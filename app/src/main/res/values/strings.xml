@@ -5,4 +5,12 @@
     <string name="enter_search_query">Enter search query</string>
     <string name="no_results">No results</string>
     <string name="an_error_occurred">An error occurred</string>
+
+    <string name="facebook_app_id">268167791607051</string>
+    <string name="fb_login_protocol_scheme">fb268167791607051</string>
+    <string name="login">Login</string>
+    <string name="REGISTER">REGISTER</string>
+    <string name="Username">  Username</string>
+    <string name="forget_pswrd">Forget Your Password ?</string>
+    <string name="or">OR</string>
 </resources>

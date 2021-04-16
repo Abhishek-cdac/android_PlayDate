@@ -16,30 +16,30 @@
         android:id="@+id/textbox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="@dimen/_30sdp"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:paddingHorizontal="@dimen/_30sdp">
 
         <EditText
             android:id="@+id/login_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:background="@drawable/rect_button"
-            android:drawableStart="@drawable/ic_baseline_person_24"
-            android:hint=" Username"
+            android:drawableStart="@drawable/group1"
+            android:hint="@string/Username"
             android:inputType="textEmailAddress"
-            android:padding="12dp"
+            android:padding="@dimen/_10sdp"
             android:textColor="@android:color/white"
             android:textColorHint="@android:color/white"
-            android:textSize="14dp" />
+            android:textSize="@dimen/_12sdp" />
 
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:hint=" Password"
+            android:layout_marginTop="@dimen/_6sdp"
+
             android:textColorHint="@android:color/white"
             app:passwordToggleDrawable="@drawable/pswrd"
             app:passwordToggleEnabled="true"
@@ -51,12 +51,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rect_button"
-                android:drawableStart="@drawable/ic_baseline_lock_24"
+                android:drawableStart="@drawable/union4"
                 android:ems="10"
                 android:inputType="textPassword"
-                android:padding="12dp"
+                android:padding="@dimen/_10sdp"
                 android:textColor="@android:color/white"
-                android:textSize="14dp" />
+                android:textSize="@dimen/_12sdp" />
 
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -66,92 +66,94 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="@dimen/_22sdp"
             android:onClick="forget_password"
-            android:text="Forget Your Password ?"
-            android:textColor="#ffffff"
-            android:textSize="12dp" />
+            android:text="@string/forget_pswrd"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/_10sdp" />
 
         <Button
             android:id="@+id/login_button"
-            android:layout_width="230dp"
+            android:layout_width="@dimen/_180sdp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            android:background="@drawable/box"
-            android:elevation="20dp"
-            android:text="Login"
+            android:onClick="Login"
+            android:layout_marginTop="@dimen/_38sdp"
+            android:background="@drawable/login_button"
+            android:elevation="@dimen/_15sdp"
+            android:text="@string/login"
             android:textColor="@android:color/white"
-            android:textSize="16dp" />
+            android:textSize="@dimen/_12sdp" />
 
         <Button
             android:id="@+id/register"
-            android:layout_width="230dp"
+            android:layout_width="@dimen/_180sdp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="25dp"
-            android:background="@drawable/register_btn"
-            android:elevation="20dp"
-            android:text="REGISTER"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:background="@drawable/register_selector"
+            android:elevation="@dimen/_15sdp"
+            android:text="@string/REGISTER"
             android:textColor="@android:color/white"
-            android:textSize="16dp" />
+            android:textSize="@dimen/_12sdp" />
 
     </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="65dp"
-        android:paddingHorizontal="15dp">
+        android:layout_marginTop="@dimen/_65sdp"
+        android:paddingHorizontal="@dimen/_15sdp">
 
         <View
             android:layout_width="wrap_content"
-            android:layout_height="2dp"
+            android:layout_height="@dimen/_2sdp"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/text_or"
-            android:background="#B3A5C9" />
+            android:background="@color/view_color" />
 
         <TextView
             android:id="@+id/text_or"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_marginHorizontal="16dp"
-            android:text="OR"
-            android:textColor="@android:color/white" />
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:text="@string/or"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/_10sdp" />
 
         <View
             android:layout_width="wrap_content"
-            android:layout_height="2dp"
+            android:layout_height="@dimen/_2sdp"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/text_or"
-            android:background="#B3A5C9" />
+            android:background="@color/view_color" />
     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:padding="15dp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:padding="@dimen/_15sdp"
         android:weightSum="1">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.3"
-            android:src="@drawable/outline_facebook_24" />
+            android:src="@drawable/image2" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.4"
-            android:src="@drawable/twitter" />
+            android:src="@drawable/image3" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.3"
-            android:src="@drawable/google_plus_new" />
+            android:src="@drawable/image4" />
 
     </LinearLayout>
 
