@@ -1,7 +1,9 @@
 package com.playdate.app;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -12,14 +14,30 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 
 public class Login extends AppCompatActivity {
+
+    private CallbackManager callbackManager;
+    private LoginManager loginManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,49 +45,120 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         EditText password = findViewById(R.id.login_Password);
         Button login_btn = findViewById(R.id.login_button);
-        login_btn.setOnClickListener(new View.OnClickListener() {
+        ImageView facebook = findViewById(R.id.fb);
+        ImageView twitter = findViewById(R.id.twitter);
+        ImageView g_plus = findViewById(R.id.g_plus);
+
+
+        FacebookSdk.sdkInitialize(this);
+        callbackManager = CallbackManager.Factory.create();
+
+        facebookLogin();
+
+
+        facebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("OnClick", "onClick: ");
+                loginManager.logInWithReadPermissions(
+                        Login.this,
+                        Arrays.asList(
+                                "email",
+                                "public_profile",
+                                "user_birthday"));
+
             }
         });
-
-        printHashKey();
-
-//        password.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//            @Override
-//            public void onFocusChange(View v, boolean hasFocus) {
-//                if(hasFocus){
-//                    Log.d("Password", "onFocusChange: ");
-//                    password.setHint(" ");
-//                }else{
-//                    password.setHint("Password");
-//                }
-//            }
-//        });
     }
 
-    public void printHashKey() {
-        try {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        callbackManager.onActivityResult(
+                requestCode,
+                resultCode,
+                data);
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
-            PackageInfo info
-                    = getPackageManager().getPackageInfo(
-                    "com.android.facebookloginsample",
-                    PackageManager.GET_SIGNATURES);
+    public void facebookLogin() {
+        loginManager
+                = LoginManager.getInstance();
+        callbackManager
+                = CallbackManager.Factory.create();
 
-            for (Signature signature : info.signatures) {
+        loginManager
+                .registerCallback(
+                        callbackManager,
+                        new FacebookCallback<LoginResult>() {
 
-                MessageDigest md
-                        = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                Log.d("KeyHash:",
-                        Base64.encodeToString(
-                                md.digest(),
-                                Base64.DEFAULT));
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-        } catch (NoSuchAlgorithmException e) {
+                            @Override
+                            public void onSuccess(LoginResult loginResult) {
+                                GraphRequest request = GraphRequest.newMeRequest(
+
+                                        loginResult.getAccessToken(),
+
+                                        new GraphRequest.GraphJSONObjectCallback() {
+
+                                            @Override
+                                            public void onCompleted(JSONObject object,
+                                                                    GraphResponse response) {
+
+                                                if (object != null) {
+                                                    try {
+                                                        String name = object.getString("name");
+                                                        String email = object.getString("email");
+                                                        String fbUserID = object.getString("id");
+
+                                                        Log.d("Name of user ", name);
+                                                        disconnectFromFacebook();
+
+                                                        // do action after Facebook login success
+                                                        // or call your API
+                                                    } catch (JSONException | NullPointerException e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                }
+                                            }
+                                        });
+
+                                Bundle parameters = new Bundle();
+                                parameters.putString(
+                                        "fields",
+                                        "id, name, email, gender, birthday");
+                                request.setParameters(parameters);
+                                request.executeAsync();
+                            }
+
+                            @Override
+                            public void onCancel() {
+                                Log.v("LoginScreen", "---onCancel");
+                            }
+
+                            @Override
+                            public void onError(FacebookException error) {
+                                // here write code when get error
+                                Log.v("LoginScreen", "----onError: "
+                                        + error.getMessage());
+                            }
+                        });
+    }
+
+    public void disconnectFromFacebook() {
+        if (AccessToken.getCurrentAccessToken() == null) {
+            return; // already logged out
         }
-    }
 
+        new GraphRequest(
+                AccessToken.getCurrentAccessToken(),
+                "/me/permissions/",
+                null,
+                HttpMethod.DELETE,
+                new GraphRequest
+                        .Callback() {
+                    @Override
+                    public void onCompleted(GraphResponse graphResponse) {
+                        LoginManager.getInstance().logOut();
+                    }
+                })
+                .executeAsync();
+    }
 }

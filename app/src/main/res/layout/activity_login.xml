@@ -77,7 +77,6 @@
             android:layout_width="@dimen/_180sdp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:onClick="Login"
             android:layout_marginTop="@dimen/_38sdp"
             android:background="@drawable/login_button"
             android:elevation="@dimen/_15sdp"
@@ -140,6 +139,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/fb"
             android:layout_weight="0.3"
             android:src="@drawable/image2" />
 
@@ -147,12 +147,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.4"
+            android:id="@+id/twitter"
             android:src="@drawable/image3" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.3"
+            android:id="@+id/g_plus"
             android:src="@drawable/image4" />
 
     </LinearLayout>
