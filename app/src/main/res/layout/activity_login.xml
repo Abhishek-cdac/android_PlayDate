@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="30dp"
+        android:src="@drawable/playdate_logo" />
+
+    <LinearLayout
+        android:id="@+id/textbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <EditText
+            android:id="@+id/login_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/rect_button"
+            android:drawableStart="@drawable/ic_baseline_person_24"
+            android:hint=" Username"
+            android:inputType="textEmailAddress"
+            android:padding="12dp"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white"
+            android:textSize="14dp" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint=" Password"
+            android:textColorHint="@android:color/white"
+            app:passwordToggleDrawable="@drawable/pswrd"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@android:color/white">
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/login_Password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rect_button"
+                android:drawableStart="@drawable/ic_baseline_lock_24"
+                android:ems="10"
+                android:inputType="textPassword"
+                android:padding="12dp"
+                android:textColor="@android:color/white"
+                android:textSize="14dp" />
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="25dp"
+            android:onClick="forget_password"
+            android:text="Forget Your Password ?"
+            android:textColor="#ffffff"
+            android:textSize="12dp" />
+
+        <Button
+            android:id="@+id/login_btn"
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/box"
+            android:elevation="20dp"
+            android:text="Login"
+            android:textColor="@android:color/white"
+            android:textSize="16dp" />
+
+        <Button
+            android:id="@+id/register"
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/register_btn"
+            android:elevation="20dp"
+            android:text="REGISTER"
+            android:textColor="@android:color/white"
+            android:textSize="16dp" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="65dp"
+        android:paddingHorizontal="15dp">
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="2dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/text_or"
+            android:background="#B3A5C9" />
+
+        <TextView
+            android:id="@+id/text_or"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginHorizontal="16dp"
+            android:text="OR"
+            android:textColor="@android:color/white" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="2dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/text_or"
+            android:background="#B3A5C9" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:padding="15dp"
+        android:weightSum="1">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:src="@drawable/outline_facebook_24" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.4"
+            android:src="@drawable/twitter" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:src="@drawable/google_plus_new" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
