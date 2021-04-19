@@ -6,14 +6,18 @@
     <string name="no_results">No results</string>
     <string name="an_error_occurred">An error occurred</string>
 
-
     <string name="facebook_app_id">268167791607051</string>
     <string name="fb_login_protocol_scheme">fb268167791607051</string>
-
+    <string name="get_started">Get Started</string>
 
     <string name="login">Login</string>
     <string name="REGISTER">REGISTER</string>
-    <string name="Username">  Username</string>
+    <string name="Username">Username</string>
+    <string name="FullName">Full Name</string>
+    <string name="Address">Address</string>
+    <string name="PhoneNo">Phone No</string>
+    <string name="Email">Email</string>
+    <string name="Password">Password</string>
     <string name="forget_pswrd">Forget Your Password ?</string>
     <string name="or">OR</string>
 </resources>

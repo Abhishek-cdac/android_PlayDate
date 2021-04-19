@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.playdate.app">
 
-
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -18,13 +17,15 @@
             android:value="@string/facebook_app_id" />
 
 
-        <activity android:name=".Login">
+        <activity android:name=".ui.onboarding.OnBoardingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.login.LoginActivity" />
+        <activity android:name=".ui.register.RegisterActivity" />
     </application>
 
 </manifest>

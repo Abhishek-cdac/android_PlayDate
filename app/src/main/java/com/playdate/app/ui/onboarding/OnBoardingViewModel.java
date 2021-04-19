@@ -5,29 +5,28 @@ import android.view.View;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.playdate.app.model.LoginUser;
-
 public class OnBoardingViewModel extends ViewModel {
 
-    public MutableLiveData<String> EmailAddress = new MutableLiveData<>();
-    public MutableLiveData<String> Password = new MutableLiveData<>();
+    OnBoardingActivity activity;
 
-    private MutableLiveData<LoginUser> userMutableLiveData;
+    public OnBoardingViewModel(OnBoardingActivity activity) {
+        this.activity = activity;
+    }
 
-    public MutableLiveData<LoginUser> getUser() {
+    public MutableLiveData<Boolean> RegisterClick = new MutableLiveData<>();
 
-        if (userMutableLiveData == null) {
-            userMutableLiveData = new MutableLiveData<>();
+    public MutableLiveData<Boolean> getStarted() {
+
+        if (RegisterClick == null) {
+            RegisterClick = new MutableLiveData<>();
         }
-        return userMutableLiveData;
+        return RegisterClick;
 
     }
 
     public void onClick(View view) {
-
-        LoginUser loginUser = new LoginUser(EmailAddress.getValue(), Password.getValue());
-
-        userMutableLiveData.setValue(loginUser);
-
+        RegisterClick.setValue(true);
     }
+
+
 }
