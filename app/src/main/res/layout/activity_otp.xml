@@ -20,8 +20,8 @@
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
             android:layout_gravity="center"
-            android:padding="@dimen/_2sdp"
             android:layout_margin="@dimen/_15sdp"
+            android:padding="@dimen/_2sdp"
             android:src="@drawable/arrow_back" />
 
         <ImageView
@@ -84,7 +84,7 @@
                 android:gravity="center"
 
                 android:padding="@dimen/_10sdp"
-                android:text="@string/_202_505_0126"
+                android:text="@={OTPViewModel.txtmobile}"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_22sdp"
                 android:textStyle="bold" />

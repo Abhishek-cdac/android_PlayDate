@@ -4,7 +4,7 @@
     <data>
 
         <variable
-            name="RegisterViewModel"
+            name="VMRegister"
             type="com.playdate.app.ui.register.RegisterViewModel" />
 
 
@@ -19,24 +19,27 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@drawable/gradient"
             android:orientation="vertical">
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:padding="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:paddingLeft="@dimen/_30sdp"
+                android:paddingTop="@dimen/_20sdp"
+                android:paddingRight="@dimen/_30sdp"
                 android:src="@drawable/playdate_logo" />
 
             <LinearLayout
                 android:id="@+id/textbox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:orientation="vertical"
                 android:paddingHorizontal="@dimen/_30sdp">
+
 
                 <EditText
                     android:id="@+id/edt_fullname"
@@ -47,25 +50,30 @@
                     android:drawableStart="@drawable/group1"
                     android:drawablePadding="@dimen/_10sdp"
                     android:hint="@string/FullName"
-                    android:inputType="textEmailAddress"
+                    android:inputType="text"
+                    android:maxLength="50"
                     android:padding="@dimen/_15sdp"
+                    android:singleLine="true"
+                    android:text="@={VMRegister.fullname}"
                     android:textColor="@android:color/white"
                     android:textColorHint="@android:color/white"
                     android:textSize="@dimen/_12sdp" />
-
 
                 <EditText
                     android:id="@+id/edt_Address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:background="@drawable/rect_button"
                     android:drawableStart="@drawable/address"
                     android:drawablePadding="@dimen/_10sdp"
                     android:ems="10"
                     android:hint="@string/Address"
-                    android:inputType="textPassword"
+                    android:inputType="text"
+                    android:maxLength="50"
                     android:padding="@dimen/_15sdp"
+                    android:singleLine="true"
+                    android:text="@={VMRegister.address}"
                     android:textColor="@android:color/white"
                     android:textColorHint="@android:color/white"
                     android:textSize="@dimen/_12sdp" />
@@ -74,14 +82,18 @@
                     android:id="@+id/edt_phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:background="@drawable/rect_button"
+                    android:digits="0123456789"
                     android:drawableStart="@drawable/phone"
                     android:drawablePadding="@dimen/_10sdp"
                     android:ems="10"
                     android:hint="@string/PhoneNo"
-                    android:inputType="textPassword"
+                    android:inputType="phone"
+                    android:maxLength="10"
                     android:padding="@dimen/_15sdp"
+                    android:singleLine="true"
+                    android:text="@={VMRegister.phoneNumber}"
                     android:textColor="@android:color/white"
                     android:textColorHint="@android:color/white"
                     android:textSize="@dimen/_12sdp" />
@@ -90,14 +102,17 @@
                     android:id="@+id/edt_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:background="@drawable/rect_button"
                     android:drawableStart="@drawable/email"
                     android:drawablePadding="@dimen/_10sdp"
                     android:ems="10"
                     android:hint="@string/Email"
-                    android:inputType="textPassword"
+                    android:inputType="textEmailAddress"
+                    android:maxLength="50"
                     android:padding="@dimen/_15sdp"
+                    android:singleLine="true"
+                    android:text="@={VMRegister.email}"
                     android:textColor="@android:color/white"
                     android:textColorHint="@android:color/white"
                     android:textSize="@dimen/_12sdp" />
@@ -106,14 +121,19 @@
                     android:id="@+id/login_Password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:background="@drawable/rect_button"
                     android:drawableStart="@drawable/union4"
                     android:drawablePadding="@dimen/_10sdp"
                     android:ems="10"
+
                     android:hint="@string/Password"
                     android:inputType="textPassword"
+                    android:maxLength="50"
                     android:padding="@dimen/_15sdp"
+                    android:singleLine="true"
+
+                    android:text="@={VMRegister.password}"
                     android:textColor="@android:color/white"
                     android:textColorHint="@android:color/white"
                     android:textSize="@dimen/_12sdp" />
@@ -125,10 +145,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/_20sdp"
-                    android:background="@drawable/login_button"
-
+                    android:background="@drawable/register_selector"
                     android:elevation="@dimen/_15sdp"
-                    android:onClick="@{(v) -> RegisterViewModel.onClickRegister(v)}"
+                    android:onClick="@{(v) -> VMRegister.onClickRegister(v)}"
                     android:text="@string/REGISTER"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/_12sdp" />
@@ -139,8 +158,11 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/_30sdp"
-                    android:background="@drawable/register_selector"
+
+                    android:background="@drawable/login_button"
+
                     android:elevation="@dimen/_15sdp"
+                    android:onClick="@{(v) -> VMRegister.onLoginClick(v)}"
                     android:text="@string/login"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/_12sdp" />
@@ -151,7 +173,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_65sdp"
+                android:layout_marginTop="@dimen/_30sdp"
                 android:paddingHorizontal="@dimen/_15sdp">
 
                 <View

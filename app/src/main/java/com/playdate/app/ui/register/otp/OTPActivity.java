@@ -25,6 +25,13 @@ public class OTPActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(OTPActivity.this, R.layout.activity_otp);
         binding.setLifecycleOwner(this);
         binding.setOTPViewModel(otpViewModel);
+        Intent mIntent = getIntent();
+//        mIntent.getStringExtra("Name");
+        String phone = mIntent.getStringExtra("Phone");
+        otpViewModel.setMobile(phone);
+//        mIntent.getStringExtra("Address");
+//        mIntent.getStringExtra("Email");
+//        mIntent.getStringExtra("Password");
 
         otpViewModel.onRegisterUser().observe(this, new Observer<Boolean>() {
             @Override

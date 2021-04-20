@@ -6,25 +6,46 @@ import android.view.View;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.playdate.app.model.LoginUser;
+import com.playdate.app.model.RegisterUser;
+
 public class RegisterViewModel extends ViewModel {
-    public MutableLiveData<Boolean> RegisterClick = new MutableLiveData<>();
+    public MutableLiveData<RegisterUser> userMutableLiveData;
 
-    private MutableLiveData<Boolean> userMutableLiveData;
-    private MutableLiveData<Boolean> Register;
+    public MutableLiveData<Boolean> onFinishCall = new MutableLiveData<>();
+    public MutableLiveData<String> fullname = new MutableLiveData<>();
+    public MutableLiveData<String> address = new MutableLiveData<>();
+    public MutableLiveData<String> phoneNumber = new MutableLiveData<>();
+    public MutableLiveData<String> email = new MutableLiveData<>();
+    public MutableLiveData<String> password = new MutableLiveData<>();
 
-    public MutableLiveData<Boolean> onRegisterUser() {
 
-        if (RegisterClick == null) {
-            RegisterClick = new MutableLiveData<>();
+    public MutableLiveData<RegisterUser> getRegisterUser() {
+
+        if (userMutableLiveData == null) {
+            Log.d("ddd", "init called");
+            userMutableLiveData = new MutableLiveData<>();
+            user = new RegisterUser("", "", "", "", "");
         }
-        return RegisterClick;
+        return userMutableLiveData;
 
     }
 
+    public MutableLiveData<Boolean> getFinish() {
+        return onFinishCall;
+
+    }
+
+    RegisterUser user;
 
     public void onClickRegister(View view) {
-        Log.d("ddd", "asdzsd");
-        RegisterClick.setValue(true);
+        user = new RegisterUser(fullname.getValue(), address.getValue(), phoneNumber.getValue(), email.getValue(), password.getValue());
+        //  Log.d("ddd", fullname.getValue());
+        userMutableLiveData.setValue(user);
+    }
+
+    public void onLoginClick(View view) {
+        onFinishCall.setValue(true);
     }
 
 }

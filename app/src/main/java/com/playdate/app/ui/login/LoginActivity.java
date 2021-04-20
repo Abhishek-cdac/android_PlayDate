@@ -40,9 +40,6 @@ import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
 
-//    private CallbackManager callbackManager;
-//    private LoginManager loginManager;
-
     private LoginViewModel loginViewModel;
 
     private ActivityLoginBinding binding;
@@ -55,24 +52,27 @@ public class LoginActivity extends AppCompatActivity {
         binding.setLifecycleOwner(this);
         binding.setLoginViewModel(loginViewModel);
 
-        loginViewModel.getUser().observe(this, loginUser -> {
+        loginViewModel.getUser().observe(this, new Observer<LoginUser>() {
+            @Override
+            public void onChanged(LoginUser loginUser) {
 
-            if (TextUtils.isEmpty(Objects.requireNonNull(loginUser).getStrEmailAddress())) {
-                binding.loginEmail.setError("Enter an E-Mail Address");
-                binding.loginEmail.requestFocus();
-            } else if (!loginUser.isEmailValid()) {
-                binding.loginEmail.setError("Enter a Valid E-mail Address");
-                binding.loginEmail.requestFocus();
-            } else if (TextUtils.isEmpty(Objects.requireNonNull(loginUser).getStrPassword())) {
-                binding.loginPassword.setError("Enter a Password");
-                binding.loginPassword.requestFocus();
-            } else if (!loginUser.isPasswordLengthGreaterThan5()) {
-                binding.loginPassword.setError("Enter at least 6 Digit password");
-                binding.loginPassword.requestFocus();
-            } else {
-                // call API
+                if (TextUtils.isEmpty(Objects.requireNonNull(loginUser).getStrEmailAddress())) {
+                    binding.loginEmail.setError("Enter an E-Mail Address");
+                    binding.loginEmail.requestFocus();
+                } else if (!loginUser.isEmailValid()) {
+                    binding.loginEmail.setError("Enter a Valid E-mail Address");
+                    binding.loginEmail.requestFocus();
+                } else if (TextUtils.isEmpty(Objects.requireNonNull(loginUser).getStrPassword())) {
+                    binding.loginPassword.setError("Enter a Password");
+                    binding.loginPassword.requestFocus();
+                } else if (!loginUser.isPasswordLengthGreaterThan5()) {
+                    binding.loginPassword.setError("Enter at least 6 Digit password");
+                    binding.loginPassword.requestFocus();
+                } else {
+                    // call API
+                }
+
             }
-
         });
         loginViewModel.getRegisterUser().observe(this, register -> {
 

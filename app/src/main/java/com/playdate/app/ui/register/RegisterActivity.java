@@ -2,6 +2,9 @@ package com.playdate.app.ui.register;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,7 +13,10 @@ import androidx.lifecycle.Observer;
 
 import com.playdate.app.R;
 import com.playdate.app.databinding.ActivityRegisterBinding;
+import com.playdate.app.model.RegisterUser;
 import com.playdate.app.ui.register.otp.OTPActivity;
+
+import java.util.Objects;
 
 public class RegisterActivity extends AppCompatActivity {
     private RegisterViewModel registerViewModel;
@@ -23,12 +29,44 @@ public class RegisterActivity extends AppCompatActivity {
         registerViewModel = new RegisterViewModel();
         binding = DataBindingUtil.setContentView(RegisterActivity.this, R.layout.activity_register);
         binding.setLifecycleOwner(this);
-        binding.setRegisterViewModel(registerViewModel);
+        binding.setVMRegister(registerViewModel);
 
-        registerViewModel.onRegisterUser().observe(this, new Observer<Boolean>() {
+        registerViewModel.getFinish().observe(this, new Observer<Boolean>() {
+
             @Override
-            public void onChanged(Boolean loginUser) {
-                RegisterActivity.this.startActivity(new Intent(RegisterActivity.this, OTPActivity.class));
+            public void onChanged(Boolean aBoolean) {
+                finish();
+            }
+        });
+
+        registerViewModel.getRegisterUser().observe(this, new Observer<RegisterUser>() {
+            @Override
+            public void onChanged(RegisterUser registerUser) {
+                if (TextUtils.isEmpty(Objects.requireNonNull(registerUser).getFullname())) {
+
+                } else if (TextUtils.isEmpty(Objects.requireNonNull(registerUser).getAddress())) {
+
+                } else if (TextUtils.isEmpty(Objects.requireNonNull(registerUser).getPhoneNumber())) {
+
+                } else if ((registerUser).getPhoneNumber().length() < 10) {
+
+                } else if (TextUtils.isEmpty(Objects.requireNonNull(registerUser).getEmail())) {
+
+                } else if (!registerUser.isEmailValid()) {
+
+                } else if (TextUtils.isEmpty(Objects.requireNonNull(registerUser).getPassword())) {
+
+                } else {
+                    //next Page
+                    Intent mIntent = new Intent(RegisterActivity.this, OTPActivity.class);
+                    mIntent.putExtra("Name", registerUser.getFullname());
+                    mIntent.putExtra("Phone", registerUser.getPhoneNumber());
+                    mIntent.putExtra("Address", registerUser.getAddress());
+                    mIntent.putExtra("Email", registerUser.getEmail());
+                    mIntent.putExtra("Password", registerUser.getPassword());
+                    startActivity(mIntent);
+                }
+
             }
         });
 
