@@ -26,9 +26,11 @@ public class OnBoardingActivity extends AppCompatActivity {
         com.playdate.app.databinding.ActivityOnboardingBinding binding = DataBindingUtil.setContentView(OnBoardingActivity.this, R.layout.activity_onboarding);
         binding.setLifecycleOwner(this);
         binding.setOnBoardingViewModel(loginViewModel);
+        binding.tabLayout.setupWithViewPager(binding.viewPager);
 //        binding.getFadevisible();
 //        binding.getIndicator();
         binding.setManager(getSupportFragmentManager());
+
         loginViewModel.getStarted().observe(this, aBoolean -> {
             startActivity(new Intent(OnBoardingActivity.this, LoginActivity.class));
             finish();
