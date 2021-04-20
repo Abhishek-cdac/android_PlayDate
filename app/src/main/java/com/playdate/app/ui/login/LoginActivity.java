@@ -40,8 +40,8 @@ import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
 
-//    private CallbackManager callbackManager;
-//    private LoginManager loginManager;
+    private CallbackManager callbackManager;
+    private LoginManager loginManager;
 
     private LoginViewModel loginViewModel;
 
@@ -50,6 +50,8 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(this);
+        callbackManager = CallbackManager.Factory.create();
         loginViewModel = new LoginViewModel();
         binding = DataBindingUtil.setContentView(LoginActivity.this, R.layout.activity_login);
         binding.setLifecycleOwner(this);
@@ -83,124 +85,132 @@ public class LoginActivity extends AppCompatActivity {
             }
 
         });
+        loginViewModel.fbClick().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean register) {
 
-//        setContentView(R.layout.activity_login);
-//        EditText password = findViewById(R.id.login_Password);
-//        Button login_btn = findViewById(R.id.login_button);
-//        ImageView facebook = findViewById(R.id.fb);
-//        ImageView twitter = findViewById(R.id.twitter);
-//        ImageView g_plus = findViewById(R.id.g_plus);
-//
-//
-//        FacebookSdk.sdkInitialize(this);
-//        callbackManager = CallbackManager.Factory.create();
-//
-//        facebookLogin();
-//
-//
-//        facebook.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                loginManager.logInWithReadPermissions(
-//                        LoginActivity.this,
-//                        Arrays.asList(
-//                                "email",
-//                                "public_profile",
-//                                "user_birthday"));
-//
-//            }
-//        });
+                calltoFB();// or you can put this in viewmodel or simply complete
+
+            }
+        });
+
+        loginViewModel.GoogleClick().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean register) {
+
+                calltoGoogle();// or you can put this in viewmodel or simply complete
+
+            }
+        });
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        callbackManager.onActivityResult(
-//                requestCode,
-//                resultCode,
-//                data);
-//        super.onActivityResult(requestCode, resultCode, data);
-//    }
-//
-//    public void facebookLogin() {
-//        loginManager
-//                = LoginManager.getInstance();
-//        callbackManager
-//                = CallbackManager.Factory.create();
-//
-//        loginManager
-//                .registerCallback(
-//                        callbackManager,
-//                        new FacebookCallback<LoginResult>() {
-//
-//                            @Override
-//                            public void onSuccess(LoginResult loginResult) {
-//                                GraphRequest request = GraphRequest.newMeRequest(
-//
-//                                        loginResult.getAccessToken(),
-//
-//                                        new GraphRequest.GraphJSONObjectCallback() {
-//
-//                                            @Override
-//                                            public void onCompleted(JSONObject object,
-//                                                                    GraphResponse response) {
-//
-//                                                if (object != null) {
-//                                                    try {
-//                                                        String name = object.getString("name");
-//                                                        String email = object.getString("email");
-//                                                        String fbUserID = object.getString("id");
-//
-//                                                        Log.d("Name of user ", name);
-//                                                        disconnectFromFacebook();
-//
-//                                                        // do action after Facebook login success
-//                                                        // or call your API
-//                                                    } catch (JSONException | NullPointerException e) {
-//                                                        e.printStackTrace();
-//                                                    }
-//                                                }
-//                                            }
-//                                        });
-//
-//                                Bundle parameters = new Bundle();
-//                                parameters.putString(
-//                                        "fields",
-//                                        "id, name, email, gender, birthday");
-//                                request.setParameters(parameters);
-//                                request.executeAsync();
-//                            }
-//
-//                            @Override
-//                            public void onCancel() {
-//                                Log.v("LoginScreen", "---onCancel");
-//                            }
-//
-//                            @Override
-//                            public void onError(FacebookException error) {
-//                                // here write code when get error
-//                                Log.v("LoginScreen", "----onError: "
-//                                        + error.getMessage());
-//                            }
-//                        });
-//    }
+    private void calltoGoogle() {
 
-//    public void disconnectFromFacebook() {
-//        if (AccessToken.getCurrentAccessToken() == null) {
-//            return; // already logged out
-//        }
-//
-//        new GraphRequest(
-//                AccessToken.getCurrentAccessToken(),
-//                "/me/permissions/",
-//                null,
-//                HttpMethod.DELETE,
-//                new GraphRequest
-//                        .Callback() {
-//                    @Override
-//                    public void onCompleted(GraphResponse graphResponse) {
-//                        LoginManager.getInstance().logOut();
-//                    }
-//                })
-//                .executeAsync();
-//    }
+
+    }
+
+    private void calltoFB() {
+        FacebookSdk.sdkInitialize(LoginActivity.this);
+        callbackManager = CallbackManager.Factory.create();
+        facebookLogin();
+
+        loginManager.logInWithReadPermissions(
+                LoginActivity.this,
+                Arrays.asList(
+                        "email",
+                        "public_profile",
+                        "user_birthday"));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        callbackManager.onActivityResult(
+                requestCode,
+                resultCode,
+                data);
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void facebookLogin() {
+        loginManager
+                = LoginManager.getInstance();
+        callbackManager
+                = CallbackManager.Factory.create();
+
+        loginManager
+                .registerCallback(
+                        callbackManager,
+                        new FacebookCallback<LoginResult>() {
+
+                            @Override
+                            public void onSuccess(LoginResult loginResult) {
+                                GraphRequest request = GraphRequest.newMeRequest(
+
+                                        loginResult.getAccessToken(),
+
+                                        new GraphRequest.GraphJSONObjectCallback() {
+
+                                            @Override
+                                            public void onCompleted(JSONObject object,
+                                                                    GraphResponse response) {
+
+                                                if (object != null) {
+                                                    try {
+                                                        String name = object.getString("name");
+                                                        String email = object.getString("email");
+                                                        String fbUserID = object.getString("id");
+
+                                                        Log.d("Name of user ", name);
+                                                        disconnectFromFacebook();
+
+                                                        // do action after Facebook login success
+                                                        // or call your API
+                                                    } catch (JSONException | NullPointerException e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                }
+                                            }
+                                        });
+
+                                Bundle parameters = new Bundle();
+                                parameters.putString(
+                                        "fields",
+                                        "id, name, email, gender, birthday");
+                                request.setParameters(parameters);
+                                request.executeAsync();
+                            }
+
+                            @Override
+                            public void onCancel() {
+                                Log.v("LoginScreen", "---onCancel");
+                            }
+
+                            @Override
+                            public void onError(FacebookException error) {
+                                // here write code when get error
+                                Log.v("LoginScreen", "----onError: "
+                                        + error.getMessage());
+                            }
+                        });
+    }
+
+    public void disconnectFromFacebook() {
+        if (AccessToken.getCurrentAccessToken() == null) {
+            return; // already logged out
+        }
+
+        new GraphRequest(
+                AccessToken.getCurrentAccessToken(),
+                "/me/permissions/",
+                null,
+                HttpMethod.DELETE,
+                new GraphRequest
+                        .Callback() {
+                    @Override
+                    public void onCompleted(GraphResponse graphResponse) {
+                        LoginManager.getInstance().logOut();
+                    }
+                })
+                .executeAsync();
+    }
 }
