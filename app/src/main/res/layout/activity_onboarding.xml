@@ -13,13 +13,14 @@
             name="fadevisible"
             type="com.playdate.app.ui.onboarding.OnBoardingActivity" />
 
+
         <variable
             name="manager"
             type="androidx.fragment.app.FragmentManager" />
 
         <variable
-            name="indicator"
-            type="com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator" />
+            name="setUpWithViewpager"
+            type="com.playdate.app.ui.onboarding.OnBoardingActivity" />
 
     </data>
 
@@ -56,6 +57,7 @@
             app:dotsCornerRadius="8dp"
             app:dotsSize="16dp"
             app:dotsSpacing="4dp"
+            app:setUpWithViewpager="@{ viewPager }"
             app:dotsWidthFactor="2.5"
             app:layout_constraintBottom_toTopOf="@+id/btnLogin"
             app:layout_constraintEnd_toEndOf="parent"
