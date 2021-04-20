@@ -18,7 +18,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_margin="@dimen/_20sdp"
             android:orientation="vertical">
 
@@ -41,7 +41,7 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:fontFamily="@font/lato_bold"
                 android:gravity="start"
-                android:text="@string/relationship"
+                android:text="@string/personal_bio"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_15sdp"
                 android:textStyle="bold" />
@@ -52,66 +52,31 @@
                 android:layout_marginLeft="@dimen/_8sdp"
                 android:fontFamily="@font/lato_bold"
                 android:gravity="start"
-                android:text="Please select your relationship status"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_10sdp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/btn_single"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/edt_otp"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/_30sdp"
-                android:layout_marginTop="@dimen/_25sdp"
-                android:layout_marginRight="@dimen/_30sdp"
-                android:background="@drawable/normal_btn_back"
-                android:elevation="@dimen/_15sdp"
-                android:onClick="@{(v) -> RelatiponShipViewModel.onSingle(v)}"
-                android:padding="@dimen/_15sdp"
-                android:text="@string/single"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/_15sdp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="@dimen/_25sdp"
-                android:fontFamily="@font/lato_bold"
-                android:gravity="center"
-                android:text="OR"
+                android:text="@string/write_a_short_bio_that_will_be_displayed_on_your_profile"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_10sdp" />
 
-            <Button
-                android:id="@+id/btn_taken"
+            <EditText
+                android:id="@+id/edt_fullname"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/edt_otp"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/_30sdp"
-                android:layout_marginRight="@dimen/_30sdp"
-                android:background="@drawable/normal_btn_back"
-                android:elevation="@dimen/_15sdp"
-                android:onClick="@{(v) -> RelatiponShipViewModel.onTaken(v)}"
-                android:padding="@dimen/_15sdp"
-                android:text="@string/taken"
+                android:layout_height="150dp"
+                android:layout_gravity="start|top"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:background="@drawable/rect_normal"
+                android:gravity="start"
+                android:hint="Type bio"
+                android:inputType="text"
+                android:maxLength="2000"
+                android:maxLines="5"
+                android:minLines="4"
+                android:padding="@dimen/_12sdp"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/_15sdp"
-                android:textStyle="bold" />
-
+                android:textColorHint="@android:color/white"
+                android:textSize="@dimen/_12sdp" />
         </LinearLayout>
+
 
         <ImageView
             android:id="@+id/iv_next"

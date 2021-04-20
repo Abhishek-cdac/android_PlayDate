@@ -1,17 +1,19 @@
-package com.playdate.app.ui.register.relationship;
+package com.playdate.app.ui.register.interestin;
 
 import android.view.View;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class RelatiponShipViewModel extends ViewModel {
+public class InterestInViewModel extends ViewModel {
+
     public MutableLiveData<Boolean> RegisterClick = new MutableLiveData<>();
 
-    private MutableLiveData<Boolean> SingleClick = new MutableLiveData<>();
+    private MutableLiveData<Boolean> maleClick = new MutableLiveData<>();
     private MutableLiveData<Boolean> BackClick = new MutableLiveData<>();
     private MutableLiveData<Boolean> NextClick = new MutableLiveData<>();
-    private MutableLiveData<Boolean> TakenClick = new MutableLiveData<>();
+    private MutableLiveData<Boolean> femaleClick = new MutableLiveData<>();
+    private MutableLiveData<Boolean> nonBin = new MutableLiveData<>();
     private MutableLiveData<Boolean> Register;
 
     public MutableLiveData<Boolean> onRegisterUser() {
@@ -23,15 +25,21 @@ public class RelatiponShipViewModel extends ViewModel {
 
     }
 
-    public MutableLiveData<Boolean> OnSingleClick() {
+    public MutableLiveData<Boolean> OnMaleClick() {
 
-        return SingleClick;
+        return maleClick;
 
     }
 
-    public MutableLiveData<Boolean> OnTakenClick() {
+    public MutableLiveData<Boolean> OnNonBinClick() {
 
-        return TakenClick;
+        return nonBin;
+
+    }
+
+    public MutableLiveData<Boolean> OnFemaleClick() {
+
+        return femaleClick;
 
     }
 
@@ -48,8 +56,8 @@ public class RelatiponShipViewModel extends ViewModel {
     }
 
 
-    public void onSingle(View view) {
-        SingleClick.setValue(true);
+    public void onMale(View view) {
+        maleClick.setValue(true);
     }
 
     public void onBack(View view) {
@@ -60,8 +68,12 @@ public class RelatiponShipViewModel extends ViewModel {
         NextClick.setValue(true);
     }
 
-    public void onTaken(View view) {
-        TakenClick.setValue(true);
+    public void onFemale(View view) {
+        femaleClick.setValue(true);
+    }
+
+    public void onNonBin(View view) {
+        nonBin.setValue(true);
     }
 
 }

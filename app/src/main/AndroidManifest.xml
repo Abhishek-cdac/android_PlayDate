@@ -31,6 +31,9 @@
         <activity android:name=".ui.register.RegisterActivity" />
         <activity android:name=".ui.register.otp.OTPActivity" />
         <activity android:name=".ui.register.relationship.RelationActivity" />
+        <activity android:name=".ui.register.interestin.InterestActivity" />
+        <activity android:name=".ui.register.username.UserNameActivity" />
+        <activity android:name=".ui.register.bio.BioActivity" />
     </application>
 
 </manifest>

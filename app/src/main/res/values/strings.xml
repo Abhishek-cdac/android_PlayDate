@@ -22,15 +22,25 @@
     <string name="forget_pswrd">Forget Your Password ?</string>
     <string name="or">OR</string>
     <string name="didn_t_get_a_code">Didn\'t get a code?</string>
-    <string name="resend">Resend</string>
+    <string name="resend"><u>Resend</u></string>
     <string name="we_sent_a_code">We Sent A Code</string>
     <string name="please_enter_the_verification_code">Please enter the verification code</string>
     <string name="that_has_been_sent_to_you_via_sms_at">that has been sent to you via SMS at</string>
     <string name="_202_505_0126">202-505-0126</string>
     <string name="age_verification">Age Verification</string>
     <string name="relationship">Relationship</string>
+    <string name="interestin">Interested In</string>
     <string name="single">SINGLE</string>
+    <string name="male">MALE</string>
+    <string name="female">FEMALE</string>
+    <string name="non_binary">NON - BINARY</string>
     <string name="taken">TAKEN</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="please_select_your_relationship_status">Please select your relationship status</string>
+    <string name="please_select_your_sex_orie">Please select your sex orientation</string>
+    <string name="create_username">Create username</string>
+    <string name="search_for_a_username_to_display_on_your_profile">Search for a username to display on your profile</string>
+    <string name="personal_bio">Personal Bio</string>
+    <string name="write_a_short_bio_that_will_be_displayed_on_your_profile">Write a short bio that will be displayed on your profile</string>
 </resources>
