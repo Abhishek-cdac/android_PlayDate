@@ -3,6 +3,7 @@ package com.playdate.app.ui.onboarding;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,7 +26,8 @@ public class OnBoardingActivity extends AppCompatActivity {
         com.playdate.app.databinding.ActivityOnboardingBinding binding = DataBindingUtil.setContentView(OnBoardingActivity.this, R.layout.activity_onboarding);
         binding.setLifecycleOwner(this);
         binding.setOnBoardingViewModel(loginViewModel);
-        binding.getFadevisible();
+//        binding.getFadevisible();
+//        binding.getIndicator();
         binding.setManager(getSupportFragmentManager());
         loginViewModel.getStarted().observe(this, aBoolean -> {
             startActivity(new Intent(OnBoardingActivity.this, LoginActivity.class));
@@ -34,10 +36,18 @@ public class OnBoardingActivity extends AppCompatActivity {
 
     }
 
+
     @BindingAdapter("bind:fadevisible")
     public static void bindViewPagerAdapter(final ViewPager view, OnBoardingViewModel viewModel) {
         final OnBoardingAdapter adapter = new OnBoardingAdapter(view.getContext(), viewModel.activity.getSupportFragmentManager());
         view.setAdapter(adapter);
+
+    }
+
+
+    @BindingAdapter({"setUpWithViewpager"})
+    public static void setUpWithViewpager(final com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator indicator, ViewPager viewPager) {
+//        indicator.setViewPager(viewPager);
     }
 
 
