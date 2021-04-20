@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
+
     <data>
 
         <variable
@@ -9,6 +10,7 @@
 
 
     </data>
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -205,19 +207,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_8sdp"
                 android:gravity="center"
                 android:padding="@dimen/_15sdp"
                 android:weightSum="1">
 
                 <RelativeLayout
-                    android:layout_width="@dimen/_70sdp"
-                    android:layout_height="@dimen/_70sdp"
-                    android:padding="@dimen/_10sdp">
+                    android:layout_width="@dimen/_72sdp"
+                    android:layout_height="@dimen/_73sdp"
+                    android:onClick="@{(v) -> RegisterViewModel.onClickFb(v)}"
+                    android:padding="@dimen/_20sdp">
 
                     <ImageView
-                        android:layout_width="@dimen/_70sdp"
-                        android:layout_height="@dimen/_70sdp"
+                        android:layout_width="@dimen/_72sdp"
+                        android:layout_height="@dimen/_73sdp"
                         android:src="@drawable/ellipse" />
 
                     <ImageView
@@ -231,13 +234,14 @@
 
 
                 <RelativeLayout
-                    android:layout_width="@dimen/_70sdp"
-                    android:layout_height="@dimen/_70sdp"
-                    android:padding="@dimen/_10sdp">
+                    android:layout_width="@dimen/_72sdp"
+                    android:layout_height="@dimen/_73sdp"
+                    android:onClick="@{(v) -> RegisterViewModel.onClickTwitter(v)}"
+                    android:padding="@dimen/_20sdp">
 
                     <ImageView
-                        android:layout_width="@dimen/_70sdp"
-                        android:layout_height="@dimen/_70sdp"
+                        android:layout_width="@dimen/_72sdp"
+                        android:layout_height="@dimen/_73sdp"
                         android:src="@drawable/ellipse" />
 
                     <ImageView
@@ -250,13 +254,14 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:layout_width="@dimen/_70sdp"
-                    android:layout_height="@dimen/_70sdp"
-                    android:padding="@dimen/_10sdp">
+                    android:layout_width="@dimen/_72sdp"
+                    android:layout_height="@dimen/_73sdp"
+                    android:onClick="@{(v) -> RegisterViewModel.onClickgPlus(v)}"
+                    android:padding="@dimen/_20sdp">
 
                     <ImageView
-                        android:layout_width="@dimen/_70sdp"
-                        android:layout_height="@dimen/_70sdp"
+                        android:layout_width="@dimen/_72sdp"
+                        android:layout_height="@dimen/_73sdp"
                         android:src="@drawable/ellipse" />
 
                     <ImageView
