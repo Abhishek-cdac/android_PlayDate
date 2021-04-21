@@ -8,6 +8,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="blue_grey">#625095</color>
     <color name="blue_grey1">#643C6A</color>
+    <color name="blue_grey2">#8F7A92</color>
+    <color name="blue_grey3">#603C65</color>
     <color name="view_color">#B3A5C9</color>
     <color name="hint_color">#66516A</color>
     <color name="search_color">#8D7A90</color>

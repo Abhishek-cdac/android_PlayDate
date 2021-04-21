@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.playdate.app">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.flash"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="ANDROID.PERMISSION.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -10,9 +24,18 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.PlayDate">
-        <activity android:name=".ui.interest_screen.InterestScreen">
 
-        </activity>
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.my.package.name.provider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            tools:replace="android:authorities">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"
+                tools:replace="android:resource"/>
+        </provider>
         <activity android:name=".ui.forgot_password.ForgotPassword" />
         <activity android:name=".ui.onboarding.GetStarted" />
 
@@ -36,6 +59,8 @@
         <activity android:name=".ui.register.interestin.InterestActivity" />
         <activity android:name=".ui.register.username.UserNameActivity" />
         <activity android:name=".ui.register.bio.BioActivity" />
+        <activity android:name=".ui.register.interest.InterestActivity" />
+<!--        <activity android:name=".ui.register.profile.UploadProfileActivity" />-->
     </application>
 
 </manifest>

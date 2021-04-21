@@ -4,8 +4,8 @@
     <data>
 
         <variable
-            name="RelatiponShipViewModel"
-            type="com.playdate.app.ui.register.relationship.RelatiponShipViewModel" />
+            name="BioViewModel"
+            type="com.playdate.app.ui.register.bio.BioViewModel" />
 
 
     </data>
@@ -27,7 +27,7 @@
                 android:id="@+id/iv_back"
                 android:layout_width="@dimen/_20sdp"
                 android:layout_height="@dimen/_20sdp"
-                android:onClick="@{(v) -> RelatiponShipViewModel.onBack(v)}"
+                android:onClick="@{(v) -> BioViewModel.onBack(v)}"
                 android:padding="@dimen/_2sdp"
                 android:src="@drawable/arrow_back" />
 
@@ -86,7 +86,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/_30sdp"
             android:background="@drawable/arrow_back_circle"
-            android:onClick="@{(v) -> RelatiponShipViewModel.onNext(v)}"
+            android:onClick="@{(v) -> BioViewModel.onNext(v)}"
             android:padding="@dimen/_12sdp"
             android:src="@drawable/arrow_right" />
     </RelativeLayout>
