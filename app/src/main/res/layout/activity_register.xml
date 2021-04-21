@@ -213,6 +213,7 @@
                 <RelativeLayout
                     android:layout_width="@dimen/_70sdp"
                     android:layout_height="@dimen/_70sdp"
+                    android:onClick="@{(v) ->VMRegister.onClickFb(v)}"
                     android:padding="@dimen/_10sdp">
 
                     <ImageView
