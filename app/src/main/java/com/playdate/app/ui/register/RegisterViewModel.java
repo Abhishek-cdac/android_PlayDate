@@ -19,6 +19,8 @@ public class RegisterViewModel extends ViewModel {
     public MutableLiveData<String> email = new MutableLiveData<>();
     public MutableLiveData<String> password = new MutableLiveData<>();
 
+    public MutableLiveData<Boolean> onFBClick = new MutableLiveData<>();
+
 
     public MutableLiveData<RegisterUser> getRegisterUser() {
 
@@ -46,6 +48,23 @@ public class RegisterViewModel extends ViewModel {
 
     public void onLoginClick(View view) {
         onFinishCall.setValue(true);
+    }
+
+    public MutableLiveData<Boolean> fbClick() {
+
+        if (onFBClick == null) {
+            onFBClick = new MutableLiveData<>();
+        }
+        return onFBClick;
+
+    }
+
+
+    public void onClickFb(View view) {
+
+        onFBClick.setValue(true);
+
+
     }
 
 }
