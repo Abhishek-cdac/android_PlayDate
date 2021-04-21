@@ -28,6 +28,7 @@ import com.playdate.app.R;
 import com.playdate.app.databinding.ActivityLoginBinding;
 import com.playdate.app.databinding.ActivityOnboardingBinding;
 import com.playdate.app.model.LoginUser;
+import com.playdate.app.ui.forgot_password.ForgotPassword;
 import com.playdate.app.ui.onboarding.OnBoardingActivity;
 import com.playdate.app.ui.onboarding.OnBoardingViewModel;
 import com.playdate.app.ui.register.RegisterActivity;
@@ -85,6 +86,15 @@ public class LoginActivity extends AppCompatActivity {
             }
 
         });
+
+        loginViewModel.getForgotClick().observe(this, forgot -> {
+            if (forgot) {
+                startActivity(new Intent(LoginActivity.this, ForgotPassword.class));
+            }else{
+                /////   
+            }
+        });
+
         loginViewModel.fbClick().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean register) {

@@ -32,6 +32,7 @@ public class LoginViewModel extends ViewModel {
     public MutableLiveData<String> EmailAddress = new MutableLiveData<>();
     public MutableLiveData<String> Password = new MutableLiveData<>();
     public MutableLiveData<Boolean> RegisterClick = new MutableLiveData<>();
+    public MutableLiveData<Boolean> ForgotClick = new MutableLiveData<>();
     public MutableLiveData<Boolean> onFBClick = new MutableLiveData<>();
     public MutableLiveData<Boolean> onGoogleClick = new MutableLiveData<>();
 
@@ -72,10 +73,21 @@ public class LoginViewModel extends ViewModel {
 
     public void onClickForgotPass(View view) {
 
-        LoginUser loginUser = new LoginUser(EmailAddress.getValue(), Password.getValue());
+        ForgotClick.setValue(true);
 
-        userMutableLiveData.setValue(loginUser);
+//        LoginUser loginUser = new LoginUser(EmailAddress.getValue(), Password.getValue());
+//
+//        userMutableLiveData.setValue(loginUser);
 
+
+    }
+
+    public MutableLiveData<Boolean> getForgotClick() {
+
+        if (ForgotClick == null) {
+            ForgotClick = new MutableLiveData<>();
+        }
+        return ForgotClick;
 
     }
 

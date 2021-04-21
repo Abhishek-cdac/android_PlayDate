@@ -10,9 +10,11 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.PlayDate">
-        <activity android:name=".ui.onboarding.GetStarted">
+        <activity android:name=".ui.interest_screen.InterestScreen">
 
         </activity>
+        <activity android:name=".ui.forgot_password.ForgotPassword" />
+        <activity android:name=".ui.onboarding.GetStarted" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

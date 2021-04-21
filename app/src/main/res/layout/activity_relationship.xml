@@ -52,7 +52,7 @@
                 android:layout_marginLeft="@dimen/_8sdp"
                 android:fontFamily="@font/lato_bold"
                 android:gravity="start"
-                android:text="Please select your relationship status"
+                android:text="@string/relationship_desc"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_10sdp" />
         </LinearLayout>

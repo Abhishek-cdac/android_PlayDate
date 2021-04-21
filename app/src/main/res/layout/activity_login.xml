@@ -151,7 +151,7 @@
                 android:weightSum="1">
 
                 <RelativeLayout
-                    android:layout_width="@dimen/_72sdp"
+                        android:layout_width="@dimen/_72sdp"
                     android:layout_height="@dimen/_73sdp"
                     android:onClick="@{(v) -> LoginViewModel.onClickFb(v)}"
                     android:padding="@dimen/_20sdp">

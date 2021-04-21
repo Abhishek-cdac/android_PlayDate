@@ -9,6 +9,8 @@
     <color name="blue_grey">#625095</color>
     <color name="blue_grey1">#643C6A</color>
     <color name="view_color">#B3A5C9</color>
+    <color name="hint_color">#66516A</color>
+    <color name="search_color">#8D7A90</color>
     <color name="editText_background">#D13A6F</color>
     <color name="color_pink">#D13A6F</color>
     <color name="register_btn">#603F82</color>
