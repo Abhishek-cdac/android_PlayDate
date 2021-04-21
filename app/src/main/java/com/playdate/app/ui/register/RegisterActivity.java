@@ -44,6 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         registerViewModel = new RegisterViewModel();
+        registerViewModel.init();
         FacebookSdk.sdkInitialize(this);
         callbackManager = CallbackManager.Factory.create();
         binding = DataBindingUtil.setContentView(RegisterActivity.this, R.layout.activity_register);

@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer;
 
 import com.playdate.app.R;
 import com.playdate.app.databinding.ActivityOtpBinding;
+import com.playdate.app.ui.register.age_verification.AgeVerifiationActivity;
 import com.playdate.app.ui.register.relationship.RelationActivity;
 import com.playdate.app.util.common.CommonClass;
 
@@ -25,6 +26,7 @@ public class OTPActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         otpViewModel = new OTPViewModel();
+        otpViewModel.init();
         binding = DataBindingUtil.setContentView(OTPActivity.this, R.layout.activity_otp);
         binding.setLifecycleOwner(this);
         binding.setOTPViewModel(otpViewModel);
@@ -37,7 +39,7 @@ public class OTPActivity extends AppCompatActivity {
 //        mIntent.getStringExtra("Email");
 //        mIntent.getStringExtra("Password");
 
-        otpViewModel.onRegisterUser().observe(this, loginUser -> OTPActivity.this.startActivity(new Intent(OTPActivity.this, RelationActivity.class)));
+        otpViewModel.onRegisterUser().observe(this, loginUser -> OTPActivity.this.startActivity(new Intent(OTPActivity.this, AgeVerifiationActivity.class)));
         otpViewModel.resendClick.observe(this, loginUser -> {
             Toast.makeText(OTPActivity.this, "Resent", Toast.LENGTH_SHORT).show();
             binding.txtResend.setVisibility(View.INVISIBLE);

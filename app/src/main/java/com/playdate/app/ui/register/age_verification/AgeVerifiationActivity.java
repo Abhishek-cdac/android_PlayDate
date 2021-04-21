@@ -2,6 +2,7 @@ package com.playdate.app.ui.register.age_verification;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,8 +15,9 @@ import com.playdate.app.databinding.ActivityRegisterBinding;
 import com.playdate.app.ui.register.RegisterActivity;
 import com.playdate.app.ui.register.RegisterViewModel;
 import com.playdate.app.ui.register.otp.OTPActivity;
+import com.playdate.app.ui.register.relationship.RelationActivity;
 
-public class AgeVerifiationActivity  extends AppCompatActivity {
+public class AgeVerifiationActivity extends AppCompatActivity {
     private AgeVerificationViewModel age_verify_viewmodel;
 
     private ActivityAgeVerificationBinding binding;
@@ -28,12 +30,14 @@ public class AgeVerifiationActivity  extends AppCompatActivity {
         binding.setLifecycleOwner(this);
         binding.setAgeVerificationViewModel(age_verify_viewmodel);
 
-        age_verify_viewmodel.onRegisterUser().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean loginUser) {
-                AgeVerifiationActivity.this.startActivity(new Intent(AgeVerifiationActivity.this, OTPActivity.class));
-            }
+        age_verify_viewmodel.onRegisterUser().observe(this, loginUser -> AgeVerifiationActivity.this.startActivity(new Intent(AgeVerifiationActivity.this, OTPActivity.class)));
+        age_verify_viewmodel.iv_backClick.observe(this, loginUser -> finish());
+        age_verify_viewmodel.DaySelectedPosition().observe(this, val -> {
+           // Toast.makeText(AgeVerifiationActivity.this, "seleced" + val, Toast.LENGTH_SHORT).show();
         });
+        age_verify_viewmodel.MonthSelectedPosition().observe(this, val -> age_verify_viewmodel.setDays(val));
+        age_verify_viewmodel.YearSelectedPosition().observe(this, val -> age_verify_viewmodel.setYear(val));
+        age_verify_viewmodel.onNextClick().observe(this, val -> startActivity(new Intent(AgeVerifiationActivity.this, RelationActivity.class)));
 
     }
 }

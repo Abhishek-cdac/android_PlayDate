@@ -25,6 +25,7 @@
     <string name="resend"><u>Resend</u></string>
     <string name="we_sent_a_code">We Sent A Code</string>
     <string name="please_enter_the_verification_code">Please enter the verification code</string>
+    <string name="please_enter_the_dob">Please enter your date of birth</string>
     <string name="that_has_been_sent_to_you_via_sms_at">that has been sent to you via SMS at</string>
     <string name="_202_505_0126">202-505-0126</string>
     <string name="age_verification">Age Verification</string>
@@ -43,4 +44,8 @@
     <string name="search_for_a_username_to_display_on_your_profile">Search for a username to display on your profile</string>
     <string name="personal_bio">Personal Bio</string>
     <string name="write_a_short_bio_that_will_be_displayed_on_your_profile">Write a short bio that will be displayed on your profile</string>
+
+
+
+
 </resources>

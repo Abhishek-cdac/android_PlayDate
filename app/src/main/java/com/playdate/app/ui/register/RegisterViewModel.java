@@ -10,6 +10,17 @@ import com.playdate.app.model.LoginUser;
 import com.playdate.app.model.RegisterUser;
 
 public class RegisterViewModel extends ViewModel {
+
+    void init(){
+        fullname.setValue("Ajit Jadhav");
+        address.setValue("A/P Pabal ,Tal-Shirur ,Pune");
+        phoneNumber.setValue("9970371183");
+        email.setValue("ajit.jadhav36@gmail.com");
+        password.setValue("123456");
+    }
+
+
+
     public MutableLiveData<RegisterUser> userMutableLiveData;
 
     public MutableLiveData<Boolean> onFinishCall = new MutableLiveData<>();

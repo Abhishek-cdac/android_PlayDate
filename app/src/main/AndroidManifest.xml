@@ -8,7 +8,6 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PlayDate">
         <activity android:name=".ui.onboarding.GetStarted">
@@ -31,6 +30,7 @@
         <activity android:name=".ui.register.RegisterActivity" />
         <activity android:name=".ui.register.otp.OTPActivity" />
         <activity android:name=".ui.register.relationship.RelationActivity" />
+        <activity android:name=".ui.register.age_verification.AgeVerifiationActivity" />
         <activity android:name=".ui.register.interestin.InterestActivity" />
         <activity android:name=".ui.register.username.UserNameActivity" />
         <activity android:name=".ui.register.bio.BioActivity" />

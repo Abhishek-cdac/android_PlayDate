@@ -8,6 +8,11 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 public class OTPViewModel extends ViewModel {
+
+    void init() {
+        txtOTP.setValue("12345");
+    }
+
     public MutableLiveData<Boolean> RegisterClick = new MutableLiveData<>();
     public MutableLiveData<Boolean> CountDownFinish = new MutableLiveData<>();
     public MutableLiveData<String> txtmobile = new MutableLiveData<>();
