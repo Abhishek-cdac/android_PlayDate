@@ -4,8 +4,8 @@
     <data>
 
         <variable
-            name="RelatiponShipViewModel"
-            type="com.playdate.app.ui.register.relationship.RelatiponShipViewModel" />
+            name="UserNameViewModel"
+            type="com.playdate.app.ui.register.username.UserNameViewModel" />
 
 
     </data>
@@ -27,7 +27,7 @@
                 android:id="@+id/iv_back"
                 android:layout_width="@dimen/_20sdp"
                 android:layout_height="@dimen/_20sdp"
-                android:onClick="@{(v) -> RelatiponShipViewModel.onBack(v)}"
+                android:onClick="@{(v) -> UserNameViewModel.onBack(v)}"
                 android:padding="@dimen/_2sdp"
                 android:src="@drawable/arrow_back" />
 
@@ -71,10 +71,21 @@
                 android:maxLength="50"
                 android:padding="@dimen/_12sdp"
                 android:singleLine="true"
+                android:text="@={UserNameViewModel.UserName}"
                 android:textColor="@android:color/white"
                 android:textColorHint="@android:color/white"
                 android:textSize="@dimen/_12sdp" />
         </LinearLayout>
+
+        <com.github.ybq.android.spinkit.SpinKitView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/spin_kit"
+            style="@style/SpinKitView.FadingCircle"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            app:SpinKit_Color="@color/color_pink" />
 
 
         <ImageView
@@ -85,9 +96,10 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/_30sdp"
             android:background="@drawable/arrow_back_circle"
-            android:onClick="@{(v) -> RelatiponShipViewModel.onNext(v)}"
+            android:onClick="@{(v) -> UserNameViewModel.onNext(v)}"
             android:padding="@dimen/_12sdp"
-            android:src="@drawable/arrow_right" />
+            android:src="@drawable/arrow_right"
+            android:visibility="gone" />
     </RelativeLayout>
 
 </layout>
