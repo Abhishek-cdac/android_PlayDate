@@ -9,6 +9,13 @@
 
     <string name="facebook_app_id">268167791607051</string>
     <string name="fb_login_protocol_scheme">fb268167791607051</string>
+
+    <string name="com.twitter.sdk.android.CONSUMER_KEY">pW3SwJXTv4EcNjuAhbhHzzh8R</string>
+    <string name="com.twitter.sdk.android.CONSUMER_SECRET">jBXImapA3VtYJLD5oKRfLmtRolwINJGmzUfmJbJZLgy5lTt64H</string>
+
+    <!--    bearer token - AAAAAAAAAAAAAAAAAAAAAPY6OwEAAAAABx7nN6PZFyl4BIDSJ5lF9%2FYZijM%3DVJg1RtA8iFul8CWRVfWWBP9tVD1qD0MumwomHrHNbCfVgSUMQy-->
+
+
     <string name="get_started">Get Started</string>
 
     <string name="login">Login</string>

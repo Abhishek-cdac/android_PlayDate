@@ -12,7 +12,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -231,6 +231,8 @@
                 <RelativeLayout
                     android:layout_width="@dimen/_72sdp"
                     android:layout_height="@dimen/_73sdp"
+                    android:onClick="@{(v) ->VMRegister.onClickTwitter(v)}"
+
                     android:padding="@dimen/_20sdp">
 
                     <ImageView
@@ -250,6 +252,8 @@
                 <RelativeLayout
                     android:layout_width="@dimen/_72sdp"
                     android:layout_height="@dimen/_73sdp"
+                    android:onClick="@{(v) ->VMRegister.onClickGoogle(v)}"
+
                     android:padding="@dimen/_20sdp">
 
                     <ImageView
@@ -268,6 +272,12 @@
 
 
             </LinearLayout>
+
+            <Button
+                android:id="@+id/logout1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="logout" />
 
 
         </LinearLayout>

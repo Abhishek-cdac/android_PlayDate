@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -21,6 +24,16 @@ import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.tasks.Task;
 import com.playdate.app.R;
 import com.playdate.app.databinding.ActivityRegisterBinding;
 import com.playdate.app.model.RegisterUser;
@@ -33,12 +46,16 @@ import org.json.JSONObject;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
     private RegisterViewModel registerViewModel;
 
     private CallbackManager callbackManager;
     private LoginManager loginManager;
+
+    private GoogleApiClient googleApiClient;
     private ActivityRegisterBinding binding;
+    private static final int RC_SIGN_IN = 1;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,9 +64,20 @@ public class RegisterActivity extends AppCompatActivity {
         registerViewModel.init();
         FacebookSdk.sdkInitialize(this);
         callbackManager = CallbackManager.Factory.create();
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+
         binding = DataBindingUtil.setContentView(RegisterActivity.this, R.layout.activity_register);
         binding.setLifecycleOwner(this);
         binding.setVMRegister(registerViewModel);
+        Button logout = binding.logout1;
+
 
         registerViewModel.getFinish().observe(this, new Observer<Boolean>() {
 
@@ -99,6 +127,43 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        registerViewModel.getOnGoogleClick().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                calltoGoogle();
+            }
+        });
+
+        registerViewModel.getOntwitterClick().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                ///////
+            }
+        });
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(
+                        new ResultCallback<Status>() {
+                            @Override
+                            public void onResult(Status status) {
+                                if (status.isSuccess()) {
+                                    Toast.makeText(getApplicationContext(), "LogOut", Toast.LENGTH_LONG).show();
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "Session not close", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
+            }
+        });
+
+    }
+
+    private void calltoGoogle() {
+        Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
+        startActivityForResult(intent, RC_SIGN_IN);
+
     }
 
     private void calltoFB() {
@@ -121,6 +186,23 @@ public class RegisterActivity extends AppCompatActivity {
                 resultCode,
                 data);
         super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
+        }
+    }
+
+    private void handleSignInResult(Task<GoogleSignInAccount> task) {
+        try {
+            GoogleSignInAccount account = task.getResult(ApiException.class);
+            Log.d("Email ", account.getEmail());
+            Log.d("Name ", account.getDisplayName());
+
+
+        } catch (ApiException e) {
+            Log.d("EXCEPTION", "signInResult:failed code=" + e.getStatusCode());
+        }
     }
 
     public void facebookLogin() {
@@ -204,5 +286,10 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 })
                 .executeAsync();
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 }

@@ -35,6 +35,7 @@ public class LoginViewModel extends ViewModel {
     public MutableLiveData<Boolean> ForgotClick = new MutableLiveData<>();
     public MutableLiveData<Boolean> onFBClick = new MutableLiveData<>();
     public MutableLiveData<Boolean> onGoogleClick = new MutableLiveData<>();
+    public MutableLiveData<Boolean> onTwitterClick = new MutableLiveData<>();
 
     private CallbackManager callbackManager;
     private LoginManager loginManager;
@@ -125,10 +126,23 @@ public class LoginViewModel extends ViewModel {
 
     }
 
+    public MutableLiveData<Boolean> getOnTwitterClick() {
+
+        if (onTwitterClick == null) {
+            onTwitterClick = new MutableLiveData<>();
+        }
+        return onTwitterClick;
+
+    }
     public void onClickTwitter(View view) {
+        onTwitterClick.setValue(true);
+
 
     }
 
+
+//   CLIENT ID  - 796495283790-tmc38onsosd8gvcs206bknct6k6mh6po.apps.googleusercontent.com
+//   CLIENT SECRET -  uu2Rrd-c1TG4Il9wXbbLAppJ
 
 //    public void facebookLogin() {
 //        loginManager
