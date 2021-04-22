@@ -4,6 +4,7 @@ import android.util.Patterns;
 
 public class RegisterUser {
 
+
     String Fullname;
     String Address;
     String PhoneNumber;
