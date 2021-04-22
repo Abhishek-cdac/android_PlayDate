@@ -82,6 +82,11 @@
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/_10sdp" />
 
+                <com.twitter.sdk.android.core.identity.TwitterLoginButton
+                    android:id="@+id/twitter_btn11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
                 <Button
                     android:id="@+id/login_button"
                     android:layout_width="@dimen/_180sdp"
@@ -107,6 +112,9 @@
                     android:text="@string/REGISTER"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/_12sdp" />
+
+
+
 
             </LinearLayout>
 
@@ -151,7 +159,7 @@
                 android:weightSum="1">
 
                 <RelativeLayout
-                        android:layout_width="@dimen/_72sdp"
+                    android:layout_width="@dimen/_72sdp"
                     android:layout_height="@dimen/_73sdp"
                     android:onClick="@{(v) -> LoginViewModel.onClickFb(v)}"
                     android:padding="@dimen/_20sdp">
@@ -176,6 +184,7 @@
                     android:layout_height="@dimen/_73sdp"
                     android:onClick="@{(v) -> LoginViewModel.onClickTwitter(v)}"
                     android:padding="@dimen/_20sdp">
+
 
                     <ImageView
                         android:layout_width="@dimen/_72sdp"
@@ -213,6 +222,12 @@
 
 
             </LinearLayout>
+            <Button
+                android:id="@+id/logout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="logout" />
+
 
 
         </LinearLayout>
