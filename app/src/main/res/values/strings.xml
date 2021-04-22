@@ -56,7 +56,9 @@
     <string name="upload">Upload</string>
     <string name="take_photo">TAKE PHOTO</string>
     <string name="change_image">Change Image</string>
-
+    <string name="restaurants">Restaurants</string>
+    <string name="please_select_your_favourite_place_to_eat">Please select your favourite place to eat</string>
+    <string name="see_more_suggestions"><u>See More Suggestions</u></string>
 
 
 </resources>

@@ -34,8 +34,9 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths"
-                tools:replace="android:resource"/>
+                tools:replace="android:resource" />
         </provider>
+
         <activity android:name=".ui.forgot_password.ForgotPassword" />
         <activity android:name=".ui.onboarding.GetStarted" />
 
@@ -61,6 +62,8 @@
         <activity android:name=".ui.register.bio.BioActivity" />
         <activity android:name=".ui.register.interest.InterestActivity" />
         <activity android:name=".ui.register.profile.UploadProfileActivity" />
+        <activity android:name=".ui.restaurant.RestaurantActivity" />
+        <activity android:name=".ui.dashboard.DashboardActivity" />
     </application>
 
 </manifest>
