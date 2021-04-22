@@ -91,7 +91,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         binding = DataBindingUtil.setContentView(LoginActivity.this, R.layout.activity_login);
         binding.setLifecycleOwner(this);
         binding.setLoginViewModel(loginViewModel);
-        twitterButton = binding.twitterBtn11;
+//        twitterButton = binding.twitterBtn11;
         Button logout = binding.logout;
 
         loginViewModel.getUser().observe(this, loginUser -> {
@@ -144,7 +144,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         loginViewModel.getOnTwitterClick().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean register) {
-                callTwitter();
+//                callTwitter();
             }
         });
 
@@ -174,24 +174,24 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
         });
 
-        twitterButton.setCallback(new Callback<TwitterSession>() {
-            @Override
-            public void success(Result<TwitterSession> result) {
-                TwitterSession session = TwitterCore.getInstance().getSessionManager().getActiveSession();
-                TwitterAuthToken authToken = session.getAuthToken();
-                String token = authToken.token;
-                String secret = authToken.secret;
-                loginSession(session);
-            }
-
-            @Override
-            public void failure(TwitterException exception) {
-                Log.d("ExceptionNEW: ", exception.toString());
-                Toast.makeText(LoginActivity.this, exception.toString(), Toast.LENGTH_SHORT).show();
-
-
-            }
-        });
+//        twitterButton.setCallback(new Callback<TwitterSession>() {
+//            @Override
+//            public void success(Result<TwitterSession> result) {
+//                TwitterSession session = TwitterCore.getInstance().getSessionManager().getActiveSession();
+//                TwitterAuthToken authToken = session.getAuthToken();
+//                String token = authToken.token;
+//                String secret = authToken.secret;
+//                loginSession(session);
+//            }
+//
+//            @Override
+//            public void failure(TwitterException exception) {
+//                Log.d("ExceptionNEW: ", exception.toString());
+//                Toast.makeText(LoginActivity.this, exception.toString(), Toast.LENGTH_SHORT).show();
+//
+//
+//            }
+//        });
     }
 
     private void loginSession(TwitterSession session) {
@@ -231,7 +231,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 resultCode,
                 data);
         super.onActivityResult(requestCode, resultCode, data);
-        twitterButton.onActivityResult(requestCode, resultCode, data);
+//        twitterButton.onActivityResult(requestCode, resultCode, data);
 
 
         if (requestCode == RC_SIGN_IN) {

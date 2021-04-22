@@ -11,14 +11,13 @@ import com.playdate.app.model.RegisterUser;
 
 public class RegisterViewModel extends ViewModel {
 
-    void init(){
+    void init() {
         fullname.setValue("Ajit Jadhav");
         address.setValue("A/P Pabal ,Tal-Shirur ,Pune");
         phoneNumber.setValue("9970371183");
         email.setValue("ajit.jadhav36@gmail.com");
         password.setValue("123456");
     }
-
 
 
     public MutableLiveData<RegisterUser> userMutableLiveData;
@@ -31,6 +30,8 @@ public class RegisterViewModel extends ViewModel {
     public MutableLiveData<String> password = new MutableLiveData<>();
 
     public MutableLiveData<Boolean> onFBClick = new MutableLiveData<>();
+    public MutableLiveData<Boolean> onTwitterClick = new MutableLiveData<>();
+    public MutableLiveData<Boolean> onGoogleClick = new MutableLiveData<>();
 
 
     public MutableLiveData<RegisterUser> getRegisterUser() {
@@ -75,6 +76,33 @@ public class RegisterViewModel extends ViewModel {
 
         onFBClick.setValue(true);
 
+    }
+
+    public void onClickTwitter(View view) {
+
+        onTwitterClick.setValue(true);
+    }
+
+    public MutableLiveData<Boolean> getOntwitterClick() {
+
+        if (onTwitterClick == null) {
+            onTwitterClick = new MutableLiveData<>();
+        }
+        return onTwitterClick;
+
+    }
+
+    public void onClickGoogle(View view) {
+
+        onGoogleClick.setValue(true);
+    }
+
+    public MutableLiveData<Boolean> getOnGoogleClick() {
+
+        if (onGoogleClick == null) {
+            onGoogleClick = new MutableLiveData<>();
+        }
+        return onGoogleClick;
 
     }
 
