@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -57,6 +59,8 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHo
         if (lst.get(position).isSelected()) {
             holder.txt_intresrt.setBackground(mContext.getDrawable(R.drawable.selected_interest_row));
             holder.iv_cross.setVisibility(View.VISIBLE);
+//            Animation fadeInAnimation = AnimationUtils.loadAnimation(mContext, R.anim.shake);
+//            holder.itemView.startAnimation(fadeInAnimation);
         } else {
             holder.iv_cross.setVisibility(View.GONE);
             holder.txt_intresrt.setBackground(mContext.getDrawable(R.drawable.circle_corner_gblue_grey));

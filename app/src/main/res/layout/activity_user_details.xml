@@ -2,7 +2,10 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-        <variable name="viewModel" type="com.playdate.app.ui.userdetails.UserDetailsViewModel" />
+
+        <variable
+            name="viewModel"
+            type="com.playdate.app.ui.userdetails.UserDetailsViewModel" />
     </data>
 
     <FrameLayout
@@ -21,65 +24,65 @@
                 android:orientation="vertical">
 
                 <de.hdodenhof.circleimageview.CircleImageView
+                    goneUnless="@{viewModel.shouldShowUserDetails}"
+                    imageUrl="@{viewModel.user.avatarUrl}"
                     android:layout_width="136dp"
                     android:layout_height="136dp"
-                    android:layout_marginBottom="16dp"
-                    imageUrl="@{viewModel.user.avatarUrl}"
-                    goneUnless="@{viewModel.shouldShowUserDetails}" />
+                    android:layout_marginBottom="16dp" />
 
                 <TextView
+                    goneUnless="@{viewModel.shouldShowUserDetails}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
-                    android:textColor="?android:attr/textColorPrimary"
-                    android:textSize="24sp"
                     android:text="@{viewModel.user.name}"
-                    goneUnless="@{viewModel.shouldShowUserDetails}" />
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="24sp" />
 
                 <TextView
+                    goneUnless="@{viewModel.shouldShowUserDetails}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:fontFamily="sans-serif-light"
-                    android:textSize="16sp"
                     android:text="@{viewModel.user.login}"
-                    goneUnless="@{viewModel.shouldShowUserDetails}" />
+                    android:textSize="16sp" />
 
                 <TextView
+                    goneUnless="@{viewModel.shouldShowUserDetails}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
-                    android:textColor="?android:attr/textColorPrimary"
-                    android:textSize="16sp"
                     android:text="@{viewModel.user.company}"
-                    goneUnless="@{viewModel.shouldShowUserDetails}" />
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="16sp" />
 
                 <TextView
+                    goneUnless="@{viewModel.shouldShowUserDetails}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
-                    android:textColor="?android:attr/textColorPrimary"
-                    android:textSize="16sp"
                     android:text="@{viewModel.user.location}"
-                    goneUnless="@{viewModel.shouldShowUserDetails}" />
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="16sp" />
 
                 <TextView
+                    goneUnless="@{viewModel.shouldShowUserDetails}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
                     android:gravity="center_horizontal"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="16sp"
-                    android:text="@{viewModel.user.blog}"
                     android:onClick="@{() -> viewModel.onBlogClick()}"
-                    goneUnless="@{viewModel.shouldShowUserDetails}" />
+                    android:text="@{viewModel.user.blog}"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="16sp" />
             </LinearLayout>
         </ScrollView>
 
         <ProgressBar
+            goneUnless="@{viewModel.isLoading}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            goneUnless="@{viewModel.isLoading}" />
+            android:layout_gravity="center" />
     </FrameLayout>
 </layout>

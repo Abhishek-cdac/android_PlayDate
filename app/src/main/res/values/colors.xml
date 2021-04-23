@@ -16,5 +16,6 @@
     <color name="search_color">#8D7A90</color>
     <color name="editText_background">#D13A6F</color>
     <color name="color_pink">#D13A6F</color>
+    <color name="color_pink_dull">#DA8EA9</color>
     <color name="register_btn">#603F82</color>
 </resources>

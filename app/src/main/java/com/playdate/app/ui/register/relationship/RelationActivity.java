@@ -2,10 +2,12 @@ package com.playdate.app.ui.register.relationship;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.databinding.Observable;
 import androidx.lifecycle.Observer;
 
 import com.playdate.app.R;
@@ -17,6 +19,7 @@ public class RelationActivity extends AppCompatActivity {
     RelatiponShipViewModel viewModel;
     ActivityRelationshipBinding binding;
 
+    boolean once=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +33,12 @@ public class RelationActivity extends AppCompatActivity {
             public void onChanged(Boolean click) {
                 binding.btnTaken.setBackground(getDrawable(R.drawable.selected_btn_back));
                 binding.btnSingle.setBackground(getDrawable(R.drawable.normal_btn_back));
-
+                binding.ivNext.setVisibility(View.VISIBLE);
+//                if (!once) {
+//                    Animation fadeInAnimation = AnimationUtils.loadAnimation(RelationActivity.this, R.anim.slide_in_left);
+//                    binding.ivNext.startAnimation(fadeInAnimation);
+//                    once=true;
+//                }
             }
         });
         viewModel.OnSingleClick().observe(this, new Observer<Boolean>() {
@@ -38,7 +46,12 @@ public class RelationActivity extends AppCompatActivity {
             public void onChanged(Boolean click) {
                 binding.btnTaken.setBackground(getDrawable(R.drawable.normal_btn_back));
                 binding.btnSingle.setBackground(getDrawable(R.drawable.selected_btn_back));
-
+                binding.ivNext.setVisibility(View.VISIBLE);
+//                if (!once) {
+//                    Animation fadeInAnimation = AnimationUtils.loadAnimation(RelationActivity.this, R.anim.slide_in_left);
+//                    binding.ivNext.startAnimation(fadeInAnimation);
+//                    once=true;
+//                }
             }
         });
 

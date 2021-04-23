@@ -71,4 +71,5 @@ dependencies {
     implementation 'com.twitter.sdk.android:twitter-core:3.1.1'
 
     implementation 'com.tbuonomo:dotsindicator:4.2'
+    implementation 'com.github.ybq:Android-SpinKit:1.4.0'
 }
