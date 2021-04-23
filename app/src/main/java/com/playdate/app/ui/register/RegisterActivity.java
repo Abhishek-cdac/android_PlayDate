@@ -128,6 +128,7 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
         });
 
         registerViewModel.getOnGoogleClick().observe(this, new Observer<Boolean>() {
+
             @Override
             public void onChanged(Boolean aBoolean) {
                 calltoGoogle();
