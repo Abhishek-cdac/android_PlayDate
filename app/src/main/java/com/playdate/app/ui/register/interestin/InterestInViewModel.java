@@ -7,6 +7,12 @@ import androidx.lifecycle.ViewModel;
 
 public class InterestInViewModel extends ViewModel {
 
+    public InterestInViewModel() {
+        maleClick.setValue(false);
+        femaleClick.setValue(false);
+        nonBin.setValue(false);
+    }
+
     public MutableLiveData<Boolean> RegisterClick = new MutableLiveData<>();
 
     private MutableLiveData<Boolean> maleClick = new MutableLiveData<>();
@@ -15,6 +21,7 @@ public class InterestInViewModel extends ViewModel {
     private MutableLiveData<Boolean> femaleClick = new MutableLiveData<>();
     private MutableLiveData<Boolean> nonBin = new MutableLiveData<>();
     private MutableLiveData<Boolean> Register;
+
 
     public MutableLiveData<Boolean> onRegisterUser() {
 
@@ -57,7 +64,12 @@ public class InterestInViewModel extends ViewModel {
 
 
     public void onMale(View view) {
-        maleClick.setValue(true);
+        if (maleClick.getValue()) {
+            maleClick.setValue(false);
+        } else {
+            maleClick.setValue(true);
+        }
+
     }
 
     public void onBack(View view) {
@@ -69,11 +81,21 @@ public class InterestInViewModel extends ViewModel {
     }
 
     public void onFemale(View view) {
-        femaleClick.setValue(true);
+
+        if (femaleClick.getValue()) {
+            femaleClick.setValue(false);
+        } else {
+            femaleClick.setValue(true);
+        }
     }
 
     public void onNonBin(View view) {
-        nonBin.setValue(true);
+
+        if (nonBin.getValue()) {
+            nonBin.setValue(false);
+        } else {
+            nonBin.setValue(true);
+        }
     }
 
 }

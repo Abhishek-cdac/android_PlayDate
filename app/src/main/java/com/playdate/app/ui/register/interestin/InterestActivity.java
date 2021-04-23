@@ -38,26 +38,44 @@ public class InterestActivity extends AppCompatActivity {
         viewModel.OnMaleClick().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean click) {
-                binding.btnMale.setBackground(getDrawable(R.drawable.selected_btn_back));
-                binding.btnFemale.setBackground(getDrawable(R.drawable.normal_btn_back));
-                binding.btnNonBinary.setBackground(getDrawable(R.drawable.normal_btn_back));
+                if(click){
+                    binding.btnMale.setBackground(getDrawable(R.drawable.selected_btn_back));
+                }else{
+                    binding.btnMale.setBackground(getDrawable(R.drawable.normal_btn_back));
+                }
+
+               // binding.btnFemale.setBackground(getDrawable(R.drawable.normal_btn_back));
+               // binding.btnNonBinary.setBackground(getDrawable(R.drawable.normal_btn_back));
 
             }
         });
         viewModel.OnFemaleClick().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean click) {
-                binding.btnMale.setBackground(getDrawable(R.drawable.normal_btn_back));
-                binding.btnFemale.setBackground(getDrawable(R.drawable.selected_btn_back));
-                binding.btnNonBinary.setBackground(getDrawable(R.drawable.normal_btn_back));
+
+                if(click){
+                    binding.btnFemale.setBackground(getDrawable(R.drawable.selected_btn_back));
+                }else{
+                    binding.btnFemale.setBackground(getDrawable(R.drawable.normal_btn_back));
+                }
+              //  binding.btnMale.setBackground(getDrawable(R.drawable.normal_btn_back));
+//                binding.btnFemale.setBackground(getDrawable(R.drawable.selected_btn_back));
+               // binding.btnNonBinary.setBackground(getDrawable(R.drawable.normal_btn_back));
             }
         });
         viewModel.OnNonBinClick().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean click) {
-                binding.btnMale.setBackground(getDrawable(R.drawable.normal_btn_back));
-                binding.btnFemale.setBackground(getDrawable(R.drawable.normal_btn_back));
-                binding.btnNonBinary.setBackground(getDrawable(R.drawable.selected_btn_back));
+
+                if(click){
+                    binding.btnNonBinary.setBackground(getDrawable(R.drawable.selected_btn_back));
+                }else{
+                    binding.btnNonBinary.setBackground(getDrawable(R.drawable.normal_btn_back));
+                }
+
+              //  binding.btnMale.setBackground(getDrawable(R.drawable.normal_btn_back));
+              //  binding.btnFemale.setBackground(getDrawable(R.drawable.normal_btn_back));
+//                binding.btnNonBinary.setBackground(getDrawable(R.drawable.selected_btn_back));
             }
         });
 
