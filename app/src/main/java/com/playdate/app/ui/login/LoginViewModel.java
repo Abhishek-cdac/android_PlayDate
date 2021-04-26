@@ -35,7 +35,6 @@ public class LoginViewModel extends ViewModel {
     public MutableLiveData<Boolean> ForgotClick = new MutableLiveData<>();
     public MutableLiveData<Boolean> onFBClick = new MutableLiveData<>();
     public MutableLiveData<Boolean> onGoogleClick = new MutableLiveData<>();
-    public MutableLiveData<Boolean> onTwitterClick = new MutableLiveData<>();
 
     private CallbackManager callbackManager;
     private LoginManager loginManager;
@@ -122,20 +121,6 @@ public class LoginViewModel extends ViewModel {
     public void onClickFb(View view) {
 
         onFBClick.setValue(true);
-
-
-    }
-
-    public MutableLiveData<Boolean> getOnTwitterClick() {
-
-        if (onTwitterClick == null) {
-            onTwitterClick = new MutableLiveData<>();
-        }
-        return onTwitterClick;
-
-    }
-    public void onClickTwitter(View view) {
-        onTwitterClick.setValue(true);
 
 
     }
