@@ -30,7 +30,6 @@ public class RegisterViewModel extends ViewModel {
     public MutableLiveData<String> password = new MutableLiveData<>();
 
     public MutableLiveData<Boolean> onFBClick = new MutableLiveData<>();
-    public MutableLiveData<Boolean> onTwitterClick = new MutableLiveData<>();
     public MutableLiveData<Boolean> onGoogleClick = new MutableLiveData<>();
 
 
@@ -78,19 +77,6 @@ public class RegisterViewModel extends ViewModel {
 
     }
 
-    public void onClickTwitter(View view) {
-
-        onTwitterClick.setValue(true);
-    }
-
-    public MutableLiveData<Boolean> getOntwitterClick() {
-
-        if (onTwitterClick == null) {
-            onTwitterClick = new MutableLiveData<>();
-        }
-        return onTwitterClick;
-
-    }
 
     public void onClickGoogle(View view) {
 

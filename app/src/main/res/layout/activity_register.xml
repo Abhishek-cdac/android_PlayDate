@@ -227,28 +227,6 @@
 
                 </RelativeLayout>
 
-
-                <RelativeLayout
-                    android:layout_width="@dimen/_72sdp"
-                    android:layout_height="@dimen/_73sdp"
-                    android:onClick="@{(v) ->VMRegister.onClickTwitter(v)}"
-
-                    android:padding="@dimen/_20sdp">
-
-                    <ImageView
-                        android:layout_width="@dimen/_72sdp"
-                        android:layout_height="@dimen/_73sdp"
-                        android:src="@drawable/ellipse" />
-
-                    <ImageView
-                        android:id="@+id/twitter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/image3" />
-
-                </RelativeLayout>
-
                 <RelativeLayout
                     android:layout_width="@dimen/_72sdp"
                     android:layout_height="@dimen/_73sdp"

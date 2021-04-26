@@ -135,12 +135,6 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
             }
         });
 
-        registerViewModel.getOntwitterClick().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                ///////
-            }
-        });
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
