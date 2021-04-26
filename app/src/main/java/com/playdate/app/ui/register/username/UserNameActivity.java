@@ -66,7 +66,12 @@ public class UserNameActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        handler.removeCallbacksAndMessages(null);
+        try {
+            if(null!=handler)
+            handler.removeCallbacksAndMessages(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     Handler handler;

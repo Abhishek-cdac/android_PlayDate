@@ -130,9 +130,16 @@
         android:textSize="@dimen/_16sdp"
         android:textStyle="bold" />
 
+
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/vp_suggestion"
         android:layout_width="match_parent"
+
+        android:foregroundGravity="center"
+        android:layout_centerInParent="true"
+        android:overScrollMode="never"
+        android:clipToPadding="false"
+
         android:layout_height="wrap_content"
         android:layout_above="@+id/txt_header_see_more"
         android:layout_below="@+id/txt_header_Suggestions">

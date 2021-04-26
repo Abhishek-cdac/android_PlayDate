@@ -29,8 +29,11 @@ public class FragLanding extends Fragment {
         rv_friends.setAdapter(adapterfriend);
         rv_friends.setLayoutManager(manager);
 
-        SuggestionAdapter adapter = new SuggestionAdapter(getActivity(), getActivity().getSupportFragmentManager());
+//        SuggestionAdapter adapter = new SuggestionAdapter(getActivity(), getActivity().getSupportFragmentManager());
+        SuggestionAdapter adapter = new SuggestionAdapter(getActivity());
         vp_suggestion.setAdapter(adapter);
+        vp_suggestion.setCurrentItem(8);
+        vp_suggestion.setPadding(130, 0, 130, 0);
 
 
         return view;

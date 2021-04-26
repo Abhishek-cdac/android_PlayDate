@@ -67,7 +67,6 @@
                 android:background="@drawable/rect_normal"
                 android:gravity="start"
                 android:hint="Type bio"
-                android:inputType="text"
                 android:maxLength="2000"
                 android:maxLines="5"
                 android:minLines="4"
