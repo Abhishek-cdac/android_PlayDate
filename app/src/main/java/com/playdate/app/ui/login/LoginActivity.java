@@ -45,6 +45,7 @@ import com.playdate.app.ui.forgot_password.ForgotPassword;
 import com.playdate.app.ui.onboarding.OnBoardingActivity;
 import com.playdate.app.ui.onboarding.OnBoardingViewModel;
 import com.playdate.app.ui.register.RegisterActivity;
+import com.playdate.app.util.common.CommonClass;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.Twitter;
@@ -99,6 +100,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             if (TextUtils.isEmpty(Objects.requireNonNull(loginUser).getStrEmailAddress())) {
                 binding.loginEmail.setError("Enter an E-Mail Address");
                 binding.loginEmail.requestFocus();
+                new CommonClass().showDialogMsg(LoginActivity.this,"PlayDate","Enter username","Ok");
+
             } else if (!loginUser.isEmailValid()) {
                 binding.loginEmail.setError("Enter a Valid E-mail Address");
                 binding.loginEmail.requestFocus();

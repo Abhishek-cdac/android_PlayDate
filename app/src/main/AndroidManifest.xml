@@ -44,7 +44,7 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".ui.dashboard.DashboardActivity">
+        <activity android:name=".ui.onboarding.OnBoardingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -63,7 +63,7 @@
         <activity android:name=".ui.register.interest.InterestActivity" />
         <activity android:name=".ui.register.profile.UploadProfileActivity" />
         <activity android:name=".ui.restaurant.RestaurantActivity" />
-<!--        <activity android:name=".ui.dashboard.DashboardActivity" />-->
+        <activity android:name=".ui.dashboard.DashboardActivity" />
     </application>
 
 </manifest>
