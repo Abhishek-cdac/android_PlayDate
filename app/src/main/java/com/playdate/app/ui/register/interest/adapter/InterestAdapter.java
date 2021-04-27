@@ -1,11 +1,16 @@
 package com.playdate.app.ui.register.interest.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+
+
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -21,27 +26,15 @@ import java.util.List;
 
 public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHolder> {
 
-    ArrayList<Interest> lst = new ArrayList();
+    ArrayList<Interest> lst_int ;
 
-
-    public InterestAdapter() {
-        lst.add(new Interest("Neflix", false));
-        lst.add(new Interest("Football", false));
-        lst.add(new Interest("Anime", false));
-        lst.add(new Interest("Manga", false));
-        lst.add(new Interest("Swimmng", false));
-        lst.add(new Interest("Wine Testing", false));
-        lst.add(new Interest("Soccer", false));
-        lst.add(new Interest("Backet ball", false));
-        lst.add(new Interest("Shopping", false));
-        lst.add(new Interest("Design", false));
-        lst.add(new Interest("Gym", false));
-        lst.add(new Interest("Reading", false));
-        lst.add(new Interest("Jogging", false));
-        lst.add(new Interest("Dinning", false));
-        lst.add(new Interest("Drawing", false));
-        lst.add(new Interest("Cooking", false));
+    public InterestAdapter(ArrayList<Interest> lst_int) {
+        this.lst_int = lst_int;
     }
+    //    ArrayList<Interest> lst_int_search = new ArrayList();
+
+
+
 
     Context mContext;
 
@@ -55,8 +48,8 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.txt_intresrt.setText(lst.get(position).getInterest());
-        if (lst.get(position).isSelected()) {
+        holder.txt_intresrt.setText(lst_int.get(position).getInterest());
+        if (lst_int.get(position).isSelected()) {
             holder.txt_intresrt.setBackground(mContext.getDrawable(R.drawable.selected_interest_row));
             holder.iv_cross.setVisibility(View.VISIBLE);
 //            Animation fadeInAnimation = AnimationUtils.loadAnimation(mContext, R.anim.shake);
@@ -67,16 +60,21 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHo
         }
 
         holder.iv_cross.setOnClickListener(view -> {
-            lst.get(position).setSelected(!lst.get(position).isSelected());
+            lst_int.get(position).setSelected(!lst_int.get(position).isSelected());
             notifyDataSetChanged();
         });
-
 
     }
 
     @Override
     public int getItemCount() {
-        return lst.size();
+        return lst_int.size();
+    }
+
+    public void updateList(ArrayList<Interest> filterdNames) {
+
+        lst_int = filterdNames;
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -90,10 +88,13 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHo
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    lst.get(getAdapterPosition()).setSelected(true);
+                    lst_int.get(getAdapterPosition()).setSelected(true);
                     notifyDataSetChanged();
                 }
             });
         }
     }
+
+
+
 }

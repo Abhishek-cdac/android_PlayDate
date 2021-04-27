@@ -15,15 +15,10 @@ import java.util.ArrayList;
 
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.ViewHolder> {
 
-    ArrayList<Restaurant> lst = new ArrayList<>();
+    ArrayList<Restaurant> lst;
 
-    public RestaurantAdapter() {
-        lst.add(new Restaurant(R.drawable.rest1, false));
-        lst.add(new Restaurant(R.drawable.rest2, false));
-        lst.add(new Restaurant(R.drawable.rest3, false));
-        lst.add(new Restaurant(R.drawable.rest4, false));
-        lst.add(new Restaurant(R.drawable.rest5, false));
-        lst.add(new Restaurant(R.drawable.rest6, false));
+    public RestaurantAdapter(ArrayList<Restaurant> lst) {
+        this.lst = lst;
     }
 
     Context mContext;
@@ -51,6 +46,11 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
         return lst.size();
     }
 
+    public void updateList(ArrayList<Restaurant> rest_list) {
+        lst = rest_list;
+        notifyDataSetChanged();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageview;
 
@@ -60,9 +60,9 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(lst.get(getAdapterPosition()).isSelected()){
+                    if (lst.get(getAdapterPosition()).isSelected()) {
                         lst.get(getAdapterPosition()).selected = false;
-                    }else{
+                    } else {
                         lst.get(getAdapterPosition()).selected = true;
                     }
 
