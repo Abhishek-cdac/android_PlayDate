@@ -73,5 +73,6 @@ dependencies {
     implementation 'com.tbuonomo:dotsindicator:4.2'
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
 //    implementation 'com.antonyt.infiniteviewpager:library:1.0.0'
-    implementation 'com.github.blennerSilva:AwesomeDialog:2.0.5'
+//    implementation 'com.github.blennerSilva:AwesomeDialog:2.0.5'
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }

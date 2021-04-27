@@ -142,7 +142,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/_20sdp"
-                    android:background="@drawable/register_selector"
+                    android:background="@drawable/login_button"
                     android:elevation="@dimen/_15sdp"
                     android:onClick="@{(v) -> VMRegister.onClickRegister(v)}"
                     android:text="@string/REGISTER"
@@ -155,9 +155,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/_30sdp"
+                    android:onClick="@{(v) -> VMRegister.onLoginClick(v)}"
 
-                    android:background="@drawable/login_button"
-
+                    android:background="@drawable/register_selector"
                     android:elevation="@dimen/_15sdp"
 
                     android:text="@string/login"

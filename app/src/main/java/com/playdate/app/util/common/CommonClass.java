@@ -1,13 +1,14 @@
 package com.playdate.app.util.common;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeInfoDialog;
-import com.awesomedialog.blennersilva.awesomedialoglibrary.interfaces.Closure;
 import com.playdate.app.R;
 
 public class CommonClass {
@@ -22,17 +23,22 @@ public class CommonClass {
 
 
     public void showDialogMsg(AppCompatActivity activity, String header, String body, String btnOk) {
-        new AwesomeInfoDialog(activity)
-                .setTitle(header)
-                .setMessage(body)
-                .setCancelable(true)
-                .setPositiveButtonText("Ok")
-                .setPositiveButtonbackgroundColor(R.color.color_pink)
-                .setPositiveButtonTextColor(R.color.white)
-                .setPositiveButtonClick(() -> {
 
-                })
-                .show();
+        LayoutInflater factory = LayoutInflater.from(activity);
+        View view = factory.inflate(R.layout.custom_dialog_yes, null);
+        AlertDialog deleteDialog = new AlertDialog.Builder(activity).create();
+        deleteDialog.setView(view);
+        TextView txt_msg = view.findViewById(R.id.txt_msg);
+        txt_msg.setText(body);
+        view.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteDialog.dismiss();
+            }
+        });
+
+        deleteDialog.show();
+
     }
 
 }

@@ -39,6 +39,7 @@ import com.playdate.app.databinding.ActivityRegisterBinding;
 import com.playdate.app.model.RegisterUser;
 import com.playdate.app.ui.login.LoginActivity;
 import com.playdate.app.ui.register.otp.OTPActivity;
+import com.playdate.app.util.common.CommonClass;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -91,19 +92,19 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
             @Override
             public void onChanged(RegisterUser registerUser) {
                 if (TextUtils.isEmpty(Objects.requireNonNull(registerUser).getFullname())) {
-
+                    new CommonClass().showDialogMsg(RegisterActivity.this,"PlayDate","Enter full name","Ok");
                 } else if (TextUtils.isEmpty(Objects.requireNonNull(registerUser).getAddress())) {
-
+                    new CommonClass().showDialogMsg(RegisterActivity.this,"PlayDate","Enter address","Ok");
                 } else if (TextUtils.isEmpty(Objects.requireNonNull(registerUser).getPhoneNumber())) {
-
+                    new CommonClass().showDialogMsg(RegisterActivity.this,"PlayDate","Enter phone number","Ok");
                 } else if ((registerUser).getPhoneNumber().length() < 10) {
-
+                    new CommonClass().showDialogMsg(RegisterActivity.this,"PlayDate","Enter proper phone number","Ok");
                 } else if (TextUtils.isEmpty(Objects.requireNonNull(registerUser).getEmail())) {
-
+                    new CommonClass().showDialogMsg(RegisterActivity.this,"PlayDate","Enter email id","Ok");
                 } else if (!registerUser.isEmailValid()) {
-
+                    new CommonClass().showDialogMsg(RegisterActivity.this,"PlayDate","Enter valid email id","Ok");
                 } else if (TextUtils.isEmpty(Objects.requireNonNull(registerUser).getPassword())) {
-
+                    new CommonClass().showDialogMsg(RegisterActivity.this,"PlayDate","Enter password","Ok");
                 } else {
                     //next Page
                     Intent mIntent = new Intent(RegisterActivity.this, OTPActivity.class);

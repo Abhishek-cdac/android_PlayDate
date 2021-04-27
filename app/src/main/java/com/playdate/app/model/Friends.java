@@ -2,11 +2,11 @@ package com.playdate.app.model;
 
 public class Friends {
     String Name;
-    int Image;
+    String ImageURL;
 
-    public Friends(String name, int image) {
+    public Friends(String name, String image) {
         Name = name;
-        Image = image;
+        ImageURL = image;
     }
 
     public String getName() {
@@ -17,11 +17,11 @@ public class Friends {
         Name = name;
     }
 
-    public int getImage() {
-        return Image;
+    public String getImage() {
+        return ImageURL;
     }
 
-    public void setImage(int image) {
-        Image = image;
+    public void setImage(String image) {
+        ImageURL = image;
     }
 }

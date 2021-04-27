@@ -41,6 +41,7 @@ import com.playdate.app.R;
 import com.playdate.app.databinding.ActivityLoginBinding;
 import com.playdate.app.databinding.ActivityOnboardingBinding;
 import com.playdate.app.model.LoginUser;
+import com.playdate.app.ui.dashboard.DashboardActivity;
 import com.playdate.app.ui.forgot_password.ForgotPassword;
 import com.playdate.app.ui.onboarding.OnBoardingActivity;
 import com.playdate.app.ui.onboarding.OnBoardingViewModel;
@@ -96,21 +97,27 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         loginViewModel.getUser().observe(this, loginUser -> {
 
             if (TextUtils.isEmpty(Objects.requireNonNull(loginUser).getStrEmailAddress())) {
-                binding.loginEmail.setError("Enter an E-Mail Address");
+//                binding.loginEmail.setError("Enter an E-Mail Address");
                 binding.loginEmail.requestFocus();
-                new CommonClass().showDialogMsg(LoginActivity.this,"PlayDate","Enter username","Ok");
+                new CommonClass().showDialogMsg(LoginActivity.this, "PlayDate", "Enter a username", "Ok");
 
-            } else if (!loginUser.isEmailValid()) {
-                binding.loginEmail.setError("Enter a Valid E-mail Address");
-                binding.loginEmail.requestFocus();
-            } else if (TextUtils.isEmpty(Objects.requireNonNull(loginUser).getStrPassword())) {
-                binding.loginPassword.setError("Enter a Password");
+            }
+//            else if (!loginUser.isEmailValid()) {
+////                binding.loginEmail.setError("Enter a Valid E-mail Address");
+//                binding.loginEmail.requestFocus();
+//                new CommonClass().showDialogMsg(LoginActivity.this,"PlayDate","Enter valid email address","Ok");
+//            }
+            else if (TextUtils.isEmpty(Objects.requireNonNull(loginUser).getStrPassword())) {
+//                binding.loginPassword.setError("Enter a Password");
                 binding.loginPassword.requestFocus();
+                new CommonClass().showDialogMsg(LoginActivity.this, "PlayDate", "Enter password", "Ok");
             } else if (!loginUser.isPasswordLengthGreaterThan5()) {
-                binding.loginPassword.setError("Enter at least 6 Digit password");
+//                binding.loginPassword.setError("Enter at least 6 Digit password");
+                new CommonClass().showDialogMsg(LoginActivity.this, "PlayDate", "Enter at least 6 digit password", "Ok");
                 binding.loginPassword.requestFocus();
             } else {
-                // call API
+                startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
+                finish();
             }
 
         });
