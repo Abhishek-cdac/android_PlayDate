@@ -14,8 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
 import com.playdate.app.databinding.ActivityRestaurantBinding;
-import com.playdate.app.model.Interest;
-import com.playdate.app.ui.dashboard.DashboardActivity;
+import com.playdate.app.ui.record_video.RecordVideoActivity;
 import com.playdate.app.ui.restaurant.adapter.Restaurant;
 import com.playdate.app.ui.restaurant.adapter.RestaurantAdapter;
 
@@ -68,7 +67,7 @@ public class RestaurantActivity extends AppCompatActivity {
         viewModel.OnNextClick().observe(RestaurantActivity.this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
-                startActivity(new Intent(RestaurantActivity.this, DashboardActivity.class));
+                startActivity(new Intent(RestaurantActivity.this, RecordVideoActivity.class));
             }
         });
         viewModel.onBackClick().observe(RestaurantActivity.this, new Observer<Boolean>() {

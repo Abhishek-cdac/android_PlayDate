@@ -27,6 +27,7 @@
     <string name="PhoneNo">Phone No</string>
     <string name="Email">Email</string>
     <string name="Password">Password</string>
+    <string name="next">Next</string>
     <string name="forget_pswrd">Forget Your Password ?</string>
     <string name="or">OR</string>
     <string name="didn_t_get_a_code">Didn\'t get a code?</string>
