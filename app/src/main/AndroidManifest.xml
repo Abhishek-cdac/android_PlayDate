@@ -41,6 +41,11 @@
         <activity android:name=".ui.forgot_password.ForgotPassword" />
         <activity android:name=".ui.onboarding.GetStarted" />
         <activity android:name=".ui.dashboard.DashboardActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
 
@@ -59,11 +64,7 @@
         <activity android:name=".ui.register.interest.InterestActivity" />
         <activity android:name=".ui.register.profile.UploadProfileActivity" />
         <activity android:name=".ui.restaurant.RestaurantActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
