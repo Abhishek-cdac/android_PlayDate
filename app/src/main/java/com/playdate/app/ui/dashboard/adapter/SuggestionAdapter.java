@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.playdate.app.R;
+import com.playdate.app.model.Friends;
 import com.playdate.app.ui.dashboard.fragments.FragSuggestion;
 import com.playdate.app.ui.onboarding.OnBoardingImageFragment;
 
@@ -25,64 +26,65 @@ public class SuggestionAdapter extends PagerAdapter {
 
     private Context context;
 
+
+    ArrayList<Friends> lst = new ArrayList<Friends>();
+
     public SuggestionAdapter(Context mContext) {
         this.context = mContext;
+        lst.add(new Friends("Maria Gomes", "", true));
+        lst.add(new Friends("Maria Gomes", "", true));
+        lst.add(new Friends("Maria Gomes", "", true));
+        lst.add(new Friends("Maria Gomes", "", true));
+        lst.add(new Friends("Maria Gomes", "", true));
+        lst.add(new Friends("Maria Gomes", "", true));
+        lst.add(new Friends("Maria Gomes", "", true));
+        lst.add(new Friends("Maria Gomes", "", true));
+        lst.add(new Friends("Maria Gomes", "", true));
+        lst.add(new Friends("Maria Gomes", "", true));
+        lst.add(new Friends("Maria Gomes", "", true));
+        lst.add(new Friends("Maria Gomes", "", true));
+        lst.add(new Friends("Maria Gomes", "", true));
+        lst.add(new Friends("Maria Gomes", "", true));
+        lst.add(new Friends("Maria Gomes", "", true));
+        lst.add(new Friends("Maria Gomes", "", true));
     }
-//    public SuggestionAdapter(final Context context, final FragmentManager fm) {
-//        super(fm);
-//        mContext = context.getApplicationContext();
-//    }
-
-//    @Override
-//    public Fragment getItem(int position) {
-//        return new FragSuggestion();
-//    }
-//
-//    @Override
-//    public float getPageWidth(int position) {
-//        return 0.85f;
-//    }
-//
-
-
 
 
     @Override
     public int getCount() {
-        return 15;
+        return lst.size();
     }
 
     @Override
     public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
         return view.equals(object);
     }
+
     private LayoutInflater layoutInflater;
+
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, final int position) {
         layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.frag_suggestions, container, false);
 
-        ImageView imageView;
+        ImageView iv_send_request;
         TextView title, desc;
 
-//        imageView = view.findViewById(R.id.image);
-//        title = view.findViewById(R.id.title);
-//        desc = view.findViewById(R.id.desc);
-//
-//        imageView.setImageResource(models.get(position).getImage());
-//        title.setText(models.get(position).getTitle());
-//        desc.setText(models.get(position).getDesc());
-//
-//        view.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(context, DetailActivity.class);
-//                intent.putExtra("param", models.get(position).getTitle());
-//                context.startActivity(intent);
-//                // finish();
-//            }
-//        });
+        iv_send_request = view.findViewById(R.id.iv_send_request);
+        if (lst.get(position).isRequestSent()) {
+            iv_send_request.setImageResource(R.drawable.sent_request_sel);
+        } else {
+            iv_send_request.setImageResource(R.drawable.sent_request);
+        }
+        iv_send_request.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view1) {
+                lst.get(position).setRequestSent(true);
+                SuggestionAdapter.this.notifyDataSetChanged();
+
+            }
+        });
 
         container.addView(view, 0);
         return view;
@@ -90,7 +92,7 @@ public class SuggestionAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        container.removeView((View)object);
+        container.removeView((View) object);
     }
 
 
