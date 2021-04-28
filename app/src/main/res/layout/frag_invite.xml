@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:paddingTop="@dimen/_20sdp"
-    android:paddingHorizontal="@dimen/_10sdp"
+    android:padding="@dimen/_15sdp"
     android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/friend_list"
+        android:id="@+id/invite_listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

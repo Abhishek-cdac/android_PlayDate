@@ -21,12 +21,12 @@ public class FragSuggested extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag_suggested_list, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.friend_list);
+
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
+        recyclerView.setLayoutManager(manager);
 
         SuggestedFriendAdapter adapter = new SuggestedFriendAdapter();
-
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(manager);
 
 
         return view;

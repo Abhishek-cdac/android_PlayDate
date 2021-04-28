@@ -5,8 +5,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
+import com.playdate.app.ui.dashboard.fragments.FragSuggestion;
 import com.playdate.app.ui.dashboard.more_suggestion.FragInvite;
 import com.playdate.app.ui.dashboard.more_suggestion.FragSuggested;
+import com.playdate.app.ui.login.LoginActivity;
 
 public class MoreSuggestionPagerAdapter extends FragmentStatePagerAdapter {
     int totalTabs;
@@ -30,6 +32,6 @@ public class MoreSuggestionPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return 0;
+        return totalTabs;
     }
 }
