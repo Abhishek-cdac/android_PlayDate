@@ -18,4 +18,8 @@
     <color name="color_pink">#D13A6F</color>
     <color name="color_pink_dull">#DA8EA9</color>
     <color name="register_btn">#603F82</color>
+
+    <color name="color_option_menu">#FF3990</color>
+    <color name="filter_label_normal">#8A8889</color>
+    <color name="filter_label_selected">#221F20</color>
 </resources>

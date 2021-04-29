@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
 import com.playdate.app.databinding.ActivityRestaurantBinding;
+import com.playdate.app.ui.dashboard.DashboardActivity;
 import com.playdate.app.ui.record_video.RecordVideoActivity;
 import com.playdate.app.ui.restaurant.adapter.Restaurant;
 import com.playdate.app.ui.restaurant.adapter.RestaurantAdapter;
@@ -64,23 +65,13 @@ public class RestaurantActivity extends AppCompatActivity {
         });
 
 
-        viewModel.OnNextClick().observe(RestaurantActivity.this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                startActivity(new Intent(RestaurantActivity.this, RecordVideoActivity.class));
-            }
-        });
-        viewModel.onBackClick().observe(RestaurantActivity.this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                finish();
-            }
-        });
+        viewModel.OnNextClick().observe(RestaurantActivity.this, aBoolean -> startActivity(new Intent(RestaurantActivity.this, DashboardActivity.class)));
+        viewModel.onBackClick().observe(RestaurantActivity.this, aBoolean -> finish());
 
     }
 
     private void filter(String str) {
-        if(str.length()>0){
+        if (str.length() > 0) {
             ArrayList<Restaurant> filteredNames = new ArrayList<>();
             for (Restaurant s : rest_list) {
                 if (s.getName().toLowerCase().contains(str.toLowerCase())) {
@@ -89,7 +80,7 @@ public class RestaurantActivity extends AppCompatActivity {
             }
             adapter.updateList(filteredNames);
             adapter.notifyDataSetChanged();
-        }else{
+        } else {
             adapter.updateList(rest_list);
             adapter.notifyDataSetChanged();
         }
