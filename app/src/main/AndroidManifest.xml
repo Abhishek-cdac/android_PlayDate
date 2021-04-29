@@ -53,7 +53,7 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".ui.tinder_swipe.TinderSwipeActivity">
+        <activity android:name=".ui.card_swipe.TinderSwipeActivity"></activity>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -77,9 +77,7 @@
         <activity android:name=".ui.register.bio.BioActivity" />
         <activity android:name=".ui.register.interest.InterestActivity" />
         <activity android:name=".ui.register.profile.UploadProfileActivity" />
-        <activity android:name=".ui.forgot_password.ForgotPassword" />
-        <activity android:name=".ui.onboarding.GetStarted" />
-        <activity android:name=".ui.dashboard.DashboardActivity" />
+
         <activity android:name=".ui.record_video.RecordVideoActivity" />
         <activity android:name=".util.customcamera.otalia.VideoPreviewActivity" />
         <activity android:name=".util.customcamera.otalia.CameraActivity" />

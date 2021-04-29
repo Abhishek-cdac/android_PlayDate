@@ -1,4 +1,4 @@
-package com.playdate.app.ui.tinder_swipe;
+package com.playdate.app.ui.card_swipe;
 
 import android.view.LayoutInflater;
 import android.view.View;
