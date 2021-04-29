@@ -33,6 +33,32 @@ public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriend
         suggestions_list.add(new Suggestions("gomes helen", "https://images.saymedia-content.com/.image/t_share/MTc0MDkwNjUxNDc2OTYwODM0/5-instagram-models-you-should-be-following.png", false, true));
         suggestions_list.add(new Suggestions("jonn den", "https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", false, true));
         suggestions_list.add(new Suggestions("Ramsphy k", "https://s29588.pcdn.co/wp-content/uploads/sites/2/2018/08/Claire-Abbott-1.jpg.optimal.jpg", true, false));
+
+        suggestions_list.add(new Suggestions("adreena helen", "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg", false, false));
+        suggestions_list.add(new Suggestions("gomes helen", "https://images.saymedia-content.com/.image/t_share/MTc0MDkwNjUxNDc2OTYwODM0/5-instagram-models-you-should-be-following.png", false, true));
+        suggestions_list.add(new Suggestions("jonn den", "https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", false, true));
+        suggestions_list.add(new Suggestions("Ramsphy k", "https://s29588.pcdn.co/wp-content/uploads/sites/2/2018/08/Claire-Abbott-1.jpg.optimal.jpg", true, false));
+        suggestions_list.add(new Suggestions("adreena helen", "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg", false, true));
+        suggestions_list.add(new Suggestions("gomes helen", "https://images.saymedia-content.com/.image/t_share/MTc0MDkwNjUxNDc2OTYwODM0/5-instagram-models-you-should-be-following.png", true, false));
+        suggestions_list.add(new Suggestions("jonn den", "https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", false, false));
+        suggestions_list.add(new Suggestions("Ramsphy k", "https://s29588.pcdn.co/wp-content/uploads/sites/2/2018/08/Claire-Abbott-1.jpg.optimal.jpg", true, true));
+        suggestions_list.add(new Suggestions("adreena helen", "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg", false, false));
+        suggestions_list.add(new Suggestions("gomes helen", "https://images.saymedia-content.com/.image/t_share/MTc0MDkwNjUxNDc2OTYwODM0/5-instagram-models-you-should-be-following.png", false, true));
+        suggestions_list.add(new Suggestions("jonn den", "https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", false, true));
+        suggestions_list.add(new Suggestions("Ramsphy k", "https://s29588.pcdn.co/wp-content/uploads/sites/2/2018/08/Claire-Abbott-1.jpg.optimal.jpg", true, false));
+        suggestions_list.add(new Suggestions("adreena helen", "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg", false, false));
+        suggestions_list.add(new Suggestions("gomes helen", "https://images.saymedia-content.com/.image/t_share/MTc0MDkwNjUxNDc2OTYwODM0/5-instagram-models-you-should-be-following.png", false, true));
+        suggestions_list.add(new Suggestions("jonn den", "https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", false, true));
+        suggestions_list.add(new Suggestions("Ramsphy k", "https://s29588.pcdn.co/wp-content/uploads/sites/2/2018/08/Claire-Abbott-1.jpg.optimal.jpg", true, false));
+        suggestions_list.add(new Suggestions("adreena helen", "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg", false, true));
+        suggestions_list.add(new Suggestions("gomes helen", "https://images.saymedia-content.com/.image/t_share/MTc0MDkwNjUxNDc2OTYwODM0/5-instagram-models-you-should-be-following.png", true, false));
+        suggestions_list.add(new Suggestions("jonn den", "https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", false, false));
+        suggestions_list.add(new Suggestions("Ramsphy k", "https://s29588.pcdn.co/wp-content/uploads/sites/2/2018/08/Claire-Abbott-1.jpg.optimal.jpg", true, true));
+        suggestions_list.add(new Suggestions("adreena helen", "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg", false, false));
+        suggestions_list.add(new Suggestions("gomes helen", "https://images.saymedia-content.com/.image/t_share/MTc0MDkwNjUxNDc2OTYwODM0/5-instagram-models-you-should-be-following.png", false, true));
+        suggestions_list.add(new Suggestions("jonn den", "https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", false, true));
+        suggestions_list.add(new Suggestions("Ramsphy k", "https://s29588.pcdn.co/wp-content/uploads/sites/2/2018/08/Claire-Abbott-1.jpg.optimal.jpg", true, false));
+
     }
 
     Context mcontext;
@@ -50,7 +76,6 @@ public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriend
 //        holder.image.setImageResource(suggestions_list.get(position).getImageUrl());
 
         Picasso.get().load(suggestions_list.get(position).getImageUrl())
-                .placeholder(R.drawable.cupertino_activity_indicator)
                 .into(holder.image);
 
         if (suggestions_list.get(position).isRequestSent()) {
@@ -92,9 +117,6 @@ public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriend
                     SuggestedFriendAdapter.this.notifyDataSetChanged();
                 }
             });
-
-
-            
 
 
         }

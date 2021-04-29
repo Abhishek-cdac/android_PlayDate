@@ -21,9 +21,8 @@ public class InviteAdapter extends RecyclerView.Adapter<InviteAdapter.ViewHolder
     public InviteAdapter() {
         invite_list.add(new Invite(R.drawable.user, "Follow Contacts"));
         invite_list.add(new Invite(R.drawable.facebook, "Invite Friends by Facebook"));
-        invite_list.add(new Invite(R.drawable.message, "Invite Friends by SMS oe Email"));
+        invite_list.add(new Invite(R.drawable.message, "Invite Friends by SMS or Email"));
         invite_list.add(new Invite(R.drawable.upload, "Invite Friends by..."));
-
     }
 
 

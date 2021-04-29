@@ -4,31 +4,39 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingHorizontal="@dimen/_12sdp"
-    android:paddingVertical="@dimen/_10sdp">
+    android:paddingVertical="@dimen/_5sdp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="1">
+        android:orientation="horizontal">
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/btn_border">
+            android:layout_height="wrap_content">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/image_friend"
+
+            <androidx.cardview.widget.CardView
                 android:layout_width="@dimen/_40sdp"
                 android:layout_height="@dimen/_40sdp"
-                android:src="@drawable/profile"
-                app:civ_border_color="@android:color/transparent"
-                app:civ_border_width="1dp" />
+                app:cardCornerRadius="7dp"
+                app:cardElevation="0dp">
+
+                <ImageView
+                    android:id="@+id/image_friend"
+                    android:layout_width="@dimen/_38sdp"
+                    android:layout_height="@dimen/_38sdp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/profile" />
+
+            </androidx.cardview.widget.CardView>
+
 
             <ImageView
-                android:layout_width="@dimen/_15sdp"
                 android:id="@+id/diamond"
+                android:layout_width="@dimen/_15sdp"
                 android:layout_height="@dimen/_15sdp"
+                android:layout_alignParentStart="true"
                 android:src="@drawable/diamond" />
 
         </RelativeLayout>
@@ -36,21 +44,20 @@
 
         <TextView
             android:id="@+id/name_friend"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:fontFamily="@font/lato_bold"
-            android:text="NAME OF USER"
             android:paddingHorizontal="@dimen/_6sdp"
             android:textColor="@color/black"
-            android:textSize="@dimen/_15sdp" />
+            android:textSize="@dimen/_14sdp" />
 
         <ImageView
             android:id="@+id/friend_request"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_40sdp"
-            android:layout_weight="0"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_gravity="center"
+            android:layout_height="@dimen/_30sdp"
             android:src="@drawable/send_request" />
 
     </LinearLayout>

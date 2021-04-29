@@ -1,5 +1,6 @@
 package com.playdate.app.ui.dashboard.more_suggestion;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,13 +24,14 @@ public class FragMoreSuggestion extends Fragment {
         ViewPager viewPager = view.findViewById(R.id.viewpager);
 
         tabLayout.addTab(tabLayout.newTab().setText("Suggested"));
-        tabLayout.addTab(tabLayout.newTab().setText("Invite"));
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        tabLayout.addTab(tabLayout.newTab().setText("   Invite   "));
+//        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
 
         MoreSuggestionPagerAdapter pagerAdapter = new MoreSuggestionPagerAdapter(getChildFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(pagerAdapter);
         viewPager.setCurrentItem(0);
+        tabLayout.setTabIndicatorFullWidth(false);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
