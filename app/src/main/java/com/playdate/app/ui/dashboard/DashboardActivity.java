@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.playdate.app.R;
 import com.playdate.app.ui.dashboard.fragments.FragLanding;
+import com.playdate.app.ui.dashboard.more_suggestion.FragMoreSuggestion;
 
 public class DashboardActivity extends AppCompatActivity {
     @Override
@@ -20,7 +21,8 @@ public class DashboardActivity extends AppCompatActivity {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
 
-        Fragment fragOne = new FragLanding();
+//        Fragment fragOne = new FragLanding();
+        Fragment fragOne = new FragMoreSuggestion();
         Bundle arguments = new Bundle();
         arguments.putBoolean("shouldYouCreateAChildFragment", true);
         fragOne.setArguments(arguments);

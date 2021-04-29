@@ -120,7 +120,7 @@
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_margin="@dimen/_5sdp"
-        android:onClick="@{(v) -> LoginViewModel.onClickLogin(v)}"
+
         android:paddingLeft="@dimen/_10sdp"
         android:paddingTop="@dimen/_5sdp"
         android:paddingRight="@dimen/_10sdp"
@@ -141,20 +141,20 @@
         android:clipToPadding="false"
 
         android:layout_height="wrap_content"
-        android:layout_above="@+id/txt_header_see_more"
+        android:layout_above="@+id/txt_footer_see_more"
         android:layout_below="@+id/txt_header_Suggestions">
 
     </androidx.viewpager.widget.ViewPager>
 
     <TextView
-        android:id="@+id/txt_header_see_more"
+        android:id="@+id/txt_footer_see_more"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_margin="@dimen/_10sdp"
-        android:onClick="@{(v) -> LoginViewModel.onClickLogin(v)}"
+
         android:paddingLeft="@dimen/_10sdp"
         android:paddingTop="@dimen/_5sdp"
         android:paddingRight="@dimen/_10sdp"
