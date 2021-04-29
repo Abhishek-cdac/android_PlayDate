@@ -93,6 +93,10 @@ public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriend
                 }
             });
 
+
+            
+
+
         }
     }
 }

@@ -23,7 +23,6 @@
         android:layout_gravity="center"
         android:textColor="@color/black"
         android:layout_weight="0.6"
-
         android:paddingHorizontal="@dimen/_6sdp"
         android:textSize="@dimen/_15sdp" />
 

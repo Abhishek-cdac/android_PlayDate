@@ -75,4 +75,10 @@ dependencies {
 //    implementation 'com.antonyt.infiniteviewpager:library:1.0.0'
 //    implementation 'com.github.blennerSilva:AwesomeDialog:2.0.5'
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+
+    implementation 'com.google.android.material:material:1.4.0-alpha02'
+    implementation "com.yuyakaido.android:card-stack-view:2.3.4"
+    implementation 'com.makeramen:roundedimageview:2.3.0'
+
 }
