@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.playdate.app.R;
+import com.playdate.app.ui.card_swipe.FragCardSwipeActivity;
 import com.playdate.app.ui.dashboard.fragments.FragLanding;
 import com.playdate.app.ui.dashboard.more_suggestion.FragMoreSuggestion;
 
@@ -22,7 +23,8 @@ public class DashboardActivity extends AppCompatActivity {
         FragmentTransaction ft = fm.beginTransaction();
 
 //        Fragment fragOne = new FragLanding();
-        Fragment fragOne = new FragMoreSuggestion();
+//        Fragment fragOne = new FragMoreSuggestion();
+        Fragment fragOne = new FragCardSwipeActivity();
         Bundle arguments = new Bundle();
         arguments.putBoolean("shouldYouCreateAChildFragment", true);
         fragOne.setArguments(arguments);

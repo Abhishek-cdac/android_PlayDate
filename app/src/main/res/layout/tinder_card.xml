@@ -21,27 +21,27 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:padding="@dimen/_8sdp">
 
         <ImageView
             android:id="@+id/item_fullScreen"
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
-            android:layout_weight="0.4"
+            android:layout_weight="0.1"
             android:src="@drawable/maximize" />
 
         <ImageView
             android:id="@+id/item_premium"
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
-            android:layout_weight="0.4"
+            android:layout_weight="0.8"
             android:src="@drawable/diamond" />
 
         <ImageView
             android:id="@+id/item_video"
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
-            android:layout_weight="0.4"
+            android:layout_weight="0.1"
             android:src="@drawable/play_circle" />
 
     </LinearLayout>
@@ -130,17 +130,17 @@
 
             <ImageView
                 android:id="@+id/item_message"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.3"
-                android:src="@drawable/cross_tinder"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_weight="0.2"
+                android:src="@drawable/question"
                 android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/item_check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.3"
+                android:layout_weight="0.4"
                 android:src="@drawable/check_tinder" />
 
 

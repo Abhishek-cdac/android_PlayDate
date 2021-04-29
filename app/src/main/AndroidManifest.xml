@@ -45,8 +45,11 @@
         <activity android:name=".ui.forgot_password.ForgotPassword" />
         <activity android:name=".ui.onboarding.GetStarted" />
         <activity android:name=".ui.dashboard.DashboardActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <meta-data
@@ -60,11 +63,7 @@
             android:value="@string/facebook_app_id" />
 
         <activity android:name=".ui.onboarding.OnBoardingActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity android:name=".ui.login.LoginActivity" />
@@ -81,7 +80,9 @@
         <activity android:name=".ui.record_video.RecordVideoActivity" />
         <activity android:name=".util.customcamera.otalia.VideoPreviewActivity" />
         <activity android:name=".util.customcamera.otalia.CameraActivity" />
-        <activity android:name=".ui.restaurant.RestaurantActivity" />
+        <activity android:name=".ui.restaurant.RestaurantActivity">
+
+        </activity>
 
 
     </application>

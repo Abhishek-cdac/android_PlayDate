@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
 import com.playdate.app.databinding.ActivityRestaurantBinding;
+import com.playdate.app.ui.card_swipe.TinderSwipeActivity;
 import com.playdate.app.ui.dashboard.DashboardActivity;
 import com.playdate.app.ui.record_video.RecordVideoActivity;
 import com.playdate.app.ui.restaurant.adapter.Restaurant;
@@ -65,7 +66,7 @@ public class RestaurantActivity extends AppCompatActivity {
         });
 
 
-        viewModel.OnNextClick().observe(RestaurantActivity.this, aBoolean -> startActivity(new Intent(RestaurantActivity.this, DashboardActivity.class)));
+        viewModel.OnNextClick().observe(RestaurantActivity.this, aBoolean -> startActivity(new Intent(RestaurantActivity.this, TinderSwipeActivity.class)));
         viewModel.onBackClick().observe(RestaurantActivity.this, aBoolean -> finish());
 
     }
