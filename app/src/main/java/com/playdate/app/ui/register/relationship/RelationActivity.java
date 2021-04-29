@@ -13,13 +13,15 @@ import androidx.lifecycle.Observer;
 import com.playdate.app.R;
 import com.playdate.app.databinding.ActivityRelationshipBinding;
 import com.playdate.app.ui.register.interestin.InterestActivity;
+import com.playdate.app.util.customcamera.otalia.CameraActivity;
 
 public class RelationActivity extends AppCompatActivity {
 
     RelatiponShipViewModel viewModel;
     ActivityRelationshipBinding binding;
 
-    boolean once=false;
+    boolean once = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +60,7 @@ public class RelationActivity extends AppCompatActivity {
         viewModel.OnNextClick().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean click) {
-                startActivity(new Intent(RelationActivity.this, InterestActivity
+                startActivity(new Intent(RelationActivity.this, CameraActivity
                         .class));
 
             }

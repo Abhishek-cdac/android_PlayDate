@@ -6,7 +6,7 @@
     <string name="enter_search_query">Enter search query</string>
     <string name="no_results">No results</string>
     <string name="an_error_occurred">An error occurred</string>
-
+    <string name="filter_normal">Normal</string>
     <string name="facebook_app_id">268167791607051</string>
     <string name="fb_login_protocol_scheme">fb268167791607051</string>
 
@@ -67,6 +67,10 @@
     <string name="restaurants">Restaurants</string>
     <string name="please_select_your_favourite_place_to_eat">Please select your favourite place to eat</string>
     <string name="see_more_suggestions"><u>See More Suggestions</u></string>
+
+
+
+
 
 
 </resources>
