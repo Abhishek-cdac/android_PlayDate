@@ -18,6 +18,7 @@ import com.playdate.app.ui.dashboard.adapter.FriendAdapter;
 import com.playdate.app.ui.dashboard.fragments.FragLanding;
 import com.playdate.app.ui.dashboard.more_suggestion.FragMoreSuggestion;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
+import com.playdate.app.ui.social.FragSocialFeed;
 
 public class DashboardActivity extends AppCompatActivity implements OnInnerFragmentClicks {
     FragmentManager fm;
@@ -63,7 +64,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
                 txt_social.setTextColor(getResources().getColor(R.color.white));
                 txt_match.setTextColor(getResources().getColor(android.R.color.darker_gray));
                 txt_social.setBackground(getResources().getDrawable(R.drawable.menu_button));
-//                ReplaceFrag(new FragCardSwipeActivity());
+                ReplaceFrag(new FragSocialFeed());
             }
         });
 

@@ -156,11 +156,21 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <ImageView
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:layout_weight="1"
-            android:src="@drawable/love" />
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:background="@drawable/rectangle_back"
+                android:padding="@dimen/_3sdp"
+                android:src="@drawable/love_high" />
+        </LinearLayout>
+
 
         <ImageView
             android:layout_width="0dp"
