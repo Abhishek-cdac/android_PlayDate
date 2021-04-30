@@ -43,20 +43,18 @@ public class FragCardSwipe extends Fragment {
 
         View view = inflater.inflate(R.layout.tinder_swipe, container, false);
         CardStackView cardStackView = view.findViewById(R.id.card_stack_view);
-        ConstraintLayout cl_page=view.findViewById(R.id.cl_page);
+        ConstraintLayout cl_page = view.findViewById(R.id.cl_page);
 
         int height = new CommonClass().getScreenHeight(getActivity());
 
-        int m1= (int) getResources().getDimension(R.dimen._15sdp);
-        int m2= (int) getResources().getDimension(R.dimen._10sdp);
-        int m3= (int) getResources().getDimension(R.dimen._20sdp);
-        int m4= (int) getResources().getDimension(R.dimen._20sdp);
-        int m5= (int) getResources().getDimension(R.dimen._60sdp);
-        int m6= (int) getResources().getDimension(R.dimen._75sdp);
+        int m1 = (int) getResources().getDimension(R.dimen._15sdp);
+        int m2 = (int) getResources().getDimension(R.dimen._10sdp);
+        int m3 = (int) getResources().getDimension(R.dimen._20sdp);
+        int m4 = (int) getResources().getDimension(R.dimen._20sdp);
+        int m5 = (int) getResources().getDimension(R.dimen._60sdp);
+        int m6 = (int) getResources().getDimension(R.dimen._75sdp);
 
-        cl_page.getLayoutParams().height=height-(m1+m2+m3+m4+m5+m6);
-
-
+        cl_page.getLayoutParams().height = height - (m1 + m2 + m3 + m4 + m5 + m6);
 
 
         manager = new CardStackLayoutManager(getActivity(), new CardStackListener() {

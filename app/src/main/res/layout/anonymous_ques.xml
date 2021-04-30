@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingHorizontal="@dimen/_12sdp">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/main_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/_14sdp">
 
         <ImageView
             android:id="@+id/back_anonymous"
@@ -27,23 +27,44 @@
             android:src="@drawable/playdate_logo" />
 
         <ImageView
+            android:id="@+id/more_option"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:src="@drawable/ic_more_vert" />
-
     </LinearLayout>
 
     <TextView
+        android:id="@+id/anun"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/main_menu"
         android:layout_marginTop="@dimen/_5sdp"
+        android:fontFamily="@font/lato_bold"
+        android:paddingHorizontal="@dimen/_14sdp"
         android:text="@string/anonymous"
         android:textColor="@color/black"
-        android:textSize="@dimen/_14sdp"
+        android:textSize="@dimen/_18sdp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/comment_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/anun"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:fontFamily="@font/lato_bold"
+        android:paddingHorizontal="@dimen/_14sdp"
+        android:text="No comments"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_13sdp"
         android:textStyle="bold" />
 
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/comments_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/comment_number" />
 
 </RelativeLayout>

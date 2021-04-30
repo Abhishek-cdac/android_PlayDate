@@ -53,13 +53,19 @@
             android:value="@string/facebook_app_id" />
 
         <activity android:name=".ui.onboarding.OnBoardingActivity">
+
+        </activity>
+
+        <activity
+            android:name=".ui.anonymous_question.AnonymousQuestionActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
 
+        </activity>
         <activity
             android:name=".ui.login.LoginActivity"
             android:screenOrientation="portrait" />
