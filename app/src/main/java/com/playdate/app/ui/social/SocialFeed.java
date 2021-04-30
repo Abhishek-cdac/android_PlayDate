@@ -2,15 +2,45 @@ package com.playdate.app.ui.social;
 
 public class SocialFeed {
     String userName;
-    String HeartCount;
+    int HeartCount;
     boolean HeartSelected;
     int tapCount;
+    int type;
+    String Image;
+    String SmallUserImage;
 
-    public SocialFeed(String userName, String heartCount, boolean heartSelected,int tapCount) {
+    public SocialFeed(String userName, int heartCount, boolean heartSelected,int tapCount,int type,String Image,String SmallUserImage) {
         this.userName = userName;
         HeartCount = heartCount;
         HeartSelected = heartSelected;
         this.tapCount = tapCount;
+        this.type = type;
+        this.Image = Image;
+        this.SmallUserImage = SmallUserImage;
+    }
+
+    public String getSmallUserImage() {
+        return SmallUserImage;
+    }
+
+    public void setSmallUserImage(String smallUserImage) {
+        SmallUserImage = smallUserImage;
+    }
+
+    public String getImage() {
+        return Image;
+    }
+
+    public void setImage(String image) {
+        Image = image;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public String getUserName() {
@@ -21,11 +51,11 @@ public class SocialFeed {
         this.userName = userName;
     }
 
-    public String getHeartCount() {
+    public int getHeartCount() {
         return HeartCount;
     }
 
-    public void setHeartCount(String heartCount) {
+    public void setHeartCount(int heartCount) {
         HeartCount = heartCount;
     }
 

@@ -17,13 +17,12 @@
         android:gravity="start|center"
         android:orientation="horizontal">
 
-        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/iv_profile"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
-            android:src="@drawable/profile"
-            app:civ_border_color="@color/white"
-            app:civ_border_width="1dp" />
+        <ImageView
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_gravity="center"
+            android:scaleType="fitXY"
+            android:src="@drawable/heart_ques" />
 
 
         <TextView
@@ -39,11 +38,12 @@
             android:textStyle="bold" />
 
         <ImageView
-            android:id="@+id/friend_request"
-            android:layout_width="@dimen/_15sdp"
-            android:layout_height="@dimen/_15sdp"
+            android:id="@+id/iv_more"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
             android:layout_gravity="center"
-            android:src="@drawable/more" />
+            android:scaleType="fitXY"
+            android:src="@drawable/medal_normal" />
 
     </LinearLayout>
 
@@ -70,7 +70,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/white"
-                android:scaleType="fitXY" />
+                android:scaleType="fitXY"
+                android:src="@drawable/annom_ques" />
 
         </androidx.cardview.widget.CardView>
 
@@ -90,52 +91,38 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rl_image"
-        android:layout_marginLeft="@dimen/_5sdp"
-        android:layout_marginTop="@dimen/_2sdp"
-        android:layout_marginRight="@dimen/_5sdp"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginRight="@dimen/_10sdp"
         android:gravity="start|center"
         android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/iv_heart"
-            android:layout_width="@dimen/_22sdp"
-            android:layout_height="@dimen/_22sdp"
+        <Button
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="@dimen/_5sdp"
-            android:background="@color/white"
-            android:src="@drawable/heart" />
+            android:layout_gravity="center"
 
+            android:background="@drawable/btn_pink_filled"
+            android:fontFamily="@font/lato_bold"
+            android:text="Respond"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/iv_msg"
-            android:layout_width="@dimen/_22sdp"
-            android:layout_height="@dimen/_22sdp"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="@dimen/_5sdp"
-            android:layout_toRightOf="@+id/iv_heart"
-            android:background="@color/white"
-            android:src="@drawable/group" />
-
-        <ImageView
-            android:layout_width="@dimen/_18sdp"
-            android:layout_height="@dimen/_18sdp"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="@dimen/_5sdp"
-            android:layout_toRightOf="@+id/iv_msg"
-            android:background="@color/white"
-            android:src="@drawable/group"
-            android:visibility="gone" />
-
-        <ImageView
-            android:layout_width="@dimen/_15sdp"
-            android:layout_height="@dimen/_15sdp"
+        <Button
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_centerHorizontal="true"
-
-            android:layout_margin="@dimen/_5sdp"
-            android:background="@color/white"
-            android:src="@drawable/bookmark" />
+            android:layout_gravity="center"
+            android:background="@drawable/login_button"
+            android:fontFamily="@font/lato_bold"
+            android:text="Delete"
+            android:textAllCaps="false"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="bold" />
 
 
     </RelativeLayout>
@@ -147,9 +134,10 @@
         android:layout_below="@+id/rl_options"
         android:layout_gravity="center"
         android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_5sdp"
         android:layout_marginRight="@dimen/_10sdp"
         android:fontFamily="@font/lato_bold"
-        android:text="1,829 Hearts"
+        android:text="No Answers"
         android:textColor="@color/black"
         android:textSize="@dimen/_10sdp"
         android:textStyle="bold" />
@@ -163,10 +151,11 @@
         android:layout_marginLeft="@dimen/_10sdp"
         android:layout_marginRight="@dimen/_10sdp"
         android:fontFamily="@font/helvetica_neue"
-        android:text="@string/str_temp"
+        android:text=""
         android:textColor="@color/black"
         android:textSize="@dimen/_10sdp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:visibility="gone" />
 
     <EditText
         android:id="@+id/edt_comment"
@@ -174,12 +163,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/txt_chat"
         android:layout_marginLeft="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_2sdp"
         android:layout_marginRight="@dimen/_10sdp"
         android:background="@null"
-        android:hint="Add a comment..."
+        android:hint="Be the first to answer..."
         android:maxLines="1"
-        android:padding="@dimen/_8sdp"
+        android:padding="@dimen/_5sdp"
         android:paddingLeft="-10dp"
         android:paddingRight="0dp"
         android:singleLine="true"
