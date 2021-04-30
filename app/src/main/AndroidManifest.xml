@@ -104,7 +104,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.dashboard.DashboardActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+
+        </activity>
         <activity
             android:name=".ui.record_video.RecordVideoActivity"
             android:screenOrientation="portrait" />

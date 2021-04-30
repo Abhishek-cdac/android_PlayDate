@@ -1,5 +1,6 @@
 package com.playdate.app.ui.social;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.ScaleAnimation;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,6 +18,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
+import com.playdate.app.ui.anonymous_question.AnonymousQuestionActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -188,7 +191,7 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             Picasso.get().load(lst.get(position).getSmallUserImage())
                     .placeholder(R.drawable.cupertino_activity_indicator)
                     .into(restViewHolder.iv_profile);
-        }else if (holder.getItemViewType() == FragSocialFeed.ADDS) {
+        } else if (holder.getItemViewType() == FragSocialFeed.ADDS) {
             ViewHolderAdds adds = (ViewHolderAdds) holder;
             adds.name_friend.setText(lst.get(position).getUserName());
             Picasso.get().load(lst.get(position).getImage())
@@ -201,6 +204,15 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         } else {
             ViewHolderAnonymQuestion anonymQuestionViewHolder = (ViewHolderAnonymQuestion) holder;
             anonymQuestionViewHolder.name_friend.setText(lst.get(position).getUserName());
+
+
+//            anonymQuestionViewHolder.respomd.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Intent intent = new Intent(this, AnonymousQuestionActivity.class);
+//                    startActivity(intent);
+//                }
+//            });
 //            Picasso.get().load(lst.get(position).getImage())
 //                    .placeholder(R.drawable.cupertino_activity_indicator)
 //                    .into(anonymQuestionViewHolder.iv_post_image);
@@ -272,10 +284,11 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     public class ViewHolderAnonymQuestion extends RecyclerView.ViewHolder {
         ImageView iv_more;
-                ImageView iv_post_image;
-//        ImageView iv_heart;
+        ImageView iv_post_image;
+        //        ImageView iv_heart;
 //        CardView card_image;
         TextView name_friend;
+        Button respomd;
 
         //        ImageView iv_profile;
         public ViewHolderAnonymQuestion(@NonNull View itemView) {
@@ -286,6 +299,7 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 //            card_image = itemView.findViewById(R.id.card_image);
 //            iv_profile = itemView.findViewById(R.id.iv_profile);
             name_friend = itemView.findViewById(R.id.name_friend);
+            respomd = itemView.findViewById(R.id.respond);
         }
     }
 }

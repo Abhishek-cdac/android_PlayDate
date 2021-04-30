@@ -101,6 +101,7 @@
             android:layout_width="@dimen/_120sdp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
+            android:id="@+id/respond"
             android:layout_gravity="center"
 
             android:background="@drawable/btn_pink_filled"
