@@ -22,10 +22,20 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<SocialFeedAdapter.Vi
     ArrayList<SocialFeed> lst = new ArrayList<>();
 
     public SocialFeedAdapter() {
-        lst.add(new SocialFeed("Maria Gomes123", "", false));
-        lst.add(new SocialFeed("John den", "", false));
-        lst.add(new SocialFeed("Adreena Helen", "", false));
-        lst.add(new SocialFeed("DeanSean", "", false));
+        lst.add(new SocialFeed("Maria Gomes123", "1,555", false, 0));
+        lst.add(new SocialFeed("John den", "1,847", false, 0));
+        lst.add(new SocialFeed("Adreena Helen", "254", false, 0));
+        lst.add(new SocialFeed("DeanSean", "2,486", false, 0));
+        lst.add(new SocialFeed("Maria Gomes123", "1,555", false, 0));
+        lst.add(new SocialFeed("John den", "1,847", false, 0));
+        lst.add(new SocialFeed("Adreena Helen", "254", false, 0));
+        lst.add(new SocialFeed("DeanSean", "2,486", false, 0));
+        lst.add(new SocialFeed("Maria Gomes123", "1,555", false, 0));
+        lst.add(new SocialFeed("John den", "1,847", false, 0));
+        lst.add(new SocialFeed("Adreena Helen", "254", false, 0));
+        lst.add(new SocialFeed("DeanSean", "2,486", false, 0));
+
+
     }
 
     @NonNull
@@ -35,18 +45,31 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<SocialFeedAdapter.Vi
         return new ViewHolder(view);
     }
 
-    int val = 0;
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
 
+        if (lst.get(position).HeartSelected) {
+            holder.iv_heart.setImageResource(R.drawable.red_heart);
+        } else {
+            holder.iv_heart.setImageResource(R.drawable.heart);
+        }
+
         holder.card_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                val++;
-                if (val == 2) {
-                    animateHeart(holder.iv_heart_red);
+                if (!lst.get(position).isHeartSelected()) {
+                    if (lst.get(position).getTapCount() == 1) {
+                        holder.card_image.setVisibility(View.VISIBLE);
+                        notifyDataSetChanged();
+                        animateHeart(holder.iv_heart_red);
+                        lst.get(position).setHeartSelected(true);
+                    } else {
+                        lst.get(position).setTapCount(lst.get(position).getTapCount() + 1);
+
+                    }
+
                 }
             }
         });
@@ -68,7 +91,23 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<SocialFeedAdapter.Vi
         animation.setFillAfter(true);
 
         view.startAnimation(animation);
-        animation.setFillAfter(true);
+
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation arg0) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation arg0) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation arg0) {
+                animation.setFillAfter(true);
+                view.setVisibility(View.GONE);
+                notifyDataSetChanged();
+            }
+        });
 
     }
 
@@ -80,16 +119,18 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<SocialFeedAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return 30;
+        return lst.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView iv_heart_red;
+        ImageView iv_heart;
         CardView card_image;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             iv_heart_red = itemView.findViewById(R.id.iv_heart_red);
+            iv_heart = itemView.findViewById(R.id.iv_heart);
             card_image = itemView.findViewById(R.id.card_image);
         }
     }

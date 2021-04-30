@@ -2,6 +2,7 @@ package com.playdate.app.ui.card_swipe;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,12 +13,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DiffUtil;
 
 import com.playdate.app.R;
 import com.playdate.app.model.TinderSwipe;
+import com.playdate.app.util.common.CommonClass;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
 import com.yuyakaido.android.cardstackview.CardStackListener;
 import com.yuyakaido.android.cardstackview.CardStackView;
@@ -28,7 +31,7 @@ import com.yuyakaido.android.cardstackview.SwipeableMethod;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FragCardSwipeActivity extends Fragment {
+public class FragCardSwipe extends Fragment {
 
     private CardStackLayoutManager manager;
     private TinderSwipeAdapter adapter;
@@ -40,6 +43,22 @@ public class FragCardSwipeActivity extends Fragment {
 
         View view = inflater.inflate(R.layout.tinder_swipe, container, false);
         CardStackView cardStackView = view.findViewById(R.id.card_stack_view);
+        ConstraintLayout cl_page=view.findViewById(R.id.cl_page);
+
+        int height = new CommonClass().getScreenHeight(getActivity());
+
+        int m1= (int) getResources().getDimension(R.dimen._15sdp);
+        int m2= (int) getResources().getDimension(R.dimen._10sdp);
+        int m3= (int) getResources().getDimension(R.dimen._20sdp);
+        int m4= (int) getResources().getDimension(R.dimen._20sdp);
+        int m5= (int) getResources().getDimension(R.dimen._60sdp);
+        int m6= (int) getResources().getDimension(R.dimen._75sdp);
+
+        cl_page.getLayoutParams().height=height-(m1+m2+m3+m4+m5+m6);
+
+
+
+
         manager = new CardStackLayoutManager(getActivity(), new CardStackListener() {
             @Override
             public void onCardDragging(Direction direction, float ratio) {

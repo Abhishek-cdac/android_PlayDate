@@ -13,10 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
-import com.playdate.app.ui.card_swipe.FragCardSwipeActivity;
+import com.playdate.app.ui.card_swipe.FragCardSwipe;
 import com.playdate.app.ui.dashboard.adapter.FriendAdapter;
 import com.playdate.app.ui.dashboard.fragments.FragLanding;
-import com.playdate.app.ui.dashboard.more_suggestion.FragMoreSuggestion;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.ui.social.FragSocialFeed;
 
@@ -54,7 +53,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
                 txt_match.setTextColor(getResources().getColor(R.color.white));
                 txt_social.setTextColor(getResources().getColor(android.R.color.darker_gray));
                 txt_match.setBackground(getResources().getDrawable(R.drawable.menu_button));
-                ReplaceFrag(new FragCardSwipeActivity());
+                ReplaceFrag(new FragCardSwipe());
             }
         });
         txt_social.setOnClickListener(new View.OnClickListener() {

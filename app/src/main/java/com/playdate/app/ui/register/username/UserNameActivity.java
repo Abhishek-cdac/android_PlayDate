@@ -88,6 +88,6 @@ public class UserNameActivity extends AppCompatActivity {
                 binding.edtFullname.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.check, 0);
 
             }
-        }, 3000);
+        }, 1000);
     }
 }

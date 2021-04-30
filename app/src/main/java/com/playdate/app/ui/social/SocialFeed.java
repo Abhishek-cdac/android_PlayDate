@@ -4,11 +4,13 @@ public class SocialFeed {
     String userName;
     String HeartCount;
     boolean HeartSelected;
+    int tapCount;
 
-    public SocialFeed(String userName, String heartCount, boolean heartSelected) {
+    public SocialFeed(String userName, String heartCount, boolean heartSelected,int tapCount) {
         this.userName = userName;
         HeartCount = heartCount;
         HeartSelected = heartSelected;
+        this.tapCount = tapCount;
     }
 
     public String getUserName() {
@@ -29,6 +31,14 @@ public class SocialFeed {
 
     public boolean isHeartSelected() {
         return HeartSelected;
+    }
+
+    public int getTapCount() {
+        return tapCount;
+    }
+
+    public void setTapCount(int tapCount) {
+        this.tapCount = tapCount;
     }
 
     public void setHeartSelected(boolean heartSelected) {

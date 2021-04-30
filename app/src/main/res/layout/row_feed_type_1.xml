@@ -80,6 +80,7 @@
                 android:layout_height="match_parent"
                 android:background="@color/white"
                 android:scaleType="fitXY"
+
                 android:src="@drawable/model1" />
 
         </androidx.cardview.widget.CardView>
@@ -90,7 +91,7 @@
             android:layout_height="@dimen/_120sdp"
             android:layout_centerInParent="true"
             android:src="@drawable/red_heart"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
     </RelativeLayout>
 
