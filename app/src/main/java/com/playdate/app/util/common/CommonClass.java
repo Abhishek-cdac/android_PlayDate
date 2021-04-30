@@ -1,6 +1,7 @@
 package com.playdate.app.util.common;
 
 import android.content.Context;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 
 import com.playdate.app.R;
 
@@ -21,6 +23,12 @@ public class CommonClass {
         }
     }
 
+
+    public int getScreenHeight(FragmentActivity activity){
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        return displayMetrics.heightPixels;
+    }
 
     public void showDialogMsg(AppCompatActivity activity, String header, String body, String btnOk) {
 
