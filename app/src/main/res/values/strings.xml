@@ -66,11 +66,12 @@
     <string name="change_image">Change Image</string>
     <string name="restaurants">Restaurants</string>
     <string name="Invite">Invite</string>
+    <string name="anonymous">Anonymous Question</string>
     <string name="Suggested">Suggested</string>
     <string name="please_select_your_favourite_place_to_eat">Please select your favourite place to eat</string>
     <string name="see_more_suggestions"><u>See More Suggestions</u></string>
     <string name="str_temp"><b>MariaGomes213</b> Nice weather to showoffmy new sunglasses\n<b>DeanSean</b> Haha , I did the same lol\n<b>KellyFinn92</b> My bestie is looking gooooood!</string>
-<!--    <string name="str_temp">We are <b>good</b> glad to see you.</string>-->
+    <!--    <string name="str_temp">We are <b>good</b> glad to see you.</string>-->
 
 
 </resources>
