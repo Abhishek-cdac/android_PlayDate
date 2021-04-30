@@ -98,7 +98,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.dashboard.DashboardActivity"
-            android:windowSoftInputMode="adjustPan|adjustResize"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.record_video.RecordVideoActivity"

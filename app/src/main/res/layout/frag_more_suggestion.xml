@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabGravity="fill"
+        app:tabTextAppearance="@style/CustomTabs"
         android:textAlignment="center"
         app:tabIndicatorColor="@color/color_pink"
         app:tabIndicatorGravity="bottom"

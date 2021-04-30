@@ -22,7 +22,8 @@
         <ImageView
             android:layout_width="0dp"
             android:layout_height="@dimen/_30sdp"
-            android:layout_margin="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_2sdp"
             android:layout_weight="1"
             android:padding="@dimen/_4sdp"
             android:src="@drawable/playdate_logo" />
@@ -150,7 +151,7 @@
     <LinearLayout
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="@dimen/_55sdp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/bottom_bar_shape"
         android:gravity="center"

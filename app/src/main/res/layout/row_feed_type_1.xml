@@ -10,7 +10,10 @@
         android:id="@+id/ll_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_10sdp"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
         android:gravity="start|center"
         android:orientation="horizontal">
 
@@ -63,9 +66,10 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/card_image"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_250sdp"
-
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_height="@dimen/_260sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginRight="@dimen/_10sdp"
             android:background="@color/white"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="7dp"
@@ -75,15 +79,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/white"
-                android:src="@drawable/model2" />
+                android:scaleType="fitXY"
+                android:src="@drawable/model1" />
 
         </androidx.cardview.widget.CardView>
 
         <ImageView
+            android:id="@+id/iv_heart_red"
             android:layout_width="@dimen/_120sdp"
             android:layout_height="@dimen/_120sdp"
             android:layout_centerInParent="true"
-            android:src="@drawable/red_heart" />
+            android:src="@drawable/red_heart"
+            android:visibility="visible" />
 
     </RelativeLayout>
 
@@ -131,8 +138,8 @@
             android:visibility="gone" />
 
         <ImageView
-            android:layout_width="@dimen/_22sdp"
-            android:layout_height="@dimen/_22sdp"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
             android:layout_alignParentEnd="true"
             android:layout_centerHorizontal="true"
 
@@ -165,8 +172,8 @@
         android:layout_gravity="center"
         android:layout_marginLeft="@dimen/_10sdp"
         android:layout_marginRight="@dimen/_10sdp"
-        android:fontFamily="@font/lato_bold"
-        android:text="MariaGomes213 Nice weather to showoffmy new sunglasses\nDeanSean Haha , I did the same lol\nKellyFinn92 My bestie is looking gooooood!"
+        android:fontFamily="@font/helvetica_neue"
+        android:text="@string/str_temp"
         android:textColor="@color/black"
         android:textSize="@dimen/_10sdp"
         android:textStyle="bold" />
@@ -179,11 +186,11 @@
         android:layout_marginLeft="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_2sdp"
         android:layout_marginRight="@dimen/_10sdp"
-        android:background="@android:color/transparent"
+        android:background="@null"
         android:hint="Add a comment..."
         android:maxLines="1"
         android:padding="@dimen/_8sdp"
-        android:paddingLeft="0dp"
+        android:paddingLeft="-10dp"
         android:paddingRight="0dp"
         android:singleLine="true"
         android:textColor="@android:color/black"

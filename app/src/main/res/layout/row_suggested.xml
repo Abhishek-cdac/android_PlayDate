@@ -55,7 +55,7 @@
             android:fontFamily="@font/lato_bold"
             android:paddingHorizontal="@dimen/_6sdp"
             android:textColor="@color/black"
-            android:textSize="@dimen/_14sdp" />
+            android:textSize="@dimen/_12sdp" />
 
         <ImageView
             android:id="@+id/friend_request"
