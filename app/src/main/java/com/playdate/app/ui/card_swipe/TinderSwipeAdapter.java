@@ -28,29 +28,29 @@ public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.
 
     public TinderSwipeAdapter() {
 
-        tinder_list.add(new TinderSwipe("https://s29588.pcdn.co/wp-content/uploads/sites/2/2018/08/Claire-Abbott-1.jpg.optimal.jpg", "adreena helen", "Dancing", "23", false));
+        tinder_list.add(new TinderSwipe("https://hips.hearstapps.com/esquireuk.cdnds.net/17/17/elizabeth-turner.jpg", "adreena helen", "Dancing", "23", false));
         tinder_list.add(new TinderSwipe("https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", "gomes helen", "Singing", "27", true));
         tinder_list.add(new TinderSwipe("https://images.saymedia-content.com/.image/t_share/MTc0MDkwNjUxNDc2OTYwODM0/5-instagram-models-you-should-be-following.png", "jonn den", "Travelling", "29", false));
         tinder_list.add(new TinderSwipe("https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg", "Ramsphy k", "Blogging", "18", true));
-        tinder_list.add(new TinderSwipe("https://s29588.pcdn.co/wp-content/uploads/sites/2/2018/08/Claire-Abbott-1.jpg.optimal.jpg", "adreena helen", "Dancing and Blogging", "20", false));
+        tinder_list.add(new TinderSwipe("https://hips.hearstapps.com/esquireuk.cdnds.net/17/17/elizabeth-turner.jpg", "adreena helen", "Dancing and Blogging", "20", false));
         tinder_list.add(new TinderSwipe("https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", "gomes helen", "Travelling & Blogging", "24", true));
         tinder_list.add(new TinderSwipe("https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", "gomes helen", "Travelling & Blogging", "24", true));
         tinder_list.add(new TinderSwipe("https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", "gomes helen", "Travelling & Blogging", "24", false));
         tinder_list.add(new TinderSwipe("https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", "gomes helen", "Travelling & Blogging", "24", false));
-        tinder_list.add(new TinderSwipe("https://s29588.pcdn.co/wp-content/uploads/sites/2/2018/08/Claire-Abbott-1.jpg.optimal.jpg", "adreena helen", "Dancing", "23", false));
+        tinder_list.add(new TinderSwipe("https://hips.hearstapps.com/esquireuk.cdnds.net/17/17/elizabeth-turner.jpg", "adreena helen", "Dancing", "23", false));
         tinder_list.add(new TinderSwipe("https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", "gomes helen", "Singing", "27", true));
         tinder_list.add(new TinderSwipe("https://images.saymedia-content.com/.image/t_share/MTc0MDkwNjUxNDc2OTYwODM0/5-instagram-models-you-should-be-following.png", "jonn den", "Travelling", "29", false));
         tinder_list.add(new TinderSwipe("https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg", "Ramsphy k", "Blogging", "18", true));
-        tinder_list.add(new TinderSwipe("https://s29588.pcdn.co/wp-content/uploads/sites/2/2018/08/Claire-Abbott-1.jpg.optimal.jpg", "adreena helen", "Dancing and Blogging", "20", false));
+        tinder_list.add(new TinderSwipe("https://hips.hearstapps.com/esquireuk.cdnds.net/17/17/elizabeth-turner.jpg", "adreena helen", "Dancing and Blogging", "20", false));
         tinder_list.add(new TinderSwipe("https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", "gomes helen", "Travelling & Blogging", "24", true));
         tinder_list.add(new TinderSwipe("https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", "gomes helen", "Travelling & Blogging", "24", true));
         tinder_list.add(new TinderSwipe("https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", "gomes helen", "Travelling & Blogging", "24", false));
         tinder_list.add(new TinderSwipe("https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", "gomes helen", "Travelling & Blogging", "24", false));
-        tinder_list.add(new TinderSwipe("https://s29588.pcdn.co/wp-content/uploads/sites/2/2018/08/Claire-Abbott-1.jpg.optimal.jpg", "adreena helen", "Dancing", "23", false));
+        tinder_list.add(new TinderSwipe("https://hips.hearstapps.com/esquireuk.cdnds.net/17/17/elizabeth-turner.jpg", "adreena helen", "Dancing", "23", false));
         tinder_list.add(new TinderSwipe("https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", "gomes helen", "Singing", "27", true));
         tinder_list.add(new TinderSwipe("https://images.saymedia-content.com/.image/t_share/MTc0MDkwNjUxNDc2OTYwODM0/5-instagram-models-you-should-be-following.png", "jonn den", "Travelling", "29", false));
         tinder_list.add(new TinderSwipe("https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg", "Ramsphy k", "Blogging", "18", true));
-        tinder_list.add(new TinderSwipe("https://s29588.pcdn.co/wp-content/uploads/sites/2/2018/08/Claire-Abbott-1.jpg.optimal.jpg", "adreena helen", "Dancing and Blogging", "20", false));
+        tinder_list.add(new TinderSwipe("https://hips.hearstapps.com/esquireuk.cdnds.net/17/17/elizabeth-turner.jpg", "adreena helen", "Dancing and Blogging", "20", false));
         tinder_list.add(new TinderSwipe("https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", "gomes helen", "Travelling & Blogging", "24", true));
         tinder_list.add(new TinderSwipe("https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", "gomes helen", "Travelling & Blogging", "24", true));
         tinder_list.add(new TinderSwipe("https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", "gomes helen", "Travelling & Blogging", "24", false));

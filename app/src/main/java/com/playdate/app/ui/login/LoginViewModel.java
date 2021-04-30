@@ -28,6 +28,10 @@ import java.util.Arrays;
 
 public class LoginViewModel extends ViewModel {
 
+    public LoginViewModel() {
+        EmailAddress.setValue("ajit8086");
+        Password.setValue("ajit8086");
+    }
 
     public MutableLiveData<String> EmailAddress = new MutableLiveData<>();
     public MutableLiveData<String> Password = new MutableLiveData<>();

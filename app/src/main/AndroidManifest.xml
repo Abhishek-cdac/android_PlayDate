@@ -43,43 +43,76 @@
         </provider>
 
 
-
-    <meta-data
-        android:name="com.facebook.sdk.ApplicationId"
-        android:value="@string/facebook_app_id" />
-
-
-    <meta-data
-        android:name="com.facebook.sdk.ApplicationId"
-        android:value="@string/facebook_app_id" />
-
-    <activity android:name=".ui.onboarding.OnBoardingActivity">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
-
-    <activity android:name=".ui.login.LoginActivity" />
-    <activity android:name=".ui.register.RegisterActivity" />
-    <activity android:name=".ui.register.otp.OTPActivity" />
-    <activity android:name=".ui.register.relationship.RelationActivity" />
-    <activity android:name=".ui.register.age_verification.AgeVerifiationActivity" />
-    <activity android:name=".ui.register.interestin.InterestActivity" />
-    <activity android:name=".ui.register.username.UserNameActivity" />
-    <activity android:name=".ui.register.bio.BioActivity" />
-    <activity android:name=".ui.register.interest.InterestActivity" />
-    <activity android:name=".ui.register.profile.UploadProfileActivity" />
-    <activity android:name=".ui.forgot_password.ForgotPassword" />
-    <activity android:name=".ui.onboarding.GetStarted" />
-    <activity android:name=".ui.dashboard.DashboardActivity" />
-    <activity android:name=".ui.record_video.RecordVideoActivity" />
-    <activity android:name=".util.customcamera.otalia.VideoPreviewActivity" />
-    <activity android:name=".util.customcamera.otalia.CameraActivity" />
-    <activity android:name=".ui.restaurant.RestaurantActivity" />
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
 
 
-</application>
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
 
-    </manifest>
+        <activity android:name=".ui.onboarding.OnBoardingActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.register.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.register.otp.OTPActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.register.relationship.RelationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.register.age_verification.AgeVerifiationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.register.interestin.InterestActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.register.username.UserNameActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.register.bio.BioActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.register.interest.InterestActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.register.profile.UploadProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.forgot_password.ForgotPassword"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.onboarding.GetStarted"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.dashboard.DashboardActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.record_video.RecordVideoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".util.customcamera.otalia.VideoPreviewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".util.customcamera.otalia.CameraActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.restaurant.RestaurantActivity"
+            android:screenOrientation="portrait" />
+
+
+    </application>
+
+</manifest>

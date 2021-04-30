@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/_5sdp"
+    android:layout_margin="@dimen/_3sdp"
     android:orientation="horizontal"
     android:paddingHorizontal="@dimen/_15sdp">
 
@@ -22,7 +22,7 @@
         android:fontFamily="@font/lato_bold"
         android:paddingHorizontal="@dimen/_6sdp"
         android:textColor="@color/black"
-        android:textSize="@dimen/_13sdp"
+        android:textSize="@dimen/_12sdp"
         android:textStyle="bold" />
 
 
