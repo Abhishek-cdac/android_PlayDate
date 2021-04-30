@@ -19,6 +19,7 @@ import com.playdate.app.ui.dashboard.DashboardActivity;
 import com.playdate.app.ui.record_video.RecordVideoActivity;
 import com.playdate.app.ui.restaurant.adapter.Restaurant;
 import com.playdate.app.ui.restaurant.adapter.RestaurantAdapter;
+import com.playdate.app.util.customcamera.otalia.CameraActivity;
 
 import java.util.ArrayList;
 
@@ -66,7 +67,7 @@ public class RestaurantActivity extends AppCompatActivity {
         });
 
 
-        viewModel.OnNextClick().observe(RestaurantActivity.this, aBoolean -> startActivity(new Intent(RestaurantActivity.this, DashboardActivity.class)));
+        viewModel.OnNextClick().observe(RestaurantActivity.this, aBoolean -> startActivity(new Intent(RestaurantActivity.this, CameraActivity.class)));
         viewModel.onBackClick().observe(RestaurantActivity.this, aBoolean -> finish());
 
     }

@@ -60,7 +60,7 @@ public class RelationActivity extends AppCompatActivity {
         viewModel.OnNextClick().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean click) {
-                startActivity(new Intent(RelationActivity.this, CameraActivity
+                startActivity(new Intent(RelationActivity.this, InterestActivity
                         .class));
 
             }

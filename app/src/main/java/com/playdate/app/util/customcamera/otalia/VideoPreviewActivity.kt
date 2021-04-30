@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.otaliastudios.cameraview.VideoResult
 import com.otaliastudios.cameraview.size.AspectRatio
 import com.playdate.app.R
+import com.playdate.app.ui.dashboard.DashboardActivity
 import com.playdate.app.ui.register.interest.InterestActivity
 import com.playdate.app.ui.restaurant.RestaurantActivity
 
@@ -31,7 +32,7 @@ class VideoPreviewActivity : AppCompatActivity() {
         }
         videoView.setOnClickListener { playVideo() }
         val iv_next = findViewById<ImageView>(R.id.iv_next).setOnClickListener(View.OnClickListener {
-            val intent = Intent(this@VideoPreviewActivity, InterestActivity::class.java)
+            val intent = Intent(this@VideoPreviewActivity, DashboardActivity::class.java)
             startActivity(intent)
         })
 //        val isSnapshot = findViewById<MessageView>(R.id.isSnapshot)
