@@ -43,8 +43,8 @@
         android:fontFamily="@font/lato_bold"
         android:paddingHorizontal="@dimen/_14sdp"
         android:text="@string/anonymous"
-        android:textColor="@color/black"
         android:textSize="@dimen/_18sdp"
+        android:textColor="@android:color/transparent"
         android:textStyle="bold" />
 
     <TextView

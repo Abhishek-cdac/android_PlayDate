@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@android:color/darker_gray" android:state_checked="false">
+        <shape android:shape="oval">
+            <solid android:color="@color/colorAccent" />
+            <size android:width="48dp" android:height="48dp" />
+        </shape>
+
+    </item>
+
+    <item android:drawable="@color/color_pink" android:state_checked="true">
+        <shape android:shape="oval">
+            <solid android:color="@color/color_pink" />
+            <size android:width="48dp" android:height="48dp" />
+
+        </shape>
+
+    </item>
+
+</selector>

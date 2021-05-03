@@ -20,7 +20,7 @@ public class AnonymousQuestionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.anonymous_ques);
+        setContentView(R.layout.activity_anonymous_ques);
         TextView text_count = findViewById(R.id.comment_number);
         text_count.setTypeface(Typeface.DEFAULT_BOLD);
 

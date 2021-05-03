@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/cardview_dark_background"
@@ -7,7 +8,7 @@
     android:paddingHorizontal="@dimen/_20sdp"
     android:paddingVertical="@dimen/_15sdp">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -16,89 +17,79 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_weight="0.8"
+            android:layout_alignParentStart="true"
             android:text="@string/commenting"
             android:textColor="@color/white"
             android:textSize="@dimen/_12sdp" />
 
-        <ImageView
+        <androidx.appcompat.widget.SwitchCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_gravity="center"
-            android:layout_weight="0.3"
-            android:src="@drawable/report" />
-    </LinearLayout>
+            app:track="@drawable/track" />
 
-    <LinearLayout
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-
         android:paddingVertical="@dimen/_2sdp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_weight="1"
+            android:layout_alignParentStart="true"
             android:text="@string/block_user"
-
             android:textColor="@color/white"
             android:textSize="@dimen/_12sdp" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_gravity="center"
-            android:layout_weight="0.3"
             android:src="@drawable/block" />
 
 
-    </LinearLayout>
+    </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-
         android:paddingVertical="@dimen/_2sdp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_weight="0.9"
+            android:layout_alignParentStart="true"
             android:text="@string/report"
-
             android:textColor="@color/white"
             android:textSize="@dimen/_12sdp" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+
             android:layout_gravity="center"
-
-            android:layout_weight="0.3"
-
             android:src="@drawable/report" />
 
 
-    </LinearLayout>
+    </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:orientation="horizontal"
-        android:paddingVertical="@dimen/_2sdp"
-        android:weightSum="1">
+        android:paddingVertical="@dimen/_2sdp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_weight="0.7"
+            android:layout_alignParentStart="true"
             android:text="@string/pin"
             android:textColor="@color/white"
             android:textSize="@dimen/_12sdp" />
@@ -106,14 +97,10 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="0.4"
-            android:padding="@dimen/_3sdp"
-
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center"
             android:src="@drawable/open_pin" />
 
 
-    </LinearLayout>
-
-
+    </RelativeLayout>
 </LinearLayout>

@@ -6,11 +6,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
@@ -55,6 +57,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                 holder.time.setTextColor(Color.parseColor("#ffffff"));
                 holder.like.setTextColor(Color.parseColor("#ffffff"));
                 holder.reply.setTextColor(Color.parseColor("#ffffff"));
+                holder.delete.setVisibility(View.VISIBLE);
 
 
             } else {
@@ -65,6 +68,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                 holder.time.setTextColor(Color.parseColor("#000000"));
                 holder.like.setTextColor(Color.parseColor("#000000"));
                 holder.reply.setTextColor(Color.parseColor("#000000"));
+                holder.delete.setVisibility(View.GONE);
 
             }
         }
@@ -78,6 +82,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView name, desc, like, reply, time;
         RelativeLayout relativeLayout;
+        ImageView delete;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -86,6 +91,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             like = itemView.findViewById(R.id.comment_like);
             reply = itemView.findViewById(R.id.comment_reply);
             time = itemView.findViewById(R.id.comment_time);
+            delete = itemView.findViewById(R.id.dustbin);
             relativeLayout = itemView.findViewById(R.id.card_comment);
             name.setTypeface(Typeface.DEFAULT_BOLD);
             relativeLayout.setOnClickListener(new View.OnClickListener() {
