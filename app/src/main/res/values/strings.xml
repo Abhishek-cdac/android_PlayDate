@@ -75,10 +75,12 @@
     <string name="str_temp"><b>MariaGomes213</b> Nice weather to showoffmy new sunglasses\n<b>DeanSean</b> Haha , I did the same lol\n<b>KellyFinn92</b> My bestie is looking gooooood!</string>
     <!--    <string name="str_temp">We are <b>good</b> glad to see you.</string>-->
 
+    <string name="comment_deleted">Comment has been deleted</string>
     <string name="commenting">Turn Commenting Off</string>
     <string name="block_user">Block User</string>
     <string name="report">Report Comment</string>
     <string name="pin">Pin Comment</string>
+    <string name="undo">Undo</string>
 
 
 </resources>

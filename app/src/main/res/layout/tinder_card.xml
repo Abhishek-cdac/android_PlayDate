@@ -132,7 +132,7 @@
                 android:layout_width="@dimen/_40sdp"
                 android:layout_height="@dimen/_40sdp"
                 android:layout_weight="0.2"
-                android:src="@drawable/question"
+                android:src="@drawable/chat"
                 android:visibility="gone" />
 
             <ImageView
