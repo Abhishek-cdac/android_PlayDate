@@ -1,5 +1,6 @@
 package com.playdate.app.ui.anonymous_question;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.Log;
@@ -7,12 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
@@ -21,14 +20,15 @@ import java.util.ArrayList;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder> {
     ArrayList<Comments> list = new ArrayList<>();
-    boolean selected = false;
-    int selected_index = -1;
+    //    boolean selected = false;
+//    int selected_index = -1;
+    Context mContext;
 
     public CommentAdapter() {
-        list.add(new Comments("MyronEvans", "hey"));
-        list.add(new Comments("MyronEvans", "all goood, whats up?"));
-        list.add(new Comments("MyronEvans", "helllo everyone"));
-        list.add(new Comments("MyronEvans", "hey"));
+        list.add(new Comments("MyronEvans", "hey", false));
+        list.add(new Comments("MyronEvans", "all goood, whats up?", false));
+        list.add(new Comments("MyronEvans", "helllo everyone", false));
+        list.add(new Comments("MyronEvans", "hey", false));
 
     }
 
@@ -36,6 +36,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     @Override
     public CommentAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_comment, parent, false);
+        mContext = parent.getContext();
         return new ViewHolder(view);
     }
 
@@ -44,34 +45,29 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         holder.name.setText(list.get(position).getName());
         holder.desc.setText(list.get(position).getComment());
 
-        if (selected_index == position) {
-            Log.d("selected_index", String.valueOf(selected_index));
+//        if (selected_index == position) {
 
-            Log.d("selected_ index", String.valueOf(selected));
-
-            if (selected) {
-                Log.d("selected", String.valueOf(selected_index));
+            if (list.get(position).isSelected) {
                 holder.relativeLayout.setBackgroundColor(Color.parseColor("#88000000"));
-                holder.name.setTextColor(Color.parseColor("#ffffff"));
-                holder.desc.setTextColor(Color.parseColor("#ffffff"));
-                holder.time.setTextColor(Color.parseColor("#ffffff"));
-                holder.like.setTextColor(Color.parseColor("#ffffff"));
-                holder.reply.setTextColor(Color.parseColor("#ffffff"));
+                holder.name.setTextColor(mContext.getResources().getColor(R.color.white));
+                holder.desc.setTextColor(mContext.getResources().getColor(R.color.white));
+                holder.time.setTextColor(mContext.getResources().getColor(R.color.white));
+                holder.like.setTextColor(mContext.getResources().getColor(R.color.white));
+                holder.reply.setTextColor(mContext.getResources().getColor(R.color.white));
                 holder.delete.setVisibility(View.VISIBLE);
 
 
             } else {
-                Log.d("selected", String.valueOf(selected_index));
-                holder.relativeLayout.setBackgroundColor(Color.parseColor("#ffffff"));
-                holder.name.setTextColor(Color.parseColor("#000000"));
-                holder.desc.setTextColor(Color.parseColor("#000000"));
-                holder.time.setTextColor(Color.parseColor("#000000"));
-                holder.like.setTextColor(Color.parseColor("#000000"));
-                holder.reply.setTextColor(Color.parseColor("#000000"));
+                holder.relativeLayout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
+                holder.name.setTextColor(mContext.getResources().getColor(R.color.black));
+                holder.desc.setTextColor(mContext.getResources().getColor(R.color.black));
+                holder.time.setTextColor(mContext.getResources().getColor(R.color.black));
+                holder.like.setTextColor(mContext.getResources().getColor(R.color.black));
+                holder.reply.setTextColor(mContext.getResources().getColor(R.color.black));
                 holder.delete.setVisibility(View.GONE);
 
             }
-        }
+//        }
     }
 
     @Override
@@ -97,17 +93,21 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             relativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    selected_index = getAdapterPosition();
-                    if (!selected) {
-                        Log.d("selected_click", String.valueOf(selected));
-                        selected = true;
+                   int selected_index = getAdapterPosition();
+                    if (!list.get(selected_index).isSelected) {
+
+                        for (int i = 0; i < list.size(); i++) {
+                            if (selected_index != i) {
+                                list.get(i).setSelected(false);
+                            } else {
+                                list.get(selected_index).setSelected(true);
+                            }
+
+                        }
+
                         notifyDataSetChanged();
-                        Log.d("selected_click_after", String.valueOf(selected));
-
-
                     } else {
-                        Log.d("selected_click", String.valueOf(selected));
-                        selected = false;
+                        list.get(selected_index).setSelected(false);
                         notifyDataSetChanged();
                     }
 

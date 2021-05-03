@@ -2,10 +2,20 @@ package com.playdate.app.ui.anonymous_question;
 
 public class Comments {
     String name, comment;
+    boolean isSelected=false;
 
-    public Comments(String name, String comment) {
+    public Comments(String name, String comment,boolean isSelected) {
         this.name = name;
         this.comment = comment;
+        this.isSelected = isSelected;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 
     public String getName() {
