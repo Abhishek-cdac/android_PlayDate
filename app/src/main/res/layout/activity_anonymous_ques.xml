@@ -44,7 +44,7 @@
         android:paddingHorizontal="@dimen/_14sdp"
         android:text="@string/anonymous"
         android:textSize="@dimen/_18sdp"
-        android:textColor="@android:color/transparent"
+        android:textColor="@android:color/black"
         android:textStyle="bold" />
 
     <TextView
