@@ -42,28 +42,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/_6sdp"
-            android:text="2h" />
+            android:text="2h"
+            android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/comment_like"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/_6sdp"
-            android:text="@string/Like" />
+            android:text="@string/Like"
+            android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/comment_reply"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/_8sdp"
-
-            android:text="@string/reply" />
+            android:text="@string/reply"
+            android:textColor="@android:color/black" />
 
         <ImageView
             android:id="@+id/dustbin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:visibility="gone"
             android:src="@drawable/bin" />
 
     </LinearLayout>
