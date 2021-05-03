@@ -6,8 +6,8 @@
         <item name="colorPrimaryVariant">@color/colorAccent</item>
         <item name="colorOnPrimary">@color/white</item>
 
-        <item name="android:fontFamily">@font/helvetica_neue</item>
-        <item name="fontFamily">@font/helvetica_neue</item>
+<!--        <item name="android:fontFamily">@font/helvetica_neue</item>-->
+<!--        <item name="fontFamily">@font/helvetica_neue</item>-->
 
 
         <!-- Secondary brand color. -->

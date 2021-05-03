@@ -45,6 +45,7 @@ public class UploadProfileActivity extends AppCompatActivity {
     private final static int ALL_PERMISSIONS_RESULT = 107;
     private final static int PICK_PHOTO_FOR_AVATAR = 150;
     private final static int TAKE_PHOTO_CODE = 0;
+    private Intent mIntent;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,8 +56,17 @@ public class UploadProfileActivity extends AppCompatActivity {
         binding.setUploadProfileViewModel(viewModel);
 
 
-        viewModel.OnNextClick().observe(this, click -> startActivity(new Intent(UploadProfileActivity.this, InterestActivity
-                .class)));
+        viewModel.OnNextClick().observe(this, click -> {
+            if(mIntent.getBooleanExtra("fromProfile", false)){
+                Intent mIntent=new Intent();
+               setResult(407,mIntent);
+               finish();
+            }else{
+                startActivity(new Intent(UploadProfileActivity.this, InterestActivity
+                        .class));
+            }
+
+        });
 
         viewModel.onBackClick().observe(this, click -> finish());
         viewModel.onGalleryClick().observe(this, new Observer<Boolean>() {
@@ -97,6 +107,8 @@ public class UploadProfileActivity extends AppCompatActivity {
                 binding.ivNext.setVisibility(View.GONE);
             }
         });
+        mIntent=getIntent();
+
     }
 
     public void pickImage() {

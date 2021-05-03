@@ -30,6 +30,7 @@ public class InterestActivity extends AppCompatActivity {
 
     ArrayList<Interest> lst_interest = new ArrayList();
     InterestAdapter adapter;
+    Intent mIntent;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +38,7 @@ public class InterestActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(InterestActivity.this, R.layout.activity_interest);
         binding.setLifecycleOwner(this);
         binding.setInterestViewModel(viewModel);
-
+        mIntent=getIntent();
         init();
 
         // bind RecyclerView
@@ -69,8 +70,15 @@ public class InterestActivity extends AppCompatActivity {
         viewModel.OnNextClick().observe(InterestActivity.this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
-                startActivity(new Intent(InterestActivity.this, RestaurantActivity
-                        .class));
+                if(mIntent.getBooleanExtra("fromProfile", false)){
+                    Intent mIntent=new Intent();
+                    setResult(409,mIntent);
+                    finish();
+                }else{
+                    startActivity(new Intent(InterestActivity.this, RestaurantActivity
+                            .class));
+                }
+
             }
         });
     }

@@ -22,6 +22,7 @@ import com.playdate.app.util.common.CommonClass;
 public class UserNameActivity extends AppCompatActivity {
     UserNameViewModel userNameViewModel;
     ActivityUsernameBinding binding;
+    Intent mIntent;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,12 +31,19 @@ public class UserNameActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(UserNameActivity.this, R.layout.activity_username);
         binding.setLifecycleOwner(this);
         binding.setUserNameViewModel(userNameViewModel);
-
+        mIntent=getIntent();
         userNameViewModel.OnNextClick().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean click) {
-                startActivity(new Intent(UserNameActivity.this, BioActivity
-                        .class));
+                if(mIntent.getBooleanExtra("fromProfile", false)){
+                    Intent mIntent=new Intent();
+                    setResult(408,mIntent);
+                    finish();
+                }else{
+                    startActivity(new Intent(UserNameActivity.this, BioActivity
+                            .class));
+                }
+
 
             }
         });

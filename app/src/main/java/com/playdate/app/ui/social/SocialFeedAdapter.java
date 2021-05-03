@@ -141,6 +141,19 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 userViewHolder.iv_heart.setImageResource(R.drawable.heart);
             }
 
+            userViewHolder.iv_heart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (lst.get(position).HeartSelected) {
+                        userViewHolder.iv_heart.setImageResource(R.drawable.heart);
+                        lst.get(position).setTapCount(0);
+                        lst.get(position).setHeartSelected(false);
+                        notifyDataSetChanged();
+                    } else {
+                        userViewHolder.iv_heart.setImageResource(R.drawable.red_heart);
+                    }
+                }
+            });
             userViewHolder.card_image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -169,14 +182,14 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         }
 
                     } else {
-
-                        if (lst.get(position).getTapCount() == 2) {
-                            lst.get(position).setTapCount(0);
-                            lst.get(position).setHeartSelected(false);
-                            userViewHolder.iv_heart.setImageResource(R.drawable.heart);
-                        } else {
-                            lst.get(position).setTapCount(lst.get(position).getTapCount() + 1);
-                        }
+                        lst.get(position).setTapCount(lst.get(position).getTapCount() + 1);
+//                        if (lst.get(position).getTapCount() == 2) {
+//                            lst.get(position).setTapCount(0);
+//                            lst.get(position).setHeartSelected(false);
+//                            userViewHolder.iv_heart.setImageResource(R.drawable.heart);
+//                        } else {
+//
+//                        }
                     }
                 }
             });

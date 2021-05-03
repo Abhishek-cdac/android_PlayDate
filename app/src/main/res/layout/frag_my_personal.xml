@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/_20sdp"
+    android:paddingRight="@dimen/_20sdp">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/profile_image"
+        android:layout_width="@dimen/_90sdp"
+        android:layout_height="@dimen/_90sdp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_25sdp"
+        android:src="@drawable/profile"
+        app:civ_border_color="@color/white"
+        app:civ_border_width="1dp"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/txt_change_photo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:fontFamily="@font/lato_bold"
+        android:gravity="center"
+        android:text="Change profile photo"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_12sdp" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_10sdp"
+
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginRight="@dimen/_10sdp">
+
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="start"
+            android:fontFamily="@font/lato_bold"
+            android:gravity="start|center"
+            android:text="Email Address"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/iv_edit_mail"
+            android:layout_width="@dimen/_12sdp"
+            android:layout_height="@dimen/_12sdp"
+            android:layout_alignParentEnd="true"
+
+            android:layout_centerVertical="true"
+            android:src="@drawable/edit_pencil">
+
+        </ImageView>
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:fontFamily="@font/helvetica_neue"
+        android:gravity="start|center"
+        android:text="myron.evans@gmail.com"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_11sdp"
+        android:textStyle="bold" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_10sdp"
+
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginRight="@dimen/_10sdp">
+
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="start"
+            android:fontFamily="@font/lato_bold"
+            android:gravity="start|center"
+            android:text="Phone Number"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="@dimen/_12sdp"
+            android:layout_height="@dimen/_12sdp"
+            android:layout_alignParentEnd="true"
+            android:visibility="gone"
+            android:layout_centerVertical="true"
+            android:src="@drawable/edit_pencil">
+
+        </ImageView>
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:fontFamily="@font/helvetica_neue"
+        android:gravity="start|center"
+        android:text="202-555-1994"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_11sdp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_10sdp"
+
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginRight="@dimen/_10sdp">
+
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="start"
+            android:fontFamily="@font/lato_bold"
+            android:gravity="start|center"
+            android:text="Gender"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="@dimen/_12sdp"
+            android:layout_height="@dimen/_12sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:id="@+id/iv_gender"
+            android:src="@drawable/edit_pencil">
+
+        </ImageView>
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:fontFamily="@font/helvetica_neue"
+        android:gravity="start|center"
+        android:text="Male"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_11sdp" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_10sdp"
+
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginRight="@dimen/_10sdp">
+
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="start"
+            android:fontFamily="@font/lato_bold"
+            android:gravity="start|center"
+            android:text="Date Of Birth"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="@dimen/_12sdp"
+            android:layout_height="@dimen/_12sdp"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/iv_dob"
+            android:layout_centerVertical="true"
+            android:src="@drawable/edit_pencil">
+
+        </ImageView>
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:fontFamily="@font/helvetica_neue"
+        android:gravity="start|center"
+        android:text="05-03-1994"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_11sdp" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_10sdp"
+
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginRight="@dimen/_10sdp">
+
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="start"
+            android:fontFamily="@font/lato_bold"
+            android:gravity="start|center"
+            android:text="Sexual Orientation"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="@dimen/_12sdp"
+            android:layout_height="@dimen/_12sdp"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/iv_sex_orientation"
+            android:layout_centerVertical="true"
+            android:src="@drawable/edit_pencil">
+
+        </ImageView>
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:fontFamily="@font/helvetica_neue"
+        android:gravity="start|center"
+        android:text="Straight"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_11sdp" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_10sdp"
+
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginRight="@dimen/_10sdp">
+
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="start"
+            android:fontFamily="@font/lato_bold"
+            android:gravity="start|center"
+            android:text="Relationship Status"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="@dimen/_12sdp"
+            android:layout_height="@dimen/_12sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:id="@+id/iv_relationship"
+            android:src="@drawable/edit_pencil">
+
+        </ImageView>
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:fontFamily="@font/helvetica_neue"
+        android:gravity="start|center"
+        android:text="Single"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_11sdp"
+        android:textStyle="bold" />
+
+
+</LinearLayout>

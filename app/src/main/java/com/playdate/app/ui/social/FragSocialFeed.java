@@ -1,7 +1,5 @@
 package com.playdate.app.ui.social;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
-import com.playdate.app.ui.anonymous_question.AnonymousQuestionActivity;
 
 import java.util.ArrayList;
 
@@ -24,17 +21,18 @@ public class FragSocialFeed extends Fragment {
     public static final int RESTAURANT = 1;
     public static final int ANONYMUSQUESTION = 2;
     public static final int ADDS = 3;
-
+    RecyclerView recycler_view_feed;
+    ArrayList<SocialFeed> lst = new ArrayList<>();
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.row_social_feed, container, false);
-        RecyclerView recycler_view_feed = view.findViewById(R.id.recycler_view_feed);
+        recycler_view_feed = view.findViewById(R.id.recycler_view_feed);
 
         ArrayList<SocialFeed> lst = new ArrayList<>();
         lst.add(new SocialFeed("Olivia251", 1548, false, 0, USER, "https://images.saymedia-content.com/.image/t_share/MTc0MDkwNjUxNDc2OTYwODM0/5-instagram-models-you-should-be-following.png", "https://i.pinimg.com/originals/09/31/b5/0931b5399d9f1a3afe4417ee83eff961.jpg"));
-        lst.add(new SocialFeed("RetroDiner", 451, false, 0, RESTAURANT, "https://cdn.cnn.com/cnnnext/dam/assets/160726132158-us-beautiful-hotels-4-four-seasons-maui-2-super-169.jpg", "https://i.pinimg.com/originals/09/31/b5/0931b5399d9f1a3afe4417ee83eff961.jpg"));
+        lst.add(new SocialFeed("RetroDiner", 451, false, 0, RESTAURANT, "https://cdn.cnn.com/cnnnext/dam/assets/160726132158-us-beautiful-hotels-4-four-seasons-maui-2-super-169.jpg", "https://loveincorporated.blob.core.windows.net/contentimages/gallery/26e0cf49-84b9-4e27-a04f-0393ebb5fd3a-roadside_diners_north_dakota.jpg"));
         lst.add(new SocialFeed("AvaSophia", 1542, false, 0, USER, "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg", "https://i.pinimg.com/originals/09/31/b5/0931b5399d9f1a3afe4417ee83eff961.jpg"));
         lst.add(new SocialFeed("Isabella", 4854, false, 0, USER, "https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", "https://i.pinimg.com/originals/09/31/b5/0931b5399d9f1a3afe4417ee83eff961.jpg"));
         lst.add(new SocialFeed("Isabella", 4854, false, 0, USER, "https://blog.ainfluencer.com/wp-content/uploads/2021/01/Cinta-Laura-868x1024.jpg", "https://i.pinimg.com/originals/09/31/b5/0931b5399d9f1a3afe4417ee83eff961.jpg"));

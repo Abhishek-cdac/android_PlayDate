@@ -59,7 +59,7 @@
             android:layout_gravity="center"
             android:fontFamily="@font/lato_bold"
             android:gravity="center"
-            android:text="@string/please_enter_the_verification_code"
+            android:text="@string/please_enter_the_dob"
             android:textColor="@color/white"
             android:textSize="@dimen/_13sdp"
             android:textStyle="bold" />

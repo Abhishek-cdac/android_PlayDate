@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_20sdp"
+        android:layout_marginRight="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:background="@drawable/round_outline_pink"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_payment"
+                android:layout_width="@dimen/_120sdp"
+                android:layout_height="@dimen/_70sdp"
+                android:layout_alignParentStart="true"
+                android:padding="@dimen/_10sdp">
+
+            </ImageView>
+
+            <RelativeLayout
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_alignParentEnd="true"
+
+                android:background="@color/color_pink">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:foregroundGravity="center"
+                    android:src="@drawable/more_white">
+
+                </ImageView>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:fontFamily="@font/helvetica_neue"
+            android:gravity="start|center"
+            android:paddingLeft="@dimen/_10sdp"
+            android:paddingRight="@dimen/_10sdp"
+            android:text="myself@me.com"
+            android:textColor="@color/color_pink"
+            android:textSize="@dimen/_11sdp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:fontFamily="@font/helvetica_neue"
+            android:gravity="start|center"
+            android:paddingLeft="@dimen/_10sdp"
+            android:paddingRight="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_20sdp"
+            android:text="added on 15/02/2021"
+            android:textColor="@color/color_pink"
+            android:textSize="@dimen/_11sdp" />
+    </LinearLayout>
+</LinearLayout>
