@@ -13,15 +13,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
 
-public class AnonymousQuestionActivity extends AppCompatActivity {
+public class AnonymousQuestionActivity extends AppCompatActivity implements onCommentDelete {
 
     CommentAdapter adapter;
+    TextView text_count;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anonymous_ques);
-        TextView text_count = findViewById(R.id.comment_number);
+        text_count = findViewById(R.id.comment_number);
         text_count.setTypeface(Typeface.DEFAULT_BOLD);
 
         TextView text = findViewById(R.id.anun);
@@ -30,7 +31,7 @@ public class AnonymousQuestionActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.comments_list);
         RecyclerView.LayoutManager manager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(manager);
-        adapter = new CommentAdapter();
+        adapter = new CommentAdapter(this);
         recyclerView.setAdapter(adapter);
 
         int number = adapter.getItemCount();
@@ -53,4 +54,17 @@ public class AnonymousQuestionActivity extends AppCompatActivity {
 
 
     }
+
+    public void ChangeCount(int number) {
+        if (number == 0) {
+            text_count.setText("No Answer");
+        } else {
+            text_count.setText(number + " Answer");
+
+        }
+    }
+}
+
+interface onCommentDelete{
+ void ChangeCount(int listCount);
 }

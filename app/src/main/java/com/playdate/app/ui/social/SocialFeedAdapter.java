@@ -1,6 +1,7 @@
 package com.playdate.app.ui.social;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
+import com.playdate.app.ui.anonymous_question.AnonymousQuestionActivity;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.squareup.picasso.Picasso;
 
@@ -331,12 +333,7 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             name_friend = itemView.findViewById(R.id.name_friend);
             respomd = itemView.findViewById(R.id.respond);
 
-            respomd.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    v.getContext().startActivity(new Intent(v.getContext(), AnonymousQuestionActivity.class));
-                }
-            });
+            respomd.setOnClickListener(v -> v.getContext().startActivity(new Intent(v.getContext(), AnonymousQuestionActivity.class)));
         }
     }
 }
