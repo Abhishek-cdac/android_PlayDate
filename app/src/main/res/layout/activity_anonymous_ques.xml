@@ -69,4 +69,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/comment_number" />
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:padding="@dimen/_8sdp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_16sdp"
+        android:hint=""
+        android:background="@color/cardview_dark_background"
+        android:layout_height="wrap_content"/>
+
 </RelativeLayout>
