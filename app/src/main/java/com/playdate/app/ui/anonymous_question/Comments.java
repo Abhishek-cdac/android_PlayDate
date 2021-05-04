@@ -2,12 +2,22 @@ package com.playdate.app.ui.anonymous_question;
 
 public class Comments {
     String name, comment;
-    boolean isSelected=false;
+    boolean isSelected = false;
+    boolean isDeleted = false;
 
-    public Comments(String name, String comment,boolean isSelected) {
+    public Comments(String name, String comment, boolean isSelected, boolean isDeleted) {
         this.name = name;
         this.comment = comment;
         this.isSelected = isSelected;
+        this.isDeleted = isDeleted;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 
     public boolean isSelected() {

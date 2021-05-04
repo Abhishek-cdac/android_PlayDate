@@ -330,6 +330,13 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 //            iv_profile = itemView.findViewById(R.id.iv_profile);
             name_friend = itemView.findViewById(R.id.name_friend);
             respomd = itemView.findViewById(R.id.respond);
+
+            respomd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    v.getContext().startActivity(new Intent(v.getContext(), AnonymousQuestionActivity.class));
+                }
+            });
         }
     }
 }

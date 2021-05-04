@@ -52,18 +52,14 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-                <activity android:name=".ui.onboarding.OnBoardingActivity">
+        <activity android:name=".ui.onboarding.OnBoardingActivity">
 
-                </activity>
+        </activity>
 
         <activity
-            android:name=".ui.dashboard.DashboardActivity"
+            android:name=".ui.anonymous_question.AnonymousQuestionActivity"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
         <activity
@@ -102,11 +98,16 @@
         <activity
             android:name=".ui.onboarding.GetStarted"
             android:screenOrientation="portrait" />
-<!--        <activity-->
-<!--            android:name=".ui.dashboard.DashboardActivity"-->
-<!--            android:screenOrientation="portrait">-->
+        <activity
+            android:name=".ui.dashboard.DashboardActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-<!--        </activity>-->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
         <activity
             android:name=".ui.record_video.RecordVideoActivity"
             android:screenOrientation="portrait" />
