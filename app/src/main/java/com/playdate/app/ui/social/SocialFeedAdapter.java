@@ -141,8 +141,8 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             userViewHolder.iv_post_image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    OnInnerFragmentClicks ref = (OnInnerFragmentClicks) mContext;
-                    ref.loadProfile();
+//                    OnInnerFragmentClicks ref = (OnInnerFragmentClicks) mContext;
+//                    ref.loadProfile();
                 }
             });
 

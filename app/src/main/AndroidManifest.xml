@@ -100,6 +100,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.dashboard.DashboardActivity"
+            android:windowSoftInputMode="adjustNothing"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
