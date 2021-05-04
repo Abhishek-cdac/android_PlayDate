@@ -69,18 +69,24 @@
     <string name="Like">Like</string>
     <string name="reply">Reply</string>
     <string name="anonymous">Anonymous Question</string>
+    <string name="comments">Comments</string>
     <string name="Suggested">Suggested</string>
     <string name="please_select_your_favourite_place_to_eat">Please select your favourite place to eat</string>
     <string name="see_more_suggestions"><u>See More Suggestions</u></string>
     <string name="str_temp"><b>MariaGomes213</b> Nice weather to showoffmy new sunglasses\n<b>DeanSean</b> Haha , I did the same lol\n<b>KellyFinn92</b> My bestie is looking gooooood!</string>
     <!--    <string name="str_temp">We are <b>good</b> glad to see you.</string>-->
 
+    <string name="post">Post</string>
+
     <string name="comment_deleted">Comment has been deleted</string>
+    <string name="add_comment">Add a comment...</string>
     <string name="commenting">Turn Commenting Off</string>
     <string name="block_user">Block User</string>
     <string name="report">Report Comment</string>
     <string name="pin">Pin Comment</string>
     <string name="undo">Undo</string>
+    <string name="post_notification">Turn Post Notification ON</string>
+    <string name="post_on">Turn Post ON For This User</string>
 
 
 </resources>

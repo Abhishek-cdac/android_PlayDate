@@ -44,7 +44,7 @@
         android:layout_marginTop="@dimen/_5sdp"
         android:fontFamily="@font/lato_bold"
         android:paddingHorizontal="@dimen/_14sdp"
-        android:text="@string/anonymous"
+        android:text="@string/comments"
         android:textColor="@android:color/black"
         android:textSize="@dimen/_18sdp"
         android:textStyle="bold" />

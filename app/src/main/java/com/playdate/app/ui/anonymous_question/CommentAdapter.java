@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -85,6 +86,14 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         return list.size();
     }
 
+    public void addComment(EditText edittxt_add_comment) {
+        list.add(new Comments("Myron", edittxt_add_comment.getText().toString(), false, false));
+        ref.ChangeCount(list.size());
+        Log.d("Added comment", "added");
+        notifyDataSetChanged();
+        edittxt_add_comment.setText("");
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView name, desc, like, reply, time;
         RelativeLayout relativeLayout;
@@ -133,9 +142,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                 return true;
             });
 
-
         }
-
 
     }
 
@@ -152,4 +159,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         }
 
     }
+
+
 }

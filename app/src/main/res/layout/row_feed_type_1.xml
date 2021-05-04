@@ -168,7 +168,28 @@
         android:textSize="@dimen/_10sdp"
         android:textStyle="bold" />
 
-    <EditText
+<!--    <EditText-->
+<!--        android:id="@+id/edt_comment"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@+id/txt_chat"-->
+<!--        android:layout_marginLeft="@dimen/_10sdp"-->
+<!--        android:layout_marginTop="@dimen/_2sdp"-->
+<!--        android:layout_marginRight="@dimen/_10sdp"-->
+<!--        android:background="@null"-->
+<!--        android:hint="Add a comment..."-->
+<!--        android:maxLines="1"-->
+<!--        android:padding="@dimen/_8sdp"-->
+<!--        android:paddingLeft="-10dp"-->
+<!--        android:paddingRight="0dp"-->
+<!--        android:singleLine="true"-->
+<!--        android:textColor="@android:color/black"-->
+<!--        android:textColorHint="@android:color/darker_gray"-->
+<!--        android:textSize="@dimen/_11sdp">-->
+
+<!--    </EditText>-->
+
+    <TextView
         android:id="@+id/edt_comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -187,7 +208,8 @@
         android:textColorHint="@android:color/darker_gray"
         android:textSize="@dimen/_11sdp">
 
-    </EditText>
+    </TextView>
+
 
     <Space
         android:layout_width="match_parent"
