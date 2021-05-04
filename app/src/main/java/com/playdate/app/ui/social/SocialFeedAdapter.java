@@ -138,12 +138,9 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 }
             });
 
-            userViewHolder.iv_post_image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+            userViewHolder.iv_post_image.setOnClickListener(view -> {
 //                    OnInnerFragmentClicks ref = (OnInnerFragmentClicks) mContext;
 //                    ref.loadProfile();
-                }
             });
 
             Picasso.get().load(lst.get(position).getImage())
@@ -160,25 +157,20 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 userViewHolder.iv_heart.setImageResource(R.drawable.heart);
             }
 
-            userViewHolder.iv_heart.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (lst.get(position).HeartSelected) {
-                        userViewHolder.iv_heart.setImageResource(R.drawable.heart);
-                        lst.get(position).setTapCount(0);
-                        lst.get(position).setHeartSelected(false);
-                        notifyDataSetChanged();
-                    } else {
-                        userViewHolder.iv_heart.setImageResource(R.drawable.red_heart);
-                    }
+            userViewHolder.iv_heart.setOnClickListener(view -> {
+                if (lst.get(position).HeartSelected) {
+                    userViewHolder.iv_heart.setImageResource(R.drawable.heart);
+                    lst.get(position).setTapCount(0);
+                    lst.get(position).setHeartSelected(false);
+                    notifyDataSetChanged();
+                } else {
+                    userViewHolder.iv_heart.setImageResource(R.drawable.red_heart);
                 }
             });
-            userViewHolder.card_image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+            userViewHolder.card_image.setOnClickListener(view -> {
 
-                    if (!lst.get(position).isHeartSelected()) {
-                        if (lst.get(position).getTapCount() == 1) {
+                if (!lst.get(position).isHeartSelected()) {
+                    if (lst.get(position).getTapCount() == 1) {
 //                        MediaPlayer mp;
 //                        mp = MediaPlayer.create(mContext, R.raw.sound);
 //                        int m4 = (int) mContext.getResources().getDimension(R.dimen._120sdp);
@@ -192,16 +184,16 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 //                            mp = MediaPlayer.create(mContext, R.raw.sound);
 //                        } mp.start();
 
-                            lst.get(position).setHeartSelected(true);
-                            userViewHolder.iv_heart_red.setVisibility(View.VISIBLE);
-                            animateHeart(userViewHolder.iv_heart_red, userViewHolder);
-                        } else {
-                            lst.get(position).setTapCount(lst.get(position).getTapCount() + 1);
-                            userViewHolder.iv_heart_red.setVisibility(View.GONE);
-                        }
-
+                        lst.get(position).setHeartSelected(true);
+                        userViewHolder.iv_heart_red.setVisibility(View.VISIBLE);
+                        animateHeart(userViewHolder.iv_heart_red, userViewHolder);
                     } else {
                         lst.get(position).setTapCount(lst.get(position).getTapCount() + 1);
+                        userViewHolder.iv_heart_red.setVisibility(View.GONE);
+                    }
+
+                } else {
+                    lst.get(position).setTapCount(lst.get(position).getTapCount() + 1);
 //                        if (lst.get(position).getTapCount() == 2) {
 //                            lst.get(position).setTapCount(0);
 //                            lst.get(position).setHeartSelected(false);
@@ -209,7 +201,6 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 //                        } else {
 //
 //                        }
-                    }
                 }
             });
 

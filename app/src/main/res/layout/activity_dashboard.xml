@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:id="@+id/rl_main"
     tools:context=".MainActivity">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -48,6 +49,19 @@
 
                 </LinearLayout>
 
+                <ImageView
+
+                    android:id="@+id/iv_plus"
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="@dimen/_15sdp"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:src="@drawable/plus"
+                    android:visibility="gone">
+
+
+                </ImageView>
+
 
                 <LinearLayout
                     android:id="@+id/ll_mainMenu"
@@ -60,9 +74,9 @@
                     android:orientation="horizontal">
 
                     <LinearLayout
+                        android:id="@+id/ll_option_love"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/ll_option_love"
                         android:layout_marginLeft="@dimen/_20sdp"
                         android:layout_marginRight="@dimen/_20sdp"
                         android:gravity="center"
@@ -167,10 +181,10 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/txt_payment"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:id="@+id/txt_payment"
                             android:layout_margin="@dimen/_5sdp"
                             android:paddingLeft="@dimen/_10sdp"
                             android:paddingTop="@dimen/_5sdp"
@@ -236,6 +250,54 @@
         </androidx.core.widget.NestedScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+    <LinearLayout
+
+        android:id="@+id/ll_profile_drop_menu"
+        android:layout_width="@dimen/_35sdp"
+        android:layout_height="@dimen/_120sdp"
+        android:layout_marginLeft="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:gravity="center"
+        android:background="@drawable/menu_button"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+
+        <ImageView
+            android:layout_width="@dimen/_10sdp"
+            android:layout_height="@dimen/_10sdp"
+            android:layout_margin="@dimen/_5sdp"
+            android:id="@+id/iv_cancel"
+            android:src="@drawable/cancel">
+
+        </ImageView>
+
+        <ImageView
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
+            android:layout_margin="@dimen/_5sdp"
+            android:src="@drawable/gallery">
+
+        </ImageView>
+
+        <ImageView
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
+            android:layout_margin="@dimen/_5sdp"
+            android:id="@+id/iv_create_ano_ques"
+            android:src="@drawable/question">
+
+        </ImageView>
+
+        <ImageView
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
+            android:layout_margin="@dimen/_5sdp"
+            android:src="@drawable/cart">
+
+        </ImageView>
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/bottomNavigationView"
@@ -247,16 +309,16 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/ll_love_bottom"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:id="@+id/ll_love_bottom"
             android:layout_weight="1"
             android:gravity="center">
 
             <ImageView
-                android:layout_width="@dimen/_30sdp"
                 android:id="@+id/iv_love"
+                android:layout_width="@dimen/_30sdp"
                 android:layout_height="@dimen/_30sdp"
                 android:background="@drawable/rectangle_back"
                 android:padding="@dimen/_3sdp"
@@ -279,29 +341,28 @@
 
 
         <LinearLayout
+            android:id="@+id/ll_profile_support"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:id="@+id/ll_profile_support"
             android:layout_weight="1"
             android:gravity="center">
 
             <ImageView
+                android:id="@+id/iv_profile_sett"
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="@dimen/_30sdp"
-                android:id="@+id/iv_profile_sett"
                 android:padding="@dimen/_3sdp"
                 android:src="@drawable/tech_support" />
         </LinearLayout>
 
 
-
         <LinearLayout
+            android:id="@+id/ll_profile_insta"
             android:layout_width="0dp"
             android:layout_height="@dimen/_30sdp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:id="@+id/ll_profile_insta"
             android:gravity="center">
 
             <ImageView

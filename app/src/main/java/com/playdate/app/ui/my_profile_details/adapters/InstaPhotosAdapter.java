@@ -1,14 +1,17 @@
 package com.playdate.app.ui.my_profile_details.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
+import com.playdate.app.ui.my_profile_details.FragInstaLikeProfile;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -16,8 +19,13 @@ import java.util.ArrayList;
 public class InstaPhotosAdapter extends RecyclerView.Adapter<InstaPhotosAdapter.ViewHolder> {
 
     ArrayList<String> lst = new ArrayList();
+    FragInstaLikeProfile fragInstaLikeProfile;
 
-    public InstaPhotosAdapter() {
+    public static boolean isLocked = true;
+    Context mContext;
+
+    public InstaPhotosAdapter(FragInstaLikeProfile fragInstaLikeProfile) {
+        this.fragInstaLikeProfile = fragInstaLikeProfile;
         lst.add("https://i1.sndcdn.com/artworks-mZMWFyprEwuWmaHG-vMwonQ-t500x500.jpg");
         lst.add("https://i.pinimg.com/originals/c6/5a/e9/c65ae905eb4e390818effae29093ec2e.jpg");
         lst.add("https://images.saymedia-content.com/.image/t_share/MTc0MDkwNjUxNDc2OTYwODM0/5-instagram-models-you-should-be-following.png");
@@ -38,18 +46,30 @@ public class InstaPhotosAdapter extends RecyclerView.Adapter<InstaPhotosAdapter.
         lst.add("https://ar.justinfeed.com/img/images_13/15-insta-models-who-are-celeb-doppelgngers_9.jpg");
 
     }
+
 
     @NonNull
     @Override
     public InstaPhotosAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_photos, null);
+        mContext = parent.getContext();
         return new InstaPhotosAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull InstaPhotosAdapter.ViewHolder holder, int position) {
-        Picasso.get().load(lst.get(position))
-                .into(holder.iv_payment);
+        if (isLocked) {
+            holder.iv_payment.setImageResource(R.drawable.pink_lock);
+           // holder.iv_chat.setImageResource(R.drawable.chat_black);
+            holder.card_grid.setCardBackgroundColor(mContext.getResources().getColor(R.color.black_back));
+            holder.iv_payment.getLayoutParams().width= (int) mContext.getResources().getDimension(R.dimen._30sdp);
+            holder.iv_payment.getLayoutParams().height= (int) mContext.getResources().getDimension(R.dimen._30sdp);
+        } else {
+            Picasso.get().load(lst.get(position))
+                    .into(holder.iv_payment);
+            holder.card_grid.setCardBackgroundColor(mContext.getResources().getColor(R.color.white));
+        }
+
     }
 
     @Override
@@ -59,10 +79,17 @@ public class InstaPhotosAdapter extends RecyclerView.Adapter<InstaPhotosAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView iv_payment;
+//        ImageView iv_chat;
+        CardView card_grid;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             iv_payment = itemView.findViewById(R.id.iv_payment);
+//            iv_chat = itemView.findViewById(R.id.iv_chat);
+            card_grid = itemView.findViewById(R.id.card_grid);
+            iv_payment.setOnClickListener(view -> fragInstaLikeProfile.onTypeChange(1));
         }
     }
 }
+
+

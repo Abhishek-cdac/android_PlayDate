@@ -19,7 +19,7 @@ import com.playdate.app.ui.register.profile.UploadProfileActivity;
 import com.playdate.app.ui.register.username.UserNameActivity;
 
 public class FragMyProfileDetails extends Fragment implements View.OnClickListener {
-
+    ImageView iv_dark_mode;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -27,12 +27,14 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
         ImageView profile_image = view.findViewById(R.id.profile_image);
         ImageView iv_edit_username = view.findViewById(R.id.iv_edit_username);
         ImageView iv_interest = view.findViewById(R.id.iv_interest);
+        iv_dark_mode = view.findViewById(R.id.iv_dark_mode);
         TextView txt_change_photo = view.findViewById(R.id.txt_change_photo);
         profile_image.setOnClickListener(this);
         iv_edit_username.setOnClickListener(this);
         txt_change_photo.setOnClickListener(this);
         iv_edit_username.setOnClickListener(this);
         iv_interest.setOnClickListener(this);
+        iv_dark_mode.setOnClickListener(this);
         return view;
 
     }
@@ -52,6 +54,15 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
             Intent mIntent = new Intent(getActivity(), InterestActivity.class);
             mIntent.putExtra("fromProfile", true);
             startActivityForResult(mIntent, 409);
+        }else if(id==R.id.iv_dark_mode){
+            if(iv_dark_mode.getRotation()==180){
+                iv_dark_mode.setImageResource(R.drawable.dark_mode);
+                iv_dark_mode.setRotation(0);
+            }else{
+                iv_dark_mode.setImageResource(R.drawable.dark_mode_sel);
+                iv_dark_mode.setRotation(180);
+            }
+
         }
     }
 

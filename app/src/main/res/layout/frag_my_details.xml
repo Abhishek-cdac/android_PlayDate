@@ -302,6 +302,7 @@
             android:id="@+id/iv_dark_mode"
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
+
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:src="@drawable/dark_mode">

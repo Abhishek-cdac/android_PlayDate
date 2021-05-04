@@ -6,6 +6,7 @@
     <color name="teal_700">#D13A6F</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="black_back">#444544</color>
     <color name="blue_grey">#625095</color>
     <color name="blue_grey1">#643C6A</color>
     <color name="blue_grey2">#8F7A92</color>
@@ -22,4 +23,19 @@
     <color name="color_option_menu">#FF3990</color>
     <color name="filter_label_normal">#8A8889</color>
     <color name="filter_label_selected">#221F20</color>
+
+
+    <color name="color_violet">#1D1375</color>
+    <color name="color_violet1">#C50AF2</color>
+    <color name="color_green_fresh">#65FF00</color>
+    <color name="color_yellow">#E6FF00</color>
+    <color name="color_blue_ligth">#3AC7D1</color>
+    <color name="color_brown">#D1763A</color>
+    <color name="color_blue">#3A3AD1</color>
+    <color name="color_grey">#989798</color>
+    <color name="color_green_dark">#117106</color>
+    <color name="color_red">#D13A3A</color>
+
+
+
 </resources>

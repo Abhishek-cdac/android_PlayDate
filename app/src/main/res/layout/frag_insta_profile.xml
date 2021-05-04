@@ -71,6 +71,14 @@
             tools:ignore="MissingConstraints" />
 
 
+        <ImageView
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_play_button">
+
+        </ImageView>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -104,19 +112,46 @@
     </RelativeLayout>
 
 
-    <TextView
-        android:id="@+id/txt_change_photo"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginLeft="@dimen/_5sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:fontFamily="@font/lato_bold"
-        android:gravity="center"
-        android:text="1950 Points"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_12sdp"
-        android:textStyle="bold" />
+        android:layout_marginLeft="@dimen/_20sdp"
+        android:layout_marginRight="@dimen/_20sdp">
+
+        <ImageView
+            android:id="@+id/iv_send_request"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/sent_request">
+
+        </ImageView>
+
+        <ImageView
+            android:id="@+id/iv_chat"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/chat_black">
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/txt_change_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/lato_bold"
+            android:gravity="center"
+            android:text="1950 Points"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
 
 
     <TextView

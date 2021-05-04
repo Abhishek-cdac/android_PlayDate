@@ -121,6 +121,8 @@
         <activity
             android:name=".ui.restaurant.RestaurantActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".ui.playvideo.VideoPlayActivity" />
+        <activity android:name=".ui.anonymous_question.AnoQuesCreateActivity" />
 
 
     </application>

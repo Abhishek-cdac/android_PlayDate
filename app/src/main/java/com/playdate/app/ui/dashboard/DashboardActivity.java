@@ -1,9 +1,12 @@
 package com.playdate.app.ui.dashboard;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -16,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.playdate.app.R;
+import com.playdate.app.ui.anonymous_question.AnoQuesCreateActivity;
 import com.playdate.app.ui.card_swipe.FragCardSwipe;
 import com.playdate.app.ui.dashboard.adapter.FriendAdapter;
 import com.playdate.app.ui.dashboard.fragments.FragLanding;
@@ -24,6 +28,7 @@ import com.playdate.app.ui.my_profile_details.FragInstaLikeProfile;
 import com.playdate.app.ui.my_profile_details.FragMyProfileDetails;
 import com.playdate.app.ui.my_profile_details.FragMyProfilePayments;
 import com.playdate.app.ui.my_profile_details.FragMyProfilePersonal;
+import com.playdate.app.ui.register.relationship.RelationActivity;
 import com.playdate.app.ui.social.FragSocialFeed;
 
 public class DashboardActivity extends AppCompatActivity implements OnInnerFragmentClicks, View.OnClickListener {
@@ -36,6 +41,9 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     TextView txt_personal;
     ImageView iv_love;
     ImageView iv_profile_sett;
+    ImageView iv_plus;
+    ImageView iv_cancel;
+    ImageView iv_create_ano_ques;
 
     SwipeRefreshLayout mSwipeRefreshLayout;
     LinearLayout ll_mainMenu;
@@ -45,12 +53,15 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     LinearLayout ll_profile_support;
     LinearLayout ll_love_bottom;
     LinearLayout ll_profile_insta;
+    LinearLayout ll_profile_drop_menu;
+    RelativeLayout rl_main;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         ll_profile_insta = findViewById(R.id.ll_profile_insta);
+        rl_main = findViewById(R.id.rl_main);
         ll_mainMenu = findViewById(R.id.ll_mainMenu);
         ll_friends = findViewById(R.id.ll_friends);
         ll_love_bottom = findViewById(R.id.ll_love_bottom);
@@ -62,15 +73,23 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         txt_payment = findViewById(R.id.txt_payment);
         txt_account = findViewById(R.id.txt_account);
         txt_personal = findViewById(R.id.txt_personal);
+        iv_plus = findViewById(R.id.iv_plus);
         iv_love = findViewById(R.id.iv_love);
         iv_profile_sett = findViewById(R.id.iv_profile_sett);
+        ll_profile_drop_menu = findViewById(R.id.ll_profile_drop_menu);
+        iv_cancel = findViewById(R.id.iv_cancel);
+        iv_create_ano_ques = findViewById(R.id.iv_create_ano_ques);
 
+        iv_cancel.setOnClickListener(this);
         ll_profile_insta.setOnClickListener(this);
+        iv_plus.setOnClickListener(this);
         txt_payment.setOnClickListener(this);
         txt_account.setOnClickListener(this);
         txt_personal.setOnClickListener(this);
         ll_profile_support.setOnClickListener(this);
         ll_love_bottom.setOnClickListener(this);
+        iv_create_ano_ques.setOnClickListener(this);
+
         fm = getSupportFragmentManager();
         ft = fm.beginTransaction();
         mSwipeRefreshLayout = findViewById(R.id.swipeToRefresh);
@@ -133,6 +152,16 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 //        ft.addToBackStack("tags");
         ft.commitAllowingStateLoss();
     }
+
+//    @Override
+//    public boolean dispatchTouchEvent(MotionEvent ev) {
+//        if (ll_profile_drop_menu.getVisibility()==View.VISIBLE){
+//            ll_profile_drop_menu.setVisibility(View.GONE);
+//            iv_plus.setVisibility(View.VISIBLE);
+//            return true;
+//        }
+//        return super.dispatchTouchEvent(ev);
+//    }
 
     @Override
     public void loadProfile() {
@@ -201,14 +230,49 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
             ReplaceFrag(new FragLanding());
         } else if (id == R.id.ll_profile_insta) {
+            iv_plus.setVisibility(View.VISIBLE);
             ll_option_love.setVisibility(View.GONE);
             ll_friends.setVisibility(View.GONE);
             ll_profile_menu.setVisibility(View.GONE);
-
-            ReplaceFrag(new FragInstaLikeProfile());
+            profile = new FragInstaLikeProfile();
+            ReplaceFrag(profile);
+        } else if (id == R.id.iv_plus) {
+            ll_profile_drop_menu.setVisibility(View.VISIBLE);
+            iv_plus.setVisibility(View.GONE);
+        }else if(id==R.id.iv_cancel){
+            ll_profile_drop_menu.setVisibility(View.GONE);
+            iv_plus.setVisibility(View.VISIBLE);
+        }else if(id==R.id.iv_create_ano_ques){
+            ll_profile_drop_menu.setVisibility(View.GONE);
+            iv_plus.setVisibility(View.VISIBLE);
+            startActivity(new Intent(DashboardActivity.this, AnoQuesCreateActivity.class));
         }
 
     }
+
+    FragInstaLikeProfile profile;
+    int count = 0;
+
+    @Override
+    public void onBackPressed() {
+
+
+        if (null != profile) {
+            if (count == 0) {
+                count = 1;
+                profile.onTypeChange(0);
+            } else {
+                super.onBackPressed();
+            }
+
+        } else {
+            super.onBackPressed();
+        }
+
+
+    }
+
+
 }
 
 

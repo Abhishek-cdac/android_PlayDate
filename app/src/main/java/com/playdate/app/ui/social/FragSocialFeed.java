@@ -22,7 +22,6 @@ public class FragSocialFeed extends Fragment {
     public static final int ANONYMUSQUESTION = 2;
     public static final int ADDS = 3;
     RecyclerView recycler_view_feed;
-    ArrayList<SocialFeed> lst = new ArrayList<>();
 
     @Nullable
     @Override

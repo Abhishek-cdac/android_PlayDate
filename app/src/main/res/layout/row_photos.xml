@@ -7,16 +7,19 @@
     >
 
     <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/_100sdp"
         android:layout_margin="@dimen/_2sdp"
         android:padding="@dimen/_2sdp"
+        android:id="@+id/card_grid"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="@dimen/_15sdp">
 
         <ImageView
             android:id="@+id/iv_payment"
             android:scaleType="fitXY"
+            android:layout_gravity="center"
+            android:foregroundGravity="center"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
