@@ -44,7 +44,6 @@ public class UserNameActivity extends AppCompatActivity {
                             .class));
                 }
 
-
             }
         });
         userNameViewModel.OnUserNameInput().observe(this, new Observer<String>() {

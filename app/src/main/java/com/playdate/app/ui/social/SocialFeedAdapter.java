@@ -1,5 +1,6 @@
 package com.playdate.app.ui.social;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
@@ -15,11 +16,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
 import com.playdate.app.ui.anonymous_question.AnonymousQuestionActivity;
+import com.playdate.app.ui.anonymous_question.AnonymousBottomSheet;
+import com.playdate.app.ui.anonymous_question.CommentBottomSheet;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.squareup.picasso.Picasso;
 
@@ -30,6 +35,7 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
 
     private Context mContext;
+
     @Override
     public int getItemCount() {
         return lst.size();
@@ -105,7 +111,7 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         View view = null;
         RecyclerView.ViewHolder viewHolder = null;
-        mContext=parent.getContext();
+        mContext = parent.getContext();
         if (viewType == FragSocialFeed.USER) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_feed_type_1, parent, false);
             viewHolder = new ViewHolderUser(view);
@@ -261,9 +267,12 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         ImageView iv_heart_red;
         ImageView iv_profile;
         ImageView iv_heart;
-        ImageView iv_post_image;
+        ImageView iv_msg;
+        ImageView iv_post_image, iv_more_options;
         CardView card_image;
         TextView name_friend;
+        //        EditText et_comment;
+        TextView et_comment;
 
         public ViewHolderUser(@NonNull View itemView) {
             super(itemView);
@@ -273,6 +282,22 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             iv_post_image = itemView.findViewById(R.id.iv_post_image);
             card_image = itemView.findViewById(R.id.card_image);
             name_friend = itemView.findViewById(R.id.name_friend);
+            iv_msg = itemView.findViewById(R.id.iv_msg);
+            et_comment = itemView.findViewById(R.id.edt_comment);
+
+            iv_more_options = itemView.findViewById(R.id.friend_request);
+            iv_more_options.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FragmentManager fragmentManager = ((AppCompatActivity) mContext).getSupportFragmentManager();
+                    CommentBottomSheet sheet = new CommentBottomSheet();
+                    sheet.show(fragmentManager, "comment bootom sheet");
+                }
+            });
+
+            iv_msg.setOnClickListener(v -> v.getContext().startActivity(new Intent(v.getContext(), AnonymousQuestionActivity.class)));
+            et_comment.setOnClickListener(v -> v.getContext().startActivity(new Intent(v.getContext(), AnonymousQuestionActivity.class)));
+
         }
     }
 
@@ -333,7 +358,16 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             name_friend = itemView.findViewById(R.id.name_friend);
             respomd = itemView.findViewById(R.id.respond);
 
-            respomd.setOnClickListener(v -> v.getContext().startActivity(new Intent(v.getContext(), AnonymousQuestionActivity.class)));
+            respomd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Activity origin = (Activity) mContext;
+                    Intent mIntent = new Intent(origin, AnonymousQuestionActivity.class);
+                    mIntent.putExtra("Anonymous", true);
+                    origin.startActivityForResult(mIntent, 410);
+                }
+            });
+//            respomd.setOnClickListener(v -> v.getContext().startActivity(new Intent(v.getContext(), AnonymousQuestionActivity.class)));
         }
     }
 }
