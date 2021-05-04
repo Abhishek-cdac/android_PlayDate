@@ -57,7 +57,7 @@
                 </activity>
 
         <activity
-            android:name=".ui.anonymous_question.AnonymousQuestionActivity"
+            android:name=".ui.dashboard.DashboardActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -102,11 +102,11 @@
         <activity
             android:name=".ui.onboarding.GetStarted"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.dashboard.DashboardActivity"
-            android:screenOrientation="portrait">
+<!--        <activity-->
+<!--            android:name=".ui.dashboard.DashboardActivity"-->
+<!--            android:screenOrientation="portrait">-->
 
-        </activity>
+<!--        </activity>-->
         <activity
             android:name=".ui.record_video.RecordVideoActivity"
             android:screenOrientation="portrait" />
