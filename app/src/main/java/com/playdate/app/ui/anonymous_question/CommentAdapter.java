@@ -30,13 +30,15 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 //    int selected_index = -1;
     Context mContext;
 
-    public CommentAdapter() {
+
+    onCommentDelete ref;
+
+    public CommentAdapter(AnonymousQuestionActivity activity) {
+        ref = activity;
         list.add(new Comments("MyronEvans", "hey", false, false));
         list.add(new Comments("MyronEvans", "all goood, whats up?", false, false));
         list.add(new Comments("MyronEvans", "helllo everyone", false, false));
         list.add(new Comments("MyronEvans", "hey", false, false));
-
-
     }
 
     @NonNull
@@ -98,29 +100,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             delete = itemView.findViewById(R.id.dustbin);
             relativeLayout = itemView.findViewById(R.id.card_comment);
             name.setTypeface(Typeface.DEFAULT_BOLD);
-//            relativeLayout.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                   int selected_index = getAdapterPosition();
-//                    if (!list.get(selected_index).isSelected) {
-//
-//                        for (int i = 0; i < list.size(); i++) {
-//                            if (selected_index != i) {
-//                                list.get(i).setSelected(false);
-//                            } else {
-//                                list.get(selected_index).setSelected(true);
-//                            }
-//
-//                        }
-//
-//                        notifyDataSetChanged();
-//                    } else {
-//                        list.get(selected_index).setSelected(false);
-//                        notifyDataSetChanged();
-//                    }
-//
-//                }
-//            });
 
 
             delete.setOnClickListener(new View.OnClickListener() {
@@ -130,30 +109,28 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                     list.get(selected_index).setDeleted(true);
 
                     commentdeleted(selected_index);
+
                 }
             });
-            relativeLayout.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    int selected_index = getAdapterPosition();
-                    if (!list.get(selected_index).isSelected) {
+            relativeLayout.setOnLongClickListener(v -> {
+                int selected_index = getAdapterPosition();
+                if (!list.get(selected_index).isSelected) {
 
-                        for (int i = 0; i < list.size(); i++) {
-                            if (selected_index != i) {
-                                list.get(i).setSelected(false);
-                            } else {
-                                list.get(selected_index).setSelected(true);
-                            }
-
+                    for (int i = 0; i < list.size(); i++) {
+                        if (selected_index != i) {
+                            list.get(i).setSelected(false);
+                        } else {
+                            list.get(selected_index).setSelected(true);
                         }
 
-                        notifyDataSetChanged();
-                    } else {
-                        list.get(selected_index).setSelected(false);
-                        notifyDataSetChanged();
                     }
-                    return true;
+
+                    notifyDataSetChanged();
+                } else {
+                    list.get(selected_index).setSelected(false);
+                    notifyDataSetChanged();
                 }
+                return true;
             });
 
 
@@ -169,6 +146,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             deleted.show(fragmentManager, "comment deleted");
             list.remove(selected_index);
             notifyDataSetChanged();
+            ref.ChangeCount(list.size());
         } else {
             //code for undo
         }

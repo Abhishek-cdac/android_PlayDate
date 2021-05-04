@@ -135,6 +135,11 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     }
 
     @Override
+    public void loadProfile() {
+        ll_profile_insta.performClick();
+    }
+
+    @Override
     public void onClick(View view) {
 
         int id = view.getId();

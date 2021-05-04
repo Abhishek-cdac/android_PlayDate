@@ -1,5 +1,6 @@
 package com.playdate.app.ui.social;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
 import com.playdate.app.ui.anonymous_question.AnonymousQuestionActivity;
+import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ import java.util.ArrayList;
 public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
+    private Context mContext;
     @Override
     public int getItemCount() {
         return lst.size();
@@ -102,7 +105,7 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         View view = null;
         RecyclerView.ViewHolder viewHolder = null;
-
+        mContext=parent.getContext();
         if (viewType == FragSocialFeed.USER) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_feed_type_1, parent, false);
             viewHolder = new ViewHolderUser(view);
@@ -126,6 +129,22 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         if (holder.getItemViewType() == FragSocialFeed.USER) {
             ViewHolderUser userViewHolder = (ViewHolderUser) holder;
             userViewHolder.name_friend.setText(lst.get(position).getUserName());
+
+            userViewHolder.name_friend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    OnInnerFragmentClicks ref = (OnInnerFragmentClicks) mContext;
+                    ref.loadProfile();
+                }
+            });
+
+            userViewHolder.iv_post_image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    OnInnerFragmentClicks ref = (OnInnerFragmentClicks) mContext;
+                    ref.loadProfile();
+                }
+            });
 
             Picasso.get().load(lst.get(position).getImage())
                     .placeholder(R.drawable.cupertino_activity_indicator)
@@ -314,12 +333,7 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             name_friend = itemView.findViewById(R.id.name_friend);
             respomd = itemView.findViewById(R.id.respond);
 
-            respomd.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    v.getContext().startActivity(new Intent(v.getContext(), AnonymousQuestionActivity.class));
-                }
-            });
+            respomd.setOnClickListener(v -> v.getContext().startActivity(new Intent(v.getContext(), AnonymousQuestionActivity.class)));
         }
     }
 }

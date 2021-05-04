@@ -23,7 +23,7 @@ public class FragCommentDeleted extends BottomSheetDialogFragment {
         undo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommentAdapter adapter = new CommentAdapter();
+//                CommentAdapter adapter = new CommentAdapter();
                 //
             }
         });
