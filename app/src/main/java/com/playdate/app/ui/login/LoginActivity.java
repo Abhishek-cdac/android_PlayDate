@@ -218,7 +218,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         try {
             GoogleSignInAccount account = task.getResult(ApiException.class);
             Log.d("Email ", account.getEmail());
-            Log.d("Name ", account.getDisplayName());
+            Log.d("Name of user ", account.getDisplayName());
 
 
         } catch (ApiException e) {

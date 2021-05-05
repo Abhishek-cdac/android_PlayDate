@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:text="@string/post_on"
+            android:text="@string/post_notification"
             android:textColor="@color/white"
             android:textSize="@dimen/_12sdp" />
 
@@ -27,7 +27,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_gravity="center"
             android:src="@drawable/ic_bookmark" />
 
     </RelativeLayout>
@@ -100,7 +99,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_gravity="center"
             app:track="@drawable/track" />
 
     </RelativeLayout>

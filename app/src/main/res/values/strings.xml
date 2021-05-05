@@ -87,6 +87,7 @@
     <string name="undo">Undo</string>
     <string name="post_notification">Turn Post Notification ON</string>
     <string name="post_on">Turn Post ON For This User</string>
+    <string name="text_here">Type your text</string>
 
 
 </resources>
