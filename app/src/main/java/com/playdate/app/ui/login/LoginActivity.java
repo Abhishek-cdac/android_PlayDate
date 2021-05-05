@@ -38,16 +38,20 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.Task;
 import com.playdate.app.R;
+import com.playdate.app.data.api.GetDataService;
+import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.databinding.ActivityLoginBinding;
 import com.playdate.app.databinding.ActivityOnboardingBinding;
+import com.playdate.app.model.LoginResponse;
 import com.playdate.app.model.LoginUser;
+import com.playdate.app.model.RegisterResult;
 import com.playdate.app.ui.dashboard.DashboardActivity;
 import com.playdate.app.ui.forgot_password.ForgotPassword;
 import com.playdate.app.ui.onboarding.OnBoardingActivity;
 import com.playdate.app.ui.onboarding.OnBoardingViewModel;
 import com.playdate.app.ui.register.RegisterActivity;
 import com.playdate.app.util.common.CommonClass;
-import com.twitter.sdk.android.core.Callback;
+import com.playdate.app.util.common.TransparentProgressDialog;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthToken;
@@ -60,7 +64,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.playdate.app.data.api.RetrofitClientInstance.DEVICE_TYPE;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
@@ -73,11 +85,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     private ActivityLoginBinding binding;
     private static final int RC_SIGN_IN = 1;
+    CommonClass clsCommon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
+        clsCommon = CommonClass.getInstance();
         FacebookSdk.sdkInitialize(this);
         callbackManager = CallbackManager.Factory.create();
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -116,8 +129,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 new CommonClass().showDialogMsg(LoginActivity.this, "PlayDate", "Enter at least 6 digit password", "Ok");
                 binding.loginPassword.requestFocus();
             } else {
-                startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
-                finish();
+
+                callLoginAPI(loginUser);
+
+
             }
 
         });
@@ -178,6 +193,50 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     }
 
+    private void callLoginAPI(LoginUser loginUser) {
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("email", loginUser.getStrEmailAddress());
+        hashMap.put("password", loginUser.getStrPassword());
+        hashMap.put("deviceID","12345");//Hardcode
+        hashMap.put("deviceType", DEVICE_TYPE);
+        hashMap.put("deviceToken", "12345");//Hardc
+        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
+        pd.show();
+        Call<LoginResponse> call = service.login(hashMap);
+        call.enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                pd.cancel();
+                if(response.code()==200){
+                    if (response.body().getStatus() == 1) {
+                        startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
+                        finish();
+                    } else {
+                        clsCommon.showDialogMsg(LoginActivity.this, "PlayDate", response.body().getMessage(), "Ok");
+                    }
+                }else{
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        clsCommon.showDialogMsg(LoginActivity.this, "PlayDate", jObjError.getString("message").toString(), "Ok");
+                    } catch (Exception e) {
+                        Toast.makeText(LoginActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                t.printStackTrace();
+                pd.cancel();
+                Toast.makeText(LoginActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     private void calltoGoogle() {
         Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
@@ -219,6 +278,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             GoogleSignInAccount account = task.getResult(ApiException.class);
             Log.d("Email ", account.getEmail());
             Log.d("Name ", account.getDisplayName());
+            Log.d("Photo ", account.getPhotoUrl().toString());
 
 
         } catch (ApiException e) {

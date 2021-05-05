@@ -42,6 +42,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     ImageView iv_love;
     ImageView iv_profile_sett;
     ImageView iv_plus;
+    ImageView iv_play_date_logo;
     ImageView iv_cancel;
     ImageView iv_create_ano_ques;
 
@@ -54,6 +55,13 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     LinearLayout ll_love_bottom;
     LinearLayout ll_profile_insta;
     LinearLayout ll_profile_drop_menu;
+
+    LinearLayout ll_take_photo;
+    LinearLayout ll_upload_photo;
+    LinearLayout ll_Record_video;
+    LinearLayout ll_upload_video;
+
+
     RelativeLayout rl_main;
 
     @Override
@@ -74,11 +82,17 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         txt_account = findViewById(R.id.txt_account);
         txt_personal = findViewById(R.id.txt_personal);
         iv_plus = findViewById(R.id.iv_plus);
+        iv_play_date_logo = findViewById(R.id.iv_play_date_logo);
         iv_love = findViewById(R.id.iv_love);
         iv_profile_sett = findViewById(R.id.iv_profile_sett);
         ll_profile_drop_menu = findViewById(R.id.ll_profile_drop_menu);
         iv_cancel = findViewById(R.id.iv_cancel);
         iv_create_ano_ques = findViewById(R.id.iv_create_ano_ques);
+
+        ll_take_photo = findViewById(R.id.ll_take_photo);
+        ll_upload_photo = findViewById(R.id.ll_upload_photo);
+        ll_Record_video = findViewById(R.id.ll_Record_video);
+        ll_upload_video = findViewById(R.id.ll_upload_video);
 
         iv_cancel.setOnClickListener(this);
         ll_profile_insta.setOnClickListener(this);
@@ -89,6 +103,11 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         ll_profile_support.setOnClickListener(this);
         ll_love_bottom.setOnClickListener(this);
         iv_create_ano_ques.setOnClickListener(this);
+
+        ll_take_photo.setOnClickListener(this);
+        ll_upload_photo.setOnClickListener(this);
+        ll_Record_video.setOnClickListener(this);
+        ll_upload_video.setOnClickListener(this);
 
         fm = getSupportFragmentManager();
         ft = fm.beginTransaction();
@@ -239,10 +258,12 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         } else if (id == R.id.iv_plus) {
             ll_profile_drop_menu.setVisibility(View.VISIBLE);
             iv_plus.setVisibility(View.GONE);
-        }else if(id==R.id.iv_cancel){
+            iv_play_date_logo.setVisibility(View.INVISIBLE);
+        } else if (id == R.id.iv_cancel) {
             ll_profile_drop_menu.setVisibility(View.GONE);
             iv_plus.setVisibility(View.VISIBLE);
-        }else if(id==R.id.iv_create_ano_ques){
+            iv_play_date_logo.setVisibility(View.VISIBLE);
+        } else if (id == R.id.iv_create_ano_ques) {
             ll_profile_drop_menu.setVisibility(View.GONE);
             iv_plus.setVisibility(View.VISIBLE);
             startActivity(new Intent(DashboardActivity.this, AnoQuesCreateActivity.class));

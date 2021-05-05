@@ -21,7 +21,7 @@
     <string name="login">Login</string>
     <string name="submit">Submit</string>
     <string name="REGISTER">REGISTER</string>
-    <string name="Username">Username</string>
+    <string name="Username">Email</string>
     <string name="FullName">Full Name</string>
     <string name="Address">Address</string>
     <string name="PhoneNo">Phone No</string>

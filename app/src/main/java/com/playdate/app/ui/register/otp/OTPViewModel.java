@@ -9,9 +9,6 @@ import androidx.lifecycle.ViewModel;
 
 public class OTPViewModel extends ViewModel {
 
-    void init() {
-        txtOTP.setValue("12345");
-    }
 
     public MutableLiveData<Boolean> RegisterClick = new MutableLiveData<>();
     public MutableLiveData<Boolean> CountDownFinish = new MutableLiveData<>();
@@ -66,13 +63,23 @@ public class OTPViewModel extends ViewModel {
         resendIn.setValue(text);
     }
 
+
     public void startTimer() {
-        new CountDownTimer(60000, 1000) {
+        new CountDownTimer(2 * 60000, 1000) {
             public void onTick(long millisUntilFinished) {
-                if ((millisUntilFinished / 1000) < 10) {
-                    setTimerText("You can resent OTP in 00:0" + (millisUntilFinished / 1000));
+
+                long Sec = millisUntilFinished / 1000;
+                if (Sec < 10) {
+                    setTimerText("You can resent OTP in 00:0" + Sec);
+                } else if (Sec >= 60) {
+                    if ((Sec - 60) < 10) {
+                        setTimerText("You can resent OTP in 01:0" + (Sec - 60));
+                    } else {
+                        setTimerText("You can resent OTP in 01:" + (Sec - 60));
+                    }
+
                 } else {
-                    setTimerText("You can resent OTP in 00:" + (millisUntilFinished / 1000));
+                    setTimerText("You can resent OTP in 00:" + Sec);
                 }
 
             }

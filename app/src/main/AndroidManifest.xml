@@ -27,6 +27,8 @@
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/Theme.PlayDate">
 
 
@@ -52,7 +54,7 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".ui.onboarding.OnBoardingActivity">
+        <activity android:name=".ui.dashboard.DashboardActivity">
 
         </activity>
 
@@ -99,7 +101,7 @@
             android:name=".ui.onboarding.GetStarted"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.dashboard.DashboardActivity"
+            android:name=".ui.onboarding.OnBoardingActivity"
             android:windowSoftInputMode="adjustNothing"
             android:screenOrientation="portrait">
             <intent-filter>

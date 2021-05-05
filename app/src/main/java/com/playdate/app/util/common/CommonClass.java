@@ -1,6 +1,7 @@
 package com.playdate.app.util.common;
 
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,15 @@ import androidx.fragment.app.FragmentActivity;
 import com.playdate.app.R;
 
 public class CommonClass {
+
+    static CommonClass common;
+
+    public static CommonClass getInstance(){
+        if(common==null){
+            common = new CommonClass();
+        }
+        return  common;
+    }
 
     public void hideKeyboard(View view, AppCompatActivity activity) {
 
@@ -35,6 +45,7 @@ public class CommonClass {
         LayoutInflater factory = LayoutInflater.from(activity);
         View view = factory.inflate(R.layout.custom_dialog_yes, null);
         AlertDialog deleteDialog = new AlertDialog.Builder(activity).create();
+        activity.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         deleteDialog.setView(view);
         TextView txt_msg = view.findViewById(R.id.txt_msg);
         txt_msg.setText(body);
@@ -48,5 +59,7 @@ public class CommonClass {
         deleteDialog.show();
 
     }
+
+
 
 }
