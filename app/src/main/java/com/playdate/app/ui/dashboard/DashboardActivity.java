@@ -34,6 +34,8 @@ import com.playdate.app.ui.my_profile_details.FragInstaLikeProfile;
 import com.playdate.app.ui.my_profile_details.FragMyProfileDetails;
 import com.playdate.app.ui.my_profile_details.FragMyProfilePayments;
 import com.playdate.app.ui.my_profile_details.FragMyProfilePersonal;
+import com.playdate.app.ui.notification_screen.FragNotificationActivity;
+import com.playdate.app.ui.register.relationship.RelationActivity;
 import com.playdate.app.ui.social.FragSocialFeed;
 import com.playdate.app.ui.social.upload_media.PostMediaActivity;
 
@@ -149,7 +151,8 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         rv_friends.setAdapter(adapterfriend);
         rv_friends.setLayoutManager(manager);
 
-        Fragment fragOne = new FragLanding();
+//        Fragment fragOne = new FragLanding();
+        Fragment fragOne = new FragNotificationActivity();
 //        Fragment fragOne = new FragMyProfileDetails();
 //        Fragment fragOne = new FragMyProfilePersonal();
 

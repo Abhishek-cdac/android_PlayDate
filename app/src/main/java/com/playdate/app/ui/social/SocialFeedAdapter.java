@@ -130,7 +130,7 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+       public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
         if (holder.getItemViewType() == FragSocialFeed.USER) {
             ViewHolderUser userViewHolder = (ViewHolderUser) holder;
