@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
 
-public class FragNotificationActivity extends Fragment {
+public class FragNotification extends Fragment {
     RecyclerView rv_notification;
 
     @Nullable

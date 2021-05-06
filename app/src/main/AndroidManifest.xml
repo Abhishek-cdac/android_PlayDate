@@ -120,7 +120,6 @@
 
 
         </activity>
-        <activity android:name=".ui.record_video.RecordVideoActivity" />
         <activity
             android:name=".util.customcamera.otalia.VideoPreviewActivity"
             android:screenOrientation="portrait" />

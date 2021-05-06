@@ -20,11 +20,11 @@ import com.playdate.app.databinding.ActivityRestaurantBinding;
 import com.playdate.app.model.LoginResponse;
 import com.playdate.app.model.RestMain;
 import com.playdate.app.ui.dashboard.DashboardActivity;
-import com.playdate.app.ui.record_video.RecordVideoActivity;
 import com.playdate.app.ui.restaurant.adapter.Restaurant;
 import com.playdate.app.ui.restaurant.adapter.RestaurantAdapter;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
+import com.playdate.app.util.customcamera.otalia.CameraActivity;
 import com.playdate.app.util.session.SessionPref;
 
 import org.json.JSONObject;
@@ -133,7 +133,7 @@ public class RestaurantActivity extends AppCompatActivity {
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
                         pref.saveStringKeyVal(SessionPref.LoginUserrestaurants, finalSelected);
-                        startActivity(new Intent(RestaurantActivity.this, RecordVideoActivity
+                        startActivity(new Intent(RestaurantActivity.this, CameraActivity
                                 .class));
                     } else {
                         clsCommon.showDialogMsg(RestaurantActivity.this, "PlayDate", response.body().getMessage(), "Ok");
