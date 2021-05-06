@@ -71,7 +71,7 @@ public class UploadProfileActivity extends AppCompatActivity {
                setResult(407,mIntent);
                finish();
             }else{
-                uploadImage();
+//                uploadImage();
 
                 startActivity(new Intent(UploadProfileActivity.this, InterestActivity
                         .class));
