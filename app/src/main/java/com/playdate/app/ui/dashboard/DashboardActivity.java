@@ -1,8 +1,11 @@
 package com.playdate.app.ui.dashboard;
 
+import android.Manifest;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.view.MotionEvent;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -11,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -28,8 +32,15 @@ import com.playdate.app.ui.my_profile_details.FragInstaLikeProfile;
 import com.playdate.app.ui.my_profile_details.FragMyProfileDetails;
 import com.playdate.app.ui.my_profile_details.FragMyProfilePayments;
 import com.playdate.app.ui.my_profile_details.FragMyProfilePersonal;
-import com.playdate.app.ui.register.relationship.RelationActivity;
 import com.playdate.app.ui.social.FragSocialFeed;
+import com.playdate.app.ui.social.upload_media.PostMediaActivity;
+
+import java.io.IOException;
+
+import static com.playdate.app.ui.register.profile.UploadProfileActivity.ALL_PERMISSIONS_RESULT;
+import static com.playdate.app.ui.register.profile.UploadProfileActivity.PICK_PHOTO_FOR_AVATAR;
+import static com.playdate.app.ui.register.profile.UploadProfileActivity.REQUEST_TAKE_GALLERY_VIDEO;
+import static com.playdate.app.ui.register.profile.UploadProfileActivity.TAKE_PHOTO_CODE;
 
 public class DashboardActivity extends AppCompatActivity implements OnInnerFragmentClicks, View.OnClickListener {
     FragmentManager fm;
@@ -45,6 +56,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     ImageView iv_play_date_logo;
     ImageView iv_cancel;
     ImageView iv_create_ano_ques;
+    ImageView iv_gallery;
 
     SwipeRefreshLayout mSwipeRefreshLayout;
     LinearLayout ll_mainMenu;
@@ -60,6 +72,8 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     LinearLayout ll_upload_photo;
     LinearLayout ll_Record_video;
     LinearLayout ll_upload_video;
+    LinearLayout bottomNavigationView;
+    LinearLayout ll_camera_option;
 
 
     RelativeLayout rl_main;
@@ -87,14 +101,18 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         iv_profile_sett = findViewById(R.id.iv_profile_sett);
         ll_profile_drop_menu = findViewById(R.id.ll_profile_drop_menu);
         iv_cancel = findViewById(R.id.iv_cancel);
+        iv_gallery = findViewById(R.id.iv_gallery);
         iv_create_ano_ques = findViewById(R.id.iv_create_ano_ques);
 
         ll_take_photo = findViewById(R.id.ll_take_photo);
         ll_upload_photo = findViewById(R.id.ll_upload_photo);
         ll_Record_video = findViewById(R.id.ll_Record_video);
         ll_upload_video = findViewById(R.id.ll_upload_video);
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        ll_camera_option = findViewById(R.id.ll_camera_option);
 
         iv_cancel.setOnClickListener(this);
+        iv_gallery.setOnClickListener(this);
         ll_profile_insta.setOnClickListener(this);
         iv_plus.setOnClickListener(this);
         txt_payment.setOnClickListener(this);
@@ -103,7 +121,6 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         ll_profile_support.setOnClickListener(this);
         ll_love_bottom.setOnClickListener(this);
         iv_create_ano_ques.setOnClickListener(this);
-
         ll_take_photo.setOnClickListener(this);
         ll_upload_photo.setOnClickListener(this);
         ll_Record_video.setOnClickListener(this);
@@ -266,13 +283,139 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         } else if (id == R.id.iv_create_ano_ques) {
             ll_profile_drop_menu.setVisibility(View.GONE);
             iv_plus.setVisibility(View.VISIBLE);
+            iv_play_date_logo.setVisibility(View.VISIBLE);
             startActivity(new Intent(DashboardActivity.this, AnoQuesCreateActivity.class));
+        } else if (id == R.id.ll_take_photo) {
+
+            String[] PERMISSIONS = {
+                    Manifest.permission.CAMERA,
+            };
+            ActivityCompat.requestPermissions(DashboardActivity.this,
+                    PERMISSIONS,
+                    ALL_PERMISSIONS_RESULT);
+            openCamera();
+            bottomNavigationView.setVisibility(View.VISIBLE);
+            ll_camera_option.setVisibility(View.GONE);
+        } else if (id == R.id.ll_upload_photo) {
+            String[] PERMISSIONS = {
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+            };
+            ActivityCompat.requestPermissions(DashboardActivity.this,
+                    PERMISSIONS,
+                    ALL_PERMISSIONS_RESULT);
+            pickImage();
+            bottomNavigationView.setVisibility(View.VISIBLE);
+            ll_camera_option.setVisibility(View.GONE);
+            iv_play_date_logo.setVisibility(View.VISIBLE);
+
+        } else if (id == R.id.ll_Record_video) {
+            bottomNavigationView.setVisibility(View.VISIBLE);
+            ll_camera_option.setVisibility(View.GONE);
+            iv_play_date_logo.setVisibility(View.VISIBLE);
+        } else if (id == R.id.ll_upload_video) {
+            String[] PERMISSIONS = {
+                    Manifest.permission.CAMERA,
+            };
+            ActivityCompat.requestPermissions(DashboardActivity.this,
+                    PERMISSIONS,
+                    ALL_PERMISSIONS_RESULT);
+            pickVideo();
+            bottomNavigationView.setVisibility(View.VISIBLE);
+            ll_camera_option.setVisibility(View.GONE);
+            iv_play_date_logo.setVisibility(View.VISIBLE);
+
+        } else if (id == R.id.iv_gallery) {
+            iv_play_date_logo.setVisibility(View.VISIBLE);
+            bottomNavigationView.setVisibility(View.GONE);
+            ll_camera_option.setVisibility(View.VISIBLE);
+            ll_profile_drop_menu.setVisibility(View.GONE);
+            iv_play_date_logo.setVisibility(View.VISIBLE);
         }
+
+
+    }
+
+    public void openCamera() {
+        try {
+            final String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/picFolder/";
+            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(cameraIntent, TAKE_PHOTO_CODE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void pickImage() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        intent.setType("image/*");
+        startActivityForResult(intent, PICK_PHOTO_FOR_AVATAR);
+    }
+
+    public void pickVideo() {
+        Intent intent = new Intent();
+        intent.setType("video/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Video"), REQUEST_TAKE_GALLERY_VIDEO);
 
     }
 
     FragInstaLikeProfile profile;
     int count = 0;
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        try {
+            if (resultCode != RESULT_OK) {
+                return;
+            }
+            if (requestCode == PICK_PHOTO_FOR_AVATAR) {
+                Bitmap bitmap = null;
+                if (data.getData() == null) {
+                    bitmap = (Bitmap) data.getExtras().get("data");
+                } else {
+                    try {
+                        bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
+                if (null != bitmap) {
+                    startActivity(new Intent(DashboardActivity.this, PostMediaActivity.class));
+                }
+
+            } else if (requestCode == TAKE_PHOTO_CODE) {
+
+                Bitmap bitmap = null;
+                if (data.getData() == null) {
+                    bitmap = (Bitmap) data.getExtras().get("data");
+                } else {
+                    try {
+                        bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
+                if (null != bitmap) {
+//                    binding.profileImage.setImageBitmap(bitmap);
+//                    showChange();
+//                    nextPage
+                    startActivity(new Intent(DashboardActivity.this, PostMediaActivity.class));
+                }
+
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public void onBackPressed() {

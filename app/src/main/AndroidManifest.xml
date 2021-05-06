@@ -54,9 +54,9 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".ui.dashboard.DashboardActivity">
-
-        </activity>
+<!--        <activity android:name=".ui.dashboard.DashboardActivity">-->
+<!---->
+<!--        </activity>-->
 
         <activity
             android:name=".ui.anonymous_question.AnonymousQuestionActivity"
@@ -125,6 +125,7 @@
             android:screenOrientation="portrait" />
         <activity android:name=".ui.playvideo.VideoPlayActivity" />
         <activity android:name=".ui.anonymous_question.AnoQuesCreateActivity" />
+        <activity android:name=".ui.social.upload_media.PostMediaActivity" />
 
 
     </application>

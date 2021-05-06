@@ -276,6 +276,7 @@
         <ImageView
             android:layout_width="@dimen/_15sdp"
             android:layout_height="@dimen/_15sdp"
+            android:id="@+id/iv_gallery"
             android:layout_margin="@dimen/_5sdp"
             android:src="@drawable/gallery">
 
@@ -308,7 +309,7 @@
         android:background="@drawable/bottom_bar_shape"
         android:gravity="center"
         android:orientation="horizontal"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <LinearLayout
             android:id="@+id/ll_love_bottom"
@@ -384,6 +385,8 @@
         android:layout_height="@dimen/_65sdp"
         android:layout_alignParentBottom="true"
         android:background="#444444"
+        android:visibility="gone"
+        android:id="@+id/ll_camera_option"
         android:gravity="center"
         android:orientation="horizontal">
 
