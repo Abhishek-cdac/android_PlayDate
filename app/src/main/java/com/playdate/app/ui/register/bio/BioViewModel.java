@@ -9,6 +9,7 @@ public class BioViewModel extends ViewModel {
 
     public MutableLiveData<Boolean> NextClick = new MutableLiveData<>();
     public MutableLiveData<Boolean> BackClick = new MutableLiveData<>();
+    public MutableLiveData<String> BioText = new MutableLiveData<>();
 
 
     public MutableLiveData<Boolean> OnNextClick() {

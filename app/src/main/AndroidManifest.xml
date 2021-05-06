@@ -25,11 +25,11 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:networkSecurityConfig="@xml/network_security_config"
-        android:theme="@style/Theme.PlayDate">
+        android:theme="@style/Theme.PlayDate"
+        android:usesCleartextTraffic="true">
 
 
         <provider
@@ -54,9 +54,11 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-<!--        <activity android:name=".ui.dashboard.DashboardActivity">-->
-<!---->
-<!--        </activity>-->
+        <activity
+            android:name=".ui.dashboard.DashboardActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
 
         <activity
             android:name=".ui.anonymous_question.AnonymousQuestionActivity"
@@ -102,8 +104,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.onboarding.OnBoardingActivity"
-            android:windowSoftInputMode="adjustNothing"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -123,9 +125,21 @@
         <activity
             android:name=".ui.restaurant.RestaurantActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.playvideo.VideoPlayActivity" />
-        <activity android:name=".ui.anonymous_question.AnoQuesCreateActivity" />
-        <activity android:name=".ui.social.upload_media.PostMediaActivity" />
+        <activity
+            android:name=".ui.playvideo.VideoPlayActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.anonymous_question.AnoQuesCreateActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.social.upload_media.PostMediaActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.register.usertype.UserTypeSelectionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.register.gender.GenderSelActivity"
+            android:screenOrientation="portrait" />
 
 
     </application>

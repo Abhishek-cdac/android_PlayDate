@@ -1,39 +1,47 @@
 package com.playdate.app.ui.register.profile;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.FileProvider;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 
-import com.playdate.app.BuildConfig;
 import com.playdate.app.R;
+import com.playdate.app.data.api.GetDataService;
+import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.databinding.ActivityUploadProfileBinding;
-import com.playdate.app.ui.register.bio.BioActivity;
+import com.playdate.app.model.LoginResponse;
+import com.playdate.app.ui.dashboard.DashboardActivity;
 import com.playdate.app.ui.register.interest.InterestActivity;
+import com.playdate.app.ui.restaurant.RestaurantActivity;
+import com.playdate.app.util.session.SessionPref;
 
+import org.json.JSONObject;
+
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
-import static android.Manifest.permission_group.CAMERA;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class UploadProfileActivity extends AppCompatActivity {
 
@@ -63,6 +71,8 @@ public class UploadProfileActivity extends AppCompatActivity {
                setResult(407,mIntent);
                finish();
             }else{
+                uploadImage();
+
                 startActivity(new Intent(UploadProfileActivity.this, InterestActivity
                         .class));
             }
@@ -112,6 +122,66 @@ public class UploadProfileActivity extends AppCompatActivity {
 
     }
 
+    private void uploadImage() {
+        //create a file to write bitmap data
+        File f = new File(getCacheDir(), "profile");
+        try {
+            f.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+        byte[] bitmapdata = bos.toByteArray();
+
+//write the bytes in file
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(f);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            fos.write(bitmapdata);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            fos.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        SessionPref pref = SessionPref.getInstance(this);
+        MultipartBody.Part filePart = MultipartBody.Part.createFormData("updateProfile", f.getName(), RequestBody.create(MediaType.parse("image/*"), f));
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Call<LoginResponse> call = service.uploadImage("Bareer " + pref.getStringVal(SessionPref.LoginUsertoken),filePart);
+        call.enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                if (response.code() == 200) {
+
+                } else {
+
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
     public void pickImage() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         intent.setType("image/*");
@@ -147,7 +217,7 @@ public class UploadProfileActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
+    Bitmap bitmap = null;
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -156,7 +226,7 @@ public class UploadProfileActivity extends AppCompatActivity {
                 return;
             }
             if (requestCode == PICK_PHOTO_FOR_AVATAR) {
-                Bitmap bitmap = null;
+
                 if (data.getData() == null) {
                     bitmap = (Bitmap) data.getExtras().get("data");
                 } else {
@@ -175,7 +245,7 @@ public class UploadProfileActivity extends AppCompatActivity {
 
             } else if (requestCode == TAKE_PHOTO_CODE) {
 
-                Bitmap bitmap = null;
+
                 if (data.getData() == null) {
                     bitmap = (Bitmap) data.getExtras().get("data");
                 } else {

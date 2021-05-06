@@ -9,7 +9,6 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
 
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
@@ -19,6 +18,7 @@ import com.playdate.app.model.LoginResponse;
 import com.playdate.app.ui.register.age_verification.AgeVerifiationActivity;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
+import com.playdate.app.util.session.SessionPref;
 
 import org.json.JSONObject;
 
@@ -55,8 +55,8 @@ public class OTPActivity extends AppCompatActivity {
                 clsCommon.showDialogMsg(OTPActivity.this, "PlayDate", "Enter OTP!", "Ok");
             } else if (otpViewModel.txtOTP.getValue().isEmpty()) {
                 clsCommon.showDialogMsg(OTPActivity.this, "PlayDate", "Enter OTP!", "Ok");
-            } else if (otpViewModel.txtOTP.getValue().length() < 5) {
-                clsCommon.showDialogMsg(OTPActivity.this, "PlayDate", "OTP must be of 5 characters in length", "Ok");
+            } else if (otpViewModel.txtOTP.getValue().length() < 4) {
+                clsCommon.showDialogMsg(OTPActivity.this, "PlayDate", "OTP must be of 4 characters in length", "Ok");
             } else {
                 callAPI();
             }
@@ -69,6 +69,7 @@ public class OTPActivity extends AppCompatActivity {
             binding.txtTimer.setVisibility(View.VISIBLE);
             otpViewModel.startTimer();
             stopAnimAfter3Sec();
+            callAPIResentOTP();
         });
         otpViewModel.CountDownFinish.observe(this, loginUser -> {
             binding.txtResend.setVisibility(View.VISIBLE);
@@ -77,17 +78,16 @@ public class OTPActivity extends AppCompatActivity {
         otpViewModel.iv_backClick.observe(this, loginUser -> {
             finish();
         });
-        otpViewModel.txtOTP.observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String loginUser) {
-                if (loginUser.length() > 4) {
-                    new CommonClass().hideKeyboard(binding.edtOtp, OTPActivity.this);
-                    binding.edtOtp.clearFocus();
-                }
-
+        otpViewModel.txtOTP.observe(this, loginUser -> {
+            if (loginUser.length() > 3) {
+                new CommonClass().hideKeyboard(binding.edtOtp, OTPActivity.this);
+                binding.edtOtp.clearFocus();
             }
-        });
 
+        });
+        if (mIntent.getBooleanExtra("resendOTP", false)) {
+            callAPIResentOTP();
+        }
         stopAnimAfter3Sec();
 
     }
@@ -133,6 +133,36 @@ public class OTPActivity extends AppCompatActivity {
                         Toast.makeText(OTPActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                     }
                 }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                t.printStackTrace();
+                pd.cancel();
+                Toast.makeText(OTPActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void callAPIResentOTP() {
+        /*Create handle for the RetrofitInstance interface*/
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("phoneNo", phone);
+//        hashMap.put("otp", otpViewModel.txtOTP.getValue());
+        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
+        pd.show();
+
+        SessionPref pref = SessionPref.getInstance(this);
+
+        Call<LoginResponse> call = service.resendVerifyOtp("Bareer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                pd.cancel();
+
 
 
             }

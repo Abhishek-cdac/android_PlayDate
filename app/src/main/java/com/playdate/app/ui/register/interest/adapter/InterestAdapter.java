@@ -48,7 +48,7 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.txt_intresrt.setText(lst_int.get(position).getInterest());
+        holder.txt_intresrt.setText(lst_int.get(position).getName());
         if (lst_int.get(position).isSelected()) {
             holder.txt_intresrt.setBackground(mContext.getDrawable(R.drawable.selected_interest_row));
             holder.iv_cross.setVisibility(View.VISIBLE);

@@ -1,21 +1,27 @@
 package com.playdate.app.model;
 
 public class Interest {
-    String Interest;
+    String _id;
+    String name;
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     boolean selected;
 
-    public Interest(String interest, boolean selected) {
-        Interest = interest;
-        this.selected = selected;
-    }
-
-    public String getInterest() {
-        return Interest;
-    }
-
-    public void setInterest(String interest) {
-        Interest = interest;
-    }
 
     public boolean isSelected() {
         return selected;

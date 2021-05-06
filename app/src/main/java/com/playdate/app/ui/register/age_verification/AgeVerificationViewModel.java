@@ -22,6 +22,18 @@ public class AgeVerificationViewModel extends ViewModel {
     private MutableLiveData<Boolean> userMutableLiveData;
     private MutableLiveData<Boolean> Register;
 
+    public String getYearSelected() {
+        return yearlist.get(YearSelectedPosition.getValue());
+    }
+
+    public String getMonthSelected() {
+        return list.get(MonthSelectedPosition.getValue());
+    }
+
+    public String getDaySelected() {
+        return DayList.get(DaySelectedPosition.getValue());
+    }
+
     public MutableLiveData<Boolean> onRegisterUser() {
 
         if (RegisterClick == null) {
@@ -70,8 +82,10 @@ public class AgeVerificationViewModel extends ViewModel {
         return yearlist;
     }
 
+    List<String> list = new ArrayList<>();
+
     public List<String> fetchMonths() {
-        List<String> list = new ArrayList<>();
+        list.clear();
         list.add("Month");
         list.add("Jan");
         list.add("Feb");
@@ -87,62 +101,66 @@ public class AgeVerificationViewModel extends ViewModel {
         list.add("Dec");
         return list;
     }
+
     public void onNext(View view) {
         NextClick.setValue(true);
     }
+
     public boolean is28 = false;
     public boolean is31 = false;
     public boolean isLeapYear = false;
+
+    List<String> DayList = new ArrayList<>();
 
     public MutableLiveData<List<String>> fetchDays() {
         if (daysList == null) {
             return new MutableLiveData<List<String>>();
         }
-        List<String> list = new ArrayList<>();
-        list.add("Day");
-        list.add("1");
-        list.add("2");
-        list.add("3");
-        list.add("4");
-        list.add("5");
-        list.add("6");
-        list.add("7");
-        list.add("8");
-        list.add("9");
-        list.add("10");
-        list.add("11");
-        list.add("12");
-        list.add("13");
-        list.add("14");
-        list.add("15");
-        list.add("16");
-        list.add("17");
-        list.add("18");
-        list.add("19");
-        list.add("20");
-        list.add("21");
-        list.add("22");
-        list.add("23");
-        list.add("24");
-        list.add("25");
-        list.add("26");
-        list.add("27");
-        list.add("28");
+        DayList.clear();
+        DayList.add("Day");
+        DayList.add("1");
+        DayList.add("2");
+        DayList.add("3");
+        DayList.add("4");
+        DayList.add("5");
+        DayList.add("6");
+        DayList.add("7");
+        DayList.add("8");
+        DayList.add("9");
+        DayList.add("10");
+        DayList.add("11");
+        DayList.add("12");
+        DayList.add("13");
+        DayList.add("14");
+        DayList.add("15");
+        DayList.add("16");
+        DayList.add("17");
+        DayList.add("18");
+        DayList.add("19");
+        DayList.add("20");
+        DayList.add("21");
+        DayList.add("22");
+        DayList.add("23");
+        DayList.add("24");
+        DayList.add("25");
+        DayList.add("26");
+        DayList.add("27");
+        DayList.add("28");
         if (!is28) {
 
-            list.add("29");
+            DayList.add("29");
 
-            list.add("30");
+            DayList.add("30");
             if (is31) {
-                list.add("31");
+                DayList.add("31");
             }
         } else {
             if (isLeapYear) {
-                list.add("29");
+                DayList.add("29");
             }
         }
 
-        daysList.setValue(list);
+        daysList.setValue(DayList);
         return daysList;
     }
 

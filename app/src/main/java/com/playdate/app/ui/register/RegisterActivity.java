@@ -69,12 +69,13 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
     private ActivityRegisterBinding binding;
     private static final int RC_SIGN_IN = 1;
     CommonClass clsCommon;
+    Intent mIntent;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        mIntent=getIntent();
         clsCommon = CommonClass.getInstance();
         registerViewModel = new RegisterViewModel();
         registerViewModel.init();
@@ -174,6 +175,7 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
         hashMap.put("deviceType", DEVICE_TYPE);
         hashMap.put("phoneNo", registerUser.getPhoneNo());
         hashMap.put("password", registerUser.getPassword());
+        hashMap.put("userType", mIntent.getStringExtra("userType"));
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
         pd.show();
         Call<RegisterResult> call = service.registerUser(hashMap);

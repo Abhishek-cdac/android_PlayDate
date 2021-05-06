@@ -1,25 +1,12 @@
 package com.playdate.app.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
+
 public class LoginUserDetails {
 
-    public LoginUserDetails(String id, String fullName, String email, String username, String phoneNo, String status, String token, String gender, String birthDate, String age, String profilePic, String profileVideo, String relationship, String personalBio, String interested, String restaurants) {
-        this.id = id;
-        this.fullName = fullName;
-        this.email = email;
-        this.username = username;
-        this.phoneNo = phoneNo;
-        this.status = status;
-        this.token = token;
-        this.gender = gender;
-        this.birthDate = birthDate;
-        this.age = age;
-        this.profilePic = profilePic;
-        this.profileVideo = profileVideo;
-        this.relationship = relationship;
-        this.personalBio = personalBio;
-        this.interested = interested;
-        this.restaurants = restaurants;
-    }
 
     String id;
     String fullName;
@@ -35,8 +22,14 @@ public class LoginUserDetails {
     String profileVideo;
     String relationship;
     String personalBio;
-    String interested;
-    String restaurants;
+
+    @SerializedName("interested")
+    @Expose
+    ArrayList<String> interested;
+
+    @SerializedName("restaurants")
+    @Expose
+    ArrayList<String> restaurants;
 
     public String getId() {
         return id;
@@ -150,19 +143,19 @@ public class LoginUserDetails {
         this.personalBio = personalBio;
     }
 
-    public String getInterested() {
+    public ArrayList<String> getInterested() {
         return interested;
     }
 
-    public void setInterested(String interested) {
+    public void setInterested(ArrayList<String> interested) {
         this.interested = interested;
     }
 
-    public String getRestaurants() {
+    public ArrayList<String> getRestaurants() {
         return restaurants;
     }
 
-    public void setRestaurants(String restaurants) {
+    public void setRestaurants(ArrayList<String> restaurants) {
         this.restaurants = restaurants;
     }
 }

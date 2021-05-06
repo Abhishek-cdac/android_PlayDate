@@ -71,6 +71,7 @@
                 android:maxLines="5"
                 android:minLines="4"
                 android:padding="@dimen/_12sdp"
+                android:text="@={BioViewModel.BioText}"
                 android:textColor="@android:color/white"
                 android:textColorHint="@android:color/white"
                 android:textSize="@dimen/_12sdp" />

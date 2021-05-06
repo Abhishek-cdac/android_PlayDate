@@ -99,7 +99,7 @@
             android:onClick="@{(v) -> UserNameViewModel.onNext(v)}"
             android:padding="@dimen/_12sdp"
             android:src="@drawable/arrow_right"
-            android:visibility="gone" />
+           />
     </RelativeLayout>
 
 </layout>

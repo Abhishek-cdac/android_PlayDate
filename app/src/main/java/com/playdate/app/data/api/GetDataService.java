@@ -1,16 +1,21 @@
 package com.playdate.app.data.api;
 
+import com.playdate.app.model.InterestsMain;
 import com.playdate.app.model.LoginResponse;
 import com.playdate.app.model.RegisterResult;
+import com.playdate.app.model.RestMain;
+import com.playdate.app.ui.restaurant.adapter.Restaurant;
 
 import java.util.Map;
 
+import okhttp3.MultipartBody;
 import retrofit2.Call;
-import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.Query;
+import retrofit2.http.Part;
 
 public interface GetDataService {
 
@@ -25,6 +30,26 @@ public interface GetDataService {
     @FormUrlEncoded
     @POST("user/verify-otp")
     Call<LoginResponse> verifyOtp(@FieldMap Map<String, String> param);
+
+    @FormUrlEncoded
+    @POST("user/update-profile")
+    Call<LoginResponse> updateProfile(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
+    @FormUrlEncoded
+    @POST("user/resend-verify-otp")
+    Call<LoginResponse> resendVerifyOtp(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
+    @FormUrlEncoded
+    @POST("user/get-restaurants")
+    Call<RestMain> restaurants(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
+    @FormUrlEncoded
+    @POST("user/get-interested")
+    Call<InterestsMain> interested(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
+    @Multipart
+    @POST("user/update-profile-image")
+    Call<LoginResponse> uploadImage(@Header("Authorization") String token, @Part MultipartBody.Part filePart);
 
 
 }

@@ -42,8 +42,16 @@ import com.playdate.app.model.LoginResponse;
 import com.playdate.app.model.LoginUser;
 import com.playdate.app.model.LoginUserDetails;
 import com.playdate.app.ui.forgot_password.ForgotPassword;
-import com.playdate.app.ui.register.RegisterActivity;
 import com.playdate.app.ui.register.age_verification.AgeVerifiationActivity;
+import com.playdate.app.ui.register.bio.BioActivity;
+import com.playdate.app.ui.register.gender.GenderSelActivity;
+import com.playdate.app.ui.register.interestin.InterestActivity;
+import com.playdate.app.ui.register.otp.OTPActivity;
+import com.playdate.app.ui.register.profile.UploadProfileActivity;
+import com.playdate.app.ui.register.relationship.RelationActivity;
+import com.playdate.app.ui.register.username.UserNameActivity;
+import com.playdate.app.ui.register.usertype.UserTypeSelectionActivity;
+import com.playdate.app.ui.restaurant.RestaurantActivity;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
@@ -128,7 +136,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         loginViewModel.getRegisterUser().observe(this, register -> {
 
             if (register) {
-                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                startActivity(new Intent(LoginActivity.this, UserTypeSelectionActivity.class));
             } else {
                 // call API
             }
@@ -184,7 +192,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private void callLoginAPI(LoginUser loginUser) {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("email", loginUser.getStrEmailAddress());
+        hashMap.put("keyward", loginUser.getStrEmailAddress());
         hashMap.put("password", loginUser.getStrPassword());
         hashMap.put("deviceID", "12345");//Hardcode
         hashMap.put("deviceType", DEVICE_TYPE);
@@ -245,25 +253,41 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 user.getProfileVideo(),
                 user.getRelationship(),
                 user.getPersonalBio(),
-                user.getInterested(),
-                user.getRestaurants());
+                "",
+                "",
+                "");
 
 
-        if (user.getBirthDate() == null) {
+        if (user.getStatus().equals("false")) {
+            Intent mIntent = new Intent(LoginActivity.this, OTPActivity.class);
+            mIntent.putExtra("Phone", user.getPhoneNo());
+            mIntent.putExtra("resendOTP", true);
+            startActivity(mIntent);
+            finish();
+        } else if (user.getBirthDate() == null) {
             startActivity(new Intent(LoginActivity.this, AgeVerifiationActivity.class));
             finish();
         } else if (user.getGender() == null) {
-
+            startActivity(new Intent(LoginActivity.this, GenderSelActivity.class));
+            finish();
         } else if (user.getRelationship() == null) {
-
+            startActivity(new Intent(LoginActivity.this, RelationActivity.class));
+            finish();
+        } else if (user.getUsername() == null) {
+            startActivity(new Intent(LoginActivity.this, UserNameActivity.class));
+            finish();
         } else if (user.getPersonalBio() == null) {
-
+            startActivity(new Intent(LoginActivity.this, BioActivity.class));
+            finish();
         } else if (user.getProfilePic() == null) {
-
+            startActivity(new Intent(LoginActivity.this, UploadProfileActivity.class));
+            finish();
         } else if (user.getInterested() == null) {
-
+            startActivity(new Intent(LoginActivity.this, InterestActivity.class));
+            finish();
         } else if (user.getRestaurants() == null) {
-
+            startActivity(new Intent(LoginActivity.this, RestaurantActivity.class));
+            finish();
         }
 
 

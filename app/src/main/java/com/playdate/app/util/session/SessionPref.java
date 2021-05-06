@@ -38,16 +38,16 @@ public class SessionPref {
         editor.commit();
     }
 
-    public void getStringVal(String key) {
-        pref.getString(key, null);
+    public String getStringVal(String key) {
+        return pref.getString(key, null);
     }
 
-    public void getBoolVal(String key) {
-        pref.getBoolean(key, false);
+    public boolean getBoolVal(String key) {
+        return pref.getBoolean(key, false);
     }
 
-    public void getIntVal(String key) {
-        pref.getInt(key, 0);
+    public int getIntVal(String key) {
+        return pref.getInt(key, 0);
     }
 
 
@@ -66,6 +66,7 @@ public class SessionPref {
     public static String LoginUserrelationship = "relationship";
     public static String LoginUserpersonalBio = "personalBio";
     public static String LoginUserinterested = "interested";
+    public static String LoginUserinterestedIn = "interestedIn";
     public static String LoginUserrestaurants = "restaurants";
 
 
@@ -84,6 +85,7 @@ public class SessionPref {
                               String relationship,
                               String personalBio,
                               String interested,
+                              String interestedIn,
                               String restaurants) {
         editor.putString(LoginUserID, id == null ? "null" : id);
         editor.putString(LoginUserfullName, fullName == null ? "null" : fullName);
@@ -100,6 +102,7 @@ public class SessionPref {
         editor.putString(LoginUserrelationship, relationship == null ? "null" : relationship);
         editor.putString(LoginUserpersonalBio, personalBio == null ? "null" : personalBio);
         editor.putString(LoginUserinterested, interested == null ? "null" : interested);
+        editor.putString(LoginUserinterestedIn, interestedIn == null ? "null" : interestedIn);
         editor.putString(LoginUserrestaurants, restaurants == null ? "null" : restaurants);
         editor.commit();
     }

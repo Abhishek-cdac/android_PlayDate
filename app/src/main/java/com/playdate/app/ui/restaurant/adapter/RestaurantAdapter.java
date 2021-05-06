@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -33,13 +34,18 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.imageview.setImageResource(lst.get(position).image);
+        Picasso.get().load(lst.get(position).getImage())
+                .placeholder(R.drawable.cupertino_activity_indicator)
+                .into(holder.imageview);
+//        holder.imageview.setImageResource(lst.get(position).image);
         if (lst.get(position).isSelected()) {
             holder.imageview.setBackground(mContext.getDrawable(R.drawable.grid_back_sel));
         } else {
             holder.imageview.setBackground(mContext.getDrawable(R.drawable.grid_back));
         }
     }
+
+//    zsdasd
 
     @Override
     public int getItemCount() {

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
@@ -27,6 +28,7 @@ import com.playdate.app.ui.anonymous_question.AnoQuesCreateActivity;
 import com.playdate.app.ui.card_swipe.FragCardSwipe;
 import com.playdate.app.ui.dashboard.adapter.FriendAdapter;
 import com.playdate.app.ui.dashboard.fragments.FragLanding;
+import com.playdate.app.ui.dialogs.FullScreenDialog;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.ui.my_profile_details.FragInstaLikeProfile;
 import com.playdate.app.ui.my_profile_details.FragMyProfileDetails;
@@ -177,6 +179,21 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
                 ReplaceFrag(new FragSocialFeed());
             }
         });
+
+        showPremium();
+
+    }
+
+    private void showPremium() {
+
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+
+                FullScreenDialog dialog = new FullScreenDialog(DashboardActivity.this);
+                dialog.show();
+            }
+        }, 5000);
+
 
     }
 

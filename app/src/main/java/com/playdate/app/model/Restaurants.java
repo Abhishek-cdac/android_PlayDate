@@ -1,10 +1,9 @@
-package com.playdate.app.ui.restaurant.adapter;
+package com.playdate.app.model;
 
-public class Restaurant {
-    String image;
+public class Restaurants {
     String _id;
     String name;
-    boolean selected;
+    String image;
 
     public String getImage() {
         return image;
@@ -28,13 +27,5 @@ public class Restaurant {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public boolean isSelected() {
-        return selected;
-    }
-
-    public void setSelected(boolean selected) {
-        this.selected = selected;
     }
 }
