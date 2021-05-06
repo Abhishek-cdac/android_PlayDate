@@ -4,20 +4,20 @@ import android.util.Patterns;
 
 public class RegisterUser {
 
-
-
     String Fullname;
-    String Address;
-    String PhoneNumber;
-    String Email;
-    String Password;
+    String address;
+    String phoneNo;
+    String email;
+    String password;
+    String deviceType;
 
-    public RegisterUser(String fullname, String address, String phoneNumber, String email, String password) {
+    public RegisterUser(String fullname, String address, String phoneNo, String email, String password, String deviceType) {
         Fullname = fullname;
-        Address = address;
-        PhoneNumber = phoneNumber;
-        Email = email;
-        Password = password;
+        this.address = address;
+        this.phoneNo = phoneNo;
+        this.email = email;
+        this.password = password;
+        this.deviceType = deviceType;
     }
 
     public String getFullname() {
@@ -29,36 +29,42 @@ public class RegisterUser {
     }
 
     public String getAddress() {
-        return Address;
+        return address;
     }
 
     public void setAddress(String address) {
-        Address = address;
-    }
-    public boolean isEmailValid() {
-        return Patterns.EMAIL_ADDRESS.matcher(getEmail()).matches();
-    }
-    public String getPhoneNumber() {
-        return PhoneNumber;
+        this.address = address;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        PhoneNumber = phoneNumber;
+    public String getPhoneNo() {
+        return phoneNo;
+    }
+
+    public void setPhoneNo(String phoneNo) {
+        this.phoneNo = phoneNo;
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public void setEmail(String email) {
-        Email = email;
+        this.email = email;
     }
 
     public String getPassword() {
-        return Password;
+        return password;
     }
 
     public void setPassword(String password) {
-        Password = password;
+        this.password = password;
+    }
+
+    public String getDeviceType() {
+        return deviceType;
+    }
+
+    public void setDeviceType(String deviceType) {
+        this.deviceType = deviceType;
     }
 }

@@ -35,17 +35,29 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.Task;
 import com.playdate.app.R;
+import com.playdate.app.data.api.GetDataService;
+import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.databinding.ActivityRegisterBinding;
+import com.playdate.app.model.RegisterResult;
 import com.playdate.app.model.RegisterUser;
 import com.playdate.app.ui.login.LoginActivity;
 import com.playdate.app.ui.register.otp.OTPActivity;
 import com.playdate.app.util.common.CommonClass;
+import com.playdate.app.util.common.TransparentProgressDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.playdate.app.data.api.RetrofitClientInstance.DEVICE_TYPE;
 
 public class RegisterActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
     private RegisterViewModel registerViewModel;
@@ -56,11 +68,14 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
     private GoogleApiClient googleApiClient;
     private ActivityRegisterBinding binding;
     private static final int RC_SIGN_IN = 1;
+    CommonClass clsCommon;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        clsCommon = CommonClass.getInstance();
         registerViewModel = new RegisterViewModel();
         registerViewModel.init();
         FacebookSdk.sdkInitialize(this);
@@ -88,35 +103,27 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
             }
         });
 
-        registerViewModel.getRegisterUser().observe(this, new Observer<RegisterUser>() {
-            @Override
-            public void onChanged(RegisterUser registerUser) {
-                if (TextUtils.isEmpty(Objects.requireNonNull(registerUser).getFullname())) {
-                    new CommonClass().showDialogMsg(RegisterActivity.this,"PlayDate","Enter full name","Ok");
-                } else if (TextUtils.isEmpty(Objects.requireNonNull(registerUser).getAddress())) {
-                    new CommonClass().showDialogMsg(RegisterActivity.this,"PlayDate","Enter address","Ok");
-                } else if (TextUtils.isEmpty(Objects.requireNonNull(registerUser).getPhoneNumber())) {
-                    new CommonClass().showDialogMsg(RegisterActivity.this,"PlayDate","Enter phone number","Ok");
-                } else if ((registerUser).getPhoneNumber().length() < 10) {
-                    new CommonClass().showDialogMsg(RegisterActivity.this,"PlayDate","Enter proper phone number","Ok");
-                } else if (TextUtils.isEmpty(Objects.requireNonNull(registerUser).getEmail())) {
-                    new CommonClass().showDialogMsg(RegisterActivity.this,"PlayDate","Enter email id","Ok");
-                } else if (!registerUser.isEmailValid()) {
-                    new CommonClass().showDialogMsg(RegisterActivity.this,"PlayDate","Enter valid email id","Ok");
-                } else if (TextUtils.isEmpty(Objects.requireNonNull(registerUser).getPassword())) {
-                    new CommonClass().showDialogMsg(RegisterActivity.this,"PlayDate","Enter password","Ok");
-                } else {
-                    //next Page
-                    Intent mIntent = new Intent(RegisterActivity.this, OTPActivity.class);
-                    mIntent.putExtra("Name", registerUser.getFullname());
-                    mIntent.putExtra("Phone", registerUser.getPhoneNumber());
-                    mIntent.putExtra("Address", registerUser.getAddress());
-                    mIntent.putExtra("Email", registerUser.getEmail());
-                    mIntent.putExtra("Password", registerUser.getPassword());
-                    startActivity(mIntent);
-                }
-
+        registerViewModel.getRegisterUser().observe(this, registerUser -> {
+            if (TextUtils.isEmpty(Objects.requireNonNull(registerUser).getFullname())) {
+                clsCommon.showDialogMsg(RegisterActivity.this, "PlayDate", "Enter full name", "Ok");
+            } else if (TextUtils.isEmpty(Objects.requireNonNull(registerUser).getAddress())) {
+                clsCommon.showDialogMsg(RegisterActivity.this, "PlayDate", "Enter address", "Ok");
+            } else if (TextUtils.isEmpty(Objects.requireNonNull(registerUser).getPhoneNo())) {
+                clsCommon.showDialogMsg(RegisterActivity.this, "PlayDate", "Enter phone number", "Ok");
+            } else if ((registerUser).getPhoneNo().length() < 10) {
+                clsCommon.showDialogMsg(RegisterActivity.this, "PlayDate", "Enter proper phone number", "Ok");
             }
+//                else if (TextUtils.isEmpty(Objects.requireNonNull(registerUser).getEmail())) {
+//                    clsCommon.showDialogMsg(RegisterActivity.this, "PlayDate", "Enter email id", "Ok");
+//                } else if (!registerUser.isEmailValid()) {
+//                    clsCommon.showDialogMsg(RegisterActivity.this, "PlayDate", "Enter valid email id", "Ok");
+//                }
+            else if (TextUtils.isEmpty(Objects.requireNonNull(registerUser).getPassword())) {
+                clsCommon.showDialogMsg(RegisterActivity.this, "PlayDate", "Enter password", "Ok");
+            } else {
+                callAPI(registerUser);
+            }
+
         });
 
         registerViewModel.fbClick().observe(this, new Observer<Boolean>() {
@@ -154,6 +161,65 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
             }
         });
 
+    }
+
+    private void callAPI(RegisterUser registerUser) {
+
+        /*Create handle for the RetrofitInstance interface*/
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("fullName", registerUser.getFullname());
+        hashMap.put("email", registerUser.getEmail());
+        hashMap.put("address", registerUser.getAddress());
+        hashMap.put("deviceType", DEVICE_TYPE);
+        hashMap.put("phoneNo", registerUser.getPhoneNo());
+        hashMap.put("password", registerUser.getPassword());
+        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
+        pd.show();
+        Call<RegisterResult> call = service.registerUser(hashMap);
+        call.enqueue(new Callback<RegisterResult>() {
+            @Override
+            public void onResponse(Call<RegisterResult> call, Response<RegisterResult> response) {
+                pd.cancel();
+                if (response.code() == 200) {
+                    if (response.body().getStatus() == 1) {
+                        nextPage(registerUser);
+                    } else {
+                        clsCommon.showDialogMsg(RegisterActivity.this, "PlayDate", "Something went wrong...Please try later!", "Ok");
+                    }
+                } else {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+
+                        clsCommon.showDialogMsg(RegisterActivity.this, "PlayDate", jObjError.getJSONArray("data").getJSONObject(0).getString("msg"), "Ok");
+                    } catch (Exception e) {
+                        Toast.makeText(RegisterActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<RegisterResult> call, Throwable t) {
+                t.printStackTrace();
+                pd.cancel();
+                Toast.makeText(RegisterActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void nextPage(RegisterUser registerUser) {
+        //next Page
+        Intent mIntent = new Intent(RegisterActivity.this, OTPActivity.class);
+        mIntent.putExtra("Name", registerUser.getFullname());
+        mIntent.putExtra("Phone", registerUser.getPhoneNo());
+        mIntent.putExtra("Address", registerUser.getAddress());
+        mIntent.putExtra("Email", registerUser.getEmail());
+        mIntent.putExtra("Password", registerUser.getPassword());
+//        registerViewModel.clearFileds();
+        startActivity(mIntent);
+        finish();
     }
 
     private void calltoGoogle() {

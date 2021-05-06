@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,11 +11,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 
 import com.playdate.app.R;
-import com.playdate.app.databinding.ActivityUserDetailsBinding;
 import com.playdate.app.databinding.ActivityUsernameBinding;
 import com.playdate.app.ui.register.bio.BioActivity;
-import com.playdate.app.ui.register.interestin.InterestActivity;
-import com.playdate.app.ui.register.relationship.RelationActivity;
 import com.playdate.app.util.common.CommonClass;
 
 public class UserNameActivity extends AppCompatActivity {
@@ -31,15 +27,15 @@ public class UserNameActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(UserNameActivity.this, R.layout.activity_username);
         binding.setLifecycleOwner(this);
         binding.setUserNameViewModel(userNameViewModel);
-        mIntent=getIntent();
+        mIntent = getIntent();
         userNameViewModel.OnNextClick().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean click) {
-                if(mIntent.getBooleanExtra("fromProfile", false)){
-                    Intent mIntent=new Intent();
-                    setResult(408,mIntent);
+                if (mIntent.getBooleanExtra("fromProfile", false)) {
+                    Intent mIntent = new Intent();
+                    setResult(408, mIntent);
                     finish();
-                }else{
+                } else {
                     startActivity(new Intent(UserNameActivity.this, BioActivity
                             .class));
                 }
@@ -74,8 +70,8 @@ public class UserNameActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         try {
-            if(null!=handler)
-            handler.removeCallbacksAndMessages(null);
+            if (null != handler)
+                handler.removeCallbacksAndMessages(null);
         } catch (Exception e) {
             e.printStackTrace();
         }

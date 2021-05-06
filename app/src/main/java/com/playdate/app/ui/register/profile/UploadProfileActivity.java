@@ -42,9 +42,10 @@ public class UploadProfileActivity extends AppCompatActivity {
     private ArrayList permissionsToRequest;
     private ArrayList permissionsRejected = new ArrayList();
     private ArrayList permissions = new ArrayList();
-    private final static int ALL_PERMISSIONS_RESULT = 107;
-    private final static int PICK_PHOTO_FOR_AVATAR = 150;
-    private final static int TAKE_PHOTO_CODE = 0;
+    public final static int ALL_PERMISSIONS_RESULT = 107;
+    public final static int PICK_PHOTO_FOR_AVATAR = 150;
+    public final static int TAKE_PHOTO_CODE = 0;
+    public final static int REQUEST_TAKE_GALLERY_VIDEO = 200;
     private Intent mIntent;
 
     @Override

@@ -21,6 +21,7 @@
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
             android:layout_gravity="center"
+            android:visibility="gone"
             android:layout_margin="@dimen/_15sdp"
             android:onClick="@{(v) -> OTPViewModel.onBackClick(v)}"
             android:padding="@dimen/_2sdp"
@@ -37,6 +38,18 @@
             android:layout_marginTop="@dimen/_50sdp"
             android:visibility="visible"
             app:SpinKit_Color="@color/color_pink" />
+
+        <ImageView
+            android:id="@+id/iv_done"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_80sdp"
+            android:src="@drawable/check_tinder"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_50sdp"
+            android:visibility="gone"
+            />
+
 
 
         <LinearLayout
@@ -67,7 +80,7 @@
                 android:gravity="center"
                 android:text="@string/please_enter_the_verification_code"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_13sdp"
+                android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
 
             <TextView
@@ -78,7 +91,7 @@
                 android:gravity="center"
                 android:text="@string/that_has_been_sent_to_you_via_sms_at"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_13sdp"
+                android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
 
             <TextView

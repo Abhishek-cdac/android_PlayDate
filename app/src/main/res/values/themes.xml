@@ -49,4 +49,11 @@
         <item name="android:colorControlActivated">@color/color_pink</item>
     </style>
 
+
+    <style name="My_Dialog">
+        <item name="android:windowMinWidthMajor">90%</item>
+        <item name="android:windowMinWidthMinor">90%</item>
+
+    </style>
+
 </resources>

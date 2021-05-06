@@ -6,17 +6,17 @@ import android.view.View;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.playdate.app.model.LoginUser;
 import com.playdate.app.model.RegisterUser;
 
 public class RegisterViewModel extends ViewModel {
 
+
     void init() {
-        fullname.setValue("Ajit Jadhav");
-        address.setValue("A/P Pabal ,Tal-Shirur ,Pune");
-        phoneNumber.setValue("9970371183");
-        email.setValue("ajit.jadhav36@gmail.com");
-        password.setValue("123456");
+//        fullname.setValue("Ajit Jadhav");
+//        address.setValue("A/P Pabal ,Tal-Shirur ,Pune");
+//        phoneNumber.setValue("9970371183");
+//        email.setValue("ajit.jadhav36@gmail.com");
+//        password.setValue("123456");
     }
 
 
@@ -38,7 +38,7 @@ public class RegisterViewModel extends ViewModel {
         if (userMutableLiveData == null) {
             Log.d("ddd", "init called");
             userMutableLiveData = new MutableLiveData<>();
-            user = new RegisterUser("", "", "", "", "");
+            user = new RegisterUser("", "", "", "", "", "");
         }
         return userMutableLiveData;
 
@@ -52,7 +52,7 @@ public class RegisterViewModel extends ViewModel {
     RegisterUser user;
 
     public void onClickRegister(View view) {
-        user = new RegisterUser(fullname.getValue(), address.getValue(), phoneNumber.getValue(), email.getValue(), password.getValue());
+        user = new RegisterUser(fullname.getValue(), address.getValue(), phoneNumber.getValue(), email.getValue(), password.getValue(), "");
         //  Log.d("ddd", fullname.getValue());
         userMutableLiveData.setValue(user);
     }
@@ -92,4 +92,9 @@ public class RegisterViewModel extends ViewModel {
 
     }
 
+    public void clearFileds() {
+        user = new RegisterUser("", "", "", "", "", "");
+        userMutableLiveData.setValue(user);
+
+    }
 }

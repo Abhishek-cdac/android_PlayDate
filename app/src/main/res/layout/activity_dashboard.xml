@@ -3,10 +3,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:id="@+id/rl_main"
     tools:context=".MainActivity">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -38,6 +38,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
+                        android:id="@+id/iv_play_date_logo"
                         android:layout_width="0dp"
                         android:layout_height="@dimen/_30sdp"
                         android:layout_marginTop="@dimen/_5sdp"
@@ -253,21 +254,21 @@
     <LinearLayout
 
         android:id="@+id/ll_profile_drop_menu"
-        android:layout_width="@dimen/_35sdp"
-        android:layout_height="@dimen/_120sdp"
+        android:layout_width="@dimen/_120sdp"
+        android:layout_height="@dimen/_35sdp"
         android:layout_marginLeft="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_10sdp"
-        android:gravity="center"
         android:background="@drawable/menu_button"
-        android:orientation="vertical"
+        android:gravity="center"
+        android:orientation="horizontal"
         android:visibility="gone">
 
 
         <ImageView
+            android:id="@+id/iv_cancel"
             android:layout_width="@dimen/_10sdp"
             android:layout_height="@dimen/_10sdp"
             android:layout_margin="@dimen/_5sdp"
-            android:id="@+id/iv_cancel"
             android:src="@drawable/cancel">
 
         </ImageView>
@@ -275,16 +276,17 @@
         <ImageView
             android:layout_width="@dimen/_15sdp"
             android:layout_height="@dimen/_15sdp"
+            android:id="@+id/iv_gallery"
             android:layout_margin="@dimen/_5sdp"
             android:src="@drawable/gallery">
 
         </ImageView>
 
         <ImageView
+            android:id="@+id/iv_create_ano_ques"
             android:layout_width="@dimen/_15sdp"
             android:layout_height="@dimen/_15sdp"
             android:layout_margin="@dimen/_5sdp"
-            android:id="@+id/iv_create_ano_ques"
             android:src="@drawable/question">
 
         </ImageView>
@@ -306,7 +308,8 @@
         android:layout_alignParentBottom="true"
         android:background="@drawable/bottom_bar_shape"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="visible">
 
         <LinearLayout
             android:id="@+id/ll_love_bottom"
@@ -372,6 +375,142 @@
 
             </ImageView>
 
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_65sdp"
+        android:layout_alignParentBottom="true"
+        android:background="#444444"
+        android:visibility="gone"
+        android:id="@+id/ll_camera_option"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:id="@+id/ll_take_photo"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:background="@drawable/circle_grey"
+                android:padding="@dimen/_8sdp"
+                android:src="@drawable/ic_photo_camera_white" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/_2sdp"
+                android:gravity="center"
+                android:text="Take Photo"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_9sdp">
+
+
+            </TextView>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:id="@+id/ll_upload_photo"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:background="@drawable/circle_grey"
+                android:padding="@dimen/_8sdp"
+                android:src="@drawable/gallery" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/_2sdp"
+                android:gravity="center"
+                android:text="Upload Photo"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_9sdp">
+
+
+            </TextView>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:id="@+id/ll_Record_video"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:background="@drawable/circle_grey"
+                android:padding="@dimen/_8sdp"
+                android:src="@drawable/ic_record" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/_2sdp"
+                android:gravity="center"
+                android:text="Record Video"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_9sdp">
+
+
+            </TextView>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:id="@+id/ll_upload_video"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:background="@drawable/circle_grey"
+                android:padding="@dimen/_8sdp"
+                android:src="@drawable/ic_video" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/_2sdp"
+                android:gravity="center"
+                android:text="Upload Video"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_9sdp">
+
+
+            </TextView>
         </LinearLayout>
 
 
