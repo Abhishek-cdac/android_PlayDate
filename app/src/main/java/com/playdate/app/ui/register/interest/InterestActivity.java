@@ -230,19 +230,19 @@ public class InterestActivity extends AppCompatActivity {
     }
 
     private void filter(String str) {
-        if (str.length() > 0) {
-            ArrayList<Interest> filteredNames = new ArrayList<>();
-            for (Interest s : lst_interest) {
-                if (s.getName().toLowerCase().contains(str.toLowerCase())) {
-                    filteredNames.add(s);
-                }
-            }
-            adapter.updateList(filteredNames);
-            adapter.notifyDataSetChanged();
-        } else {
-            adapter.updateList(lst_interest);
-            adapter.notifyDataSetChanged();
-        }
+//        if (str.length() > 0) {
+//            ArrayList<Interest> filteredNames = new ArrayList<>();
+//            for (Interest s : lst_interest) {
+//                if (s.getName().toLowerCase().contains(str.toLowerCase())) {
+//                    filteredNames.add(s);
+//                }
+//            }
+//            adapter.updateList(filteredNames);
+//            adapter.notifyDataSetChanged();
+//        } else {
+//            adapter.updateList(lst_interest);
+//            adapter.notifyDataSetChanged();
+//        }
 
 
     }

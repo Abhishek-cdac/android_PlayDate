@@ -2,9 +2,11 @@ package com.playdate.app.ui.record_video;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -16,7 +18,10 @@ import android.widget.VideoView;
 import com.playdate.app.R;
 import com.playdate.app.databinding.ActivityRecordVideoBinding;
 import com.playdate.app.ui.dashboard.DashboardActivity;
+import com.playdate.app.ui.register.profile.UploadProfileActivity;
 import com.playdate.app.ui.restaurant.RestaurantActivity;
+
+import static com.playdate.app.ui.register.profile.UploadProfileActivity.ALL_PERMISSIONS_RESULT;
 
 public class RecordVideoActivity extends AppCompatActivity {
     RecordVideoViewModel viewModel;
@@ -34,6 +39,9 @@ public class RecordVideoActivity extends AppCompatActivity {
 
         Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 10);
+
+
+
         startActivityForResult(intent, 1);
 
 
