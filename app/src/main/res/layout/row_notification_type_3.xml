@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:padding="@dimen/_8sdp"
+    android:layout_height="wrap_content">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_image_3"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_toRightOf="@+id/back_anonymous"
+        android:src="@drawable/model1"
+        app:civ_border_color="@android:color/transparent" />
+
+
+    <TextView
+        android:id="@+id/tv_desc_noti"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginHorizontal="@dimen/_5sdp"
+        android:layout_toRightOf="@+id/profile_image_3"
+        android:text="You matched with"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/tv_name_noti"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/tv_desc_noti"
+        android:text="NatalliSmith"
+        android:textColor="@color/black"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/iv_icon_3"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_toRightOf="@+id/tv_name_noti"
+        android:src="@drawable/message_icon" />
+
+</RelativeLayout>

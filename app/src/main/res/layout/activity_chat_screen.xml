@@ -68,10 +68,12 @@
         android:id="@+id/rv_chat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/bottom_menu"
         android:layout_below="@+id/main_menu"
         android:padding="@dimen/_8sdp" />
 
     <RelativeLayout
+        android:id="@+id/bottom_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -113,6 +115,7 @@
             android:src="@drawable/voice" />
 
         <RelativeLayout
+            android:id="@+id/msg_dialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_5sdp"
@@ -126,17 +129,27 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:backgroundTint="@android:color/transparent"
-                android:hint="@string/text_here" />
+                android:hint="@string/text_here"
+                android:textSize="@dimen/_12sdp" />
 
             <ImageView
                 android:id="@+id/iv_smiley"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
+
                 android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/iv_send"
                 android:paddingHorizontal="@dimen/_5sdp"
                 android:src="@drawable/smile" />
 
+            <ImageView
+                android:id="@+id/iv_send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:paddingHorizontal="@dimen/_5sdp"
+                android:src="@drawable/ic_send" />
 
         </RelativeLayout>
 

@@ -7,8 +7,8 @@
     <string name="no_results">No results</string>
     <string name="an_error_occurred">An error occurred</string>
     <string name="filter_normal">Normal</string>
-    <string name="facebook_app_id">268167791607051</string>
-    <string name="fb_login_protocol_scheme">fb268167791607051</string>
+    <string name="facebook_app_id">774666393441925</string>
+    <string name="fb_login_protocol_scheme">fb774666393441925</string>
 
     <string name="com.twitter.sdk.android.CONSUMER_KEY">pW3SwJXTv4EcNjuAhbhHzzh8R</string>
     <string name="com.twitter.sdk.android.CONSUMER_SECRET">jBXImapA3VtYJLD5oKRfLmtRolwINJGmzUfmJbJZLgy5lTt64H</string>
@@ -80,6 +80,7 @@
 
     <string name="comment_deleted">Comment has been deleted</string>
     <string name="add_comment">Add a comment...</string>
+    <string name="notification">Notification</string>
     <string name="commenting">Turn Commenting Off</string>
     <string name="block_user">Block User</string>
     <string name="report">Report Comment</string>

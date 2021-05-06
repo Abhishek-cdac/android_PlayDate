@@ -5,12 +5,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
 import com.playdate.app.model.Chat;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -81,25 +85,63 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        if (holder.getItemViewType() == ME) {
+            ViewHolderMe viewHolderMe = (ViewHolderMe) holder;
+            Picasso.get().load(chat_list.get(position).getImage())
+                    .placeholder(R.drawable.cupertino_activity_indicator)
+                    .into(viewHolderMe.iv_profile);
+            viewHolderMe.tv_msg.setText(chat_list.get(position).getMessage());
+        } else if (holder.getItemViewType() == OPPONENT) {
+            ViewHolderOponent viewHolderOponent = (ViewHolderOponent) holder;
+            Picasso.get().load(chat_list.get(position).getImage())
+                    .placeholder(R.drawable.cupertino_activity_indicator)
+                    .into(viewHolderOponent.iv_profile);
+            viewHolderOponent.tv_msg.setText(chat_list.get(position).getMessage());
 
+        } else {
+            ViewHolderOther viewHolderOther = (ViewHolderOther) holder;
+            viewHolderOther.tv_msg.setText(chat_list.get(position).getMessage());
+
+        }
+    }
+
+    public void addToList(EditText et_msg) {
+        chat_list.add(new Chat(et_msg.getText().toString(), "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg", ME));
+        notifyDataSetChanged();
+        et_msg.setText("");
     }
 
 
     public class ViewHolderOther extends RecyclerView.ViewHolder {
+        TextView tv_msg;
+
         public ViewHolderOther(@NonNull View itemView) {
             super(itemView);
+            tv_msg = itemView.findViewById(R.id.tv_chat_other);
+
         }
     }
 
-    private class ViewHolderMe extends RecyclerView.ViewHolder {
+    public class ViewHolderMe extends RecyclerView.ViewHolder {
+        ImageView iv_profile;
+        TextView tv_msg;
+
         public ViewHolderMe(View view) {
             super(view);
+            iv_profile = view.findViewById(R.id.profile_image_me);
+            tv_msg = view.findViewById(R.id.tv_chat);
         }
     }
 
-    private class ViewHolderOponent extends RecyclerView.ViewHolder {
+    public class ViewHolderOponent extends RecyclerView.ViewHolder {
+        ImageView iv_profile;
+        TextView tv_msg;
+
         public ViewHolderOponent(View view) {
             super(view);
+            iv_profile = view.findViewById(R.id.profile_image_oponent);
+            tv_msg = view.findViewById(R.id.tv_chat_oponent);
+
         }
     }
 }

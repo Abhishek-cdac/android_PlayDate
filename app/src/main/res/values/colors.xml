@@ -35,7 +35,8 @@
     <color name="color_grey">#989798</color>
     <color name="color_green_dark">#117106</color>
     <color name="color_red">#D13A3A</color>
-
+    <color name="color_blue_middle">#0066EC</color>
+    <color name="color_light_black">#88000000</color>
 
 
 </resources>
