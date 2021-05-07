@@ -3,6 +3,7 @@ package com.playdate.app.ui.register.otp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -119,6 +120,7 @@ public class OTPActivity extends AppCompatActivity {
                 pd.cancel();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
+                        Log.d("OTP..", response.body().toString());
                         nextPage();
                         finish();
                     } else {

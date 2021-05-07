@@ -129,6 +129,7 @@
                             android:textStyle="bold" />
 
                         <ImageView
+                            android:id="@+id/iv_dashboard_notification"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_10sdp"
@@ -274,9 +275,9 @@
         </ImageView>
 
         <ImageView
+            android:id="@+id/iv_gallery"
             android:layout_width="@dimen/_15sdp"
             android:layout_height="@dimen/_15sdp"
-            android:id="@+id/iv_gallery"
             android:layout_margin="@dimen/_5sdp"
             android:src="@drawable/gallery">
 
@@ -381,21 +382,21 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_camera_option"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_65sdp"
         android:layout_alignParentBottom="true"
         android:background="#444444"
-        android:visibility="gone"
-        android:id="@+id/ll_camera_option"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <LinearLayout
+            android:id="@+id/ll_take_photo"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:id="@+id/ll_take_photo"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -422,12 +423,12 @@
 
 
         <LinearLayout
+            android:id="@+id/ll_upload_photo"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:gravity="center"
-            android:id="@+id/ll_upload_photo"
             android:orientation="vertical">
 
             <ImageView
@@ -453,11 +454,11 @@
 
 
         <LinearLayout
+            android:id="@+id/ll_Record_video"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:id="@+id/ll_Record_video"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -484,11 +485,11 @@
 
 
         <LinearLayout
+            android:id="@+id/ll_upload_video"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:id="@+id/ll_upload_video"
             android:gravity="center"
             android:orientation="vertical">
 

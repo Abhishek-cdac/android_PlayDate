@@ -58,6 +58,8 @@
             android:name=".ui.dashboard.DashboardActivity"
             android:screenOrientation="portrait">
 
+
+
         </activity>
 
         <activity
@@ -114,6 +116,8 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+
 
         </activity>
         <activity android:name=".ui.chat.ChatActivity">

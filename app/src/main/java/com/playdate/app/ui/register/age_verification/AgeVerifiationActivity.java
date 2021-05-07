@@ -60,7 +60,8 @@ public class AgeVerifiationActivity extends AppCompatActivity {
             } else if (age_verify_viewmodel.getDaySelected().toLowerCase().equals("day")) {
                 clsCommon.showDialogMsg(this, "PlayDate", "Please select day of birth", "Ok");
             } else {
-                callAPI();
+                startActivity(new Intent(AgeVerifiationActivity.this, GenderSelActivity.class));
+//                callAPI();
             }
 
 
@@ -72,22 +73,22 @@ public class AgeVerifiationActivity extends AppCompatActivity {
     private void callAPI() {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
-        String DOB=age_verify_viewmodel.getYearSelected() + "-" + age_verify_viewmodel.getMonthSelected() + "-" + age_verify_viewmodel.getDaySelected();
-        hashMap.put("birthDate",DOB );// format 1990-08-12
+        String DOB = age_verify_viewmodel.getYearSelected() + "-" + age_verify_viewmodel.getMonthSelected() + "-" + age_verify_viewmodel.getDaySelected();
+        hashMap.put("birthDate", DOB);// format 1990-08-12
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
         pd.show();
         SessionPref pref = SessionPref.getInstance(this);
 //        Toast.makeText(this, ""+pref.getStringVal(SessionPref.LoginUsertoken), Toast.LENGTH_SHORT).show();
 
 
-        Call<LoginResponse> call = service.updateProfile("Bareer "+pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        Call<LoginResponse> call = service.updateProfile("Bareer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 pd.cancel();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
-                        pref.saveStringKeyVal(SessionPref.LoginUserbirthDate,DOB);
+                        pref.saveStringKeyVal(SessionPref.LoginUserbirthDate, DOB);
                         startActivity(new Intent(AgeVerifiationActivity.this, GenderSelActivity.class));
 
                     } else {

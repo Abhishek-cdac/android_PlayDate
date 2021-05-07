@@ -60,6 +60,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     ImageView iv_cancel;
     ImageView iv_create_ano_ques;
     ImageView iv_gallery;
+    ImageView iv_dashboard_notification;
 
     SwipeRefreshLayout mSwipeRefreshLayout;
     LinearLayout ll_mainMenu;
@@ -106,6 +107,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         iv_cancel = findViewById(R.id.iv_cancel);
         iv_gallery = findViewById(R.id.iv_gallery);
         iv_create_ano_ques = findViewById(R.id.iv_create_ano_ques);
+        iv_dashboard_notification = findViewById(R.id.iv_dashboard_notification);
 
         ll_take_photo = findViewById(R.id.ll_take_photo);
         ll_upload_photo = findViewById(R.id.ll_upload_photo);
@@ -150,9 +152,10 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         rv_friends.setAdapter(adapterfriend);
         rv_friends.setLayoutManager(manager);
 
-//        Fragment fragOne = new FragLanding();
-        Fragment fragOne = new FragNotification();
+        Fragment fragOne = new FragLanding();
+//        Fragment fragOne = new FragNotification();
 //        Fragment fragOne = new FragMyProfileDetails();
+
 //        Fragment fragOne = new FragMyProfilePersonal();
 
 //        Fragment fragOne = new FragMyProfilePayments();
@@ -166,6 +169,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             public void onClick(View view) {
                 txt_social.setBackground(null);
                 txt_match.setTextColor(getResources().getColor(R.color.white));
+                iv_dashboard_notification.setBackground(null);
                 txt_social.setTextColor(getResources().getColor(android.R.color.darker_gray));
                 txt_match.setBackground(getResources().getDrawable(R.drawable.menu_button));
                 ReplaceFrag(new FragCardSwipe());
@@ -176,11 +180,26 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             public void onClick(View view) {
                 txt_match.setBackground(null);
                 txt_social.setTextColor(getResources().getColor(R.color.white));
+                iv_dashboard_notification.setBackground(null);
                 txt_match.setTextColor(getResources().getColor(android.R.color.darker_gray));
                 txt_social.setBackground(getResources().getDrawable(R.drawable.menu_button));
                 ReplaceFrag(new FragSocialFeed());
             }
         });
+//        iv_dashboard_notification.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                txt_match.setBackground(null);
+//                txt_social.setBackground(null);
+//                txt_match.setTextColor(getResources().getColor(android.R.color.darker_gray));
+//                txt_social.setTextColor(getResources().getColor(android.R.color.darker_gray));
+////                iv_dashboard_notification.setBackground(getResources().getDrawable(R.drawable.menu_button));
+////                iv_dashboard_notification.setColorFilter(R.color.white);
+////                ReplaceFrag(new FragNotification());
+//
+//
+//            }
+//        });
 
         showPremium();
 
