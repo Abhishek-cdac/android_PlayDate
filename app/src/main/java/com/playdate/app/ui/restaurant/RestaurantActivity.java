@@ -83,9 +83,9 @@ public class RestaurantActivity extends AppCompatActivity {
 
 
         viewModel.OnNextClick().observe(RestaurantActivity.this, aBoolean -> {
-            startActivity(new Intent(RestaurantActivity.this, CameraActivity
-                    .class));
-//            callAPI();
+//            startActivity(new Intent(RestaurantActivity.this, CameraActivity
+//                    .class));
+            callAPI();
 
         });
         viewModel.onBackClick().observe(RestaurantActivity.this, aBoolean -> finish());

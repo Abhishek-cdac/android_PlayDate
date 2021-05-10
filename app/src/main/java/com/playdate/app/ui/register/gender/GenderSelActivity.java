@@ -81,8 +81,8 @@ public class GenderSelActivity extends AppCompatActivity {
                 if (selectedGender == -1) {
                     clsCommon.showDialogMsg(GenderSelActivity.this, "PlayDate", "Please select your gender", "Ok");
                 } else {
-                    startActivity(new Intent(GenderSelActivity.this, RelationActivity.class));
-//                    callAPI();
+//                    startActivity(new Intent(GenderSelActivity.this, RelationActivity.class));
+                    callAPI();
                 }
 
 

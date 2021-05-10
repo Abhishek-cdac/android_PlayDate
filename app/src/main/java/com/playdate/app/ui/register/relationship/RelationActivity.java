@@ -82,9 +82,9 @@ public class RelationActivity extends AppCompatActivity {
                 if (selectedRelationShip == -1) {
                     clsCommon.showDialogMsg(RelationActivity.this, "PlayDate", "Please select relationship", "Ok");
                 } else {
-                    startActivity(new Intent(RelationActivity.this, InterestActivity
-                            .class));
-//                    callAPI();
+//                    startActivity(new Intent(RelationActivity.this, InterestActivity
+//                            .class));
+                    callAPI();
                 }
 
 

@@ -56,8 +56,8 @@ public class UserNameActivity extends AppCompatActivity {
                 } else {
 
                     if (userNameViewModel.UserName.getValue() != null) {
-                        startActivity(new Intent(UserNameActivity.this, BioActivity.class));
-//                        callAPI(userNameViewModel.UserName.getValue());
+//                        startActivity(new Intent(UserNameActivity.this, BioActivity.class));
+                        callAPI(userNameViewModel.UserName.getValue());
                     }
 
 

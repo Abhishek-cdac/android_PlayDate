@@ -60,8 +60,8 @@ public class AgeVerifiationActivity extends AppCompatActivity {
             } else if (age_verify_viewmodel.getDaySelected().toLowerCase().equals("day")) {
                 clsCommon.showDialogMsg(this, "PlayDate", "Please select day of birth", "Ok");
             } else {
-                startActivity(new Intent(AgeVerifiationActivity.this, GenderSelActivity.class));
-//                callAPI();
+//                startActivity(new Intent(AgeVerifiationActivity.this, GenderSelActivity.class));
+                callAPI();
             }
 
         });
