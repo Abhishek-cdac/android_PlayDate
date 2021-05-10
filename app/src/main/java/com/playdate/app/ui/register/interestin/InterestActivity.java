@@ -71,8 +71,10 @@ public class InterestActivity extends AppCompatActivity {
                         }
                     }
 
+                    startActivity(new Intent(InterestActivity.this, UserNameActivity
+                            .class));
 
-                    callAPI(interest);
+//                    callAPI(interest);
                 }
 
 

@@ -91,7 +91,9 @@ public class InterestActivity extends AppCompatActivity {
                     setResult(409, mIntent);
                     finish();
                 } else {
-                    callSaveAPI();
+                    startActivity(new Intent(InterestActivity.this, RestaurantActivity
+                            .class));
+//                    callSaveAPI();
 
                 }
 

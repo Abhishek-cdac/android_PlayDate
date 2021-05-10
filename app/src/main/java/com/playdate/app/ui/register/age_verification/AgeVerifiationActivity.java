@@ -64,8 +64,6 @@ public class AgeVerifiationActivity extends AppCompatActivity {
 //                callAPI();
             }
 
-
-//
         });
 
     }

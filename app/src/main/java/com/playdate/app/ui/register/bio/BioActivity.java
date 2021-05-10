@@ -51,7 +51,9 @@ public class BioActivity extends AppCompatActivity {
                 } else if (viewModel.BioText.getValue().toString().trim().equals("")) {
                     clsCommon.showDialogMsg(BioActivity.this, "PlayDate", "Enter your personal bio.", "Ok");
                 } else {
-                    callAPI();
+                    startActivity(new Intent(BioActivity.this, UploadProfileActivity
+                            .class));
+//                    callAPI();
                 }
 
 
