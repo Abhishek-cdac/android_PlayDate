@@ -24,7 +24,8 @@
     <color name="filter_label_normal">#8A8889</color>
     <color name="filter_label_selected">#221F20</color>
 
-
+    <color name="color_purple">#7B0063</color>
+    <color name="color_purple1">#AB206A</color>
     <color name="color_violet">#1D1375</color>
     <color name="color_violet1">#C50AF2</color>
     <color name="color_green_fresh">#65FF00</color>

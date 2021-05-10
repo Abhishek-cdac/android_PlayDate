@@ -80,6 +80,12 @@
 
     <string name="comment_deleted">Comment has been deleted</string>
     <string name="add_comment">Add a comment...</string>
+    <string name="refer_your_friend">Refer your Friends and Earn Points</string>
+    <string name="earn_point">and Earn Points</string>
+    <string name="ur_discount">Your Discount Coupon</string>
+    <string name="points">100 Points</string>
+    <string name="share_code">Share Coupon Code via</string>
+    <string name="every_time">Every time one of your friends signs up, you will both receive 25 Points !</string>
     <string name="notification">Notification</string>
     <string name="commenting">Turn Commenting Off</string>
     <string name="block_user">Block User</string>
@@ -92,5 +98,7 @@
     <string name="which_one_are_you">Which one are you?</string>
     <string name="gender">Gender</string>
 
+    <string name="copy">Copy </string>
+    <string name="code">Code</string>
 
 </resources>
