@@ -1,36 +1,20 @@
 package com.playdate.app.ui.login;
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.HttpMethod;
 import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
 import com.playdate.app.model.LoginUser;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.Arrays;
 
 public class LoginViewModel extends ViewModel {
 
     public LoginViewModel() {
-        EmailAddress.setValue("ajit.jadhav36@gmail.com");
-        Password.setValue("80868086");
+//        EmailAddress.setValue("ajit.jadhav36@gmail.com");
+//        Password.setValue("80868086");
     }
 
     public MutableLiveData<String> EmailAddress = new MutableLiveData<>();

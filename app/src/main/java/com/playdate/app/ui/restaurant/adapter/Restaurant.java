@@ -2,7 +2,7 @@ package com.playdate.app.ui.restaurant.adapter;
 
 public class Restaurant {
     String image;
-    String _id;
+    String id;
     String name;
     boolean selected;
 
@@ -15,11 +15,11 @@ public class Restaurant {
     }
 
     public String get_id() {
-        return _id;
+        return id;
     }
 
     public void set_id(String _id) {
-        this._id = _id;
+        this.id = id;
     }
 
     public String getName() {

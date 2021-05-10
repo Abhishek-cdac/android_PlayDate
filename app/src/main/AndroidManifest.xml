@@ -103,7 +103,7 @@
             android:name=".ui.register.profile.UploadProfileActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.forgot_password.ForgotPassword"
+            android:name=".ui.forgot_password.ForgotPasswordActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.onboarding.GetStarted"

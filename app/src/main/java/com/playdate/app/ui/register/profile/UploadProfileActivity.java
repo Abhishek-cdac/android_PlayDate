@@ -21,8 +21,11 @@ import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.databinding.ActivityUploadProfileBinding;
 import com.playdate.app.model.LoginResponse;
 import com.playdate.app.ui.dashboard.DashboardActivity;
+import com.playdate.app.ui.register.RegisterActivity;
 import com.playdate.app.ui.register.interest.InterestActivity;
 import com.playdate.app.ui.restaurant.RestaurantActivity;
+import com.playdate.app.util.common.CommonClass;
+import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
 
 import org.json.JSONObject;
@@ -42,6 +45,8 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.playdate.app.util.session.SessionPref.LoginUserprofilePic;
 
 public class UploadProfileActivity extends AppCompatActivity {
 
@@ -66,15 +71,13 @@ public class UploadProfileActivity extends AppCompatActivity {
 
 
         viewModel.OnNextClick().observe(this, click -> {
-            if(mIntent.getBooleanExtra("fromProfile", false)){
-                Intent mIntent=new Intent();
-               setResult(407,mIntent);
-               finish();
-            }else{
-//                uploadImage();
+            if (mIntent.getBooleanExtra("fromProfile", false)) {
+                Intent mIntent = new Intent();
+                setResult(407, mIntent);
+                finish();
+            } else {
+                uploadImage();
 
-                startActivity(new Intent(UploadProfileActivity.this, InterestActivity
-                        .class));
             }
 
         });
@@ -118,11 +121,15 @@ public class UploadProfileActivity extends AppCompatActivity {
                 binding.ivNext.setVisibility(View.GONE);
             }
         });
-        mIntent=getIntent();
+        mIntent = getIntent();
 
     }
 
     private void uploadImage() {
+
+        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
+        pd.show();
+
         //create a file to write bitmap data
         File f = new File(getCacheDir(), "profile");
         try {
@@ -159,16 +166,19 @@ public class UploadProfileActivity extends AppCompatActivity {
         }
 
         SessionPref pref = SessionPref.getInstance(this);
-        MultipartBody.Part filePart = MultipartBody.Part.createFormData("updateProfile", f.getName(), RequestBody.create(MediaType.parse("image/*"), f));
+        MultipartBody.Part filePart = MultipartBody.Part.createFormData("userProfilePic", f.getName(), RequestBody.create(MediaType.parse("image/png"), f));
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-        Call<LoginResponse> call = service.uploadImage("Bareer " + pref.getStringVal(SessionPref.LoginUsertoken),filePart);
+        Call<LoginResponse> call = service.uploadImage("Bareer " + pref.getStringVal(SessionPref.LoginUsertoken), filePart);
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                pd.dismiss();
                 if (response.code() == 200) {
-
+                    //pref.saveStringKeyVal(LoginUserprofilePic,);
+                    startActivity(new Intent(UploadProfileActivity.this, InterestActivity
+                            .class));
                 } else {
-
+                    new CommonClass().showDialogMsg(UploadProfileActivity.this, "PlayDate", "An error occurred!", "Ok");
 
                 }
 
@@ -178,6 +188,7 @@ public class UploadProfileActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 t.printStackTrace();
+                pd.dismiss();
             }
         });
     }
@@ -217,7 +228,9 @@ public class UploadProfileActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
     Bitmap bitmap = null;
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

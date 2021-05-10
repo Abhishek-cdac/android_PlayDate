@@ -278,6 +278,7 @@ class CameraActivity : AppCompatActivity(), View.OnClickListener, OptionView.Cal
 
         override fun onVideoTaken(result: VideoResult) {
             super.onVideoTaken(result)
+
             LOG.w("onVideoTaken called! Launching activity.")
             VideoPreviewActivity.videoResult = result
             val intent = Intent(this@CameraActivity, VideoPreviewActivity::class.java)
