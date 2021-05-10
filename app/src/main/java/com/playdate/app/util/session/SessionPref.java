@@ -52,6 +52,7 @@ public class SessionPref {
 
 
     public static String LoginUserID = "id";
+    public static String LoginVerified = "LoginVerified";
     public static String LoginUserfullName = "fullName";
     public static String LoginUseremail = "email";
     public static String LoginUserusername = "username";
@@ -87,23 +88,23 @@ public class SessionPref {
                               String interested,
                               String interestedIn,
                               String restaurants) {
-        editor.putString(LoginUserID, id == null ? "null" : id);
-        editor.putString(LoginUserfullName, fullName == null ? "null" : fullName);
-        editor.putString(LoginUseremail, email == null ? "null" : email);
-        editor.putString(LoginUserusername, username == null ? "null" : username);
-        editor.putString(LoginUserphoneNo, phoneNo == null ? "null" : phoneNo);
-        editor.putString(LoginUserstatus, status == null ? "null" : status);
-        editor.putString(LoginUsertoken, token == null ? "null" : token);
-        editor.putString(LoginUsergender, gender == null ? "null" : gender);
-        editor.putString(LoginUserbirthDate, birthDate == null ? "null" : birthDate);
-        editor.putString(LoginUserage, age == null ? "null" : age);
-        editor.putString(LoginUserprofilePic, profilePic == null ? "null" : profilePic);
-        editor.putString(LoginUserprofileVideo, profileVideo == null ? "null" : profileVideo);
-        editor.putString(LoginUserrelationship, relationship == null ? "null" : relationship);
-        editor.putString(LoginUserpersonalBio, personalBio == null ? "null" : personalBio);
-        editor.putString(LoginUserinterested, interested == null ? "null" : interested);
-        editor.putString(LoginUserinterestedIn, interestedIn == null ? "null" : interestedIn);
-        editor.putString(LoginUserrestaurants, restaurants == null ? "null" : restaurants);
+        editor.putString(LoginUserID, id);
+        editor.putString(LoginUserfullName, fullName);
+        editor.putString(LoginUseremail, email);
+        editor.putString(LoginUserusername, username);
+        editor.putString(LoginUserphoneNo, phoneNo);
+        editor.putString(LoginUserstatus, status);
+        editor.putString(LoginUsertoken, token);
+        editor.putString(LoginUsergender, gender);
+        editor.putString(LoginUserbirthDate, birthDate);
+        editor.putString(LoginUserage, age);
+        editor.putString(LoginUserprofilePic, profilePic);
+        editor.putString(LoginUserprofileVideo, profileVideo);
+        editor.putString(LoginUserrelationship, relationship);
+        editor.putString(LoginUserpersonalBio, personalBio);
+        editor.putString(LoginUserinterested, interested);
+        editor.putString(LoginUserinterestedIn, interestedIn);
+        editor.putString(LoginUserrestaurants, restaurants);
         editor.commit();
     }
 

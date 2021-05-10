@@ -37,6 +37,8 @@ import com.playdate.app.ui.my_profile_details.FragMyProfilePersonal;
 import com.playdate.app.ui.notification_screen.FragNotification;
 import com.playdate.app.ui.social.FragSocialFeed;
 import com.playdate.app.ui.social.upload_media.PostMediaActivity;
+import com.playdate.app.util.session.SessionPref;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 
@@ -81,12 +83,14 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
 
     RelativeLayout rl_main;
+    ImageView profile_image;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         ll_profile_insta = findViewById(R.id.ll_profile_insta);
+        profile_image = findViewById(R.id.profile_image);
         rl_main = findViewById(R.id.rl_main);
         ll_mainMenu = findViewById(R.id.ll_mainMenu);
         ll_friends = findViewById(R.id.ll_friends);
@@ -201,8 +205,18 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 //            }
 //        });
 
-        showPremium();
+//        showPremium();
+        setValue();
 
+    }
+
+    private void setValue() {
+        SessionPref pref = SessionPref.getInstance(this);
+//        profile_image.setText(pref.getStringVal(SessionPref.LoginUserusername));
+
+        Picasso.get().load(pref.getStringVal(SessionPref.LoginUserprofilePic))
+                .placeholder(R.drawable.cupertino_activity_indicator)
+                .into(profile_image);
     }
 
     private void showPremium() {

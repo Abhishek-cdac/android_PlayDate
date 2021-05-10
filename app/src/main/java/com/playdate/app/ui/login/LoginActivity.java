@@ -41,7 +41,8 @@ import com.playdate.app.databinding.ActivityLoginBinding;
 import com.playdate.app.model.LoginResponse;
 import com.playdate.app.model.LoginUser;
 import com.playdate.app.model.LoginUserDetails;
-import com.playdate.app.ui.forgot_password.ForgotPassword;
+import com.playdate.app.ui.dashboard.DashboardActivity;
+import com.playdate.app.ui.forgot_password.ForgotPasswordActivity;
 import com.playdate.app.ui.register.age_verification.AgeVerifiationActivity;
 import com.playdate.app.ui.register.bio.BioActivity;
 import com.playdate.app.ui.register.gender.GenderSelActivity;
@@ -54,6 +55,7 @@ import com.playdate.app.ui.register.usertype.UserTypeSelectionActivity;
 import com.playdate.app.ui.restaurant.RestaurantActivity;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
+import com.playdate.app.util.customcamera.otalia.CameraActivity;
 import com.playdate.app.util.session.SessionPref;
 
 import org.json.JSONException;
@@ -69,6 +71,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.playdate.app.data.api.RetrofitClientInstance.DEVICE_TYPE;
+import static com.playdate.app.util.session.SessionPref.LoginVerified;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
@@ -145,7 +148,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         loginViewModel.getForgotClick().observe(this, forgot -> {
             if (forgot) {
-                startActivity(new Intent(LoginActivity.this, ForgotPassword.class));
+                startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class));
             } else {
                 /////   
             }
@@ -249,12 +252,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 user.getGender(),
                 user.getBirthDate(),
                 user.getAge(),
-                user.getProfilePic(),
-                user.getProfileVideo(),
+                user.getProfilePicPath(),
+                user.getProfileVideoPath(),
                 user.getRelationship(),
                 user.getPersonalBio(),
                 "",
-                "",
+                user.getInterestedIn(),
                 "");
 
 
@@ -262,6 +265,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             Intent mIntent = new Intent(LoginActivity.this, OTPActivity.class);
             mIntent.putExtra("Phone", user.getPhoneNo());
             mIntent.putExtra("resendOTP", true);
+            mIntent.putExtra("Forgot", false);
             startActivity(mIntent);
             finish();
         } else if (user.getBirthDate() == null) {
@@ -287,6 +291,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             finish();
         } else if (user.getRestaurants() == null) {
             startActivity(new Intent(LoginActivity.this, RestaurantActivity.class));
+            finish();
+        } else if (user.getProfileVideo() == null) {
+            startActivity(new Intent(LoginActivity.this, CameraActivity.class));
+            finish();
+        } else {
+            startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
+            SessionPref.getInstance(LoginActivity.this).saveBoolKeyVal(LoginVerified, true);
             finish();
         }
 

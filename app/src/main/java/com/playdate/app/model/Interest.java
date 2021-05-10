@@ -1,15 +1,15 @@
 package com.playdate.app.model;
 
 public class Interest {
-    String _id;
+    String id;
     String name;
 
     public String get_id() {
-        return _id;
+        return id;
     }
 
     public void set_id(String _id) {
-        this._id = _id;
+        this.id = _id;
     }
 
     public String getName() {

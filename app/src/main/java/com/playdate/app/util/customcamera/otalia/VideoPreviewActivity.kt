@@ -1,6 +1,7 @@
 package com.playdate.app.util.customcamera.otalia;
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -12,9 +13,21 @@ import androidx.appcompat.app.AppCompatActivity
 import com.otaliastudios.cameraview.VideoResult
 import com.otaliastudios.cameraview.size.AspectRatio
 import com.playdate.app.R
+import com.playdate.app.data.api.GetDataService
+import com.playdate.app.data.api.RetrofitClientInstance
+import com.playdate.app.model.LoginResponse
 import com.playdate.app.ui.dashboard.DashboardActivity
 import com.playdate.app.ui.register.interest.InterestActivity
-import com.playdate.app.ui.restaurant.RestaurantActivity
+import com.playdate.app.util.common.CommonClass
+import com.playdate.app.util.common.TransparentProgressDialog
+import com.playdate.app.util.session.SessionPref
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.io.*
 
 class VideoPreviewActivity : AppCompatActivity() {
     companion object {
@@ -32,8 +45,9 @@ class VideoPreviewActivity : AppCompatActivity() {
         }
         videoView.setOnClickListener { playVideo() }
         val iv_next = findViewById<ImageView>(R.id.iv_next).setOnClickListener(View.OnClickListener {
-            val intent = Intent(this@VideoPreviewActivity, DashboardActivity::class.java)
-            startActivity(intent)
+//            val intent = Intent(this@VideoPreviewActivity, DashboardActivity::class.java)
+//            startActivity(intent)
+            uploadVideo()
         })
 //        val isSnapshot = findViewById<MessageView>(R.id.isSnapshot)
 //        val rotation = findViewById<MessageView>(R.id.rotation)
@@ -80,7 +94,32 @@ class VideoPreviewActivity : AppCompatActivity() {
             videoView.start()
         }
     }
+    private fun uploadVideo() {
+        val pd = TransparentProgressDialog.getInstance(this)
+        pd.show()
 
+
+        val pref = SessionPref.getInstance(this)
+        val filePart = MultipartBody.Part.createFormData("userProfileVideo", videoResult!!.file.name, RequestBody.create(MediaType.parse("video/mp4"), videoResult!!.file))
+        val service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService::class.java)
+        val call = service.uploadProfileVideo("Bareer " + pref.getStringVal(SessionPref.LoginUsertoken), filePart)
+        call.enqueue(object : Callback<LoginResponse?> {
+            override fun onResponse(call: Call<LoginResponse?>, response: Response<LoginResponse?>) {
+                pd.dismiss()
+                if (response.code() == 200) {
+                    startActivity(Intent(this@VideoPreviewActivity, DashboardActivity::class.java))
+                    finish()
+                } else {
+                    CommonClass().showDialogMsg(this@VideoPreviewActivity, "PlayDate", "An error occurred!", "Ok")
+                }
+            }
+
+            override fun onFailure(call: Call<LoginResponse?>, t: Throwable) {
+                t.printStackTrace()
+                pd.dismiss()
+            }
+        })
+    }
     override fun onDestroy() {
         super.onDestroy()
         if (!isChangingConfigurations) {

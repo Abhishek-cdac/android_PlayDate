@@ -17,17 +17,24 @@ import com.playdate.app.R;
 import com.playdate.app.ui.register.interest.InterestActivity;
 import com.playdate.app.ui.register.profile.UploadProfileActivity;
 import com.playdate.app.ui.register.username.UserNameActivity;
+import com.playdate.app.util.session.SessionPref;
+import com.squareup.picasso.Picasso;
 
 public class FragMyProfileDetails extends Fragment implements View.OnClickListener {
     ImageView iv_dark_mode;
+    ImageView profile_image;
+    ImageView iv_reset_pass;
+    TextView txt_user_name;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag_my_details, container, false);
-        ImageView profile_image = view.findViewById(R.id.profile_image);
+        iv_reset_pass = view.findViewById(R.id.iv_reset_pass);
+         profile_image = view.findViewById(R.id.profile_image);
         ImageView iv_edit_username = view.findViewById(R.id.iv_edit_username);
         ImageView iv_interest = view.findViewById(R.id.iv_interest);
         iv_dark_mode = view.findViewById(R.id.iv_dark_mode);
+        txt_user_name = view.findViewById(R.id.txt_user_name);
         TextView txt_change_photo = view.findViewById(R.id.txt_change_photo);
         profile_image.setOnClickListener(this);
         iv_edit_username.setOnClickListener(this);
@@ -35,8 +42,20 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
         iv_edit_username.setOnClickListener(this);
         iv_interest.setOnClickListener(this);
         iv_dark_mode.setOnClickListener(this);
+
+        setValues();
+
         return view;
 
+    }
+
+    private void setValues() {
+        SessionPref pref = SessionPref.getInstance(getActivity());
+        txt_user_name.setText(pref.getStringVal(SessionPref.LoginUserusername));
+
+        Picasso.get().load(pref.getStringVal(SessionPref.LoginUserprofilePic))
+                .placeholder(R.drawable.cupertino_activity_indicator)
+                .into(profile_image);
     }
 
     @Override

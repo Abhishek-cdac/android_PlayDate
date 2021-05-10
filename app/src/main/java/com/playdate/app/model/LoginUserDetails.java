@@ -19,7 +19,36 @@ public class LoginUserDetails {
     String birthDate;
     String age;
     String profilePic;
+    String profilePicPath;
+
     String profileVideo;
+    String profileVideoPath;
+    String interestedIn;
+
+    public String getInterestedIn() {
+        return interestedIn;
+    }
+
+    public void setInterestedIn(String interestedIn) {
+        this.interestedIn = interestedIn;
+    }
+
+    public String getProfilePicPath() {
+        return profilePicPath;
+    }
+
+    public void setProfilePicPath(String profilePicPath) {
+        this.profilePicPath = profilePicPath;
+    }
+
+    public String getProfileVideoPath() {
+        return profileVideoPath;
+    }
+
+    public void setProfileVideoPath(String profileVideoPath) {
+        this.profileVideoPath = profileVideoPath;
+    }
+
     String relationship;
     String personalBio;
 

@@ -34,10 +34,10 @@ public class OnBoardingImageFragment extends Fragment {
                 img_back.setImageResource(R.drawable.couple1);
                 break;
             case 1:
-                img_back.setImageResource(R.drawable.couple2);
+                img_back.setImageResource(R.drawable.couple1);
                 break;
             case 2:
-                img_back.setImageResource(R.drawable.couple3);
+                img_back.setImageResource(R.drawable.couple1);
                 break;
             case 3:
                 img_back.setImageResource(R.drawable.couple1);

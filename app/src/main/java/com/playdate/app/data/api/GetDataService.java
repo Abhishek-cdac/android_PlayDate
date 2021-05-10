@@ -36,6 +36,14 @@ public interface GetDataService {
     Call<LoginResponse> updateProfile(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
     @FormUrlEncoded
+    @POST("user/reset-password")
+    Call<LoginResponse> resetPassword(@FieldMap Map<String, String> param);
+
+    @FormUrlEncoded
+    @POST("user/forgot-password-sent-otp")
+    Call<LoginResponse> forgotPasswordSentOtp(@FieldMap Map<String, String> param);
+
+    @FormUrlEncoded
     @POST("user/resend-verify-otp")
     Call<LoginResponse> resendVerifyOtp(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
@@ -50,6 +58,10 @@ public interface GetDataService {
     @Multipart
     @POST("user/update-profile-image")
     Call<LoginResponse> uploadImage(@Header("Authorization") String token, @Part MultipartBody.Part filePart);
+
+    @Multipart
+    @POST("user/update-profile-video")
+    Call<LoginResponse> uploadProfileVideo(@Header("Authorization") String token, @Part MultipartBody.Part filePart);
 
 
 }

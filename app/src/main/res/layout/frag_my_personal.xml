@@ -74,12 +74,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
+        android:id="@+id/email"
         android:layout_marginLeft="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_2sdp"
         android:layout_marginRight="@dimen/_10sdp"
         android:fontFamily="@font/helvetica_neue"
         android:gravity="start|center"
-        android:text="myron.evans@gmail.com"
         android:textColor="@color/black"
         android:textSize="@dimen/_11sdp"
         android:textStyle="bold" />
@@ -124,12 +124,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
+        android:id="@+id/txt_phone"
         android:layout_marginLeft="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_2sdp"
         android:layout_marginRight="@dimen/_10sdp"
         android:fontFamily="@font/helvetica_neue"
         android:gravity="start|center"
-        android:text="202-555-1994"
         android:textColor="@color/black"
         android:textSize="@dimen/_11sdp" />
 
@@ -177,7 +177,7 @@
         android:layout_marginRight="@dimen/_10sdp"
         android:fontFamily="@font/helvetica_neue"
         android:gravity="start|center"
-        android:text="Male"
+        android:id="@+id/txt_gender"
         android:textColor="@color/black"
         android:textSize="@dimen/_11sdp" />
 
@@ -226,7 +226,7 @@
         android:layout_marginRight="@dimen/_10sdp"
         android:fontFamily="@font/helvetica_neue"
         android:gravity="start|center"
-        android:text="05-03-1994"
+        android:id="@+id/DOB"
         android:textColor="@color/black"
         android:textSize="@dimen/_11sdp" />
 
@@ -274,7 +274,7 @@
         android:layout_marginRight="@dimen/_10sdp"
         android:fontFamily="@font/helvetica_neue"
         android:gravity="start|center"
-        android:text="Straight"
+        android:id="@+id/interestin"
         android:textColor="@color/black"
         android:textSize="@dimen/_11sdp" />
 
@@ -323,7 +323,7 @@
         android:layout_marginRight="@dimen/_10sdp"
         android:fontFamily="@font/helvetica_neue"
         android:gravity="start|center"
-        android:text="Single"
+        android:id="@+id/txt_relationship"
         android:textColor="@color/black"
         android:textSize="@dimen/_11sdp"
         android:textStyle="bold" />
