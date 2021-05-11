@@ -339,6 +339,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
 
+        }else{
+
         }
     }
 
@@ -384,7 +386,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                                         String name = object.getString("name");
                                                         String email = object.getString("email");
                                                         String fbUserID = object.getString("id");
-
+                                                        String birthday = object.getString("birthday");
+xfgdf
                                                         Log.d("Name of user ", name);
                                                         disconnectFromFacebook();
 
