@@ -9,7 +9,6 @@
         android:id="@+id/main_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         android:orientation="horizontal"
         android:padding="@dimen/_14sdp">
 
@@ -19,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerInParent="true"
-            android:src="@drawable/ic_arrow_back_ios" />
+            android:src="@drawable/ic_arrow_back_black" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_image"
@@ -42,12 +41,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="KaylaJenner11"
+                android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
 
             <TextView
                 android:id="@+id/active_now"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/color_grey"
                 android:text="Active Now"
                 android:textSize="@dimen/_10sdp" />
 
@@ -110,6 +111,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="-1dp"
             android:layout_toRightOf="@+id/iv_video"
             android:paddingHorizontal="@dimen/_5sdp"
             android:src="@drawable/voice" />
@@ -130,6 +132,8 @@
                 android:layout_alignParentStart="true"
                 android:backgroundTint="@android:color/transparent"
                 android:hint="@string/text_here"
+                android:textColor="@color/black"
+                android:textColorHint="@color/color_grey"
                 android:textSize="@dimen/_12sdp" />
 
             <ImageView
