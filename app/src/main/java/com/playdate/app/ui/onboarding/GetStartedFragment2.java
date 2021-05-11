@@ -19,7 +19,7 @@ public class GetStartedFragment2 extends Fragment {
         View view = inflater.inflate(R.layout.fragment_get_started, container, false);
         ImageView img = view.findViewById(R.id.img_frag);
 
-        img.setImageResource(R.drawable.couple2);
+        img.setImageResource(R.drawable.couple1);
         return view;
     }
 

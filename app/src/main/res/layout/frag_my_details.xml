@@ -78,7 +78,7 @@
         android:layout_marginRight="@dimen/_10sdp"
         android:fontFamily="@font/helvetica_neue"
         android:gravity="start|center"
-        android:text="Emyron96"
+        android:id="@+id/txt_user_name"
         android:textColor="@color/black"
         android:textSize="@dimen/_11sdp"
         android:textStyle="bold" />
@@ -109,6 +109,7 @@
         <ImageView
             android:layout_width="@dimen/_12sdp"
             android:layout_height="@dimen/_12sdp"
+            android:id="@+id/iv_reset_pass"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:src="@drawable/edit_pencil">

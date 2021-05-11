@@ -3,9 +3,9 @@ package com.playdate.app.model;
 public class RegisterResult {
     int status;
     String message;
-    Data data;
+    LoginUserDetails data;
 
-    public RegisterResult(int status, String message, Data data) {
+    public RegisterResult(int status, String message, LoginUserDetails data) {
         this.status = status;
         this.message = message;
         this.data = data;
@@ -27,19 +27,14 @@ public class RegisterResult {
         this.message = message;
     }
 
-    public Data getData() {
+    public LoginUserDetails getData() {
         return data;
     }
 
-    public void setData(Data data) {
+    public void setData(LoginUserDetails data) {
         this.data = data;
     }
 
-    class Data {
-        String fullName;
-        String email;
-        String phoneNo;
-    }
 
 }
 

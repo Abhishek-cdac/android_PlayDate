@@ -86,7 +86,7 @@ public class BioActivity extends AppCompatActivity {
                 pd.cancel();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
-                        pref.saveStringKeyVal(SessionPref.LoginUserbirthDate, bio);
+                        pref.saveStringKeyVal(SessionPref.LoginUserpersonalBio, bio);
                         startActivity(new Intent(BioActivity.this, UploadProfileActivity
                                 .class));
                     } else {

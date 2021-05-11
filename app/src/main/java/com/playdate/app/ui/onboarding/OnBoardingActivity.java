@@ -15,7 +15,11 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.playdate.app.R;
 import com.playdate.app.databinding.ActivityOnboardingBinding;
+import com.playdate.app.ui.dashboard.DashboardActivity;
 import com.playdate.app.ui.login.LoginActivity;
+import com.playdate.app.util.session.SessionPref;
+
+import static com.playdate.app.util.session.SessionPref.LoginVerified;
 
 public class OnBoardingActivity extends AppCompatActivity {
 
@@ -35,6 +39,12 @@ public class OnBoardingActivity extends AppCompatActivity {
             startActivity(new Intent(OnBoardingActivity.this, LoginActivity.class));
             finish();
         });
+        SessionPref pref = SessionPref.getInstance(this);
+        if (pref.getBoolVal(LoginVerified)) {
+            startActivity(new Intent(OnBoardingActivity.this, DashboardActivity.class));
+            finish();
+        }
+
 
     }
 

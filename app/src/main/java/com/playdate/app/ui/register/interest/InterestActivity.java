@@ -120,10 +120,10 @@ public class InterestActivity extends AppCompatActivity {
         }
 
         if (count == 0) {
-            clsCommon.showDialogMsg(InterestActivity.this, "PlayDate", "Please select at least 4 interests", "Ok");
+            clsCommon.showDialogMsg(InterestActivity.this, "PlayDate", "Please select at least 2 interests", "Ok");
             return;
-        } else if (count < 4) {
-            clsCommon.showDialogMsg(InterestActivity.this, "PlayDate", "Please select at least 4 interests", "Ok");
+        } else if (count < 2) {
+            clsCommon.showDialogMsg(InterestActivity.this, "PlayDate", "Please select at least 2 interests", "Ok");
             return;
         } else if (count > 10) {
             clsCommon.showDialogMsg(InterestActivity.this, "PlayDate", "You can select max 10 interests", "Ok");

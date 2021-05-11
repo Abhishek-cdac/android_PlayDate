@@ -2,6 +2,7 @@ package com.playdate.app.ui.register;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -38,12 +39,14 @@ import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.databinding.ActivityRegisterBinding;
+import com.playdate.app.model.LoginUserDetails;
 import com.playdate.app.model.RegisterResult;
 import com.playdate.app.model.RegisterUser;
 import com.playdate.app.ui.login.LoginActivity;
 import com.playdate.app.ui.register.otp.OTPActivity;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
+import com.playdate.app.util.session.SessionPref;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -75,7 +78,7 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mIntent=getIntent();
+        mIntent = getIntent();
         clsCommon = CommonClass.getInstance();
         registerViewModel = new RegisterViewModel();
         registerViewModel.init();
@@ -173,9 +176,14 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
         hashMap.put("email", registerUser.getEmail());
         hashMap.put("address", registerUser.getAddress());
         hashMap.put("deviceType", DEVICE_TYPE);
+        hashMap.put("deviceToken", "12345695");
         hashMap.put("phoneNo", registerUser.getPhoneNo());
         hashMap.put("password", registerUser.getPassword());
         hashMap.put("userType", mIntent.getStringExtra("userType"));
+
+        String android_id = Settings.Secure.getString(this.getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+        hashMap.put("deviceID", android_id);
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
         pd.show();
         Call<RegisterResult> call = service.registerUser(hashMap);
@@ -185,6 +193,26 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
                 pd.cancel();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
+                        LoginUserDetails user = response.body().getData();
+                        SessionPref.getInstance(RegisterActivity.this).saveLoginUser(
+                                user.getId(),
+                                user.getFullName(),
+                                user.getEmail(),
+                                user.getUsername(),
+                                user.getPhoneNo(),
+                                user.getStatus(),
+                                user.getToken(),
+                                user.getGender(),
+                                user.getBirthDate(),
+                                user.getAge(),
+                                user.getProfilePicPath(),
+                                user.getProfileVideoPath(),
+                                user.getRelationship(),
+                                user.getPersonalBio(),
+                                "",
+                                user.getInterestedIn(),
+                                "");
+
                         nextPage(registerUser);
                     } else {
                         clsCommon.showDialogMsg(RegisterActivity.this, "PlayDate", "Something went wrong...Please try later!", "Ok");
@@ -219,6 +247,7 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
         mIntent.putExtra("Address", registerUser.getAddress());
         mIntent.putExtra("Email", registerUser.getEmail());
         mIntent.putExtra("Password", registerUser.getPassword());
+        mIntent.putExtra("Forgot", false);
 //        registerViewModel.clearFileds();
         startActivity(mIntent);
         finish();

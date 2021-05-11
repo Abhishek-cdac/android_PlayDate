@@ -30,12 +30,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.playdate.app.util.session.SessionPref.LoginVerified;
+
 public class OTPActivity extends AppCompatActivity {
 
     String phone;
     CommonClass clsCommon;
     private OTPViewModel otpViewModel;
     private ActivityOtpBinding binding;
+    Intent mIntent;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,12 +48,13 @@ public class OTPActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(OTPActivity.this, R.layout.activity_otp);
         binding.setLifecycleOwner(this);
         binding.setOTPViewModel(otpViewModel);
-        Intent mIntent = getIntent();
+        mIntent = getIntent();
         phone = mIntent.getStringExtra("Phone");
         otpViewModel.setMobile(phone);
         otpViewModel.startTimer();
 
         otpViewModel.onRegisterUser().observe(this, loginUser -> {
+
 
             if (null == otpViewModel.txtOTP.getValue()) {
                 clsCommon.showDialogMsg(OTPActivity.this, "PlayDate", "Enter OTP!", "Ok");
@@ -59,7 +63,17 @@ public class OTPActivity extends AppCompatActivity {
             } else if (otpViewModel.txtOTP.getValue().length() < 4) {
                 clsCommon.showDialogMsg(OTPActivity.this, "PlayDate", "OTP must be of 4 characters in length", "Ok");
             } else {
-                callAPI();
+                if (mIntent.getBooleanExtra("Forgot", false)) {
+                    Intent mIntent = new Intent();
+                    mIntent.putExtra("verified", true);
+                    mIntent.putExtra("OTP", otpViewModel.txtOTP.getValue());
+                    setResult(101, mIntent);
+                    finish();
+
+                } else {
+                    callAPI();
+                }
+
             }
 
 
@@ -122,6 +136,8 @@ public class OTPActivity extends AppCompatActivity {
                     if (response.body().getStatus() == 1) {
                         Log.d("OTP..", response.body().toString());
                         nextPage();
+                        SessionPref pref=SessionPref.getInstance(OTPActivity.this);
+                        pref.saveBoolKeyVal(LoginVerified, true);
                         finish();
                     } else {
                         clsCommon.showDialogMsg(OTPActivity.this, "PlayDate", "Something went wrong...Please try later!", "Ok");
@@ -158,13 +174,18 @@ public class OTPActivity extends AppCompatActivity {
         pd.show();
 
         SessionPref pref = SessionPref.getInstance(this);
+        Call<LoginResponse> call;
+//        if (mIntent.getBooleanExtra("resetPassword", false)) {
+//            call = service.forgotPasswordSentOtp(hashMap);
+//        } else {
+        call = service.resendVerifyOtp("Bareer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+//        }
 
-        Call<LoginResponse> call = service.resendVerifyOtp("Bareer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 pd.cancel();
-
 
 
             }
@@ -179,6 +200,11 @@ public class OTPActivity extends AppCompatActivity {
     }
 
     private void nextPage() {
+//        if (mIntent.getBooleanExtra("resetPassword", false)) {
+//
+//        } else {
         OTPActivity.this.startActivity(new Intent(OTPActivity.this, AgeVerifiationActivity.class));
+//        }
+
     }
 }

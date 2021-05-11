@@ -369,12 +369,18 @@
             android:layout_weight="1"
             android:gravity="center">
 
-            <ImageView
+
+
+            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/profile_image"
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="@dimen/_30sdp"
-                android:background="@drawable/profile">
+                android:layout_gravity="center"
+                android:src="@drawable/profile"
+                app:civ_border_color="@color/white"
+                app:civ_border_width="1dp"
+                tools:ignore="MissingConstraints" />
 
-            </ImageView>
 
         </LinearLayout>
 
