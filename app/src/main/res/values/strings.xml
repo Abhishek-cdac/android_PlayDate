@@ -94,6 +94,9 @@
     <string name="location">Location</string>
     <string name="date">Date</string>
     <string name="Mobile">Mobile Number</string>
+    <string name="winner">Winner!</string>
+    <string name="level">LEVEL 1</string>
+    <string name="ans_first">You answered first!</string>
 
 
 </resources>

@@ -63,5 +63,8 @@ public interface GetDataService {
     @POST("user/update-profile-video")
     Call<LoginResponse> uploadProfileVideo(@Header("Authorization") String token, @Part MultipartBody.Part filePart);
 
+    @FormUrlEncoded
+    @POST("user/social-signin")
+    Call<LoginResponse> sociallogin(@FieldMap Map<String, String> param);
 
 }
