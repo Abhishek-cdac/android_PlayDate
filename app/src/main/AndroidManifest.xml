@@ -110,16 +110,15 @@
             android:name=".ui.onboarding.OnBoardingActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing">
+
+
+        </activity>
+        <activity android:name=".ui.coupons.ActivityCoupons">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-
-        </activity>
-        <activity android:name=".ui.coupons.ActivityCoupons">
-
 
         </activity>
         <activity android:name=".ui.chat.ChatActivity">

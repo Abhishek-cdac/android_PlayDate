@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
 
@@ -12,5 +14,10 @@ public class ActivityCoupons extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coupan_code);
+        RecyclerView rv_frequently = findViewById(R.id.rv_frequently);
+        RecyclerView.LayoutManager manager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+        rv_frequently.setLayoutManager(manager);
+        FrequentlyQuestionAdapter adapter = new FrequentlyQuestionAdapter();
+        rv_frequently.setAdapter(adapter);
     }
 }

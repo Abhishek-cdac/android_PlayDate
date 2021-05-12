@@ -271,7 +271,6 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             txt_account.setBackground(null);
             txt_account.setTextColor(getResources().getColor(android.R.color.darker_gray));
 
-
             ReplaceFrag(new FragMyProfilePayments());
         } else if (id == R.id.txt_personal) {
 
@@ -283,10 +282,8 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             txt_payment.setBackground(null);
             txt_payment.setTextColor(getResources().getColor(android.R.color.darker_gray));
 
-
             ReplaceFrag(new FragMyProfilePersonal());
         } else if (id == R.id.txt_account) {
-
 
             txt_account.setTextColor(getResources().getColor(R.color.white));
             txt_account.setBackground(getResources().getDrawable(R.drawable.menu_button));
