@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "998105748338",
+    "project_id": "playdate-1620799505982",
+    "storage_bucket": "playdate-1620799505982.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:998105748338:android:83d9ad2aee7d3408bbc3eb",
+        "android_client_info": {
+          "package_name": "com.playdate.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "998105748338-rb00anbgi2cosa5e2maislmt8dj3rpht.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.playdate.app",
+            "certificate_hash": "73c0081e5ee223f577b22d22985e39763ca12840"
+          }
+        },
+        {
+          "client_id": "998105748338-hujtc2ec9go8mpuekgv9iet1ecejfblc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADVuDJR55vtKhh2Etm9hCrBvc0Gw0mFYI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "998105748338-hujtc2ec9go8mpuekgv9iet1ecejfblc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

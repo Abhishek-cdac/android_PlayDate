@@ -1,8 +1,13 @@
 package com.playdate.app.ui.login;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -63,6 +68,8 @@ import com.playdate.app.util.session.SessionPref;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -92,10 +99,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        myshakey();
         clsCommon = CommonClass.getInstance();
         FacebookSdk.sdkInitialize(this);
         callbackManager = CallbackManager.Factory.create();
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestId()
+                .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
 
@@ -197,6 +207,30 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
         });
 
+    }
+
+    void myshakey() {
+
+        Log.e("Playdate myshakey ---", "-- Called --");
+        // Add code to print out the key hash
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    "com.playdate.app",
+                    PackageManager.GET_SIGNATURES);
+            Log.e("Playdate myshakey", "----");
+            for (Signature signature : info.signatures) {
+                Log.e("Playdate", "-- Called --");
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.e("Playdate KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT).toString() + "--");
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e("Playdate EXCP 1---", "");
+            e.printStackTrace();
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
     }
 
     private void callLoginAPI(LoginUser loginUser) {
@@ -350,15 +384,83 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private void handleSignInResult(Task<GoogleSignInAccount> task) {
         try {
             GoogleSignInAccount account = task.getResult(ApiException.class);
-            Log.e("Email ", ""+account.getEmail());
-            Log.d("Name ", account.getDisplayName());
-            Log.d("ID ", account.getId());
-            Log.d("ServerAuthCode ", account.getServerAuthCode());
-            Log.d("Photo ", account.getPhotoUrl().toString());
+//            Log.e("Email ", ""+account.getEmail());
+//            Log.d("Name ", account.getDisplayName());
+//            Log.d("ID ", account.getId());
+//            Log.d("ServerAuthCode ", account.getServerAuthCode());
+//            Log.d("Photo ", account.getPhotoUrl().toString());
+
+            GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
+            if (acct != null) {
+                String personName = acct.getDisplayName();
+                String personGivenName = acct.getGivenName();
+                String ServerAuthCode = acct.getIdToken();
+                String personEmail = acct.getEmail();
+                String personId = acct.getId();
+                Uri personPhoto = acct.getPhotoUrl();
+
+                Log.e("personEmail",""+personEmail);
+                Log.e("ServerAuthCode",""+ServerAuthCode);
+                Log.e("personId",""+personId);
+                Log.e("personPhoto",""+personPhoto);
+                Log.e("personName",""+personName);
+
+                callGmailSocialLoginAPI(personEmail,personId,ServerAuthCode);
+
+            }
+
+
 
         } catch (ApiException e) {
-            Log.d("EXCEPTION", "signInResult:failed code=" + e.getStatusCode());
+            Log.e("EXCEPTION", "signInResult:failed code=" + e.getStatusCode());
         }
+    }
+
+    private void callGmailSocialLoginAPI(String personEmail, String personId, String serverAuthCode) {
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("email", personEmail);
+        hashMap.put("sourceSocialId", personId);
+        hashMap.put("deviceToken", serverAuthCode);
+        hashMap.put("sourceType", "Google");
+        hashMap.put("deviceID", "12345");//Hardcode
+        hashMap.put("deviceType", DEVICE_TYPE);
+        //   hashMap.put("deviceToken", "12345");//Hardc
+        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
+        pd.show();
+        Call<LoginResponse> call = service.sociallogin(hashMap);
+        call.enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                pd.cancel();
+                if (response.code() == 200) {
+                    if (response.body().getStatus() == 1) {
+
+                        // startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
+                        //finish();
+                        checkforTheLastActivity(response.body());
+
+                    } else {
+                        clsCommon.showDialogMsg(LoginActivity.this, "PlayDate", response.body().getMessage(), "Ok");
+                    }
+                } else {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        clsCommon.showDialogMsg(LoginActivity.this, "PlayDate", jObjError.getString("message").toString(), "Ok");
+                    } catch (Exception e) {
+                        Toast.makeText(LoginActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                t.printStackTrace();
+                pd.cancel();
+                Toast.makeText(LoginActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
@@ -438,7 +540,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         hashMap.put("sourceType", "Facebook");
         hashMap.put("deviceID", "12345");//Hardcode
         hashMap.put("deviceType", DEVICE_TYPE);
-     //   hashMap.put("deviceToken", "12345");//Hardc
+
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
         pd.show();
         Call<LoginResponse> call = service.sociallogin(hashMap);
@@ -448,7 +550,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 pd.cancel();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
-
                         // startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
                         //finish();
                         checkforTheLastActivity(response.body());

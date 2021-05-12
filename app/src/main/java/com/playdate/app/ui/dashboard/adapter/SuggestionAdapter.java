@@ -17,6 +17,7 @@ import androidx.viewpager.widget.PagerAdapter;
 
 import com.playdate.app.R;
 import com.playdate.app.model.Friends;
+import com.playdate.app.model.GetUserSuggestionData;
 import com.playdate.app.ui.dashboard.fragments.FragSuggestion;
 import com.playdate.app.ui.onboarding.OnBoardingImageFragment;
 
@@ -27,7 +28,9 @@ public class SuggestionAdapter extends PagerAdapter {
     private Context context;
 
 
-    ArrayList<Friends> lst = new ArrayList<Friends>();
+   // ArrayList<GetUserSuggestionData> lst = new ArrayList<GetUserSuggestionData>();
+ ArrayList<Friends> lst = new ArrayList<Friends>();
+
 
     public SuggestionAdapter(Context mContext) {
         this.context = mContext;
@@ -69,9 +72,11 @@ public class SuggestionAdapter extends PagerAdapter {
         View view = layoutInflater.inflate(R.layout.frag_suggestions, container, false);
 
         ImageView iv_send_request;
-        TextView title, desc;
+        TextView title, desc, txt_header_Suggestions;
 
         iv_send_request = view.findViewById(R.id.iv_send_request);
+      //  txt_header_Suggestions = view.findViewById(R.id.txt_header_Suggestions);
+//        txt_header_Suggestions.setText(lst.get(position).getFullName());
         if (lst.get(position).isRequestSent()) {
             iv_send_request.setImageResource(R.drawable.sent_request_sel);
         } else {
@@ -81,6 +86,7 @@ public class SuggestionAdapter extends PagerAdapter {
             @Override
             public void onClick(View view1) {
                 lst.get(position).setRequestSent(true);
+
                 SuggestionAdapter.this.notifyDataSetChanged();
 
             }

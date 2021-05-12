@@ -50,7 +50,7 @@ import static com.playdate.app.ui.register.profile.UploadProfileActivity.PICK_PH
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.REQUEST_TAKE_GALLERY_VIDEO;
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.TAKE_PHOTO_CODE;
 
-public class DashboardActivity extends AppCompatActivity implements OnInnerFragmentClicks, View.OnClickListener,OnProfilePhotoChageListerner {
+public class DashboardActivity extends AppCompatActivity implements OnInnerFragmentClicks, View.OnClickListener, OnProfilePhotoChageListerner {
     FragmentManager fm;
     FragmentTransaction ft;
     TextView txt_match, txt_chat;
@@ -68,7 +68,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     ImageView iv_dashboard_notification;
 
     SwipeRefreshLayout mSwipeRefreshLayout;
-    LinearLayout ll_mainMenu,ll_her;
+    LinearLayout ll_mainMenu, ll_her;
     LinearLayout ll_friends;
     LinearLayout ll_profile_menu;
     LinearLayout ll_option_love;
@@ -231,7 +231,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 //                ReplaceFrag(new FragNotification());
             }
         });
-     iv_dashboard_notification.setOnClickListener(new View.OnClickListener() {
+        iv_dashboard_notification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 txt_match.setBackground(null);
@@ -241,7 +241,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
                 txt_chat.setBackground(null);
                 txt_chat.setTextColor(getResources().getColor(android.R.color.darker_gray));
                 iv_dashboard_notification.setBackground(getResources().getDrawable(R.drawable.menu_button));
-               // iv_dashboard_notification.setColorFilter(R.color.white);
+                // iv_dashboard_notification.setColorFilter(R.color.white);
                 iv_dashboard_notification.setImageResource(R.drawable.ic_notifications_well);
                 ReplaceFrag(new FragNotification());
                 ll_friends.setVisibility(View.GONE);

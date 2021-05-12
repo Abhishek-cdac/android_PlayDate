@@ -107,5 +107,6 @@
     <string name="copy">Copy </string>
     <string name="frequently_asked">Frequently Asked Questions</string>
     <string name="code">Code</string>
+    <string name="title_activity_maps">Map</string>
 
 </resources>
