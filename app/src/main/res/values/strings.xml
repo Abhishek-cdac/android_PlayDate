@@ -97,6 +97,8 @@
     <string name="text_here">Type your text</string>
     <string name="which_one_are_you">Which one are you?</string>
     <string name="gender">Gender</string>
+    <string name="location">Location</string>
+    <string name="date">Date</string>
     <string name="Mobile">Mobile Number</string>
 
     <string name="copy">Copy </string>

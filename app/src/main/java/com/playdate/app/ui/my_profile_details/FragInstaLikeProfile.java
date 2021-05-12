@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,9 +22,12 @@ import com.playdate.app.ui.playvideo.VideoPlayActivity;
 import com.playdate.app.ui.social.SocialFeed;
 import com.playdate.app.ui.social.SocialFeedAdapter;
 import com.playdate.app.util.customcamera.otalia.VideoPreviewActivity;
+import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 
 public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View.OnClickListener {
     RecyclerView recycler_photos;
@@ -31,6 +35,8 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
     ImageView iv_send_request;
     ImageView iv_chat;
     ImageView profile_image;
+    TextView txt_bio;
+    TextView txt_login_user;
 
     @Nullable
     @Override
@@ -40,17 +46,38 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
         profile_image = view.findViewById(R.id.profile_image);
         iv_chat = view.findViewById(R.id.iv_chat);
         recycler_photos = view.findViewById(R.id.recycler_photos);
+        txt_bio = view.findViewById(R.id.txt_bio);
+        txt_login_user = view.findViewById(R.id.txt_login_user);
 
 
         onTypeChange(0);
-        Picasso.get().load("https://i.pinimg.com/564x/b8/03/78/b80378993da7282e58b35bdd3adbce89.jpg").placeholder(R.drawable.profile)
-                .into(profile_image);
+
+
+        setValue();
+
 
         iv_send_request.setOnClickListener(this);
         profile_image.setOnClickListener(this);
 
         return view;
     }
+
+    private void setValue() {
+        SessionPref pref = SessionPref.getInstance(getActivity());
+        String img = pref.getStringVal(SessionPref.LoginUserprofilePic);
+        if (img.contains("http")) {
+            Picasso.get().load(img)
+                    .placeholder(R.drawable.cupertino_activity_indicator)
+                    .into(profile_image);
+        } else {
+            Picasso.get().load(BASE_URL_IMAGE + img)
+                    .placeholder(R.drawable.cupertino_activity_indicator)
+                    .into(profile_image);
+        }
+        txt_login_user.setText(pref.getStringVal(SessionPref.LoginUserusername));
+        txt_bio.setText(pref.getStringVal(SessionPref.LoginUserpersonalBio));
+    }
+
 
     @Override
     public void onTypeChange(int type) {

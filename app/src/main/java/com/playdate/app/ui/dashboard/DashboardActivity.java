@@ -26,6 +26,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.playdate.app.R;
 import com.playdate.app.ui.anonymous_question.AnoQuesCreateActivity;
 import com.playdate.app.ui.card_swipe.FragCardSwipe;
+import com.playdate.app.ui.chat.request.RequestChatFragment;
 import com.playdate.app.ui.dashboard.adapter.FriendAdapter;
 import com.playdate.app.ui.dashboard.fragments.FragLanding;
 import com.playdate.app.ui.dialogs.FullScreenDialog;
@@ -34,6 +35,7 @@ import com.playdate.app.ui.my_profile_details.FragInstaLikeProfile;
 import com.playdate.app.ui.my_profile_details.FragMyProfileDetails;
 import com.playdate.app.ui.my_profile_details.FragMyProfilePayments;
 import com.playdate.app.ui.my_profile_details.FragMyProfilePersonal;
+
 import com.playdate.app.ui.notification_screen.FragNotification;
 import com.playdate.app.ui.social.FragSocialFeed;
 import com.playdate.app.ui.social.upload_media.PostMediaActivity;
@@ -42,15 +44,16 @@ import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 
+import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.ALL_PERMISSIONS_RESULT;
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.PICK_PHOTO_FOR_AVATAR;
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.REQUEST_TAKE_GALLERY_VIDEO;
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.TAKE_PHOTO_CODE;
 
-public class DashboardActivity extends AppCompatActivity implements OnInnerFragmentClicks, View.OnClickListener {
+public class DashboardActivity extends AppCompatActivity implements OnInnerFragmentClicks, View.OnClickListener,OnProfilePhotoChageListerner {
     FragmentManager fm;
     FragmentTransaction ft;
-    TextView txt_match;
+    TextView txt_match, txt_chat;
     TextView txt_social;
     TextView txt_payment;
     TextView txt_account;
@@ -65,7 +68,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     ImageView iv_dashboard_notification;
 
     SwipeRefreshLayout mSwipeRefreshLayout;
-    LinearLayout ll_mainMenu;
+    LinearLayout ll_mainMenu,ll_her;
     LinearLayout ll_friends;
     LinearLayout ll_profile_menu;
     LinearLayout ll_option_love;
@@ -91,7 +94,9 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         setContentView(R.layout.activity_dashboard);
         ll_profile_insta = findViewById(R.id.ll_profile_insta);
         profile_image = findViewById(R.id.profile_image);
+        txt_chat = findViewById(R.id.txt_chat);
         rl_main = findViewById(R.id.rl_main);
+        ll_her = findViewById(R.id.ll_her);
         ll_mainMenu = findViewById(R.id.ll_mainMenu);
         ll_friends = findViewById(R.id.ll_friends);
         ll_love_bottom = findViewById(R.id.ll_love_bottom);
@@ -159,9 +164,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         Fragment fragOne = new FragLanding();
 //        Fragment fragOne = new FragNotification();
 //        Fragment fragOne = new FragMyProfileDetails();
-
 //        Fragment fragOne = new FragMyProfilePersonal();
-
 //        Fragment fragOne = new FragMyProfilePayments();
 //        Fragment fragOne = new FragMoreSuggestion();
 //        Fragment fragOne = new FragCardSwipeActivity();
@@ -172,38 +175,81 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             @Override
             public void onClick(View view) {
                 txt_social.setBackground(null);
+                txt_chat.setBackground(null);
                 txt_match.setTextColor(getResources().getColor(R.color.white));
                 iv_dashboard_notification.setBackground(null);
+                iv_dashboard_notification.setImageResource(R.drawable.ic_bell);
+
                 txt_social.setTextColor(getResources().getColor(android.R.color.darker_gray));
+                txt_chat.setTextColor(getResources().getColor(android.R.color.darker_gray));
                 txt_match.setBackground(getResources().getDrawable(R.drawable.menu_button));
                 ReplaceFrag(new FragCardSwipe());
+                ll_friends.setVisibility(View.VISIBLE);
+                ll_mainMenu.setVisibility(View.VISIBLE);
+                ll_her.setVisibility(View.VISIBLE);
             }
         });
         txt_social.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 txt_match.setBackground(null);
+                txt_chat.setBackground(null);
                 txt_social.setTextColor(getResources().getColor(R.color.white));
                 iv_dashboard_notification.setBackground(null);
+                iv_dashboard_notification.setImageResource(R.drawable.ic_bell);
+
+                txt_chat.setTextColor(getResources().getColor(android.R.color.darker_gray));
                 txt_match.setTextColor(getResources().getColor(android.R.color.darker_gray));
                 txt_social.setBackground(getResources().getDrawable(R.drawable.menu_button));
                 ReplaceFrag(new FragSocialFeed());
+                ll_friends.setVisibility(View.VISIBLE);
+                ll_mainMenu.setVisibility(View.VISIBLE);
+                ll_her.setVisibility(View.VISIBLE);
             }
         });
-//        iv_dashboard_notification.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                txt_match.setBackground(null);
-//                txt_social.setBackground(null);
-//                txt_match.setTextColor(getResources().getColor(android.R.color.darker_gray));
-//                txt_social.setTextColor(getResources().getColor(android.R.color.darker_gray));
-////                iv_dashboard_notification.setBackground(getResources().getDrawable(R.drawable.menu_button));
-////                iv_dashboard_notification.setColorFilter(R.color.white);
-////                ReplaceFrag(new FragNotification());
-//
-//
-//            }
-//        });
+        txt_chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                txt_match.setBackground(null);
+                txt_social.setBackground(null);
+                iv_dashboard_notification.setBackground(null);
+                iv_dashboard_notification.setImageResource(R.drawable.ic_bell);
+
+                txt_match.setTextColor(getResources().getColor(android.R.color.darker_gray));
+                txt_social.setTextColor(getResources().getColor(android.R.color.darker_gray));
+                txt_chat.setBackground(getResources().getDrawable(R.drawable.menu_button));
+                txt_chat.setTextColor(getResources().getColor(R.color.white));
+                ReplaceFrag(new RequestChatFragment());
+//                Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+//                startActivity(intent);
+                ll_friends.setVisibility(View.GONE);
+                ll_mainMenu.setVisibility(View.GONE);
+                ll_her.setVisibility(View.GONE);
+
+//                iv_dashboard_notification.setBackground(getResources().getDrawable(R.drawable.menu_button));
+//                iv_dashboard_notification.setColorFilter(R.color.white);
+//                ReplaceFrag(new FragNotification());
+            }
+        });
+     iv_dashboard_notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                txt_match.setBackground(null);
+                txt_social.setBackground(null);
+                txt_match.setTextColor(getResources().getColor(android.R.color.darker_gray));
+                txt_social.setTextColor(getResources().getColor(android.R.color.darker_gray));
+                txt_chat.setBackground(null);
+                txt_chat.setTextColor(getResources().getColor(android.R.color.darker_gray));
+                iv_dashboard_notification.setBackground(getResources().getDrawable(R.drawable.menu_button));
+               // iv_dashboard_notification.setColorFilter(R.color.white);
+                iv_dashboard_notification.setImageResource(R.drawable.ic_notifications_well);
+                ReplaceFrag(new FragNotification());
+                ll_friends.setVisibility(View.GONE);
+                ll_mainMenu.setVisibility(View.GONE);
+                ll_her.setVisibility(View.GONE);
+
+            }
+        });
 
 //        showPremium();
         setValue();
@@ -213,10 +259,16 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     private void setValue() {
         SessionPref pref = SessionPref.getInstance(this);
 //        profile_image.setText(pref.getStringVal(SessionPref.LoginUserusername));
-
-        Picasso.get().load(pref.getStringVal(SessionPref.LoginUserprofilePic))
-                .placeholder(R.drawable.cupertino_activity_indicator)
-                .into(profile_image);
+        String img = pref.getStringVal(SessionPref.LoginUserprofilePic);
+        if (img.contains("http")) {
+            Picasso.get().load(img)
+                    .placeholder(R.drawable.cupertino_activity_indicator)
+                    .into(profile_image);
+        } else {
+            Picasso.get().load(BASE_URL_IMAGE + img)
+                    .placeholder(R.drawable.cupertino_activity_indicator)
+                    .into(profile_image);
+        }
     }
 
     private void showPremium() {
@@ -314,6 +366,9 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             iv_love.setImageResource(R.drawable.love_high);
 
             ReplaceFrag(new FragLanding());
+            ll_friends.setVisibility(View.VISIBLE);
+            ll_mainMenu.setVisibility(View.VISIBLE);
+            ll_her.setVisibility(View.VISIBLE);
         } else if (id == R.id.ll_profile_insta) {
             iv_plus.setVisibility(View.VISIBLE);
             ll_option_love.setVisibility(View.GONE);
@@ -486,6 +541,10 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     }
 
 
+    @Override
+    public void updateImage() {
+        setValue();
+    }
 }
 
 
