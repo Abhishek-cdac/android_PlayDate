@@ -14,11 +14,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.playdate.app.R;
+import com.playdate.app.ui.dashboard.OnProfilePhotoChageListerner;
 import com.playdate.app.ui.register.interest.InterestActivity;
 import com.playdate.app.ui.register.profile.UploadProfileActivity;
 import com.playdate.app.ui.register.username.UserNameActivity;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
+
+import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 
 public class FragMyProfileDetails extends Fragment implements View.OnClickListener {
     ImageView iv_dark_mode;
@@ -53,9 +56,17 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
         SessionPref pref = SessionPref.getInstance(getActivity());
         txt_user_name.setText(pref.getStringVal(SessionPref.LoginUserusername));
 
-        Picasso.get().load(pref.getStringVal(SessionPref.LoginUserprofilePic))
-                .placeholder(R.drawable.cupertino_activity_indicator)
-                .into(profile_image);
+        String img=pref.getStringVal(SessionPref.LoginUserprofilePic);
+        if(img.contains("http")){
+            Picasso.get().load(img)
+                    .placeholder(R.drawable.cupertino_activity_indicator)
+                    .into(profile_image);
+        }else{
+            Picasso.get().load(BASE_URL_IMAGE+img)
+                    .placeholder(R.drawable.cupertino_activity_indicator)
+                    .into(profile_image);
+        }
+
     }
 
     @Override
@@ -86,8 +97,11 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        setValues();
+        OnProfilePhotoChageListerner inf= (OnProfilePhotoChageListerner) getActivity();
+        inf.updateImage();
     }
 
 }

@@ -20,6 +20,7 @@ import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.databinding.ActivityUploadProfileBinding;
 import com.playdate.app.model.LoginResponse;
+import com.playdate.app.model.LoginUserDetails;
 import com.playdate.app.ui.dashboard.DashboardActivity;
 import com.playdate.app.ui.register.RegisterActivity;
 import com.playdate.app.ui.register.interest.InterestActivity;
@@ -71,14 +72,15 @@ public class UploadProfileActivity extends AppCompatActivity {
 
 
         viewModel.OnNextClick().observe(this, click -> {
-            if (mIntent.getBooleanExtra("fromProfile", false)) {
-                Intent mIntent = new Intent();
-                setResult(407, mIntent);
-                finish();
-            } else {
-                uploadImage();
-
-            }
+            uploadImage();
+//            if (mIntent.getBooleanExtra("fromProfile", false)) {
+//                Intent mIntent = new Intent();
+//                setResult(407, mIntent);
+//                finish();
+//            } else {
+//                uploadImage();
+//
+//            }
 
         });
 
@@ -174,9 +176,20 @@ public class UploadProfileActivity extends AppCompatActivity {
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 pd.dismiss();
                 if (response.code() == 200) {
-                    //pref.saveStringKeyVal(LoginUserprofilePic,);
-                    startActivity(new Intent(UploadProfileActivity.this, InterestActivity
-                            .class));
+
+                    LoginUserDetails user = response.body().getUserData();
+                    pref.saveStringKeyVal(LoginUserprofilePic,user.getProfilePicPath());
+
+                    if (mIntent.getBooleanExtra("fromProfile", false)) {
+                        Intent mIntent = new Intent();
+                        setResult(407, mIntent);
+                        finish();
+                    }else{
+                        startActivity(new Intent(UploadProfileActivity.this, InterestActivity
+                                .class));
+                    }
+
+
                 } else {
                     new CommonClass().showDialogMsg(UploadProfileActivity.this, "PlayDate", "An error occurred!", "Ok");
 

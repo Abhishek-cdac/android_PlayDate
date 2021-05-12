@@ -71,6 +71,7 @@
             android:name=".ui.dashboard.DashboardActivity"
             android:screenOrientation="portrait">
 
+
         </activity>
 
         <activity
@@ -128,6 +129,8 @@
             </intent-filter>
 
 
+        </activity>
+        <activity android:name=".ui.coupons.ActivityCoupons">
 
         </activity>
         <activity android:name=".ui.chat.ChatActivity">

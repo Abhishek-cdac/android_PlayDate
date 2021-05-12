@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.playdate.app.R;
+import com.playdate.app.ui.dashboard.OnProfilePhotoChageListerner;
 import com.playdate.app.ui.forgot_password.ForgotPasswordActivity;
 import com.playdate.app.ui.register.age_verification.AgeVerifiationActivity;
 import com.playdate.app.ui.register.interestin.InterestActivity;
@@ -22,6 +23,8 @@ import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 
 public class FragMyProfilePersonal extends Fragment implements View.OnClickListener {
     TextView email;
@@ -80,9 +83,16 @@ public class FragMyProfilePersonal extends Fragment implements View.OnClickListe
         txt_relationship.setText(pref.getStringVal(SessionPref.LoginUserrelationship));
         interestin.setText(pref.getStringVal(SessionPref.LoginUserinterestedIn));
 
-        Picasso.get().load(pref.getStringVal(SessionPref.LoginUserprofilePic))
-                .placeholder(R.drawable.cupertino_activity_indicator)
-                .into(profile_image);
+        String img = pref.getStringVal(SessionPref.LoginUserprofilePic);
+        if (img.contains("http")) {
+            Picasso.get().load(img)
+                    .placeholder(R.drawable.cupertino_activity_indicator)
+                    .into(profile_image);
+        } else {
+            Picasso.get().load(BASE_URL_IMAGE + img)
+                    .placeholder(R.drawable.cupertino_activity_indicator)
+                    .into(profile_image);
+        }
     }
 
     @Override
@@ -113,5 +123,13 @@ public class FragMyProfilePersonal extends Fragment implements View.OnClickListe
             mIntent.putExtra("fromProfile", true);
             startActivityForResult(mIntent, 408);
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        setValues();
+        OnProfilePhotoChageListerner inf= (OnProfilePhotoChageListerner) getActivity();
+        inf.updateImage();
     }
 }

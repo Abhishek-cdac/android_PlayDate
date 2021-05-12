@@ -1,7 +1,6 @@
 package com.playdate.app.util.customcamera.otalia;
 
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -17,7 +16,6 @@ import com.playdate.app.data.api.GetDataService
 import com.playdate.app.data.api.RetrofitClientInstance
 import com.playdate.app.model.LoginResponse
 import com.playdate.app.ui.dashboard.DashboardActivity
-import com.playdate.app.ui.register.interest.InterestActivity
 import com.playdate.app.util.common.CommonClass
 import com.playdate.app.util.common.TransparentProgressDialog
 import com.playdate.app.util.session.SessionPref
@@ -107,6 +105,8 @@ class VideoPreviewActivity : AppCompatActivity() {
             override fun onResponse(call: Call<LoginResponse?>, response: Response<LoginResponse?>) {
                 pd.dismiss()
                 if (response.code() == 200) {
+                    val user = response.body()!!.userData
+                    pref.saveStringKeyVal(SessionPref.LoginUserprofileVideo, user.getProfilePicPath())
                     startActivity(Intent(this@VideoPreviewActivity, DashboardActivity::class.java))
                     finish()
                 } else {

@@ -341,6 +341,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
+
+        }else{
+
         }
     }
 
@@ -388,6 +391,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                                         String name = object.getString("name");
                                                         String email = object.getString("email");
                                                         String fbUserID = object.getString("id");
+                                                        String birthday = object.getString("birthday");
 
                                                         Log.d("Name of user ", name);
                                                         callSocialLoginAPI(email,fbUserID,accessToken);

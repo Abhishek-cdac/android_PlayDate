@@ -1,5 +1,6 @@
 package com.playdate.app.ui.playvideo;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -14,9 +15,27 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.playdate.app.R;
+import com.playdate.app.data.api.GetDataService;
+import com.playdate.app.data.api.RetrofitClientInstance;
+import com.playdate.app.model.LoginResponse;
+import com.playdate.app.ui.register.interest.InterestActivity;
+import com.playdate.app.ui.register.profile.UploadProfileActivity;
+import com.playdate.app.util.common.CommonClass;
+import com.playdate.app.util.session.SessionPref;
+import com.squareup.picasso.Picasso;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 
 public class VideoPlayActivity extends AppCompatActivity {
     int length;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +43,18 @@ public class VideoPlayActivity extends AppCompatActivity {
         VideoView videoView = findViewById(R.id.videoView);
         ImageView iv_play_pause = findViewById(R.id.iv_play_pause);
         LinearLayout ll_loader = findViewById(R.id.ll_loader);
-        videoView.setVideoPath("https://assets.mixkit.co/videos/preview/mixkit-fashion-model-with-a-cold-and-pale-appearance-39877-large.mp4");
+        SessionPref pref = SessionPref.getInstance(this);
+
+        String videopath = pref.getStringVal(SessionPref.LoginUserprofileVideo);
+
+
+        if (videopath.contains("http")) {
+
+        } else {
+            videopath = BASE_URL_IMAGE + videopath;
+        }
+
+        videoView.setVideoPath(videopath);
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         ViewGroup.LayoutParams params = videoView.getLayoutParams();
@@ -53,11 +83,11 @@ public class VideoPlayActivity extends AppCompatActivity {
         iv_play_pause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(videoView.isPlaying()){
+                if (videoView.isPlaying()) {
                     videoView.pause();
-                    length=videoView.getCurrentPosition();
+                    length = videoView.getCurrentPosition();
                     iv_play_pause.setImageResource(R.drawable.play_circle);
-                }else{
+                } else {
 
                     videoView.seekTo(length);
                     videoView.start();

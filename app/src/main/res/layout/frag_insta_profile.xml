@@ -9,6 +9,7 @@
     android:paddingRight="@dimen/_20sdp">
 
     <TextView
+        android:id="@+id/txt_login_user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -16,7 +17,6 @@
         android:layout_marginTop="@dimen/_25sdp"
         android:fontFamily="@font/lato_bold"
         android:gravity="center"
-        android:text="Emyron96"
         android:textColor="@color/black"
         android:textSize="@dimen/_12sdp"
         android:textStyle="bold" />
@@ -173,7 +173,7 @@
         android:layout_marginTop="@dimen/_5sdp"
         android:fontFamily="@font/helvetica_neue"
         android:gravity="center"
-        android:text="I'm a 28 years old photographer from india looking to meet new peopleand make new people  and new friends I love travelling . Trying new foods and learing about the cultures. If you want to share something with me let's get in touch."
+        android:id="@+id/txt_bio"
         android:textColor="@color/black"
         android:textSize="@dimen/_10sdp"
         android:textStyle="bold" />

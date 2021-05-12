@@ -44,12 +44,13 @@ import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 
+import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.ALL_PERMISSIONS_RESULT;
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.PICK_PHOTO_FOR_AVATAR;
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.REQUEST_TAKE_GALLERY_VIDEO;
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.TAKE_PHOTO_CODE;
 
-public class DashboardActivity extends AppCompatActivity implements OnInnerFragmentClicks, View.OnClickListener {
+public class DashboardActivity extends AppCompatActivity implements OnInnerFragmentClicks, View.OnClickListener,OnProfilePhotoChageListerner {
     FragmentManager fm;
     FragmentTransaction ft;
     TextView txt_match, txt_chat;
@@ -258,10 +259,16 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     private void setValue() {
         SessionPref pref = SessionPref.getInstance(this);
 //        profile_image.setText(pref.getStringVal(SessionPref.LoginUserusername));
-
-        Picasso.get().load(pref.getStringVal(SessionPref.LoginUserprofilePic))
-                .placeholder(R.drawable.cupertino_activity_indicator)
-                .into(profile_image);
+        String img = pref.getStringVal(SessionPref.LoginUserprofilePic);
+        if (img.contains("http")) {
+            Picasso.get().load(img)
+                    .placeholder(R.drawable.cupertino_activity_indicator)
+                    .into(profile_image);
+        } else {
+            Picasso.get().load(BASE_URL_IMAGE + img)
+                    .placeholder(R.drawable.cupertino_activity_indicator)
+                    .into(profile_image);
+        }
     }
 
     private void showPremium() {
@@ -316,7 +323,6 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             txt_account.setBackground(null);
             txt_account.setTextColor(getResources().getColor(android.R.color.darker_gray));
 
-
             ReplaceFrag(new FragMyProfilePayments());
         } else if (id == R.id.txt_personal) {
 
@@ -328,10 +334,8 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             txt_payment.setBackground(null);
             txt_payment.setTextColor(getResources().getColor(android.R.color.darker_gray));
 
-
             ReplaceFrag(new FragMyProfilePersonal());
         } else if (id == R.id.txt_account) {
-
 
             txt_account.setTextColor(getResources().getColor(R.color.white));
             txt_account.setBackground(getResources().getDrawable(R.drawable.menu_button));
@@ -537,6 +541,10 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     }
 
 
+    @Override
+    public void updateImage() {
+        setValue();
+    }
 }
 
 
