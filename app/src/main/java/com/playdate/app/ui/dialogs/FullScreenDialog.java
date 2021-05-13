@@ -24,7 +24,7 @@ public class FullScreenDialog extends Dialog {
         setCancelable(true);
         setOnCancelListener(null);
         View view = LayoutInflater.from(context).inflate(
-                R.layout.dialog_get_remium, null);
+                R.layout.dialog_get_premium, null);
         getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         setContentView(view);
         ImageView iv_close=view.findViewById(R.id.iv_close);

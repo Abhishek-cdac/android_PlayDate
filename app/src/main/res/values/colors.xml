@@ -30,12 +30,15 @@
     <color name="color_violet1">#C50AF2</color>
     <color name="color_green_fresh">#65FF00</color>
     <color name="color_yellow">#E6FF00</color>
+    <color name="color_yellow_dark">#FFE715</color>
     <color name="color_blue_ligth">#3AC7D1</color>
     <color name="color_brown">#D1763A</color>
     <color name="color_blue">#3A3AD1</color>
     <color name="color_grey">#989798</color>
     <color name="color_green_dark">#117106</color>
     <color name="color_red">#D13A3A</color>
+    <color name="color_red_dark">#FF0000</color>
+    <color name="color_brown_dark">#56230C</color>
     <color name="color_blue_middle">#0066EC</color>
     <color name="color_light_black">#88000000</color>
 

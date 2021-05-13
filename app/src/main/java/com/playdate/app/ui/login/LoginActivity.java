@@ -387,7 +387,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                                         String email = object.getString("email");
                                                         String fbUserID = object.getString("id");
                                                         String birthday = object.getString("birthday");
-xfgdf
                                                         Log.d("Name of user ", name);
                                                         disconnectFromFacebook();
 

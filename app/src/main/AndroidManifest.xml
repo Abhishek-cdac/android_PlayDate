@@ -58,7 +58,11 @@
         <activity
             android:name=".ui.dashboard.DashboardActivity"
             android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
 
@@ -115,11 +119,7 @@
 
         </activity>
         <activity android:name=".ui.coupons.ActivityCoupons">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
         <activity android:name=".ui.chat.ChatActivity">
