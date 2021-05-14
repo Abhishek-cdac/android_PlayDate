@@ -16,12 +16,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.playdate.app.R;
+import com.playdate.app.model.FriendRequest;
 import com.playdate.app.model.Friends;
 import com.playdate.app.model.GetUserSuggestionData;
 import com.playdate.app.ui.dashboard.fragments.FragSuggestion;
 import com.playdate.app.ui.onboarding.OnBoardingImageFragment;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 
 public class SuggestionAdapter extends PagerAdapter {
 
@@ -30,6 +34,8 @@ public class SuggestionAdapter extends PagerAdapter {
 
    // ArrayList<GetUserSuggestionData> lst = new ArrayList<GetUserSuggestionData>();
  ArrayList<Friends> lst = new ArrayList<Friends>();
+    ArrayList<GetUserSuggestionData> suggestions_list = new ArrayList<>();
+    ArrayList<FriendRequest> friendRequests_list = new ArrayList<>();
 
 
     public SuggestionAdapter(Context mContext) {
@@ -52,10 +58,16 @@ public class SuggestionAdapter extends PagerAdapter {
         lst.add(new Friends("Maria Gomes", "", true));
     }
 
+    public SuggestionAdapter(Context mContext,ArrayList<GetUserSuggestionData> lst_getUserSuggestions) {
+        this.suggestions_list = lst_getUserSuggestions;
+        this.context = mContext;
+
+    }
+
 
     @Override
     public int getCount() {
-        return lst.size();
+        return suggestions_list.size();
     }
 
     @Override
@@ -71,26 +83,30 @@ public class SuggestionAdapter extends PagerAdapter {
         layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.frag_suggestions, container, false);
 
-        ImageView iv_send_request;
+        ImageView iv_send_request, profile_image;
         TextView title, desc, txt_header_Suggestions;
 
+        profile_image = view.findViewById(R.id.profile_image);
         iv_send_request = view.findViewById(R.id.iv_send_request);
-      //  txt_header_Suggestions = view.findViewById(R.id.txt_header_Suggestions);
-//        txt_header_Suggestions.setText(lst.get(position).getFullName());
-        if (lst.get(position).isRequestSent()) {
-            iv_send_request.setImageResource(R.drawable.sent_request_sel);
-        } else {
-            iv_send_request.setImageResource(R.drawable.sent_request);
-        }
-        iv_send_request.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view1) {
-                lst.get(position).setRequestSent(true);
-
-                SuggestionAdapter.this.notifyDataSetChanged();
-
-            }
-        });
+        txt_header_Suggestions = view.findViewById(R.id.txt_header_Suggestions);
+        txt_header_Suggestions.setText(suggestions_list.get(position).getFullName());
+//        Picasso.get().load(BASE_URL_IMAGE + suggestions_list.get(position).getProfilePicPath())
+//                .placeholder(R.drawable.cupertino_activity_indicator)
+//                .placeholder(R.drawable.profile)
+//                .into(profile_image);
+//        if (suggestions_list.get(position).getFriendRequest().get(position).getStatus().equals("Pending")) {
+//            iv_send_request.setImageResource(R.drawable.sent_request_sel);
+//        } else {
+//            iv_send_request.setImageResource(R.drawable.sent_request);
+//        }
+//        iv_send_request.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view1) {
+//                lst.get(position).setRequestSent(true);
+//
+//                SuggestionAdapter.this.notifyDataSetChanged();
+//            }
+//        });
 
         container.addView(view, 0);
         return view;

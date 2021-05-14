@@ -100,7 +100,7 @@ class VideoPreviewActivity : AppCompatActivity() {
         val pref = SessionPref.getInstance(this)
         val filePart = MultipartBody.Part.createFormData("userProfileVideo", videoResult!!.file.name, RequestBody.create(MediaType.parse("video/mp4"), videoResult!!.file))
         val service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService::class.java)
-        val call = service.uploadProfileVideo("Bareer " + pref.getStringVal(SessionPref.LoginUsertoken), filePart)
+        val call = service.uploadProfileVideo("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), filePart)
         call.enqueue(object : Callback<LoginResponse?> {
             override fun onResponse(call: Call<LoginResponse?>, response: Response<LoginResponse?>) {
                 pd.dismiss()

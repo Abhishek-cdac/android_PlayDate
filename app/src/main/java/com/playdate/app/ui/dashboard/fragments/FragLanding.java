@@ -50,13 +50,15 @@ public class FragLanding extends Fragment {
         vp_suggestion = view.findViewById(R.id.vp_suggestion);
         Rl_page = view.findViewById(R.id.Rl_page);
         clsCommon = CommonClass.getInstance();
-      //  callGetUserSuggestionAPI();
+        callGetUserSuggestionAPI();
 
-     // SuggestionAdapter adapter = new SuggestionAdapter(getActivity(), getActivity().getSupportFragmentManager());
-        SuggestionAdapter adapter = new SuggestionAdapter(getActivity());
-        vp_suggestion.setAdapter(adapter);
-        vp_suggestion.setCurrentItem(8);
-        vp_suggestion.setPadding(130, 0, 130, 0);
+        // SuggestionAdapter adapter = new SuggestionAdapter(getActivity(), getActivity().getSupportFragmentManager());
+
+//        SuggestionAdapter adapter = new SuggestionAdapter(getActivity());
+//
+//        vp_suggestion.setAdapter(adapter);
+//        vp_suggestion.setCurrentItem(8);
+//        vp_suggestion.setPadding(130, 0, 130, 0);
 
 
         int height = new CommonClass().getScreenHeight(getActivity());
@@ -95,7 +97,7 @@ public class FragLanding extends Fragment {
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
         pd.show();
         SessionPref pref = SessionPref.getInstance(getActivity());
-        Log.e("GetUserSuggestionData", "" + pref.getStringVal(SessionPref.LoginUsertoken));
+        Log.e("GetLandingData", "" + pref.getStringVal(SessionPref.LoginUsertoken));
 
         Call<GetUserSuggestion> call = service.getUserSuggestion("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         Log.e("GetUserSuggestionData", "" + hashMap);
@@ -109,15 +111,13 @@ public class FragLanding extends Fragment {
 
                     assert response.body() != null;
                     if (response.body().getStatus() == 1) {
-                        Toast.makeText(getActivity(), "Success!", Toast.LENGTH_SHORT).show();
                         lst_getUserSuggestions = (ArrayList<GetUserSuggestionData>) response.body().getData();
                         if (lst_getUserSuggestions == null) {
                             lst_getUserSuggestions = new ArrayList<>();
                         }
 
-                        Log.e("GetUserDataSize", "" + lst_getUserSuggestions.size());
-
-                        SuggestionAdapter adapter = new SuggestionAdapter(getActivity());
+                        // SuggestionAdapter adapter = new SuggestionAdapter(getActivity());
+                        SuggestionAdapter adapter = new SuggestionAdapter(getActivity(), lst_getUserSuggestions);
                         vp_suggestion.setAdapter(adapter);
                         vp_suggestion.setCurrentItem(8);
                         vp_suggestion.setPadding(130, 0, 130, 0);

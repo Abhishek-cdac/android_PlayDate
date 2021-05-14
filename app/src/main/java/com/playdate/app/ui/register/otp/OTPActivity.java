@@ -178,7 +178,7 @@ public class OTPActivity extends AppCompatActivity {
 //        if (mIntent.getBooleanExtra("resetPassword", false)) {
 //            call = service.forgotPasswordSentOtp(hashMap);
 //        } else {
-        call = service.resendVerifyOtp("Bareer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call = service.resendVerifyOtp("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
 //        }
 
 

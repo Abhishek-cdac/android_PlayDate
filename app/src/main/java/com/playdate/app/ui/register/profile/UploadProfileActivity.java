@@ -170,7 +170,7 @@ public class UploadProfileActivity extends AppCompatActivity {
         SessionPref pref = SessionPref.getInstance(this);
         MultipartBody.Part filePart = MultipartBody.Part.createFormData("userProfilePic", f.getName(), RequestBody.create(MediaType.parse("image/png"), f));
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-        Call<LoginResponse> call = service.uploadImage("Bareer " + pref.getStringVal(SessionPref.LoginUsertoken), filePart);
+        Call<LoginResponse> call = service.uploadImage("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), filePart);
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
