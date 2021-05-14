@@ -2,6 +2,7 @@ package com.playdate.app.ui.register.age_verification;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -69,17 +70,20 @@ public class AgeVerifiationActivity extends AppCompatActivity {
     }
 
     private void callAPI() {
+        SessionPref pref = SessionPref.getInstance(this);
+
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
         String DOB = age_verify_viewmodel.getYearSelected() + "-" + age_verify_viewmodel.getMonthSelected() + "-" + age_verify_viewmodel.getDaySelected();
+        hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
         hashMap.put("birthDate", DOB);// format 1990-08-12
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
         pd.show();
-        SessionPref pref = SessionPref.getInstance(this);
+      //  SessionPref pref = SessionPref.getInstance(this);
 //        Toast.makeText(this, ""+pref.getStringVal(SessionPref.LoginUsertoken), Toast.LENGTH_SHORT).show();
 
 
-        Call<LoginResponse> call = service.updateProfile("Bareer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        Call<LoginResponse> call = service.updateProfile("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
@@ -90,11 +94,14 @@ public class AgeVerifiationActivity extends AppCompatActivity {
                         startActivity(new Intent(AgeVerifiationActivity.this, GenderSelActivity.class));
 
                     } else {
+                        Log.e("PlayDateDOB",""+response.body().getMessage());
                         clsCommon.showDialogMsg(AgeVerifiationActivity.this, "PlayDate", response.body().getMessage(), "Ok");
                     }
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        Log.e("PlayDateDOB",""+response.body().getMessage());
+
                         clsCommon.showDialogMsg(AgeVerifiationActivity.this, "PlayDate", jObjError.getString("message").toString(), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(AgeVerifiationActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();

@@ -46,7 +46,7 @@ public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriend
         holder.name.setText(suggestions_list.get(position).getFullName());
         Picasso.get().load(BASE_URL_IMAGE + suggestions_list.get(position).getProfilePicPath())
                 .placeholder(R.drawable.cupertino_activity_indicator)
-                .placeholder(R.drawable.profile)
+                //.placeholder(R.drawable.profile)
                 .into(holder.image);
         holder.request.setImageResource(R.drawable.sent_request);
         userId = suggestions_list.get(position).getId();

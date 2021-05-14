@@ -115,18 +115,19 @@ public class RestaurantActivity extends AppCompatActivity {
             return;
         }
 
+        SessionPref pref = SessionPref.getInstance(this);
 
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
 //        String bio = viewModel.BioText.getValue();
+        hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
         hashMap.put("restaurants", Selected);// format 1990-08-12
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
         pd.show();
-        SessionPref pref = SessionPref.getInstance(this);
 //        Toast.makeText(this, ""+pref.getStringVal(SessionPref.LoginUsertoken), Toast.LENGTH_SHORT).show();
 
 
-        Call<LoginResponse> call = service.updateProfile("Bareer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        Call<LoginResponse> call = service.updateProfile("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         String finalSelected = Selected;
         call.enqueue(new Callback<LoginResponse>() {
             @Override
@@ -192,7 +193,7 @@ public class RestaurantActivity extends AppCompatActivity {
 //        Toast.makeText(this, ""+pref.getStringVal(SessionPref.LoginUsertoken), Toast.LENGTH_SHORT).show();
 
 
-        Call<RestMain> call = service.restaurants("Bareer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        Call<RestMain> call = service.restaurants("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<RestMain>() {
             @Override
             public void onResponse(Call<RestMain> call, Response<RestMain> response) {

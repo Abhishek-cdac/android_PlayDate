@@ -141,18 +141,19 @@ public class InterestActivity extends AppCompatActivity {
     }
 
     private void callAPI(String interest) {
+        SessionPref pref = SessionPref.getInstance(this);
+
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
 
-
+        hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
         hashMap.put("interestedIn", interest);// format 1990-08-12
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
         pd.show();
-        SessionPref pref = SessionPref.getInstance(this);
 //        Toast.makeText(this, ""+pref.getStringVal(SessionPref.LoginUsertoken), Toast.LENGTH_SHORT).show();
 
 
-        Call<LoginResponse> call = service.updateProfile("Bareer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        Call<LoginResponse> call = service.updateProfile("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {

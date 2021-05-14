@@ -134,7 +134,6 @@ public class FragSuggested extends Fragment {
                 if (response.code() == 200) {
                     assert response.body() != null;
                     if (response.body().getStatus() == 1) {
-                        Toast.makeText(getActivity(), "Success!", Toast.LENGTH_SHORT).show();
                         lst_getUserSuggestions = (ArrayList<GetUserSuggestionData>) response.body().getData();
                         if (lst_getUserSuggestions == null) {
                             lst_getUserSuggestions = new ArrayList<>();

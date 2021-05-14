@@ -452,7 +452,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
                         clsCommon.showDialogMsg(LoginActivity.this, "PlayDate", jObjError.getString("message").toString(), "Ok");
                     } catch (Exception e) {
-                        Toast.makeText(LoginActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Something went wrong...Please try later!" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -462,7 +462,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 t.printStackTrace();
                 pd.cancel();
-                Toast.makeText(LoginActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Something went wrong...Please try later!" , Toast.LENGTH_SHORT).show();
             }
         });
     }
