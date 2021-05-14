@@ -30,6 +30,7 @@ import com.playdate.app.ui.chat.request.RequestChatFragment;
 import com.playdate.app.ui.coupons.FragCouponStore;
 import com.playdate.app.ui.dashboard.adapter.FriendAdapter;
 import com.playdate.app.ui.dashboard.fragments.FragLanding;
+import com.playdate.app.ui.dialogs.AnonymousMedalDialog;
 import com.playdate.app.ui.dialogs.FullScreenDialog;
 import com.playdate.app.ui.dialogs.GetPremiumDialog;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
@@ -163,8 +164,8 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         rv_friends.setAdapter(adapterfriend);
         rv_friends.setLayoutManager(manager);
 
-//        Fragment fragOne = new FragLanding();
-        Fragment fragOne = new GetPremiumDialog();
+        Fragment fragOne = new FragLanding();
+//        Fragment fragOne = new GetPremiumDialog();
 //        Fragment fragOne = new FragMyProfileDetails();
 //        Fragment fragOne = new FragMyProfilePersonal();
 //        Fragment fragOne = new FragMyProfilePayments();
@@ -281,6 +282,9 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
                 FullScreenDialog dialog = new FullScreenDialog(DashboardActivity.this);
                 dialog.show();
+
+//                AnonymousMedalDialog dialog = new AnonymousMedalDialog(DashboardActivity.this);
+//                dialog.show();
             }
         }, 5000);
 

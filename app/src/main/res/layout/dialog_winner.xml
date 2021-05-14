@@ -21,9 +21,9 @@
         android:id="@+id/center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="132dp"
+        android:layout_marginTop="144dp"
         android:scaleType="fitXY"
-        android:src="@drawable/question_mark"
+        android:src="@drawable/one"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:fontFamily="@font/lato_bold"
-            android:text="Perfect Answer!"
+            android:text="Winner!"
             android:textColor="@color/white"
             android:textSize="@dimen/_26sdp" />
 
@@ -57,7 +57,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/_20sdp"
             android:fontFamily="@font/helvetica_neue"
-            android:text="It's nice to be helpful!"
+            android:text="You answered first!"
             android:textColor="@color/white"
             android:textSize="@dimen/_18sdp" />
 
@@ -87,13 +87,13 @@
                 android:id="@+id/bar_meter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="+ 100"
-                android:gravity="center"
-                android:textColor="@color/color_pink"
+                android:background="@drawable/bar_meter1"
                 android:fontFamily="@font/lato_bold"
+                android:gravity="center"
                 android:paddingHorizontal="@dimen/_5sdp"
-                android:textSize="@dimen/_16sdp"
-                android:background="@drawable/bar_meter1"/>
+                android:text="+ 100"
+                android:textColor="@color/color_pink"
+                android:textSize="@dimen/_16sdp" />
 
         </RelativeLayout>
 
