@@ -1,9 +1,11 @@
 package com.playdate.app.ui.card_swipe;
 
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -78,7 +80,7 @@ public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView image;
+        ImageView image,maximise;
         TextView name, age, hobby;
         ImageView message;
 
@@ -89,6 +91,20 @@ public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.
             hobby = itemView.findViewById(R.id.item_hobby);
             image = itemView.findViewById(R.id.item_image);
             message = itemView.findViewById(R.id.item_message);
+            maximise = itemView.findViewById(R.id.item_fullScreen);
+            maximise.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH ){
+                        image.setSystemUiVisibility( View.SYSTEM_UI_FLAG_HIDE_NAVIGATION );
+
+                    }
+                    else if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB )
+                        image.setSystemUiVisibility( View.STATUS_BAR_HIDDEN );
+                    else{}
+
+                }
+            });
         }
 
         void setData(TinderSwipe tinderSwipe) {

@@ -1,4 +1,4 @@
-package com.playdate.app.ui.coupons;
+package com.playdate.app.ui.coupons.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;

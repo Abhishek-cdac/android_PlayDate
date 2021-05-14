@@ -105,7 +105,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         callbackManager = CallbackManager.Factory.create();
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestId()
-                .requestIdToken(getString(R.string.default_web_client_id))
+//                .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
 
@@ -498,7 +498,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                                         String email = object.getString("email");
                                                         String fbUserID = object.getString("id");
                                                         String birthday = object.getString("birthday");
-
                                                         Log.d("Name of user ", name);
                                                         callSocialLoginAPI(email,fbUserID,accessToken);
 

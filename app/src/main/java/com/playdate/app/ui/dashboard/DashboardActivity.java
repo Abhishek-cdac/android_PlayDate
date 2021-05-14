@@ -27,9 +27,12 @@ import com.playdate.app.R;
 import com.playdate.app.ui.anonymous_question.AnoQuesCreateActivity;
 import com.playdate.app.ui.card_swipe.FragCardSwipe;
 import com.playdate.app.ui.chat.request.RequestChatFragment;
+import com.playdate.app.ui.coupons.FragCouponStore;
 import com.playdate.app.ui.dashboard.adapter.FriendAdapter;
 import com.playdate.app.ui.dashboard.fragments.FragLanding;
+import com.playdate.app.ui.dialogs.AnonymousMedalDialog;
 import com.playdate.app.ui.dialogs.FullScreenDialog;
+import com.playdate.app.ui.dialogs.GetPremiumDialog;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.ui.my_profile_details.FragInstaLikeProfile;
 import com.playdate.app.ui.my_profile_details.FragMyProfileDetails;
@@ -162,7 +165,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         rv_friends.setLayoutManager(manager);
 
         Fragment fragOne = new FragLanding();
-//        Fragment fragOne = new FragNotification();
+//        Fragment fragOne = new GetPremiumDialog();
 //        Fragment fragOne = new FragMyProfileDetails();
 //        Fragment fragOne = new FragMyProfilePersonal();
 //        Fragment fragOne = new FragMyProfilePayments();
@@ -252,7 +255,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         });
 
 //        showPremium();
-        setValue();
+//        setValue();
 
     }
 
@@ -269,6 +272,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
                     .placeholder(R.drawable.cupertino_activity_indicator)
                     .into(profile_image);
         }
+
     }
 
     private void showPremium() {
@@ -278,6 +282,9 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
                 FullScreenDialog dialog = new FullScreenDialog(DashboardActivity.this);
                 dialog.show();
+
+//                AnonymousMedalDialog dialog = new AnonymousMedalDialog(DashboardActivity.this);
+//                dialog.show();
             }
         }, 5000);
 

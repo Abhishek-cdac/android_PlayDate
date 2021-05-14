@@ -55,6 +55,7 @@ public class FragCardSwipe extends Fragment {
         int m6 = (int) getResources().getDimension(R.dimen._75sdp);
 
         cl_page.getLayoutParams().height = height - (m1 + m2 + m3 + m4 + m5 + m6);
+//        cl_page.getLayoutParams().height = height;
 
 
         manager = new CardStackLayoutManager(getActivity(), new CardStackListener() {
