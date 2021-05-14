@@ -51,7 +51,7 @@ public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriend
         holder.request.setImageResource(R.drawable.sent_request);
         userId = suggestions_list.get(position).getId();
 
-//        if (suggestions_list.get(position).getFirends().get(position).getStatus()=="Pending") {
+//        if (suggestions_list.get(position).getFriendRequest().get(position).getStatus().equals("Pending")) {
 //            holder.request.setImageResource(R.drawable.sent_request_sel);
 //        } else {
 //            holder.request.setImageResource(R.drawable.sent_request);
