@@ -91,5 +91,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
 
     implementation 'jp.wasabeef:picasso-transformations:2.2.1'
-
+    implementation 'com.google.android.exoplayer:exoplayer:2.10.5'
 }

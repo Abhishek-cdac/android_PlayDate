@@ -197,9 +197,11 @@ public class FragCardSwipe extends Fragment {
                 if (direction == Direction.Bottom) {
 
                 }
-                if (manager.getTopPosition() == adapter.getItemCount() - 5) {
-                    paginate();
-                }
+
+
+//                if (manager.getTopPosition() == adapter.getItemCount() - 5) {
+//                    paginate();
+//                }
 
             }
 
@@ -232,7 +234,7 @@ public class FragCardSwipe extends Fragment {
 
 
         manager.setStackFrom(StackFrom.None);
-        manager.setVisibleCount(3);
+        manager.setVisibleCount(5);
         manager.setTranslationInterval(8.0f);
         manager.setScaleInterval(0.95f);
         manager.setSwipeThreshold(0.3f);

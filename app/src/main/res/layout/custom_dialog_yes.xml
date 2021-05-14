@@ -52,6 +52,7 @@
             android:layout_height="wrap_content"
             android:background="@color/color_pink"
             android:text="Ok"
+            android:textColor="@color/white"
             android:textSize="@dimen/_14sdp">
 
         </Button>

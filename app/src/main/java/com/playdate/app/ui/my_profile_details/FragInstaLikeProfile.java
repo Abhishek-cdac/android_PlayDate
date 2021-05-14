@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.playdate.app.R;
 import com.playdate.app.ui.my_profile_details.adapters.InstaPhotosAdapter;
 import com.playdate.app.ui.my_profile_details.adapters.SocialFeedNormal;
-import com.playdate.app.ui.playvideo.VideoPlayActivity;
+import com.playdate.app.ui.playvideo.ExoPlayerActivity;
 import com.playdate.app.ui.social.SocialFeed;
 import com.playdate.app.ui.social.SocialFeedAdapter;
 import com.playdate.app.util.customcamera.otalia.VideoPreviewActivity;
@@ -119,7 +119,19 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
             InstaPhotosAdapter.isLocked = false;
             onTypeChange(0);
         } else if (id == R.id.profile_image) {
-            startActivity(new Intent(getActivity(), VideoPlayActivity.class));
+            Intent mIntent = new Intent(getActivity(), ExoPlayerActivity.class);
+            SessionPref pref = SessionPref.getInstance(getActivity());
+
+            String videopath = pref.getStringVal(SessionPref.LoginUserprofileVideo);
+
+
+            if (videopath.contains("http")) {
+
+            } else {
+                videopath = BASE_URL_IMAGE + videopath;
+            }
+            mIntent.putExtra("video",videopath);
+            startActivity(mIntent);
         }
     }
 }

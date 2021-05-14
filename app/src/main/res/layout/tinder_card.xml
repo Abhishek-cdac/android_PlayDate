@@ -13,8 +13,20 @@
     <ImageView
         android:id="@+id/item_image"
         android:layout_width="match_parent"
+
         android:layout_height="match_parent"
         android:scaleType="centerCrop" />
+
+
+    <com.google.android.exoplayer2.ui.PlayerView
+        android:id="@+id/ep_video_view"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        app:resize_mode="fill"
+        android:layout_height="match_parent" />
+
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,6 +39,7 @@
             android:id="@+id/item_fullScreen"
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
+            android:visibility="invisible"
             android:layout_weight="0.1"
             android:src="@drawable/maximize" />
 
@@ -38,7 +51,7 @@
             android:src="@drawable/diamond_normal" />
 
         <ImageView
-            android:id="@+id/item_video"
+            android:id="@+id/iv_video_play"
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
             android:layout_weight="0.1"
@@ -62,10 +75,13 @@
 
             <TextView
                 android:id="@+id/item_name"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="8"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lato_bold"
-                android:text="Name"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:minLines="1"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/_26sdp"
 
@@ -77,6 +93,9 @@
                 android:fontFamily="@font/lato_bold"
                 android:padding="@dimen/_5sdp"
                 android:text=","
+                android:singleLine="true"
+                android:maxLines="1"
+                android:minLines="1"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/_26sdp"
 
@@ -84,11 +103,11 @@
 
             <TextView
                 android:id="@+id/item_age"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="2"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lato_bold"
                 android:paddingHorizontal="@dimen/_5sdp"
-                android:text="Age"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_26sdp"
                 android:textStyle="bold" />
@@ -107,7 +126,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/lato_bold"
-            android:text="Hobby"
             android:textColor="@android:color/white"
             android:textSize="@dimen/_13sdp"
             android:textStyle="bold" />
