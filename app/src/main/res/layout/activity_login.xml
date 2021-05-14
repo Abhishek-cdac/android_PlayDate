@@ -32,7 +32,6 @@
                 android:id="@+id/textbox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_30sdp"
                 android:orientation="vertical"
                 android:paddingHorizontal="@dimen/_30sdp">
 
@@ -121,7 +120,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_65sdp"
+                android:layout_marginTop="@dimen/_25sdp"
                 android:paddingHorizontal="@dimen/_15sdp">
 
                 <View
@@ -202,6 +201,7 @@
             </LinearLayout>
             <Button
                 android:id="@+id/logout"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="logout" />

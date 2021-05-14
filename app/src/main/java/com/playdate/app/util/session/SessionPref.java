@@ -22,6 +22,15 @@ public class SessionPref {
         editor = pref.edit();
     }
 
+    public static void logout(Context mContext) {
+        pref = mContext.getSharedPreferences("playdate_shared_pref", 0); // 0 - for private mode
+        editor = pref.edit();
+        editor.clear();
+        editor.commit();
+    }
+
+
+
 
     public void saveStringKeyVal(String key, String val) {
         editor.putString(key, val);
@@ -69,6 +78,10 @@ public class SessionPref {
     public static String LoginUserinterested = "interested";
     public static String LoginUserinterestedIn = "interestedIn";
     public static String LoginUserrestaurants = "restaurants";
+ public static String LoginUserSourceType = "sourceType";
+ public static String LoginUsersourceSocialId = "sourceSocialId";
+ public static String LoginUserinviteCode = "inviteCode";
+ public static String LoginUserpaymentMode = "paymentMode";
 
 
     public void saveLoginUser(String id,
@@ -87,7 +100,13 @@ public class SessionPref {
                               String personalBio,
                               String interested,
                               String interestedIn,
-                              String restaurants) {
+                              String restaurants,
+                               String sourceType,
+                              String sourceSocialId,
+                              String inviteCode,
+                              String paymentMode
+
+    ) {
         editor.putString(LoginUserID, id);
         editor.putString(LoginUserfullName, fullName);
         editor.putString(LoginUseremail, email);
@@ -105,6 +124,10 @@ public class SessionPref {
         editor.putString(LoginUserinterested, interested);
         editor.putString(LoginUserinterestedIn, interestedIn);
         editor.putString(LoginUserrestaurants, restaurants);
+        editor.putString(LoginUserSourceType, sourceType);
+        editor.putString(LoginUsersourceSocialId, sourceSocialId);
+        editor.putString(LoginUserinviteCode, inviteCode);
+        editor.putString(LoginUserpaymentMode, paymentMode);
         editor.commit();
     }
 

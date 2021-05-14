@@ -1,70 +1,34 @@
 package com.playdate.app.ui.dashboard.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
 import com.playdate.app.model.GetUserSuggestionData;
-import com.playdate.app.model.Suggestions;
+import com.playdate.app.ui.chat.request.Onclick;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 
 public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriendAdapter.ViewHolder> {
     ArrayList<GetUserSuggestionData> suggestions_list = new ArrayList<>();
+    Onclick itemClick;
+    String userId;
 
-    public SuggestedFriendAdapter(ArrayList<GetUserSuggestionData> lst_getUserSuggestions) {
+    public SuggestedFriendAdapter(ArrayList<GetUserSuggestionData> lst_getUserSuggestions, Onclick itemClick) {
         this.suggestions_list = lst_getUserSuggestions;
-
-//        suggestions_list.add(new Suggestions("adreena helen", "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg", false, false));
-//        suggestions_list.add(new Suggestions("gomes helen", "https://images.saymedia-content.com/.image/t_share/MTc0MDkwNjUxNDc2OTYwODM0/5-instagram-models-you-should-be-following.png", false, true));
-//        suggestions_list.add(new Suggestions("jonn den", "https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", false, true));
-//        suggestions_list.add(new Suggestions("Ramsphy k", "https://s29588.pcdn.co/wp-content/uploads/sites/2/2018/08/Claire-Abbott-1.jpg.optimal.jpg", true, false));
-//        suggestions_list.add(new Suggestions("adreena helen", "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg", false, true));
-//        suggestions_list.add(new Suggestions("gomes helen", "https://images.saymedia-content.com/.image/t_share/MTc0MDkwNjUxNDc2OTYwODM0/5-instagram-models-you-should-be-following.png", true, false));
-//        suggestions_list.add(new Suggestions("jonn den", "https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", false, false));
-//        suggestions_list.add(new Suggestions("Ramsphy k", "https://s29588.pcdn.co/wp-content/uploads/sites/2/2018/08/Claire-Abbott-1.jpg.optimal.jpg", true, true));
-//        suggestions_list.add(new Suggestions("adreena helen", "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg", false, false));
-//        suggestions_list.add(new Suggestions("gomes helen", "https://images.saymedia-content.com/.image/t_share/MTc0MDkwNjUxNDc2OTYwODM0/5-instagram-models-you-should-be-following.png", false, true));
-//        suggestions_list.add(new Suggestions("jonn den", "https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", false, true));
-//        suggestions_list.add(new Suggestions("Ramsphy k", "https://s29588.pcdn.co/wp-content/uploads/sites/2/2018/08/Claire-Abbott-1.jpg.optimal.jpg", true, false));
-//
-//        suggestions_list.add(new Suggestions("adreena helen", "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg", false, false));
-//        suggestions_list.add(new Suggestions("gomes helen", "https://images.saymedia-content.com/.image/t_share/MTc0MDkwNjUxNDc2OTYwODM0/5-instagram-models-you-should-be-following.png", false, true));
-//        suggestions_list.add(new Suggestions("jonn den", "https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", false, true));
-//        suggestions_list.add(new Suggestions("Ramsphy k", "https://s29588.pcdn.co/wp-content/uploads/sites/2/2018/08/Claire-Abbott-1.jpg.optimal.jpg", true, false));
-//        suggestions_list.add(new Suggestions("adreena helen", "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg", false, true));
-//        suggestions_list.add(new Suggestions("gomes helen", "https://images.saymedia-content.com/.image/t_share/MTc0MDkwNjUxNDc2OTYwODM0/5-instagram-models-you-should-be-following.png", true, false));
-//        suggestions_list.add(new Suggestions("jonn den", "https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", false, false));
-//        suggestions_list.add(new Suggestions("Ramsphy k", "https://s29588.pcdn.co/wp-content/uploads/sites/2/2018/08/Claire-Abbott-1.jpg.optimal.jpg", true, true));
-//        suggestions_list.add(new Suggestions("adreena helen", "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg", false, false));
-//        suggestions_list.add(new Suggestions("gomes helen", "https://images.saymedia-content.com/.image/t_share/MTc0MDkwNjUxNDc2OTYwODM0/5-instagram-models-you-should-be-following.png", false, true));
-//        suggestions_list.add(new Suggestions("jonn den", "https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", false, true));
-//        suggestions_list.add(new Suggestions("Ramsphy k", "https://s29588.pcdn.co/wp-content/uploads/sites/2/2018/08/Claire-Abbott-1.jpg.optimal.jpg", true, false));
-//        suggestions_list.add(new Suggestions("adreena helen", "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg", false, false));
-//        suggestions_list.add(new Suggestions("gomes helen", "https://images.saymedia-content.com/.image/t_share/MTc0MDkwNjUxNDc2OTYwODM0/5-instagram-models-you-should-be-following.png", false, true));
-//        suggestions_list.add(new Suggestions("jonn den", "https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", false, true));
-//        suggestions_list.add(new Suggestions("Ramsphy k", "https://s29588.pcdn.co/wp-content/uploads/sites/2/2018/08/Claire-Abbott-1.jpg.optimal.jpg", true, false));
-//        suggestions_list.add(new Suggestions("adreena helen", "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg", false, true));
-//        suggestions_list.add(new Suggestions("gomes helen", "https://images.saymedia-content.com/.image/t_share/MTc0MDkwNjUxNDc2OTYwODM0/5-instagram-models-you-should-be-following.png", true, false));
-//        suggestions_list.add(new Suggestions("jonn den", "https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", false, false));
-//        suggestions_list.add(new Suggestions("Ramsphy k", "https://s29588.pcdn.co/wp-content/uploads/sites/2/2018/08/Claire-Abbott-1.jpg.optimal.jpg", true, true));
-//        suggestions_list.add(new Suggestions("adreena helen", "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg", false, false));
-//        suggestions_list.add(new Suggestions("gomes helen", "https://images.saymedia-content.com/.image/t_share/MTc0MDkwNjUxNDc2OTYwODM0/5-instagram-models-you-should-be-following.png", false, true));
-//        suggestions_list.add(new Suggestions("jonn den", "https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", false, true));
-//        suggestions_list.add(new Suggestions("Ramsphy k", "https://s29588.pcdn.co/wp-content/uploads/sites/2/2018/08/Claire-Abbott-1.jpg.optimal.jpg", true, false));
+        this.itemClick = itemClick;
 
     }
 
@@ -80,25 +44,19 @@ public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriend
     @Override
     public void onBindViewHolder(@NonNull SuggestedFriendAdapter.ViewHolder holder, int position) {
         holder.name.setText(suggestions_list.get(position).getFullName());
-//        holder.image.setImageResource(suggestions_list.get(position).getImageUrl());
-
-//        Picasso.get().load(suggestions_list.get(position).getImageUrl())
-//                .into(holder.image);
         Picasso.get().load(BASE_URL_IMAGE + suggestions_list.get(position).getProfilePicPath())
                 .placeholder(R.drawable.cupertino_activity_indicator)
                 .placeholder(R.drawable.profile)
-                .resize(38, 38)
-                .transform(new CropCircleTransformation())
-                // .transform(new PicassoCircleTransformation())
                 .into(holder.image);
         holder.request.setImageResource(R.drawable.sent_request);
+        userId = suggestions_list.get(position).getId();
 
-//        if (suggestions_list.get(position).isRequestSent()) {
+//        if (suggestions_list.get(position).getFirends().get(position).getStatus()=="Pending") {
 //            holder.request.setImageResource(R.drawable.sent_request_sel);
 //        } else {
 //            holder.request.setImageResource(R.drawable.sent_request);
 //        }
-//
+
 //        if (suggestions_list.get(position).isPremium()) {
 //            holder.diamond.setVisibility(View.VISIBLE);
 //        } else {
@@ -124,13 +82,15 @@ public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriend
             request = itemView.findViewById(R.id.friend_request);
             diamond = itemView.findViewById(R.id.diamond);
 
-//            request.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    suggestions_list.get(getPosition()).setRequestSent(true);
+            request.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    itemClick.onItemClicks(v, getAdapterPosition(), 10, userId);
+
+                    //    suggestions_list.get(getPosition()).setRequestSent(true);
 //                    SuggestedFriendAdapter.this.notifyDataSetChanged();
-//                }
-//            });
+                }
+            });
 
 
         }

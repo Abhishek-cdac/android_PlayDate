@@ -1,6 +1,6 @@
 package com.playdate.app.ui.dashboard.more_suggestion;
 
-import android.graphics.Color;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,8 +28,7 @@ public class FragMoreSuggestion extends Fragment {
 
         tabLayout.addTab(tabLayout.newTab().setText("Suggested"));
         tabLayout.addTab(tabLayout.newTab().setText("   Invite   "));
-//        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
+//      tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         int height = new CommonClass().getScreenHeight(getActivity());
 
 

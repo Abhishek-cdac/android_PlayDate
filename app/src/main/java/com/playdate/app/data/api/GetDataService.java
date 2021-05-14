@@ -5,6 +5,7 @@ import com.playdate.app.model.GetUserSuggestion;
 import com.playdate.app.model.GetUserSuggestionData;
 import com.playdate.app.model.InterestsMain;
 import com.playdate.app.model.LoginResponse;
+import com.playdate.app.model.NotificationModel;
 import com.playdate.app.model.RegisterResult;
 import com.playdate.app.model.RestMain;
 import com.playdate.app.ui.restaurant.adapter.Restaurant;
@@ -76,10 +77,10 @@ public interface GetDataService {
 
     @FormUrlEncoded
     @POST("user/add-friend-request")
-    Call<CommonModel> addFriendRequest(@FieldMap Map<String, String> param);
+    Call<CommonModel> addFriendRequest(@Header("Authorization") String token,@FieldMap Map<String, String> param);
 
     @FormUrlEncoded
     @POST("user/get-notifications")
-    Call<CommonModel> getNotification(@FieldMap Map<String, String> param);
+    Call<NotificationModel> getNotification(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
 }
