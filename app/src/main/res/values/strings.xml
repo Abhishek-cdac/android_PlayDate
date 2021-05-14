@@ -77,6 +77,8 @@
     <!--    <string name="str_temp">We are <b>good</b> glad to see you.</string>-->
 
     <string name="post">Post</string>
+    <string name="keep_looking1">Keep Looking</string>
+    <string name="send_msg">Send Message</string>
 
     <string name="comment_deleted">Comment has been deleted</string>
     <string name="add_comment">Add a comment...</string>
@@ -100,9 +102,13 @@
     <string name="location">Location</string>
     <string name="date">Date</string>
     <string name="Mobile">Mobile Number</string>
+    <string name="winner">Winner!</string>
+    <string name="level">LEVEL 1</string>
+    <string name="ans_first">You answered first!</string>
 
     <string name="copy">Copy </string>
     <string name="frequently_asked">Frequently Asked Questions</string>
     <string name="code">Code</string>
+    <string name="title_activity_maps">Map</string>
 
 </resources>

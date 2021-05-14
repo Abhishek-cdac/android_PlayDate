@@ -356,5 +356,20 @@
         android:textSize="@dimen/_12sdp"
         android:textStyle="bold" />
 
+    <TextView
+        android:id="@+id/logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_15sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:fontFamily="@font/lato_bold"
+        android:gravity="start|center"
+        android:text="Logout"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_12sdp"
+        android:textStyle="bold" />
 
 </LinearLayout>

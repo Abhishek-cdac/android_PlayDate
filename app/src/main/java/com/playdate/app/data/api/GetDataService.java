@@ -1,7 +1,11 @@
 package com.playdate.app.data.api;
 
+import com.playdate.app.model.CommonModel;
+import com.playdate.app.model.GetUserSuggestion;
+import com.playdate.app.model.GetUserSuggestionData;
 import com.playdate.app.model.InterestsMain;
 import com.playdate.app.model.LoginResponse;
+import com.playdate.app.model.NotificationModel;
 import com.playdate.app.model.RegisterResult;
 import com.playdate.app.model.RestMain;
 import com.playdate.app.ui.restaurant.adapter.Restaurant;
@@ -63,5 +67,20 @@ public interface GetDataService {
     @POST("user/update-profile-video")
     Call<LoginResponse> uploadProfileVideo(@Header("Authorization") String token, @Part MultipartBody.Part filePart);
 
+    @FormUrlEncoded
+    @POST("user/social-signin")
+    Call<LoginResponse> sociallogin(@FieldMap Map<String, String> param);
+
+    @FormUrlEncoded
+    @POST("user/get-users-suggestions")
+    Call<GetUserSuggestion> getUserSuggestion(@Header("Authorization") String token,@FieldMap Map<String, String> param);
+
+    @FormUrlEncoded
+    @POST("user/add-friend-request")
+    Call<CommonModel> addFriendRequest(@Header("Authorization") String token,@FieldMap Map<String, String> param);
+
+    @FormUrlEncoded
+    @POST("user/get-notifications")
+    Call<NotificationModel> getNotification(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
 }

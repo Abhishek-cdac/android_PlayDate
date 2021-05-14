@@ -1,21 +1,18 @@
 package com.playdate.app.ui.chat.request;
 
-import android.content.Context;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
 import com.playdate.app.model.Inbox;
-import com.playdate.app.model.Suggestions;
-import com.playdate.app.ui.dashboard.adapter.SuggestedFriendAdapter;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -50,6 +47,8 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MyViewHolder
                     itemClick.onItemClick(v, getAdapterPosition(), 12);
                 }
             });
+
+
 
         }
     }

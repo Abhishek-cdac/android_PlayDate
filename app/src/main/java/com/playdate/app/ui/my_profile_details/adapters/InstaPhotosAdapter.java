@@ -60,10 +60,11 @@ public class InstaPhotosAdapter extends RecyclerView.Adapter<InstaPhotosAdapter.
     public void onBindViewHolder(@NonNull InstaPhotosAdapter.ViewHolder holder, int position) {
         if (isLocked) {
             holder.iv_payment.setImageResource(R.drawable.pink_lock);
-           // holder.iv_chat.setImageResource(R.drawable.chat_black);
+//            holder.iv_payment.setImageResource(R.drawable.pink_timelapse);
+            // holder.iv_chat.setImageResource(R.drawable.chat_black);
             holder.card_grid.setCardBackgroundColor(mContext.getResources().getColor(R.color.black_back));
-            holder.iv_payment.getLayoutParams().width= (int) mContext.getResources().getDimension(R.dimen._30sdp);
-            holder.iv_payment.getLayoutParams().height= (int) mContext.getResources().getDimension(R.dimen._30sdp);
+            holder.iv_payment.getLayoutParams().width = (int) mContext.getResources().getDimension(R.dimen._30sdp);
+            holder.iv_payment.getLayoutParams().height = (int) mContext.getResources().getDimension(R.dimen._30sdp);
         } else {
             Picasso.get().load(lst.get(position))
                     .into(holder.iv_payment);
@@ -79,7 +80,7 @@ public class InstaPhotosAdapter extends RecyclerView.Adapter<InstaPhotosAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView iv_payment;
-//        ImageView iv_chat;
+        //        ImageView iv_chat;
         CardView card_grid;
 
         public ViewHolder(@NonNull View itemView) {
