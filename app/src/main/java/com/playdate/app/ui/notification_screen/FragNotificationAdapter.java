@@ -37,9 +37,6 @@ public class FragNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
         list.add(new Notification("https://hips.hearstapps.com/esquireuk.cdnds.net/17/17/elizabeth-turner.jpg", "KayleJennar", "https://blog.ainfluencer.com/wp-content/uploads/2021/01/Cinta-Laura-868x1024.jpg", LIKED, "L"));
     }
 
-    @NonNull
-
-
     @Override
     public int getItemCount() {
         return list.size();
@@ -123,7 +120,7 @@ public class FragNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     public class ViewHolderLiked extends RecyclerView.ViewHolder {
-        ImageView profile_image, icons;
+        ImageView profile_image, icons, iv_right, iv_cross;
         TextView tv_name, tv_desc;
         RelativeLayout rl_request;
 
@@ -134,6 +131,8 @@ public class FragNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             tv_name = view.findViewById(R.id.tv_name_noti);
             tv_desc = view.findViewById(R.id.tv_desc_noti);
             rl_request = view.findViewById(R.id.rl_request);
+            iv_right = view.findViewById(R.id.iv_right);
+            iv_cross = view.findViewById(R.id.iv_cross);
         }
     }
 

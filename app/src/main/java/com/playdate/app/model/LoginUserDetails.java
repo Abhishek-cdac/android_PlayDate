@@ -20,10 +20,13 @@ public class LoginUserDetails {
     String age;
     String profilePic;
     String profilePicPath;
-
     String profileVideo;
     String profileVideoPath;
     String interestedIn;
+    String sourceType;
+    String sourceSocialId;
+    String inviteCode;
+    String paymentMode;
 
     public String getInterestedIn() {
         return interestedIn;
@@ -51,6 +54,40 @@ public class LoginUserDetails {
 
     String relationship;
     String personalBio;
+
+
+
+    public String getSourceType() {
+        return sourceType;
+    }
+
+    public void setSourceType(String sourceType) {
+        this.sourceType = sourceType;
+    }
+
+    public String getSourceSocialId() {
+        return sourceSocialId;
+    }
+
+    public void setSourceSocialId(String sourceSocialId) {
+        this.sourceSocialId = sourceSocialId;
+    }
+
+    public String getInviteCode() {
+        return inviteCode;
+    }
+
+    public void setInviteCode(String inviteCode) {
+        this.inviteCode = inviteCode;
+    }
+
+    public String getPaymentMode() {
+        return paymentMode;
+    }
+
+    public void setPaymentMode(String paymentMode) {
+        this.paymentMode = paymentMode;
+    }
 
     @SerializedName("interested")
     @Expose

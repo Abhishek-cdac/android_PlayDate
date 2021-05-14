@@ -2,24 +2,18 @@ package com.playdate.app.ui.chat.request;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.playdate.app.R;
 import com.playdate.app.model.Inbox;
-import com.playdate.app.model.Suggestions;
 import com.playdate.app.ui.chat.ChatActivity;
-import com.playdate.app.ui.dashboard.adapter.SuggestedFriendAdapter;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +36,11 @@ public class FragInbox extends Fragment {
                     Intent intent = new Intent(getContext(), ChatActivity.class);
                     startActivity(intent);
                 }
+            }
+
+            @Override
+            public void onItemClicks(View view, int position, int value, String s) {
+
             }
         };
         setAdapter();

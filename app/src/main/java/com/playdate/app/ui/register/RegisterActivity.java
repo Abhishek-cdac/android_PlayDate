@@ -211,7 +211,12 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
                                 user.getPersonalBio(),
                                 "",
                                 user.getInterestedIn(),
-                                "");
+                                "",
+                                user.getSourceType(),
+                                user.getSourceSocialId(),
+                                user.getInviteCode(),
+                                user.getPaymentMode()
+                                );
 
                         nextPage(registerUser);
                     } else {

@@ -298,7 +298,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 user.getPersonalBio(),
                 "",
                 user.getInterestedIn(),
-                "");
+                "",
+                user.getSourceType(),
+                user.getSourceSocialId(),
+                user.getInviteCode(),
+                user.getPaymentMode());
 
 
         if (user.getStatus().equals("false")) {
