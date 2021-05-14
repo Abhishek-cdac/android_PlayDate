@@ -109,7 +109,7 @@
             android:fontFamily="@font/lato_bold"
             android:text="Hobby"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/_15sdp"
+            android:textSize="@dimen/_13sdp"
             android:textStyle="bold" />
 
         <LinearLayout

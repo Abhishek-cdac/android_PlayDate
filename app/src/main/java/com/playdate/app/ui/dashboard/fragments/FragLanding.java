@@ -80,7 +80,7 @@ public class FragLanding extends Fragment {
             }
         });
 
-
+        callGetUserSuggestionAPI();
         return view;
     }
 

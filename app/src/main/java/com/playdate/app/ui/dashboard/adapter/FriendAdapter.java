@@ -12,27 +12,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
 import com.playdate.app.model.Friends;
+import com.playdate.app.model.MatchListUser;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder> {
 
-    ArrayList<Friends> lst = new ArrayList<Friends>();
+    ArrayList<MatchListUser> lst;
 
-    public FriendAdapter() {
-            lst.add(new Friends("adreena helen", "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg"));
-            lst.add(new Friends("gomes helen", "https://images.saymedia-content.com/.image/t_share/MTc0MDkwNjUxNDc2OTYwODM0/5-instagram-models-you-should-be-following.png"));
-            lst.add(new Friends("jonn den", "https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png"));
-            lst.add(new Friends("Ramsphy k", "https://s29588.pcdn.co/wp-content/uploads/sites/2/2018/08/Claire-Abbott-1.jpg.optimal.jpg"));
-            lst.add(new Friends("adreena helen", "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg"));
-            lst.add(new Friends("gomes helen", "https://images.saymedia-content.com/.image/t_share/MTc0MDkwNjUxNDc2OTYwODM0/5-instagram-models-you-should-be-following.png"));
-            lst.add(new Friends("jonn den", "https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png"));
-            lst.add(new Friends("Ramsphy k", "https://s29588.pcdn.co/wp-content/uploads/sites/2/2018/08/Claire-Abbott-1.jpg.optimal.jpg"));
-            lst.add(new Friends("adreena helen", "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg"));
-            lst.add(new Friends("gomes helen", "https://images.saymedia-content.com/.image/t_share/MTc0MDkwNjUxNDc2OTYwODM0/5-instagram-models-you-should-be-following.png"));
-            lst.add(new Friends("jonn den", "https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png"));
-            lst.add(new Friends("Ramsphy k", "https://s29588.pcdn.co/wp-content/uploads/sites/2/2018/08/Claire-Abbott-1.jpg.optimal.jpg"));
+    public FriendAdapter(ArrayList<MatchListUser> lst) {
+        this.lst = lst;
     }
 
     Context mContext;
@@ -47,12 +37,12 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Picasso.get().load(lst.get(position).getImage())
-                .placeholder(R.drawable.cupertino_activity_indicator)
+        Picasso.get().load(lst.get(position).getProfilePicPath())
+                .placeholder(R.drawable.profile)
                 .into(holder.profile_image);
 
 //        holder.profile_image.setImageResource(lst.get(position).getImage());
-        holder.txt_friend_name.setText(lst.get(position).getName());
+        holder.txt_friend_name.setText(lst.get(position).getFullName());
     }
 
     @Override

@@ -2,24 +2,18 @@ package com.playdate.app.ui.onboarding;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
 import com.playdate.app.R;
-import com.playdate.app.databinding.ActivityOnboardingBinding;
 import com.playdate.app.ui.dashboard.DashboardActivity;
 import com.playdate.app.ui.login.LoginActivity;
 import com.playdate.app.util.session.SessionPref;
 
-import static com.playdate.app.util.session.SessionPref.LoginVerified;
+import static com.playdate.app.util.session.SessionPref.CompleteProfile;
 
 public class OnBoardingActivity extends AppCompatActivity {
 
@@ -40,7 +34,7 @@ public class OnBoardingActivity extends AppCompatActivity {
             finish();
         });
         SessionPref pref = SessionPref.getInstance(this);
-        if (pref.getBoolVal(LoginVerified)) {
+        if (pref.getBoolVal(CompleteProfile)) {
             startActivity(new Intent(OnBoardingActivity.this, DashboardActivity.class));
             finish();
         }

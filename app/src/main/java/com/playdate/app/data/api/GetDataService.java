@@ -1,10 +1,12 @@
 package com.playdate.app.data.api;
 
 import com.playdate.app.model.CommonModel;
+import com.playdate.app.model.FriendsListModel;
 import com.playdate.app.model.GetUserSuggestion;
 import com.playdate.app.model.GetUserSuggestionData;
 import com.playdate.app.model.InterestsMain;
 import com.playdate.app.model.LoginResponse;
+import com.playdate.app.model.MatchListModel;
 import com.playdate.app.model.NotificationModel;
 import com.playdate.app.model.RegisterResult;
 import com.playdate.app.model.RestMain;
@@ -82,5 +84,15 @@ public interface GetDataService {
     @FormUrlEncoded
     @POST("user/get-notifications")
     Call<NotificationModel> getNotification(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
+
+    @FormUrlEncoded
+    @POST("user/get-user-match-list")
+    Call<MatchListModel> getUserMatchList(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
+    @FormUrlEncoded
+    @POST("user/get-friends-list")
+    Call<FriendsListModel> getFriendsList(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
 
 }

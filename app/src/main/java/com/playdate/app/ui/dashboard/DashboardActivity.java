@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +25,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.playdate.app.R;
+import com.playdate.app.data.api.GetDataService;
+import com.playdate.app.data.api.RetrofitClientInstance;
+import com.playdate.app.model.FriendsListModel;
+import com.playdate.app.model.MatchListModel;
+import com.playdate.app.model.MatchListUser;
 import com.playdate.app.ui.anonymous_question.AnoQuesCreateActivity;
 import com.playdate.app.ui.card_swipe.FragCardSwipe;
 import com.playdate.app.ui.chat.request.RequestChatFragment;
@@ -42,16 +48,27 @@ import com.playdate.app.ui.my_profile_details.FragMyProfilePersonal;
 import com.playdate.app.ui.notification_screen.FragNotification;
 import com.playdate.app.ui.social.FragSocialFeed;
 import com.playdate.app.ui.social.upload_media.PostMediaActivity;
+import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.ALL_PERMISSIONS_RESULT;
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.PICK_PHOTO_FOR_AVATAR;
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.REQUEST_TAKE_GALLERY_VIDEO;
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.TAKE_PHOTO_CODE;
+import static com.playdate.app.util.session.SessionPref.CompleteProfile;
 
 public class DashboardActivity extends AppCompatActivity implements OnInnerFragmentClicks, View.OnClickListener, OnProfilePhotoChageListerner {
     FragmentManager fm;
@@ -90,6 +107,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
     RelativeLayout rl_main;
     ImageView profile_image;
+    RecyclerView rv_friends;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -158,11 +176,8 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             }
         });
 
-        RecyclerView rv_friends = findViewById(R.id.rv_friends);
-        RecyclerView.LayoutManager manager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
-        FriendAdapter adapterfriend = new FriendAdapter();
-        rv_friends.setAdapter(adapterfriend);
-        rv_friends.setLayoutManager(manager);
+        rv_friends = findViewById(R.id.rv_friends);
+
 
         Fragment fragOne = new FragLanding();
 //        Fragment fragOne = new GetPremiumDialog();
@@ -255,22 +270,76 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         });
 
 //        showPremium();
-//        setValue();
+        setValue();
+        callAPIFriends();
+
+
+    }
+
+    private void callAPIFriends() {
+
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("limit", "100");
+        hashMap.put("pageNo", "1");
+//        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
+//        pd.show();
+        SessionPref pref = SessionPref.getInstance(this);
+        Call<FriendsListModel> call = service.getFriendsList("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new Callback<FriendsListModel>() {
+            @Override
+            public void onResponse(Call<FriendsListModel> call, Response<FriendsListModel> response) {
+//                pd.cancel();
+                if (response.code() == 200) {
+                    if (response.body().getStatus() == 1) {
+                        RecyclerView.LayoutManager manager = new LinearLayoutManager(DashboardActivity.this, RecyclerView.HORIZONTAL, false);
+                        ArrayList<MatchListUser> lst = response.body().getUsers();
+                        if (lst == null) {
+                            lst = new ArrayList<>();
+                        }
+                        FriendAdapter adapterfriend = new FriendAdapter(lst);
+                        rv_friends.setAdapter(adapterfriend);
+                        rv_friends.setLayoutManager(manager);
+
+                    } else {
+                    }
+                } else {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                    } catch (Exception e) {
+//                        Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<FriendsListModel> call, Throwable t) {
+                t.printStackTrace();
+//                pd.cancel();
+//                Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
     private void setValue() {
-        SessionPref pref = SessionPref.getInstance(this);
-//        profile_image.setText(pref.getStringVal(SessionPref.LoginUserusername));
-        String img = pref.getStringVal(SessionPref.LoginUserprofilePic);
-        if (img.contains("http")) {
-            Picasso.get().load(img)
-                    .placeholder(R.drawable.cupertino_activity_indicator)
-                    .into(profile_image);
-        } else {
-            Picasso.get().load(BASE_URL_IMAGE + img)
-                    .placeholder(R.drawable.cupertino_activity_indicator)
-                    .into(profile_image);
+        try {
+            SessionPref pref = SessionPref.getInstance(this);
+            pref.saveBoolKeyVal(CompleteProfile, true);
+            String img = pref.getStringVal(SessionPref.LoginUserprofilePic);
+            if (img.contains("http")) {
+                Picasso.get().load(img)
+                        .placeholder(R.drawable.profile)
+                        .into(profile_image);
+            } else {
+                Picasso.get().load(BASE_URL_IMAGE + img)
+                        .placeholder(R.drawable.profile)
+                        .into(profile_image);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }

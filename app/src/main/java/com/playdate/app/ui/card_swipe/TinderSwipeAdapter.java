@@ -1,18 +1,17 @@
 package com.playdate.app.ui.card_swipe;
 
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
-import com.playdate.app.model.TinderSwipe;
+import com.playdate.app.model.Interest;
+import com.playdate.app.model.MatchListUser;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -20,46 +19,14 @@ import java.util.List;
 
 public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.ViewHolder> {
 
-//    private List<TinderSwipe> list;
+    ArrayList<Interest> lst_interest;
+    List<MatchListUser> tinder_list;
 
-//    public TinderSwipeAdapter(List<TinderSwipe> list) {
-//        this.list = list;
-//    }
-
-    List<TinderSwipe> tinder_list = new ArrayList<>();
-
-    public TinderSwipeAdapter() {
-
-        tinder_list.add(new TinderSwipe("https://hips.hearstapps.com/esquireuk.cdnds.net/17/17/elizabeth-turner.jpg", "adreena helen", "Dancing", "23", false));
-        tinder_list.add(new TinderSwipe("https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", "gomes helen", "Singing", "27", true));
-        tinder_list.add(new TinderSwipe("https://images.saymedia-content.com/.image/t_share/MTc0MDkwNjUxNDc2OTYwODM0/5-instagram-models-you-should-be-following.png", "jonn den", "Travelling", "29", false));
-        tinder_list.add(new TinderSwipe("https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg", "Ramsphy k", "Blogging", "18", true));
-        tinder_list.add(new TinderSwipe("https://hips.hearstapps.com/esquireuk.cdnds.net/17/17/elizabeth-turner.jpg", "adreena helen", "Dancing and Blogging", "20", false));
-        tinder_list.add(new TinderSwipe("https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", "gomes helen", "Travelling & Blogging", "24", true));
-        tinder_list.add(new TinderSwipe("https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", "gomes helen", "Travelling & Blogging", "24", true));
-        tinder_list.add(new TinderSwipe("https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", "gomes helen", "Travelling & Blogging", "24", false));
-        tinder_list.add(new TinderSwipe("https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", "gomes helen", "Travelling & Blogging", "24", false));
-        tinder_list.add(new TinderSwipe("https://hips.hearstapps.com/esquireuk.cdnds.net/17/17/elizabeth-turner.jpg", "adreena helen", "Dancing", "23", false));
-        tinder_list.add(new TinderSwipe("https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", "gomes helen", "Singing", "27", true));
-        tinder_list.add(new TinderSwipe("https://images.saymedia-content.com/.image/t_share/MTc0MDkwNjUxNDc2OTYwODM0/5-instagram-models-you-should-be-following.png", "jonn den", "Travelling", "29", false));
-        tinder_list.add(new TinderSwipe("https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg", "Ramsphy k", "Blogging", "18", true));
-        tinder_list.add(new TinderSwipe("https://hips.hearstapps.com/esquireuk.cdnds.net/17/17/elizabeth-turner.jpg", "adreena helen", "Dancing and Blogging", "20", false));
-        tinder_list.add(new TinderSwipe("https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", "gomes helen", "Travelling & Blogging", "24", true));
-        tinder_list.add(new TinderSwipe("https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", "gomes helen", "Travelling & Blogging", "24", true));
-        tinder_list.add(new TinderSwipe("https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", "gomes helen", "Travelling & Blogging", "24", false));
-        tinder_list.add(new TinderSwipe("https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", "gomes helen", "Travelling & Blogging", "24", false));
-        tinder_list.add(new TinderSwipe("https://hips.hearstapps.com/esquireuk.cdnds.net/17/17/elizabeth-turner.jpg", "adreena helen", "Dancing", "23", false));
-        tinder_list.add(new TinderSwipe("https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", "gomes helen", "Singing", "27", true));
-        tinder_list.add(new TinderSwipe("https://images.saymedia-content.com/.image/t_share/MTc0MDkwNjUxNDc2OTYwODM0/5-instagram-models-you-should-be-following.png", "jonn den", "Travelling", "29", false));
-        tinder_list.add(new TinderSwipe("https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg", "Ramsphy k", "Blogging", "18", true));
-        tinder_list.add(new TinderSwipe("https://hips.hearstapps.com/esquireuk.cdnds.net/17/17/elizabeth-turner.jpg", "adreena helen", "Dancing and Blogging", "20", false));
-        tinder_list.add(new TinderSwipe("https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", "gomes helen", "Travelling & Blogging", "24", true));
-        tinder_list.add(new TinderSwipe("https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", "gomes helen", "Travelling & Blogging", "24", true));
-        tinder_list.add(new TinderSwipe("https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", "gomes helen", "Travelling & Blogging", "24", false));
-        tinder_list.add(new TinderSwipe("https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", "gomes helen", "Travelling & Blogging", "24", false));
-
-
+    public TinderSwipeAdapter(List<MatchListUser> tinder_list, ArrayList<Interest> lst_interest) {
+        this.tinder_list = tinder_list;
+        this.lst_interest = lst_interest;
     }
+
 
     @NonNull
     @Override
@@ -80,9 +47,10 @@ public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView image,maximise;
+        ImageView image, maximise;
         TextView name, age, hobby;
         ImageView message;
+        ImageView item_premium;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -91,46 +59,60 @@ public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.
             hobby = itemView.findViewById(R.id.item_hobby);
             image = itemView.findViewById(R.id.item_image);
             message = itemView.findViewById(R.id.item_message);
+            item_premium = itemView.findViewById(R.id.item_premium);
             maximise = itemView.findViewById(R.id.item_fullScreen);
             maximise.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH ){
-                        image.setSystemUiVisibility( View.SYSTEM_UI_FLAG_HIDE_NAVIGATION );
-
-                    }
-                    else if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB )
-                        image.setSystemUiVisibility( View.STATUS_BAR_HIDDEN );
-                    else{}
+                    image.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
                 }
             });
         }
 
-        void setData(TinderSwipe tinderSwipe) {
+        void setData(MatchListUser user) {
             Picasso.get()
-                    .load(tinderSwipe.getImage())
+                    .load(user.getProfilePicPath())
                     .fit()
                     .centerCrop()
                     .into(image);
-            name.setText(tinderSwipe.getName());
-            age.setText(tinderSwipe.getAge());
-            hobby.setText(tinderSwipe.getHobby());
+            name.setText(user.getFullName());
+            age.setText("" + user.getAge());
 
-            if (tinderSwipe.isMessage()) {
-                message.setVisibility(View.VISIBLE);
+            String ints = "";
+            if (null != lst_interest) {
+                for (int i = 0; i < lst_interest.size(); i++) {
+                    for (int j = 0; j < user.getInterested().size(); j++) {
+                        if (lst_interest.get(i).get_id().equals(user.getInterested().get(j))) {
+                            if (ints.isEmpty()) {
+                                ints = lst_interest.get(i).getName();
+                            } else {
+                                ints = ints +","+ lst_interest.get(i).getName();
+                            }
+
+                            break;
+                        }
+                    }
+                }
+            }
+
+
+            hobby.setText(ints);
+
+            if (user.getPaymentMode().equals("1")) {
+                item_premium.setVisibility(View.VISIBLE);
             } else {
-                message.setVisibility(View.GONE);
+                item_premium.setVisibility(View.INVISIBLE);
             }
         }
     }
 
 
-    public List<TinderSwipe> getList() {
+    public List<MatchListUser> getList() {
         return tinder_list;
     }
 
-    public void setList(List<TinderSwipe> list) {
+    public void setList(List<MatchListUser> list) {
         this.tinder_list = list;
     }
 }

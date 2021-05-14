@@ -2,14 +2,14 @@ package com.playdate.app.ui.card_swipe;
 
 import androidx.recyclerview.widget.DiffUtil;
 
-import com.playdate.app.model.TinderSwipe;
+import com.playdate.app.model.MatchListUser;
 
 import java.util.List;
 
 public class TinderSwipeCallback extends DiffUtil.Callback {
-    private List<TinderSwipe> old, newList;
+    private List<MatchListUser> old, newList;
 
-    public TinderSwipeCallback(List<TinderSwipe> old, List<TinderSwipe> newList) {
+    public TinderSwipeCallback(List<MatchListUser> old, List<MatchListUser> newList) {
         this.old = old;
         this.newList = newList;
     }
@@ -26,7 +26,7 @@ public class TinderSwipeCallback extends DiffUtil.Callback {
 
     @Override
     public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-        return old.get(oldItemPosition).getImage() == newList.get(newItemPosition).getImage();
+        return old.get(oldItemPosition).getProfilePicPath() == newList.get(newItemPosition).getProfilePicPath();
     }
 
     @Override

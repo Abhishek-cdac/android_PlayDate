@@ -62,6 +62,7 @@ public class SessionPref {
 
     public static String LoginUserID = "id";
     public static String LoginVerified = "LoginVerified";
+    public static String CompleteProfile = "CompleteProfile";
     public static String LoginUserfullName = "fullName";
     public static String LoginUseremail = "email";
     public static String LoginUserusername = "username";

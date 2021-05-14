@@ -41,6 +41,7 @@ import java.util.Objects;
 import java.util.concurrent.Executor;
 
 import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
+import static com.playdate.app.util.session.SessionPref.CompleteProfile;
 import static com.playdate.app.util.session.SessionPref.LoginVerified;
 
 public class FragMyProfileDetails extends Fragment implements View.OnClickListener {
@@ -145,6 +146,7 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
                 Toast.makeText(getActivity(), "LogOut", Toast.LENGTH_LONG).show();
 
                 SessionPref.getInstance(getActivity()).saveBoolKeyVal(LoginVerified, false);
+                SessionPref.getInstance(getActivity()).saveBoolKeyVal(CompleteProfile, false);
                 SessionPref.logout(getActivity());
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
