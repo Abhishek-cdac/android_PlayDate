@@ -48,24 +48,23 @@ public class UserNameActivity extends AppCompatActivity {
         mIntent = getIntent();
         userNameViewModel.OnNextClick().observe(this, new Observer<Boolean>() {
             @Override
-            public void onChanged(Boolean click) {
+            public void onChanged(Boolean click)
+            {
                 if (mIntent.getBooleanExtra("fromProfile", false)) {
                     Intent mIntent = new Intent();
                     setResult(408, mIntent);
                     finish();
-                } else {
-
+                }
+                else{
                     if (userNameViewModel.UserName.getValue() != null) {
 //                        startActivity(new Intent(UserNameActivity.this, BioActivity.class));
                         callAPI(userNameViewModel.UserName.getValue());
                     }
-
-
                 }
-
             }
         });
         userNameViewModel.OnUserNameInput().observe(this, new Observer<String>() {
+
             @Override
             public void onChanged(String charSeq) {
 //                if (charSeq.length() == 5) {
@@ -97,7 +96,7 @@ public class UserNameActivity extends AppCompatActivity {
         hashMap.put("username", uname);
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
         pd.show();
-        Call<LoginResponse> call = service.updateProfile("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        Call<LoginResponse> call = service.updateUsername("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {

@@ -63,6 +63,11 @@ public class FragSuggested extends Fragment {
                     callAddFriendRequestApi(s);
                 }
             }
+
+            @Override
+            public void onItemClicks(View v, int adapterPosition, int i, String notifiationId, String userId) {
+
+            }
         };
 
         callGetUserSuggestionAPI();

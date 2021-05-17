@@ -1,6 +1,7 @@
 package com.playdate.app.ui.dashboard.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,10 +94,15 @@ public class SuggestionAdapter extends PagerAdapter {
         iv_send_request = view.findViewById(R.id.iv_send_request);
         txt_header_Suggestions = view.findViewById(R.id.txt_header_Suggestions);
         txt_header_Suggestions.setText(suggestions_list.get(position).getFullName());
-        Picasso.get().load(BASE_URL_IMAGE + suggestions_list.get(position).getProfilePicPath())
+
+        Picasso.get().load(suggestions_list.get(position).getProfilePicPath())
                 //.placeholder(R.drawable.cupertino_activity_indicator)
                 .placeholder(R.drawable.profile)
+                .fit()
+                .centerCrop()
                 .into(profile_image);
+
+
        String userId = suggestions_list.get(position).getId();
 
         iv_send_request.setOnClickListener(new View.OnClickListener() {
