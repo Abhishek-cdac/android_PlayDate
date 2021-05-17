@@ -64,6 +64,7 @@ public class FragSuggested extends Fragment {
                 }
             }
         };
+
         callGetUserSuggestionAPI();
         return view;
     }

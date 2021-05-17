@@ -19,6 +19,7 @@ import com.playdate.app.R;
 import com.playdate.app.model.FriendRequest;
 import com.playdate.app.model.Friends;
 import com.playdate.app.model.GetUserSuggestionData;
+import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.ui.dashboard.fragments.FragSuggestion;
 import com.playdate.app.ui.onboarding.OnBoardingImageFragment;
 import com.squareup.picasso.Picasso;
@@ -36,6 +37,7 @@ public class SuggestionAdapter extends PagerAdapter {
  ArrayList<Friends> lst = new ArrayList<Friends>();
     ArrayList<GetUserSuggestionData> suggestions_list = new ArrayList<>();
     ArrayList<FriendRequest> friendRequests_list = new ArrayList<>();
+    Onclick itemClick;
 
 
     public SuggestionAdapter(Context mContext) {
@@ -58,9 +60,10 @@ public class SuggestionAdapter extends PagerAdapter {
         lst.add(new Friends("Maria Gomes", "", true));
     }
 
-    public SuggestionAdapter(Context mContext,ArrayList<GetUserSuggestionData> lst_getUserSuggestions) {
+    public SuggestionAdapter(Context mContext,ArrayList<GetUserSuggestionData> lst_getUserSuggestions,Onclick itemClick) {
         this.suggestions_list = lst_getUserSuggestions;
         this.context = mContext;
+        this.itemClick = itemClick;
 
     }
 
@@ -90,11 +93,22 @@ public class SuggestionAdapter extends PagerAdapter {
         iv_send_request = view.findViewById(R.id.iv_send_request);
         txt_header_Suggestions = view.findViewById(R.id.txt_header_Suggestions);
         txt_header_Suggestions.setText(suggestions_list.get(position).getFullName());
-//        Picasso.get().load(BASE_URL_IMAGE + suggestions_list.get(position).getProfilePicPath())
-//                .placeholder(R.drawable.cupertino_activity_indicator)
-//                .placeholder(R.drawable.profile)
-//                .into(profile_image);
-//        if (suggestions_list.get(position).getFriendRequest().get(position).getStatus().equals("Pending")) {
+        Picasso.get().load(BASE_URL_IMAGE + suggestions_list.get(position).getProfilePicPath())
+                //.placeholder(R.drawable.cupertino_activity_indicator)
+                .placeholder(R.drawable.profile)
+                .into(profile_image);
+       String userId = suggestions_list.get(position).getId();
+
+        iv_send_request.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemClick.onItemClicks(v, position, 10, userId);
+
+                //    suggestions_list.get(getPosition()).setRequestSent(true);
+//                    SuggestedFriendAdapter.this.notifyDataSetChanged();
+            }
+        });
+//        if (friendRequests_list.get(position).getStatus().equals("Pending")) {
 //            iv_send_request.setImageResource(R.drawable.sent_request_sel);
 //        } else {
 //            iv_send_request.setImageResource(R.drawable.sent_request);
