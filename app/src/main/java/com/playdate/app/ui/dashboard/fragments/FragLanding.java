@@ -65,6 +65,11 @@ public class FragLanding extends Fragment {
                     callAddFriendRequestApi(s);
                 }
             }
+
+            @Override
+            public void onItemClicks(View v, int adapterPosition, int i, String notifiationId, String userId) {
+
+            }
         };
 
         callGetUserSuggestionAPI();
@@ -114,11 +119,7 @@ public class FragLanding extends Fragment {
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
         pd.show();
         SessionPref pref = SessionPref.getInstance(getActivity());
-        Log.e("GetLandingData", "" + pref.getStringVal(SessionPref.LoginUsertoken));
-
         Call<GetUserSuggestion> call = service.getUserSuggestion("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
-        Log.e("GetUserSuggestionData", "" + hashMap);
-
         call.enqueue(new Callback<GetUserSuggestion>() {
             @Override
             public void onResponse(Call<GetUserSuggestion> call, Response<GetUserSuggestion> response) {

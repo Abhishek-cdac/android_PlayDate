@@ -2,6 +2,7 @@
 package com.playdate.app.model;
 
 import java.util.List;
+
 import com.google.gson.annotations.SerializedName;
 
 public class NotificationData {
@@ -10,6 +11,8 @@ public class NotificationData {
     private String mEntryDate;
     @SerializedName("friendRequest")
     private List<FriendRequest> mFriendRequest;
+    @SerializedName("notificationId")
+    private String mNotificationId;
     @SerializedName("notificationMessage")
     private String mNotificationMessage;
     @SerializedName("notificationText")
@@ -41,6 +44,14 @@ public class NotificationData {
 
     public void setFriendRequest(List<FriendRequest> friendRequest) {
         mFriendRequest = friendRequest;
+    }
+
+    public String getNotificationId() {
+        return mNotificationId;
+    }
+
+    public void setNotificationId(String notificationId) {
+        mNotificationId = notificationId;
     }
 
     public String getNotificationMessage() {

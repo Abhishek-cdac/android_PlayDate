@@ -37,6 +37,7 @@ import com.playdate.app.ui.chat.request.RequestChatFragment;
 import com.playdate.app.ui.coupons.FragCouponStore;
 import com.playdate.app.ui.dashboard.adapter.FriendAdapter;
 import com.playdate.app.ui.dashboard.fragments.FragLanding;
+import com.playdate.app.ui.date.IntroScreen;
 import com.playdate.app.ui.dialogs.AnonymousMedalDialog;
 import com.playdate.app.ui.dialogs.FullScreenDialog;
 import com.playdate.app.ui.dialogs.GetPremiumDialog;
@@ -87,6 +88,8 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     ImageView iv_create_ano_ques;
     ImageView iv_gallery;
     ImageView iv_dashboard_notification;
+    ImageView iv_coupons;
+    ImageView iv_date;
 
     SwipeRefreshLayout mSwipeRefreshLayout;
     LinearLayout ll_mainMenu, ll_her;
@@ -139,6 +142,8 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         iv_gallery = findViewById(R.id.iv_gallery);
         iv_create_ano_ques = findViewById(R.id.iv_create_ano_ques);
         iv_dashboard_notification = findViewById(R.id.iv_dashboard_notification);
+        iv_coupons = findViewById(R.id.iv_coupons);
+        iv_date = findViewById(R.id.iv_date);
 
         ll_take_photo = findViewById(R.id.ll_take_photo);
         ll_upload_photo = findViewById(R.id.ll_upload_photo);
@@ -257,6 +262,19 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             ll_mainMenu.setVisibility(View.GONE);
             ll_her.setVisibility(View.GONE);
 
+        });
+        iv_coupons.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ReplaceFrag(new FragCouponStore());
+            }
+        });
+        iv_date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DashboardActivity.this, IntroScreen.class));
+
+            }
         });
 
 //        showPremium();
@@ -515,10 +533,14 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             ll_camera_option.setVisibility(View.VISIBLE);
             ll_profile_drop_menu.setVisibility(View.GONE);
             iv_play_date_logo.setVisibility(View.VISIBLE);
+        } else if (id == R.id.iv_coupons) {
+            iv_love.setImageResource(R.drawable.love);
+            ReplaceFrag(new FragCouponStore());
         }
 
 
     }
+
 
     public void openCamera() {
         try {

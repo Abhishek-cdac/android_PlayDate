@@ -3,14 +3,12 @@ package com.playdate.app.data.api;
 import com.playdate.app.model.CommonModel;
 import com.playdate.app.model.FriendsListModel;
 import com.playdate.app.model.GetUserSuggestion;
-import com.playdate.app.model.GetUserSuggestionData;
 import com.playdate.app.model.InterestsMain;
 import com.playdate.app.model.LoginResponse;
 import com.playdate.app.model.MatchListModel;
 import com.playdate.app.model.NotificationModel;
 import com.playdate.app.model.RegisterResult;
 import com.playdate.app.model.RestMain;
-import com.playdate.app.ui.restaurant.adapter.Restaurant;
 
 import java.util.Map;
 
@@ -75,11 +73,11 @@ public interface GetDataService {
 
     @FormUrlEncoded
     @POST("user/get-users-suggestions")
-    Call<GetUserSuggestion> getUserSuggestion(@Header("Authorization") String token,@FieldMap Map<String, String> param);
+    Call<GetUserSuggestion> getUserSuggestion(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
     @FormUrlEncoded
     @POST("user/add-friend-request")
-    Call<CommonModel> addFriendRequest(@Header("Authorization") String token,@FieldMap Map<String, String> param);
+    Call<CommonModel> addFriendRequest(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
     @FormUrlEncoded
     @POST("user/get-notifications")
@@ -93,6 +91,18 @@ public interface GetDataService {
     @FormUrlEncoded
     @POST("user/get-friends-list")
     Call<FriendsListModel> getFriendsList(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
+    @FormUrlEncoded
+    @POST("user/update-username")
+    Call<LoginResponse> updateUsername(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
+    @FormUrlEncoded
+    @POST("user/update-notification")
+    Call<CommonModel> updateNotification(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
+    @FormUrlEncoded
+    @POST("user/friend-request-status-update")
+    Call<CommonModel> friendRequestStatus(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
 
     @Multipart

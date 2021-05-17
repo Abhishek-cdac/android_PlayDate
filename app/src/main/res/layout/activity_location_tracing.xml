@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/location_bg">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_light_black" />
+
+    <ImageView
+        android:id="@+id/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="@dimen/_25sdp"
+        android:src="@drawable/icon_cancel" />
+
+    <com.github.ybq.android.spinkit.SpinKitView
+        android:id="@+id/spin_kit_location_trace"
+        style="@style/SpinKitView.Small.MultiplePulseRing"
+        android:layout_width="@dimen/_200sdp"
+        android:layout_height="@dimen/_200sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_140sdp"
+        android:padding="@dimen/_5sdp"
+        android:visibility="visible"
+        app:SpinKit_Color="@color/color_pink" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tv_location"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:paddingHorizontal="@dimen/_26sdp">
+
+        <ImageView
+            android:id="@+id/iv_check_mine"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/icon_check"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:id="@+id/rl_mine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:visibility="visible">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/male" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_my_image"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_centerHorizontal="true"
+                android:padding="@dimen/_5sdp"
+                android:src="@drawable/model1"
+                app:civ_border_color="@android:color/transparent"
+                app:civ_border_width="1dp" />
+
+        </RelativeLayout>
+
+        <com.github.ybq.android.spinkit.SpinKitView
+            android:id="@+id/spin_kit_dots1"
+            style="@style/SpinKitView.Small.ThreeBounce"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_centerVertical="true"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:layout_toRightOf="@+id/rl_mine"
+            android:padding="@dimen/_5sdp"
+            android:visibility="visible"
+            app:SpinKit_Color="@color/color_pink" />
+
+
+        <ImageView
+            android:id="@+id/iv_check_other"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/_110sdp"
+            android:src="@drawable/pink_check"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:id="@+id/rl_other"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_110sdp"
+            android:visibility="visible">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/female" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_partner_image"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_centerHorizontal="true"
+                android:padding="@dimen/_5sdp"
+                android:src="@drawable/model2"
+                app:civ_border_color="@android:color/transparent"
+                app:civ_border_width="1dp" />
+
+        </RelativeLayout>
+
+        <com.github.ybq.android.spinkit.SpinKitView
+            android:id="@+id/spin_kit_dots2"
+            style="@style/SpinKitView.Small.ThreeBounce"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/_165sdp"
+            android:padding="@dimen/_5sdp"
+            android:visibility="gone"
+            app:SpinKit_Color="@color/color_pink" />
+
+        <ImageView
+            android:id="@+id/iv_check_rest"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/blue_check"
+            android:visibility="gone" />
+
+
+        <ImageView
+            android:id="@+id/iv_pin_restaurent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/pin_rest"
+            android:visibility="visible" />
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/_55sdp"
+        android:fontFamily="@font/lato_bold"
+        android:text="@string/waiting_partner"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_18sdp" />
+
+
+</RelativeLayout>

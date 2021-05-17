@@ -29,25 +29,22 @@ public class SelectPartner extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_select_partner);
+        setContentView(R.layout.activity_date_select_partner);
         vp_partners = findViewById(R.id.vp_partners);
         btn_search_partner = findViewById(R.id.btn_search_partner);
-        tv_waiting = findViewById(R.id.tv_waiting);
-        tv_or = findViewById(R.id.tv_or);
-        spin_kit = findViewById(R.id.spin_kit);
 
 
-        list.add(new PartnerImage("https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg"));
-        list.add(new PartnerImage("https://images.saymedia-content.com/.image/t_share/MTc0MDkwNjUxNDc2OTYwODM0/5-instagram-models-you-should-be-following.png"));
-        list.add(new PartnerImage("https://hips.hearstapps.com/esquireuk.cdnds.net/17/17/elizabeth-turner.jpg"));
-        list.add(new PartnerImage("https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg"));
-        list.add(new PartnerImage("https://hips.hearstapps.com/esquireuk.cdnds.net/17/17/elizabeth-turner.jpg"));
-        list.add(new PartnerImage("\"https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg\""));
-        list.add(new PartnerImage("\"https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg\""));
-        list.add(new PartnerImage("\"https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg\""));
-        list.add(new PartnerImage("\"https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg\""));
-        list.add(new PartnerImage("\"https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg\""));
-        list.add(new PartnerImage("\"https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg\""));
+        list.add(new PartnerImage("https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg","kaylajenner12","1200"));
+        list.add(new PartnerImage("https://images.saymedia-content.com/.image/t_share/MTc0MDkwNjUxNDc2OTYwODM0/5-instagram-models-you-should-be-following.png","malaika2124","1200"));
+        list.add(new PartnerImage("https://hips.hearstapps.com/esquireuk.cdnds.net/17/17/elizabeth-turner.jpg","kaylajenner12","1400"));
+        list.add(new PartnerImage("https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg","kaylajenner12","1200"));
+        list.add(new PartnerImage("https://hips.hearstapps.com/esquireuk.cdnds.net/17/17/elizabeth-turner.jpg","kaylajenner12","1200"));
+        list.add(new PartnerImage("https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg","myron1122","1300"));
+        list.add(new PartnerImage("https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg","geneeeres","1200"));
+        list.add(new PartnerImage("https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg","kaylajenner12","1200"));
+        list.add(new PartnerImage("https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg","kaylajenner12","1200"));
+        list.add(new PartnerImage("https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg","kaylajenner12","1200"));
+        list.add(new PartnerImage("https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg","kaylajenner12","1200"));
 
 
         vp_partners.setClipToPadding(false);
@@ -56,15 +53,6 @@ public class SelectPartner extends AppCompatActivity {
         adapter = new PartnerViewPagerAdapter(SelectPartner.this, list);
         vp_partners.setAdapter(adapter);
 
-
-    }
-
-    public void updateChanges() {
-        btn_search_partner.setVisibility(View.GONE);
-        tv_or.setVisibility(View.GONE);
-        spin_kit.setVisibility(View.VISIBLE);
-        tv_waiting.setVisibility(View.VISIBLE);
-        adapter.notifyDataSetChanged();
 
     }
 }
