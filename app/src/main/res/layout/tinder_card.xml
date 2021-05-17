@@ -31,13 +31,6 @@
             android:src="@drawable/maximize" />
 
         <ImageView
-            android:id="@+id/item_premium"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_40sdp"
-            android:layout_weight="0.8"
-            android:src="@drawable/diamond_normal" />
-
-        <ImageView
             android:id="@+id/item_video"
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"

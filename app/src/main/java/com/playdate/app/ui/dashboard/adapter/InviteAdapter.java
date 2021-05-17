@@ -52,10 +52,16 @@ public class InviteAdapter extends RecyclerView.Adapter<InviteAdapter.ViewHolder
     public void onBindViewHolder(@NonNull InviteAdapter.ViewHolder holder, int position) {
         holder.title.setText(invite_list.get(position).getTitle());
         holder.icon.setImageResource(invite_list.get(position).getImage());
-        switch (position) {
-            case 0:
-                ReplaceFrag(new FragPremium1());
-        }
+
+//        holder.title.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                switch (position) {
+//                    case 0:
+//                        ReplaceFrag(new FragPremium1());
+//                }
+//            }
+//        });
 
 
     }
