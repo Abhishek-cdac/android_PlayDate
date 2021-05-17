@@ -91,7 +91,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     ImageView iv_coupons;
     ImageView iv_date;
 
-    SwipeRefreshLayout mSwipeRefreshLayout;
+//    SwipeRefreshLayout mSwipeRefreshLayout;
     LinearLayout ll_mainMenu, ll_her;
     LinearLayout ll_friends;
     LinearLayout ll_profile_menu;
@@ -169,18 +169,18 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
         fm = getSupportFragmentManager();
         ft = fm.beginTransaction();
-        mSwipeRefreshLayout = findViewById(R.id.swipeToRefresh);
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.color_pink);
-
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-//                FragSocialFeed fragment=new FragSocialFeed();
-//                fragment.shuffle();
-//                ReplaceFrag(fragment);
-                mSwipeRefreshLayout.setRefreshing(false);
-            }
-        });
+//        mSwipeRefreshLayout = findViewById(R.id.swipeToRefresh);
+//        mSwipeRefreshLayout.setColorSchemeResources(R.color.color_pink);
+//
+//        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+////                FragSocialFeed fragment=new FragSocialFeed();
+////                fragment.shuffle();
+////                ReplaceFrag(fragment);
+//                mSwipeRefreshLayout.setRefreshing(false);
+//            }
+//        });
 
         rv_friends = findViewById(R.id.rv_friends);
 
