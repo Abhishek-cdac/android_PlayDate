@@ -81,6 +81,7 @@
     <string name="send_msg">Send Message</string>
     <string name="create_date">Create Date</string>
     <string name="accept_date">Accept Date</string>
+    <string name="search_date_partner">Search Date Partner</string>
 
     <string name="comment_deleted">Comment has been deleted</string>
     <string name="add_comment">Add a comment...</string>
