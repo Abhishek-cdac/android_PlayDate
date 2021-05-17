@@ -21,6 +21,8 @@ public class OnBoardingAdapter extends FragmentPagerAdapter {
     }
 
 
+
+
     @Override
     public int getCount() {
         return 4;

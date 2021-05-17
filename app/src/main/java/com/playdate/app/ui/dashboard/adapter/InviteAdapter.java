@@ -7,16 +7,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
 import com.playdate.app.model.Invite;
+import com.playdate.app.ui.dashboard.FragPremium1;
 
 import java.util.ArrayList;
 
 public class InviteAdapter extends RecyclerView.Adapter<InviteAdapter.ViewHolder> {
 
     ArrayList<Invite> invite_list = new ArrayList<>();
+
+    FragmentManager fm;
+    FragmentTransaction ft;
 
     public InviteAdapter() {
         invite_list.add(new Invite(R.drawable.user, "Follow Contacts"));
@@ -34,10 +41,22 @@ public class InviteAdapter extends RecyclerView.Adapter<InviteAdapter.ViewHolder
 
     }
 
+    public void ReplaceFrag(Fragment fragment) {
+        ft = fm.beginTransaction();
+        ft.replace(R.id.flFragment, fragment, fragment.getClass().getSimpleName());
+//        ft.addToBackStack("tags");
+        ft.commitAllowingStateLoss();
+    }
+
     @Override
     public void onBindViewHolder(@NonNull InviteAdapter.ViewHolder holder, int position) {
         holder.title.setText(invite_list.get(position).getTitle());
         holder.icon.setImageResource(invite_list.get(position).getImage());
+        switch (position) {
+            case 0:
+                ReplaceFrag(new FragPremium1());
+        }
+
 
     }
 
@@ -55,6 +74,7 @@ public class InviteAdapter extends RecyclerView.Adapter<InviteAdapter.ViewHolder
 
             icon = itemView.findViewById(R.id.icons_invite);
             title = itemView.findViewById(R.id.title_invite);
+
         }
     }
 }

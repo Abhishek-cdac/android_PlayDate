@@ -1,6 +1,7 @@
 package com.playdate.app.ui.chat;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
 import com.playdate.app.model.Chat;
+import com.playdate.app.ui.dialogs.DialogWinner;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -32,7 +34,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         chat_list.add(new Chat("Hey Kayle! yeah it looks like we can have a nice conversation", "https://images.saymedia-content.com/.image/t_share/MTc0MDkwNjUxNDc2OTYwODM0/5-instagram-models-you-should-be-following.png", OPPONENT));
         chat_list.add(new Chat("Nice Smile btw!1", "https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", ME));
         chat_list.add(new Chat("Not better than you.", "https://s29588.pcdn.co/wp-content/uploads/sites/2/2018/08/Claire-Abbott-1.jpg.optimal.jpg", OPPONENT));
-        chat_list.add(new Chat("According to Forbes", "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg", OTHER));
+        chat_list.add(new Chat("According to Forbes,which entreprenour became first person in history to have net worth of $400 billion?", "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg", OTHER));
     }
 
     @Override
@@ -114,11 +116,19 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public class ViewHolderOther extends RecyclerView.ViewHolder {
         TextView tv_msg;
+        TextView answer1;
 
         public ViewHolderOther(@NonNull View itemView) {
             super(itemView);
             tv_msg = itemView.findViewById(R.id.tv_chat_other);
-
+            answer1 = itemView.findViewById(R.id.answer1);
+//            answer1.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Intent intent = new Intent(itemView.getContext(), DialogWinner.class);
+//                    startActivity(intent);
+//                }
+//            });
         }
     }
 

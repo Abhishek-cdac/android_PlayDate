@@ -12,11 +12,11 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@drawable/gradient"
             android:orientation="vertical">
 
@@ -155,10 +155,10 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/_30sdp"
-                    android:onClick="@{(v) -> VMRegister.onLoginClick(v)}"
-
                     android:background="@drawable/register_selector"
+
                     android:elevation="@dimen/_15sdp"
+                    android:onClick="@{(v) -> VMRegister.onLoginClick(v)}"
 
                     android:text="@string/login"
                     android:textColor="@android:color/white"
@@ -253,10 +253,10 @@
 
             <Button
                 android:id="@+id/logout1"
-                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="logout" />
+                android:text="logout"
+                android:visibility="gone" />
 
 
         </LinearLayout>
