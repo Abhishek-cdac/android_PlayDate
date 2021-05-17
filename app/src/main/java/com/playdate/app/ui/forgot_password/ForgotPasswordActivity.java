@@ -147,7 +147,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                         mIntent.putExtra("resetPassword", true);
                         mIntent.putExtra("Phone", phone);
                         startActivityForResult(mIntent, 100);
-//                        finish();
+
 
                     } else {
                         clsCommon.showDialogMsg(ForgotPasswordActivity.this, "PlayDate", response.body().getMessage(), "Ok");

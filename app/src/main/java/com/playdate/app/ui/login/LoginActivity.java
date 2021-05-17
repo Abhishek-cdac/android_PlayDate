@@ -86,7 +86,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     private CallbackManager callbackManager;
     private LoginManager loginManager;
-
+    String ServerAuthCode = null;
     private GoogleApiClient googleApiClient;
 
     private LoginViewModel loginViewModel;
@@ -102,7 +102,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         myshakey();
         clsCommon = CommonClass.getInstance();
         FacebookSdk.sdkInitialize(this);
+
         callbackManager = CallbackManager.Factory.create();
+
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestId()
 //                .requestIdToken(getString(R.string.default_web_client_id))
@@ -344,9 +349,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             SessionPref.getInstance(LoginActivity.this).saveBoolKeyVal(LoginVerified, true);
             finish();
         }
-
-//        Toast.makeText(this, user.getFullName(), Toast.LENGTH_SHORT).show();
-
     }
 
 
@@ -380,7 +382,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
 
-        }else{
+        } else {
 
         }
     }
@@ -388,31 +390,25 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private void handleSignInResult(Task<GoogleSignInAccount> task) {
         try {
             GoogleSignInAccount account = task.getResult(ApiException.class);
-//            Log.e("Email ", ""+account.getEmail());
-//            Log.d("Name ", account.getDisplayName());
-//            Log.d("ID ", account.getId());
-//            Log.d("ServerAuthCode ", account.getServerAuthCode());
-//            Log.d("Photo ", account.getPhotoUrl().toString());
-
             GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
             if (acct != null) {
                 String personName = acct.getDisplayName();
                 String personGivenName = acct.getGivenName();
-                String ServerAuthCode = acct.getIdToken();
+              //  String ServerAuthCode = acct.getIdToken();
+
                 String personEmail = acct.getEmail();
                 String personId = acct.getId();
                 Uri personPhoto = acct.getPhotoUrl();
 
-                Log.e("personEmail",""+personEmail);
-                Log.e("ServerAuthCode",""+ServerAuthCode);
-                Log.e("personId",""+personId);
-                Log.e("personPhoto",""+personPhoto);
-                Log.e("personName",""+personName);
+                Log.e("personEmail", "" + personEmail);
+               // Log.e("ServerAuthCode", "" + ServerAuthCode);
+                Log.e("personId", "" + personId);
+                Log.e("personPhoto", "" + personPhoto);
+                Log.e("personName", "" + personName);
 
-                callGmailSocialLoginAPI(personEmail,personId,ServerAuthCode);
+                callGmailSocialLoginAPI(personEmail, personId, ServerAuthCode);
 
             }
-
 
 
         } catch (ApiException e) {
@@ -425,7 +421,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("email", personEmail);
         hashMap.put("sourceSocialId", personId);
-        hashMap.put("deviceToken", serverAuthCode);
+        hashMap.put("deviceToken", "lkjfsidfsdfiuwyierwer12313");
         hashMap.put("sourceType", "Google");
         hashMap.put("deviceID", "12345");//Hardcode
         hashMap.put("deviceType", DEVICE_TYPE);
@@ -440,8 +436,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
 
-                        // startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
-                        //finish();
                         checkforTheLastActivity(response.body());
 
                     } else {
@@ -452,9 +446,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
                         clsCommon.showDialogMsg(LoginActivity.this, "PlayDate", jObjError.getString("message").toString(), "Ok");
                     } catch (Exception e) {
-                        Toast.makeText(LoginActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Something went wrong...Please try later!" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     }
-
                 }
             }
 
@@ -473,68 +466,60 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         callbackManager = CallbackManager.Factory.create();
 
         loginManager.registerCallback(
-                        callbackManager,
-                        new FacebookCallback<LoginResult>() {
+                callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        String accessToken = loginResult.getAccessToken().getToken();
+                        GraphRequest request = GraphRequest.newMeRequest(
+                                loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                                    @Override
+                                    public void onCompleted(JSONObject object,
+                                                            GraphResponse response) {
 
-                            @Override
-                            public void onSuccess(LoginResult loginResult) {
+                                        if (object != null) {
+                                            try {
+                                                String name = object.getString("name");
+                                                String email = object.getString("email");
+                                                String fbUserID = object.getString("id");
+                                                String birthday = object.getString("birthday");
+                                                Log.d("Name of user ", name);
+                                                callSocialLoginAPI(email, fbUserID, accessToken);
 
-                                Log.e("AccessToken", ""+loginResult.getAccessToken().toString());
-                                Log.e("AccessToken", ""+loginResult.getAccessToken().getToken());
+                                                disconnectFromFacebook();
 
-                                String accessToken = loginResult.getAccessToken().getToken();
-
-                                GraphRequest request = GraphRequest.newMeRequest(
-
-                                        loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-
-                                            @Override
-                                            public void onCompleted(JSONObject object,
-                                                                    GraphResponse response) {
-
-                                                if (object != null) {
-                                                    try {
-                                                        String name = object.getString("name");
-                                                        String email = object.getString("email");
-                                                        String fbUserID = object.getString("id");
-                                                        String birthday = object.getString("birthday");
-                                                        Log.d("Name of user ", name);
-                                                        callSocialLoginAPI(email,fbUserID,accessToken);
-
-                                                        disconnectFromFacebook();
-
-                                                        // do action after Facebook login success
-                                                        // or call your API
-                                                    } catch (JSONException | NullPointerException e) {
-                                                        e.printStackTrace();
-                                                    }
-                                                }
+                                                // do action after Facebook login success
+                                                // or call your API
+                                            } catch (JSONException | NullPointerException e) {
+                                                e.printStackTrace();
                                             }
-                                        });
+                                        }
+                                    }
+                                });
 
-                                Bundle parameters = new Bundle();
-                                parameters.putString(
-                                        "fields",
-                                        "id, name, email, gender, birthday");
-                                request.setParameters(parameters);
-                                request.executeAsync();
-                            }
+                        Bundle parameters = new Bundle();
+                        parameters.putString(
+                                "fields",
+                                "id, name, email, gender, birthday");
+                        request.setParameters(parameters);
+                        request.executeAsync();
+                    }
 
-                            @Override
-                            public void onCancel() {
-                                Log.v("LoginScreen", "---onCancel");
-                            }
+                    @Override
+                    public void onCancel() {
+                        Log.v("LoginScreen", "---onCancel");
+                    }
 
-                            @Override
-                            public void onError(FacebookException error) {
-                                // here write code when get error
-                                Log.v("LoginScreen", "----onError: "
-                                        + error.getMessage());
-                            }
-                        });
+                    @Override
+                    public void onError(FacebookException error) {
+                        // here write code when get error
+                        Log.v("LoginScreen", "----onError: "
+                                + error.getMessage());
+                    }
+                });
     }
 
-    private void callSocialLoginAPI( String email, String fbUserID, String token) {
+    private void callSocialLoginAPI(String email, String fbUserID, String token) {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("email", email);

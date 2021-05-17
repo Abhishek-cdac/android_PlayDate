@@ -130,17 +130,19 @@ public class InterestActivity extends AppCompatActivity {
             return;
         }
 
+        SessionPref pref = SessionPref.getInstance(this);
 
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
         hashMap.put("interested", selected);// format 1990-08-12
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
         pd.show();
-        SessionPref pref = SessionPref.getInstance(this);
+     //   SessionPref pref = SessionPref.getInstance(this);
 //        Toast.makeText(this, ""+pref.getStringVal(SessionPref.LoginUsertoken), Toast.LENGTH_SHORT).show();
 
 
-        Call<LoginResponse> call = service.updateProfile("Bareer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        Call<LoginResponse> call = service.updateProfile("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         String finalSelected = selected;
         call.enqueue(new Callback<LoginResponse>() {
             @Override
@@ -189,7 +191,7 @@ public class InterestActivity extends AppCompatActivity {
 //        Toast.makeText(this, ""+pref.getStringVal(SessionPref.LoginUsertoken), Toast.LENGTH_SHORT).show();
 
 
-        Call<InterestsMain> call = service.interested("Bareer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        Call<InterestsMain> call = service.interested("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<InterestsMain>() {
             @Override
             public void onResponse(Call<InterestsMain> call, Response<InterestsMain> response) {

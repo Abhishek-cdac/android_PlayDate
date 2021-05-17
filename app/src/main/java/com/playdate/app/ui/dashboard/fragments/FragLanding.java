@@ -18,8 +18,11 @@ import androidx.viewpager.widget.ViewPager;
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
+import com.playdate.app.model.CommonModel;
+import com.playdate.app.model.FriendRequest;
 import com.playdate.app.model.GetUserSuggestion;
 import com.playdate.app.model.GetUserSuggestionData;
+import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.ui.dashboard.adapter.SuggestionAdapter;
 import com.playdate.app.ui.dashboard.more_suggestion.FragMoreSuggestion;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
@@ -42,7 +45,7 @@ public class FragLanding extends Fragment {
     ViewPager vp_suggestion;
     RelativeLayout Rl_page;
     ArrayList<GetUserSuggestionData> lst_getUserSuggestions;
-
+    Onclick itemClick;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -50,13 +53,29 @@ public class FragLanding extends Fragment {
         vp_suggestion = view.findViewById(R.id.vp_suggestion);
         Rl_page = view.findViewById(R.id.Rl_page);
         clsCommon = CommonClass.getInstance();
-      //  callGetUserSuggestionAPI();
+        itemClick = new Onclick() {
+            @Override
+            public void onItemClick(View view, int position, int value) {
 
-     // SuggestionAdapter adapter = new SuggestionAdapter(getActivity(), getActivity().getSupportFragmentManager());
-        SuggestionAdapter adapter = new SuggestionAdapter(getActivity());
-        vp_suggestion.setAdapter(adapter);
-        vp_suggestion.setCurrentItem(8);
-        vp_suggestion.setPadding(130, 0, 130, 0);
+            }
+
+            @Override
+            public void onItemClicks(View view, int position, int value, String s) {
+                if (value == 10) {
+                    callAddFriendRequestApi(s);
+                }
+            }
+        };
+
+        callGetUserSuggestionAPI();
+
+        // SuggestionAdapter adapter = new SuggestionAdapter(getActivity(), getActivity().getSupportFragmentManager());
+
+//        SuggestionAdapter adapter = new SuggestionAdapter(getActivity());
+//
+//        vp_suggestion.setAdapter(adapter);
+//        vp_suggestion.setCurrentItem(8);
+//        vp_suggestion.setPadding(130, 0, 130, 0);
 
 
         int height = new CommonClass().getScreenHeight(getActivity());
@@ -95,7 +114,7 @@ public class FragLanding extends Fragment {
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
         pd.show();
         SessionPref pref = SessionPref.getInstance(getActivity());
-        Log.e("GetUserSuggestionData", "" + pref.getStringVal(SessionPref.LoginUsertoken));
+        Log.e("GetLandingData", "" + pref.getStringVal(SessionPref.LoginUsertoken));
 
         Call<GetUserSuggestion> call = service.getUserSuggestion("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         Log.e("GetUserSuggestionData", "" + hashMap);
@@ -109,15 +128,13 @@ public class FragLanding extends Fragment {
 
                     assert response.body() != null;
                     if (response.body().getStatus() == 1) {
-                        Toast.makeText(getActivity(), "Success!", Toast.LENGTH_SHORT).show();
                         lst_getUserSuggestions = (ArrayList<GetUserSuggestionData>) response.body().getData();
                         if (lst_getUserSuggestions == null) {
                             lst_getUserSuggestions = new ArrayList<>();
                         }
 
-                        Log.e("GetUserDataSize", "" + lst_getUserSuggestions.size());
-
-                        SuggestionAdapter adapter = new SuggestionAdapter(getActivity());
+                        // SuggestionAdapter adapter = new SuggestionAdapter(getActivity());
+                        SuggestionAdapter adapter = new SuggestionAdapter(getActivity(), lst_getUserSuggestions, itemClick);
                         vp_suggestion.setAdapter(adapter);
                         vp_suggestion.setCurrentItem(8);
                         vp_suggestion.setPadding(130, 0, 130, 0);
@@ -142,4 +159,52 @@ public class FragLanding extends Fragment {
             }
         });
     }
+
+
+    private void callAddFriendRequestApi(String s) {
+
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("toUserID", s);
+        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
+        pd.show();
+        SessionPref pref = SessionPref.getInstance(getActivity());
+        Log.e("CommonModel", "" + pref.getStringVal(SessionPref.LoginUsertoken));
+
+        Call<CommonModel> call = service.addFriendRequest("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        Log.e("CommonModelData", "" + hashMap);
+        call.enqueue(new Callback<CommonModel>() {
+            @Override
+            public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
+                pd.cancel();
+                if (response.code() == 200) {
+                    assert response.body() != null;
+                    if (response.body().getStatus() == 1) {
+                        FriendRequest friendRequest= new FriendRequest();
+                        Log.e("FriendRequestStatus",""+friendRequest.getStatus());
+
+                        Toast.makeText(getActivity(), "Request Sent! " + s, Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", ""+response.body().getMessage(), "Ok");
+                    }
+                } else {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message").toString(), "Ok");
+                    } catch (Exception e) {
+                        Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CommonModel> call, Throwable t) {
+                t.printStackTrace();
+                pd.cancel();
+                Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 }

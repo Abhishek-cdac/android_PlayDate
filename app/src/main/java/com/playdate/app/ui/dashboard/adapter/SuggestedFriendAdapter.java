@@ -46,12 +46,12 @@ public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriend
         holder.name.setText(suggestions_list.get(position).getFullName());
         Picasso.get().load(BASE_URL_IMAGE + suggestions_list.get(position).getProfilePicPath())
                 .placeholder(R.drawable.cupertino_activity_indicator)
-                .placeholder(R.drawable.profile)
+                //.placeholder(R.drawable.profile)
                 .into(holder.image);
         holder.request.setImageResource(R.drawable.sent_request);
         userId = suggestions_list.get(position).getId();
 
-//        if (suggestions_list.get(position).getFirends().get(position).getStatus()=="Pending") {
+//        if (suggestions_list.get(position).getFriendRequest().get(position).getStatus().equals("Pending")) {
 //            holder.request.setImageResource(R.drawable.sent_request_sel);
 //        } else {
 //            holder.request.setImageResource(R.drawable.sent_request);
