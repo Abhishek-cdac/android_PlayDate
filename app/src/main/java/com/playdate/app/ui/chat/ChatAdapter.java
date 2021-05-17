@@ -122,13 +122,13 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             super(itemView);
             tv_msg = itemView.findViewById(R.id.tv_chat_other);
             answer1 = itemView.findViewById(R.id.answer1);
-            answer1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getContext(), DialogWinner.class);
-                    startActivity(intent);
-                }
-            });
+//            answer1.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Intent intent = new Intent(itemView.getContext(), DialogWinner.class);
+//                    startActivity(intent);
+//                }
+//            });
         }
     }
 
