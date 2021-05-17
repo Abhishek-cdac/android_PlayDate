@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
+import com.playdate.app.model.CommonModel;
 import com.playdate.app.model.NotificationData;
 import com.playdate.app.model.NotificationModel;
 import com.playdate.app.ui.chat.request.Onclick;
@@ -54,20 +55,20 @@ public class FragNotification extends Fragment {
 
             @Override
             public void onItemClicks(View view, int position, int value, String s) {
-
-            }
-
-            @Override
-            public void onItemClicks(View v, int adapterPosition, int i, String notifiationId, String userId) {
-                if (i == 20) {
-                    callUpdateNotificationAPI(notifiationId, userId, "Read");
+                if (value == 20) {
+                    callFriedRequestStatusAPI(s, "Verified");
 
                     Log.e("Accept", "Accept");
-                } else if (i == 21) {
-                    callUpdateNotificationAPI(notifiationId, userId, "delete");
+                } else if (value == 21) {
+                    callFriedRequestStatusAPI(s,  "Rejected");
                     Log.e("Reject", "Reject");
 
                 }
+            }
+
+            @Override
+            public void onItemClicks(View v, int adapterPosition, int i, String requestId, String userId) {
+
             }
         };
         callGetNotificationAPI();
@@ -76,9 +77,51 @@ public class FragNotification extends Fragment {
         return view;
     }
 
+    private void callFriedRequestStatusAPI(String s, String status) {
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("requestID", s);
+        hashMap.put("status",status);
+
+        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
+        pd.show();
+        SessionPref pref = SessionPref.getInstance(getActivity());
 
 
-    private void callUpdateNotificationAPI(String notifiationId, String userId, String action) {
+        Call<CommonModel> call = service.friendRequestStatus("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        Log.e("friendRequestStatus", "" + hashMap);
+        call.enqueue(new Callback<CommonModel>() {
+            @Override
+            public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
+                pd.cancel();
+                if (response.code() == 200) {
+                    assert response.body() != null;
+                    if (response.body().getStatus() == 1) {
+
+                        Toast.makeText(getActivity(), ""+ response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message").toString(), "Ok");
+                    } catch (Exception e) {
+                        Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<CommonModel> call, Throwable t) {
+                t.printStackTrace();
+                pd.cancel();
+                Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+    private void callUpdateNotificationStatusAPI(String notifiationId, String userId, String action) {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("notificationId", notifiationId);

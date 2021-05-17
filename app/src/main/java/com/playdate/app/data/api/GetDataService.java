@@ -100,5 +100,9 @@ public interface GetDataService {
     @POST("user/update-notification")
     Call<CommonModel> updateNotification(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
+    @FormUrlEncoded
+    @POST("user/friend-request-status-update")
+    Call<CommonModel> friendRequestStatus(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
 
 }

@@ -24,6 +24,7 @@ public class FragNewNotificationAdapter extends RecyclerView.Adapter<FragNewNoti
     Onclick itemClick;
     String userId;
     String notifiationId;
+    String requestId;
 
 
     public FragNewNotificationAdapter(List<NotificationData> lst_notifications, Onclick itemClick) {
@@ -47,6 +48,7 @@ public class FragNewNotificationAdapter extends RecyclerView.Adapter<FragNewNoti
         holder.tv_desc.setText(notification_list.get(position).getNotificationMessage());
         Log.e("UserName.", "" + notification_list.get(position).getFriendRequest().get(position).getUserInfo().get(position).getUsername());
         holder.tv_name.setText(notification_list.get(position).getFriendRequest().get(position).getUserInfo().get(position).getUsername());
+        requestId = notification_list.get(position).getFriendRequest().get(position).getRequestId();
         notifiationId = notification_list.get(position).getNotificationId();
         userId = notification_list.get(position).getUserID();
     }
@@ -75,16 +77,20 @@ public class FragNewNotificationAdapter extends RecyclerView.Adapter<FragNewNoti
             iv_right.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    itemClick.onItemClicks(v, getAdapterPosition(), 20, notifiationId, userId);
+                    Log.e("requestId",""+requestId);
+                    itemClick.onItemClicks(v, getAdapterPosition(), 20, requestId);
 
                 }
             });
             iv_cross.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    itemClick.onItemClicks(v, getAdapterPosition(), 21, notifiationId, userId);
+                    Log.e("requestId",""+requestId);
 
-                    removeAt(getAdapterPosition());
+
+                    itemClick.onItemClicks(v, getAdapterPosition(), 21, requestId);
+
+                  //  removeAt(getAdapterPosition());
                 }
             });
 
