@@ -78,6 +78,7 @@
             android:screenOrientation="portrait">
 
 
+
         </activity>
         <activity android:name=".ui.date.IntroScreen">
 
@@ -96,6 +97,13 @@
         <activity android:name=".ui.date.SelectPartner">
 
         </activity>
+        <activity android:name=".ui.date.LocationTracing" />
+        <activity android:name=".ui.date.PartnerSelected" />
+        <activity android:name=".ui.date.SelectDateActivity" >
+
+
+        </activity>
+        <activity android:name=".ui.date.LocationConfirmationActivity"/>
         <activity
             android:name=".ui.register.RegisterActivity"
             android:screenOrientation="portrait" />

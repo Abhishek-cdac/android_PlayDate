@@ -343,6 +343,7 @@
             android:layout_width="71dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:id="@+id/iv_date"
             android:padding="@dimen/_5sdp"
             android:src="@mipmap/ic_launcher" />
 

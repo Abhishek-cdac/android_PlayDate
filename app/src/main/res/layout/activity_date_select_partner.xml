@@ -53,48 +53,48 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
+    <!--    <TextView-->
+    <!--        android:id="@+id/tv_points"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_gravity="center_horizontal"-->
+    <!--        android:layout_marginTop="@dimen/_10sdp"-->
+    <!--        android:fontFamily="@font/lato_bold"-->
+    <!--        android:text="1200 points"-->
+    <!--        android:textColor="@color/white"-->
+    <!--        android:textSize="@dimen/_16sdp"-->
+    <!--        app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--        app:layout_constraintRight_toRightOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/vp_partners" />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/tv_username"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_gravity="center_horizontal"-->
+    <!--        android:layout_marginTop="@dimen/_2sdp"-->
+    <!--        android:text="kaylejenner91"-->
+    <!--        android:textColor="@color/white"-->
+    <!--        android:textSize="@dimen/_10sdp"-->
+    <!--        app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--        app:layout_constraintRight_toRightOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/tv_points" />-->
+
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/vp_partners"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_200sdp"
+        android:layout_height="@dimen/_250sdp"
         android:clipToPadding="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.424" />
+        app:layout_constraintVertical_bias="0.524" />
 
     <TextView
-        android:id="@+id/tv_points"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:fontFamily="@font/lato_bold"
-        android:text="1200 points"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_16sdp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vp_partners" />
-
-    <TextView
-        android:id="@+id/tv_username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/_2sdp"
-        android:text="kaylejenner91"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_10sdp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_points" />
-
-    <TextView
-        android:layout_width="wrap_content"
         android:id="@+id/tv_or"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:fontFamily="@font/lato_bold"
@@ -102,41 +102,9 @@
         android:text="@string/or"
         android:textColor="@color/white"
         android:textSize="@dimen/_12sdp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_search_partner"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_username" />
-
-    <com.github.ybq.android.spinkit.SpinKitView
-        android:id="@+id/spin_kit"
-        style="@style/SpinKitView.FadingCircle"
-        android:layout_width="@dimen/_50sdp"
-        android:layout_height="@dimen/_50sdp"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center"
-        android:layout_marginTop="64dp"
-        android:visibility="gone"
-        app:SpinKit_Color="@color/color_purple"
-        app:layout_constraintHorizontal_bias="0.505"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_username" />
-
-    <TextView
-        android:id="@+id/tv_waiting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:fontFamily="@font/lato_bold"
-        android:text="Waiting for partner"
-        android:textColor="@color/white"
-        android:visibility="gone"
-        android:textSize="@dimen/_18sdp"
-        android:layout_marginBottom="@dimen/_55sdp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
-
+        app:layout_constraintRight_toRightOf="parent" />
 
     <Button
         android:id="@+id/btn_search_partner"

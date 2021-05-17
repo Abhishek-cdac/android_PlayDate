@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <RelativeLayout
+        android:id="@+id/rl_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_20sdp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/icon_cancel" />
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="@dimen/_14sdp"
+            android:layout_height="@dimen/_14sdp"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/arrow_back" />
+
+        <ImageView
+            android:layout_width="276dp"
+            android:layout_height="64dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_22sdp"
+            android:src="@drawable/playdate_logo" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/image_restaurant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_main"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:background="@drawable/btn_border"
+        android:src="@drawable/rest_1" />
+
+    <TextView
+        android:id="@+id/tv_details"
+        android:layout_width="@dimen/_250sdp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/image_restaurant"
+        android:layout_marginVertical="@dimen/_15sdp"
+        android:lines="3"
+        android:paddingHorizontal="@dimen/_20sdp"
+        android:text="Center city, bounded by 8th,Front, Walnut and Lombard Streets"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/_18sdp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tv_proceed"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/_40sdp"
+        android:src="@drawable/open" />
+
+    <Button
+        android:id="@+id/tv_proceed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginHorizontal="@dimen/_25sdp"
+        android:layout_marginBottom="@dimen/_45sdp"
+        android:background="@drawable/btn_pink_filled"
+        android:gravity="center"
+        android:paddingVertical="@dimen/_10sdp"
+        android:text="@string/proceed"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_10sdp" />
+
+
+</RelativeLayout>

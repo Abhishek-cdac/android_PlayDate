@@ -43,7 +43,7 @@ public class InviteAdapter extends RecyclerView.Adapter<InviteAdapter.ViewHolder
 
     public void ReplaceFrag(Fragment fragment) {
         ft = fm.beginTransaction();
-        ft.replace(R.id.flFragment, fragment, fragment.getClass().getSimpleName());
+        ft.replace(R.id.invite_listView, fragment, fragment.getClass().getSimpleName());
 //        ft.addToBackStack("tags");
         ft.commitAllowingStateLoss();
     }

@@ -80,6 +80,7 @@
     <string name="keep_looking1">Keep Looking</string>
     <string name="send_msg">Send Message</string>
     <string name="create_date">Create Date</string>
+    <string name="proceed">Proceed</string>
     <string name="accept_date">Accept Date</string>
     <string name="search_date_partner">Search Date Partner</string>
 
@@ -109,6 +110,9 @@
     <string name="level">LEVEL 1</string>
     <string name="ans_first">You answered first!</string>
 
+    <string name="select_date">Select Date</string>
+    <string name="waiting_partner">Waiting for partner</string>
+    <string name="accepted_patner">Partner has accepted</string>
     <string name="copy">Copy </string>
     <string name="frequently_asked">Frequently Asked Questions</string>
     <string name="code">Code</string>
