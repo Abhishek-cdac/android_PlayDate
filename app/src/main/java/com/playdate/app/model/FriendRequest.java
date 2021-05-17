@@ -1,19 +1,24 @@
 
 package com.playdate.app.model;
 
-import com.google.gson.annotations.SerializedName;
+import java.util.List;
 
+import com.google.gson.annotations.SerializedName;
 
 public class FriendRequest {
 
     @SerializedName("action")
     private String mAction;
+    @SerializedName("requestId")
+    private String mRequestId;
     @SerializedName("status")
     private String mStatus;
     @SerializedName("toUserID")
     private String mToUserID;
     @SerializedName("userID")
     private String mUserID;
+    @SerializedName("UserInfo")
+    private List<UserInfo> mUserInfo;
     @SerializedName("_id")
     private String m_id;
 
@@ -23,6 +28,14 @@ public class FriendRequest {
 
     public void setAction(String action) {
         mAction = action;
+    }
+
+    public String getRequestId() {
+        return mRequestId;
+    }
+
+    public void setRequestId(String requestId) {
+        mRequestId = requestId;
     }
 
     public String getStatus() {
@@ -47,6 +60,14 @@ public class FriendRequest {
 
     public void setUserID(String userID) {
         mUserID = userID;
+    }
+
+    public List<UserInfo> getUserInfo() {
+        return mUserInfo;
+    }
+
+    public void setUserInfo(List<UserInfo> userInfo) {
+        mUserInfo = userInfo;
     }
 
     public String get_id() {

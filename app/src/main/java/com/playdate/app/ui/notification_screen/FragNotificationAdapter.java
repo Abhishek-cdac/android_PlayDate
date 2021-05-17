@@ -60,10 +60,14 @@ public class FragNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
         RecyclerView.ViewHolder viewHolder = null;
         mContext = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+
+
         if (viewType == LIKED) {
             view = inflater.inflate(R.layout.row_notification_type_1, parent, false);
             viewHolder = new ViewHolderLiked(view);
-        } else {
+        }
+
+        else {
             view = inflater.inflate(R.layout.row_notification_type_3, parent, false);
             viewHolder = new ViewHolderMatched(view);
         }
