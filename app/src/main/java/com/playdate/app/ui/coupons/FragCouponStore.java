@@ -24,11 +24,11 @@ public class FragCouponStore extends Fragment {
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         rv_coupons_list.setLayoutManager(manager);
 
-//        CouponStoreAdapter adapter = new CouponStoreAdapter();
-//        rv_coupons_list.setAdapter(adapter);
+        CouponStoreAdapter adapter = new CouponStoreAdapter();
+        rv_coupons_list.setAdapter(adapter);
 
-        MyCouponAdapter adapter1 = new MyCouponAdapter();
-        rv_coupons_list.setAdapter(adapter1);
+//        MyCouponAdapter adapter1 = new MyCouponAdapter();
+//        rv_coupons_list.setAdapter(adapter1);
 
         return view;
     }

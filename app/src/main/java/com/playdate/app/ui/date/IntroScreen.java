@@ -1,6 +1,7 @@
 package com.playdate.app.ui.date;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -19,6 +20,13 @@ public class IntroScreen extends AppCompatActivity {
 
         TextView tv_create_date = findViewById(R.id.tv_create_date);
         TextView tv_accept_date = findViewById(R.id.tv_accept_date);
+
+        tv_create_date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(IntroScreen.this, SelectPartner.class));
+            }
+        });
 
     }
 }
