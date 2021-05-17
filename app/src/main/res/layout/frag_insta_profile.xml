@@ -51,7 +51,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="@font/helvetica_neue"
                 android:gravity="center"
-                android:text="Followers"
+                android:text="Friends"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
@@ -103,7 +103,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="@font/helvetica_neue"
                 android:gravity="center"
-                android:text="Following"
+                android:text="Posts"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />

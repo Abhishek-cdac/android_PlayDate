@@ -124,6 +124,10 @@
         <activity
             android:name=".ui.register.interest.InterestActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.playvideo.ExoPlayerActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.register.profile.UploadProfileActivity"
             android:screenOrientation="portrait" />

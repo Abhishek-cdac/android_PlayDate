@@ -179,7 +179,8 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         rv_friends = findViewById(R.id.rv_friends);
 
 
-        Fragment fragOne = new FragLanding();
+//        Fragment fragOne = new FragLanding();
+        Fragment fragOne = new FragCouponStore();
 //        Fragment fragOne = new GetPremiumDialog();
 //        Fragment fragOne = new FragMyProfileDetails();
 //        Fragment fragOne = new FragMyProfilePersonal();
@@ -189,84 +190,72 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         ft.add(R.id.flFragment, fragOne);
         ft.commit();
 
-        txt_match.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                txt_social.setBackground(null);
-                txt_chat.setBackground(null);
-                txt_match.setTextColor(getResources().getColor(R.color.white));
-                iv_dashboard_notification.setBackground(null);
-                iv_dashboard_notification.setImageResource(R.drawable.ic_bell);
+        txt_match.setOnClickListener(view -> {
+            txt_social.setBackground(null);
+            txt_chat.setBackground(null);
+            txt_match.setTextColor(getResources().getColor(R.color.white));
+            iv_dashboard_notification.setBackground(null);
+            iv_dashboard_notification.setImageResource(R.drawable.ic_bell);
 
-                txt_social.setTextColor(getResources().getColor(android.R.color.darker_gray));
-                txt_chat.setTextColor(getResources().getColor(android.R.color.darker_gray));
-                txt_match.setBackground(getResources().getDrawable(R.drawable.menu_button));
-                ReplaceFrag(new FragCardSwipe());
-                ll_friends.setVisibility(View.VISIBLE);
-                ll_mainMenu.setVisibility(View.VISIBLE);
-                ll_her.setVisibility(View.VISIBLE);
-            }
+            txt_social.setTextColor(getResources().getColor(android.R.color.darker_gray));
+            txt_chat.setTextColor(getResources().getColor(android.R.color.darker_gray));
+            txt_match.setBackground(getResources().getDrawable(R.drawable.menu_button));
+            ReplaceFrag(new FragCardSwipe());
+            ll_friends.setVisibility(View.VISIBLE);
+            ll_mainMenu.setVisibility(View.VISIBLE);
+            ll_her.setVisibility(View.VISIBLE);
         });
-        txt_social.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                txt_match.setBackground(null);
-                txt_chat.setBackground(null);
-                txt_social.setTextColor(getResources().getColor(R.color.white));
-                iv_dashboard_notification.setBackground(null);
-                iv_dashboard_notification.setImageResource(R.drawable.ic_bell);
+        txt_social.setOnClickListener(view -> {
+            txt_match.setBackground(null);
+            txt_chat.setBackground(null);
+            txt_social.setTextColor(getResources().getColor(R.color.white));
+            iv_dashboard_notification.setBackground(null);
+            iv_dashboard_notification.setImageResource(R.drawable.ic_bell);
 
-                txt_chat.setTextColor(getResources().getColor(android.R.color.darker_gray));
-                txt_match.setTextColor(getResources().getColor(android.R.color.darker_gray));
-                txt_social.setBackground(getResources().getDrawable(R.drawable.menu_button));
-                ReplaceFrag(new FragSocialFeed());
-                ll_friends.setVisibility(View.VISIBLE);
-                ll_mainMenu.setVisibility(View.VISIBLE);
-                ll_her.setVisibility(View.VISIBLE);
-            }
+            txt_chat.setTextColor(getResources().getColor(android.R.color.darker_gray));
+            txt_match.setTextColor(getResources().getColor(android.R.color.darker_gray));
+            txt_social.setBackground(getResources().getDrawable(R.drawable.menu_button));
+            ReplaceFrag(new FragSocialFeed());
+            ll_friends.setVisibility(View.VISIBLE);
+            ll_mainMenu.setVisibility(View.VISIBLE);
+            ll_her.setVisibility(View.VISIBLE);
         });
-        txt_chat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                txt_match.setBackground(null);
-                txt_social.setBackground(null);
-                iv_dashboard_notification.setBackground(null);
-                iv_dashboard_notification.setImageResource(R.drawable.ic_bell);
+        txt_chat.setOnClickListener(v -> {
+            txt_match.setBackground(null);
+            txt_social.setBackground(null);
+            iv_dashboard_notification.setBackground(null);
+            iv_dashboard_notification.setImageResource(R.drawable.ic_bell);
 
-                txt_match.setTextColor(getResources().getColor(android.R.color.darker_gray));
-                txt_social.setTextColor(getResources().getColor(android.R.color.darker_gray));
-                txt_chat.setBackground(getResources().getDrawable(R.drawable.menu_button));
-                txt_chat.setTextColor(getResources().getColor(R.color.white));
-                ReplaceFrag(new RequestChatFragment());
+            txt_match.setTextColor(getResources().getColor(android.R.color.darker_gray));
+            txt_social.setTextColor(getResources().getColor(android.R.color.darker_gray));
+            txt_chat.setBackground(getResources().getDrawable(R.drawable.menu_button));
+            txt_chat.setTextColor(getResources().getColor(R.color.white));
+            ReplaceFrag(new RequestChatFragment());
 //                Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
 //                startActivity(intent);
-                ll_friends.setVisibility(View.GONE);
-                ll_mainMenu.setVisibility(View.GONE);
-                ll_her.setVisibility(View.GONE);
+            ll_friends.setVisibility(View.GONE);
+            ll_mainMenu.setVisibility(View.GONE);
+            ll_her.setVisibility(View.GONE);
 
 //                iv_dashboard_notification.setBackground(getResources().getDrawable(R.drawable.menu_button));
 //                iv_dashboard_notification.setColorFilter(R.color.white);
 //                ReplaceFrag(new FragNotification());
-            }
         });
-        iv_dashboard_notification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                txt_match.setBackground(null);
-                txt_social.setBackground(null);
-                txt_match.setTextColor(getResources().getColor(android.R.color.darker_gray));
-                txt_social.setTextColor(getResources().getColor(android.R.color.darker_gray));
-                txt_chat.setBackground(null);
-                txt_chat.setTextColor(getResources().getColor(android.R.color.darker_gray));
-                iv_dashboard_notification.setBackground(getResources().getDrawable(R.drawable.menu_button));
-                // iv_dashboard_notification.setColorFilter(R.color.white);
-                iv_dashboard_notification.setImageResource(R.drawable.ic_notifications_well);
-                ReplaceFrag(new FragNotification());
-                ll_friends.setVisibility(View.GONE);
-                ll_mainMenu.setVisibility(View.GONE);
-                ll_her.setVisibility(View.GONE);
+        iv_dashboard_notification.setOnClickListener(v -> {
+            txt_match.setBackground(null);
+            txt_social.setBackground(null);
+            txt_match.setTextColor(getResources().getColor(android.R.color.darker_gray));
+            txt_social.setTextColor(getResources().getColor(android.R.color.darker_gray));
+            txt_chat.setBackground(null);
+            txt_chat.setTextColor(getResources().getColor(android.R.color.darker_gray));
+            iv_dashboard_notification.setBackground(getResources().getDrawable(R.drawable.menu_button));
+            // iv_dashboard_notification.setColorFilter(R.color.white);
+            iv_dashboard_notification.setImageResource(R.drawable.ic_notifications_well);
+            ReplaceFrag(new FragNotification());
+            ll_friends.setVisibility(View.GONE);
+            ll_mainMenu.setVisibility(View.GONE);
+            ll_her.setVisibility(View.GONE);
 
-            }
         });
 
 //        showPremium();
@@ -291,6 +280,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             public void onResponse(Call<FriendsListModel> call, Response<FriendsListModel> response) {
 //                pd.cancel();
                 if (response.code() == 200) {
+                    assert response.body() != null;
                     if (response.body().getStatus() == 1) {
                         RecyclerView.LayoutManager manager = new LinearLayoutManager(DashboardActivity.this, RecyclerView.HORIZONTAL, false);
                         ArrayList<MatchListUser> lst = response.body().getUsers();
