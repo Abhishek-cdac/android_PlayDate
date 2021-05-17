@@ -19,15 +19,15 @@ public class AgeVerificationViewModel extends ViewModel {
     public MutableLiveData<Integer> YearSelectedPosition = new MutableLiveData<>();
     public MutableLiveData<List<String>> daysList = new MutableLiveData<>();
 
-    private MutableLiveData<Boolean> userMutableLiveData;
-    private MutableLiveData<Boolean> Register;
+//    private MutableLiveData<Boolean> userMutableLiveData;
+//    private MutableLiveData<Boolean> Register;
 
     public String getYearSelected() {
         return yearlist.get(YearSelectedPosition.getValue());
     }
 
-    public String getMonthSelected() {
-        return list.get(MonthSelectedPosition.getValue());
+    public int getMonthSelected() {
+        return MonthSelectedPosition.getValue();
     }
 
     public String getDaySelected() {
@@ -222,4 +222,20 @@ public class AgeVerificationViewModel extends ViewModel {
 
     }
 
+    public void setDates(String currentYYYY, String currentMM, String currentDDD) {
+        for (int i = 0; i < yearlist.size(); i++) {
+            if (yearlist.get(i).equals(currentYYYY)) {
+                YearSelectedPosition.setValue(i);
+                setYear(i);
+                break;
+            }
+        }
+
+        int currMonth = Integer.parseInt(currentMM);
+        MonthSelectedPosition.setValue(currMonth);
+
+        int currDay= Integer.parseInt(currentDDD);
+        DaySelectedPosition.setValue(currDay);
+
+    }
 }

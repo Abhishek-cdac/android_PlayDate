@@ -15,10 +15,10 @@
 
         <ImageView
             android:id="@+id/back_anonymous"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_arrow_back_ios" />
+            android:src="@drawable/arrow_black" />
 
         <ImageView
             android:layout_width="0dp"
@@ -31,10 +31,11 @@
 
         <ImageView
             android:id="@+id/more_option"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_more_vert" />
+            android:rotation="90"
+            android:src="@drawable/ic_baseline_more_horizontal" />
     </LinearLayout>
 
     <TextView
@@ -92,7 +93,6 @@
                 android:layout_marginRight="@dimen/_20sdp"
                 android:fontFamily="@font/lato_bold"
                 android:gravity="center"
-                android:text="How can I tell her I want to be more than a friend?"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_13sdp"
                 android:textStyle="bold">
@@ -121,5 +121,42 @@
         android:layout_below="@id/card_ques"
         android:layout_margin="@dimen/_10sdp"
         android:padding="@dimen/_5sdp" />
+
+    <RelativeLayout
+        android:id="@+id/rl_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/cardview_dark_background"
+        android:paddingHorizontal="@dimen/_15sdp"
+        android:paddingVertical="@dimen/_6sdp">
+
+        <EditText
+            android:id="@+id/add_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:backgroundTint="@android:color/transparent"
+            android:hint="Post in feed...!"
+            android:textColor="@color/white"
+            android:enabled="false"
+            android:textColorHint="@color/white"
+            android:textSize="@dimen/_12sdp" />
+
+
+        <TextView
+            android:id="@+id/txt_post_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:text="@string/post"
+            android:textStyle="bold"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14sdp" />
+
+
+    </RelativeLayout>
 
 </RelativeLayout>

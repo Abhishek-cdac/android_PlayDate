@@ -95,4 +95,9 @@ public interface GetDataService {
     Call<FriendsListModel> getFriendsList(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
 
+    @Multipart
+    @POST("user/post")
+    Call<LoginResponse> uploadImage(@Header("Authorization") String token, @Part MultipartBody.Part filePart,@FieldMap Map<String, String> param);
+
+
 }

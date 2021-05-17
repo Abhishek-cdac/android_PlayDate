@@ -31,6 +31,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.playdate.app.util.session.SessionPref.LoginUserusername;
+
 public class UserNameActivity extends AppCompatActivity {
     UserNameViewModel userNameViewModel;
     ActivityUsernameBinding binding;
@@ -44,24 +46,25 @@ public class UserNameActivity extends AppCompatActivity {
         userNameViewModel = new UserNameViewModel();
         binding = DataBindingUtil.setContentView(UserNameActivity.this, R.layout.activity_username);
         binding.setLifecycleOwner(this);
-        binding.setUserNameViewModel(userNameViewModel);
         mIntent = getIntent();
+        binding.setUserNameViewModel(userNameViewModel);
+        if (mIntent.getBooleanExtra("fromProfile", false)) {
+            SessionPref pref = SessionPref.getInstance(this);
+            userNameViewModel.OnUserNameInput().setValue(pref.getStringVal(LoginUserusername));
+        } else {
+
+
+        }
+
+
         userNameViewModel.OnNextClick().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean click) {
-                if (mIntent.getBooleanExtra("fromProfile", false)) {
-                    Intent mIntent = new Intent();
-                    setResult(408, mIntent);
-                    finish();
-                } else {
 
-                    if (userNameViewModel.UserName.getValue() != null) {
-//                        startActivity(new Intent(UserNameActivity.this, BioActivity.class));
-                        callAPI(userNameViewModel.UserName.getValue());
-                    }
-
-
+                if (userNameViewModel.UserName.getValue() != null) {
+                    callAPI(userNameViewModel.UserName.getValue());
                 }
+
 
             }
         });
@@ -104,8 +107,20 @@ public class UserNameActivity extends AppCompatActivity {
                 pd.cancel();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
-                        pref.saveStringKeyVal(SessionPref.LoginUserusername, uname);
-                        startActivity(new Intent(UserNameActivity.this, BioActivity.class));
+                        pref.saveStringKeyVal(LoginUserusername, uname);
+
+                        if (mIntent.getBooleanExtra("fromProfile", false)) {
+                            Intent mIntent = new Intent();
+                            setResult(408, mIntent);
+                            finish();
+                        } else {
+
+                            startActivity(new Intent(UserNameActivity.this, BioActivity.class));
+
+
+                        }
+
+
                     } else {
                         clsCommon.showDialogMsg(UserNameActivity.this, "PlayDate", response.body().getMessage(), "Ok");
                     }

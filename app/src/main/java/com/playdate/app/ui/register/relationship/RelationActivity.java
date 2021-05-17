@@ -2,6 +2,7 @@ package com.playdate.app.ui.register.relationship;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Toast;
 
@@ -37,15 +38,18 @@ public class RelationActivity extends AppCompatActivity {
     boolean once = false;
     int selectedRelationShip = -1;
     CommonClass clsCommon;
+    Intent mIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new RelatiponShipViewModel();
+        mIntent = getIntent();
         clsCommon = CommonClass.getInstance();
         binding = DataBindingUtil.setContentView(RelationActivity.this, R.layout.activity_relationship);
         binding.setLifecycleOwner(this);
         binding.setRelatiponShipViewModel(viewModel);
+
 
         viewModel.OnTakenClick().observe(this, new Observer<Boolean>() {
             @Override
@@ -82,8 +86,6 @@ public class RelationActivity extends AppCompatActivity {
                 if (selectedRelationShip == -1) {
                     clsCommon.showDialogMsg(RelationActivity.this, "PlayDate", "Please select relationship", "Ok");
                 } else {
-//                    startActivity(new Intent(RelationActivity.this, InterestActivity
-//                            .class));
                     callAPI();
                 }
 
@@ -97,6 +99,22 @@ public class RelationActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+
+        if (mIntent.getBooleanExtra("fromProfile", false)) {
+            new Handler().postDelayed(new Runnable() {
+                public void run() {
+
+                    if (mIntent.getStringExtra("Selected").toLowerCase().equals("single")) {
+                        viewModel.setSingle();
+                    } else {
+                        viewModel.setTaken();
+                    }
+                }
+            }, 200);
+
+
+        }
     }
 
     private void callAPI() {
@@ -105,7 +123,7 @@ public class RelationActivity extends AppCompatActivity {
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
 
-        hashMap.put("relationship", selectedRelationShip == 1 ?"Taken":"Single");// format 1990-08-12
+        hashMap.put("relationship", selectedRelationShip == 1 ? "Taken" : "Single");// format 1990-08-12
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
         pd.show();
 //        Toast.makeText(this, ""+pref.getStringVal(SessionPref.LoginUsertoken), Toast.LENGTH_SHORT).show();
@@ -118,9 +136,15 @@ public class RelationActivity extends AppCompatActivity {
                 pd.cancel();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
-                        pref.saveStringKeyVal(SessionPref.LoginUserrelationship, selectedRelationShip==1?"Taken":"Single");
-                        startActivity(new Intent(RelationActivity.this, InterestActivity
-                                .class));
+                        pref.saveStringKeyVal(SessionPref.LoginUserrelationship, selectedRelationShip == 1 ? "Taken" : "Single");
+                        if (mIntent.getBooleanExtra("fromProfile", false)) {
+
+                            finish();
+                        } else {
+                            startActivity(new Intent(RelationActivity.this, InterestActivity
+                                    .class));
+                        }
+
                     } else {
                         clsCommon.showDialogMsg(RelationActivity.this, "PlayDate", response.body().getMessage(), "Ok");
                     }

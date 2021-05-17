@@ -31,6 +31,7 @@ import com.playdate.app.model.FriendsListModel;
 import com.playdate.app.model.MatchListModel;
 import com.playdate.app.model.MatchListUser;
 import com.playdate.app.ui.anonymous_question.AnoQuesCreateActivity;
+import com.playdate.app.ui.anonymous_question.AnonymousQuestionActivity;
 import com.playdate.app.ui.card_swipe.FragCardSwipe;
 import com.playdate.app.ui.chat.request.RequestChatFragment;
 import com.playdate.app.ui.coupons.FragCouponStore;
@@ -412,6 +413,9 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
             ReplaceFrag(new FragMyProfileDetails());
         } else if (id == R.id.ll_profile_support) {
+            iv_play_date_logo.setVisibility(View.VISIBLE);
+            ll_profile_drop_menu.setVisibility(View.GONE);
+            iv_plus.setVisibility(View.GONE);
             ll_option_love.setVisibility(View.GONE);
             ll_friends.setVisibility(View.GONE);
             ll_profile_menu.setVisibility(View.VISIBLE);
@@ -422,6 +426,9 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             ReplaceFrag(new FragMyProfileDetails());
 
         } else if (id == R.id.ll_love_bottom) {
+            iv_play_date_logo.setVisibility(View.VISIBLE);
+            ll_profile_drop_menu.setVisibility(View.GONE);
+            iv_plus.setVisibility(View.GONE);
             ll_option_love.setVisibility(View.VISIBLE);
             ll_friends.setVisibility(View.VISIBLE);
             ll_profile_menu.setVisibility(View.GONE);
@@ -435,11 +442,17 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             ll_mainMenu.setVisibility(View.VISIBLE);
             ll_her.setVisibility(View.VISIBLE);
         } else if (id == R.id.ll_profile_insta) {
+            iv_play_date_logo.setVisibility(View.VISIBLE);
+            ll_profile_drop_menu.setVisibility(View.GONE);
             iv_plus.setVisibility(View.VISIBLE);
             ll_option_love.setVisibility(View.GONE);
             ll_friends.setVisibility(View.GONE);
             ll_profile_menu.setVisibility(View.GONE);
             profile = new FragInstaLikeProfile();
+            iv_profile_sett.setImageResource(R.drawable.tech_support);
+            iv_profile_sett.setBackground(null);
+
+
             ReplaceFrag(profile);
         } else if (id == R.id.iv_plus) {
             ll_profile_drop_menu.setVisibility(View.VISIBLE);
@@ -453,7 +466,9 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             ll_profile_drop_menu.setVisibility(View.GONE);
             iv_plus.setVisibility(View.VISIBLE);
             iv_play_date_logo.setVisibility(View.VISIBLE);
-            startActivity(new Intent(DashboardActivity.this, AnoQuesCreateActivity.class));
+            Intent mIntent=new Intent(DashboardActivity.this, AnonymousQuestionActivity.class);
+            mIntent.putExtra("new",true);
+            startActivity(mIntent);
         } else if (id == R.id.ll_take_photo) {
 
             String[] PERMISSIONS = {

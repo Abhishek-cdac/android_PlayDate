@@ -60,6 +60,7 @@
             android:id="@+id/iv_edit_mail"
             android:layout_width="@dimen/_12sdp"
             android:layout_height="@dimen/_12sdp"
+            android:visibility="invisible"
             android:layout_alignParentEnd="true"
 
             android:layout_centerVertical="true"
@@ -102,7 +103,7 @@
             android:layout_gravity="start"
             android:fontFamily="@font/lato_bold"
             android:gravity="start|center"
-            android:text="Phone Number"
+            android:text="@string/phone_number"
             android:textColor="@color/black"
             android:textSize="@dimen/_12sdp"
             android:textStyle="bold" />

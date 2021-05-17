@@ -16,6 +16,7 @@ import com.playdate.app.R;
 import com.playdate.app.ui.dashboard.OnProfilePhotoChageListerner;
 import com.playdate.app.ui.forgot_password.ForgotPasswordActivity;
 import com.playdate.app.ui.register.age_verification.AgeVerifiationActivity;
+import com.playdate.app.ui.register.gender.GenderSelActivity;
 import com.playdate.app.ui.register.interestin.InterestActivity;
 import com.playdate.app.ui.register.profile.UploadProfileActivity;
 import com.playdate.app.ui.register.relationship.RelationActivity;
@@ -103,19 +104,23 @@ public class FragMyProfilePersonal extends Fragment implements View.OnClickListe
             mIntent.putExtra("fromProfile", true);
             startActivityForResult(mIntent, 407);
         } else if (id == R.id.iv_gender) {
-            Intent mIntent = new Intent(getActivity(), InterestActivity.class);
+            Intent mIntent = new Intent(getActivity(), GenderSelActivity.class);
             mIntent.putExtra("fromProfile", true);
             startActivityForResult(mIntent, 408);
         } else if (id == R.id.iv_dob) {
             Intent mIntent = new Intent(getActivity(), AgeVerifiationActivity.class);
+            mIntent.putExtra("CurrentDOB",DOB.getText().toString());
             mIntent.putExtra("fromProfile", true);
             startActivityForResult(mIntent, 408);
         } else if (id == R.id.iv_sex_orientation) {
             Intent mIntent = new Intent(getActivity(), InterestActivity.class);
+            mIntent.putExtra("Selected", interestin.getText().toString());
             mIntent.putExtra("fromProfile", true);
+
             startActivityForResult(mIntent, 408);
         } else if (id == R.id.iv_relationship) {
             Intent mIntent = new Intent(getActivity(), RelationActivity.class);
+            mIntent.putExtra("Selected", txt_relationship.getText().toString());
             mIntent.putExtra("fromProfile", true);
             startActivityForResult(mIntent, 408);
         } else if (id == R.id.iv_edit_mail) {

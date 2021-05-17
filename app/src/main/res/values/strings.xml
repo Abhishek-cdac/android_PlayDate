@@ -113,5 +113,6 @@
     <string name="frequently_asked">Frequently Asked Questions</string>
     <string name="code">Code</string>
     <string name="title_activity_maps">Map</string>
+    <string name="phone_number">Phone Number</string>
 
 </resources>

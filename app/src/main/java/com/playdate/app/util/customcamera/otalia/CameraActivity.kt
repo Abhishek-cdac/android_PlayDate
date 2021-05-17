@@ -57,7 +57,6 @@ class CameraActivity : AppCompatActivity(), View.OnClickListener, OptionView.Cal
     )
     private var currentFilter = 0
     private val allFilters = Filters.values()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_camera)
@@ -281,8 +280,18 @@ class CameraActivity : AppCompatActivity(), View.OnClickListener, OptionView.Cal
 
             LOG.w("onVideoTaken called! Launching activity.")
             VideoPreviewActivity.videoResult = result
+
             val intent = Intent(this@CameraActivity, VideoPreviewActivity::class.java)
-            startActivity(intent)
+            var mIntent=getIntent()
+            if(mIntent.getBooleanExtra("fromProfile",false)){
+                intent.putExtra("fromProfile",true)
+                startActivityForResult(intent,101)
+            }else{
+                intent.putExtra("fromProfile",false)
+                startActivity(intent)
+            }
+
+
             LOG.w("onVideoTaken called! Launched activity.")
         }
 
@@ -305,6 +314,15 @@ class CameraActivity : AppCompatActivity(), View.OnClickListener, OptionView.Cal
         override fun onZoomChanged(newValue: Float, bounds: FloatArray, fingers: Array<PointF>?) {
             super.onZoomChanged(newValue, bounds, fingers)
 //            message("Zoom:$newValue", false)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode==101){
+            if(resultCode==100){
+                finish()
+            }
         }
     }
 

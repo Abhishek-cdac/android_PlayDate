@@ -119,19 +119,23 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
             InstaPhotosAdapter.isLocked = false;
             onTypeChange(0);
         } else if (id == R.id.profile_image) {
-            Intent mIntent = new Intent(getActivity(), ExoPlayerActivity.class);
-            SessionPref pref = SessionPref.getInstance(getActivity());
+            try {
+                Intent mIntent = new Intent(getActivity(), ExoPlayerActivity.class);
+                SessionPref pref = SessionPref.getInstance(getActivity());
 
-            String videopath = pref.getStringVal(SessionPref.LoginUserprofileVideo);
+                String videopath = pref.getStringVal(SessionPref.LoginUserprofileVideo);
 
 
-            if (videopath.contains("http")) {
+                if (videopath.contains("http")) {
 
-            } else {
-                videopath = BASE_URL_IMAGE + videopath;
+                } else {
+                    videopath = BASE_URL_IMAGE + videopath;
+                }
+                mIntent.putExtra("video",videopath);
+                startActivity(mIntent);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            mIntent.putExtra("video",videopath);
-            startActivity(mIntent);
         }
     }
 }

@@ -74,7 +74,7 @@
         </provider>
 
         <activity
-            android:name=".ui.dashboard.DashboardActivity"
+            android:name=".ui.onboarding.OnBoardingActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -134,11 +134,13 @@
         <activity
             android:name=".ui.forgot_password.ForgotPasswordActivity"
             android:screenOrientation="portrait" />
+
+
         <activity
             android:name=".ui.onboarding.GetStarted"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.onboarding.OnBoardingActivity"
+            android:name=".ui.dashboard.DashboardActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing">
 
@@ -154,9 +156,7 @@
         <activity
             android:name=".ui.restaurant.RestaurantActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.playvideo.VideoPlayActivity"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.anonymous_question.AnoQuesCreateActivity"
             android:screenOrientation="portrait" />
@@ -169,6 +169,7 @@
         <activity
             android:name=".ui.register.gender.GenderSelActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".ui.invite.InviteFriendActivity" />
         <!--   <service
                android:name=".java.MyFirebaseMessagingService"
                android:exported="false">
