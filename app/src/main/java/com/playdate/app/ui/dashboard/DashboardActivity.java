@@ -179,8 +179,8 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         rv_friends = findViewById(R.id.rv_friends);
 
 
-//        Fragment fragOne = new FragLanding();
-        Fragment fragOne = new FragCouponStore();
+        Fragment fragOne = new FragLanding();
+//        Fragment fragOne = new FragCouponStore();
 //        Fragment fragOne = new GetPremiumDialog();
 //        Fragment fragOne = new FragMyProfileDetails();
 //        Fragment fragOne = new FragMyProfilePersonal();
@@ -280,7 +280,6 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             public void onResponse(Call<FriendsListModel> call, Response<FriendsListModel> response) {
 //                pd.cancel();
                 if (response.code() == 200) {
-                    assert response.body() != null;
                     if (response.body().getStatus() == 1) {
                         RecyclerView.LayoutManager manager = new LinearLayoutManager(DashboardActivity.this, RecyclerView.HORIZONTAL, false);
                         ArrayList<MatchListUser> lst = response.body().getUsers();
