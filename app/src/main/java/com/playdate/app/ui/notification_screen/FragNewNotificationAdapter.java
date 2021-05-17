@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,14 +21,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FragNewNotificationAdapter extends RecyclerView.Adapter<FragNewNotificationAdapter.ViewHolder> {
-    List<NotificationData> notification_list = new ArrayList<>();
+    ArrayList<NotificationData> notification_list = new ArrayList<>();
     Onclick itemClick;
     String userId;
     String notifiationId;
     String requestId;
 
 
-    public FragNewNotificationAdapter(List<NotificationData> lst_notifications, Onclick itemClick) {
+    public FragNewNotificationAdapter(ArrayList<NotificationData> lst_notifications, Onclick itemClick) {
         this.notification_list = lst_notifications;
         this.itemClick = itemClick;
 
@@ -45,12 +46,19 @@ public class FragNewNotificationAdapter extends RecyclerView.Adapter<FragNewNoti
     @Override
     public void onBindViewHolder(@NonNull FragNewNotificationAdapter.ViewHolder holder, int position) {
 
-        holder.tv_desc.setText(notification_list.get(position).getNotificationMessage());
-        Log.e("UserName.", "" + notification_list.get(position).getFriendRequest().get(position).getUserInfo().get(position).getUsername());
-        holder.tv_name.setText(notification_list.get(position).getFriendRequest().get(position).getUserInfo().get(position).getUsername());
-        requestId = notification_list.get(position).getFriendRequest().get(position).getRequestId();
+        // Log.e("UserName.", "" + notification_list.get(position).getFriendRequest().get(position).getUserInfo().get(position).getUsername());
         notifiationId = notification_list.get(position).getNotificationId();
         userId = notification_list.get(position).getUserID();
+        holder.tv_desc.setText(notification_list.get(position).getNotificationMessage());
+
+        if (notification_list.get(position).getFriendRequest().size()==0) {
+            Toast.makeText(mcontext, "No notification available", Toast.LENGTH_SHORT).show();
+        } else {
+            holder.tv_name.setText(notification_list.get(position).getFriendRequest().get(position).getUserInfo().get(position).getUsername());
+            requestId = notification_list.get(position).getFriendRequest().get(position).getRequestId();
+
+        }
+
     }
 
     @Override
@@ -77,7 +85,7 @@ public class FragNewNotificationAdapter extends RecyclerView.Adapter<FragNewNoti
             iv_right.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.e("requestId",""+requestId);
+                    Log.e("requestId", "" + requestId);
                     itemClick.onItemClicks(v, getAdapterPosition(), 20, requestId);
 
                 }
@@ -85,12 +93,12 @@ public class FragNewNotificationAdapter extends RecyclerView.Adapter<FragNewNoti
             iv_cross.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.e("requestId",""+requestId);
+                    Log.e("requestId", "" + requestId);
 
 
                     itemClick.onItemClicks(v, getAdapterPosition(), 21, requestId);
 
-                  //  removeAt(getAdapterPosition());
+                    //  removeAt(getAdapterPosition());
                 }
             });
 
