@@ -67,8 +67,16 @@ public class FragNotification extends Fragment {
             }
 
             @Override
-            public void onItemClicks(View v, int adapterPosition, int i, String requestId, String userId) {
+            public void onItemClicks(View v, int adapterPosition, int i, String notifiationId, String userId) {
+                if (i == 22) {
+                    callUpdateNotificationStatusAPI(notifiationId, userId, "read");
 
+                    Log.e("read", "read");
+                } else if (i == 23) {
+                    callUpdateNotificationStatusAPI(notifiationId, userId, "delete");
+                    Log.e("read", "read");
+
+                }
             }
         };
         callGetNotificationAPI();
@@ -133,11 +141,11 @@ public class FragNotification extends Fragment {
         SessionPref pref = SessionPref.getInstance(getActivity());
 
 
-        Call<NotificationModel> call = service.getNotification("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        Call<CommonModel> call = service.updateNotification("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         Log.e("UpdateNotificationData", "" + hashMap);
-        call.enqueue(new Callback<NotificationModel>() {
+        call.enqueue(new Callback<CommonModel>() {
             @Override
-            public void onResponse(Call<NotificationModel> call, Response<NotificationModel> response) {
+            public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
                 pd.cancel();
                 if (response.code() == 200) {
                     assert response.body() != null;
@@ -157,7 +165,7 @@ public class FragNotification extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<NotificationModel> call, Throwable t) {
+            public void onFailure(Call<CommonModel> call, Throwable t) {
                 t.printStackTrace();
                 pd.cancel();
                 Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
@@ -191,13 +199,14 @@ public class FragNotification extends Fragment {
                             lst_notifications = new ArrayList<>();
                         }
 
-                        Log.e("lst_notifications", "" + lst_notifications.size());
-
+                        Log.e("lst_notifications",""+lst_notifications.size());
                         RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
                         rv_notification.setLayoutManager(manager);
-                        FragNewNotificationAdapter adapter = new FragNewNotificationAdapter(lst_notifications, itemClick);
+                        FragNewNotificationAdapter adapter = new FragNewNotificationAdapter((ArrayList<NotificationData>) lst_notifications, itemClick);
                         rv_notification.setAdapter(adapter);
-//  FragNotificationAdapter adapter = new FragNotificationAdapter();
+
+
+                        //  FragNotificationAdapter adapter = new FragNotificationAdapter();
 //  rv_notification.setAdapter(adapter);
 
                     }
