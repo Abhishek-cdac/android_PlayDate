@@ -100,23 +100,27 @@ public class SuggestionAdapter extends PagerAdapter {
             public void onClick(View v) {
                 itemClick.onItemClicks(v, position, 10, userId);
 
-                //    suggestions_list.get(getPosition()).setRequestSent(true);
-//                    SuggestedFriendAdapter.this.notifyDataSetChanged();
             }
         });
-//        if (friendRequests_list.get(position).getStatus().equals("Pending")) {
-//            iv_send_request.setImageResource(R.drawable.sent_request_sel);
-//        } else {
+
+//        if (suggestions_list.get(position).getFriendRequest().size() == 0) {
 //            iv_send_request.setImageResource(R.drawable.sent_request);
-//        }
-//        iv_send_request.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view1) {
-//                lst.get(position).setRequestSent(true);
+//        } else {
+//            Log.e("getStatus", " " + suggestions_list.get(position).getFriendRequest().get(position).getStatus());
+//            if (suggestions_list.get(position).getFriendRequest().get(position).getStatus().equals("Pending")) {
 //
-//                SuggestionAdapter.this.notifyDataSetChanged();
+//                Log.e("getStatusif", " " + suggestions_list.get(position).getFriendRequest().get(position).getStatus());
+//                iv_send_request.setImageResource(R.drawable.sent_request_sel);
+//
+//            } else {
+//                Log.e("getStatuselse", " " + suggestions_list.get(position).getFriendRequest().get(position).getStatus());
+//
+//                iv_send_request.setImageResource(R.drawable.sent_request);
+//
 //            }
-//        });
+//            SuggestionAdapter.this.notifyDataSetChanged();
+//        }
+
 
         container.addView(view, 0);
         return view;

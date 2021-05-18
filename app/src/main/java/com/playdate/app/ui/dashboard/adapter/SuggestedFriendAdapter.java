@@ -51,11 +51,24 @@ public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriend
         holder.request.setImageResource(R.drawable.sent_request);
         userId = suggestions_list.get(position).getId();
 
-//        if (suggestions_list.get(position).getFriendRequest().get(position).getStatus().equals("Pending")) {
-//            holder.request.setImageResource(R.drawable.sent_request_sel);
-//        } else {
+
+
+//        if (suggestions_list.get(position).getFriendRequest().size() == 0) {
 //            holder.request.setImageResource(R.drawable.sent_request);
+//        } else {
+//            Log.e("getStatus", " " + suggestions_list.get(position).getFriendRequest().get(position).getStatus());
+//            if (suggestions_list.get(position).getFriendRequest().get(position).getStatus().equals("Pending")) {
+//                Log.e("getStatusif", " " + suggestions_list.get(position).getFriendRequest().get(position).getStatus());
+//                holder.request.setImageResource(R.drawable.sent_request_sel);
+//            } else {
+//                Log.e("getStatuselse", " " + suggestions_list.get(position).getFriendRequest().get(position).getStatus());
+//                holder.request.setImageResource(R.drawable.sent_request);
+//
+//            }
+//            SuggestionAdapter.this.notifyDataSetChanged();
 //        }
+
+
 
 //        if (suggestions_list.get(position).isPremium()) {
 //            holder.diamond.setVisibility(View.VISIBLE);

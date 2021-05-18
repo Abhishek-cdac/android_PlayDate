@@ -3,6 +3,7 @@ package com.playdate.app.ui.card_swipe;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,7 @@ public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.
     ArrayList<Interest> lst_interest;
     List<MatchListUser> tinder_list;
     Context mContext;
+    String userId;
 
     public TinderSwipeAdapter(List<MatchListUser> tinder_list, ArrayList<Interest> lst_interest) {
         this.tinder_list = tinder_list;
@@ -69,7 +71,7 @@ public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView image, iv_maximise;
+        ImageView image, iv_maximise, item_cross, item_check;
         TextView name, age, hobby;
         ImageView message;
         ImageView item_premium;
@@ -82,6 +84,8 @@ public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.item_name);
+            item_check = itemView.findViewById(R.id.item_check);
+            item_cross = itemView.findViewById(R.id.item_cross);
             age = itemView.findViewById(R.id.item_age);
             hobby = itemView.findViewById(R.id.item_hobby);
             image = itemView.findViewById(R.id.item_image);
@@ -95,6 +99,9 @@ public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.
         }
 
         void setData(MatchListUser user) {
+             userId= user.get_id();
+            Log.e("userIdTinder",""+userId);
+            Log.e("userNameTinder",""+user.getFullName());
             if (user.getProfileVideoPath() == null) {
                 iv_video_play.setVisibility(View.INVISIBLE);
             } else {
@@ -135,7 +142,7 @@ public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.
                     .centerCrop()
                     .into(image);
             name.setText(user.getFullName());
-            age.setText("" + user.getAge());
+            age.setText("" +user.getAge());
 
             String ints = "";
             if (null != lst_interest) {
@@ -168,17 +175,14 @@ public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.
                 @Override
                 public void onClick(View v) {
                     Intent mIntent = new Intent(mContext, ExoPlayerActivity.class);
-
                     String videopath = user.getProfileVideoPath();
-
 
                     if (videopath.contains("http")) {
 
-                    } else {
+                    }
+                    else {
                         videopath = BASE_URL_IMAGE + videopath;
                     }
-
-
 
                     mIntent.putExtra("video", videopath);
                     mIntent.putExtra("time", absPlayerInternal.getCurrentPosition());

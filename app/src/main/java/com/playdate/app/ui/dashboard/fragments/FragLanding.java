@@ -109,12 +109,10 @@ public class FragLanding extends Fragment {
     }
 
     private void callGetUserSuggestionAPI() {
-
-
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
-        // hashMap.put("filter", "");
-        hashMap.put("limit", "10");
+        hashMap.put("filter", "");
+        hashMap.put("limit", "50");
         hashMap.put("pageNo", "1");//Hardcode
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
         pd.show();
@@ -124,15 +122,14 @@ public class FragLanding extends Fragment {
             @Override
             public void onResponse(Call<GetUserSuggestion> call, Response<GetUserSuggestion> response) {
                 pd.cancel();
-
                 if (response.code() == 200) {
-
                     assert response.body() != null;
                     if (response.body().getStatus() == 1) {
                         lst_getUserSuggestions = (ArrayList<GetUserSuggestionData>) response.body().getData();
                         if (lst_getUserSuggestions == null) {
                             lst_getUserSuggestions = new ArrayList<>();
                         }
+
 
                         // SuggestionAdapter adapter = new SuggestionAdapter(getActivity());
                         SuggestionAdapter adapter = new SuggestionAdapter(getActivity(), lst_getUserSuggestions, itemClick);
