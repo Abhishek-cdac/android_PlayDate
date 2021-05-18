@@ -14,10 +14,10 @@
 
         <ImageView
             android:id="@+id/back_anonymous"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_arrow_back_ios" />
+            android:src="@drawable/arrow_black" />
 
         <ImageView
             android:layout_width="0dp"
@@ -30,10 +30,11 @@
 
         <ImageView
             android:id="@+id/more_option"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_more_vert" />
+            android:rotation="90"
+            android:src="@drawable/ic_baseline_more_horizontal" />
     </LinearLayout>
 
     <TextView
@@ -51,7 +52,7 @@
 
     <TextView
         android:id="@+id/comment_number"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/anun"
         android:layout_marginTop="@dimen/_10sdp"
@@ -59,9 +60,25 @@
         android:paddingHorizontal="@dimen/_14sdp"
         android:text="No comments"
         android:textColor="@color/black"
-        android:textSize="@dimen/_13sdp"
+        android:textSize="@dimen/_11sdp"
         android:textStyle="bold" />
 
+
+    <EditText
+        android:id="@+id/ext_question"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/comment_number"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@null"
+        android:hint="Type your question here..."
+        android:maxLength="200"
+        android:maxLines="4"
+        android:paddingHorizontal="@dimen/_14sdp"
+
+        android:textColor="@color/black"
+        android:textColorHint="@color/color_grey"
+        android:textSize="@dimen/_12sdp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/comments_list"
@@ -70,6 +87,7 @@
         android:layout_below="@id/comment_number" />
 
     <RelativeLayout
+        android:id="@+id/rl_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -82,21 +100,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:hint="@string/add_comment"
             android:backgroundTint="@android:color/transparent"
+            android:hint="@string/add_comment"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:textSize="@dimen/_12sdp" />
 
+
         <TextView
-            android:id="@+id/post_comment"
+            android:id="@+id/txt_post_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerInParent="true"
             android:text="@string/post"
+            android:textStyle="bold"
+            android:enabled="false"
+            android:layout_marginEnd="@dimen/_10sdp"
             android:textColor="@color/white"
-            android:textSize="@dimen/_10sdp" />
+            android:textSize="@dimen/_14sdp" />
 
 
     </RelativeLayout>

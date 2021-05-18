@@ -7,6 +7,7 @@ public class LoginResponse {
 
     int status;
     String message;
+
     @SerializedName("data")
     @Expose
     LoginUserDetails objdata;

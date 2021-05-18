@@ -2,10 +2,7 @@ package com.playdate.app.ui.my_profile_details;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -14,41 +11,51 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.facebook.login.LoginManager;
-import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.playdate.app.R;
+import com.playdate.app.data.api.GetDataService;
+import com.playdate.app.data.api.RetrofitClientInstance;
+import com.playdate.app.model.Interest;
+import com.playdate.app.model.InterestsMain;
 import com.playdate.app.ui.dashboard.OnProfilePhotoChageListerner;
+import com.playdate.app.ui.forgot_password.ForgotPasswordActivity;
+import com.playdate.app.ui.invite.InviteFriendActivity;
 import com.playdate.app.ui.login.LoginActivity;
 import com.playdate.app.ui.register.interest.InterestActivity;
 import com.playdate.app.ui.register.profile.UploadProfileActivity;
 import com.playdate.app.ui.register.username.UserNameActivity;
+import com.playdate.app.util.customcamera.otalia.CameraActivity;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
 
-import org.jetbrains.annotations.NotNull;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-import java.util.Objects;
-import java.util.concurrent.Executor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
-import static com.playdate.app.util.session.SessionPref.CompleteProfile;
 import static com.playdate.app.util.session.SessionPref.LoginVerified;
 
 public class FragMyProfileDetails extends Fragment implements View.OnClickListener {
     ImageView iv_dark_mode;
     ImageView profile_image;
     ImageView iv_reset_pass;
+    ImageView iv_change_bio_video;
     TextView txt_user_name, logout;
+    TextView txt_interetsed;
+    TextView txt_invite;
     SessionPref pref;
     private GoogleApiClient googleApiClient;
     GoogleSignInClient mGoogleSignInClient;
@@ -66,42 +73,122 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
         mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
 
         iv_reset_pass = view.findViewById(R.id.iv_reset_pass);
+        iv_change_bio_video = view.findViewById(R.id.iv_change_bio_video);
         profile_image = view.findViewById(R.id.profile_image);
+        txt_interetsed = view.findViewById(R.id.txt_interetsed);
         ImageView iv_edit_username = view.findViewById(R.id.iv_edit_username);
         ImageView iv_interest = view.findViewById(R.id.iv_interest);
         iv_dark_mode = view.findViewById(R.id.iv_dark_mode);
         txt_user_name = view.findViewById(R.id.txt_user_name);
+        txt_invite = view.findViewById(R.id.txt_invite);
         logout = view.findViewById(R.id.logout);
         TextView txt_change_photo = view.findViewById(R.id.txt_change_photo);
+
         profile_image.setOnClickListener(this);
+        iv_change_bio_video.setOnClickListener(this);
         iv_edit_username.setOnClickListener(this);
         txt_change_photo.setOnClickListener(this);
         iv_edit_username.setOnClickListener(this);
         iv_interest.setOnClickListener(this);
         iv_dark_mode.setOnClickListener(this);
         logout.setOnClickListener(this);
+        iv_reset_pass.setOnClickListener(this);
+        txt_invite.setOnClickListener(this);
 
         setValues();
+
 
         return view;
 
     }
 
-    private void setValues() {
+    ArrayList<Interest> lst_interest;
+
+    private void getInterest() {
+
+
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("limit", "50");// format 1990-08-12
+        hashMap.put("pageNo", "1");// format 1990-08-12
+//        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
+//        pd.show();
         SessionPref pref = SessionPref.getInstance(getActivity());
-        txt_user_name.setText(pref.getStringVal(SessionPref.LoginUserusername));
+//        Toast.makeText(this, ""+pref.getStringVal(SessionPref.LoginUsertoken), Toast.LENGTH_SHORT).show();
 
-        String img = pref.getStringVal(SessionPref.LoginUserprofilePic);
-        if (img.contains("http")) {
-            Picasso.get().load(img)
-                    .placeholder(R.drawable.cupertino_activity_indicator)
-                    .into(profile_image);
-        } else {
-            Picasso.get().load(BASE_URL_IMAGE + img)
-                    .placeholder(R.drawable.cupertino_activity_indicator)
-                    .into(profile_image);
+
+        Call<InterestsMain> call = service.interested("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new Callback<InterestsMain>() {
+            @Override
+            public void onResponse(Call<InterestsMain> call, Response<InterestsMain> response) {
+//                pd.cancel();
+                if (response.code() == 200) {
+                    assert response.body() != null;
+                    if (response.body().getStatus() == 1) {
+                        String finalInterest = "";
+                        lst_interest = response.body().getLst();
+                        if (lst_interest == null) {
+                            lst_interest = new ArrayList<>();
+                        }
+
+
+                        String interestList[] = pref.getStringVal(SessionPref.LoginUserinterested).split(",");
+
+
+                        for (int i = 0; i < lst_interest.size(); i++) {
+                            for (String s : interestList) {
+                                if (s.trim().equals(lst_interest.get(i).get_id())) {
+                                    if (finalInterest.isEmpty()) {
+                                        finalInterest = lst_interest.get(i).getName();
+                                    } else {
+                                        finalInterest = finalInterest + "," + lst_interest.get(i).getName();
+                                    }
+                                }
+                            }
+                        }
+
+                        txt_interetsed.setText(finalInterest);
+
+
+                    } else {
+
+                    }
+                } else {
+
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<InterestsMain> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+
+    }
+
+    private void setValues() {
+        try {
+            SessionPref pref = SessionPref.getInstance(getActivity());
+            txt_user_name.setText(pref.getStringVal(SessionPref.LoginUserusername));
+
+            String img = pref.getStringVal(SessionPref.LoginUserprofilePic);
+            if (img.contains("http")) {
+                Picasso.get().load(img)
+                        .placeholder(R.drawable.cupertino_activity_indicator)
+                        .into(profile_image);
+            } else {
+                Picasso.get().load(BASE_URL_IMAGE + img)
+                        .placeholder(R.drawable.cupertino_activity_indicator)
+                        .into(profile_image);
+            }
+            getInterest();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
     }
 
     @Override
@@ -113,6 +200,14 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
             startActivityForResult(mIntent, 407);
         } else if (id == R.id.iv_edit_username) {
             Intent mIntent = new Intent(getActivity(), UserNameActivity.class);
+            mIntent.putExtra("fromProfile", true);
+            startActivityForResult(mIntent, 408);
+        } else if (id == R.id.iv_change_bio_video) {
+            Intent mIntent = new Intent(getActivity(), CameraActivity.class);
+            mIntent.putExtra("fromProfile", true);
+            startActivityForResult(mIntent, 408);
+        } else if (id == R.id.iv_reset_pass) {
+            Intent mIntent = new Intent(getActivity(), ForgotPasswordActivity.class);
             mIntent.putExtra("fromProfile", true);
             startActivityForResult(mIntent, 408);
         } else if (id == R.id.iv_interest) {
@@ -128,31 +223,34 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
                 iv_dark_mode.setRotation(180);
             }
 
+        } else if (id == R.id.txt_invite) {
+            startActivity(new Intent(getActivity(), InviteFriendActivity.class));
         } else if (id == R.id.logout) {
+            showYesNoDialog();
+        }
+    }
 
-            Log.e("LoginUserSourceType", "" + pref.getStringVal(SessionPref.LoginUserSourceType));
-            Toast.makeText(getActivity(), "LogOut", Toast.LENGTH_LONG).show();
+    private void showYesNoDialog() {
+        new AlertDialog.Builder(getActivity())
 
-//            LoginManager.getInstance().logOut();
-//            SessionPref.getInstance(getActivity()).saveBoolKeyVal(LoginVerified, false);
-//            SessionPref.logout(getActivity());
-//            Intent intent = new Intent(getActivity(), LoginActivity.class);
-//            startActivity(intent);
-//            getActivity().finish();
-//
+                .setInverseBackgroundForced(true)
+                .setMessage("Are you sure you want to logout from app?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", (dialog, id) -> outFromApp())
+                .setNegativeButton("No", null)
+                .show();
+    }
 
-
-            if (pref.getStringVal(SessionPref.LoginUserSourceType).equals("Direct")) {
-                Toast.makeText(getActivity(), "LogOut", Toast.LENGTH_LONG).show();
-
-                SessionPref.getInstance(getActivity()).saveBoolKeyVal(LoginVerified, false);
-                SessionPref.getInstance(getActivity()).saveBoolKeyVal(CompleteProfile, false);
+    private void outFromApp() {
+        switch (pref.getStringVal(SessionPref.LoginUserSourceType)) {
+            case "Direct": {
                 SessionPref.logout(getActivity());
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
                 getActivity().finish();
-            } else if (pref.getStringVal(SessionPref.LoginUserSourceType).equals("Facebook")) {
-                Toast.makeText(getActivity(), "LogOut", Toast.LENGTH_LONG).show();
+                break;
+            }
+            case "Facebook": {
 
                 LoginManager.getInstance().logOut();
                 SessionPref.getInstance(getActivity()).saveBoolKeyVal(LoginVerified, false);
@@ -160,28 +258,12 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
                 getActivity().finish();
-            } else if (pref.getStringVal(SessionPref.LoginUserSourceType).equals("Google")) {
+                break;
+            }
+            case "Google":
 
                 signOut();
-////                Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(
-////                        new ResultCallback<Status>() {
-////                            @Override
-////                            public void onResult(@NotNull Status status) {
-////                                if (status.isSuccess()) {
-////                                    Toast.makeText(getActivity(), "LogOut", Toast.LENGTH_LONG).show();
-////                                    SessionPref.getInstance(getActivity()).saveBoolKeyVal(LoginVerified, false);
-////                                    SessionPref.logout(getActivity());
-////                                    Intent intent = new Intent(getActivity(), LoginActivity.class);
-////                                    startActivity(intent);
-////                                    getActivity().finish();
-////
-////                                } else {
-////                                    Toast.makeText(getActivity(), "Session not close", Toast.LENGTH_LONG).show();
-////                                }
-////                            }
-////                        });
-            }
-
+                break;
         }
     }
 

@@ -206,6 +206,7 @@
 
         <ImageView
             android:layout_width="@dimen/_12sdp"
+            android:id="@+id/iv_change_bio_video"
             android:layout_height="@dimen/_12sdp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
@@ -274,6 +275,7 @@
         android:fontFamily="@font/helvetica_neue"
         android:gravity="start|center"
         android:text="Select interests"
+        android:id="@+id/txt_interetsed"
         android:textColor="@color/black"
         android:textSize="@dimen/_11sdp" />
 
@@ -352,6 +354,7 @@
         android:fontFamily="@font/lato_bold"
         android:gravity="start|center"
         android:text="Invite Friends"
+        android:id="@+id/txt_invite"
         android:textColor="@color/black"
         android:textSize="@dimen/_12sdp"
         android:textStyle="bold" />

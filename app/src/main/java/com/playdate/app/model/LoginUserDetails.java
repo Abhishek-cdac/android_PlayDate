@@ -27,6 +27,24 @@ public class LoginUserDetails {
     String sourceSocialId;
     String inviteCode;
     String paymentMode;
+    String mediaId;
+    String fullPath;
+
+    public String getFullPath() {
+        return fullPath;
+    }
+
+    public void setFullPath(String fullPath) {
+        this.fullPath = fullPath;
+    }
+
+    public String getMediaId() {
+        return mediaId;
+    }
+
+    public void setMediaId(String mediaId) {
+        this.mediaId = mediaId;
+    }
 
     public String getInterestedIn() {
         return interestedIn;

@@ -55,7 +55,6 @@ public class GenderSelActivity extends AppCompatActivity {
             binding.btnNonBinary.setBackground(getDrawable(R.drawable.normal_btn_back));
 
 
-
             binding.ivNext.setVisibility(View.VISIBLE);
         });
         viewModel.OnMaleClick().observe(this, click -> {
@@ -112,7 +111,13 @@ public class GenderSelActivity extends AppCompatActivity {
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
                         pref.saveStringKeyVal(SessionPref.LoginUsergender, selectedGender == 1 ? "Female" : selectedGender == 0 ? "Male" : "Other");
-                        startActivity(new Intent(GenderSelActivity.this, RelationActivity.class));
+
+                        if (getIntent().getBooleanExtra("fromProfile", false)) {
+                            finish();
+                        } else {
+                            startActivity(new Intent(GenderSelActivity.this, RelationActivity.class));
+                        }
+
                     } else {
                         clsCommon.showDialogMsg(GenderSelActivity.this, "PlayDate", response.body().getMessage(), "Ok");
                     }

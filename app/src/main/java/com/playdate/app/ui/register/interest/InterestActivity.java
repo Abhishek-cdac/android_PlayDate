@@ -86,16 +86,12 @@ public class InterestActivity extends AppCompatActivity {
         viewModel.OnNextClick().observe(InterestActivity.this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
-                if (mIntent.getBooleanExtra("fromProfile", false)) {
-                    Intent mIntent = new Intent();
-                    setResult(409, mIntent);
-                    finish();
-                } else {
+
 //                    startActivity(new Intent(InterestActivity.this, RestaurantActivity
 //                            .class));
-                    callSaveAPI();
+                callSaveAPI();
 
-                }
+//                }
 
             }
         });
@@ -138,7 +134,7 @@ public class InterestActivity extends AppCompatActivity {
         hashMap.put("interested", selected);// format 1990-08-12
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
         pd.show();
-     //   SessionPref pref = SessionPref.getInstance(this);
+        //   SessionPref pref = SessionPref.getInstance(this);
 //        Toast.makeText(this, ""+pref.getStringVal(SessionPref.LoginUsertoken), Toast.LENGTH_SHORT).show();
 
 
@@ -151,8 +147,15 @@ public class InterestActivity extends AppCompatActivity {
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
                         pref.saveStringKeyVal(SessionPref.LoginUserinterested, finalSelected);
-                        startActivity(new Intent(InterestActivity.this, RestaurantActivity
-                                .class));
+                        if (mIntent.getBooleanExtra("fromProfile", false)) {
+                            Intent mIntent = new Intent();
+                            setResult(409, mIntent);
+                            finish();
+                        } else {
+                            startActivity(new Intent(InterestActivity.this, RestaurantActivity
+                                    .class));
+                        }
+
                     } else {
                         clsCommon.showDialogMsg(InterestActivity.this, "PlayDate", response.body().getMessage(), "Ok");
                     }
@@ -203,6 +206,23 @@ public class InterestActivity extends AppCompatActivity {
                         if (lst_interest == null) {
                             lst_interest = new ArrayList<>();
                         }
+
+                        if (mIntent.getBooleanExtra("fromProfile", false)) {
+
+                            String interestList[] = pref.getStringVal(SessionPref.LoginUserinterested).split(",");
+
+                            for (int i = 0; i < lst_interest.size(); i++) {
+                                for (String s : interestList) {
+                                    if (s.trim().equals(lst_interest.get(i).get_id())) {
+                                        lst_interest.get(i).setSelected(true);
+                                    }
+                                }
+                            }
+
+
+                        }
+
+
                         binding.ivNext.setVisibility(View.VISIBLE);
                         adapter = new InterestAdapter(lst_interest);
                         recyclerView.setAdapter(adapter);

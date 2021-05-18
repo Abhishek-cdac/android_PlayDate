@@ -1,4 +1,4 @@
-package com.playdate.app.util.customcamera.otalia;
+package com.playdate.app.util.customcamera.otalia
 
 import android.content.Intent
 import android.net.Uri
@@ -33,7 +33,6 @@ class VideoPreviewActivity : AppCompatActivity() {
     }
 
     private val videoView: VideoView by lazy { findViewById<VideoView>(R.id.video) }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_video_preview)
@@ -41,12 +40,14 @@ class VideoPreviewActivity : AppCompatActivity() {
             finish()
             return
         }
+//        var intent = getIntent()
         videoView.setOnClickListener { playVideo() }
-        val iv_next = findViewById<ImageView>(R.id.iv_next).setOnClickListener(View.OnClickListener {
+        val iv_next =
+            findViewById<ImageView>(R.id.iv_next).setOnClickListener(View.OnClickListener {
 //            val intent = Intent(this@VideoPreviewActivity, DashboardActivity::class.java)
 //            startActivity(intent)
-            uploadVideo()
-        })
+                uploadVideo()
+            })
 //        val isSnapshot = findViewById<MessageView>(R.id.isSnapshot)
 //        val rotation = findViewById<MessageView>(R.id.rotation)
 //        val audio = findViewById<MessageView>(R.id.audio)
@@ -92,25 +93,55 @@ class VideoPreviewActivity : AppCompatActivity() {
             videoView.start()
         }
     }
+
     private fun uploadVideo() {
         val pd = TransparentProgressDialog.getInstance(this)
         pd.show()
 
 
         val pref = SessionPref.getInstance(this)
-        val filePart = MultipartBody.Part.createFormData("userProfileVideo", videoResult!!.file.name, RequestBody.create(MediaType.parse("video/mp4"), videoResult!!.file))
-        val service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService::class.java)
-        val call = service.uploadProfileVideo("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), filePart)
+        val filePart = MultipartBody.Part.createFormData(
+            "userProfileVideo",
+            videoResult!!.file.name,
+            RequestBody.create(MediaType.parse("video/mp4"), videoResult!!.file)
+        )
+        val service =
+            RetrofitClientInstance.getRetrofitInstance().create(GetDataService::class.java)
+        val call = service.uploadProfileVideo(
+            "Bearer " + pref.getStringVal(SessionPref.LoginUsertoken),
+            filePart
+        )
         call.enqueue(object : Callback<LoginResponse?> {
-            override fun onResponse(call: Call<LoginResponse?>, response: Response<LoginResponse?>) {
+            override fun onResponse(
+                call: Call<LoginResponse?>,
+                response: Response<LoginResponse?>
+            ) {
                 pd.dismiss()
                 if (response.code() == 200) {
                     val user = response.body()!!.userData
-                    pref.saveStringKeyVal(SessionPref.LoginUserprofileVideo, user.getProfilePicPath())
-                    startActivity(Intent(this@VideoPreviewActivity, DashboardActivity::class.java))
+                    pref.saveStringKeyVal(
+                        SessionPref.LoginUserprofileVideo,
+                        user.profileVideoPath
+                    )
+                    if (intent.getBooleanExtra("fromProfile", false)) {
+                        setResult(100, null)
+                    } else {
+                        startActivity(
+                            Intent(
+                                this@VideoPreviewActivity,
+                                DashboardActivity::class.java
+                            )
+                        )
+                    }
+
                     finish()
                 } else {
-                    CommonClass().showDialogMsg(this@VideoPreviewActivity, "PlayDate", "An error occurred!", "Ok")
+                    CommonClass().showDialogMsg(
+                        this@VideoPreviewActivity,
+                        "PlayDate",
+                        "An error occurred!",
+                        "Ok"
+                    )
                 }
             }
 
@@ -120,6 +151,7 @@ class VideoPreviewActivity : AppCompatActivity() {
             }
         })
     }
+
     override fun onDestroy() {
         super.onDestroy()
         if (!isChangingConfigurations) {
