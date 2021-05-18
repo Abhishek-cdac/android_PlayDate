@@ -17,13 +17,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.facebook.login.LoginManager;
-import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.playdate.app.R;
@@ -35,10 +32,6 @@ import com.playdate.app.ui.register.username.UserNameActivity;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Objects;
-import java.util.concurrent.Executor;
 
 import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 import static com.playdate.app.util.session.SessionPref.CompleteProfile;
@@ -133,14 +126,6 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
             Log.e("LoginUserSourceType", "" + pref.getStringVal(SessionPref.LoginUserSourceType));
             Toast.makeText(getActivity(), "LogOut", Toast.LENGTH_LONG).show();
 
-//            LoginManager.getInstance().logOut();
-//            SessionPref.getInstance(getActivity()).saveBoolKeyVal(LoginVerified, false);
-//            SessionPref.logout(getActivity());
-//            Intent intent = new Intent(getActivity(), LoginActivity.class);
-//            startActivity(intent);
-//            getActivity().finish();
-//
-
 
             if (pref.getStringVal(SessionPref.LoginUserSourceType).equals("Direct")) {
                 Toast.makeText(getActivity(), "LogOut", Toast.LENGTH_LONG).show();
@@ -160,26 +145,11 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
                 getActivity().finish();
-            } else if (pref.getStringVal(SessionPref.LoginUserSourceType).equals("Google")) {
+            }
+            else if (pref.getStringVal(SessionPref.LoginUserSourceType).equals("Google")) {
 
                 signOut();
-//                Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(
-//                        new ResultCallback<Status>() {
-//                            @Override
-//                            public void onResult(@NotNull Status status) {
-//                                if (status.isSuccess()) {
-//                                    Toast.makeText(getActivity(), "LogOut", Toast.LENGTH_LONG).show();
-//                                    SessionPref.getInstance(getActivity()).saveBoolKeyVal(LoginVerified, false);
-//                                    SessionPref.logout(getActivity());
-//                                    Intent intent = new Intent(getActivity(), LoginActivity.class);
-//                                    startActivity(intent);
-//                                    getActivity().finish();
-//
-//                                } else {
-//                                    Toast.makeText(getActivity(), "Session not close", Toast.LENGTH_LONG).show();
-//                                }
-//                            }
-//                        });
+
             }
 
         }
