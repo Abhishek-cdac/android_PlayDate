@@ -28,8 +28,8 @@
 
 
             <ImageView
-                android:layout_width="@dimen/_20sdp"
-                android:layout_height="@dimen/_20sdp"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:padding="@dimen/_2sdp"
@@ -52,9 +52,9 @@
                 android:textStyle="bold" />
 
             <ImageView
-                android:id="@+id/iv_back"
-                android:layout_width="@dimen/_20sdp"
-                android:layout_height="@dimen/_20sdp"
+                android:id="@+id/iv_done"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:padding="@dimen/_2sdp"
@@ -84,14 +84,13 @@
 
 
             <TextView
-                android:id="@+id/name_friend"
+                android:id="@+id/txt_myname"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:fontFamily="@font/lato_bold"
                 android:paddingHorizontal="@dimen/_6sdp"
-                android:text="Myron "
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
@@ -105,18 +104,22 @@
 
             android:layout_below="@+id/ll_name"
             android:layout_margin="@dimen/_25sdp"
-            android:padding="@dimen/_10sdp"
             android:background="@color/white"
+            android:padding="@dimen/_10sdp"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="@dimen/_15sdp">
 
             <ImageView
+                android:id="@+id/img_upload"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                android:src="@drawable/model1">
+                android:layout_height="match_parent">
 
             </ImageView>
+
+            <com.google.android.exoplayer2.ui.PlayerView
+                android:id="@+id/ep_video_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
         </androidx.cardview.widget.CardView>
 
@@ -130,7 +133,7 @@
             android:layout_marginRight="@dimen/_25sdp"
             android:fontFamily="@font/helvetica_neue"
             android:gravity="start|center"
-            android:text="Date Description"
+            android:text="Description"
             android:textColor="@android:color/black"
             android:textSize="@dimen/_11sdp" />
 
@@ -140,17 +143,20 @@
             android:layout_marginLeft="@dimen/_25sdp"
             android:layout_marginRight="@dimen/_25sdp">
 
-            <TextView
+            <EditText
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_gravity="start"
+
+                android:layout_marginLeft="-5dp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/lato_bold"
                 android:gravity="start|center"
-                android:text="Flashing Lights"
+                android:hint="Enter description here..."
                 android:textColor="@color/black"
+                android:textColorHint="@color/color_grey"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
 
@@ -187,6 +193,7 @@
 
             <TextView
 
+                android:id="@+id/txt_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -195,7 +202,6 @@
                 android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/lato_bold"
                 android:gravity="start|center"
-                android:text="Pune"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
@@ -204,11 +210,24 @@
                 android:layout_width="@dimen/_12sdp"
                 android:layout_height="@dimen/_12sdp"
                 android:layout_alignParentEnd="true"
+                android:id="@+id/iv_location"
+                android:visibility="gone"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="6dp"
                 android:src="@drawable/ic_pin">
 
             </ImageView>
+
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/animationView"
+                app:lottie_url="REPLACE_JSON_URL"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:layout_alignParentEnd="true"
+                app:lottie_rawRes="@raw/loading"
+                android:layout_centerVertical="true"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"/>
 
         </RelativeLayout>
 
@@ -222,7 +241,7 @@
             android:layout_marginRight="@dimen/_25sdp"
             android:fontFamily="@font/helvetica_neue"
             android:gravity="start|center"
-            android:text="Tag Date Partner"
+            android:text="Tag a friend"
             android:textColor="@android:color/black"
             android:textSize="@dimen/_11sdp" />
 
@@ -251,7 +270,7 @@
                 android:layout_height="@dimen/_12sdp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:src="@android:drawable/sym_contact_card">
+                android:src="@drawable/ic_price_tag">
 
             </ImageView>
 

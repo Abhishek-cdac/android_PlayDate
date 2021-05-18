@@ -106,8 +106,17 @@ public interface GetDataService {
 
 
     @Multipart
-    @POST("user/post")
-    Call<LoginResponse> uploadImage(@Header("Authorization") String token, @Part MultipartBody.Part filePart,@FieldMap Map<String, String> param);
+    @POST("user/add-media?section=feed&mediaType=image")
+    Call<LoginResponse> uploadImageToFeed(@Header("Authorization") String token, @Part MultipartBody.Part filePart);
+
+    @Multipart
+    @POST("user/add-media?section=feed&mediaType=video")
+    Call<LoginResponse> uploadVideoToFeed(@Header("Authorization") String token, @Part MultipartBody.Part filePart);
+
+
+    @FormUrlEncoded
+    @POST("user/add-post-feed")
+    Call<LoginResponse> addPostFeed(@Header("Authorization") String token,@FieldMap Map<String, String> param);
 
 
 }

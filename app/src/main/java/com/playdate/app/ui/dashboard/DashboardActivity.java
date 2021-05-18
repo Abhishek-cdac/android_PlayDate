@@ -2,11 +2,15 @@ package com.playdate.app.ui.dashboard;
 
 import android.Manifest;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,6 +28,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.android.gms.maps.model.Dash;
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
@@ -56,7 +61,10 @@ import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -91,7 +99,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     ImageView iv_coupons;
     ImageView iv_date;
 
-//    SwipeRefreshLayout mSwipeRefreshLayout;
+    //    SwipeRefreshLayout mSwipeRefreshLayout;
     LinearLayout ll_mainMenu, ll_her;
     LinearLayout ll_friends;
     LinearLayout ll_profile_menu;
@@ -484,8 +492,8 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             ll_profile_drop_menu.setVisibility(View.GONE);
             iv_plus.setVisibility(View.VISIBLE);
             iv_play_date_logo.setVisibility(View.VISIBLE);
-            Intent mIntent=new Intent(DashboardActivity.this, AnonymousQuestionActivity.class);
-            mIntent.putExtra("new",true);
+            Intent mIntent = new Intent(DashboardActivity.this, AnonymousQuestionActivity.class);
+            mIntent.putExtra("new", true);
             startActivity(mIntent);
         } else if (id == R.id.ll_take_photo) {
 
@@ -512,6 +520,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             iv_play_date_logo.setVisibility(View.VISIBLE);
 
         } else if (id == R.id.ll_Record_video) {
+            takeVideoFromCamera();
             bottomNavigationView.setVisibility(View.VISIBLE);
             ll_camera_option.setVisibility(View.GONE);
             iv_play_date_logo.setVisibility(View.VISIBLE);
@@ -551,7 +560,11 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             e.printStackTrace();
         }
     }
-
+    private int GALLERY = 1, CAMERA = 2;
+    private void takeVideoFromCamera() {
+        Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+        startActivityForResult(intent, CAMERA);
+    }
     public void pickImage() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         intent.setType("image/*");
@@ -559,16 +572,17 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     }
 
     public void pickVideo() {
-        Intent intent = new Intent();
-        intent.setType("video/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Video"), REQUEST_TAKE_GALLERY_VIDEO);
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
+        galleryIntent.setType("video/*");
+        startActivityForResult(Intent.createChooser(galleryIntent, "Select Video"), REQUEST_TAKE_GALLERY_VIDEO);
 
     }
 
     FragInstaLikeProfile profile;
     int count = 0;
 
+    public static Bitmap bitmap = null;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -578,7 +592,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
                 return;
             }
             if (requestCode == PICK_PHOTO_FOR_AVATAR) {
-                Bitmap bitmap = null;
+
                 if (data.getData() == null) {
                     bitmap = (Bitmap) data.getExtras().get("data");
                 } else {
@@ -591,12 +605,14 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
 
                 if (null != bitmap) {
-                    startActivity(new Intent(DashboardActivity.this, PostMediaActivity.class));
+
+                    Intent mIntent = new Intent(DashboardActivity.this, PostMediaActivity.class);
+                    startActivity(mIntent);
                 }
 
             } else if (requestCode == TAKE_PHOTO_CODE) {
 
-                Bitmap bitmap = null;
+
                 if (data.getData() == null) {
                     bitmap = (Bitmap) data.getExtras().get("data");
                 } else {
@@ -609,20 +625,55 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
 
                 if (null != bitmap) {
-//                    binding.profileImage.setImageBitmap(bitmap);
-//                    showChange();
-//                    nextPage
-                    startActivity(new Intent(DashboardActivity.this, PostMediaActivity.class));
+
+                    Intent mIntent = new Intent(DashboardActivity.this, PostMediaActivity.class);
+
+                    startActivity(mIntent);
                 }
 
+            } else if (requestCode == REQUEST_TAKE_GALLERY_VIDEO) {
 
+                if (data != null) {
+                    Uri contentURI = data.getData();
+
+                    String selectedVideoPath = getPath(contentURI);
+                    Log.d("path",selectedVideoPath);
+//                    saveVideoToInternalStorage(selectedVideoPath);
+//                    videoView.setVideoURI(contentURI);
+//                    videoView.requestFocus();
+//                    videoView.start();
+
+                    Intent mIntent = new Intent(DashboardActivity.this, PostMediaActivity.class);
+                    mIntent.putExtra("videoPath",selectedVideoPath);
+                    startActivity(mIntent);
+
+                }
+            } else if (requestCode == CAMERA){
+                Uri contentURI = data.getData();
+                String recordedVideoPath = getPath(contentURI);
+                Log.d("frrr",recordedVideoPath);
+                Intent mIntent = new Intent(DashboardActivity.this, PostMediaActivity.class);
+                mIntent.putExtra("videoPath",recordedVideoPath);
+                startActivity(mIntent);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-
+    public String getPath(Uri uri) {
+        String[] projection = { MediaStore.Video.Media.DATA };
+        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
+        if (cursor != null) {
+            // HERE YOU WILL GET A NULLPOINTER IF CURSOR IS NULL
+            // THIS CAN BE, IF YOU USED OI FILE MANAGER FOR PICKING THE MEDIA
+            int column_index = cursor
+                    .getColumnIndexOrThrow(MediaStore.Video.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        } else
+            return null;
+    }
     @Override
     public void onBackPressed() {
 
