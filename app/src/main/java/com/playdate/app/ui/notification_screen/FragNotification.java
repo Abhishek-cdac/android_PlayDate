@@ -193,7 +193,6 @@ public class FragNotification extends Fragment {
                 if (response.code() == 200) {
                     assert response.body() != null;
                     if (response.body().getStatus() == 1) {
-                        Toast.makeText(getActivity(), "Success!", Toast.LENGTH_SHORT).show();
                         lst_notifications = response.body().getData();
                         if (lst_notifications == null) {
                             lst_notifications = new ArrayList<>();
@@ -202,7 +201,7 @@ public class FragNotification extends Fragment {
                         Log.e("lst_notifications",""+lst_notifications.size());
                         RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
                         rv_notification.setLayoutManager(manager);
-                        FragNewNotificationAdapter adapter = new FragNewNotificationAdapter((ArrayList<NotificationData>) lst_notifications, itemClick);
+                        FragNewNotificationAdapter adapter = new FragNewNotificationAdapter(getActivity(), (ArrayList<NotificationData>) lst_notifications, itemClick);
                         rv_notification.setAdapter(adapter);
 
 

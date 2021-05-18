@@ -118,5 +118,6 @@
     <string name="code">Code</string>
     <string name="title_activity_maps">Map</string>
     <string name="phone_number">Phone Number</string>
-
+    <string name="more_suggestion">See More Suggestions</string>
+    <string name="moresugesstion_foru">Suggestions For You</string>
 </resources>
