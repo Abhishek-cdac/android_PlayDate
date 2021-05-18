@@ -20,7 +20,7 @@ public class FragSelectDate extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_select_date,container,false);
+        View view = inflater.inflate(R.layout.activity_select_date, container, false);
         rl_inperson = view.findViewById(R.id.in_person);
         rl_virtual = view.findViewById(R.id.virtual);
 
@@ -30,6 +30,13 @@ public class FragSelectDate extends Fragment {
                 OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
                 frag.ReplaceFrag(new FragLocationTracing());
 //                startActivity(new Intent(getActivity(),LocationTracing.class));
+            }
+        });
+
+        rl_virtual.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+////////rest
             }
         });
 

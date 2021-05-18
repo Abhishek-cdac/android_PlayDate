@@ -19,26 +19,39 @@
             android:layout_alignParentEnd="true"
             android:src="@drawable/icon_cancel" />
 
-        <TextView
-            android:id="@+id/txt_timer"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/_30sdp"
-            android:fontFamily="@font/lato_bold"
-            android:gravity="center"
-            android:text="29:59"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_15sdp"
-            android:textStyle="bold" />
+            android:layout_marginBottom="@dimen/_30sdp">
+
+            <ImageView
+                android:id="@+id/timer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/timer" />
+
+            <TextView
+                android:id="@+id/txt_timer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lato_bold"
+                android:gravity="center"
+                android:layout_marginLeft="@dimen/_4sdp"
+                android:layout_toRightOf="@+id/timer"
+                android:text="29:59"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_15sdp"
+                android:textStyle="bold" />
+        </RelativeLayout>
 
         <ImageView
-            android:id="@+id/iv_back"
+            android:id="@+id/iv_leaderboard"
             android:layout_width="@dimen/_14sdp"
             android:layout_height="@dimen/_14sdp"
             android:layout_alignParentStart="true"
-            android:src="@drawable/arrow_back" />
+            android:src="@drawable/stage" />
 
         <ImageView
             android:layout_width="276dp"

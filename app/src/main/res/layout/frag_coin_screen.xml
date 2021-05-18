@@ -1,7 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:background="@color/color_light_black"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:padding="@dimen/_20sdp">
+
+    <ImageView
+        android:id="@+id/iv_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/icon_cancel" />
+
+    <RelativeLayout
+        android:id="@+id/rl_images"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iv_cancel"
+        android:layout_marginTop="@dimen/_40sdp"
+        android:paddingHorizontal="@dimen/_16sdp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image_me"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/model1"
+            app:civ_border_color="@android:color/transparent" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/right_shift" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image_other"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/model2"
+            app:civ_border_color="@android:color/transparent" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/choose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_images"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:text="Available Coins"
+        android:textColor="@color/off_white"
+        android:textSize="@dimen/_16sdp" />
+
+    <RelativeLayout
+        android:id="@+id/rl_coins"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/choose"
+        android:layout_centerHorizontal="true"
+        android:paddingVertical="@dimen/_12sdp">
+
+        <TextView
+            android:id="@+id/tv_coins_available"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/lato_bold"
+            android:text="40"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_32sdp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_coins_available"
+            android:paddingHorizontal="@dimen/_12sdp"
+            android:src="@drawable/coin" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_coins"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_32sdp"
+        android:padding="@dimen/_10sdp">
+
+        <ImageView
+            android:id="@+id/iv_minus"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/tv_coins"
+            android:src="@drawable/minus" />
+
+        <TextView
+            android:id="@+id/tv_coins"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/lato_bold"
+            android:paddingHorizontal="@dimen/_16sdp"
+            android:text="1"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_42sdp" />
+
+        <ImageView
+            android:id="@+id/iv_add"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/tv_coins"
+            android:src="@drawable/plus" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_buy_coin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btn_send_coin"
+        android:layout_marginHorizontal="@dimen/_14sdp"
+        android:background="@drawable/login_button"
+        android:gravity="center"
+        android:paddingVertical="@dimen/_10sdp"
+        android:text="@string/buy_coins"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_10sdp" />
+
+    <Button
+        android:id="@+id/btn_send_coin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginHorizontal="@dimen/_14sdp"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:layout_marginBottom="@dimen/_24sdp"
+        android:background="@drawable/btn_pink_filled"
+        android:gravity="center"
+        android:paddingVertical="@dimen/_10sdp"
+        android:text="@string/send_coins"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/_10sdp" />
 
 </RelativeLayout>
