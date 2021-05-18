@@ -75,7 +75,7 @@
             <TextView
                 android:id="@+id/item_name"
                 android:layout_width="0dp"
-                android:layout_weight="8"
+                android:layout_weight="5"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lato_bold"
                 android:singleLine="true"
@@ -83,7 +83,6 @@
                 android:minLines="1"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/_26sdp"
-
                 android:textStyle="bold" />
 
             <TextView
@@ -97,13 +96,13 @@
                 android:minLines="1"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/_26sdp"
-
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/item_age"
                 android:layout_width="0dp"
                 android:layout_weight="2"
+                android:maxLines="1"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lato_bold"
                 android:paddingHorizontal="@dimen/_5sdp"

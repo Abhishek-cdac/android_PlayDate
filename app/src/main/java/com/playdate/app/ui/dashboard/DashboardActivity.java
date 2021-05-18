@@ -214,12 +214,13 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             txt_match.setBackground(null);
             txt_chat.setBackground(null);
             txt_social.setTextColor(getResources().getColor(R.color.white));
+            txt_social.setBackground(getResources().getDrawable(R.drawable.menu_button));
+
             iv_dashboard_notification.setBackground(null);
             iv_dashboard_notification.setImageResource(R.drawable.ic_bell);
 
             txt_chat.setTextColor(getResources().getColor(android.R.color.darker_gray));
             txt_match.setTextColor(getResources().getColor(android.R.color.darker_gray));
-            txt_social.setBackground(getResources().getDrawable(R.drawable.menu_button));
             ReplaceFrag(new FragSocialFeed());
             ll_friends.setVisibility(View.VISIBLE);
             ll_mainMenu.setVisibility(View.VISIBLE);
@@ -452,6 +453,13 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             ll_friends.setVisibility(View.VISIBLE);
             ll_mainMenu.setVisibility(View.VISIBLE);
             ll_her.setVisibility(View.VISIBLE);
+
+            iv_dashboard_notification.setBackground(null);
+            iv_dashboard_notification.setImageResource(R.drawable.ic_bell);
+            txt_social.setTextColor(getResources().getColor(R.color.white));
+            txt_social.setBackground(getResources().getDrawable(R.drawable.menu_button));
+
+
         } else if (id == R.id.ll_profile_insta) {
             iv_plus.setVisibility(View.VISIBLE);
             ll_option_love.setVisibility(View.GONE);
@@ -521,6 +529,10 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         } else if (id == R.id.iv_coupons) {
             iv_love.setImageResource(R.drawable.love);
             ReplaceFrag(new FragCouponStore());
+            ll_friends.setVisibility(View.VISIBLE);
+            ll_mainMenu.setVisibility(View.VISIBLE);
+            ll_her.setVisibility(View.VISIBLE);
+
         }
 
 
