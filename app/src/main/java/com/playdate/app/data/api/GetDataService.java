@@ -104,6 +104,13 @@ public interface GetDataService {
     @POST("user/friend-request-status-update")
     Call<CommonModel> friendRequestStatus(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
+    @FormUrlEncoded
+    @POST("user/add-user-match-request")
+    Call<CommonModel> addUserMatchRequest(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
+    @FormUrlEncoded
+    @POST("user/match-request-status-update")
+    Call<CommonModel> matchRequestStatusUpdate(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
     @Multipart
     @POST("user/add-media?section=feed&mediaType=image")

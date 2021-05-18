@@ -218,12 +218,13 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             txt_match.setBackground(null);
             txt_chat.setBackground(null);
             txt_social.setTextColor(getResources().getColor(R.color.white));
+            txt_social.setBackground(getResources().getDrawable(R.drawable.menu_button));
+
             iv_dashboard_notification.setBackground(null);
             iv_dashboard_notification.setImageResource(R.drawable.ic_bell);
 
             txt_chat.setTextColor(getResources().getColor(android.R.color.darker_gray));
             txt_match.setTextColor(getResources().getColor(android.R.color.darker_gray));
-            txt_social.setBackground(getResources().getDrawable(R.drawable.menu_button));
             ReplaceFrag(new FragSocialFeed());
             ll_friends.setVisibility(View.VISIBLE);
             ll_mainMenu.setVisibility(View.VISIBLE);
@@ -462,6 +463,13 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             ll_friends.setVisibility(View.VISIBLE);
             ll_mainMenu.setVisibility(View.VISIBLE);
             ll_her.setVisibility(View.VISIBLE);
+
+            iv_dashboard_notification.setBackground(null);
+            iv_dashboard_notification.setImageResource(R.drawable.ic_bell);
+            txt_social.setTextColor(getResources().getColor(R.color.white));
+            txt_social.setBackground(getResources().getDrawable(R.drawable.menu_button));
+
+
         } else if (id == R.id.ll_profile_insta) {
             iv_play_date_logo.setVisibility(View.VISIBLE);
             ll_profile_drop_menu.setVisibility(View.GONE);
@@ -540,6 +548,10 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         } else if (id == R.id.iv_coupons) {
             iv_love.setImageResource(R.drawable.love);
             ReplaceFrag(new FragCouponStore());
+            ll_friends.setVisibility(View.VISIBLE);
+            ll_mainMenu.setVisibility(View.VISIBLE);
+            ll_her.setVisibility(View.VISIBLE);
+
         }
 
 
@@ -555,11 +567,14 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             e.printStackTrace();
         }
     }
+
     private int GALLERY = 1, CAMERA = 2;
+
     private void takeVideoFromCamera() {
         Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
         startActivityForResult(intent, CAMERA);
     }
+
     public void pickImage() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         intent.setType("image/*");
@@ -632,23 +647,23 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
                     Uri contentURI = data.getData();
 
                     String selectedVideoPath = getPath(contentURI);
-                    Log.d("path",selectedVideoPath);
+                    Log.d("path", selectedVideoPath);
 //                    saveVideoToInternalStorage(selectedVideoPath);
 //                    videoView.setVideoURI(contentURI);
 //                    videoView.requestFocus();
 //                    videoView.start();
 
                     Intent mIntent = new Intent(DashboardActivity.this, PostMediaActivity.class);
-                    mIntent.putExtra("videoPath",selectedVideoPath);
+                    mIntent.putExtra("videoPath", selectedVideoPath);
                     startActivity(mIntent);
 
                 }
-            } else if (requestCode == CAMERA){
+            } else if (requestCode == CAMERA) {
                 Uri contentURI = data.getData();
                 String recordedVideoPath = getPath(contentURI);
-                Log.d("frrr",recordedVideoPath);
+                Log.d("frrr", recordedVideoPath);
                 Intent mIntent = new Intent(DashboardActivity.this, PostMediaActivity.class);
-                mIntent.putExtra("videoPath",recordedVideoPath);
+                mIntent.putExtra("videoPath", recordedVideoPath);
                 startActivity(mIntent);
             }
         } catch (Exception e) {
@@ -657,7 +672,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     }
 
     public String getPath(Uri uri) {
-        String[] projection = { MediaStore.Video.Media.DATA };
+        String[] projection = {MediaStore.Video.Media.DATA};
         Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
         if (cursor != null) {
             // HERE YOU WILL GET A NULLPOINTER IF CURSOR IS NULL
@@ -669,6 +684,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         } else
             return null;
     }
+
     @Override
     public void onBackPressed() {
 
