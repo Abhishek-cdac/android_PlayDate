@@ -307,12 +307,8 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
 //                    } catch (Exception e) {
 //                        Toast.makeText(BioActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
 //                    }
-
                 }
-
-
             }
-
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 t.printStackTrace();
@@ -321,8 +317,6 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
             }
         });
     }
-
-
 }
 
 

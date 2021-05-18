@@ -27,6 +27,7 @@ import com.google.android.exoplayer2.util.Util;
 import com.playdate.app.R;
 import com.playdate.app.model.Interest;
 import com.playdate.app.model.MatchListUser;
+import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.ui.playvideo.ExoPlayerActivity;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
@@ -42,10 +43,12 @@ public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.
     List<MatchListUser> tinder_list;
     Context mContext;
     String userId;
-
-    public TinderSwipeAdapter(List<MatchListUser> tinder_list, ArrayList<Interest> lst_interest) {
+    Onclick itemClick;
+    public TinderSwipeAdapter(List<MatchListUser> tinder_list, ArrayList<Interest> lst_interest, Onclick itemClick) {
         this.tinder_list = tinder_list;
         this.lst_interest = lst_interest;
+        this.itemClick = itemClick;
+
     }
 
 
@@ -67,8 +70,6 @@ public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.
     public int getItemCount() {
         return tinder_list.size();
     }
-
-
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView image, iv_maximise, item_cross, item_check;
@@ -94,6 +95,21 @@ public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.
             iv_video_play = itemView.findViewById(R.id.iv_video_play);
             item_premium = itemView.findViewById(R.id.item_premium);
             iv_maximise = itemView.findViewById(R.id.item_fullScreen);
+            item_check.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    itemClick.onItemClicks(v, getAdapterPosition(), 13, userId);
+
+                }
+            });
+
+            item_cross.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    itemClick.onItemClicks(v, getAdapterPosition(), 14, userId);
+
+                }
+            });
 
 
         }

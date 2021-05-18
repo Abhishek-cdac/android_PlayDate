@@ -42,6 +42,7 @@
                 android:id="@+id/diamond"
                 android:layout_width="@dimen/_15sdp"
                 android:layout_height="@dimen/_15sdp"
+                android:visibility="gone"
                 android:src="@drawable/diamond_normal" />
 
 
