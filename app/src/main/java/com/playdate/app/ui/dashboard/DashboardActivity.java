@@ -567,11 +567,14 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             e.printStackTrace();
         }
     }
+
     private int GALLERY = 1, CAMERA = 2;
+
     private void takeVideoFromCamera() {
         Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
         startActivityForResult(intent, CAMERA);
     }
+
     public void pickImage() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         intent.setType("image/*");
@@ -644,23 +647,23 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
                     Uri contentURI = data.getData();
 
                     String selectedVideoPath = getPath(contentURI);
-                    Log.d("path",selectedVideoPath);
+                    Log.d("path", selectedVideoPath);
 //                    saveVideoToInternalStorage(selectedVideoPath);
 //                    videoView.setVideoURI(contentURI);
 //                    videoView.requestFocus();
 //                    videoView.start();
 
                     Intent mIntent = new Intent(DashboardActivity.this, PostMediaActivity.class);
-                    mIntent.putExtra("videoPath",selectedVideoPath);
+                    mIntent.putExtra("videoPath", selectedVideoPath);
                     startActivity(mIntent);
 
                 }
-            } else if (requestCode == CAMERA){
+            } else if (requestCode == CAMERA) {
                 Uri contentURI = data.getData();
                 String recordedVideoPath = getPath(contentURI);
-                Log.d("frrr",recordedVideoPath);
+                Log.d("frrr", recordedVideoPath);
                 Intent mIntent = new Intent(DashboardActivity.this, PostMediaActivity.class);
-                mIntent.putExtra("videoPath",recordedVideoPath);
+                mIntent.putExtra("videoPath", recordedVideoPath);
                 startActivity(mIntent);
             }
         } catch (Exception e) {
@@ -669,7 +672,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     }
 
     public String getPath(Uri uri) {
-        String[] projection = { MediaStore.Video.Media.DATA };
+        String[] projection = {MediaStore.Video.Media.DATA};
         Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
         if (cursor != null) {
             // HERE YOU WILL GET A NULLPOINTER IF CURSOR IS NULL
@@ -681,6 +684,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         } else
             return null;
     }
+
     @Override
     public void onBackPressed() {
 
