@@ -241,6 +241,7 @@
             android:layout_marginRight="@dimen/_25sdp"
             android:fontFamily="@font/helvetica_neue"
             android:gravity="start|center"
+            android:visibility="gone"
             android:text="Tag a friend"
             android:textColor="@android:color/black"
             android:textSize="@dimen/_11sdp" />
@@ -249,6 +250,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_25sdp"
+            android:visibility="gone"
             android:layout_marginRight="@dimen/_25sdp">
 
             <TextView
