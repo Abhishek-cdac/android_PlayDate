@@ -285,6 +285,7 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
         hashMap.put("location", txt_location.getText().toString());
         hashMap.put("mediaId", mediaId);
         hashMap.put("postType", "Normal");// Hardcode
+        hashMap.put("tagFriend", "6099116701fa031ccf75beae,6099241bea3de137a41d4098,60992219ea3de137a41d4095");// Hardcode
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
         pd.show();
 
