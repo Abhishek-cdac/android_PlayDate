@@ -36,6 +36,7 @@
                     android:src="@drawable/profile" />
 
             </androidx.cardview.widget.CardView>
+
             <ImageView
                 android:layout_alignTop="@+id/card"
                 android:layout_alignLeft="@+id/card"
@@ -44,7 +45,6 @@
                 android:layout_height="@dimen/_15sdp"
                 android:visibility="gone"
                 android:src="@drawable/diamond_normal" />
-
 
 
         </RelativeLayout>

@@ -28,8 +28,7 @@
                 android:id="@+id/profile_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                android:src="@drawable/model1"/>
+                android:scaleType="fitXY" />
 
         </androidx.cardview.widget.CardView>
 
@@ -69,6 +68,7 @@
             <ImageView
                 android:layout_width="@dimen/_40sdp"
                 android:layout_height="@dimen/_40sdp"
+                android:id="@+id/iv_chat_icon"
                 android:layout_marginLeft="@dimen/_30sdp"
                 android:src="@drawable/msg_lock">
 

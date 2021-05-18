@@ -46,6 +46,7 @@ public class FragLanding extends Fragment {
     RelativeLayout Rl_page;
     ArrayList<GetUserSuggestionData> lst_getUserSuggestions;
     Onclick itemClick;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -132,7 +133,7 @@ public class FragLanding extends Fragment {
 
 
                         // SuggestionAdapter adapter = new SuggestionAdapter(getActivity());
-                        SuggestionAdapter adapter = new SuggestionAdapter(getActivity(), lst_getUserSuggestions, itemClick);
+                        SuggestionAdapter adapter = new SuggestionAdapter( getActivity(), lst_getUserSuggestions, itemClick);
                         vp_suggestion.setAdapter(adapter);
                         vp_suggestion.setCurrentItem(8);
                         vp_suggestion.setPadding(130, 0, 130, 0);
@@ -164,8 +165,8 @@ public class FragLanding extends Fragment {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("toUserID", s);
-        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
-        pd.show();
+//        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
+//        pd.show();
         SessionPref pref = SessionPref.getInstance(getActivity());
         Log.e("CommonModel", "" + pref.getStringVal(SessionPref.LoginUsertoken));
 
@@ -174,17 +175,16 @@ public class FragLanding extends Fragment {
         call.enqueue(new Callback<CommonModel>() {
             @Override
             public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
-                pd.cancel();
+//                pd.cancel();
                 if (response.code() == 200) {
                     assert response.body() != null;
                     if (response.body().getStatus() == 1) {
-                        FriendRequest friendRequest= new FriendRequest();
-                        Log.e("FriendRequestStatus",""+friendRequest.getStatus());
-
-                        Toast.makeText(getActivity(), "Request Sent! " + s, Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", ""+response.body().getMessage(), "Ok");
+//                        FriendRequest friendRequest = new FriendRequest();
+//                        Log.e("FriendRequestStatus", "" + friendRequest.getStatus());
+//
+//                        Toast.makeText(getActivity(), "Request Sent! " + s, Toast.LENGTH_SHORT).show();
+                    } else {
+                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", "" + response.body().getMessage(), "Ok");
                     }
                 } else {
                     try {
@@ -199,7 +199,7 @@ public class FragLanding extends Fragment {
             @Override
             public void onFailure(Call<CommonModel> call, Throwable t) {
                 t.printStackTrace();
-                pd.cancel();
+//                pd.cancel();
                 Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
