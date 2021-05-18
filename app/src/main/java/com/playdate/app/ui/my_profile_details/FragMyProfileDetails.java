@@ -163,23 +163,23 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
             } else if (pref.getStringVal(SessionPref.LoginUserSourceType).equals("Google")) {
 
                 signOut();
-//                Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(
-//                        new ResultCallback<Status>() {
-//                            @Override
-//                            public void onResult(@NotNull Status status) {
-//                                if (status.isSuccess()) {
-//                                    Toast.makeText(getActivity(), "LogOut", Toast.LENGTH_LONG).show();
-//                                    SessionPref.getInstance(getActivity()).saveBoolKeyVal(LoginVerified, false);
-//                                    SessionPref.logout(getActivity());
-//                                    Intent intent = new Intent(getActivity(), LoginActivity.class);
-//                                    startActivity(intent);
-//                                    getActivity().finish();
-//
-//                                } else {
-//                                    Toast.makeText(getActivity(), "Session not close", Toast.LENGTH_LONG).show();
-//                                }
-//                            }
-//                        });
+////                Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(
+////                        new ResultCallback<Status>() {
+////                            @Override
+////                            public void onResult(@NotNull Status status) {
+////                                if (status.isSuccess()) {
+////                                    Toast.makeText(getActivity(), "LogOut", Toast.LENGTH_LONG).show();
+////                                    SessionPref.getInstance(getActivity()).saveBoolKeyVal(LoginVerified, false);
+////                                    SessionPref.logout(getActivity());
+////                                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+////                                    startActivity(intent);
+////                                    getActivity().finish();
+////
+////                                } else {
+////                                    Toast.makeText(getActivity(), "Session not close", Toast.LENGTH_LONG).show();
+////                                }
+////                            }
+////                        });
             }
 
         }

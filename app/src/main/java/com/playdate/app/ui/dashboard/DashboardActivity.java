@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,7 +27,6 @@ import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.FriendsListModel;
-import com.playdate.app.model.MatchListModel;
 import com.playdate.app.model.MatchListUser;
 import com.playdate.app.ui.anonymous_question.AnoQuesCreateActivity;
 import com.playdate.app.ui.card_swipe.FragCardSwipe;
@@ -36,10 +34,8 @@ import com.playdate.app.ui.chat.request.RequestChatFragment;
 import com.playdate.app.ui.coupons.FragCouponStore;
 import com.playdate.app.ui.dashboard.adapter.FriendAdapter;
 import com.playdate.app.ui.dashboard.fragments.FragLanding;
-import com.playdate.app.ui.date.IntroScreen;
-import com.playdate.app.ui.dialogs.AnonymousMedalDialog;
+import com.playdate.app.ui.date.DateBaseActivity;
 import com.playdate.app.ui.dialogs.FullScreenDialog;
-import com.playdate.app.ui.dialogs.GetPremiumDialog;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.ui.my_profile_details.FragInstaLikeProfile;
 import com.playdate.app.ui.my_profile_details.FragMyProfileDetails;
@@ -49,7 +45,6 @@ import com.playdate.app.ui.my_profile_details.FragMyProfilePersonal;
 import com.playdate.app.ui.notification_screen.FragNotification;
 import com.playdate.app.ui.social.FragSocialFeed;
 import com.playdate.app.ui.social.upload_media.PostMediaActivity;
-import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
 
@@ -271,7 +266,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         iv_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(DashboardActivity.this, IntroScreen.class));
+                startActivity(new Intent(DashboardActivity.this, DateBaseActivity.class));
 
             }
         });
