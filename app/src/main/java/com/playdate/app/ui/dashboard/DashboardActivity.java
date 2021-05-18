@@ -8,13 +8,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -25,15 +23,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.google.android.gms.maps.model.Dash;
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.FriendsListModel;
 import com.playdate.app.model.MatchListUser;
-import com.playdate.app.ui.anonymous_question.AnoQuesCreateActivity;
 import com.playdate.app.ui.anonymous_question.AnonymousQuestionActivity;
 import com.playdate.app.ui.card_swipe.FragCardSwipe;
 import com.playdate.app.ui.chat.request.RequestChatFragment;
@@ -47,7 +42,6 @@ import com.playdate.app.ui.my_profile_details.FragInstaLikeProfile;
 import com.playdate.app.ui.my_profile_details.FragMyProfileDetails;
 import com.playdate.app.ui.my_profile_details.FragMyProfilePayments;
 import com.playdate.app.ui.my_profile_details.FragMyProfilePersonal;
-
 import com.playdate.app.ui.notification_screen.FragNotification;
 import com.playdate.app.ui.social.FragSocialFeed;
 import com.playdate.app.ui.social.upload_media.PostMediaActivity;
@@ -56,10 +50,7 @@ import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -76,59 +67,48 @@ import static com.playdate.app.ui.register.profile.UploadProfileActivity.TAKE_PH
 import static com.playdate.app.util.session.SessionPref.CompleteProfile;
 
 public class DashboardActivity extends AppCompatActivity implements OnInnerFragmentClicks, View.OnClickListener, OnProfilePhotoChageListerner {
-    FragmentManager fm;
-    FragmentTransaction ft;
-    TextView txt_match, txt_chat;
-    TextView txt_social;
-    TextView txt_payment;
-    TextView txt_account;
-    TextView txt_personal;
-    ImageView iv_love;
-    ImageView iv_profile_sett;
-    ImageView iv_plus;
-    ImageView iv_play_date_logo;
-    ImageView iv_cancel;
-    ImageView iv_create_ano_ques;
-    ImageView iv_gallery;
-    ImageView iv_dashboard_notification;
-    ImageView iv_coupons;
-    ImageView iv_date;
+    private FragmentManager fm;
+    private FragmentTransaction ft;
+    private TextView txt_match, txt_chat;
+    private TextView txt_social;
+    private TextView txt_payment;
+    private TextView txt_account;
+    private TextView txt_personal;
+    private ImageView iv_love;
+    private ImageView iv_profile_sett;
+    private ImageView iv_plus;
+    private ImageView iv_play_date_logo;
+    private ImageView iv_dashboard_notification;
 
     //    SwipeRefreshLayout mSwipeRefreshLayout;
-    LinearLayout ll_mainMenu, ll_her;
-    LinearLayout ll_friends;
-    LinearLayout ll_profile_menu;
-    LinearLayout ll_option_love;
-    LinearLayout ll_profile_support;
-    LinearLayout ll_love_bottom;
-    LinearLayout ll_profile_insta;
-    LinearLayout ll_profile_drop_menu;
+    private LinearLayout ll_mainMenu, ll_her;
+    private LinearLayout ll_friends;
+    private LinearLayout ll_profile_menu;
+    private LinearLayout ll_option_love;
+    private LinearLayout ll_profile_insta;
+    private LinearLayout ll_profile_drop_menu;
 
-    LinearLayout ll_take_photo;
-    LinearLayout ll_upload_photo;
-    LinearLayout ll_Record_video;
-    LinearLayout ll_upload_video;
-    LinearLayout bottomNavigationView;
-    LinearLayout ll_camera_option;
+    private LinearLayout bottomNavigationView;
+    private LinearLayout ll_camera_option;
 
 
-    RelativeLayout rl_main;
-    ImageView profile_image;
-    RecyclerView rv_friends;
+    private ImageView profile_image;
+    private ImageView iv_search;
+    private RecyclerView rv_friends;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+        iv_search = findViewById(R.id.iv_search);
         ll_profile_insta = findViewById(R.id.ll_profile_insta);
         profile_image = findViewById(R.id.profile_image);
         txt_chat = findViewById(R.id.txt_chat);
-        rl_main = findViewById(R.id.rl_main);
         ll_her = findViewById(R.id.ll_her);
         ll_mainMenu = findViewById(R.id.ll_mainMenu);
         ll_friends = findViewById(R.id.ll_friends);
-        ll_love_bottom = findViewById(R.id.ll_love_bottom);
-        ll_profile_support = findViewById(R.id.ll_profile_support);
+        LinearLayout ll_love_bottom = findViewById(R.id.ll_love_bottom);
+        LinearLayout ll_profile_support = findViewById(R.id.ll_profile_support);
         ll_profile_menu = findViewById(R.id.ll_profile_menu);
         ll_option_love = findViewById(R.id.ll_option_love);
         txt_social = findViewById(R.id.txt_social);
@@ -141,17 +121,17 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         iv_love = findViewById(R.id.iv_love);
         iv_profile_sett = findViewById(R.id.iv_profile_sett);
         ll_profile_drop_menu = findViewById(R.id.ll_profile_drop_menu);
-        iv_cancel = findViewById(R.id.iv_cancel);
-        iv_gallery = findViewById(R.id.iv_gallery);
-        iv_create_ano_ques = findViewById(R.id.iv_create_ano_ques);
+        ImageView iv_cancel = findViewById(R.id.iv_cancel);
+        ImageView iv_gallery = findViewById(R.id.iv_gallery);
+        ImageView iv_create_ano_ques = findViewById(R.id.iv_create_ano_ques);
         iv_dashboard_notification = findViewById(R.id.iv_dashboard_notification);
-        iv_coupons = findViewById(R.id.iv_coupons);
-        iv_date = findViewById(R.id.iv_date);
+        ImageView iv_coupons = findViewById(R.id.iv_coupons);
+        ImageView iv_date = findViewById(R.id.iv_date);
 
-        ll_take_photo = findViewById(R.id.ll_take_photo);
-        ll_upload_photo = findViewById(R.id.ll_upload_photo);
-        ll_Record_video = findViewById(R.id.ll_Record_video);
-        ll_upload_video = findViewById(R.id.ll_upload_video);
+        LinearLayout ll_take_photo = findViewById(R.id.ll_take_photo);
+        LinearLayout ll_upload_photo = findViewById(R.id.ll_upload_photo);
+        LinearLayout ll_Record_video = findViewById(R.id.ll_Record_video);
+        LinearLayout ll_upload_video = findViewById(R.id.ll_upload_video);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         ll_camera_option = findViewById(R.id.ll_camera_option);
 
@@ -169,6 +149,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         ll_upload_photo.setOnClickListener(this);
         ll_Record_video.setOnClickListener(this);
         ll_upload_video.setOnClickListener(this);
+        iv_search.setOnClickListener(this);
 
         fm = getSupportFragmentManager();
         ft = fm.beginTransaction();
@@ -540,6 +521,9 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         } else if (id == R.id.iv_coupons) {
             iv_love.setImageResource(R.drawable.love);
             ReplaceFrag(new FragCouponStore());
+        } else if (id == R.id.iv_search) {
+            iv_love.setImageResource(R.drawable.love);
+            ReplaceFrag(new FragCouponStore());
         }
 
 
@@ -555,11 +539,14 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             e.printStackTrace();
         }
     }
+
     private int GALLERY = 1, CAMERA = 2;
+
     private void takeVideoFromCamera() {
         Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
         startActivityForResult(intent, CAMERA);
     }
+
     public void pickImage() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         intent.setType("image/*");
@@ -632,23 +619,23 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
                     Uri contentURI = data.getData();
 
                     String selectedVideoPath = getPath(contentURI);
-                    Log.d("path",selectedVideoPath);
+                    Log.d("path", selectedVideoPath);
 //                    saveVideoToInternalStorage(selectedVideoPath);
 //                    videoView.setVideoURI(contentURI);
 //                    videoView.requestFocus();
 //                    videoView.start();
 
                     Intent mIntent = new Intent(DashboardActivity.this, PostMediaActivity.class);
-                    mIntent.putExtra("videoPath",selectedVideoPath);
+                    mIntent.putExtra("videoPath", selectedVideoPath);
                     startActivity(mIntent);
 
                 }
-            } else if (requestCode == CAMERA){
+            } else if (requestCode == CAMERA) {
                 Uri contentURI = data.getData();
                 String recordedVideoPath = getPath(contentURI);
-                Log.d("frrr",recordedVideoPath);
+                Log.d("frrr", recordedVideoPath);
                 Intent mIntent = new Intent(DashboardActivity.this, PostMediaActivity.class);
-                mIntent.putExtra("videoPath",recordedVideoPath);
+                mIntent.putExtra("videoPath", recordedVideoPath);
                 startActivity(mIntent);
             }
         } catch (Exception e) {
@@ -657,7 +644,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     }
 
     public String getPath(Uri uri) {
-        String[] projection = { MediaStore.Video.Media.DATA };
+        String[] projection = {MediaStore.Video.Media.DATA};
         Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
         if (cursor != null) {
             // HERE YOU WILL GET A NULLPOINTER IF CURSOR IS NULL
@@ -669,6 +656,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         } else
             return null;
     }
+
     @Override
     public void onBackPressed() {
 
