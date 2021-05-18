@@ -80,8 +80,15 @@
     <string name="keep_looking1">Keep Looking</string>
     <string name="send_msg">Send Message</string>
     <string name="create_date">Create Date</string>
+    <string name="buy_coins">Buy Coins</string>
+    <string name="send_coins">Send Coins</string>
+    <string name="keep_playing">Keep Playing</string>
+    <string name="finish_date">Finish Date</string>
+    <string name="use_date_coin">Use Date Coin</string>
+    <string name="use_game_coin">Use Game Coin</string>
     <string name="proceed">Proceed</string>
     <string name="popular">Popular</string>
+    <string name="hope_you_had">Hope you had a great time!</string>
     <string name="new_games">New Games</string>
     <string name="trending">Trending</string>
     <string name="accept_date">Accept Date</string>

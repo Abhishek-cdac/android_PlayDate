@@ -19,10 +19,10 @@ public class PopularGamesAdapter extends RecyclerView.Adapter<PopularGamesAdapte
     public PopularGamesAdapter() {
         list.add(new PopularGames("The Spirit Animal", R.drawable.game1));
         list.add(new PopularGames("Guess My Drawing", R.drawable.game2));
-        list.add(new PopularGames("one word answer", R.drawable.game1));
-        list.add(new PopularGames("36 question", R.drawable.game2));
-        list.add(new PopularGames("The Spirit Animal", R.drawable.game1));
+        list.add(new PopularGames("one word answer", R.drawable.game3));
+        list.add(new PopularGames("36 question", R.drawable.game1));
         list.add(new PopularGames("The Spirit Animal", R.drawable.game2));
+        list.add(new PopularGames("The Spirit Animal", R.drawable.game1));
     }
 
     @NonNull
