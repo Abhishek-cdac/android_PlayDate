@@ -41,6 +41,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.Task;
+import com.google.zxing.common.StringUtils;
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
@@ -301,7 +302,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 user.getProfileVideoPath(),
                 user.getRelationship(),
                 user.getPersonalBio(),
-                "",
+                user.getInterested().toString().replace("[","").replace("]",""),
                 user.getInterestedIn(),
                 "",
                 user.getSourceType(),

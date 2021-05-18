@@ -1,7 +1,6 @@
 package com.playdate.app.ui.dashboard.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,11 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.playdate.app.R;
@@ -21,13 +15,9 @@ import com.playdate.app.model.FriendRequest;
 import com.playdate.app.model.Friends;
 import com.playdate.app.model.GetUserSuggestionData;
 import com.playdate.app.ui.chat.request.Onclick;
-import com.playdate.app.ui.dashboard.fragments.FragSuggestion;
-import com.playdate.app.ui.onboarding.OnBoardingImageFragment;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-
-import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 
 public class SuggestionAdapter extends PagerAdapter {
 

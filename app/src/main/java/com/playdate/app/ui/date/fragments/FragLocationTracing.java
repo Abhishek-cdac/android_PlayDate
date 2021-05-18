@@ -1,22 +1,24 @@
-package com.playdate.app.ui.date;
+package com.playdate.app.ui.date.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.playdate.app.R;
-import com.playdate.app.ui.dashboard.DashboardActivity;
-import com.playdate.app.ui.dialogs.FullScreenDialog;
+import com.playdate.app.ui.date.fragments.FragLocationConfirmation;
+import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 
-public class LocationTracing extends AppCompatActivity {
+public class FragLocationTracing extends Fragment {
 
     SpinKitView spin_kit_location_trace;
     SpinKitView spin_kit_dots1;
@@ -33,28 +35,52 @@ public class LocationTracing extends AppCompatActivity {
     ImageView iv_check_other;
     ImageView iv_check_rest;
 
+    @Nullable
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_location_tracing);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_location_tracing, container, false);
 
-        spin_kit_location_trace = findViewById(R.id.spin_kit_location_trace);
-        spin_kit_dots1 = findViewById(R.id.spin_kit_dots1);
-        spin_kit_dots2 = findViewById(R.id.spin_kit_dots2);
+        spin_kit_location_trace = view.findViewById(R.id.spin_kit_location_trace);
+        spin_kit_dots1 = view.findViewById(R.id.spin_kit_dots1);
+        spin_kit_dots2 = view.findViewById(R.id.spin_kit_dots2);
 
-        rl_other = findViewById(R.id.rl_other);
-        rl_mine = findViewById(R.id.rl_mine);
-        tv_location = findViewById(R.id.tv_location);
+        rl_other = view.findViewById(R.id.rl_other);
+        rl_mine = view.findViewById(R.id.rl_mine);
+        tv_location = view.findViewById(R.id.tv_location);
 
-        iv_my_image = findViewById(R.id.iv_my_image);
-        iv_partner_image = findViewById(R.id.iv_partner_image);
-        iv_pin_restaurent = findViewById(R.id.iv_pin_restaurent);
-        iv_check_mine = findViewById(R.id.iv_check_mine);
-        iv_check_other = findViewById(R.id.iv_check_other);
-        iv_check_rest = findViewById(R.id.iv_check_rest);
+        iv_my_image = view.findViewById(R.id.iv_my_image);
+        iv_partner_image = view.findViewById(R.id.iv_partner_image);
+        iv_pin_restaurent = view.findViewById(R.id.iv_pin_restaurent);
+        iv_check_mine = view.findViewById(R.id.iv_check_mine);
+        iv_check_other = view.findViewById(R.id.iv_check_other);
+        iv_check_rest = view.findViewById(R.id.iv_check_rest);
         animationFirst();
 
+        return view;
     }
+
+//    @Override
+//    protected void onCreate(@Nullable Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_location_tracing);
+//
+//        spin_kit_location_trace = findViewById(R.id.spin_kit_location_trace);
+//        spin_kit_dots1 = findViewById(R.id.spin_kit_dots1);
+//        spin_kit_dots2 = findViewById(R.id.spin_kit_dots2);
+//
+//        rl_other = findViewById(R.id.rl_other);
+//        rl_mine = findViewById(R.id.rl_mine);
+//        tv_location = findViewById(R.id.tv_location);
+//
+//        iv_my_image = findViewById(R.id.iv_my_image);
+//        iv_partner_image = findViewById(R.id.iv_partner_image);
+//        iv_pin_restaurent = findViewById(R.id.iv_pin_restaurent);
+//        iv_check_mine = findViewById(R.id.iv_check_mine);
+//        iv_check_other = findViewById(R.id.iv_check_other);
+//        iv_check_rest = findViewById(R.id.iv_check_rest);
+//        animationFirst();
+//
+//    }
 
     private void animationFirst() {
 
@@ -107,7 +133,9 @@ public class LocationTracing extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(LocationTracing.this, LocationConfirmationActivity.class));
+                OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
+                frag.ReplaceFrag(new FragLocationConfirmation());
+//                startActivity(new Intent(getActivity(), LocationConfirmationActivity.class));
             }
         }, 3000);
     }

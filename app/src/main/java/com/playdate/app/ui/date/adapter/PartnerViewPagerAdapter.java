@@ -1,16 +1,10 @@
 package com.playdate.app.ui.date.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,27 +12,24 @@ import androidx.viewpager.widget.PagerAdapter;
 
 import com.playdate.app.R;
 import com.playdate.app.model.PartnerImage;
-import com.playdate.app.ui.date.PartnerSelected;
-import com.playdate.app.ui.date.SelectPartner;
+import com.playdate.app.ui.date.fragments.FragSelectPartner;
 import com.squareup.picasso.Picasso;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 public class PartnerViewPagerAdapter extends PagerAdapter {
 //    List<PartnerImage> image_list = new ArrayList<>();
 
-    Context mcontext;
-    LayoutInflater mlayoutInflator;
-    ArrayList<PartnerImage> list;
+    private Context mcontext;
+    private LayoutInflater mlayoutInflator;
+    private ArrayList<PartnerImage> list;
+    private FragSelectPartner frag;
 
-
-    public PartnerViewPagerAdapter(Context mcontext, ArrayList<PartnerImage> list) {
+    public PartnerViewPagerAdapter(Context mcontext, ArrayList<PartnerImage> list, FragSelectPartner frag) {
         mlayoutInflator = (LayoutInflater) mcontext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.mcontext = mcontext;
         this.list = list;
+        this.frag = frag;
     }
 
     @Override
@@ -76,12 +67,10 @@ public class PartnerViewPagerAdapter extends PagerAdapter {
         partner_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("Url ProfileImage", list.get(position).getImage());
-                Intent intent = new Intent(view.getContext(), PartnerSelected.class);
-                intent.putExtra("profile_image", list.get(position).getImage());
-                intent.putExtra("profile_name", list.get(position).getName());
-                intent.putExtra("profile_points", list.get(position).getPoints());
-                view.getContext().startActivity(intent);
+                frag.OnPortnerSelect(position);
+//                Log.d("Url ProfileImage", list.get(position).getImage());
+
+
             }
         });
         return view;

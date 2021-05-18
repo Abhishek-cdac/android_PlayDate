@@ -81,6 +81,9 @@
     <string name="send_msg">Send Message</string>
     <string name="create_date">Create Date</string>
     <string name="proceed">Proceed</string>
+    <string name="popular">Popular</string>
+    <string name="new_games">New Games</string>
+    <string name="trending">Trending</string>
     <string name="accept_date">Accept Date</string>
     <string name="search_date_partner">Search Date Partner</string>
 
@@ -117,7 +120,7 @@
     <string name="frequently_asked">Frequently Asked Questions</string>
     <string name="code">Code</string>
     <string name="title_activity_maps">Map</string>
+    <string name="phone_number">Phone Number</string>
     <string name="more_suggestion">See More Suggestions</string>
     <string name="moresugesstion_foru">Suggestions For You</string>
-
 </resources>

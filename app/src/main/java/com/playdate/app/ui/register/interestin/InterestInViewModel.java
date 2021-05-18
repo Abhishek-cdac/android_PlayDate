@@ -22,6 +22,19 @@ public class InterestInViewModel extends ViewModel {
     private MutableLiveData<Boolean> nonBin = new MutableLiveData<>();
     private MutableLiveData<Boolean> Register;
 
+    public void setMale(){
+        maleClick.setValue(true);
+    }
+
+    public void setFeMale(){
+        femaleClick.setValue(true);
+    }
+    public void setNonBin(){
+        nonBin.setValue(true);
+    }
+
+
+
 
     public MutableLiveData<Boolean> onRegisterUser() {
 

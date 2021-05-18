@@ -2,6 +2,7 @@ package com.playdate.app.ui.register.interestin;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -36,15 +37,18 @@ public class InterestActivity extends AppCompatActivity {
     boolean FeMale = false;
     boolean Other = false;
     CommonClass clsCommon;
+    Intent mIntent;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         clsCommon = CommonClass.getInstance();
         viewModel = new InterestInViewModel();
+        mIntent = getIntent();
         binding = DataBindingUtil.setContentView(InterestActivity.this, R.layout.activity_interestin);
         binding.setLifecycleOwner(this);
         binding.setInterestInViewModel(viewModel);
+
 
         viewModel.OnNextClick().observe(this, new Observer<Boolean>() {
             @Override
@@ -138,6 +142,32 @@ public class InterestActivity extends AppCompatActivity {
             }
         });
 
+
+        if (mIntent.getBooleanExtra("fromProfile", false)) {
+            new Handler().postDelayed(new Runnable() {
+                public void run() {
+
+                    String arr[] = mIntent.getStringExtra("Selected").split(",");
+
+                    for (String s : arr) {
+                        if (s.equals("Male")) {
+                            viewModel.setMale();
+                        }
+                        if (s.equals("Female")) {
+                            viewModel.setFeMale();
+                        }
+                        if (s.equals("Other")) {
+                            viewModel.setNonBin();
+                        }
+                    }
+
+
+                }
+            }, 200);
+
+
+        }
+
     }
 
     private void callAPI(String interest) {
@@ -161,8 +191,14 @@ public class InterestActivity extends AppCompatActivity {
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
                         pref.saveStringKeyVal(SessionPref.LoginUserinterestedIn, interest);
-                        startActivity(new Intent(InterestActivity.this, UserNameActivity
-                                .class));
+                        if (mIntent.getBooleanExtra("fromProfile", false)) {
+
+                            finish();
+                        } else {
+                            startActivity(new Intent(InterestActivity.this, UserNameActivity
+                                    .class));
+                        }
+
                     } else {
                         clsCommon.showDialogMsg(InterestActivity.this, "PlayDate", response.body().getMessage(), "Ok");
                     }

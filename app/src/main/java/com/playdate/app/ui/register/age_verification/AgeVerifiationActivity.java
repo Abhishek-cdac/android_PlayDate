@@ -2,7 +2,9 @@ package com.playdate.app.ui.register.age_verification;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -36,15 +38,18 @@ public class AgeVerifiationActivity extends AppCompatActivity {
 
     private ActivityAgeVerificationBinding binding;
     CommonClass clsCommon;
+    private Intent mIntent;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         age_verify_viewmodel = new AgeVerificationViewModel();
         clsCommon = CommonClass.getInstance();
+        mIntent = getIntent();
         binding = DataBindingUtil.setContentView(AgeVerifiationActivity.this, R.layout.activity_age_verification);
         binding.setLifecycleOwner(this);
         binding.setAgeVerificationViewModel(age_verify_viewmodel);
+
 
         age_verify_viewmodel.onRegisterUser().observe(this, loginUser -> AgeVerifiationActivity.this.startActivity(new Intent(AgeVerifiationActivity.this, OTPActivity.class)));
         age_verify_viewmodel.iv_backClick.observe(this, loginUser -> finish());
@@ -56,7 +61,7 @@ public class AgeVerifiationActivity extends AppCompatActivity {
 
             if (age_verify_viewmodel.getYearSelected().toLowerCase().equals("year")) {
                 clsCommon.showDialogMsg(this, "PlayDate", "Please select Year of birth", "Ok");
-            } else if (age_verify_viewmodel.getMonthSelected().toLowerCase().equals("month")) {
+            } else if (age_verify_viewmodel.getMonthSelected()==0) {
                 clsCommon.showDialogMsg(this, "PlayDate", "Please select month of birth", "Ok");
             } else if (age_verify_viewmodel.getDaySelected().toLowerCase().equals("day")) {
                 clsCommon.showDialogMsg(this, "PlayDate", "Please select day of birth", "Ok");
@@ -67,6 +72,22 @@ public class AgeVerifiationActivity extends AppCompatActivity {
 
         });
 
+        if (mIntent.getBooleanExtra("fromProfile", false)) {
+            new Handler().postDelayed(new Runnable() {
+                public void run() {
+
+                    String CurrentDOB = mIntent.getStringExtra("CurrentDOB");
+                    String ar[] = CurrentDOB.split("-");
+                    String CurrentYYYY = ar[0];
+                    String CurrentMM = ar[1];
+                    String CurrentDDD = ar[2];
+                    age_verify_viewmodel.setDates(CurrentYYYY, CurrentMM, CurrentDDD);
+                }
+            }, 200);
+
+
+        }
+
     }
 
     private void callAPI() {
@@ -74,12 +95,26 @@ public class AgeVerifiationActivity extends AppCompatActivity {
 
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
-        String DOB = age_verify_viewmodel.getYearSelected() + "-" + age_verify_viewmodel.getMonthSelected() + "-" + age_verify_viewmodel.getDaySelected();
+        String MM="";
+        if(age_verify_viewmodel.getMonthSelected()<10){
+            MM="0"+age_verify_viewmodel.getMonthSelected();
+        }else{
+            MM=""+age_verify_viewmodel.getMonthSelected();
+        }
+
+        String DD="";
+        if(age_verify_viewmodel.getDaySelected().length()==1){
+            DD="0"+age_verify_viewmodel.getDaySelected();
+        }else{
+            DD=""+age_verify_viewmodel.getDaySelected();
+        }
+
+        String DOB = age_verify_viewmodel.getYearSelected() + "-" + MM + "-" + DD;
         hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
         hashMap.put("birthDate", DOB);// format 1990-08-12
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
         pd.show();
-      //  SessionPref pref = SessionPref.getInstance(this);
+        //  SessionPref pref = SessionPref.getInstance(this);
 //        Toast.makeText(this, ""+pref.getStringVal(SessionPref.LoginUsertoken), Toast.LENGTH_SHORT).show();
 
 
@@ -91,16 +126,21 @@ public class AgeVerifiationActivity extends AppCompatActivity {
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
                         pref.saveStringKeyVal(SessionPref.LoginUserbirthDate, DOB);
-                        startActivity(new Intent(AgeVerifiationActivity.this, GenderSelActivity.class));
+                        if (mIntent.getBooleanExtra("fromProfile", false)) {
+                            finish();
+                        } else {
+                            startActivity(new Intent(AgeVerifiationActivity.this, GenderSelActivity.class));
+                        }
+
 
                     } else {
-                        Log.e("PlayDateDOB",""+response.body().getMessage());
+                        Log.e("PlayDateDOB", "" + response.body().getMessage());
                         clsCommon.showDialogMsg(AgeVerifiationActivity.this, "PlayDate", response.body().getMessage(), "Ok");
                     }
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        Log.e("PlayDateDOB",""+response.body().getMessage());
+                        Log.e("PlayDateDOB", "" + response.body().getMessage());
 
                         clsCommon.showDialogMsg(AgeVerifiationActivity.this, "PlayDate", jObjError.getString("message").toString(), "Ok");
                     } catch (Exception e) {

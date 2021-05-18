@@ -9,14 +9,7 @@
     android:background="@color/white"
    >
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeToRefresh"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/bottomNavigationView"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="-4dp"
-        android:layout_marginBottom="4dp">
+
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -248,10 +241,10 @@
 
                     android:layout_marginTop="0dp"
                     android:layout_marginBottom="-1dp" />
+
             </RelativeLayout>
 
         </androidx.core.widget.NestedScrollView>
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <LinearLayout
 

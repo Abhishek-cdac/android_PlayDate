@@ -92,4 +92,6 @@ dependencies {
 
     implementation 'jp.wasabeef:picasso-transformations:2.2.1'
     implementation 'com.google.android.exoplayer:exoplayer:2.10.5'
+    def lottieVersion = "3.7.0"
+    implementation "com.airbnb.android:lottie:$lottieVersion"
 }

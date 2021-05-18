@@ -1,8 +1,12 @@
 package com.playdate.app.ui.anonymous_question;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,24 +20,40 @@ import com.playdate.app.ui.anonymous_question.adapter.SmileyAdapter;
 
 import java.util.ArrayList;
 
-public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorCodeSelect {
+public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorCodeSelect, View.OnClickListener {
     RelativeLayout ll_ques;
     LinearLayout ll_smily;
+    Intent mIntent;
     RecyclerView rec_view_colors;
+    TextView txt_ques;
+    TextView txt_post_comment;
+    ImageView back_anonymous;
+    ImageView more_option;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_ano_ques);
         rec_view_colors = findViewById(R.id.rec_view_colors);
+        txt_ques = findViewById(R.id.txt_ques);
+        txt_post_comment = findViewById(R.id.txt_post_comment);
+        back_anonymous = findViewById(R.id.back_anonymous);
+        more_option = findViewById(R.id.more_option);
         ll_ques = findViewById(R.id.ll_ques);
         ll_smily = findViewById(R.id.ll_smily);
+        mIntent=getIntent();
+        txt_ques.setText(mIntent.getStringExtra("question"));
         CreateList();
+
         CreateSmilyList();
         OnColorChange(0);
         ColorAdapter adapter = new ColorAdapter(lst, this);
         rec_view_colors.setLayoutManager(new GridLayoutManager(this, 4));
         rec_view_colors.setAdapter(adapter);
+
+        back_anonymous.setOnClickListener(this);
+        more_option.setOnClickListener(this);
+        txt_post_comment.setOnClickListener(this);
     }
 
     ArrayList<Integer> lst = new ArrayList<>();
@@ -102,6 +122,28 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
     @Override
     public void onSmileySelect(int index) {
         ll_smily.setBackground(getDrawable(lstSmiley.get(index)));
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id=v.getId();
+        if(id==R.id.back_anonymous){
+            finish();
+        }else if(id==R.id.more_option){
+            showModel();
+        }else if(id==R.id.txt_post_comment){
+            postQues();
+        }
+    }
+
+    private void postQues() {
+        setResult(100,null);
+        finish();
+    }
+
+    private void showModel() {
+        AnonymousBottomSheet bottomSheet = new AnonymousBottomSheet();
+        bottomSheet.show(getSupportFragmentManager(), "ModalBottomSheet");
     }
 }
 

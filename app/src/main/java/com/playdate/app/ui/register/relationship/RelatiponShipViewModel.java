@@ -23,6 +23,14 @@ public class RelatiponShipViewModel extends ViewModel {
 
     }
 
+    public void setTaken(){
+        TakenClick.setValue(true);
+    }
+
+    public void setSingle() {
+        SingleClick.setValue(true);
+    }
+
     public MutableLiveData<Boolean> OnSingleClick() {
 
         return SingleClick;
