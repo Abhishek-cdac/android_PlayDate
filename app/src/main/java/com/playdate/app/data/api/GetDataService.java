@@ -2,7 +2,6 @@ package com.playdate.app.data.api;
 
 import com.playdate.app.model.CommonModel;
 import com.playdate.app.model.FriendsListModel;
-import com.playdate.app.model.GetPostFeedModel;
 import com.playdate.app.model.GetUserSuggestion;
 import com.playdate.app.model.InterestsMain;
 import com.playdate.app.model.LoginResponse;
