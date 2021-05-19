@@ -9,37 +9,30 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.chip.Chip;
 import com.playdate.app.R;
+import com.playdate.app.model.MatchListUser;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
 public class ChipsAdapter extends RecyclerView.Adapter<ChipsAdapter.ViewHolder> {
-    ArrayList<String> lst = new ArrayList<>();
+    ArrayList<MatchListUser> lst;
 
-    public ChipsAdapter() {
-        lst.add("Ajit");
-        lst.add("Smita");
-        lst.add("Pawan");
-        lst.add("Kavya");
+    public ChipsAdapter(ArrayList<MatchListUser> lstUserSuggestions) {
+        this.lst = lstUserSuggestions;
     }
 
     @NonNull
     @NotNull
     @Override
     public ChipsAdapter.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        try {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_chips, parent,false);
-            return new ViewHolder(view);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_chips, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull ChipsAdapter.ViewHolder holder, int position) {
-        holder.chips.setChipText(lst.get(position));
+        holder.chips.setChipText(lst.get(position).getUsername());
     }
 
     @Override

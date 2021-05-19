@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">PlayDate</string>
     <string name="search">Search</string>
-    <string name="search_here">Search here</string>
+    <string name="search_here">Search here...</string>
     <string name="search_user">Search user</string>
     <string name="enter_search_query">Enter search query</string>
     <string name="no_results">No results</string>

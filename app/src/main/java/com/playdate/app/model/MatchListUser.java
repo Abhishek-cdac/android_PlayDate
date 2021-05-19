@@ -4,6 +4,15 @@ import java.util.ArrayList;
 
 public class MatchListUser {
     private String profilePicPath;
+    boolean Selected;
+
+    public boolean isSelected() {
+        return Selected;
+    }
+
+    public void setSelected(boolean selected) {
+        Selected = selected;
+    }
 
     private String gender;
 
