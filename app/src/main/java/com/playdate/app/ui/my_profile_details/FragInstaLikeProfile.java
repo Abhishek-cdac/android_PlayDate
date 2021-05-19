@@ -19,9 +19,7 @@ import com.playdate.app.R;
 import com.playdate.app.ui.my_profile_details.adapters.InstaPhotosAdapter;
 import com.playdate.app.ui.my_profile_details.adapters.SocialFeedNormal;
 import com.playdate.app.ui.playvideo.ExoPlayerActivity;
-import com.playdate.app.ui.social.SocialFeed;
-import com.playdate.app.ui.social.SocialFeedAdapter;
-import com.playdate.app.util.customcamera.otalia.VideoPreviewActivity;
+import com.playdate.app.ui.social.model.SocialFeed;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
 

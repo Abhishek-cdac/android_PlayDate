@@ -94,4 +94,6 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer:2.10.5'
     def lottieVersion = "3.7.0"
     implementation "com.airbnb.android:lottie:$lottieVersion"
+    implementation("com.squareup.okhttp3:logging-interceptor:3.9.0")
+
 }

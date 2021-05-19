@@ -41,8 +41,8 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
                 .placeholder(R.drawable.profile)
                 .into(holder.profile_image);
 
-//        holder.profile_image.setImageResource(lst.get(position).getImage());
-        holder.txt_friend_name.setText(lst.get(position).getFullName());
+//      holder.profile_image.setImageResource(lst.get(position).getImage());
+        holder.txt_friend_name.setText(lst.get(position).getUsername());
     }
 
     @Override

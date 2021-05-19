@@ -67,7 +67,7 @@ public class SuggestionAdapter extends PagerAdapter {
         iv_send_request = view.findViewById(R.id.iv_send_request);
         iv_chat_icon = view.findViewById(R.id.iv_chat_icon);
         txt_header_Suggestions = view.findViewById(R.id.txt_header_Suggestions);
-        txt_header_Suggestions.setText(suggestions_list.get(position).getFullName());
+        txt_header_Suggestions.setText(suggestions_list.get(position).getUsername());
 
 
         if (suggestions_list.get(position).getProfilePicPath() == null) {

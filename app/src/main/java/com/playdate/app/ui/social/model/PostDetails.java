@@ -30,15 +30,15 @@ public class PostDetails {
         this.likes = likes;
     }
 
-    boolean isHeartSelected;
+//    boolean isHeartSelected;
 
-    public boolean isHeartSelected() {
-        return isHeartSelected;
-    }
-
-    public void setHeartSelected(boolean heartSelected) {
-        isHeartSelected = heartSelected;
-    }
+//    public boolean isHeartSelected() {
+//        return isHeartSelected;
+//    }
+//
+//    public void setHeartSelected(boolean heartSelected) {
+//        isHeartSelected = heartSelected;
+//    }
 
     private ArrayList<TagFriends> tagFriends;
 

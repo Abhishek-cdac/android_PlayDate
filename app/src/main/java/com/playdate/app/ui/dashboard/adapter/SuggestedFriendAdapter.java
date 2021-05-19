@@ -43,12 +43,13 @@ public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriend
 
     @Override
     public void onBindViewHolder(@NonNull SuggestedFriendAdapter.ViewHolder holder, int position) {
-        holder.name.setText(suggestions_list.get(position).getFullName());
+        holder.name.setText(suggestions_list.get(position).getUsername());
         if (suggestions_list.get(position).getProfilePicPath() == null) {
             holder.image.setBackgroundColor(mcontext.getResources().getColor(R.color.color_grey_light));
         }
         Picasso.get().load(suggestions_list.get(position).getProfilePicPath()).placeholder(R.drawable.ic_baseline_person_24)
                 .fit()
+                .placeholder(R.drawable.profile)
                 .centerCrop()
                 .into(holder.image);
 

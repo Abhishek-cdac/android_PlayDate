@@ -62,15 +62,12 @@ import static android.content.ContentValues.TAG;
 import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 
 public class PostMediaActivity extends AppCompatActivity implements View.OnClickListener {
-    TextView txt_myname;
-    TextView txt_location;
-    ImageView iv_profile;
-    ImageView iv_done;
-    ImageView iv_location;
-    LottieAnimationView animationView;
-    PlayerView pvMain;
-    SimpleExoPlayer absPlayerInternal;
-    boolean isVideo = false;
+    private TextView txt_myname;
+    private TextView txt_location;
+    private ImageView iv_profile;
+    private PlayerView pvMain;
+    private SimpleExoPlayer absPlayerInternal;
+    private boolean isVideo = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,9 +75,10 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_post_photo);
         iv_profile = findViewById(R.id.iv_profile);
         pvMain = findViewById(R.id.ep_video_view);
-        animationView = findViewById(R.id.animationView);
-        iv_location = findViewById(R.id.iv_location);
-        iv_done = findViewById(R.id.iv_done);
+        ImageView iv_back = findViewById(R.id.iv_back);
+        LottieAnimationView animationView = findViewById(R.id.animationView);
+        ImageView iv_location = findViewById(R.id.iv_location);
+        ImageView iv_done = findViewById(R.id.iv_done);
         txt_myname = findViewById(R.id.txt_myname);
 
         ImageView img_upload = findViewById(R.id.img_upload);
@@ -134,6 +132,7 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 200);
         }
         iv_done.setOnClickListener(this);
+        iv_back.setOnClickListener(this);
 
     }
 
@@ -175,6 +174,8 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
         int id = v.getId();
         if (id == R.id.iv_done) {
             uploadImage();
+        } else if (id == R.id.iv_back) {
+            finish();
         }
     }
 
@@ -308,12 +309,8 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
 //                    } catch (Exception e) {
 //                        Toast.makeText(BioActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
 //                    }
-
                 }
-
-
             }
-
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 t.printStackTrace();
@@ -322,8 +319,6 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
             }
         });
     }
-
-
 }
 
 

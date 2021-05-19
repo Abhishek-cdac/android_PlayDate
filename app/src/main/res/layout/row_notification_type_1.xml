@@ -20,7 +20,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:textStyle="bold"
-            android:text="No Notification available"
+            android:text="No New Notifications"
             android:textColor="@color/black"
             android:textSize="@dimen/_15sdp" />
 

@@ -83,6 +83,7 @@ public class SessionPref {
  public static String LoginUsersourceSocialId = "sourceSocialId";
  public static String LoginUserinviteCode = "inviteCode";
  public static String LoginUserpaymentMode = "paymentMode";
+ public static String LoginUserSuggestionShown = "LoginUserSuggestionShown";
 
 
     public void saveLoginUser(String id,

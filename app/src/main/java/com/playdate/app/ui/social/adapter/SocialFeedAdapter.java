@@ -1,4 +1,4 @@
-package com.playdate.app.ui.social;
+package com.playdate.app.ui.social.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -27,12 +27,10 @@ import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.LoginResponse;
 import com.playdate.app.ui.anonymous_question.AnonymousQuestionActivity;
-import com.playdate.app.ui.anonymous_question.AnonymousBottomSheet;
 import com.playdate.app.ui.anonymous_question.CommentBottomSheet;
-import com.playdate.app.ui.dashboard.DashboardActivity;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
+import com.playdate.app.ui.social.FragSocialFeed;
 import com.playdate.app.ui.social.model.PostDetails;
-import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -97,8 +95,8 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
         hashMap.put("postId", postId);
-        if (like == 1) {
-            hashMap.put("status", "UnLike");
+        if (like == 0) {
+            hashMap.put("status", "Unlike");
         } else {
             hashMap.put("status", "Like");
         }
@@ -206,17 +204,26 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 //                    ref.loadProfile();
             });
 
-            Picasso.get().load(lst.get(position).getPostMedia().get(0).getMediaFullPath())
+            if(null!=lst.get(position).getPostMedia().get(0).getMediaFullPath()){
+                if(lst.get(position).getPostMedia().get(0).getMediaFullPath().contains(".mp4")){
+
+                    // video
+
+                }else{
+                    Picasso.get().load(lst.get(position).getPostMedia().get(0).getMediaFullPath())
 
 
-                    .into(userViewHolder.iv_post_image, new ImageLoadedCallback(userViewHolder.animationView) {
-                        @Override
-                        public void onSuccess() {
-                            if (this.iv_loader != null) {
-                                this.iv_loader.setVisibility(View.GONE);
-                            }
-                        }
-                    });
+                            .into(userViewHolder.iv_post_image, new ImageLoadedCallback(userViewHolder.animationView) {
+                                @Override
+                                public void onSuccess() {
+                                    if (this.iv_loader != null) {
+                                        this.iv_loader.setVisibility(View.GONE);
+                                    }
+                                }
+                            });
+                }
+            }
+
 
             Picasso.get().load(lst.get(position).getLstpostby().get(0).getProfilePicPath())
                     .placeholder(R.drawable.cupertino_activity_indicator)
@@ -230,21 +237,32 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
             userViewHolder.iv_heart.setOnClickListener(view -> {
                 if (lst.get(position).getLikes() == 1) {
+                    lst.get(position).setLikes(0);
                     userViewHolder.iv_heart.setImageResource(R.drawable.heart);
                     lst.get(position).setTapCount(0);
-                    lst.get(position).setHeartSelected(false);
+//                    lst.get(position).setHeartSelected(false);
                     notifyDataSetChanged();
                     callAPI(lst.get(position).getPostId(), lst.get(position).getLikes());
-                } else {
+                }  else if (lst.get(position).getLikes() ==0) {
                     userViewHolder.iv_heart.setImageResource(R.drawable.red_heart);
+                    lst.get(position).setLikes(1);
+                    lst.get(position).setTapCount(0);
+//                    lst.get(position).setHeartSelected(true);
+                    notifyDataSetChanged();
+                    callAPI(lst.get(position).getPostId(), lst.get(position).getLikes());
+                }else {
+//                    callAPI(lst.get(position).getPostId(), lst.get(position).getLikes());
+//                    userViewHolder.iv_heart.setImageResource(R.drawable.red_heart);
                 }
             });
+            userViewHolder.txt_heart_count.setText(lst.get(position).getLikes()+" Hearts");
+//            userViewHolder.txt_chat.setText(lst.get(position).getPostMedia().get(0));
             userViewHolder.iv_post_image.setOnClickListener(view -> {
 
-                if (!lst.get(position).isHeartSelected()) {
+                if (lst.get(position).getLikes()!=1) {
                     if (lst.get(position).getTapCount() == 1) {
 
-                        lst.get(position).setHeartSelected(true);
+                        lst.get(position).setLikes(1);
                         userViewHolder.iv_heart_red.setVisibility(View.VISIBLE);
                         callAPI(lst.get(position).getPostId(),lst.get(position).getLikes());
                         animateHeart(userViewHolder.iv_heart_red, userViewHolder);
@@ -301,6 +319,8 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         TextView name_friend;
         //        EditText et_comment;
         TextView et_comment;
+        TextView txt_heart_count;
+        TextView txt_chat;
 
         public ViewHolderUser(@NonNull View itemView) {
             super(itemView);
@@ -312,7 +332,9 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             name_friend = itemView.findViewById(R.id.name_friend);
             iv_msg = itemView.findViewById(R.id.iv_msg);
             animationView = itemView.findViewById(R.id.animationView);
+            txt_heart_count = itemView.findViewById(R.id.txt_heart_count);
             et_comment = itemView.findViewById(R.id.edt_comment);
+            txt_chat = itemView.findViewById(R.id.txt_chat);
 
             iv_more_options = itemView.findViewById(R.id.friend_request);
             iv_more_options.setOnClickListener(new View.OnClickListener() {

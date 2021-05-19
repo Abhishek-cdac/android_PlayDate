@@ -113,7 +113,7 @@ public class FragLanding extends Fragment {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("filter", "");
-        hashMap.put("limit", "50");
+        hashMap.put("limit", "10");
         hashMap.put("pageNo", "1");//Hardcode
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
         pd.show();
@@ -182,7 +182,7 @@ public class FragLanding extends Fragment {
 //                        FriendRequest friendRequest = new FriendRequest();
 //                        Log.e("FriendRequestStatus", "" + friendRequest.getStatus());
 //
-//                        Toast.makeText(getActivity(), "Request Sent! " + s, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Request Sent! " + s, Toast.LENGTH_SHORT).show();
                     } else {
                         clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", "" + response.body().getMessage(), "Ok");
                     }
