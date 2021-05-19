@@ -149,7 +149,6 @@
         android:layout_marginLeft="@dimen/_10sdp"
         android:layout_marginRight="@dimen/_10sdp"
         android:fontFamily="@font/lato_bold"
-        android:text="1,829 Hearts"
         android:textColor="@color/black"
         android:textSize="@dimen/_10sdp"
         android:textStyle="bold" />
@@ -163,7 +162,6 @@
         android:layout_marginLeft="@dimen/_10sdp"
         android:layout_marginRight="@dimen/_10sdp"
         android:fontFamily="@font/helvetica_neue"
-        android:text="@string/str_temp"
         android:textColor="@color/black"
         android:textSize="@dimen/_10sdp"
         android:textStyle="bold" />
@@ -175,6 +173,7 @@
         android:layout_below="@+id/txt_chat"
         android:layout_marginLeft="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_2sdp"
+        android:paddingStart="-10dp"
         android:layout_marginRight="@dimen/_10sdp"
         android:background="@null"
         android:hint="Add a comment..."

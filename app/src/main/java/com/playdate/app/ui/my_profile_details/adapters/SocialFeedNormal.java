@@ -18,8 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
-import com.playdate.app.ui.social.FragSocialFeed;
-import com.playdate.app.ui.social.SocialFeed;
+import com.playdate.app.ui.social.model.SocialFeed;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

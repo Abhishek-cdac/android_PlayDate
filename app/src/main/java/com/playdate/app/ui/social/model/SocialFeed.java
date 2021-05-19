@@ -1,4 +1,4 @@
-package com.playdate.app.ui.social;
+package com.playdate.app.ui.social.model;
 
 public class SocialFeed {
     String userName;
