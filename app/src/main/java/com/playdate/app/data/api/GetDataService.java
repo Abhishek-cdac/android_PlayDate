@@ -2,6 +2,7 @@ package com.playdate.app.data.api;
 
 import com.playdate.app.model.CommonModel;
 import com.playdate.app.model.FriendsListModel;
+import com.playdate.app.model.GetPostFeedModel;
 import com.playdate.app.model.GetUserSuggestion;
 import com.playdate.app.model.InterestsMain;
 import com.playdate.app.model.LoginResponse;
@@ -106,10 +107,12 @@ public interface GetDataService {
 
     @FormUrlEncoded
     @POST("user/add-user-match-request")
+        //not implemented fully
     Call<CommonModel> addUserMatchRequest(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
     @FormUrlEncoded
     @POST("user/match-request-status-update")
+        //not implemented fully
     Call<CommonModel> matchRequestStatusUpdate(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
     @Multipart
@@ -120,10 +123,10 @@ public interface GetDataService {
     @POST("user/add-media?section=feed&mediaType=video")
     Call<LoginResponse> uploadVideoToFeed(@Header("Authorization") String token, @Part MultipartBody.Part filePart);
 
-
     @FormUrlEncoded
     @POST("user/add-post-feed")
-    Call<LoginResponse> addPostFeed(@Header("Authorization") String token,@FieldMap Map<String, String> param);
+    Call<LoginResponse> addPostFeed(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
 
 
 }

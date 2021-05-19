@@ -50,27 +50,30 @@ public class FragNewNotificationAdapter extends RecyclerView.Adapter<FragNewNoti
     @Override
     public void onBindViewHolder(@NonNull FragNewNotificationAdapter.ViewHolder holder, int position) {
 
-        // Log.e("UserName.", "" + notification_list.get(position).getFriendRequest().get(position).getUserInfo().get(position).getUsername());
+         Log.e("notification_list.", "" + notification_list.size());
+         Log.e("notification_list.", "" + notification_list.get(position).getFriendRequest());
 
-        if (notification_list.get(position).getFriendRequest().size() == 0) {
-            holder.rl_notification.setVisibility(View.GONE);
-            holder.ll_no_notify.setVisibility(View.VISIBLE);
-
-        } else {
+        if (notification_list.get(position).getFriendRequest().size() > 0) {
             holder.rl_notification.setVisibility(View.VISIBLE);
             holder.ll_no_notify.setVisibility(View.GONE);
 
             notifiationId = notification_list.get(position).getNotificationId();
             userId = notification_list.get(position).getUserID();
             holder.tv_desc.setText(notification_list.get(position).getNotificationMessage());
-            holder.tv_name.setText(notification_list.get(position).getFriendRequest().get(position).getUserInfo().get(position).getUsername());
+            holder.tv_name.setText(notification_list.get(position).getFriendRequest().get(position).getUserInfo().get(0).getUsername());
             requestId = notification_list.get(position).getFriendRequest().get(position).getRequestId();
+            Log.e("requestId",""+requestId);
             Picasso.get().load(notification_list.get(position).getFriendRequest().get(position).getUserInfo().get(position).getProfilePicPath())
                     //.placeholder(R.drawable.cupertino_activity_indicator)
                     .placeholder(R.drawable.profile)
                     .fit()
                     .centerCrop()
                     .into(holder.profile_image);
+
+        } else {
+            holder.rl_notification.setVisibility(View.GONE);
+            holder.ll_no_notify.setVisibility(View.VISIBLE);
+
         }
 
     }

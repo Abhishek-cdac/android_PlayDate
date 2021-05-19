@@ -157,7 +157,7 @@ public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.
                     .fit()
                     .centerCrop()
                     .into(image);
-            name.setText(user.getFullName());
+            name.setText(user.getUsername());
             age.setText("" +user.getAge());
 
             String ints = "";

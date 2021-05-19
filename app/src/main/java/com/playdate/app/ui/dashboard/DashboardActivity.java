@@ -460,11 +460,15 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             iv_love.setImageResource(R.drawable.love_high);
 
             ReplaceFrag(new FragLanding());
+
             ll_friends.setVisibility(View.VISIBLE);
             ll_mainMenu.setVisibility(View.VISIBLE);
             ll_her.setVisibility(View.VISIBLE);
-
+            txt_match.setBackground(null);
             iv_dashboard_notification.setBackground(null);
+            txt_chat.setBackground(null);
+            txt_match.setTextColor(getResources().getColor(android.R.color.darker_gray));
+            txt_chat.setTextColor(getResources().getColor(android.R.color.darker_gray));
             iv_dashboard_notification.setImageResource(R.drawable.ic_bell);
             txt_social.setTextColor(getResources().getColor(R.color.white));
             txt_social.setBackground(getResources().getDrawable(R.drawable.menu_button));
