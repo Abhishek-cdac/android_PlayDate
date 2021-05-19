@@ -277,7 +277,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 //                AnonymousMedalDialog dialog = new AnonymousMedalDialog(DashboardActivity.this);
 //                dialog.show();
             }
-        }, 8000);
+        }, 20000);
 
 
     }

@@ -171,6 +171,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.social.upload_media.PostMediaActivity"
+            android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.register.usertype.UserTypeSelectionActivity"

@@ -13,12 +13,15 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.exoplayer2.ExoPlayerFactory;
@@ -36,6 +39,7 @@ import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.LoginResponse;
 import com.playdate.app.model.LoginUserDetails;
 import com.playdate.app.ui.dashboard.DashboardActivity;
+import com.playdate.app.ui.social.upload_media.adapter.ChipsAdapter;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
@@ -63,11 +67,12 @@ import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 
 public class PostMediaActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView txt_myname;
-    private TextView txt_location;
+    private EditText edt_location;
     private ImageView iv_profile;
     private PlayerView pvMain;
     private SimpleExoPlayer absPlayerInternal;
     private boolean isVideo = false;
+    private RecyclerView recycler_tag_friend;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,6 +80,8 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_post_photo);
         iv_profile = findViewById(R.id.iv_profile);
         pvMain = findViewById(R.id.ep_video_view);
+        recycler_tag_friend = findViewById(R.id.recycler_tag_friend);
+
         ImageView iv_back = findViewById(R.id.iv_back);
         LottieAnimationView animationView = findViewById(R.id.animationView);
         ImageView iv_location = findViewById(R.id.iv_location);
@@ -83,7 +90,9 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
 
         ImageView img_upload = findViewById(R.id.img_upload);
 
-        txt_location = findViewById(R.id.txt_location);
+        edt_location = findViewById(R.id.edt_location);
+
+
 
         if (getIntent().getStringExtra("videoPath") != null) {
             pvMain.setVisibility(View.VISIBLE);
@@ -118,8 +127,8 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
 
         LocationManager locationManager = (LocationManager)
                 getSystemService(Context.LOCATION_SERVICE);
-        txt_location.setText("fetching loaction...");
-        LocationListener locationListener = new MyLocationListener(this, txt_location, iv_location, animationView);
+        edt_location.setHint("fetching loaction...");
+        LocationListener locationListener = new MyLocationListener(this, edt_location, iv_location, animationView);
 
         setData();
         boolean permissionGranted = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
@@ -131,8 +140,15 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
         } else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 200);
         }
+
+        recycler_tag_friend.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+        recycler_tag_friend.setAdapter(new ChipsAdapter());
+
+
         iv_done.setOnClickListener(this);
         iv_back.setOnClickListener(this);
+
+
 
     }
 
@@ -280,10 +296,13 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
 
     private void callAPIFeedPost(String mediaId) {
         SessionPref pref = SessionPref.getInstance(this);
-
+        String Location = edt_location.getText().toString();
+        if (Location.isEmpty()) {
+            Location = "India";// Hardcode
+        }
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("location", txt_location.getText().toString());
+        hashMap.put("location", Location);
         hashMap.put("mediaId", mediaId);
         hashMap.put("postType", "Normal");// Hardcode
         hashMap.put("tagFriend", "6099116701fa031ccf75beae,6099241bea3de137a41d4098,60992219ea3de137a41d4095");// Hardcode
@@ -311,6 +330,7 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
 //                    }
                 }
             }
+
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 t.printStackTrace();
