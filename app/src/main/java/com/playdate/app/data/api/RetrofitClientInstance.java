@@ -14,13 +14,12 @@ public class RetrofitClientInstance {
     public static final String BASE_URL_IMAGE = "http://139.59.0.106:3000";
     public static final String DEVICE_TYPE = "Android";
 
-//    HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-//    logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
 
     private static OkHttpClient getRequestHeader() {
         return new OkHttpClient.Builder()
                 .readTimeout(60, TimeUnit.SECONDS)
                 .connectTimeout(60, TimeUnit.SECONDS)
+                .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                 .writeTimeout(60, TimeUnit.SECONDS)
                 .build();
     }
