@@ -2,8 +2,10 @@ package com.playdate.app.ui.social.upload_media;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -12,13 +14,20 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.exoplayer2.ExoPlayerFactory;
@@ -33,19 +42,29 @@ import com.google.android.exoplayer2.util.Util;
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
+import com.playdate.app.model.FriendsListModel;
+import com.playdate.app.model.GetUserSuggestion;
+import com.playdate.app.model.GetUserSuggestionData;
 import com.playdate.app.model.LoginResponse;
 import com.playdate.app.model.LoginUserDetails;
+import com.playdate.app.model.MatchListUser;
 import com.playdate.app.ui.dashboard.DashboardActivity;
+import com.playdate.app.ui.dashboard.adapter.SuggestedFriendAdapter;
+import com.playdate.app.ui.dialogs.FriendDialog;
+import com.playdate.app.ui.social.upload_media.adapter.ChipsAdapter;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -63,18 +82,23 @@ import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 
 public class PostMediaActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView txt_myname;
-    private TextView txt_location;
+    private EditText edt_location;
     private ImageView iv_profile;
     private PlayerView pvMain;
     private SimpleExoPlayer absPlayerInternal;
     private boolean isVideo = false;
+    private ImageView iv_add;
+    RecyclerView recycler_tag_friend;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_photo);
         iv_profile = findViewById(R.id.iv_profile);
+        iv_add = findViewById(R.id.iv_add);
         pvMain = findViewById(R.id.ep_video_view);
+        recycler_tag_friend = findViewById(R.id.recycler_tag_friend);
+
         ImageView iv_back = findViewById(R.id.iv_back);
         LottieAnimationView animationView = findViewById(R.id.animationView);
         ImageView iv_location = findViewById(R.id.iv_location);
@@ -83,7 +107,8 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
 
         ImageView img_upload = findViewById(R.id.img_upload);
 
-        txt_location = findViewById(R.id.txt_location);
+        edt_location = findViewById(R.id.edt_location);
+
 
         if (getIntent().getStringExtra("videoPath") != null) {
             pvMain.setVisibility(View.VISIBLE);
@@ -118,8 +143,8 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
 
         LocationManager locationManager = (LocationManager)
                 getSystemService(Context.LOCATION_SERVICE);
-        txt_location.setText("fetching loaction...");
-        LocationListener locationListener = new MyLocationListener(this, txt_location, iv_location, animationView);
+        edt_location.setHint("fetching loaction...");
+        LocationListener locationListener = new MyLocationListener(this, edt_location, iv_location, animationView);
 
         setData();
         boolean permissionGranted = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
@@ -131,9 +156,54 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
         } else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 200);
         }
+
+
+        callGetUserSuggestionAPI();
         iv_done.setOnClickListener(this);
         iv_back.setOnClickListener(this);
+        iv_add.setOnClickListener(this);
 
+
+    }
+
+    private ArrayList<MatchListUser> lstUserSuggestions;
+
+    private void callGetUserSuggestionAPI() {
+
+
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        // hashMap.put("filter", "");
+        hashMap.put("limit", "50");
+        hashMap.put("pageNo", "1");//Hardcode
+        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
+        pd.show();
+        SessionPref pref = SessionPref.getInstance(this);
+
+        Call<FriendsListModel> call = service.getFriendsList("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new Callback<FriendsListModel>() {
+            @Override
+            public void onResponse(Call<FriendsListModel> call, Response<FriendsListModel> response) {
+                pd.cancel();
+                if (response.code() == 200) {
+                    assert response.body() != null;
+                    if (response.body().getStatus() == 1) {
+                        lstUserSuggestions = response.body().getUsers();
+                        if (lstUserSuggestions == null) {
+                            lstUserSuggestions = new ArrayList<>();
+                        }
+                    }
+                } else {
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<FriendsListModel> call, Throwable t) {
+                t.printStackTrace();
+                pd.cancel();
+            }
+        });
     }
 
     @Override
@@ -176,6 +246,8 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
             uploadImage();
         } else if (id == R.id.iv_back) {
             finish();
+        } else if (id == R.id.iv_add) {
+            showFriendsDialog();
         }
     }
 
@@ -279,14 +351,31 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
 
 
     private void callAPIFeedPost(String mediaId) {
-        SessionPref pref = SessionPref.getInstance(this);
 
+        String tagFriends = "";
+        if (null != lstUserSuggestions) {
+            for (int i = 0; i < lstUserSuggestions.size(); i++) {
+                if (lstUserSuggestions.get(i).isSelected()) {
+                    if (tagFriends.isEmpty()) {
+                        tagFriends = lstUserSuggestions.get(i).get_id();
+                    } else {
+                        tagFriends = tagFriends +","+ lstUserSuggestions.get(i).get_id();
+                    }
+                }
+            }
+        }
+
+        SessionPref pref = SessionPref.getInstance(this);
+        String Location = edt_location.getText().toString();
+        if (Location.isEmpty()) {
+            Location = "India";// Hardcode
+        }
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("location", txt_location.getText().toString());
+        hashMap.put("location", Location);
         hashMap.put("mediaId", mediaId);
         hashMap.put("postType", "Normal");// Hardcode
-        hashMap.put("tagFriend", "6099116701fa031ccf75beae,6099241bea3de137a41d4098,60992219ea3de137a41d4095");// Hardcode
+        hashMap.put("tagFriend", tagFriends);
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
         pd.show();
 
@@ -311,12 +400,28 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
 //                    }
                 }
             }
+
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 t.printStackTrace();
                 pd.cancel();
 //                Toast.makeText(BioActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
+        });
+    }
+
+    void showFriendsDialog() {
+        FriendDialog dialog = new FriendDialog(this, lstUserSuggestions);
+        dialog.show();
+        dialog.setOnDismissListener(dialog1 -> {
+            ArrayList<MatchListUser> lst = new ArrayList<>();
+            for (int i = 0; i < lstUserSuggestions.size(); i++) {
+                if (lstUserSuggestions.get(i).isSelected()) {
+                    lst.add(lstUserSuggestions.get(i));
+                }
+            }
+            recycler_tag_friend.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+            recycler_tag_friend.setAdapter(new ChipsAdapter(lst));
         });
     }
 }
@@ -376,4 +481,6 @@ class MyLocationListener implements LocationListener {
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
     }
+
+
 }
