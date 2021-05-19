@@ -120,6 +120,7 @@
     <string name="level">LEVEL 1</string>
     <string name="ans_first">You answered first!</string>
 
+    <string name="select_restaurant">Select Restaurant</string>
     <string name="select_date">Select Date</string>
     <string name="waiting_partner">Waiting for partner</string>
     <string name="accepted_patner">Partner has accepted</string>

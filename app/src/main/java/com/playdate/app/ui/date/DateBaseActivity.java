@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.playdate.app.R;
 import com.playdate.app.ui.date.fragments.FragIntroScreen;
 import com.playdate.app.ui.date.fragments.FragLocationConfirmation;
+import com.playdate.app.ui.date.games.FragGameMenu;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 
 public class DateBaseActivity extends AppCompatActivity implements OnInnerFragmentClicks {
@@ -24,8 +25,8 @@ public class DateBaseActivity extends AppCompatActivity implements OnInnerFragme
         fm = getSupportFragmentManager();
         ft = fm.beginTransaction();
 
-        Fragment fragIntro = new FragIntroScreen();
-//        Fragment fragIntro = new FragLocationConfirmation();
+//        Fragment fragIntro = new FragIntroScreen();
+        Fragment fragIntro = new FragGameMenu();
         ft.add(R.id.fl_fragment, fragIntro);
         ft.commit();
     }

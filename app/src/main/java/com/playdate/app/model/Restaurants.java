@@ -3,13 +3,18 @@ package com.playdate.app.model;
 public class Restaurants {
     String _id;
     String name;
-    String image;
+    int image;
 
-    public String getImage() {
+    public Restaurants(String name, int image) {
+        this.name = name;
+        this.image = image;
+    }
+
+    public int getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(int image) {
         this.image = image;
     }
 

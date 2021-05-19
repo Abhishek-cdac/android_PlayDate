@@ -18,8 +18,10 @@
     <color name="editText_background">#D13A6F</color>
     <color name="color_pink">#D13A6F</color>
     <color name="color_pink_dull">#DA8EA9</color>
+    <color name="color_pink_2">#C97DAA</color>
     <color name="register_btn">#603F82</color>
     <color name="off_white">#EFEEEF</color>
+    <color name="transparent">#00000000</color>
 
     <color name="color_option_menu">#FF3990</color>
     <color name="filter_label_normal">#8A8889</color>
