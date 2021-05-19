@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginHorizontal="@dimen/_15sdp"
+    android:layout_marginVertical="@dimen/_8sdp">
+
+    <EditText
+        android:id="@+id/et_cad_no"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/outline_pink_box"
+        android:hint="@string/card_no"
+        android:paddingHorizontal="@dimen/_12sdp"
+        android:paddingVertical="@dimen/_10sdp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/color_grey"
+        android:textSize="@dimen/_12sdp" />
+
+    <EditText
+        android:id="@+id/et_card_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/et_cad_no"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:background="@drawable/outline_pink_box"
+        android:hint="@string/card_hlder"
+        android:paddingHorizontal="@dimen/_12sdp"
+        android:paddingVertical="@dimen/_10sdp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/color_grey"
+        android:textSize="@dimen/_12sdp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/et_card_name"
+        android:orientation="horizontal">
+
+        <Spinner
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/transparent"
+            android:entries="@{AgeVerificationViewModel.fetchMonths()}"
+            android:popupBackground="@color/white"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:selectedItemPosition="@={AgeVerificationViewModel.MonthSelectedPosition}"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.498" />
+    </LinearLayout>
+</RelativeLayout>

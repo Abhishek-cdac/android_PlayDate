@@ -4,11 +4,37 @@ public class PartnerImage {
     String image;
     String name;
     String points;
+    String position;
+    boolean isIncreased;
+
+    public PartnerImage(String image, String name, String points, String position, boolean isIncreased) {
+        this.image = image;
+        this.name = name;
+        this.points = points;
+        this.position = position;
+        this.isIncreased = isIncreased;
+    }
+
+    public boolean isIncreased() {
+        return isIncreased;
+    }
+
+    public void setIncreased(boolean increased) {
+        isIncreased = increased;
+    }
 
     public PartnerImage(String image, String name, String points) {
         this.image = image;
         this.name = name;
         this.points = points;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
     }
 
     public String getName() {

@@ -76,6 +76,7 @@
     <string name="str_temp"><b>MariaGomes213</b> Nice weather to showoffmy new sunglasses\n<b>DeanSean</b> Haha , I did the same lol\n<b>KellyFinn92</b> My bestie is looking gooooood!</string>
     <!--    <string name="str_temp">We are <b>good</b> glad to see you.</string>-->
 
+    <string name="add_new_payment_method">Add New Payment Method</string>
     <string name="post">Post</string>
     <string name="keep_looking1">Keep Looking</string>
     <string name="send_msg">Send Message</string>
@@ -118,6 +119,9 @@
     <string name="Mobile">Mobile Number</string>
     <string name="winner">Winner!</string>
     <string name="level">LEVEL 1</string>
+    <string name="card_no">CARD NUMBER</string>
+    <string name="card_hlder">CARDHOLDER'S NAME</string>
+    <string name="save_credit_information">Save credit card information</string>
     <string name="ans_first">You answered first!</string>
 
     <string name="select_restaurant">Select Restaurant</string>
