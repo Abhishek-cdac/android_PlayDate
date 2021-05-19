@@ -3,6 +3,7 @@ package com.playdate.app.ui.social.upload_media.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,7 +33,7 @@ public class ChipsAdapter extends RecyclerView.Adapter<ChipsAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull ChipsAdapter.ViewHolder holder, int position) {
-        holder.chips.setChipText(lst.get(position).getUsername());
+        holder.chips.setText(lst.get(position).getUsername());
     }
 
     @Override
@@ -41,11 +42,11 @@ public class ChipsAdapter extends RecyclerView.Adapter<ChipsAdapter.ViewHolder> 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        Chip chips;
+        TextView chips;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
-            chips = itemView.findViewById(R.id.chips);
+            chips = itemView.findViewById(R.id.chip);
         }
     }
 }
