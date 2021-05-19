@@ -69,9 +69,11 @@ public class FragCardSwipe extends Fragment {
             @Override
             public void onItemClicks(View view, int position, int value, String s) {
                 if (value == 13) {
-                //    callMatchRequestStatusUpdateAPI("Verified");
+                    callAddUserMatchRequestAPI(s, "Like");
+
                 } else if (value == 14) {
-                //    callMatchRequestStatusUpdateAPI("Rejected");
+                    callAddUserMatchRequestAPI(s, "Unlike");
+
                 }
             }
 
@@ -195,13 +197,12 @@ public class FragCardSwipe extends Fragment {
     }
 
 
-    private void callAddUserMatchRequestAPI() {
-
+    private void callAddUserMatchRequestAPI(String userId, String action) {
 
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("toUserID", "6098d32a84f15a7ac50c8312");
-        hashMap.put("action", "like");
+        hashMap.put("toUserID", userId);
+        hashMap.put("action", action);
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
         pd.show();
         SessionPref pref = SessionPref.getInstance(getActivity());
@@ -212,9 +213,6 @@ public class FragCardSwipe extends Fragment {
                 pd.cancel();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
-
-
-                    } else {
                         clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
                     }
                 } else {
@@ -236,45 +234,6 @@ public class FragCardSwipe extends Fragment {
         });
     }
 
-    private void callMatchRequestStatusUpdateAPI(String status) {
-
-
-        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-        Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("requestID", "60a20921082d502dfb7cbdc4");  //hardcode
-        hashMap.put("status", status);  //Verified,Rejected
-        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
-        pd.show();
-        SessionPref pref = SessionPref.getInstance(getActivity());
-        Call<CommonModel> call = service.matchRequestStatusUpdate("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
-        call.enqueue(new Callback<CommonModel>() {
-            @Override
-            public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
-                pd.cancel();
-                if (response.code() == 200) {
-                    if (response.body().getStatus() == 1) {
-                        Toast.makeText(getActivity(), "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                    } else {
-                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
-                    }
-                } else {
-                    try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
-                    } catch (Exception e) {
-                        Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<CommonModel> call, Throwable t) {
-                t.printStackTrace();
-                pd.cancel();
-                Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
 
     private void setPages(ArrayList<MatchListUser> lstusers) {

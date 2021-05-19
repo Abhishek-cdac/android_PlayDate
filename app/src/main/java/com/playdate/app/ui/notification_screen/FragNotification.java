@@ -57,12 +57,15 @@ public class FragNotification extends Fragment {
             public void onItemClicks(View view, int position, int value, String s) {
                 if (value == 20) {
                     callFriedRequestStatusAPI(s, "Verified");
-
                     Log.e("Accept", "Accept");
                 } else if (value == 21) {
                     callFriedRequestStatusAPI(s,  "Rejected");
                     Log.e("Reject", "Reject");
-
+                }
+                else if(value == 24){
+                    callMatchRequestStatusUpdateAPI(s, "Verified");
+                }else if(value == 25){
+                    callMatchRequestStatusUpdateAPI(s, "Rejected");
                 }
             }
 
@@ -83,6 +86,43 @@ public class FragNotification extends Fragment {
 
 
         return view;
+    }
+    private void callMatchRequestStatusUpdateAPI(String requestId, String status) {
+
+
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("requestID", requestId);
+        hashMap.put("status", status);  //Verified,Rejected
+        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
+        pd.show();
+        SessionPref pref = SessionPref.getInstance(getActivity());
+        Call<CommonModel> call = service.matchRequestStatusUpdate("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new Callback<CommonModel>() {
+            @Override
+            public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
+                pd.cancel();
+                if (response.code() == 200) {
+                    if (response.body().getStatus() == 1) {
+                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
+                    }
+                } else {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
+                    } catch (Exception e) {
+                        Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CommonModel> call, Throwable t) {
+                t.printStackTrace();
+                pd.cancel();
+                Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void callFriedRequestStatusAPI(String s, String status) {

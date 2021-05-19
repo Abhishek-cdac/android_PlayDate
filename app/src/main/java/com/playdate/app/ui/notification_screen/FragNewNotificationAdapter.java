@@ -30,7 +30,7 @@ public class FragNewNotificationAdapter extends RecyclerView.Adapter<FragNewNoti
     String notifiationId;
     String requestId;
     Context mcontext;
-
+    String patternID;
 
     public FragNewNotificationAdapter(FragmentActivity activity, ArrayList<NotificationData> lst_notifications, Onclick itemClick) {
         this.mcontext = activity;
@@ -50,20 +50,19 @@ public class FragNewNotificationAdapter extends RecyclerView.Adapter<FragNewNoti
     @Override
     public void onBindViewHolder(@NonNull FragNewNotificationAdapter.ViewHolder holder, int position) {
 
-         Log.e("notification_list.", "" + notification_list.size());
-         Log.e("notification_list.", "" + notification_list.get(position).getFriendRequest());
 
         if (notification_list.get(position).getFriendRequest().size() > 0) {
+            patternID = notification_list.get(position).getPatternID();
+            Log.e("patternID", "" + patternID);
             holder.rl_notification.setVisibility(View.VISIBLE);
             holder.ll_no_notify.setVisibility(View.GONE);
-
             notifiationId = notification_list.get(position).getNotificationId();
             userId = notification_list.get(position).getUserID();
             holder.tv_desc.setText(notification_list.get(position).getNotificationMessage());
-            holder.tv_name.setText(notification_list.get(position).getFriendRequest().get(position).getUserInfo().get(0).getUsername());
-            requestId = notification_list.get(position).getFriendRequest().get(position).getRequestId();
+            holder.tv_name.setText(notification_list.get(position).getFriendRequest().get(0).getUserInfo().get(0).getUsername());
+            requestId = notification_list.get(position).getFriendRequest().get(0).getRequestId();
             Log.e("requestId",""+requestId);
-            Picasso.get().load(notification_list.get(position).getFriendRequest().get(position).getUserInfo().get(position).getProfilePicPath())
+            Picasso.get().load(notification_list.get(position).getFriendRequest().get(0).getUserInfo().get(0).getProfilePicPath())
                     //.placeholder(R.drawable.cupertino_activity_indicator)
                     .placeholder(R.drawable.profile)
                     .fit()
@@ -104,12 +103,19 @@ public class FragNewNotificationAdapter extends RecyclerView.Adapter<FragNewNoti
 
 
 
-
             iv_right.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.e("requestId", "" + requestId);
-                    itemClick.onItemClicks(v, getAdapterPosition(), 20, requestId);
+
+                    if (patternID.equals("Friend")){
+                        itemClick.onItemClicks(v, getAdapterPosition(), 20, requestId);
+                    }
+                    else if (patternID.equals("Match"))
+                    {
+                        itemClick.onItemClicks(v, getAdapterPosition(), 24, requestId);
+
+                    }
+
 
                 }
             });
@@ -118,8 +124,15 @@ public class FragNewNotificationAdapter extends RecyclerView.Adapter<FragNewNoti
                 public void onClick(View v) {
                     Log.e("requestId", "" + requestId);
 
+                    if (patternID.equals("Friend")){
+                        itemClick.onItemClicks(v, getAdapterPosition(), 21, requestId);
+                    }
+                    else if (patternID.equals("Match"))
+                    {
+                        itemClick.onItemClicks(v, getAdapterPosition(), 25, requestId);
+                    }
 
-                    itemClick.onItemClicks(v, getAdapterPosition(), 21, requestId);
+
 
                     //  removeAt(getAdapterPosition());
                 }
