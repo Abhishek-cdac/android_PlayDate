@@ -33,6 +33,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:padding="@dimen/_2sdp"
+                android:id="@+id/iv_back"
 
                 android:src="@drawable/ic_arrowhead_thin_outline_to_the_left" />
 

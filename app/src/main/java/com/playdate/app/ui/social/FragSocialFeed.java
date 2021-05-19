@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -14,15 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
-import com.playdate.app.model.RestMain;
-import com.playdate.app.ui.restaurant.RestaurantActivity;
-import com.playdate.app.ui.restaurant.adapter.RestaurantAdapter;
+import com.playdate.app.ui.social.adapter.SocialFeedAdapter;
 import com.playdate.app.ui.social.model.PostDetails;
 import com.playdate.app.ui.social.model.PostHistory;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,7 +31,7 @@ public class FragSocialFeed extends Fragment {
 
 
     public static final String NORMAL = "Normal";
-//    public static final String RESTAURANT = 1;
+    //    public static final String RESTAURANT = 1;
 //    public static final String ANONYMUSQUESTION = 2;
 //    public static final String ADDS = 3;
     RecyclerView recycler_view_feed;
@@ -71,9 +66,9 @@ public class FragSocialFeed extends Fragment {
                 pd.cancel();
                 if (response.code() == 200) {
                     assert response.body() != null;
-                    ArrayList<PostDetails>lst=response.body().getPostDetails();
-                    if(lst==null){
-                        lst=new ArrayList<>();
+                    ArrayList<PostDetails> lst = response.body().getPostDetails();
+                    if (lst == null) {
+                        lst = new ArrayList<>();
                     }
                     SocialFeedAdapter adapter = new SocialFeedAdapter(lst);
 
