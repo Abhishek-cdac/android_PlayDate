@@ -1,9 +1,12 @@
 package com.playdate.app.ui.dashboard.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,14 +22,21 @@ import com.playdate.app.ui.chat.request.Onclick;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriendAdapter.ViewHolder> {
-    ArrayList<GetUserSuggestionData> suggestions_list = new ArrayList<>();
+public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriendAdapter.ViewHolder> implements Filterable {
+
+    //    ArrayList<GetUserSuggestionData> suggestions_list = new ArrayList<>();
+//    ArrayList<GetUserSuggestionData> suggestionsListFiltered = new ArrayList<>();
+    List<GetUserSuggestionData> suggestions_list;
+    List<GetUserSuggestionData> suggestionsListFiltered;
+
     Onclick itemClick;
 
 
     public SuggestedFriendAdapter(ArrayList<GetUserSuggestionData> lst_getUserSuggestions, Onclick itemClick) {
         this.suggestions_list = lst_getUserSuggestions;
+        this.suggestionsListFiltered = lst_getUserSuggestions;
         this.itemClick = itemClick;
 
     }
@@ -43,29 +53,28 @@ public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriend
 
     @Override
     public void onBindViewHolder(@NonNull SuggestedFriendAdapter.ViewHolder holder, int position) {
-        holder.name.setText(suggestions_list.get(position).getUsername());
-        if (suggestions_list.get(position).getProfilePicPath() == null) {
+        holder.name.setText(suggestionsListFiltered.get(position).getUsername());
+        if (suggestionsListFiltered.get(position).getProfilePicPath() == null) {
             holder.image.setBackgroundColor(mcontext.getResources().getColor(R.color.color_grey_light));
         }
-        Picasso.get().load(suggestions_list.get(position).getProfilePicPath()).placeholder(R.drawable.ic_baseline_person_24)
+        Picasso.get().load(suggestionsListFiltered.get(position).getProfilePicPath()).placeholder(R.drawable.ic_baseline_person_24)
                 .fit()
                 .placeholder(R.drawable.profile)
                 .centerCrop()
                 .into(holder.image);
 
 
-        if (null != suggestions_list.get(position).getFriendRequest()) {
-            if (suggestions_list.get(position).getFriendRequest().size() == 0) {
+        if (null != suggestionsListFiltered.get(position).getFriendRequest()) {
+            if (suggestionsListFiltered.get(position).getFriendRequest().size() == 0) {
                 holder.request.setImageResource(R.drawable.sent_request);
             } else {
-                if (suggestions_list.get(position).getFriendRequest().get(0).getStatus().toLowerCase().trim().equals("pending")) {
+                if (suggestionsListFiltered.get(position).getFriendRequest().get(0).getStatus().toLowerCase().trim().equals("pending")) {
                     holder.request.setImageResource(R.drawable.sent_request_sel);
                 } else {
                     holder.request.setImageResource(R.drawable.sent_request);
                 }
             }
         }
-
 
 //        if (suggestions_list.get(position).isPremium()) {
 //            holder.diamond.setVisibility(View.VISIBLE);
@@ -78,7 +87,49 @@ public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriend
 
     @Override
     public int getItemCount() {
-        return suggestions_list.size();
+        Log.e("suggestionsListFiltered", "" + suggestionsListFiltered.size());
+
+        return suggestionsListFiltered.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+                if (charString.isEmpty()) {
+                    suggestionsListFiltered = suggestions_list;
+                } else {
+                    List<GetUserSuggestionData> filteredList = new ArrayList<>();
+                    for (GetUserSuggestionData row : suggestions_list) {
+                        Log.e("rowrow", "" + row.getUsername());
+                        // name match condition. this might differ depending on your requirement
+                        // here we are looking for name or phone number match
+                        if (row.getUsername().toLowerCase().contains(charString.toLowerCase()) || row.getFullName().contains(charSequence)) {
+                            filteredList.add(row);
+                        }
+                    }
+
+                    suggestionsListFiltered = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = suggestionsListFiltered;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                suggestionsListFiltered = (ArrayList<GetUserSuggestionData>) filterResults.values;
+                notifyDataSetChanged();
+            }
+
+        };
+    }
+
+    public interface SuggestionsAdapterListner {
+        void onSuggestionSelected(GetUserSuggestionData getUserSuggestionData);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

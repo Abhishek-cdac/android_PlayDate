@@ -36,6 +36,7 @@ import com.playdate.app.ui.chat.request.RequestChatFragment;
 import com.playdate.app.ui.coupons.FragCouponStore;
 import com.playdate.app.ui.dashboard.adapter.FriendAdapter;
 import com.playdate.app.ui.dashboard.fragments.FragLanding;
+import com.playdate.app.ui.dashboard.fragments.FragSearchUser;
 import com.playdate.app.ui.date.DateBaseActivity;
 import com.playdate.app.ui.dialogs.FullScreenDialog;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
@@ -105,7 +106,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
 
     RelativeLayout rl_main;
-    ImageView profile_image;
+    ImageView profile_image, search;
     RecyclerView rv_friends;
     SessionPref pref;
 
@@ -113,6 +114,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+        search = findViewById(R.id.iv_search);
         pref = SessionPref.getInstance(this);
         ll_profile_insta = findViewById(R.id.ll_profile_insta);
         profile_image = findViewById(R.id.profile_image);
@@ -163,6 +165,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         ll_upload_photo.setOnClickListener(this);
         ll_Record_video.setOnClickListener(this);
         ll_upload_video.setOnClickListener(this);
+        search.setOnClickListener(this);
 
         fm = getSupportFragmentManager();
         ft = fm.beginTransaction();
@@ -522,9 +525,13 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             ll_friends.setVisibility(View.VISIBLE);
             ll_mainMenu.setVisibility(View.VISIBLE);
             ll_her.setVisibility(View.VISIBLE);
-
         }
-
+        else  if(id == R.id.iv_search){
+            ReplaceFrag(new FragSearchUser());
+            ll_friends.setVisibility(View.GONE);
+            ll_mainMenu.setVisibility(View.GONE);
+            ll_her.setVisibility(View.GONE);
+        }
 
     }
 
