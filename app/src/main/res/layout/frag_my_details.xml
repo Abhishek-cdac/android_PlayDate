@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
+    >
+<LinearLayout
     android:paddingLeft="@dimen/_20sdp"
-    android:paddingRight="@dimen/_20sdp">
 
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingRight="@dimen/_20sdp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+     <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/profile_image"
         android:layout_width="@dimen/_90sdp"
         android:layout_height="@dimen/_90sdp"
@@ -366,7 +373,7 @@
         android:layout_gravity="start"
         android:layout_marginLeft="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_15sdp"
-        android:layout_marginBottom="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_55sdp"
         android:layout_marginRight="@dimen/_10sdp"
         android:fontFamily="@font/lato_bold"
         android:gravity="start|center"
@@ -376,3 +383,6 @@
         android:textStyle="bold" />
 
 </LinearLayout>
+
+
+</androidx.core.widget.NestedScrollView>

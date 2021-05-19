@@ -94,7 +94,16 @@
             android:screenOrientation="portrait">
 
         </activity>
+        <activity android:name=".ui.date.fragments.FragSelectPartner">
 
+        </activity>
+        <activity android:name=".ui.date.fragments.FragLocationTracing" />
+        <activity android:name=".ui.date.fragments.FragPartnerSelected" />
+        <activity android:name=".ui.date.fragments.FragSelectDate" >
+
+
+        </activity>
+        <activity android:name=".ui.date.fragments.FragLocationConfirmation"/>
         <activity
             android:name=".ui.register.RegisterActivity"
             android:screenOrientation="portrait" />
