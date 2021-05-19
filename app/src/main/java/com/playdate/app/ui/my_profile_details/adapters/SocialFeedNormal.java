@@ -82,21 +82,21 @@ public class SocialFeedNormal extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         int finalpos = lst.get(position).getType();
         switch (finalpos) {
-            case FragSocialFeed.USER:
-                return FragSocialFeed.USER;
+            case 0:
+                return 0;
 
-            case FragSocialFeed.RESTAURANT:
-                return FragSocialFeed.RESTAURANT;
-
-            case FragSocialFeed.ANONYMUSQUESTION:
-                return FragSocialFeed.ANONYMUSQUESTION;
-
-            case FragSocialFeed.ADDS:
-                return FragSocialFeed.ADDS;
+//            case FragSocialFeed.RESTAURANT:
+//                return FragSocialFeed.RESTAURANT;
+//
+//            case FragSocialFeed.ANONYMUSQUESTION:
+//                return FragSocialFeed.ANONYMUSQUESTION;
+//
+//            case FragSocialFeed.ADDS:
+//                return FragSocialFeed.ADDS;
 
 
         }
-        return FragSocialFeed.USER;
+        return 0;
 
     }
 
@@ -106,7 +106,7 @@ public class SocialFeedNormal extends RecyclerView.Adapter<RecyclerView.ViewHold
         View view = null;
         RecyclerView.ViewHolder viewHolder = null;
         mContext = parent.getContext();
-        if (viewType == FragSocialFeed.USER) {
+        if (viewType == 0) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_feed_type_normal, parent, false);
             viewHolder = new SocialFeedNormal.ViewHolderUser(view);
         }
@@ -117,7 +117,7 @@ public class SocialFeedNormal extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
-        if (holder.getItemViewType() == FragSocialFeed.USER) {
+        if (holder.getItemViewType() == 0) {
             SocialFeedNormal.ViewHolderUser userViewHolder = (SocialFeedNormal.ViewHolderUser) holder;
             userViewHolder.name_friend.setText(lst.get(position).getUserName());
 

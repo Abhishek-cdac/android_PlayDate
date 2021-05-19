@@ -9,6 +9,7 @@ import com.playdate.app.model.MatchListModel;
 import com.playdate.app.model.NotificationModel;
 import com.playdate.app.model.RegisterResult;
 import com.playdate.app.model.RestMain;
+import com.playdate.app.ui.social.model.PostHistory;
 
 import java.util.Map;
 
@@ -106,12 +107,10 @@ public interface GetDataService {
 
     @FormUrlEncoded
     @POST("user/add-user-match-request")
-        //not implemented fully
     Call<CommonModel> addUserMatchRequest(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
     @FormUrlEncoded
     @POST("user/match-request-status-update")
-        //not implemented fully
     Call<CommonModel> matchRequestStatusUpdate(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
     @Multipart
@@ -125,6 +124,14 @@ public interface GetDataService {
     @FormUrlEncoded
     @POST("user/add-post-feed")
     Call<LoginResponse> addPostFeed(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
+    @FormUrlEncoded
+    @POST("user/get-post-feed")
+    Call<PostHistory> getPostFeed(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
+    @FormUrlEncoded
+    @POST("user/add-post-like-unlike")
+    Call<LoginResponse> addPostLikeUnlike(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
 
 
