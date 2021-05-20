@@ -192,12 +192,9 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             ViewHolderUser userViewHolder = (ViewHolderUser) holder;
             userViewHolder.name_friend.setText(lst.get(position).getLstpostby().get(0).getUsername());
 
-            userViewHolder.name_friend.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    OnInnerFragmentClicks ref = (OnInnerFragmentClicks) mContext;
-                    ref.loadProfile();
-                }
+            userViewHolder.name_friend.setOnClickListener(view -> {
+                OnInnerFragmentClicks ref = (OnInnerFragmentClicks) mContext;
+                ref.loadProfile();
             });
 
             userViewHolder.iv_post_image.setOnClickListener(view -> {
@@ -205,12 +202,12 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 //                    ref.loadProfile();
             });
 
-            if(null!=lst.get(position).getPostMedia().get(0).getMediaFullPath()){
-                if(lst.get(position).getPostMedia().get(0).getMediaFullPath().contains(".mp4")){
+            if (null != lst.get(position).getPostMedia().get(0).getMediaFullPath()) {
+                if (lst.get(position).getPostMedia().get(0).getMediaFullPath().contains(".mp4")) {
 
                     // video
 
-                }else{
+                } else {
                     Picasso.get().load(lst.get(position).getPostMedia().get(0).getMediaFullPath())
 
 
@@ -244,32 +241,36 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 //                    lst.get(position).setHeartSelected(false);
                     notifyDataSetChanged();
                     callAPI(lst.get(position).getPostId(), lst.get(position).getIsLike());
-                }  else if (lst.get(position).getIsLike() ==0) {
+                } else if (lst.get(position).getIsLike() == 0) {
                     userViewHolder.iv_heart.setImageResource(R.drawable.red_heart);
                     lst.get(position).setIsLike(1);
                     lst.get(position).setTapCount(0);
 //                    lst.get(position).setHeartSelected(true);
                     notifyDataSetChanged();
                     callAPI(lst.get(position).getPostId(), lst.get(position).getIsLike());
-                }else {
+                } else {
 //                    callAPI(lst.get(position).getPostId(), lst.get(position).getLikes());
 //                    userViewHolder.iv_heart.setImageResource(R.drawable.red_heart);
                 }
             });
-            userViewHolder.txt_heart_count.setText(lst.get(position).getLikes()+" Hearts");
-            if(null!=lst.get(position).getTag()){
-                String s = "<b>"+lst.get(position).getLstpostby().get(0).getUsername()+ "</b> "+lst.get(position).getTag();
-                userViewHolder.txt_chat.setText(Html.fromHtml(s));
+            try {
+                userViewHolder.txt_heart_count.setText(lst.get(position).getLikes() + " Hearts");
+                if (null != lst.get(position).getTag()) {
+                    String s = "<b>" + lst.get(position).getLstpostby().get(0).getUsername() + "</b> " + lst.get(position).getTag();
+                    userViewHolder.txt_chat.setText(Html.fromHtml(s));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
             userViewHolder.iv_post_image.setOnClickListener(view -> {
 
-                if (lst.get(position).getLikes()!=1) {
+                if (lst.get(position).getLikes() != 1) {
                     if (lst.get(position).getTapCount() == 1) {
 
                         lst.get(position).setLikes(1);
                         userViewHolder.iv_heart_red.setVisibility(View.VISIBLE);
-                        callAPI(lst.get(position).getPostId(),lst.get(position).getLikes());
+                        callAPI(lst.get(position).getPostId(), lst.get(position).getLikes());
                         animateHeart(userViewHolder.iv_heart_red, userViewHolder);
 
                     } else {
@@ -345,9 +346,7 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             iv_more_options.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    FragmentManager fragmentManager = ((AppCompatActivity) mContext).getSupportFragmentManager();
-                    CommentBottomSheet sheet = new CommentBottomSheet();
-                    sheet.show(fragmentManager, "comment bootom sheet");
+                   showBottomSheet(getAdapterPosition());
                 }
             });
 
@@ -355,6 +354,17 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             et_comment.setOnClickListener(v -> v.getContext().startActivity(new Intent(v.getContext(), AnonymousQuestionActivity.class)));
 
         }
+    }
+
+    private void showBottomSheet(int adapterPosition) {
+        boolean notification=lst.get(adapterPosition).getNotifyStatus().equals("On");
+        FragmentManager fragmentManager = ((AppCompatActivity) mContext).getSupportFragmentManager();
+        CommentBottomSheet sheet = new CommentBottomSheet(notification,lst.get(adapterPosition),this);
+        sheet.show(fragmentManager, "comment bootom sheet");
+    }
+
+    void notifyAdapter(){
+        notifyDataSetChanged();
     }
 
     public class ViewHolderAdds extends RecyclerView.ViewHolder {
