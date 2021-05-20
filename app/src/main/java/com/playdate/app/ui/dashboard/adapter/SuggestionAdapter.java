@@ -1,6 +1,7 @@
 package com.playdate.app.ui.dashboard.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,6 +83,7 @@ public class SuggestionAdapter extends PagerAdapter {
 
 
         String userId = suggestions_list.get(position).getId();
+        Log.e("request_sent_userID",""+userId);
 
         if (suggestions_list.get(position).getFriendRequest() != null) {
             if (suggestions_list.get(position).getFriendRequest().size() > 0) {

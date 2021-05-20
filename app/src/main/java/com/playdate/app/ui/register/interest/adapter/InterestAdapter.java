@@ -19,17 +19,22 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
+import com.playdate.app.model.GetUserSuggestionData;
 import com.playdate.app.model.Interest;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHolder> {
+public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHolder> implements Filterable  {
 
     ArrayList<Interest> lst_int ;
+    ArrayList<Interest> lst_intFilter ;
 
     public InterestAdapter(ArrayList<Interest> lst_int) {
+
+
         this.lst_int = lst_int;
+        this.lst_intFilter = lst_int;
     }
     //    ArrayList<Interest> lst_int_search = new ArrayList();
 
@@ -48,8 +53,8 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.txt_intresrt.setText(lst_int.get(position).getName());
-        if (lst_int.get(position).isSelected()) {
+        holder.txt_intresrt.setText(lst_intFilter.get(position).getName());
+        if (lst_intFilter.get(position).isSelected()) {
             holder.txt_intresrt.setBackground(mContext.getDrawable(R.drawable.selected_interest_row));
             holder.iv_cross.setVisibility(View.VISIBLE);
 //            Animation fadeInAnimation = AnimationUtils.loadAnimation(mContext, R.anim.shake);
@@ -60,7 +65,7 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHo
         }
 
         holder.iv_cross.setOnClickListener(view -> {
-            lst_int.get(position).setSelected(!lst_int.get(position).isSelected());
+            lst_intFilter.get(position).setSelected(!lst_intFilter.get(position).isSelected());
             notifyDataSetChanged();
         });
 
@@ -68,14 +73,15 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return lst_int.size();
+        return lst_intFilter.size();
     }
 
     public void updateList(ArrayList<Interest> filterdNames) {
 
-        lst_int = filterdNames;
+        lst_intFilter = filterdNames;
         notifyDataSetChanged();
     }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView txt_intresrt;
@@ -88,13 +94,51 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHo
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    lst_int.get(getAdapterPosition()).setSelected(true);
+                    lst_intFilter.get(getAdapterPosition()).setSelected(true);
                     notifyDataSetChanged();
                 }
             });
         }
     }
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+                if (charString.isEmpty()) {
+                    lst_intFilter = lst_int;
+                } else {
+                    List<Interest> filteredList = new ArrayList<>();
+                    for (Interest row : lst_int) {
+                        Log.e("rowrow", "" + row.getName());
+                        // name match condition. this might differ depending on your requirement
+                        // here we are looking for name or phone number match
+                        if (row.getName().toLowerCase().contains(charString.toLowerCase())) {
+                            filteredList.add(row);
+                        }
+                    }
 
+                    lst_intFilter = (ArrayList<Interest>) filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = lst_intFilter;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                lst_intFilter = (ArrayList<Interest>) filterResults.values;
+                notifyDataSetChanged();
+            }
+
+        };
+    }
+
+    public interface InterestAdapterListner {
+        void onInterestSelected(Interest interest);
+    }
 
 
 }

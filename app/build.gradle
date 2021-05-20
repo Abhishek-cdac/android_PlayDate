@@ -95,5 +95,5 @@ dependencies {
     def lottieVersion = "3.7.0"
     implementation "com.airbnb.android:lottie:$lottieVersion"
     implementation("com.squareup.okhttp3:logging-interceptor:3.9.0")
-    implementation "im.ene.toro3:toro:3.0.0-beta1"
+    implementation 'com.allattentionhere:autoplayvideos:0.2.0'
 }
