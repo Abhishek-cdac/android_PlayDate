@@ -83,6 +83,7 @@ import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 public class PostMediaActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView txt_myname;
     private EditText edt_location;
+    private EditText edt_desc;
     private ImageView iv_profile;
     private PlayerView pvMain;
     private SimpleExoPlayer absPlayerInternal;
@@ -94,6 +95,7 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_photo);
+        edt_desc = findViewById(R.id.edt_desc);
         iv_profile = findViewById(R.id.iv_profile);
         iv_add = findViewById(R.id.iv_add);
         pvMain = findViewById(R.id.ep_video_view);
@@ -376,6 +378,7 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
         hashMap.put("mediaId", mediaId);
         hashMap.put("postType", "Normal");// Hardcode
         hashMap.put("tagFriend", tagFriends);
+        hashMap.put("tag", edt_desc.getText().toString());
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
         pd.show();
 
