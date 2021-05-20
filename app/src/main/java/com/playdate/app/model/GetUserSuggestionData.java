@@ -8,6 +8,17 @@ import com.google.gson.annotations.SerializedName;
 
 
 public class GetUserSuggestionData {
+
+    boolean selected;
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
     @SerializedName("_id")
     @Expose
     private String id;

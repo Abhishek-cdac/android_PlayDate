@@ -23,11 +23,13 @@ public class FragGameMenu extends Fragment {
         View view = inflater.inflate(R.layout.frag_game_menu, container, false);
 
         ImageView iv_shuffle;
+        ImageView iv_leaderboard;
         TabLayout tabLayout;
         TabLayout tab_layout2;
         ViewPager viewPager;
 
         iv_shuffle = view.findViewById(R.id.iv_shuffle);
+        iv_leaderboard = view.findViewById(R.id.iv_leaderboard);
         tabLayout = view.findViewById(R.id.tab);
         tab_layout2 = view.findViewById(R.id.tab_layout);
         viewPager = view.findViewById(R.id.viewpager);
@@ -64,6 +66,14 @@ public class FragGameMenu extends Fragment {
             public void onClick(View v) {
                 OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
                 frag.ReplaceFrag(new FragCoinScreen());
+            }
+        });
+
+        iv_leaderboard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
+                frag.ReplaceFrag(new FragGameLeaderBoard());
             }
         });
 

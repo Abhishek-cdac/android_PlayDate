@@ -28,12 +28,12 @@
 
 
             <ImageView
+                android:id="@+id/iv_back"
                 android:layout_width="@dimen/_25sdp"
                 android:layout_height="@dimen/_25sdp"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:padding="@dimen/_2sdp"
-                android:id="@+id/iv_back"
 
                 android:src="@drawable/ic_arrowhead_thin_outline_to_the_left" />
 
@@ -146,11 +146,11 @@
 
             <EditText
 
+                android:id="@+id/edt_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_gravity="start"
-
                 android:layout_marginLeft="-5dp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/lato_bold"
@@ -172,6 +172,7 @@
 
         </RelativeLayout>
 
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -192,90 +193,102 @@
             android:layout_marginLeft="@dimen/_25sdp"
             android:layout_marginRight="@dimen/_25sdp">
 
-            <TextView
 
-                android:id="@+id/txt_location"
+            <EditText
+                android:id="@+id/edt_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true"
                 android:layout_gravity="start"
+
+                android:layout_marginLeft="-5dp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/lato_bold"
                 android:gravity="start|center"
+                android:hint="Location"
                 android:textColor="@color/black"
+                android:textColorHint="@color/color_grey"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
 
             <ImageView
+                android:id="@+id/iv_location"
                 android:layout_width="@dimen/_12sdp"
                 android:layout_height="@dimen/_12sdp"
                 android:layout_alignParentEnd="true"
-                android:id="@+id/iv_location"
-                android:visibility="gone"
                 android:layout_centerVertical="true"
-                android:src="@drawable/ic_pin">
+                android:src="@drawable/ic_pin"
+                android:visibility="gone">
 
             </ImageView>
 
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/animationView"
-                app:lottie_url="REPLACE_JSON_URL"
                 android:layout_width="@dimen/_15sdp"
                 android:layout_height="@dimen/_15sdp"
                 android:layout_alignParentEnd="true"
-                app:lottie_rawRes="@raw/loading"
                 android:layout_centerVertical="true"
                 app:lottie_autoPlay="true"
-                app:lottie_loop="true"/>
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/loading"
+                app:lottie_url="REPLACE_JSON_URL" />
 
         </RelativeLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-
-            android:layout_marginLeft="@dimen/_25sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginRight="@dimen/_25sdp"
-            android:fontFamily="@font/helvetica_neue"
-            android:gravity="start|center"
-            android:visibility="gone"
-            android:text="Tag a friend"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/_11sdp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_25sdp"
-            android:visibility="gone"
-            android:layout_marginRight="@dimen/_25sdp">
+            android:layout_marginRight="@dimen/_25sdp"
+            android:visibility="visible">
 
             <TextView
 
+                android:id="@+id/txt_add"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_gravity="start"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:drawableRight="@drawable/ic_price_tag"
                 android:fontFamily="@font/lato_bold"
                 android:gravity="start|center"
-                android:text="Add Friend"
+                android:text="Tag a friend"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
 
-            <ImageView
-                android:layout_width="@dimen/_12sdp"
-                android:layout_height="@dimen/_12sdp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/ic_price_tag">
 
-            </ImageView>
+            <LinearLayout
+                android:id="@+id/ll_add"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_below="@+id/txt_add"
+                android:layout_centerVertical="true"
+                android:foregroundGravity="center"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/iv_add"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+
+                    android:src="@drawable/add_circle">
+
+                </ImageView>
+            </LinearLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_tag_friend"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_below="@+id/txt_add"
+                android:layout_toRightOf="@+id/ll_add">
+
+            </androidx.recyclerview.widget.RecyclerView>
 
         </RelativeLayout>
 

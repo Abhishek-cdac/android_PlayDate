@@ -28,7 +28,7 @@ public class FragTimesUp1 extends Fragment {
             @Override
             public void onClick(View v) {
                 OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
-                frag.ReplaceFrag(new FragTimes2());
+                frag.ReplaceFrag(new FragTimesUp2());
             }
         });
 

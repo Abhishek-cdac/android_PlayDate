@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cl_page"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginHorizontal="@dimen/_25sdp"
+    android:layout_marginVertical="@dimen/_10sdp"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:id="@+id/rl_visa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/round_outline_pink"
+        android:padding="@dimen/_12sdp">
+
+        <ImageView
+            android:layout_width="132dp"
+            android:layout_height="69dp"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/open" />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/check" />
+
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_scan_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_visa"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:background="@drawable/btn_pink_filled"
+        android:gravity="center"
+        android:paddingHorizontal="@dimen/_32sdp"
+        android:text="@string/scan_card"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_10sdp" />
+
+    <TextView
+        android:id="@+id/or"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_scan_card"
+        android:layout_centerHorizontal="true"
+        android:paddingVertical="@dimen/_15sdp"
+        android:text="@string/or" />
+
+    <EditText
+        android:id="@+id/et_cad_no"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/or"
+        android:background="@drawable/outline_pink_box"
+        android:hint="@string/card_no"
+        android:paddingHorizontal="@dimen/_12sdp"
+        android:paddingVertical="@dimen/_10sdp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/color_grey"
+        android:textSize="@dimen/_12sdp" />
+
+    <EditText
+        android:id="@+id/et_card_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/et_cad_no"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:background="@drawable/outline_pink_box"
+        android:hint="@string/card_hlder"
+        android:paddingHorizontal="@dimen/_12sdp"
+        android:paddingVertical="@dimen/_10sdp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/color_grey"
+        android:textSize="@dimen/_12sdp" />
+
+    <LinearLayout
+        android:id="@+id/date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/et_card_name"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/spinner_month"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/outline_pink_box"
+            android:paddingVertical="@dimen/_10sdp"
+            android:paddingLeft="@dimen/_3sdp"
+            android:paddingRight="@dimen/_8sdp"
+            android:popupBackground="@color/color_pink" />
+
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/spinner_year"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:background="@drawable/outline_pink_box"
+            android:paddingVertical="@dimen/_10sdp"
+            android:paddingLeft="@dimen/_3sdp"
+            android:paddingRight="@dimen/_8sdp"
+            android:popupBackground="@color/color_pink" />
+
+
+        <EditText
+            android:id="@+id/et_card_cvv"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:background="@drawable/outline_pink_box"
+            android:hint="CVV"
+            android:paddingVertical="@dimen/_10sdp"
+            android:paddingStart="@dimen/_8sdp"
+            android:paddingEnd="@dimen/_14sdp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/color_grey"
+            android:textSize="@dimen/_12sdp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/date"
+        android:id="@+id/check"
+        android:layout_marginTop="@dimen/_8sdp">
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/save_credit_information"
+            android:textColor="@color/black_back"
+            android:textSize="@dimen/_10sdp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_add_payment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       android:layout_below="@+id/check"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_40sdp"
+        android:background="@drawable/btn_pink_filled"
+        android:gravity="center"
+        android:paddingHorizontal="@dimen/_25sdp"
+        android:text="@string/add_payment_method"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_10sdp" />
+</RelativeLayout>

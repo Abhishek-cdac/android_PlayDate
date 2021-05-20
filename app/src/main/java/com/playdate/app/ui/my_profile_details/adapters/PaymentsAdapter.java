@@ -16,6 +16,7 @@ public class PaymentsAdapter extends RecyclerView.Adapter<PaymentsAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_payments, null);
+
         return new ViewHolder(view);
     }
 
@@ -27,7 +28,7 @@ public class PaymentsAdapter extends RecyclerView.Adapter<PaymentsAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 8;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
