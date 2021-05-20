@@ -118,7 +118,7 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
 
         LocationManager locationManager = (LocationManager)
                 getSystemService(Context.LOCATION_SERVICE);
-        txt_location.setText("fetching loaction...");
+        txt_location.setText("fetching location...");
         LocationListener locationListener = new MyLocationListener(this, txt_location, iv_location, animationView);
 
         setData();

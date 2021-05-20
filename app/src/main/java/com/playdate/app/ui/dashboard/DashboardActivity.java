@@ -109,11 +109,14 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     ImageView profile_image, search;
     RecyclerView rv_friends;
     SessionPref pref;
+    TextView txt_serachfriend;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+        txt_serachfriend = findViewById(R.id.txt_serachfriend);
         search = findViewById(R.id.iv_search);
         pref = SessionPref.getInstance(this);
         ll_profile_insta = findViewById(R.id.ll_profile_insta);
@@ -217,15 +220,21 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 //                pd.cancel();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
-                        RecyclerView.LayoutManager manager = new LinearLayoutManager(DashboardActivity.this, RecyclerView.HORIZONTAL, false);
                         ArrayList<MatchListUser> lst = response.body().getUsers();
                         if (lst == null) {
                             lst = new ArrayList<>();
                         }
-                        FriendAdapter adapterfriend = new FriendAdapter(lst);
-                        rv_friends.setAdapter(adapterfriend);
-                        rv_friends.setLayoutManager(manager);
-
+                        if (lst.size()>0){
+                            txt_serachfriend.setVisibility(View.GONE);
+                            rv_friends.setVisibility(View.VISIBLE);
+                            RecyclerView.LayoutManager manager = new LinearLayoutManager(DashboardActivity.this, RecyclerView.HORIZONTAL, false);
+                            FriendAdapter adapterfriend = new FriendAdapter(lst);
+                            rv_friends.setAdapter(adapterfriend);
+                            rv_friends.setLayoutManager(manager);
+                        }else{
+                            txt_serachfriend.setVisibility(View.VISIBLE);
+                            rv_friends.setVisibility(View.GONE);
+                        }
                     } else {
                     }
                 } else {

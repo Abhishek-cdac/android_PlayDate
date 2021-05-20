@@ -16,8 +16,6 @@
         android:drawableStart="@drawable/search"
         android:drawablePadding="@dimen/_8sdp"
         android:hint="@string/search_here"
-        android:inputType="textEmailAddress"
-
         android:textColor="@android:color/white"
         android:textColorHint="@android:color/white"
         android:textSize="@dimen/_12sdp" />

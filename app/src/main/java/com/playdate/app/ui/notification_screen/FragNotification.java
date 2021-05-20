@@ -57,10 +57,10 @@ public class FragNotification extends Fragment {
             public void onItemClicks(View view, int position, int value, String s) {
                 if (value == 20) {
                     callFriedRequestStatusAPI(s, "Verified");
-                    Log.e("Accept", "Accept");
+                    Log.e("request_sent_requestID", "accept"+s);
                 } else if (value == 21) {
                     callFriedRequestStatusAPI(s,  "Rejected");
-                    Log.e("Reject", "Reject");
+                    Log.e("request_sent_requestID", "reject"+s);
                 }
                 else if(value == 24){
                     callMatchRequestStatusUpdateAPI(s, "Verified");

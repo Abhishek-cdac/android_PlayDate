@@ -37,6 +37,8 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
+
         Picasso.get().load(lst.get(position).getProfilePicPath())
                 .placeholder(R.drawable.profile)
                 .into(holder.profile_image);

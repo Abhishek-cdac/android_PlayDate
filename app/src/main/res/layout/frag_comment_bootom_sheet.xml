@@ -24,6 +24,7 @@
             android:textSize="@dimen/_12sdp" />
 
         <ImageView
+            android:id="@+id/notificationOn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -47,6 +48,7 @@
             android:textSize="@dimen/_12sdp" />
 
         <ImageView
+            android:id="@+id/block_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -71,6 +73,7 @@
             android:textSize="@dimen/_12sdp" />
 
         <ImageView
+            android:id="@+id/report_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -81,7 +84,7 @@
 
     </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -95,13 +98,13 @@
             android:textColor="@color/white"
             android:textSize="@dimen/_12sdp" />
 
-        <androidx.appcompat.widget.SwitchCompat
+        <Switch
+            android:id="@+id/post_on_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-
             app:track="@drawable/track" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

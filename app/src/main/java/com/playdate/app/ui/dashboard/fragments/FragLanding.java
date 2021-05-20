@@ -181,8 +181,8 @@ public class FragLanding extends Fragment {
                     if (response.body().getStatus() == 1) {
 //                        FriendRequest friendRequest = new FriendRequest();
 //                        Log.e("FriendRequestStatus", "" + friendRequest.getStatus());
-//
-                        Toast.makeText(getActivity(), "Request Sent! " + s, Toast.LENGTH_SHORT).show();
+
+                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", "" + response.body().getMessage(), "Ok");
                     } else {
                         clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", "" + response.body().getMessage(), "Ok");
                     }
