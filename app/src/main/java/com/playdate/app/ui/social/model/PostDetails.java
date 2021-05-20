@@ -22,6 +22,15 @@ public class PostDetails {
     private String tag;
     private String comments;
     private int isLike;
+    private String notifyStatus;
+
+    public String getNotifyStatus() {
+        return notifyStatus;
+    }
+
+    public void setNotifyStatus(String notifyStatus) {
+        this.notifyStatus = notifyStatus;
+    }
 
     public int getIsSaved() {
         return isSaved;

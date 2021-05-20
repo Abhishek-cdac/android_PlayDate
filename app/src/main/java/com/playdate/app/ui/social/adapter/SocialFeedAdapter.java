@@ -199,12 +199,9 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             userViewHolder = (ViewHolderUser) holder;
             userViewHolder.name_friend.setText(lst.get(position).getLstpostby().get(0).getUsername());
 
-            userViewHolder.name_friend.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    OnInnerFragmentClicks ref = (OnInnerFragmentClicks) mContext;
-                    ref.loadProfile();
-                }
+            userViewHolder.name_friend.setOnClickListener(view -> {
+                OnInnerFragmentClicks ref = (OnInnerFragmentClicks) mContext;
+                ref.loadProfile();
             });
 
             userViewHolder.iv_post_image.setOnClickListener(view -> {
@@ -263,10 +260,14 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 //                    userViewHolder.iv_heart.setImageResource(R.drawable.red_heart);
                 }
             });
-            userViewHolder.txt_heart_count.setText(lst.get(position).getLikes() + " Hearts");
-            if (null != lst.get(position).getTag()) {
-                String s = "<b>" + lst.get(position).getLstpostby().get(0).getUsername() + "</b> " + lst.get(position).getTag();
-                userViewHolder.txt_chat.setText(Html.fromHtml(s));
+            try {
+                userViewHolder.txt_heart_count.setText(lst.get(position).getLikes() + " Hearts");
+                if (null != lst.get(position).getTag()) {
+                    String s = "<b>" + lst.get(position).getLstpostby().get(0).getUsername() + "</b> " + lst.get(position).getTag();
+                    userViewHolder.txt_chat.setText(Html.fromHtml(s));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
             if (lst.get(position).getIsSaved() == 1) {
                 userViewHolder.savePost.setImageResource(R.drawable.ic_icons8_bookmark);
@@ -418,9 +419,7 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             iv_more_options.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    FragmentManager fragmentManager = ((AppCompatActivity) mContext).getSupportFragmentManager();
-                    CommentBottomSheet sheet = new CommentBottomSheet();
-                    sheet.show(fragmentManager, "comment bootom sheet");
+                   showBottomSheet(getAdapterPosition());
                 }
             });
 
@@ -428,6 +427,17 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             et_comment.setOnClickListener(v -> v.getContext().startActivity(new Intent(v.getContext(), AnonymousQuestionActivity.class)));
 
         }
+    }
+
+    private void showBottomSheet(int adapterPosition) {
+        boolean notification=lst.get(adapterPosition).getNotifyStatus().equals("On");
+        FragmentManager fragmentManager = ((AppCompatActivity) mContext).getSupportFragmentManager();
+        CommentBottomSheet sheet = new CommentBottomSheet(notification,lst.get(adapterPosition),this);
+        sheet.show(fragmentManager, "comment bootom sheet");
+    }
+
+    void notifyAdapter(){
+        notifyDataSetChanged();
     }
 
     public class ViewHolderAdds extends RecyclerView.ViewHolder {
