@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -229,34 +230,38 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     .placeholder(R.drawable.cupertino_activity_indicator)
                     .into(userViewHolder.iv_profile);
 
-            if (lst.get(position).getLikes() == 1) {
+            if (lst.get(position).getIsLike() == 1) {
                 userViewHolder.iv_heart.setImageResource(R.drawable.red_heart);
             } else {
                 userViewHolder.iv_heart.setImageResource(R.drawable.heart);
             }
 
             userViewHolder.iv_heart.setOnClickListener(view -> {
-                if (lst.get(position).getLikes() == 1) {
-                    lst.get(position).setLikes(0);
+                if (lst.get(position).getIsLike() == 1) {
+                    lst.get(position).setIsLike(0);
                     userViewHolder.iv_heart.setImageResource(R.drawable.heart);
                     lst.get(position).setTapCount(0);
 //                    lst.get(position).setHeartSelected(false);
                     notifyDataSetChanged();
-                    callAPI(lst.get(position).getPostId(), lst.get(position).getLikes());
-                }  else if (lst.get(position).getLikes() ==0) {
+                    callAPI(lst.get(position).getPostId(), lst.get(position).getIsLike());
+                }  else if (lst.get(position).getIsLike() ==0) {
                     userViewHolder.iv_heart.setImageResource(R.drawable.red_heart);
-                    lst.get(position).setLikes(1);
+                    lst.get(position).setIsLike(1);
                     lst.get(position).setTapCount(0);
 //                    lst.get(position).setHeartSelected(true);
                     notifyDataSetChanged();
-                    callAPI(lst.get(position).getPostId(), lst.get(position).getLikes());
+                    callAPI(lst.get(position).getPostId(), lst.get(position).getIsLike());
                 }else {
 //                    callAPI(lst.get(position).getPostId(), lst.get(position).getLikes());
 //                    userViewHolder.iv_heart.setImageResource(R.drawable.red_heart);
                 }
             });
             userViewHolder.txt_heart_count.setText(lst.get(position).getLikes()+" Hearts");
-//            userViewHolder.txt_chat.setText(lst.get(position).getPostMedia().get(0));
+            if(null!=lst.get(position).getTag()){
+                String s = "<b>"+lst.get(position).getLstpostby().get(0).getUsername()+ "</b> "+lst.get(position).getTag();
+                userViewHolder.txt_chat.setText(Html.fromHtml(s));
+            }
+
             userViewHolder.iv_post_image.setOnClickListener(view -> {
 
                 if (lst.get(position).getLikes()!=1) {

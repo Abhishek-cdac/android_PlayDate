@@ -146,11 +146,11 @@
 
             <EditText
 
+                android:id="@+id/edt_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_gravity="start"
-
                 android:layout_marginLeft="-5dp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/lato_bold"

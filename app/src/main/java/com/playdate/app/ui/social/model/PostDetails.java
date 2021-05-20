@@ -19,6 +19,34 @@ public class PostDetails {
 
     private String postType;
 
+    private String tag;
+    private String comments;
+    private int isLike;
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    public int getIsLike() {
+        return isLike;
+    }
+
+    public void setIsLike(int isLike) {
+        this.isLike = isLike;
+    }
+
     private String entryDate;
     int likes;
 

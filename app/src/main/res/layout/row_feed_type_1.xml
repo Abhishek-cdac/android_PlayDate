@@ -73,6 +73,12 @@
                 android:background="@color/color_grey_too_light"
                 android:foregroundGravity="center" />
 
+            <com.google.android.exoplayer2.ui.PlayerView
+                android:id="@+id/ep_video_view"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_height="match_parent" />
+
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/animationView"
