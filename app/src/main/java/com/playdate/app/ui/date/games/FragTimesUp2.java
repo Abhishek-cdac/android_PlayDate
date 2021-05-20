@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import com.playdate.app.R;
 
-public class FragTimes2 extends Fragment {
+public class FragTimesUp2 extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

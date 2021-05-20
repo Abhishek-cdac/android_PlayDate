@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import com.playdate.app.R;
 import com.playdate.app.ui.date.fragments.FragLocationTracing;
+import com.playdate.app.ui.date.games.FragTimesUp2;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 
 public class FragSelectDate extends Fragment {
@@ -36,7 +37,8 @@ public class FragSelectDate extends Fragment {
         rl_virtual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-////////rest
+                OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
+                frag.ReplaceFrag(new FragRestaurantSelection());
             }
         });
 
