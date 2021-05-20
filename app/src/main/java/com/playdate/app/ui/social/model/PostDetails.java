@@ -23,6 +23,16 @@ public class PostDetails {
     private String comments;
     private int isLike;
 
+    public int getIsSaved() {
+        return isSaved;
+    }
+
+    public void setIsSaved(int isSaved) {
+        this.isSaved = isSaved;
+    }
+
+    private int isSaved;
+
     public String getTag() {
         return tag;
     }

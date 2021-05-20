@@ -133,6 +133,10 @@ public interface GetDataService {
     @POST("user/add-post-like-unlike")
     Call<LoginResponse> addPostLikeUnlike(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
+    @FormUrlEncoded
+    @POST("user/post-file-save-gallery")
+    Call<CommonModel> postFileSaveGallery(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
 
 
 }

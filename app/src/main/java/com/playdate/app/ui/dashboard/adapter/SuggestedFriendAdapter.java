@@ -106,11 +106,12 @@ public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriend
                         Log.e("rowrow", "" + row.getUsername());
                         // name match condition. this might differ depending on your requirement
                         // here we are looking for name or phone number match
-                        if (row.getUsername().toLowerCase().contains(charString.toLowerCase()) || row.getFullName().contains(charSequence)) {
-                            filteredList.add(row);
+                        if(row.getUsername()!=null){
+                            if (row.getUsername().toLowerCase().contains(charString.toLowerCase()) || row.getFullName().contains(charSequence)) {
+                                filteredList.add(row);
+                            }
                         }
                     }
-
                     suggestionsListFiltered = filteredList;
                 }
 

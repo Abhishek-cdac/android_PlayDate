@@ -70,7 +70,7 @@ public class FragSocialFeed extends Fragment {
                     if (lst == null) {
                         lst = new ArrayList<>();
                     }
-                    SocialFeedAdapter adapter = new SocialFeedAdapter(lst);
+                    SocialFeedAdapter adapter = new SocialFeedAdapter(getActivity(), lst);
 
 
                     LinearLayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
