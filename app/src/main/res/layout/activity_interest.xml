@@ -61,7 +61,7 @@
                 android:textSize="@dimen/_10sdp" />
         </LinearLayout>
 
-        <EditText
+        <SearchView
             android:id="@+id/edt_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -71,14 +71,15 @@
             android:layout_marginRight="@dimen/_25sdp"
             android:layout_marginBottom="@dimen/_5sdp"
             android:background="@drawable/circle_corner"
+            android:hint="@string/search_here"
             android:drawableStart="@drawable/search"
             android:drawablePadding="@dimen/_8sdp"
-            android:hint="@string/search_here"
-            android:inputType="textEmailAddress"
-            android:padding="@dimen/_10sdp"
             android:textColor="@android:color/white"
             android:textColorHint="@android:color/white"
-            android:textSize="@dimen/_12sdp" />
+            android:textSize="@dimen/_12sdp">
+
+
+        </SearchView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
