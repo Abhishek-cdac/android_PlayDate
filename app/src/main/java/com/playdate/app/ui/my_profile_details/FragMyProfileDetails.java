@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,6 +58,8 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
     TextView txt_interetsed;
     TextView txt_invite;
     SessionPref pref;
+    RelativeLayout saved_rl;
+
     private GoogleApiClient googleApiClient;
     GoogleSignInClient mGoogleSignInClient;
 
@@ -72,6 +75,7 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
 
+        saved_rl = view.findViewById(R.id.saved_rl);
         iv_reset_pass = view.findViewById(R.id.iv_reset_pass);
         iv_change_bio_video = view.findViewById(R.id.iv_change_bio_video);
         profile_image = view.findViewById(R.id.profile_image);
@@ -94,6 +98,7 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
         logout.setOnClickListener(this);
         iv_reset_pass.setOnClickListener(this);
         txt_invite.setOnClickListener(this);
+        saved_rl.setOnClickListener(this);
 
         setValues();
 
@@ -227,6 +232,8 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
             startActivity(new Intent(getActivity(), InviteFriendActivity.class));
         } else if (id == R.id.logout) {
             showYesNoDialog();
+        }else if (id == R.id.saved_rl) {
+            startActivity(new Intent(getActivity(), SavedPostActivity.class));
         }
     }
 

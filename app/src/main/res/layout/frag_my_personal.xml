@@ -9,7 +9,8 @@
     android:paddingRight="@dimen/_20sdp">
 
 
-    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/profile_image"
         android:layout_width="@dimen/_90sdp"
         android:layout_height="@dimen/_90sdp"
