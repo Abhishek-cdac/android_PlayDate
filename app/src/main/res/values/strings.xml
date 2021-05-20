@@ -30,6 +30,11 @@
     <string name="next">Next</string>
     <string name="forget_pswrd">Forget Your Password ?</string>
     <string name="or">OR</string>
+    <string name="game_coin">Game Coins</string>
+    <string name="date_coin">Date Coins</string>
+    <string name="multiplier">Multiplier Boosters</string>
+    <string name="dm">DM Boosters</string>
+
     <string name="didn_t_get_a_code">Didn\'t get a code?</string>
     <string name="resend"><u>Resend</u></string>
     <string name="we_sent_a_code">We Sent A Code</string>

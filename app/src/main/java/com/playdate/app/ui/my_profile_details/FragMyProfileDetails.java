@@ -56,6 +56,7 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
     TextView txt_user_name, logout;
     TextView txt_interetsed;
     TextView txt_invite;
+    TextView txt_upgrade;
     SessionPref pref;
     private GoogleApiClient googleApiClient;
     GoogleSignInClient mGoogleSignInClient;
@@ -81,6 +82,7 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
         iv_dark_mode = view.findViewById(R.id.iv_dark_mode);
         txt_user_name = view.findViewById(R.id.txt_user_name);
         txt_invite = view.findViewById(R.id.txt_invite);
+        txt_upgrade = view.findViewById(R.id.txt_upgrade);
         logout = view.findViewById(R.id.logout);
         TextView txt_change_photo = view.findViewById(R.id.txt_change_photo);
 
@@ -94,6 +96,7 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
         logout.setOnClickListener(this);
         iv_reset_pass.setOnClickListener(this);
         txt_invite.setOnClickListener(this);
+        txt_upgrade.setOnClickListener(this);
 
         setValues();
 
@@ -227,6 +230,8 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
             startActivity(new Intent(getActivity(), InviteFriendActivity.class));
         } else if (id == R.id.logout) {
             showYesNoDialog();
+        }else if( id == R.id.txt_upgrade){
+            ///// upgrade
         }
     }
 

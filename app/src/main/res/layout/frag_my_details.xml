@@ -343,7 +343,7 @@
         android:layout_marginLeft="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_15sdp"
         android:layout_marginRight="@dimen/_10sdp"
-
+        android:id="@+id/txt_upgrade"
         android:fontFamily="@font/lato_bold"
         android:gravity="start|center"
         android:text="Update Account to Premium"

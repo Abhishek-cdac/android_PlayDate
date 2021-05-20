@@ -62,6 +62,14 @@ public class FragCoinScreen extends Fragment {
             }
         });
 
+        btn_buy_coin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
+                frag.ReplaceFrag(new FragStore());
+            }
+        });
+
         return view;
     }
 }
