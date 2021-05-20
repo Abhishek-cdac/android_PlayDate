@@ -16,7 +16,6 @@ import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +25,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.allattentionhere.autoplayvideos.AAH_CustomViewHolder;
+import com.allattentionhere.autoplayvideos.AAH_VideosAdapter;
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
@@ -34,7 +35,6 @@ import com.playdate.app.model.LoginResponse;
 import com.playdate.app.ui.anonymous_question.AnonymousQuestionActivity;
 import com.playdate.app.ui.anonymous_question.CommentBottomSheet;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
-import com.playdate.app.ui.social.FragSocialFeed;
 import com.playdate.app.ui.social.model.PostDetails;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Callback;
@@ -48,11 +48,11 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 
-public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class SocialFeedAdapter extends AAH_VideosAdapter {
 
 
     private Context mContext;
-    ViewHolderUser userViewHolder;
+
 
     @Override
     public int getItemCount() {
@@ -66,7 +66,7 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         this.lst = lst;
     }
 
-    public void animateHeart(final ImageView view, ViewHolderUser holder) {
+    public void animateHeart(final ImageView view, View iv) {
 
         ScaleAnimation scaleAnimation = new ScaleAnimation(0.0f, 1.5f, 0.0f, 1.5f,
                 Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
@@ -83,13 +83,11 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         view.startAnimation(animation);
 
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                view.clearAnimation();
+        new Handler().postDelayed(() -> {
+            view.clearAnimation();
 
-                holder.iv_heart_red.setVisibility(View.GONE);
-                notifyDataSetChanged();
-            }
+            iv.setVisibility(View.GONE);
+            notifyDataSetChanged();
         }, 900);
 
 
@@ -147,35 +145,25 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public int getItemViewType(int position) {
 
-        String type = lst.get(position).getPostType();
-        switch (type) {
-            case FragSocialFeed.NORMAL:
-                return 0;
+        if (lst.get(position).getPostMedia().get(0).getMediaFullPath().toLowerCase().contains(".mp4")) {
+            return 1;
+        } else return 0;
 
-//            case FragSocialFeed.RESTAURANT:
-//                return FragSocialFeed.RESTAURANT;
-//
-//            case FragSocialFeed.ANONYMUSQUESTION:
-//                return FragSocialFeed.ANONYMUSQUESTION;
-//
-//            case FragSocialFeed.ADDS:
-//                return FragSocialFeed.ADDS;
-
-
-        }
-        return 0;
 
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public AAH_CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view = null;
-        RecyclerView.ViewHolder viewHolder = null;
+        AAH_CustomViewHolder viewHolder = null;
         mContext = parent.getContext();
         if (viewType == 0) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_feed_type_1, parent, false);
             viewHolder = new ViewHolderUser(view);
+        } else {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_feed_type_video, parent, false);
+            viewHolder = new ViewHolderUserVideo(view);
         }
 //        else if (viewType == FragSocialFeed.RESTAURANT) {
 //            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_feed_type_1, parent, false);
@@ -193,9 +181,10 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final AAH_CustomViewHolder holder, final int position) {
 
         if (holder.getItemViewType() == 0) {
+            ViewHolderUser userViewHolder;
             userViewHolder = (ViewHolderUser) holder;
             userViewHolder.name_friend.setText(lst.get(position).getLstpostby().get(0).getUsername());
 
@@ -298,7 +287,7 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         lst.get(position).setLikes(1);
                         userViewHolder.iv_heart_red.setVisibility(View.VISIBLE);
                         callAPI(lst.get(position).getPostId(), lst.get(position).getLikes());
-                        animateHeart(userViewHolder.iv_heart_red, userViewHolder);
+                        animateHeart(userViewHolder.iv_heart_red, userViewHolder.iv_heart_red);
 
                     } else {
                         lst.get(position).setTapCount(lst.get(position).getTapCount() + 1);
@@ -309,6 +298,103 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     lst.get(position).setTapCount(lst.get(position).getTapCount() + 1);
                 }
             });
+
+        } else {
+            ViewHolderUserVideo videoHolder;
+            holder.setVideoUrl(lst.get(position).getPostMedia().get(0).getMediaFullPath());
+
+            holder.setLooping(true); //optional - true by default
+
+
+            videoHolder = (ViewHolderUserVideo) holder;
+            videoHolder.name_friend.setText(lst.get(position).getLstpostby().get(0).getUsername());
+
+            videoHolder.name_friend.setOnClickListener(view -> {
+                OnInnerFragmentClicks ref = (OnInnerFragmentClicks) mContext;
+                ref.loadProfile();
+            });
+
+
+            Picasso.get().load(lst.get(position).getLstpostby().get(0).getProfilePicPath())
+                    .placeholder(R.drawable.cupertino_activity_indicator)
+                    .into(videoHolder.iv_profile);
+
+            if (lst.get(position).getIsLike() == 1) {
+                videoHolder.iv_heart.setImageResource(R.drawable.red_heart);
+            } else {
+                videoHolder.iv_heart.setImageResource(R.drawable.heart);
+            }
+
+            videoHolder.iv_heart.setOnClickListener(view -> {
+                if (lst.get(position).getIsLike() == 1) {
+                    lst.get(position).setIsLike(0);
+                    videoHolder.iv_heart.setImageResource(R.drawable.heart);
+                    lst.get(position).setTapCount(0);
+//                    lst.get(position).setHeartSelected(false);
+                    notifyDataSetChanged();
+                    callAPI(lst.get(position).getPostId(), lst.get(position).getIsLike());
+                } else if (lst.get(position).getIsLike() == 0) {
+                    videoHolder.iv_heart.setImageResource(R.drawable.red_heart);
+                    lst.get(position).setIsLike(1);
+                    lst.get(position).setTapCount(0);
+//                    lst.get(position).setHeartSelected(true);
+                    notifyDataSetChanged();
+                    callAPI(lst.get(position).getPostId(), lst.get(position).getIsLike());
+                } else {
+//                    callAPI(lst.get(position).getPostId(), lst.get(position).getLikes());
+//                    userViewHolder.iv_heart.setImageResource(R.drawable.red_heart);
+                }
+            });
+            try {
+                videoHolder.txt_heart_count.setText(lst.get(position).getLikes() + " Hearts");
+                if (null != lst.get(position).getTag()) {
+                    String s = "<b>" + lst.get(position).getLstpostby().get(0).getUsername() + "</b> " + lst.get(position).getTag();
+                    videoHolder.txt_chat.setText(Html.fromHtml(s));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if (lst.get(position).getIsSaved() == 1) {
+                videoHolder.savePost.setImageResource(R.drawable.ic_icons8_bookmark);
+            } else {
+                videoHolder.savePost.setImageResource(R.drawable.ic_icons8_bookmark_border);
+            }
+
+            videoHolder.savePost.setOnClickListener(view -> {
+                if (lst.get(position).getIsSaved() == 1) {
+                    lst.get(position).setIsSaved(0);
+                    videoHolder.savePost.setImageResource(R.drawable.ic_icons8_bookmark_border);
+                    notifyDataSetChanged();
+                    callSavePostAPI(lst.get(position).getPostId(), lst.get(position).getIsSaved());
+                } else if (lst.get(position).getIsSaved() == 0) {
+                    videoHolder.savePost.setImageResource(R.drawable.ic_icons8_bookmark);
+                    lst.get(position).setIsSaved(1);
+                    notifyDataSetChanged();
+                    callSavePostAPI(lst.get(position).getPostId(), lst.get(position).getIsSaved());
+                }
+            });
+
+
+            videoHolder.iv_post_image.setOnClickListener(view -> {
+
+                if (lst.get(position).getLikes() != 1) {
+                    if (lst.get(position).getTapCount() == 1) {
+
+                        lst.get(position).setLikes(1);
+                        videoHolder.iv_heart_red.setVisibility(View.VISIBLE);
+                        callAPI(lst.get(position).getPostId(), lst.get(position).getLikes());
+                        animateHeart(videoHolder.iv_heart_red, videoHolder.iv_heart_red);
+
+                    } else {
+                        lst.get(position).setTapCount(lst.get(position).getTapCount() + 1);
+                        videoHolder.iv_heart_red.setVisibility(View.GONE);
+                    }
+
+                } else {
+                    lst.get(position).setTapCount(lst.get(position).getTapCount() + 1);
+                }
+            });
+
 
         }
 //        else if (holder.getItemViewType() == FragSocialFeed.RESTAURANT) {
@@ -367,7 +453,7 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 //                pd.cancel();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
-                     //   Toast.makeText(mContext, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        //   Toast.makeText(mContext, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
                         //      clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", ""+response.body().getMessage(), "Ok");
                     }
                 } else {
@@ -385,7 +471,105 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     }
 
-    public class ViewHolderUser extends RecyclerView.ViewHolder {
+    public class ViewHolderUserVideo extends AAH_CustomViewHolder {
+        ImageView iv_heart_red;
+        ImageView iv_profile;
+        ImageView iv_heart;
+        ImageView iv_msg;
+        LottieAnimationView animationView;
+        ImageView iv_post_image, iv_more_options;
+        CardView card_image;
+        TextView name_friend;
+        //        EditText et_comment;
+        TextView et_comment;
+        TextView txt_heart_count;
+        ImageView savePost;
+        ImageView iv_mute_unmute;
+        ImageView img_playback;
+        TextView txt_chat;
+        boolean isMuted=false;
+        boolean isPlaying=true;
+        public ViewHolderUserVideo(@NonNull View itemView) {
+            super(itemView);
+            savePost = itemView.findViewById(R.id.save);
+            iv_mute_unmute = itemView.findViewById(R.id.iv_mute_unmute);
+            img_playback = itemView.findViewById(R.id.img_playback);
+            iv_heart_red = itemView.findViewById(R.id.iv_heart_red);
+            iv_profile = itemView.findViewById(R.id.iv_profile);
+            iv_heart = itemView.findViewById(R.id.iv_heart);
+            iv_post_image = itemView.findViewById(R.id.iv_post_image);
+            card_image = itemView.findViewById(R.id.card_image);
+            name_friend = itemView.findViewById(R.id.name_friend);
+            iv_msg = itemView.findViewById(R.id.iv_msg);
+            animationView = itemView.findViewById(R.id.animationView);
+            txt_heart_count = itemView.findViewById(R.id.txt_heart_count);
+            et_comment = itemView.findViewById(R.id.edt_comment);
+            txt_chat = itemView.findViewById(R.id.txt_chat);
+
+            iv_more_options = itemView.findViewById(R.id.friend_request);
+            iv_more_options.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showBottomSheet(getAdapterPosition());
+                }
+            });
+
+            iv_msg.setOnClickListener(v -> v.getContext().startActivity(new Intent(v.getContext(), AnonymousQuestionActivity.class)));
+            et_comment.setOnClickListener(v -> v.getContext().startActivity(new Intent(v.getContext(), AnonymousQuestionActivity.class)));
+            iv_mute_unmute.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    if (!isMuted) {
+                        isMuted=true;
+                        muteVideo();
+                        iv_mute_unmute.setImageResource(R.drawable.ic_mute);
+                    } else {
+                        isMuted=false;
+                        unmuteVideo();
+                        iv_mute_unmute.setImageResource(R.drawable.ic_unmute);
+                    }
+                }
+            });
+            img_playback.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(isPlaying){
+                        isPlaying=false;
+                        pauseVideo();
+                        img_playback.setImageResource(R.drawable.play_circle);
+
+                    }else{
+                        isPlaying=true;
+                        playVideo();
+                        img_playback.setImageResource(R.drawable.ic_pause);
+                    }
+
+                }
+            });
+        }
+
+        @Override
+        public void videoStarted() {
+            super.videoStarted();
+            img_playback.setImageResource(R.drawable.ic_pause);
+            if (isMuted) {
+                muteVideo();
+                iv_mute_unmute.setImageResource(R.drawable.ic_mute);
+            } else {
+                unmuteVideo();
+                iv_mute_unmute.setImageResource(R.drawable.ic_unmute);
+            }
+        }
+
+        @Override
+        public void pauseVideo() {
+            super.pauseVideo();
+            img_playback.setImageResource(R.drawable.play_circle);
+        }
+    }
+
+    public class ViewHolderUser extends AAH_CustomViewHolder {
         ImageView iv_heart_red;
         ImageView iv_profile;
         ImageView iv_heart;
@@ -419,7 +603,7 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             iv_more_options.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                   showBottomSheet(getAdapterPosition());
+                    showBottomSheet(getAdapterPosition());
                 }
             });
 
@@ -430,13 +614,13 @@ public class SocialFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     private void showBottomSheet(int adapterPosition) {
-        boolean notification=lst.get(adapterPosition).getNotifyStatus().equals("On");
+        boolean notification = lst.get(adapterPosition).getNotifyStatus().equals("On");
         FragmentManager fragmentManager = ((AppCompatActivity) mContext).getSupportFragmentManager();
-        CommentBottomSheet sheet = new CommentBottomSheet(notification,lst.get(adapterPosition),this);
+        CommentBottomSheet sheet = new CommentBottomSheet(notification, lst.get(adapterPosition), this);
         sheet.show(fragmentManager, "comment bootom sheet");
     }
 
-    void notifyAdapter(){
+    void notifyAdapter() {
         notifyDataSetChanged();
     }
 
