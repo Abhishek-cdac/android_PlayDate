@@ -8,7 +8,6 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-
         android:layout_height="match_parent"
         android:background="@color/white"
         android:orientation="vertical"
@@ -140,6 +139,7 @@
             android:textSize="@dimen/_11sdp" />
 
 
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -187,7 +187,6 @@
             android:textColor="@color/black"
             android:textSize="@dimen/_11sdp" />
 
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -203,6 +202,53 @@
                 android:layout_alignParentStart="true"
                 android:layout_gravity="start"
 
+                android:fontFamily="@font/lato_bold"
+                android:gravity="start|center"
+                android:text="Change bio"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/iv_edit_bio"
+                android:layout_width="@dimen/_12sdp"
+                android:layout_height="@dimen/_12sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/edit_pencil">
+
+            </ImageView>
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/txt_bio_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:fontFamily="@font/helvetica_neue"
+            android:gravity="start|center"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="@dimen/_11sdp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginRight="@dimen/_10sdp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_gravity="start"
                 android:fontFamily="@font/lato_bold"
                 android:gravity="start|center"
                 android:text="Change Bio Video"
