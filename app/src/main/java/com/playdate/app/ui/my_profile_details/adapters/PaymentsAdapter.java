@@ -28,7 +28,7 @@ public class PaymentsAdapter extends RecyclerView.Adapter<PaymentsAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return 8;
+        return 2;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
