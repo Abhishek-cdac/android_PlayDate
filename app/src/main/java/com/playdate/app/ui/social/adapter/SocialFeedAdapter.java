@@ -375,7 +375,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
             });
 
 
-            videoHolder.iv_post_image.setOnClickListener(view -> {
+            videoHolder.card_image.setOnClickListener(view -> {
 
                 if (lst.get(position).getLikes() != 1) {
                     if (lst.get(position).getTapCount() == 1) {

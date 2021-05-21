@@ -148,7 +148,7 @@
         <activity
             android:name=".ui.social.upload_media.PostMediaActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize|adjustPan" />
         <activity
             android:name=".ui.register.usertype.UserTypeSelectionActivity"
             android:screenOrientation="portrait" />
