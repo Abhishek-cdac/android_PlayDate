@@ -33,6 +33,7 @@ import com.playdate.app.ui.forgot_password.ForgotPasswordActivity;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.ui.invite.InviteFriendActivity;
 import com.playdate.app.ui.login.LoginActivity;
+import com.playdate.app.ui.register.bio.BioActivity;
 import com.playdate.app.ui.register.interest.InterestActivity;
 import com.playdate.app.ui.register.profile.UploadProfileActivity;
 import com.playdate.app.ui.register.username.UserNameActivity;
@@ -55,6 +56,8 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
     ImageView iv_dark_mode;
     ImageView profile_image;
     ImageView iv_reset_pass;
+    ImageView iv_edit_bio;
+    TextView txt_bio;
     ImageView iv_change_bio_video;
     TextView txt_user_name, logout;
     TextView txt_interetsed;
@@ -78,7 +81,9 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
 
-        saved_rl = view.findViewById(R.id.saved_rl);
+
+        iv_edit_bio = view.findViewById(R.id.iv_edit_bio);
+        txt_bio = view.findViewById(R.id.txt_bio_detail);
         iv_reset_pass = view.findViewById(R.id.iv_reset_pass);
         iv_change_bio_video = view.findViewById(R.id.iv_change_bio_video);
         profile_image = view.findViewById(R.id.profile_image);
@@ -102,8 +107,9 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
         logout.setOnClickListener(this);
         iv_reset_pass.setOnClickListener(this);
         txt_invite.setOnClickListener(this);
-        saved_rl.setOnClickListener(this);
         txt_upgrade.setOnClickListener(this);
+        iv_edit_bio.setOnClickListener(this);
+
 
         setValues();
 
@@ -184,6 +190,7 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
         try {
             SessionPref pref = SessionPref.getInstance(getActivity());
             txt_user_name.setText(pref.getStringVal(SessionPref.LoginUserusername));
+            txt_bio.setText(pref.getStringVal(SessionPref.LoginUserpersonalBio));
 
             String img = pref.getStringVal(SessionPref.LoginUserprofilePic);
             if (img.contains("http")) {
@@ -237,12 +244,16 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
             startActivity(new Intent(getActivity(), InviteFriendActivity.class));
         } else if (id == R.id.logout) {
             showYesNoDialog();
-        }else if (id == R.id.saved_rl) {
-            startActivity(new Intent(getActivity(), SavedPostActivity.class));
-        } else if (id == R.id.txt_upgrade) {
+        }else if (id == R.id.txt_upgrade) {
             OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
             frag.ReplaceFrag(new FragUpgradePremiun());
+        } else if (id == R.id.iv_edit_bio) {
+            Intent mIntent = new Intent(getActivity(), BioActivity.class);
+            mIntent.putExtra("fromProfile", true);
+            startActivityForResult(mIntent, 409);
         }
+
+
     }
 
     private void showYesNoDialog() {

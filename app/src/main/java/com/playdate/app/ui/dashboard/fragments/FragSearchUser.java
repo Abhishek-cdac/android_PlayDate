@@ -1,12 +1,15 @@
 package com.playdate.app.ui.dashboard.fragments;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -37,7 +40,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FragSearchUser extends Fragment implements SuggestedFriendAdapter.SuggestionsAdapterListner {
-    SearchView edt_search;
+    EditText edt_search;
+    TextView txt_cancel;
     RecyclerView recyclerView;
     private ArrayList<GetUserSuggestionData> lst_getUserSuggestions;
     private CommonClass clsCommon;
@@ -50,6 +54,7 @@ public class FragSearchUser extends Fragment implements SuggestedFriendAdapter.S
         View view = inflater.inflate(R.layout.frag_search_user, container, false);
         clsCommon = CommonClass.getInstance();
         edt_search = view.findViewById(R.id.edt_search);
+        txt_cancel = view.findViewById(R.id.txt_cancel);
         recyclerView = view.findViewById(R.id.recycler_view);  itemClick = new Onclick() {
             @Override
             public void onItemClick(View view, int position, int value) {
@@ -69,7 +74,14 @@ public class FragSearchUser extends Fragment implements SuggestedFriendAdapter.S
             }
         };
 
-        edt_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        txt_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edt_search.setText("");
+            }
+        });
+
+    /*    edt_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 adapter.getFilter().filter(query);
@@ -80,6 +92,23 @@ public class FragSearchUser extends Fragment implements SuggestedFriendAdapter.S
             public boolean onQueryTextChange(String newText) {
                 adapter.getFilter().filter(newText);
                 return false;
+            }
+        });*/
+
+        edt_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                adapter.getFilter().filter(s);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                adapter.getFilter().filter(s);
             }
         });
 

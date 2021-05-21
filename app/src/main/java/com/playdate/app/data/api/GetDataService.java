@@ -141,10 +141,10 @@ public interface GetDataService {
     @FormUrlEncoded
     @POST("user/post-file-save-gallery")
     Call<CommonModel> postFileSaveGallery(@Header("Authorization") String token, @FieldMap Map<String, String> param);
-  @FormUrlEncoded
+
+    @FormUrlEncoded
     @POST("user/get-post-save-gallery")
     Call<SavedPostModel> getPostSaveGallery(@Header("Authorization") String token, @FieldMap Map<String, String> param);
-
 
 
 }

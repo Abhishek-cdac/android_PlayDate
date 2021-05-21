@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class LoginUserDetails {
 
@@ -29,6 +30,18 @@ public class LoginUserDetails {
     String paymentMode;
     String mediaId;
     String fullPath;
+
+    String relationship;
+    String personalBio;
+
+    @SerializedName("interested")
+    @Expose
+    ArrayList<Interest> interested;
+
+    @SerializedName("restaurants")
+    @Expose
+    ArrayList<Restaurants> restaurants;
+
 
     public String getFullPath() {
         return fullPath;
@@ -70,9 +83,6 @@ public class LoginUserDetails {
         this.profileVideoPath = profileVideoPath;
     }
 
-    String relationship;
-    String personalBio;
-
 
 
     public String getSourceType() {
@@ -107,13 +117,6 @@ public class LoginUserDetails {
         this.paymentMode = paymentMode;
     }
 
-    @SerializedName("interested")
-    @Expose
-    ArrayList<String> interested;
-
-    @SerializedName("restaurants")
-    @Expose
-    ArrayList<String> restaurants;
 
     public String getId() {
         return id;
@@ -227,19 +230,18 @@ public class LoginUserDetails {
         this.personalBio = personalBio;
     }
 
-    public ArrayList<String> getInterested() {
+    public ArrayList<Interest> getInterested() {
         return interested;
     }
 
-    public void setInterested(ArrayList<String> interested) {
+    public void setInterested(ArrayList<Interest> interested) {
         this.interested = interested;
     }
 
-    public ArrayList<String> getRestaurants() {
+    public ArrayList<Restaurants> getRestaurants() {
         return restaurants;
     }
 
-    public void setRestaurants(ArrayList<String> restaurants) {
+    public void setRestaurants(ArrayList<Restaurants> restaurants) {
         this.restaurants = restaurants;
-    }
-}
+    }}

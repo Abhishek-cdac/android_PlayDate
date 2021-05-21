@@ -57,6 +57,19 @@
 
             </ImageView>
 
+            <ImageView
+                android:id="@+id/iv_saved"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:src="@drawable/ic_icons8_bookmark"
+                android:visibility="gone">
+
+
+            </ImageView>
+
 
             <LinearLayout
                 android:id="@+id/ll_mainMenu"
@@ -224,14 +237,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                   android:gravity="start|center"
                     android:layout_weight="1"
+                    android:gravity="start|center"
                     android:paddingLeft="@dimen/_10sdp"
-                    android:visibility="gone"
                     android:text="@string/sarchfriendhere"
                     android:textColor="@color/color_grey"
                     android:textSize="@dimen/_10sdp"
-                   />
+                    android:visibility="gone" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_friends"

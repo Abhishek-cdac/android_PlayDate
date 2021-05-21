@@ -35,7 +35,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PlayDate"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.my_profile_details.SavedPostActivity"></activity>
         <!-- fb start -->
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -75,10 +74,11 @@
         <activity android:name=".ui.date.DateBaseActivity"></activity>
         <activity
             android:name=".ui.anonymous_question.AnonymousQuestionActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.login.LoginActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".util.customcamera.otalia.GameCamera"/>
       <!--  <activity android:name=".ui.date.fragments.FragSelectPartner"></activity>
         <activity android:name=".ui.date.fragments.FragLocationTracing" />
         <activity android:name=".ui.date.fragments.FragPartnerSelected" />
