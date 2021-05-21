@@ -54,7 +54,7 @@ public class FragSocialFeed extends Fragment {
     @Override
     public void onStop() {
         try {
-            recycler_view_feed.stopVideos();
+         //   recycler_view_feed.stopVideos();
         } catch (Exception e) {
             e.printStackTrace();
         }

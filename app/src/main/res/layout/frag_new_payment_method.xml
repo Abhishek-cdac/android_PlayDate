@@ -20,7 +20,7 @@
             android:layout_width="132dp"
             android:layout_height="69dp"
             android:layout_alignParentStart="true"
-            android:src="@drawable/open" />
+            android:src="@drawable/visa" />
 
 
         <ImageView
@@ -28,7 +28,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/check" />
+            android:background="@drawable/ellipse1"
+            android:padding="@dimen/_6sdp"
+            android:src="@drawable/checkbox" />
 
 
     </RelativeLayout>
@@ -59,6 +61,8 @@
 
     <EditText
         android:id="@+id/et_cad_no"
+        android:maxLength="12"
+        android:phoneNumber="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/or"
@@ -75,6 +79,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/et_cad_no"
+        android:maxLength="20"
         android:layout_marginTop="@dimen/_15sdp"
         android:background="@drawable/outline_pink_box"
         android:hint="@string/card_hlder"
@@ -120,7 +125,9 @@
         <EditText
             android:id="@+id/et_card_cvv"
             android:layout_width="@dimen/_80sdp"
+            android:maxLength="3"
             android:layout_height="wrap_content"
+            android:phoneNumber="true"
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/_8sdp"
             android:background="@drawable/outline_pink_box"
@@ -135,16 +142,32 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/check"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/date"
-        android:id="@+id/check"
         android:layout_marginTop="@dimen/_8sdp">
 
-        <CheckBox
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rl_check"
+            android:background="@drawable/rect11">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:id="@+id/iv_checkbox"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:padding="@dimen/_5sdp"
+                android:src="@drawable/checkbox" />
+        </RelativeLayout>
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginStart="@dimen/_3sdp"
             android:text="@string/save_credit_information"
             android:textColor="@color/black_back"
             android:textSize="@dimen/_10sdp" />
@@ -154,7 +177,7 @@
         android:id="@+id/btn_add_payment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-       android:layout_below="@+id/check"
+        android:layout_below="@+id/check"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/_40sdp"
         android:background="@drawable/btn_pink_filled"

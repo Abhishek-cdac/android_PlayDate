@@ -30,6 +30,11 @@
     <string name="next">Next</string>
     <string name="forget_pswrd">Forget Your Password ?</string>
     <string name="or">OR</string>
+    <string name="game_coin">Game Coins</string>
+    <string name="date_coin">Date Coins</string>
+    <string name="multiplier">Multiplier Boosters</string>
+    <string name="dm">DM Boosters</string>
+
     <string name="didn_t_get_a_code">Didn\'t get a code?</string>
     <string name="resend"><u>Resend</u></string>
     <string name="we_sent_a_code">We Sent A Code</string>
@@ -78,8 +83,10 @@
 
     <string name="add_new_payment_method">Add New Payment Method</string>
     <string name="add_payment_method">Add Payment Method</string>
+    <string name="premiun_upgrade">Premiun Plan Upgrade</string>
     <string name="post">Post</string>
     <string name="scan_card">Scan Card</string>
+    <string name="send_invite">Send Invite</string>
     <string name="keep_looking1">Keep Looking</string>
     <string name="send_msg">Send Message</string>
     <string name="create_date">Create Date</string>

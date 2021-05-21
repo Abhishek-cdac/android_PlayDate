@@ -276,4 +276,55 @@
             android:src="@drawable/speech_bubble" />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:id="@+id/ll_frnds"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_social"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal"
+        android:paddingVertical="@dimen/_15sdp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/circledot"
+            android:padding="@dimen/_8sdp"
+            android:src="@drawable/standingman" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:background="@drawable/circledot"
+            android:padding="@dimen/_8sdp"
+            android:src="@drawable/standingman" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/circledot"
+            android:padding="@dimen/_8sdp"
+            android:src="@drawable/standingman" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_send_invite"
+        android:layout_width="wrap_content"
+        android:visibility="visible"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_frnds"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:background="@drawable/btn_pink_filled"
+        android:gravity="center"
+        android:paddingHorizontal="@dimen/_32sdp"
+        android:text="@string/send_invite"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_10sdp" />
+
+
+
 </RelativeLayout>
