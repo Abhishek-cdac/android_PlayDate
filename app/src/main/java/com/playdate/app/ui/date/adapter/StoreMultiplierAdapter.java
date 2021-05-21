@@ -45,7 +45,7 @@ public class StoreMultiplierAdapter extends RecyclerView.Adapter<StoreMultiplier
         if (holder.tv_amount.getText() == "1") {
             holder.iv_coins.setImageResource(R.drawable.multi_coin);
         } else {
-            holder.iv_coins.setImageResource(R.drawable.game_coin3);
+            holder.iv_coins.setImageResource(R.drawable.multiplier3);
         }
 
     }

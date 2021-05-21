@@ -27,7 +27,9 @@ import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.Interest;
 import com.playdate.app.model.InterestsMain;
 import com.playdate.app.ui.dashboard.OnProfilePhotoChageListerner;
+import com.playdate.app.ui.date.games.FragTimesUp1;
 import com.playdate.app.ui.forgot_password.ForgotPasswordActivity;
+import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.ui.invite.InviteFriendActivity;
 import com.playdate.app.ui.login.LoginActivity;
 import com.playdate.app.ui.register.interest.InterestActivity;
@@ -230,8 +232,9 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
             startActivity(new Intent(getActivity(), InviteFriendActivity.class));
         } else if (id == R.id.logout) {
             showYesNoDialog();
-        }else if( id == R.id.txt_upgrade){
-            ///// upgrade
+        } else if (id == R.id.txt_upgrade) {
+            OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
+            frag.ReplaceFrag(new FragUpgradePremiun());
         }
     }
 

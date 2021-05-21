@@ -83,8 +83,10 @@
 
     <string name="add_new_payment_method">Add New Payment Method</string>
     <string name="add_payment_method">Add Payment Method</string>
+    <string name="premiun_upgrade">Premiun Plan Upgrade</string>
     <string name="post">Post</string>
     <string name="scan_card">Scan Card</string>
+    <string name="send_invite">Send Invite</string>
     <string name="keep_looking1">Keep Looking</string>
     <string name="send_msg">Send Message</string>
     <string name="create_date">Create Date</string>
