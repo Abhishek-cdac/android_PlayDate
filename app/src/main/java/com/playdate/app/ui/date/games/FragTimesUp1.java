@@ -1,5 +1,6 @@
 package com.playdate.app.ui.date.games;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,8 @@ import androidx.fragment.app.Fragment;
 
 import com.playdate.app.R;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
+import com.playdate.app.ui.restaurant.RestaurantActivity;
+import com.playdate.app.util.customcamera.otalia.GameCamera;
 
 public class FragTimesUp1 extends Fragment {
     @Nullable
@@ -29,6 +32,14 @@ public class FragTimesUp1 extends Fragment {
             public void onClick(View v) {
                 OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
                 frag.ReplaceFrag(new FragTimesUp2());
+            }
+        });
+
+        btn_finish_date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), GameCamera
+                        .class));
             }
         });
 

@@ -75,10 +75,11 @@
         <activity android:name=".ui.date.DateBaseActivity"></activity>
         <activity
             android:name=".ui.anonymous_question.AnonymousQuestionActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.login.LoginActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".util.customcamera.otalia.GameCamera"/>
       <!--  <activity android:name=".ui.date.fragments.FragSelectPartner"></activity>
         <activity android:name=".ui.date.fragments.FragLocationTracing" />
         <activity android:name=".ui.date.fragments.FragPartnerSelected" />

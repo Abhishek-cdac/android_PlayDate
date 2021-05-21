@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,6 +21,7 @@ public class FragIntroScreen extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_date_intro, container, false);
         TextView tv_create_date = view.findViewById(R.id.tv_create_date);
+        ImageView cancel = view.findViewById(R.id.cancel);
         TextView tv_accept_date = view.findViewById(R.id.tv_accept_date);
 
         tv_create_date.setOnClickListener(new View.OnClickListener() {
@@ -30,6 +32,12 @@ public class FragIntroScreen extends Fragment {
 //                startActivity(new Intent(IntroScreen.this, SelectPartner.class));
             }
         });
+//        cancel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+
+//            }
+//        });
 
         return view;
     }
