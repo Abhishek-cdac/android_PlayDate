@@ -9,6 +9,7 @@ import com.playdate.app.model.MatchListModel;
 import com.playdate.app.model.NotificationModel;
 import com.playdate.app.model.RegisterResult;
 import com.playdate.app.model.RestMain;
+import com.playdate.app.model.SavedPostModel;
 import com.playdate.app.ui.social.model.PostHistory;
 
 import java.util.Map;
@@ -140,6 +141,9 @@ public interface GetDataService {
     @FormUrlEncoded
     @POST("user/post-file-save-gallery")
     Call<CommonModel> postFileSaveGallery(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+  @FormUrlEncoded
+    @POST("user/get-post-save-gallery")
+    Call<SavedPostModel> getPostSaveGallery(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
 
 
