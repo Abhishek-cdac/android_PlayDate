@@ -544,6 +544,9 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             iv_play_date_logo.setVisibility(View.VISIBLE);
         } else if (id == R.id.iv_coupons) {
             iv_love.setImageResource(R.drawable.love);
+            iv_love.setBackground(getDrawable((R.color.transparent)));
+            iv_coupons.setImageResource(R.drawable.my_coupon);
+            iv_coupons.setBackground(getDrawable(R.drawable.rectangle_back));
             ReplaceFrag(new FragCouponStore());
             ll_friends.setVisibility(View.VISIBLE);
             ll_mainMenu.setVisibility(View.VISIBLE);
