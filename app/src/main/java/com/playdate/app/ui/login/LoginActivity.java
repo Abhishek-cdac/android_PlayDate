@@ -1,5 +1,6 @@
 package com.playdate.app.ui.login;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -24,7 +25,6 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
@@ -41,7 +41,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.Task;
-import com.google.zxing.common.StringUtils;
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
@@ -255,11 +254,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 pd.cancel();
                 if (response.code() == 200) {
+                    assert response.body() != null;
                     if (response.body().getStatus() == 1) {
 
-                        // startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
-                        //finish();
-                        checkforTheLastActivity(response.body());
+                        checkForTheLastActivity(response.body());
 
                     } else {
                         clsCommon.showDialogMsg(LoginActivity.this, "PlayDate", response.body().getMessage(), "Ok");
@@ -285,71 +283,71 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         });
     }
 
-    private void checkforTheLastActivity(LoginResponse body) {
-        LoginUserDetails user = body.getUserData();
-        SessionPref.getInstance(LoginActivity.this).saveLoginUser(
-                user.getId(),
-                user.getFullName(),
-                user.getEmail(),
-                user.getUsername(),
-                user.getPhoneNo(),
-                user.getStatus(),
-                user.getToken(),
-                user.getGender(),
-                user.getBirthDate(),
-                user.getAge(),
-                user.getProfilePicPath(),
-                user.getProfileVideoPath(),
-                user.getRelationship(),
-                user.getPersonalBio(),
-                user.getInterested().toString().replace("[","").replace("]",""),
-                user.getInterestedIn(),
-                "",
-                user.getSourceType(),
-                user.getSourceSocialId(),
-                user.getInviteCode(),
-                user.getPaymentMode());
+    private void checkForTheLastActivity(LoginResponse body) {
+        try {
+            LoginUserDetails user = body.getUserData();
+            SessionPref.getInstance(LoginActivity.this).saveLoginUser(
+                    user.getId(),
+                    user.getFullName(),
+                    user.getEmail(),
+                    user.getUsername(),
+                    user.getPhoneNo(),
+                    user.getStatus(),
+                    user.getToken(),
+                    user.getGender(),
+                    user.getBirthDate(),
+                    user.getAge(),
+                    user.getProfilePicPath(),
+                    user.getProfileVideoPath(),
+                    user.getRelationship(),
+                    user.getPersonalBio(),
+                    user.getInterested().toString().replace("[", "").replace("]", ""),
+                    user.getInterestedIn(),
+                    "",
+                    user.getSourceType(),
+                    user.getSourceSocialId(),
+                    user.getInviteCode(),
+                    user.getPaymentMode());
 
+            Intent mIntent = null;
+            Context mContext = LoginActivity.this;
+            if (user.getStatus().equals("false")) {
+                mIntent = new Intent(mContext, OTPActivity.class);
+                mIntent.putExtra("Phone", user.getPhoneNo());
+                mIntent.putExtra("resendOTP", true);
+                mIntent.putExtra("Forgot", false);
 
-        if (user.getStatus().equals("false")) {
-            Intent mIntent = new Intent(LoginActivity.this, OTPActivity.class);
-            mIntent.putExtra("Phone", user.getPhoneNo());
-            mIntent.putExtra("resendOTP", true);
-            mIntent.putExtra("Forgot", false);
-            startActivity(mIntent);
-            finish();
-        } else if (user.getBirthDate() == null) {
-            startActivity(new Intent(LoginActivity.this, AgeVerifiationActivity.class));
-            finish();
-        } else if (user.getGender() == null) {
-            startActivity(new Intent(LoginActivity.this, GenderSelActivity.class));
-            finish();
-        } else if (user.getRelationship() == null) {
-            startActivity(new Intent(LoginActivity.this, RelationActivity.class));
-            finish();
-        } else if (user.getUsername() == null) {
-            startActivity(new Intent(LoginActivity.this, UserNameActivity.class));
-            finish();
-        } else if (user.getPersonalBio() == null) {
-            startActivity(new Intent(LoginActivity.this, BioActivity.class));
-            finish();
-        } else if (user.getProfilePic() == null) {
-            startActivity(new Intent(LoginActivity.this, UploadProfileActivity.class));
-            finish();
-        } else if (user.getInterested() == null) {
-            startActivity(new Intent(LoginActivity.this, InterestActivity.class));
-            finish();
-        } else if (user.getRestaurants() == null) {
-            startActivity(new Intent(LoginActivity.this, RestaurantActivity.class));
-            finish();
-        } else if (user.getProfileVideo() == null) {
-            startActivity(new Intent(LoginActivity.this, CameraActivity.class));
-            finish();
-        } else {
-            startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
-            SessionPref.getInstance(LoginActivity.this).saveBoolKeyVal(LoginVerified, true);
-            finish();
+            } else if (user.getBirthDate() == null) {
+                mIntent = new Intent(mContext, AgeVerifiationActivity.class);
+
+            } else if (user.getGender() == null) {
+                mIntent = new Intent(mContext, GenderSelActivity.class);
+            } else if (user.getRelationship() == null) {
+                mIntent = new Intent(mContext, RelationActivity.class);
+            } else if (user.getUsername() == null) {
+                mIntent = new Intent(mContext, UserNameActivity.class);
+            } else if (user.getPersonalBio() == null) {
+                mIntent = new Intent(mContext, BioActivity.class);
+            } else if (user.getProfilePicPath() == null) {
+                mIntent = new Intent(mContext, UploadProfileActivity.class);
+            } else if (user.getInterested() == null) {
+                mIntent = new Intent(mContext, InterestActivity.class);
+            } else if (user.getRestaurants() == null) {
+                mIntent = new Intent(mContext, RestaurantActivity.class);
+            } else if (user.getProfileVideoPath() == null) {
+                mIntent = new Intent(mContext, CameraActivity.class);
+            } else {
+                mIntent = new Intent(mContext, DashboardActivity.class);
+                SessionPref.getInstance(mContext).saveBoolKeyVal(LoginVerified, true);
+            }
+            if (null != mIntent) {
+                startActivity(mIntent);
+                finish();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
     }
 
 
@@ -395,14 +393,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             if (acct != null) {
                 String personName = acct.getDisplayName();
                 String personGivenName = acct.getGivenName();
-              //  String ServerAuthCode = acct.getIdToken();
+                //  String ServerAuthCode = acct.getIdToken();
 
                 String personEmail = acct.getEmail();
                 String personId = acct.getId();
                 Uri personPhoto = acct.getPhotoUrl();
 
                 Log.e("personEmail", "" + personEmail);
-               // Log.e("ServerAuthCode", "" + ServerAuthCode);
+                // Log.e("ServerAuthCode", "" + ServerAuthCode);
                 Log.e("personId", "" + personId);
                 Log.e("personPhoto", "" + personPhoto);
                 Log.e("personName", "" + personName);
@@ -437,7 +435,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
 
-                        checkforTheLastActivity(response.body());
+                        checkForTheLastActivity(response.body());
 
                     } else {
                         clsCommon.showDialogMsg(LoginActivity.this, "PlayDate", response.body().getMessage(), "Ok");
@@ -541,7 +539,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     if (response.body().getStatus() == 1) {
                         // startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
                         //finish();
-                        checkforTheLastActivity(response.body());
+                        checkForTheLastActivity(response.body());
 
                     } else {
                         clsCommon.showDialogMsg(LoginActivity.this, "PlayDate", response.body().getMessage(), "Ok");
