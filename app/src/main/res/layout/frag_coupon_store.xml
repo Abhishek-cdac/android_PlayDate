@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:id="@+id/rl_main"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_20sdp"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/icon_cancel" />
+
+                <ImageView
+                    android:id="@+id/iv_leaderboard"
+                    android:layout_width="@dimen/_16sdp"
+                    android:layout_height="@dimen/_16sdp"
+                    android:layout_alignParentStart="true"
+                    android:src="@drawable/stage" />
+
+                <ImageView
+                    android:id="@+id/logo"
+                    android:layout_width="276dp"
+                    android:layout_height="60dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/_25sdp"
+                    android:src="@drawable/playdate_logo" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/logo"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="-12dp"
+                    android:layout_marginEnd="60dp"
+                    android:src="@drawable/store" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/coin_dash"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/_35sdp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rl_main">
+
+
+                <RelativeLayout
+                    android:id="@+id/star_rl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginBottom="@dimen/_10sdp">
+
+
+                    <TextView
+                        android:id="@+id/tv_position"
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/_7sdp"
+                        android:layout_marginTop="@dimen/_9sdp"
+                        android:background="@drawable/light_black_card_bg"
+                        android:fontFamily="@font/lato_bold"
+                        android:paddingVertical="@dimen/_1sdp"
+                        android:paddingStart="@dimen/_28sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:text="800 points"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12sdp" />
+
+                    <ImageView
+                        android:id="@+id/star"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/star" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/ate_rl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+
+                    android:layout_marginBottom="@dimen/_10sdp">
+
+                    <TextView
+                        android:id="@+id/date_coin"
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/_7sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:background="@drawable/light_black_card_bg"
+                        android:fontFamily="@font/lato_bold"
+                        android:paddingVertical="@dimen/_1sdp"
+                        android:paddingStart="@dimen/_28sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:text="40 Coins"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12sdp" />
+
+                    <ImageView
+                        android:id="@+id/datecoin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:src="@drawable/date_coin" />
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/multi_rl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/star_rl"
+                    android:layout_alignParentStart="true">
+
+                    <TextView
+                        android:id="@+id/multi_coin"
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/_7sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:background="@drawable/light_black_card_bg"
+                        android:fontFamily="@font/lato_bold"
+                        android:paddingVertical="@dimen/_1sdp"
+                        android:paddingStart="@dimen/_28sdp"
+
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:text="1 Multi's"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12sdp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:src="@drawable/multi_coin" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ate_rl"
+                    android:layout_alignParentEnd="true">
+
+                    <TextView
+                        android:id="@+id/booster"
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/_7sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:background="@drawable/light_black_card_bg"
+                        android:fontFamily="@font/lato_bold"
+                        android:paddingVertical="@dimen/_1sdp"
+                        android:paddingStart="@dimen/_28sdp"
+
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:text="0 DM's"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12sdp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:src="@drawable/booster" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/multi_rl"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="@dimen/_10sdp">
+
+                    <TextView
+                        android:id="@+id/date_coin1"
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/_7sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:background="@drawable/light_black_card_bg"
+                        android:fontFamily="@font/lato_bold"
+                        android:paddingVertical="@dimen/_1sdp"
+                        android:paddingStart="@dimen/_28sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:text="40 Coins"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12sdp" />
+
+                    <ImageView
+                        android:id="@+id/datecoin1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:src="@drawable/date_coin" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/store_dash"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/_22sdp"
+                app:layout_constraintTop_toBottomOf="@+id/coin_dash">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_7sdp"
+                    android:layout_marginTop="@dimen/_25sdp"
+                    android:background="@drawable/store_dash">
+
+                    <TextView
+                        android:id="@+id/choose"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:fontFamily="@font/lato_bold"
+                        android:paddingVertical="@dimen/_8sdp"
+                        android:text="One Time Purchase"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_15sdp" />
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/choose"
+                        android:layout_alignParentStart="true"
+
+                        android:layout_marginStart="@dimen/_40sdp">
+
+                        <ImageView
+                            android:id="@+id/datecoin2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/date_coin"
+                            android:visibility="invisible" />
+
+                        <TextView
+                            android:id="@+id/tv_datenumber"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/datecoin2"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="@dimen/_2sdp"
+                            android:fontFamily="@font/lato_bold"
+                            android:text="3"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_10sdp" />
+
+                    </RelativeLayout>
+
+                    <ImageView
+                        android:layout_width="@dimen/_10sdp"
+                        android:layout_height="@dimen/_10sdp"
+                        android:layout_marginStart="@dimen/_85sdp"
+                        android:layout_marginTop="@dimen/_45sdp"
+                        android:src="@drawable/ic_add" />
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/choose"
+                        android:layout_centerHorizontal="true">
+
+                        <ImageView
+                            android:id="@+id/multicoin2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/multi_coin" />
+
+                        <TextView
+                            android:id="@+id/tv_multicoin_number"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/multicoin2"
+
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="@dimen/_2sdp"
+                            android:fontFamily="@font/lato_bold"
+                            android:text="3"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_10sdp" />
+
+                    </RelativeLayout>
+
+                    <ImageView
+                        android:layout_width="@dimen/_10sdp"
+                        android:layout_height="@dimen/_10sdp"
+                        android:layout_marginStart="@dimen/_160sdp"
+                        android:layout_marginTop="@dimen/_45sdp"
+                        android:src="@drawable/ic_add" />
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/choose"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="@dimen/_40sdp">
+
+                        <ImageView
+                            android:id="@+id/booster2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/booster" />
+
+                        <TextView
+                            android:id="@+id/tv_booster_number"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/booster2"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="@dimen/_2sdp"
+                            android:fontFamily="@font/lato_bold"
+                            android:text="1"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_10sdp" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/tv_total"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:paddingBottom="@dimen/_2sdp"
+                        android:text="$13.89"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_10sdp" />
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/iv_sparkle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="0dp"
+                    android:src="@drawable/sparkles1" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="0dp"
+                    android:src="@drawable/sparkles" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tvg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_25sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:background="@drawable/light_black_card_bg"
+                android:fontFamily="@font/lato_bold"
+                android:paddingVertical="@dimen/_3sdp"
+                android:text="@string/game_coin"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12sdp"
+                app:layout_constraintTop_toBottomOf="@+id/store_dash" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_game_coin"
+                android:layout_width="match_parent"
+                android:layout_marginVertical="@dimen/_7sdp"
+                android:layout_marginHorizontal="@dimen/_25sdp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/tvg" />
+
+            <TextView
+                android:id="@+id/tvd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_25sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:background="@drawable/light_black_card_bg"
+                android:fontFamily="@font/lato_bold"
+                android:paddingVertical="@dimen/_3sdp"
+                android:text="@string/date_coin"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12sdp"
+                app:layout_constraintTop_toBottomOf="@+id/rv_game_coin" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_date_coin"
+                android:layout_width="match_parent"
+                android:layout_marginVertical="@dimen/_5sdp"
+                android:layout_marginHorizontal="@dimen/_25sdp"
+
+                android:layout_height="wrap_content"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvd" />
+
+            <TextView
+                android:id="@+id/tvm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_25sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:background="@drawable/light_black_card_bg"
+                android:fontFamily="@font/lato_bold"
+                android:paddingVertical="@dimen/_3sdp"
+                android:text="@string/multiplier"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12sdp"
+                app:layout_constraintTop_toBottomOf="@+id/rv_date_coin" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_multiplier"
+                android:layout_marginVertical="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_marginHorizontal="@dimen/_25sdp"
+
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/tvm" />
+
+            <TextView
+                android:id="@+id/tvdm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_25sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:background="@drawable/light_black_card_bg"
+                android:fontFamily="@font/lato_bold"
+                android:paddingVertical="@dimen/_3sdp"
+                android:text="@string/dm"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12sdp"
+                app:layout_constraintTop_toBottomOf="@+id/rv_multiplier" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_dm_booster"
+                android:layout_marginVertical="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_marginHorizontal="@dimen/_25sdp"
+
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/tvdm" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</LinearLayout>

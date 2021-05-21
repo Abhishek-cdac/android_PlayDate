@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -33,12 +34,26 @@ public class NewPaymentMethod extends Fragment implements AdapterView.OnItemSele
         Spinner spinner_month = view.findViewById(R.id.spinner_month);
         Spinner spinner_year = view.findViewById(R.id.spinner_year);
         RelativeLayout cl_page = view.findViewById(R.id.cl_page);
+        RelativeLayout rl_check = view.findViewById(R.id.rl_check);
+        ImageView iv_checkbox = view.findViewById(R.id.iv_checkbox);
 
         int height = new CommonClass().getScreenHeight(getActivity());
         cl_page.getLayoutParams().height = height;
 
         spinner_month.setOnItemSelectedListener(this);
         spinner_year.setOnItemSelectedListener(this);
+
+        rl_check.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                iv_checkbox.setVisibility(View.INVISIBLE);
+//                if (iv_checkbox.isOpaque()) {
+//                    iv_checkbox.setVisibility(View.INVISIBLE);
+//                } else {
+//                    iv_checkbox.setVisibility(View.VISIBLE);
+//                }
+            }
+        });
 
         List<String> list = new ArrayList<>();
         list.add("MM ");
@@ -69,7 +84,7 @@ public class NewPaymentMethod extends Fragment implements AdapterView.OnItemSele
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String item = parent.getItemAtPosition(position).toString();
-        Toast.makeText(getActivity(), "Month " + item, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), "Month " + item, Toast.LENGTH_SHORT).show();
 
     }
 

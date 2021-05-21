@@ -28,7 +28,9 @@ import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.Interest;
 import com.playdate.app.model.InterestsMain;
 import com.playdate.app.ui.dashboard.OnProfilePhotoChageListerner;
+import com.playdate.app.ui.date.games.FragTimesUp1;
 import com.playdate.app.ui.forgot_password.ForgotPasswordActivity;
+import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.ui.invite.InviteFriendActivity;
 import com.playdate.app.ui.login.LoginActivity;
 import com.playdate.app.ui.register.interest.InterestActivity;
@@ -57,6 +59,7 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
     TextView txt_user_name, logout;
     TextView txt_interetsed;
     TextView txt_invite;
+    TextView txt_upgrade;
     SessionPref pref;
     RelativeLayout saved_rl;
 
@@ -85,6 +88,7 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
         iv_dark_mode = view.findViewById(R.id.iv_dark_mode);
         txt_user_name = view.findViewById(R.id.txt_user_name);
         txt_invite = view.findViewById(R.id.txt_invite);
+        txt_upgrade = view.findViewById(R.id.txt_upgrade);
         logout = view.findViewById(R.id.logout);
         TextView txt_change_photo = view.findViewById(R.id.txt_change_photo);
 
@@ -99,6 +103,7 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
         iv_reset_pass.setOnClickListener(this);
         txt_invite.setOnClickListener(this);
         saved_rl.setOnClickListener(this);
+        txt_upgrade.setOnClickListener(this);
 
         setValues();
 
@@ -234,6 +239,9 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
             showYesNoDialog();
         }else if (id == R.id.saved_rl) {
             startActivity(new Intent(getActivity(), SavedPostActivity.class));
+        } else if (id == R.id.txt_upgrade) {
+            OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
+            frag.ReplaceFrag(new FragUpgradePremiun());
         }
     }
 
