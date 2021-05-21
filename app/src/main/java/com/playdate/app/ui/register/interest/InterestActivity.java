@@ -68,7 +68,7 @@ public class InterestActivity extends AppCompatActivity implements InterestAdapt
         getInterest();
 
 
-        binding.edtSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+      /*  binding.edtSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 adapter.getFilter().filter(query);
@@ -79,6 +79,22 @@ public class InterestActivity extends AppCompatActivity implements InterestAdapt
             public boolean onQueryTextChange(String newText) {
                 adapter.getFilter().filter(newText);
                 return false;
+            }
+        });*/
+        binding.edtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                adapter.getFilter().filter(s);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                adapter.getFilter().filter(s);
             }
         });
 

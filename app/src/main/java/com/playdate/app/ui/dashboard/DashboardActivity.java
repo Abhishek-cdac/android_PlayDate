@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -44,6 +45,7 @@ import com.playdate.app.ui.my_profile_details.FragInstaLikeProfile;
 import com.playdate.app.ui.my_profile_details.FragMyProfileDetails;
 import com.playdate.app.ui.my_profile_details.FragMyProfilePayments;
 import com.playdate.app.ui.my_profile_details.FragMyProfilePersonal;
+import com.playdate.app.ui.my_profile_details.FragSavedPost;
 import com.playdate.app.ui.notification_screen.FragNotification;
 import com.playdate.app.ui.social.FragSocialFeed;
 import com.playdate.app.ui.social.upload_media.PostMediaActivity;
@@ -78,7 +80,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     TextView txt_personal;
     ImageView iv_love;
     ImageView iv_profile_sett;
-    ImageView iv_plus;
+    ImageView iv_plus, iv_saved;
     ImageView iv_play_date_logo;
     ImageView iv_cancel;
     ImageView iv_create_ano_ques;
@@ -136,6 +138,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         txt_account = findViewById(R.id.txt_account);
         txt_personal = findViewById(R.id.txt_personal);
         iv_plus = findViewById(R.id.iv_plus);
+        iv_saved = findViewById(R.id.iv_saved);
         iv_play_date_logo = findViewById(R.id.iv_play_date_logo);
         iv_love = findViewById(R.id.iv_love);
         iv_profile_sett = findViewById(R.id.iv_profile_sett);
@@ -158,6 +161,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         iv_gallery.setOnClickListener(this);
         ll_profile_insta.setOnClickListener(this);
         iv_plus.setOnClickListener(this);
+        iv_saved.setOnClickListener(this);
         txt_payment.setOnClickListener(this);
         txt_account.setOnClickListener(this);
         txt_personal.setOnClickListener(this);
@@ -191,9 +195,11 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         iv_coupons.setOnClickListener(this);
         iv_dashboard_notification.setOnClickListener(this);
         txt_social.setOnClickListener(this);
-
-
-        showPremium();
+        try {
+            showPremium();
+        } catch (WindowManager.BadTokenException e) {
+            Log.e("BadTokenException", "" + e);
+        }
         setValue();
         callAPIFriends();
 
@@ -224,14 +230,14 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
                         if (lst == null) {
                             lst = new ArrayList<>();
                         }
-                        if (lst.size()>0){
+                        if (lst.size() > 0) {
                             txt_serachfriend.setVisibility(View.GONE);
                             rv_friends.setVisibility(View.VISIBLE);
                             RecyclerView.LayoutManager manager = new LinearLayoutManager(DashboardActivity.this, RecyclerView.HORIZONTAL, false);
                             FriendAdapter adapterfriend = new FriendAdapter(lst);
                             rv_friends.setAdapter(adapterfriend);
                             rv_friends.setLayoutManager(manager);
-                        }else{
+                        } else {
                             txt_serachfriend.setVisibility(View.VISIBLE);
                             rv_friends.setVisibility(View.GONE);
                         }
@@ -284,6 +290,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             public void run() {
 
                 FullScreenDialog dialog = new FullScreenDialog(DashboardActivity.this);
+
                 dialog.show();
 
 //                AnonymousMedalDialog dialog = new AnonymousMedalDialog(DashboardActivity.this);
@@ -414,6 +421,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             iv_play_date_logo.setVisibility(View.VISIBLE);
             ll_profile_drop_menu.setVisibility(View.GONE);
             iv_plus.setVisibility(View.GONE);
+            iv_saved.setVisibility(View.GONE);
             ll_option_love.setVisibility(View.GONE);
             ll_friends.setVisibility(View.GONE);
             ll_profile_menu.setVisibility(View.VISIBLE);
@@ -427,6 +435,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             iv_play_date_logo.setVisibility(View.VISIBLE);
             ll_profile_drop_menu.setVisibility(View.GONE);
             iv_plus.setVisibility(View.GONE);
+            iv_saved.setVisibility(View.GONE);
             ll_option_love.setVisibility(View.VISIBLE);
             ll_friends.setVisibility(View.VISIBLE);
             ll_profile_menu.setVisibility(View.GONE);
@@ -457,6 +466,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             iv_play_date_logo.setVisibility(View.VISIBLE);
             ll_profile_drop_menu.setVisibility(View.GONE);
             iv_plus.setVisibility(View.VISIBLE);
+            iv_saved.setVisibility(View.VISIBLE);
             ll_option_love.setVisibility(View.GONE);
             ll_friends.setVisibility(View.GONE);
             ll_profile_menu.setVisibility(View.GONE);
@@ -534,9 +544,13 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             ll_friends.setVisibility(View.VISIBLE);
             ll_mainMenu.setVisibility(View.VISIBLE);
             ll_her.setVisibility(View.VISIBLE);
-        }
-        else  if(id == R.id.iv_search){
+        } else if (id == R.id.iv_search) {
             ReplaceFrag(new FragSearchUser());
+            ll_friends.setVisibility(View.GONE);
+            ll_mainMenu.setVisibility(View.GONE);
+            ll_her.setVisibility(View.GONE);
+        } else if (id == R.id.iv_saved) {
+            ReplaceFrag(new FragSavedPost());
             ll_friends.setVisibility(View.GONE);
             ll_mainMenu.setVisibility(View.GONE);
             ll_her.setVisibility(View.GONE);

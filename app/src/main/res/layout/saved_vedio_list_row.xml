@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+        android:id="@+id/rl_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_name">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_image"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_100sdp"
+            android:layout_margin="@dimen/_2sdp"
+            android:background="@color/white"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="@dimen/_10sdp"
+            app:cardElevation="0dp">
+
+            <ImageView
+                android:id="@+id/iv_post_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@color/color_grey_too_light"
+                android:foregroundGravity="center"
+                android:visibility="gone" />
+
+
+            <com.allattentionhere.autoplayvideos.AAH_VideoImage
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/color_grey_too_light" />
+
+            <ImageView
+                android:id="@+id/img_playback"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_pause"
+                android:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/iv_mute_unmute"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_gravity="bottom|start"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:src="@drawable/ic_unmute">
+
+            </ImageView>
+
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/animationView"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                app:lottie_autoPlay="true"
+                app:lottie_colorFilter="@color/color_pink"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/loading"
+                app:lottie_url="REPLACE_JSON_URL" />
+
+        </androidx.cardview.widget.CardView>
+
+
+    </RelativeLayout>
+
+

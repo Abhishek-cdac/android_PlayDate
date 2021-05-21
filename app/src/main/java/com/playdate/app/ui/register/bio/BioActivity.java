@@ -16,6 +16,7 @@ import com.playdate.app.databinding.ActivityBioBinding;
 import com.playdate.app.model.LoginResponse;
 import com.playdate.app.ui.register.age_verification.AgeVerifiationActivity;
 import com.playdate.app.ui.register.profile.UploadProfileActivity;
+import com.playdate.app.ui.register.username.UserNameActivity;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
@@ -29,10 +30,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.playdate.app.util.session.SessionPref.LoginUserpersonalBio;
+
+
 public class BioActivity extends AppCompatActivity {
     BioViewModel viewModel;
     ActivityBioBinding bioBinding;
     CommonClass clsCommon;
+    Intent mIntent;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,8 +46,15 @@ public class BioActivity extends AppCompatActivity {
         clsCommon = CommonClass.getInstance();
         bioBinding = DataBindingUtil.setContentView(BioActivity.this, R.layout.activity_bio);
         bioBinding.setLifecycleOwner(this);
+        mIntent = getIntent();
         bioBinding.setBioViewModel(viewModel);
+        if (mIntent.getBooleanExtra("fromProfile", false)) {
+            SessionPref pref = SessionPref.getInstance(this);
+            viewModel.BioText.setValue(pref.getStringVal(LoginUserpersonalBio));
+        } else {
 
+
+        }
         viewModel.OnNextClick().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean click) {
@@ -88,9 +100,21 @@ public class BioActivity extends AppCompatActivity {
                 pd.cancel();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
-                        pref.saveStringKeyVal(SessionPref.LoginUserpersonalBio, bio);
-                        startActivity(new Intent(BioActivity.this, UploadProfileActivity
-                                .class));
+                        pref.saveStringKeyVal(LoginUserpersonalBio, bio);
+
+                        if (mIntent.getBooleanExtra("fromProfile", false)) {
+                            Intent mIntent = new Intent();
+                            setResult(409, mIntent);
+                            finish();
+                        } else {
+
+                            startActivity(new Intent(BioActivity.this, UploadProfileActivity
+                                    .class));
+
+                        }
+
+
+
                     } else {
                         clsCommon.showDialogMsg(BioActivity.this, "PlayDate", response.body().getMessage(), "Ok");
                     }

@@ -3,22 +3,68 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent">
-    <SearchView
-        android:id="@+id/edt_search"
+    <RelativeLayout
+        android:id="@+id/herder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ll_head"
-        android:layout_marginLeft="@dimen/_25sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginRight="@dimen/_25sdp"
-        android:layout_marginBottom="@dimen/_5sdp"
-        android:background="@drawable/circle_pink"
-        android:drawableStart="@drawable/search"
-        android:drawablePadding="@dimen/_8sdp"
-        android:hint="@string/search_here"
-        android:textColor="@android:color/white"
-        android:textColorHint="@android:color/white"
-        android:textSize="@dimen/_12sdp" />
+        android:orientation="horizontal">
+  <!--      <SearchView
+            android:id="@+id/edt_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_25sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:background="@drawable/circle_pink"
+            android:drawableStart="@drawable/search"
+            android:drawablePadding="@dimen/_8sdp"
+            android:hint="@string/search_here"
+            android:layout_toLeftOf="@+id/txt_cancel"
+            android:textColor="@android:color/white"
+            android:textColorHint="@color/white"
+            android:textSize="@dimen/_12sdp">
+
+        </SearchView>-->
+        <EditText
+            android:id="@+id/edt_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_25sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:layout_toLeftOf="@+id/txt_cancel"
+            android:background="@drawable/circle_pink"
+            android:drawableStart="@drawable/search"
+            android:drawablePadding="@dimen/_8sdp"
+            android:hint="@string/search_here"
+            android:inputType="textEmailAddress"
+            android:padding="@dimen/_8sdp"
+
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white"
+            android:textSize="@dimen/_12sdp" />
+
+
+        <TextView
+            android:id="@+id/txt_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:fontFamily="@font/lato_bold"
+            android:foregroundGravity="center"
+            android:gravity="center"
+            android:padding="@dimen/_5sdp"
+            android:text="Cancel"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
     <TextView
         android:id="@+id/txt_suggestion"
         android:layout_width="match_parent"

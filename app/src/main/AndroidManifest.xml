@@ -35,7 +35,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PlayDate"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.my_profile_details.SavedPostActivity"></activity>
         <!-- fb start -->
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
