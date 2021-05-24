@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.GetUserSuggestion;
 import com.playdate.app.model.GetUserSuggestionData;
 import com.playdate.app.ui.chat.request.Onclick;
+import com.playdate.app.ui.dashboard.OnFriendSelected;
 import com.playdate.app.ui.dashboard.adapter.SuggestedFriendAdapter;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
@@ -46,7 +48,16 @@ public class FragSearchUser extends Fragment implements SuggestedFriendAdapter.S
     private ArrayList<GetUserSuggestionData> lst_getUserSuggestions;
     private CommonClass clsCommon;
     private Onclick itemClick;
-    private  SuggestedFriendAdapter adapter;
+    private SuggestedFriendAdapter adapter;
+
+    public FragSearchUser() {
+    }
+
+    public void OnUserProfileSelected(boolean isFriend,String id){
+        OnFriendSelected inf = (OnFriendSelected) getActivity();
+        inf.OnSuggestionClosed(isFriend,id);
+
+    }
 
     @Nullable
     @Override
@@ -55,7 +66,8 @@ public class FragSearchUser extends Fragment implements SuggestedFriendAdapter.S
         clsCommon = CommonClass.getInstance();
         edt_search = view.findViewById(R.id.edt_search);
         txt_cancel = view.findViewById(R.id.txt_cancel);
-        recyclerView = view.findViewById(R.id.recycler_view);  itemClick = new Onclick() {
+        recyclerView = view.findViewById(R.id.recycler_view);
+        itemClick = new Onclick() {
             @Override
             public void onItemClick(View view, int position, int value) {
 
@@ -64,7 +76,7 @@ public class FragSearchUser extends Fragment implements SuggestedFriendAdapter.S
             @Override
             public void onItemClicks(View view, int position, int value, String id) {
                 if (value == 10) {
-                  //  callAddFriendRequestApi(id);
+                    //  callAddFriendRequestApi(id);
                 }
             }
 
@@ -78,8 +90,15 @@ public class FragSearchUser extends Fragment implements SuggestedFriendAdapter.S
             @Override
             public void onClick(View v) {
                 edt_search.setText("");
+                OnFriendSelected inf = (OnFriendSelected) getActivity();
+                inf.OnSuggestionClosed();
+
+
             }
         });
+
+
+
 
     /*    edt_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -113,8 +132,24 @@ public class FragSearchUser extends Fragment implements SuggestedFriendAdapter.S
         });
 
         callGetUserSuggestionAPI();
+
+
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    OnFriendSelected inf = (OnFriendSelected) getActivity();
+                    inf.OnSuggestionClosed();
+                    return true;
+                }
+                return false;
+            }
+        });
         return view;
     }
+
     private void callGetUserSuggestionAPI() {
 
 
@@ -143,7 +178,7 @@ public class FragSearchUser extends Fragment implements SuggestedFriendAdapter.S
                         }
                         RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
                         recyclerView.setLayoutManager(manager);
-                         adapter = new SuggestedFriendAdapter(lst_getUserSuggestions, itemClick);
+                        adapter = new SuggestedFriendAdapter(lst_getUserSuggestions, itemClick,FragSearchUser.this);
                         recyclerView.setAdapter(adapter);
                     }
                 } else {
@@ -169,6 +204,6 @@ public class FragSearchUser extends Fragment implements SuggestedFriendAdapter.S
     @Override
     public void onSuggestionSelected(GetUserSuggestionData getUserSuggestionData) {
 
-        Log.e("filter user",""+getUserSuggestionData);
+        Log.e("filter user", "" + getUserSuggestionData);
     }
 }

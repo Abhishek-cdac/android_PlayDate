@@ -23,6 +23,9 @@ public class FragInbox extends Fragment {
     RecyclerView recyclerView;
     Onclick itemClick;
 
+    public FragInbox() {
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

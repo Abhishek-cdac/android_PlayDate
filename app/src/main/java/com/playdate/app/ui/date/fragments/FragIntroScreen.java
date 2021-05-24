@@ -16,6 +16,9 @@ import com.playdate.app.ui.date.fragments.FragSelectPartner;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 
 public class FragIntroScreen extends Fragment {
+    public FragIntroScreen() {
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

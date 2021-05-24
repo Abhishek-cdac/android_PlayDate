@@ -16,6 +16,8 @@ import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.squareup.picasso.Picasso;
 
 public class FragPartnerSelected extends Fragment {
+    public FragPartnerSelected() {
+    }
 
     ImageView iv_partner_image;
     ImageView iv_accepted;

@@ -12,6 +12,9 @@ import androidx.fragment.app.Fragment;
 import com.playdate.app.R;
 
 public class FragPremium1 extends Fragment {
+    public FragPremium1() {
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

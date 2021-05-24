@@ -23,6 +23,8 @@ import com.playdate.app.util.common.CommonClass;
 
 
 public class FragMyProfilePayments extends Fragment {
+    public FragMyProfilePayments() {
+    }
 
     @Nullable
     @Override

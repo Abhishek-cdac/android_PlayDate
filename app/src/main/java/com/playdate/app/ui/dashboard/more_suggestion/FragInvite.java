@@ -16,6 +16,10 @@ import com.playdate.app.R;
 import com.playdate.app.ui.dashboard.adapter.InviteAdapter;
 
 public class FragInvite extends Fragment {
+
+    public FragInvite() {
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

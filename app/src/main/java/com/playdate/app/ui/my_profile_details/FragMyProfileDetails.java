@@ -53,6 +53,9 @@ import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 import static com.playdate.app.util.session.SessionPref.LoginVerified;
 
 public class FragMyProfileDetails extends Fragment implements View.OnClickListener {
+    public FragMyProfileDetails() {
+    }
+
     ImageView iv_dark_mode;
     ImageView profile_image;
     ImageView iv_reset_pass;
@@ -120,71 +123,72 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
 
     ArrayList<Interest> lst_interest;
 
-    private void getInterest() {
-
-
-        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-        Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("limit", "50");// format 1990-08-12
-        hashMap.put("pageNo", "1");// format 1990-08-12
-//        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
-//        pd.show();
-        SessionPref pref = SessionPref.getInstance(getActivity());
-//        Toast.makeText(this, ""+pref.getStringVal(SessionPref.LoginUsertoken), Toast.LENGTH_SHORT).show();
-
-
-        Call<InterestsMain> call = service.interested("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
-        call.enqueue(new Callback<InterestsMain>() {
-            @Override
-            public void onResponse(Call<InterestsMain> call, Response<InterestsMain> response) {
-//                pd.cancel();
-                if (response.code() == 200) {
-                    assert response.body() != null;
-                    if (response.body().getStatus() == 1) {
-                        String finalInterest = "";
-                        lst_interest = response.body().getLst();
-                        if (lst_interest == null) {
-                            lst_interest = new ArrayList<>();
-                        }
-
-
-                        String interestList[] = pref.getStringVal(SessionPref.LoginUserinterested).split(",");
-
-
-                        for (int i = 0; i < lst_interest.size(); i++) {
-                            for (String s : interestList) {
-                                if (s.trim().equals(lst_interest.get(i).get_id())) {
-                                    if (finalInterest.isEmpty()) {
-                                        finalInterest = lst_interest.get(i).getName();
-                                    } else {
-                                        finalInterest = finalInterest + "," + lst_interest.get(i).getName();
-                                    }
-                                }
-                            }
-                        }
-
-                        txt_interetsed.setText(finalInterest);
-
-
-                    } else {
-
-                    }
-                } else {
-
-
-                }
-
-
-            }
-
-            @Override
-            public void onFailure(Call<InterestsMain> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
-
-
-    }
+//    private void getInterest() {
+//
+//
+//        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+//        Map<String, String> hashMap = new HashMap<>();
+//        hashMap.put("limit", "50");// format 1990-08-12
+//        hashMap.put("pageNo", "1");// format 1990-08-12
+////        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
+////        pd.show();
+//        SessionPref pref = SessionPref.getInstance(getActivity());
+////        Toast.makeText(this, ""+pref.getStringVal(SessionPref.LoginUsertoken), Toast.LENGTH_SHORT).show();
+//
+//
+//        Call<InterestsMain> call = service.interested("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+//        call.enqueue(new Callback<InterestsMain>() {
+//            @Override
+//            public void onResponse(Call<InterestsMain> call, Response<InterestsMain> response) {
+////                pd.cancel();
+//                if (response.code() == 200) {
+//                    assert response.body() != null;
+//                    if (response.body().getStatus() == 1) {
+//                        String finalInterest = "";
+//                        lst_interest = response.body().getLst();
+//                        if (lst_interest == null) {
+//                            lst_interest = new ArrayList<>();
+//                        }
+//
+//
+//
+//
+//
+//
+//                        for (int i = 0; i < lst_interest.size(); i++) {
+//                            for (String s : interestList) {
+//                                if (s.trim().equals(lst_interest.get(i).get_id())) {
+//                                    if (finalInterest.isEmpty()) {
+//                                        finalInterest = lst_interest.get(i).getName();
+//                                    } else {
+//                                        finalInterest = finalInterest + "," + lst_interest.get(i).getName();
+//                                    }
+//                                }
+//                            }
+//                        }
+//
+//
+//
+//
+//                    } else {
+//
+//                    }
+//                } else {
+//
+//
+//                }
+//
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<InterestsMain> call, Throwable t) {
+//                t.printStackTrace();
+//            }
+//        });
+//
+//
+//    }
 
     private void setValues() {
         try {
@@ -202,7 +206,8 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
                         .placeholder(R.drawable.cupertino_activity_indicator)
                         .into(profile_image);
             }
-            getInterest();
+            txt_interetsed.setText(pref.getStringVal(SessionPref.LoginUserinterested));
+//            getInterest();
         } catch (Exception e) {
             e.printStackTrace();
         }

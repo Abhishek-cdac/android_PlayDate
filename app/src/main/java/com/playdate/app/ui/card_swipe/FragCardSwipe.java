@@ -55,6 +55,9 @@ public class FragCardSwipe extends Fragment {
     private CommonClass clsCommon;
     private CardStackView cardStackView;
 
+    public FragCardSwipe() {
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
