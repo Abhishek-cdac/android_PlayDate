@@ -2,6 +2,7 @@ package com.playdate.app.ui.my_profile_details;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.GetProfileDetails;
 import com.playdate.app.model.GetProileDetailData;
+import com.playdate.app.ui.dashboard.OnFriendSelected;
 import com.playdate.app.ui.my_profile_details.adapters.InstaPhotosAdapter;
 import com.playdate.app.ui.playvideo.ExoPlayerActivity;
 import com.playdate.app.util.common.CommonClass;
@@ -37,7 +39,7 @@ import retrofit2.Response;
 
 import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 
-public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View.OnClickListener {
+public class FragInstaLikeProfileFriends extends Fragment implements onPhotoClick, View.OnClickListener {
     //    RecyclerView recycler_photos;
 
     public static final int USER = 0;
@@ -50,19 +52,22 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
     private TextView txtTotalFriend, txtTotalPost;
     private ArrayList<GetProileDetailData> lst_getPostDetail;
 
-    public FragInstaLikeProfile() {
+    public FragInstaLikeProfileFriends() {
     }
 
-    boolean itsMe = true;
 
-    public FragInstaLikeProfile(boolean itsMe) {
-        this.itsMe = itsMe;
+    boolean isFriend = true;
+    String LoginId;
+
+    public FragInstaLikeProfileFriends(boolean isFriend, String LoginId) {
+        this.isFriend = isFriend;
+        this.LoginId = LoginId;
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.frag_insta_profile, container, false);
+        View view = inflater.inflate(R.layout.frag_insta_profile_other, container, false);
 
         clsCommon = CommonClass.getInstance();
 
@@ -74,51 +79,43 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
 //        recycler_photos = view.findViewById(R.id.recycler_photos);
         txt_bio = view.findViewById(R.id.txt_bio);
         txt_login_user = view.findViewById(R.id.txt_login_user);
-        callAPI();
-        if (itsMe) {
-            iv_send_request.setVisibility(View.GONE);
-            iv_chat.setVisibility(View.GONE);
+        callAPI(LoginId);
+        if (isFriend) {
+            iv_send_request.setImageResource(R.drawable.sent_request_sel);
+            iv_chat.setImageResource(R.drawable.chat_sel);
         } else {
-            iv_send_request.setVisibility(View.VISIBLE);
-            iv_chat.setVisibility(View.VISIBLE);
+            iv_send_request.setImageResource(R.drawable.sent_request);
+            iv_chat.setImageResource(R.drawable.chat_black);
         }
-
-//        onTypeChange(0);
-
-        setValue();
 
 
         iv_send_request.setOnClickListener(this);
         profile_image.setOnClickListener(this);
 
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    OnFriendSelected inf = (OnFriendSelected) getActivity();
+                    inf.OnFrinedDataClosed();
+                    return true;
+                }
+                return false;
+            }
+        });
         return view;
     }
 
-    private void setValue() {
-        SessionPref pref = SessionPref.getInstance(getActivity());
-        String img = pref.getStringVal(SessionPref.LoginUserprofilePic);
-        if (img.contains("http")) {
-            Picasso.get().load(img)
-                    .placeholder(R.drawable.cupertino_activity_indicator)
-                    .into(profile_image);
-        } else {
-            Picasso.get().load(BASE_URL_IMAGE + img)
-                    .placeholder(R.drawable.cupertino_activity_indicator)
-                    .into(profile_image);
-        }
-        txt_login_user.setText(pref.getStringVal(SessionPref.LoginUserusername));
-        txt_bio.setText(pref.getStringVal(SessionPref.LoginUserpersonalBio));
 
-
-    }
-
-    private void callAPI() {
+    private void callAPI(String loginId) {
         SessionPref pref = SessionPref.getInstance(getActivity());
 
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
 
-        hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
+        hashMap.put("userId", loginId);
 
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
         pd.show();
@@ -138,7 +135,20 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
                         }
                         txtTotalFriend.setText(String.valueOf(lst_getPostDetail.get(0).getTotalFriends()));
                         txtTotalPost.setText(String.valueOf(lst_getPostDetail.get(0).getTotalPosts()));
-//                        onTypeChange(0);
+
+                        if (lst_getPostDetail.get(0).getProfilePicPath().contains("http")) {
+                            Picasso.get().load(lst_getPostDetail.get(0).getProfilePicPath())
+                                    .placeholder(R.drawable.cupertino_activity_indicator)
+                                    .into(profile_image);
+                        } else {
+                            Picasso.get().load(BASE_URL_IMAGE + lst_getPostDetail.get(0).getProfilePicPath())
+                                    .placeholder(R.drawable.cupertino_activity_indicator)
+                                    .into(profile_image);
+                        }
+                        txt_login_user.setText(lst_getPostDetail.get(0).getUsername());
+                        txt_bio.setText(lst_getPostDetail.get(0).getPersonalBio());
+                        videopath = lst_getPostDetail.get(0).getProfileVideoPath();
+
 
                     } else {
                         clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
@@ -173,29 +183,13 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
             if (InstaPhotosAdapter.isLocked) {
                 return;
             }
-//            recycler_photos.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
-//            ArrayList<SocialFeed> lst = new ArrayList<>();
-//            lst.add(new SocialFeed("Olivia251", 1548, false, 0, USER, "https://images.saymedia-content.com/.image/t_share/MTc0MDkwNjUxNDc2OTYwODM0/5-instagram-models-you-should-be-following.png", "https://i.pinimg.com/originals/09/31/b5/0931b5399d9f1a3afe4417ee83eff961.jpg"));
-//            lst.add(new SocialFeed("AvaSophia", 1542, false, 0, USER, "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg", "https://i.pinimg.com/originals/09/31/b5/0931b5399d9f1a3afe4417ee83eff961.jpg"));
-//            lst.add(new SocialFeed("Isabella", 4854, false, 0, USER, "https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", "https://i.pinimg.com/originals/09/31/b5/0931b5399d9f1a3afe4417ee83eff961.jpg"));
-//
-//            lst.add(new SocialFeed("Olivia251", 1548, false, 0, USER, "https://images.saymedia-content.com/.image/t_share/MTc0MDkwNjUxNDc2OTYwODM0/5-instagram-models-you-should-be-following.png", "https://i.pinimg.com/originals/09/31/b5/0931b5399d9f1a3afe4417ee83eff961.jpg"));
-//            lst.add(new SocialFeed("AvaSophia", 1542, false, 0, USER, "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg", "https://i.pinimg.com/originals/09/31/b5/0931b5399d9f1a3afe4417ee83eff961.jpg"));
-//            lst.add(new SocialFeed("Isabella", 4854, false, 0, USER, "https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", "https://i.pinimg.com/originals/09/31/b5/0931b5399d9f1a3afe4417ee83eff961.jpg"));
-//            lst.add(new SocialFeed("Isabella", 4854, false, 0, USER, "https://blog.ainfluencer.com/wp-content/uploads/2021/01/Cinta-Laura-868x1024.jpg", "https://i.pinimg.com/originals/09/31/b5/0931b5399d9f1a3afe4417ee83eff961.jpg"));
-//
-//
-//            SocialFeedNormal adapter = new SocialFeedNormal(lst);
-//            recycler_photos.setAdapter(adapter);
         } else {
-//            recycler_photos.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-//            InstaPhotosAdapter adapter = new InstaPhotosAdapter(this);
-//            recycler_photos.setAdapter(adapter);
         }
 
 
     }
 
+    String videopath = "";
 
     @Override
     public void onClick(View view) {
@@ -207,15 +201,14 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
             onTypeChange(0);
         } else if (id == R.id.profile_image) {
             try {
+                if (videopath == null) {
+                    return;
+                } else if (videopath.isEmpty()) {
+                    return;
+                }
                 Intent mIntent = new Intent(getActivity(), ExoPlayerActivity.class);
-                SessionPref pref = SessionPref.getInstance(getActivity());
 
-                String videopath = pref.getStringVal(SessionPref.LoginUserprofileVideo);
-
-
-                if (videopath.contains("http")) {
-
-                } else {
+                if (!videopath.contains("http")) {
                     videopath = BASE_URL_IMAGE + videopath;
                 }
                 mIntent.putExtra("video", videopath);
@@ -228,6 +221,3 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
 }
 
 
-interface onPhotoClick {
-    void onTypeChange(int type);
-}

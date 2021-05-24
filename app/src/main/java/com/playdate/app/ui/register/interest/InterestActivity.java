@@ -118,14 +118,17 @@ public class InterestActivity extends AppCompatActivity implements InterestAdapt
             return;
         }
         String selected = "";
+        String selectedText = "";
         int count = 0;
         for (int i = 0; i < lst_interest.size(); i++) {
             if (lst_interest.get(i).isSelected()) {
                 count++;
                 if (selected.isEmpty()) {
                     selected = lst_interest.get(i).get_id();
+                    selectedText = lst_interest.get(i).getName();
                 } else {
                     selected = selected + "," + lst_interest.get(i).get_id();
+                    selectedText = selectedText + "," + lst_interest.get(i).getName();
                 }
             }
         }
@@ -153,13 +156,15 @@ public class InterestActivity extends AppCompatActivity implements InterestAdapt
 
         Call<LoginResponse> call = service.updateProfile("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         String finalSelected = selected;
+        String finalSelectedText = selectedText;
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 pd.cancel();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
-                        pref.saveStringKeyVal(SessionPref.LoginUserinterested, finalSelected);
+                        pref.saveStringKeyVal(SessionPref.LoginUserinterested, finalSelectedText);
+                        pref.saveStringKeyVal(SessionPref.LoginUserInterestsIDS, finalSelected);
                         if (mIntent.getBooleanExtra("fromProfile", false)) {
                             Intent mIntent = new Intent();
                             setResult(409, mIntent);
@@ -222,7 +227,7 @@ public class InterestActivity extends AppCompatActivity implements InterestAdapt
 
                         if (mIntent.getBooleanExtra("fromProfile", false)) {
 
-                            String interestList[] = pref.getStringVal(SessionPref.LoginUserinterested).split(",");
+                            String interestList[] = pref.getStringVal(SessionPref.LoginUserInterestsIDS).split(",");
 
                             for (int i = 0; i < lst_interest.size(); i++) {
                                 for (String s : interestList) {

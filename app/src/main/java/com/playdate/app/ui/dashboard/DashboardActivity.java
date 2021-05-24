@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,6 +43,7 @@ import com.playdate.app.ui.date.DateBaseActivity;
 import com.playdate.app.ui.dialogs.FullScreenDialog;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.ui.my_profile_details.FragInstaLikeProfile;
+import com.playdate.app.ui.my_profile_details.FragInstaLikeProfileFriends;
 import com.playdate.app.ui.my_profile_details.FragMyProfileDetails;
 import com.playdate.app.ui.my_profile_details.FragMyProfilePayments;
 import com.playdate.app.ui.my_profile_details.FragMyProfilePersonal;
@@ -70,7 +72,7 @@ import static com.playdate.app.ui.register.profile.UploadProfileActivity.REQUEST
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.TAKE_PHOTO_CODE;
 import static com.playdate.app.util.session.SessionPref.CompleteProfile;
 
-public class DashboardActivity extends AppCompatActivity implements OnInnerFragmentClicks, View.OnClickListener, OnProfilePhotoChageListerner {
+public class DashboardActivity extends AppCompatActivity implements OnInnerFragmentClicks, View.OnClickListener, OnProfilePhotoChageListerner, OnFriendSelected {
     FragmentManager fm;
     FragmentTransaction ft;
     TextView txt_match, txt_chat;
@@ -80,7 +82,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     TextView txt_personal;
     ImageView iv_love;
     ImageView iv_profile_sett;
-    ImageView iv_plus, iv_saved;
+    ImageView iv_plus;
     ImageView iv_play_date_logo;
     ImageView iv_cancel;
     ImageView iv_create_ano_ques;
@@ -140,7 +142,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         txt_account = findViewById(R.id.txt_account);
         txt_personal = findViewById(R.id.txt_personal);
         iv_plus = findViewById(R.id.iv_plus);
-        iv_saved = findViewById(R.id.iv_saved);
+//        iv_saved = findViewById(R.id.iv_saved);
         iv_play_date_logo = findViewById(R.id.iv_play_date_logo);
         iv_love = findViewById(R.id.iv_love);
         iv_profile_sett = findViewById(R.id.iv_profile_sett);
@@ -163,7 +165,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         iv_gallery.setOnClickListener(this);
         ll_profile_insta.setOnClickListener(this);
         iv_plus.setOnClickListener(this);
-        iv_saved.setOnClickListener(this);
+//        iv_saved.setOnClickListener(this);
         txt_payment.setOnClickListener(this);
         txt_account.setOnClickListener(this);
         txt_personal.setOnClickListener(this);
@@ -197,7 +199,11 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         iv_coupons.setOnClickListener(this);
         iv_dashboard_notification.setOnClickListener(this);
         txt_social.setOnClickListener(this);
-        showPremium();
+//        try {
+//            showPremium();
+//        } catch (WindowManager.BadTokenException e) {
+//            Log.e("BadTokenException", "" + e);
+//        }
         setValue();
         callAPIFriends();
 
@@ -214,14 +220,11 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("limit", "100");
         hashMap.put("pageNo", "1");
-//        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
-//        pd.show();
 
         Call<FriendsListModel> call = service.getFriendsList("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<FriendsListModel>() {
             @Override
             public void onResponse(Call<FriendsListModel> call, Response<FriendsListModel> response) {
-//                pd.cancel();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
                         ArrayList<MatchListUser> lst = response.body().getUsers();
@@ -232,7 +235,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
                             txt_serachfriend.setVisibility(View.GONE);
                             rv_friends.setVisibility(View.VISIBLE);
                             RecyclerView.LayoutManager manager = new LinearLayoutManager(DashboardActivity.this, RecyclerView.HORIZONTAL, false);
-                            FriendAdapter adapterfriend = new FriendAdapter(lst);
+                            FriendAdapter adapterfriend = new FriendAdapter(lst, DashboardActivity.this);
                             rv_friends.setAdapter(adapterfriend);
                             rv_friends.setLayoutManager(manager);
                         } else {
@@ -287,12 +290,9 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         new Handler().postDelayed(new Runnable() {
             public void run() {
 
-                try {
-                    FullScreenDialog dialog = new FullScreenDialog(DashboardActivity.this);
-                    dialog.show();
-                } catch (WindowManager.BadTokenException e) {
-                    Log.e("BadTokenException", "" + e);
-                }
+                FullScreenDialog dialog = new FullScreenDialog(DashboardActivity.this);
+
+                dialog.show();
 
 //                AnonymousMedalDialog dialog = new AnonymousMedalDialog(DashboardActivity.this);
 //                dialog.show();
@@ -306,12 +306,27 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     @Override
     public void ReplaceFrag(Fragment fragment) {
         try {
+
             ft = fm.beginTransaction();
             ft.replace(R.id.flFragment, fragment, fragment.getClass().getSimpleName());
 //        ft.addToBackStack("tags");
             ft.commitAllowingStateLoss();
         } catch (Exception e) {
             e.printStackTrace();
+            Toast.makeText(this, "" + e.toString(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void ReplaceFragWithStack(Fragment fragment) {
+        try {
+
+            ft = fm.beginTransaction();
+            ft.replace(R.id.flFragment, fragment, fragment.getClass().getSimpleName());
+            ft.addToBackStack("tags");
+            ft.commitAllowingStateLoss();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "" + e.toString(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -321,11 +336,15 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         ll_profile_insta.performClick();
     }
 
+
+    int OPTION_CLICK = 0;
+
     @Override
     public void onClick(View view) {
 
         int id = view.getId();
         if (id == R.id.iv_date) {
+            OPTION_CLICK = 2;
             startActivity(new Intent(DashboardActivity.this, DateBaseActivity.class));
 
         } else if (id == R.id.txt_social) {
@@ -422,32 +441,23 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             txt_payment.setTextColor(getResources().getColor(android.R.color.darker_gray));
 
             ReplaceFrag(new FragMyProfileDetails());
-        } else if (id == R.id.ll_profile_support) {
-            iv_play_date_logo.setVisibility(View.VISIBLE);
-            ll_profile_drop_menu.setVisibility(View.GONE);
-            iv_plus.setVisibility(View.GONE);
-            iv_saved.setVisibility(View.GONE);
-            ll_option_love.setVisibility(View.GONE);
-            ll_friends.setVisibility(View.GONE);
-            ll_profile_menu.setVisibility(View.VISIBLE);
-            iv_love.setBackground(null);
-            iv_love.setImageResource(R.drawable.love);
-            iv_profile_sett.setBackground(getDrawable(R.drawable.rectangle_back));
-            iv_profile_sett.setImageResource(R.drawable.tech_support_red);
-            ReplaceFrag(new FragMyProfileDetails());
-
         } else if (id == R.id.ll_love_bottom) {
+            OPTION_CLICK = 1;
             iv_play_date_logo.setVisibility(View.VISIBLE);
             ll_profile_drop_menu.setVisibility(View.GONE);
             iv_plus.setVisibility(View.GONE);
-            iv_saved.setVisibility(View.GONE);
             ll_option_love.setVisibility(View.VISIBLE);
             ll_friends.setVisibility(View.VISIBLE);
             ll_profile_menu.setVisibility(View.GONE);
-            iv_profile_sett.setBackground(null);
-            iv_profile_sett.setImageResource(R.drawable.tech_support);
+
             iv_love.setBackground(getDrawable(R.drawable.rectangle_back));
             iv_love.setImageResource(R.drawable.love_high);
+            iv_coupons.setBackground(null);
+            iv_coupons.setImageResource(R.drawable.badge);
+            iv_profile_sett.setBackground(null);
+            iv_profile_sett.setImageResource(R.drawable.tech_support);
+
+
             checkFirstFrag();
             Fragment frag;
             if (!checkFirstFrag()) {
@@ -467,17 +477,58 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             txt_social.setBackground(getResources().getDrawable(R.drawable.menu_button));
 
 
+        } else if (id == R.id.iv_coupons) {
+            OPTION_CLICK = 1;
+            iv_love.setImageResource(R.drawable.love);
+            iv_love.setBackground(null);
+            iv_coupons.setImageResource(R.drawable.badge_sel);
+            iv_coupons.setBackground(getDrawable(R.drawable.rectangle_back));
+            iv_love.setBackground(null);
+            iv_love.setImageResource(R.drawable.love);
+            iv_profile_sett.setBackground(null);
+            iv_profile_sett.setImageResource(R.drawable.tech_support);
+
+
+            ReplaceFrag(new FragCouponStore());
+            ll_friends.setVisibility(View.VISIBLE);
+            ll_mainMenu.setVisibility(View.VISIBLE);
+            ll_her.setVisibility(View.VISIBLE);
+        } else if (id == R.id.ll_profile_support) {
+            OPTION_CLICK = 3;
+            iv_play_date_logo.setVisibility(View.VISIBLE);
+            ll_profile_drop_menu.setVisibility(View.GONE);
+            iv_plus.setVisibility(View.GONE);
+//            iv_saved.setVisibility(View.GONE);
+            ll_option_love.setVisibility(View.GONE);
+            ll_friends.setVisibility(View.GONE);
+            ll_profile_menu.setVisibility(View.VISIBLE);
+
+            iv_coupons.setImageResource(R.drawable.badge);
+            iv_coupons.setBackground(null);
+            iv_love.setBackground(null);
+            iv_love.setImageResource(R.drawable.love);
+            iv_profile_sett.setBackground(getDrawable(R.drawable.rectangle_back));
+            iv_profile_sett.setImageResource(R.drawable.tech_support_red);
+            ReplaceFrag(new FragMyProfileDetails());
+
         } else if (id == R.id.ll_profile_insta) {
+            OPTION_CLICK = 4;
             iv_play_date_logo.setVisibility(View.VISIBLE);
             ll_profile_drop_menu.setVisibility(View.GONE);
             iv_plus.setVisibility(View.VISIBLE);
-            iv_saved.setVisibility(View.VISIBLE);
+//            iv_saved.setVisibility(View.VISIBLE);
             ll_option_love.setVisibility(View.GONE);
             ll_friends.setVisibility(View.GONE);
             ll_profile_menu.setVisibility(View.GONE);
-            profile = new FragInstaLikeProfile();
-            iv_profile_sett.setImageResource(R.drawable.tech_support);
+            profile = new FragInstaLikeProfile(true);
+
+
+            iv_coupons.setImageResource(R.drawable.badge);
+            iv_coupons.setBackground(null);
+            iv_love.setBackground(null);
+            iv_love.setImageResource(R.drawable.love);
             iv_profile_sett.setBackground(null);
+            iv_profile_sett.setImageResource(R.drawable.tech_support);
 
 
             ReplaceFrag(profile);
@@ -543,18 +594,6 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             ll_camera_option.setVisibility(View.VISIBLE);
             ll_profile_drop_menu.setVisibility(View.GONE);
             iv_play_date_logo.setVisibility(View.VISIBLE);
-
-        } else if (id == R.id.iv_coupons) {
-            iv_love.setImageResource(R.drawable.love);
-            iv_love.setBackground(getDrawable((R.color.transparent)));
-            iv_coupons.setImageResource(R.drawable.badgepink);
-            iv_coupons.setBackground(getDrawable(R.drawable.rectangle_back));
-            ReplaceFrag(new FragCouponStore());
-         
-
-            ll_friends.setVisibility(View.VISIBLE);
-            ll_mainMenu.setVisibility(View.VISIBLE);
-            ll_her.setVisibility(View.VISIBLE);
         } else if (id == R.id.iv_search) {
             ReplaceFrag(new FragSearchUser());
             ll_friends.setVisibility(View.GONE);
@@ -720,7 +759,39 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     public void updateImage() {
         setValue();
     }
+
+    @Override
+    public void OnSingleFriendSelected(String Id) {
+        ll_friends.setVisibility(View.GONE);
+        ll_option_love.setVisibility(View.GONE);
+        ReplaceFragWithStack(new FragInstaLikeProfileFriends(true, Id));
+    }
+
+    @Override
+    public void OnFrinedDataClosed() {
+        ll_friends.setVisibility(View.VISIBLE);
+        ll_option_love.setVisibility(View.VISIBLE);
+        ReplaceFrag(new FragSocialFeed());
+    }
+
+    @Override
+    public void OnSuggestionClosed() {
+        ll_friends.setVisibility(View.VISIBLE);
+        ll_mainMenu.setVisibility(View.VISIBLE);
+        ll_her.setVisibility(View.VISIBLE);
+        ReplaceFrag(new FragSocialFeed());
+
+
+    }
+
+    @Override
+    public void OnSuggestionClosed(boolean isFriend, String id) {
+        ll_friends.setVisibility(View.GONE);
+        ll_mainMenu.setVisibility(View.VISIBLE);
+        ll_option_love.setVisibility(View.GONE);
+        ll_her.setVisibility(View.VISIBLE);
+
+        ReplaceFragWithStack(new FragInstaLikeProfileFriends(isFriend, id));
+    }
 }
-
-
 

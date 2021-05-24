@@ -41,6 +41,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FragLanding extends Fragment {
+    public FragLanding() {
+    }
+
     CommonClass clsCommon;
     ViewPager vp_suggestion;
     RelativeLayout Rl_page;

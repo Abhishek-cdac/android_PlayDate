@@ -16,6 +16,9 @@ import com.playdate.app.R;
 import java.util.zip.Inflater;
 
 public class OnBoardingImageFragment extends Fragment {
+    public OnBoardingImageFragment() {
+    }
+
     int position;
 
     public OnBoardingImageFragment(int position) {

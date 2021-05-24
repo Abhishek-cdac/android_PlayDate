@@ -13,6 +13,9 @@ import com.playdate.app.R;
 
 public class FragSuggestion extends Fragment {
 
+    public FragSuggestion() {
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

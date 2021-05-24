@@ -11,21 +11,24 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
-import com.playdate.app.model.Friends;
 import com.playdate.app.model.MatchListUser;
+import com.playdate.app.ui.dashboard.DashboardActivity;
+import com.playdate.app.ui.dashboard.OnFriendSelected;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder> {
 
-    ArrayList<MatchListUser> lst;
+    private ArrayList<MatchListUser> lst;
+    private DashboardActivity dashboardActivity;
 
-    public FriendAdapter(ArrayList<MatchListUser> lst) {
+    public FriendAdapter(ArrayList<MatchListUser> lst, DashboardActivity dashboardActivity) {
         this.lst = lst;
+        this.dashboardActivity = dashboardActivity;
     }
 
-    Context mContext;
+    private Context mContext;
 
     @NonNull
     @Override
@@ -43,7 +46,6 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
                 .placeholder(R.drawable.profile)
                 .into(holder.profile_image);
 
-//      holder.profile_image.setImageResource(lst.get(position).getImage());
         holder.txt_friend_name.setText(lst.get(position).getUsername());
     }
 
@@ -60,6 +62,14 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
             super(itemView);
             profile_image = itemView.findViewById(R.id.profile_image);
             txt_friend_name = itemView.findViewById(R.id.txt_friend_name);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    OnFriendSelected inf= dashboardActivity;
+                    inf.OnSingleFriendSelected(lst.get(getAdapterPosition()).getUserId());
+                }
+            });
         }
     }
 }

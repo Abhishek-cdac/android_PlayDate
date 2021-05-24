@@ -5,6 +5,7 @@ import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -33,6 +34,8 @@ import retrofit2.Response;
 
 public class FragSocialFeed extends Fragment {
 
+    public FragSocialFeed() {
+    }
 
     public static final String NORMAL = "Normal";
     //    public static final String RESTAURANT = 1;
@@ -54,7 +57,7 @@ public class FragSocialFeed extends Fragment {
     @Override
     public void onStop() {
         try {
-         //   recycler_view_feed.stopVideos();
+            recycler_view_feed.stopVideos();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -102,6 +105,7 @@ public class FragSocialFeed extends Fragment {
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
+                        Toast.makeText(getActivity(), ""+e.toString(), Toast.LENGTH_SHORT).show();
                     }
                     recycler_view_feed.preDownload(urls);
                     recycler_view_feed.setVisiblePercent(70);

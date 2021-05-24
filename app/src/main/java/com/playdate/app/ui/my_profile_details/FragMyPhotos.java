@@ -1,5 +1,4 @@
-package com.playdate.app.ui.dashboard.more_suggestion;
-
+package com.playdate.app.ui.my_profile_details;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,26 +13,30 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.playdate.app.R;
-import com.playdate.app.ui.dashboard.adapter.MoreSuggestionPagerAdapter;
+import com.playdate.app.ui.chat.request.RequestChatAdapter;
 import com.playdate.app.util.common.CommonClass;
 
-public class FragMoreSuggestion extends Fragment {
+import org.jetbrains.annotations.NotNull;
 
-
-    public FragMoreSuggestion() {
+public class FragMyPhotos extends Fragment {
+    public FragMyPhotos() {
     }
 
     @Nullable
+    @org.jetbrains.annotations.Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.frag_more_suggestion, container, false);
+    public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.frag_tab_my_photos,container,false);
+
+
         TabLayout tabLayout = view.findViewById(R.id.tab);
         ViewPager viewPager = view.findViewById(R.id.viewpager);
         RelativeLayout rl_page=view.findViewById(R.id.rl_page);
 
-        tabLayout.addTab(tabLayout.newTab().setText("Suggested"));
-        tabLayout.addTab(tabLayout.newTab().setText("   Invite   "));
-//      tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        tabLayout.addTab(tabLayout.newTab().setText("My Feed"));
+        tabLayout.addTab(tabLayout.newTab().setText("Liked Photos"));
+//        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
         int height = new CommonClass().getScreenHeight(getActivity());
 
 
@@ -46,7 +49,7 @@ public class FragMoreSuggestion extends Fragment {
 
         rl_page.getLayoutParams().height=height-(m1+m2+m3+m4+m5+m6);
 
-        MoreSuggestionPagerAdapter pagerAdapter = new MoreSuggestionPagerAdapter(getChildFragmentManager(), tabLayout.getTabCount());
+        PhotoAdapter pagerAdapter = new PhotoAdapter(getChildFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(pagerAdapter);
         viewPager.setCurrentItem(0);
         tabLayout.setTabIndicatorFullWidth(false);
@@ -70,5 +73,6 @@ public class FragMoreSuggestion extends Fragment {
 
 
         return view;
+
     }
 }
