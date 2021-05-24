@@ -197,11 +197,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         iv_coupons.setOnClickListener(this);
         iv_dashboard_notification.setOnClickListener(this);
         txt_social.setOnClickListener(this);
-        try {
-            showPremium();
-        } catch (WindowManager.BadTokenException e) {
-            Log.e("BadTokenException", "" + e);
-        }
+        showPremium();
         setValue();
         callAPIFriends();
 
@@ -291,9 +287,12 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         new Handler().postDelayed(new Runnable() {
             public void run() {
 
-                FullScreenDialog dialog = new FullScreenDialog(DashboardActivity.this);
-
-                dialog.show();
+                try {
+                    FullScreenDialog dialog = new FullScreenDialog(DashboardActivity.this);
+                    dialog.show();
+                } catch (WindowManager.BadTokenException e) {
+                    Log.e("BadTokenException", "" + e);
+                }
 
 //                AnonymousMedalDialog dialog = new AnonymousMedalDialog(DashboardActivity.this);
 //                dialog.show();
