@@ -2,6 +2,7 @@ package com.playdate.app.data.api;
 
 import com.playdate.app.model.CommonModel;
 import com.playdate.app.model.FriendsListModel;
+import com.playdate.app.model.GetCommentModel;
 import com.playdate.app.model.GetProfileDetails;
 import com.playdate.app.model.GetUserSuggestion;
 import com.playdate.app.model.InterestsMain;
@@ -150,6 +151,13 @@ public interface GetDataService {
     @FormUrlEncoded
     @POST("user/get-profile-details")
     Call<GetProfileDetails> getProfileDetails(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
+    @FormUrlEncoded
+    @POST("user/add-post-comment")
+    Call<CommonModel> addPostComment(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+    @FormUrlEncoded
+    @POST("user/get-post-comments")
+    Call<GetCommentModel> getPostComment(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
 
 }

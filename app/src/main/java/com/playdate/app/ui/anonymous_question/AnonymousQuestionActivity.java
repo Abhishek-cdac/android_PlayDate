@@ -9,8 +9,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,8 +19,25 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
+import com.playdate.app.data.api.GetDataService;
+import com.playdate.app.data.api.RetrofitClientInstance;
+import com.playdate.app.model.CommonModel;
+import com.playdate.app.model.GetCommentData;
+import com.playdate.app.model.GetCommentModel;
+import com.playdate.app.model.GetUserSuggestionData;
+import com.playdate.app.model.LoginResponse;
+import com.playdate.app.ui.dashboard.adapter.SuggestedFriendAdapter;
+import com.playdate.app.util.session.SessionPref;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Response;
 
 public class AnonymousQuestionActivity extends AppCompatActivity implements onCommentDelete, View.OnClickListener {
+    ArrayList<GetCommentData> lst_getComment;
 
     CommentAdapter adapter;
     TextView text_count, txt_post_comment;
@@ -30,6 +48,7 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
     EditText add_comment;
     EditText ext_question;
     boolean isForNew = false;
+    String postId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,25 +62,19 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
         text_count.setTypeface(Typeface.DEFAULT_BOLD);
         back_anonymous = findViewById(R.id.back_anonymous);
         txt_post_comment = findViewById(R.id.txt_post_comment);
-
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            postId = extras.getString("post_id");
+            Log.e("postiddddddd",""+ postId);
+            //The key argument here must match that used in the other activity
+        }
         TextView text = findViewById(R.id.anun);
         text.setTypeface(Typeface.DEFAULT_BOLD);
-
         recyclerView = findViewById(R.id.comments_list);
-        RecyclerView.LayoutManager manager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
-        recyclerView.setLayoutManager(manager);
-        adapter = new CommentAdapter(this);
-        recyclerView.setAdapter(adapter);
+
+        callGetCommentApi();
         txt_post_comment.setTextColor(getResources().getColor(R.color.color_grey));
-        int number = adapter.getItemCount();
-        Log.d("selected_click", String.valueOf(number));
 
-        if (number == 0) {
-            text_count.setText("No Answer");
-        } else {
-            text_count.setText(number + " Answer");
-
-        }
 
         if (mIntent.getBooleanExtra("new", false)) {
             isForNew = true;
@@ -74,11 +87,9 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
             text.setText(R.string.comments);
         }
 
-        more_option.setOnClickListener(this);
-        back_anonymous.setOnClickListener(this);
-        txt_post_comment.setOnClickListener(this);
 
-        ext_question.addTextChangedListener(new TextWatcher() {
+        add_comment.addTextChangedListener(new TextWatcher() {
+
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -100,6 +111,91 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
 
             }
         });
+
+        more_option.setOnClickListener(this);
+        back_anonymous.setOnClickListener(this);
+        txt_post_comment.setOnClickListener(this);
+
+        ext_question.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if (s.length() > 0) {
+                    txt_post_comment.setEnabled(true);
+                    txt_post_comment.setTextColor(getResources().getColor(R.color.white));
+                } else {
+                    txt_post_comment.setEnabled(false);
+                    txt_post_comment.setTextColor(getResources().getColor(R.color.color_grey));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                txt_post_comment.setEnabled(true);
+            }
+        });
+    }
+
+    private void callGetCommentApi() {
+
+        SessionPref pref = SessionPref.getInstance(getApplicationContext());
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("postId", postId);
+        Log.e("postId", "" + this.postId);
+        Call<GetCommentModel> call = service.getPostComment("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new retrofit2.Callback<GetCommentModel>() {
+            @Override
+            public void onResponse(Call<GetCommentModel> call, Response<GetCommentModel> response) {
+//                pd.cancel();
+                if (response.code() == 200) {
+                    if (response.body().getStatus() == 1) {
+                        lst_getComment = (ArrayList<GetCommentData>) response.body().getData();
+                        if (lst_getComment == null) {
+                            lst_getComment = new ArrayList<>();
+                        }
+
+//                        RecyclerView.LayoutManager manager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+//                        recyclerView.setLayoutManager(manager);
+//                        adapter = new CommentAdapter(lst_getComment);
+//                        recyclerView.setAdapter(adapter);
+
+
+                        RecyclerView.LayoutManager manager = new LinearLayoutManager(AnonymousQuestionActivity.this, RecyclerView.VERTICAL, false);
+                        recyclerView.setLayoutManager(manager);
+                        CommentAdapter adapter = new CommentAdapter(lst_getComment);
+                        recyclerView.setAdapter(adapter);
+                        int number = adapter.getItemCount();
+                        Log.d("selected_click", String.valueOf(number));
+
+                        if (number == 0) {
+                            text_count.setText("No Answer");
+                        } else {
+                            text_count.setText(number + " Answer");
+                        }
+                    } else {
+
+                    }
+                } else {
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<GetCommentModel> call, Throwable t) {
+                t.printStackTrace();
+//                pd.cancel();
+//                Toast.makeText(BioActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     public void ChangeCount(int number) {
@@ -107,7 +203,6 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
             text_count.setText("No Answer");
         } else {
             text_count.setText(number + " Answer");
-
         }
     }
 
@@ -123,13 +218,50 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
                 mIntent.putExtra("question", ext_question.getText().toString());
                 startActivityForResult(mIntent, 101);
             } else {
-
+                callAddCommentApi();
             }
 
         } else if (id == R.id.more_option) {
             showModel();
         }
 
+    }
+
+    private void callAddCommentApi() {
+        SessionPref pref = SessionPref.getInstance(getApplicationContext());
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
+        hashMap.put("postId", postId);
+        hashMap.put("comment", add_comment.getText().toString());
+
+        Log.e("userId", "" + pref.getStringVal(SessionPref.LoginUserID));
+        Log.e("postId", "" + this.postId);
+        Call<CommonModel> call = service.addPostComment("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new retrofit2.Callback<CommonModel>() {
+            @Override
+            public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
+//                pd.cancel();
+                if (response.code() == 200) {
+                    if (response.body().getStatus() == 1) {
+                        add_comment.setText("");
+                    } else {
+
+                    }
+                } else {
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<CommonModel> call, Throwable t) {
+                t.printStackTrace();
+//                pd.cancel();
+//                Toast.makeText(BioActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

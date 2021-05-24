@@ -105,10 +105,6 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
         } else {
             hashMap.put("status", "Like");
         }
-
-//        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(mContext);
-//        pd.show();
-
         Call<LoginResponse> call = service.addPostLikeUnlike("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new retrofit2.Callback<LoginResponse>() {
             @Override
@@ -278,7 +274,14 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                 }
             });
 
-
+            userViewHolder.iv_msg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(v.getContext(), AnonymousQuestionActivity.class);
+                    i.putExtra("post_id",lst.get(position).getPostId());
+                    v.getContext().startActivity(i);
+                }
+            });
             userViewHolder.iv_post_image.setOnClickListener(view -> {
 
                 if (lst.get(position).getLikes() != 1) {
@@ -313,7 +316,14 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                 OnInnerFragmentClicks ref = (OnInnerFragmentClicks) mContext;
                 ref.loadProfile();
             });
-
+            videoHolder.iv_msg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(v.getContext(), AnonymousQuestionActivity.class);
+                    i.putExtra("post_id",lst.get(position).getPostId());
+                    v.getContext().startActivity(i);
+                }
+            });
 
             Picasso.get().load(lst.get(position).getLstpostby().get(0).getProfilePicPath())
                     .placeholder(R.drawable.cupertino_activity_indicator)
@@ -397,6 +407,10 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
 
 
         }
+
+
+
+
 //        else if (holder.getItemViewType() == FragSocialFeed.RESTAURANT) {
 //            ViewHolderRestaurant restViewHolder = (ViewHolderRestaurant) holder;
 //            restViewHolder.name_friend.setText(lst.get(position).getUserName());
@@ -607,7 +621,10 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                 }
             });
 
-            iv_msg.setOnClickListener(v -> v.getContext().startActivity(new Intent(v.getContext(), AnonymousQuestionActivity.class)));
+
+
+//            iv_msg.setOnClickListener(v ->
+//                    v.getContext().startActivity(new Intent(v.getContext(), AnonymousQuestionActivity.class)));
             et_comment.setOnClickListener(v -> v.getContext().startActivity(new Intent(v.getContext(), AnonymousQuestionActivity.class)));
 
         }
