@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.LongDef;
 import androidx.annotation.NonNull;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,25 +23,32 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
+import com.playdate.app.model.GetCommentData;
 
 import java.util.ArrayList;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder> {
     ArrayList<Comments> list = new ArrayList<>();
+    ArrayList<GetCommentData> commentList = new ArrayList<>();
     //    boolean selected = false;
 //    int selected_index = -1;
     Context mContext;
-
-
     onCommentDelete ref;
 
-    public CommentAdapter(AnonymousQuestionActivity activity) {
-        ref = activity;
-        list.add(new Comments("MyronEvans", "hey", false, false));
-        list.add(new Comments("MyronEvans", "all goood, whats up?", false, false));
-        list.add(new Comments("MyronEvans", "helllo everyone", false, false));
-        list.add(new Comments("MyronEvans", "hey", false, false));
+    public CommentAdapter(ArrayList<GetCommentData> lst_getComment) {
+        this.commentList = lst_getComment;
+
     }
+//
+//    public CommentAdapter(AnonymousQuestionActivity activity) {
+//        ref = activity;
+//        list.add(new Comments("MyronEvans", "hey", false, false));
+//        list.add(new Comments("MyronEvans", "all goood, whats up?", false, false));
+//        list.add(new Comments("MyronEvans", "helllo everyone", false, false));
+//        list.add(new Comments("MyronEvans", "hey", false, false));
+//    }
+
+
 
     @NonNull
     @Override
@@ -52,47 +60,48 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull CommentAdapter.ViewHolder holder, int position) {
-        holder.name.setText(list.get(position).getName());
-        holder.desc.setText(list.get(position).getComment());
+        holder.name.setText(commentList.get(position).getUsername());
+        holder.desc.setText(commentList.get(position).getComments().getComment());
 
 
 //        if (selected_index == position) {
-
-        if (list.get(position).isSelected) {
-            holder.relativeLayout.setBackgroundColor(Color.parseColor("#88000000"));
-            holder.name.setTextColor(mContext.getResources().getColor(R.color.white));
-            holder.desc.setTextColor(mContext.getResources().getColor(R.color.white));
-            holder.time.setTextColor(mContext.getResources().getColor(R.color.white));
-            holder.like.setTextColor(mContext.getResources().getColor(R.color.white));
-            holder.reply.setTextColor(mContext.getResources().getColor(R.color.white));
-            holder.delete.setVisibility(View.VISIBLE);
-
-
-        } else {
-            holder.relativeLayout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
-            holder.name.setTextColor(mContext.getResources().getColor(R.color.black));
-            holder.desc.setTextColor(mContext.getResources().getColor(R.color.black));
-            holder.time.setTextColor(mContext.getResources().getColor(R.color.black));
-            holder.like.setTextColor(mContext.getResources().getColor(R.color.black));
-            holder.reply.setTextColor(mContext.getResources().getColor(R.color.black));
-            holder.delete.setVisibility(View.GONE);
-
-        }
+//
+//        if (list.get(position).isSelected) {
+//            holder.relativeLayout.setBackgroundColor(Color.parseColor("#88000000"));
+//            holder.name.setTextColor(mContext.getResources().getColor(R.color.white));
+//            holder.desc.setTextColor(mContext.getResources().getColor(R.color.white));
+//            holder.time.setTextColor(mContext.getResources().getColor(R.color.white));
+//            holder.like.setTextColor(mContext.getResources().getColor(R.color.white));
+//            holder.reply.setTextColor(mContext.getResources().getColor(R.color.white));
+//            holder.delete.setVisibility(View.VISIBLE);
+//
+//
+//        } else {
+//            holder.relativeLayout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
+//            holder.name.setTextColor(mContext.getResources().getColor(R.color.black));
+//            holder.desc.setTextColor(mContext.getResources().getColor(R.color.black));
+//            holder.time.setTextColor(mContext.getResources().getColor(R.color.black));
+//            holder.like.setTextColor(mContext.getResources().getColor(R.color.black));
+//            holder.reply.setTextColor(mContext.getResources().getColor(R.color.black));
+//            holder.delete.setVisibility(View.GONE);
+//
+//        }
 //        }
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        Log.e("commentList",""+commentList.size());
+        return commentList.size();
     }
 
-    public void addComment(EditText edittxt_add_comment) {
-        list.add(new Comments("Myron", edittxt_add_comment.getText().toString(), false, false));
-        ref.ChangeCount(list.size());
-        Log.d("Added comment", "added");
-        notifyDataSetChanged();
-        edittxt_add_comment.setText("");
-    }
+//    public void addComment(EditText edittxt_add_comment) {
+//        list.add(new Comments("Myron", edittxt_add_comment.getText().toString(), false, false));
+//        ref.ChangeCount(list.size());
+//        Log.d("Added comment", "added");
+//        notifyDataSetChanged();
+//        edittxt_add_comment.setText("");
+//    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView name, desc, like, reply, time;
@@ -111,36 +120,36 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             name.setTypeface(Typeface.DEFAULT_BOLD);
 
 
-            delete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int selected_index = getAdapterPosition();
-                    list.get(selected_index).setDeleted(true);
-
-                    commentdeleted(selected_index);
-
-                }
-            });
-            relativeLayout.setOnLongClickListener(v -> {
-                int selected_index = getAdapterPosition();
-                if (!list.get(selected_index).isSelected) {
-
-                    for (int i = 0; i < list.size(); i++) {
-                        if (selected_index != i) {
-                            list.get(i).setSelected(false);
-                        } else {
-                            list.get(selected_index).setSelected(true);
-                        }
-
-                    }
-
-                    notifyDataSetChanged();
-                } else {
-                    list.get(selected_index).setSelected(false);
-                    notifyDataSetChanged();
-                }
-                return true;
-            });
+//            delete.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    int selected_index = getAdapterPosition();
+//                    list.get(selected_index).setDeleted(true);
+//
+//                    commentdeleted(selected_index);
+//
+//                }
+//            });
+//            relativeLayout.setOnLongClickListener(v -> {
+//                int selected_index = getAdapterPosition();
+//                if (!list.get(selected_index).isSelected) {
+//
+//                    for (int i = 0; i < list.size(); i++) {
+//                        if (selected_index != i) {
+//                            list.get(i).setSelected(false);
+//                        } else {
+//                            list.get(selected_index).setSelected(true);
+//                        }
+//
+//                    }
+//
+//                    notifyDataSetChanged();
+//                } else {
+//                    list.get(selected_index).setSelected(false);
+//                    notifyDataSetChanged();
+//                }
+//                return true;
+//            });
 
         }
 

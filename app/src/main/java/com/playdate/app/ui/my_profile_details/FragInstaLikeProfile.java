@@ -2,11 +2,13 @@ package com.playdate.app.ui.my_profile_details;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,16 +18,35 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
+import com.playdate.app.data.api.GetDataService;
+import com.playdate.app.data.api.RetrofitClientInstance;
+import com.playdate.app.model.GetProfileDetails;
+import com.playdate.app.model.GetProileDetailData;
+import com.playdate.app.model.GetUserSuggestionData;
+import com.playdate.app.model.LoginResponse;
 import com.playdate.app.ui.my_profile_details.adapters.InstaPhotosAdapter;
 import com.playdate.app.ui.my_profile_details.adapters.SocialFeedNormal;
 import com.playdate.app.ui.playvideo.ExoPlayerActivity;
+import com.playdate.app.ui.register.bio.BioActivity;
+import com.playdate.app.ui.register.profile.UploadProfileActivity;
 import com.playdate.app.ui.social.model.SocialFeed;
+import com.playdate.app.util.common.CommonClass;
+import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
+import static com.playdate.app.util.session.SessionPref.LoginUserpersonalBio;
 
 public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View.OnClickListener {
     RecyclerView recycler_photos;
@@ -35,21 +56,28 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
     ImageView profile_image;
     TextView txt_bio;
     TextView txt_login_user;
+    CommonClass clsCommon;
+    TextView txtTotalFriend, txtTotalPost;
+    private ArrayList<GetProileDetailData> lst_getPostDetail;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag_insta_profile, container, false);
+
+        clsCommon = CommonClass.getInstance();
+
+        txtTotalFriend = view.findViewById(R.id.friend_count);
+        txtTotalPost = view.findViewById(R.id.post_count);
         iv_send_request = view.findViewById(R.id.iv_send_request);
         profile_image = view.findViewById(R.id.profile_image);
         iv_chat = view.findViewById(R.id.iv_chat);
         recycler_photos = view.findViewById(R.id.recycler_photos);
         txt_bio = view.findViewById(R.id.txt_bio);
         txt_login_user = view.findViewById(R.id.txt_login_user);
-
+        callAPI();
 
         onTypeChange(0);
-
 
         setValue();
 
@@ -74,6 +102,60 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
         }
         txt_login_user.setText(pref.getStringVal(SessionPref.LoginUserusername));
         txt_bio.setText(pref.getStringVal(SessionPref.LoginUserpersonalBio));
+
+
+    }
+
+    private void callAPI() {
+        SessionPref pref = SessionPref.getInstance(getActivity());
+
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+
+        hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
+
+        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
+        pd.show();
+//        Toast.makeText(this, ""+pref.getStringVal(SessionPref.LoginUsertoken), Toast.LENGTH_SHORT).show();
+
+
+        Call<GetProfileDetails> call = service.getProfileDetails("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new Callback<GetProfileDetails>() {
+            @Override
+            public void onResponse(Call<GetProfileDetails> call, Response<GetProfileDetails> response) {
+                pd.cancel();
+                if (response.code() == 200) {
+                    if (response.body().getStatus() == 1) {
+                        lst_getPostDetail = (ArrayList<GetProileDetailData>) response.body().getData();
+                        if (lst_getPostDetail == null) {
+                            lst_getPostDetail = new ArrayList<>();
+                        }
+                        txtTotalFriend.setText(String.valueOf(lst_getPostDetail.get(0).getTotalFriends()));
+                        txtTotalPost.setText(String.valueOf(lst_getPostDetail.get(0).getTotalPosts()));
+
+                    } else {
+                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
+                    }
+                } else {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message").toString(), "Ok");
+                    } catch (Exception e) {
+                        Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<GetProfileDetails> call, Throwable t) {
+                t.printStackTrace();
+                pd.cancel();
+                Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
@@ -129,7 +211,7 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
                 } else {
                     videopath = BASE_URL_IMAGE + videopath;
                 }
-                mIntent.putExtra("video",videopath);
+                mIntent.putExtra("video", videopath);
                 startActivity(mIntent);
             } catch (Exception e) {
                 e.printStackTrace();
