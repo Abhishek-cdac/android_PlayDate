@@ -786,9 +786,11 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
     @Override
     public void OnSuggestionClosed(boolean isFriend, String id) {
-        ll_friends.setVisibility(View.VISIBLE);
+        ll_friends.setVisibility(View.GONE);
         ll_mainMenu.setVisibility(View.VISIBLE);
+        ll_option_love.setVisibility(View.GONE);
         ll_her.setVisibility(View.VISIBLE);
+
         ReplaceFragWithStack(new FragInstaLikeProfileFriends(isFriend, id));
     }
 }
