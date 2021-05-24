@@ -91,6 +91,8 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     ImageView iv_coupons;
     ImageView iv_date;
 
+
+
     //    SwipeRefreshLayout mSwipeRefreshLayout;
     LinearLayout ll_mainMenu, ll_her;
     LinearLayout ll_friends;

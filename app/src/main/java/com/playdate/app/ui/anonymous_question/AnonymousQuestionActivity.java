@@ -160,15 +160,9 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
                             lst_getComment = new ArrayList<>();
                         }
 
-//                        RecyclerView.LayoutManager manager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
-//                        recyclerView.setLayoutManager(manager);
-//                        adapter = new CommentAdapter(lst_getComment);
-//                        recyclerView.setAdapter(adapter);
-
-
                         RecyclerView.LayoutManager manager = new LinearLayoutManager(AnonymousQuestionActivity.this, RecyclerView.VERTICAL, false);
                         recyclerView.setLayoutManager(manager);
-                        CommentAdapter adapter = new CommentAdapter(lst_getComment);
+                        CommentAdapter adapter = new CommentAdapter(getApplicationContext(), lst_getComment);
                         recyclerView.setAdapter(adapter);
                         int number = adapter.getItemCount();
                         Log.d("selected_click", String.valueOf(number));
@@ -245,6 +239,7 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
                         add_comment.setText("");
+                        callGetCommentApi();
                     } else {
 
                     }

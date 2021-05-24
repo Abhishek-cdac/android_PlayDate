@@ -247,7 +247,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                 }
             });
             try {
-                userViewHolder.txt_heart_count.setText(lst.get(position).getLikes() + " Hearts");
+                userViewHolder.txt_heart_count.setText(lst.get(position).getLikes() + " Loves");
                 if (null != lst.get(position).getTag()) {
                     String s = "<b>" + lst.get(position).getLstpostby().get(0).getUsername() + "</b> " + lst.get(position).getTag();
                     userViewHolder.txt_chat.setText(Html.fromHtml(s));
@@ -361,7 +361,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                 }
             });
             try {
-                videoHolder.txt_heart_count.setText(lst.get(position).getLikes() + " Hearts");
+                videoHolder.txt_heart_count.setText(lst.get(position).getLikes() + " Loves");
                 if (null != lst.get(position).getTag()) {
                     String s = "<b>" + lst.get(position).getLstpostby().get(0).getUsername() + "</b> " + lst.get(position).getTag();
                     videoHolder.txt_chat.setText(Html.fromHtml(s));

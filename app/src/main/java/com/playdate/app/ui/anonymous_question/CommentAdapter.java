@@ -20,34 +20,38 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
+import com.playdate.app.data.api.GetDataService;
+import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.GetCommentData;
+import com.playdate.app.model.GetCommentModel;
+import com.playdate.app.util.session.SessionPref;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Response;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder> {
     ArrayList<Comments> list = new ArrayList<>();
     ArrayList<GetCommentData> commentList = new ArrayList<>();
-    //    boolean selected = false;
-//    int selected_index = -1;
+    boolean selected = false;
+    int selected_index = -1;
+
     Context mContext;
     onCommentDelete ref;
+    String userId, postId, commentId;
 
-    public CommentAdapter(ArrayList<GetCommentData> lst_getComment) {
+    public CommentAdapter(Context applicationContext, ArrayList<GetCommentData> lst_getComment) {
         this.commentList = lst_getComment;
+        this.mContext = applicationContext;
 
     }
-//
-//    public CommentAdapter(AnonymousQuestionActivity activity) {
-//        ref = activity;
-//        list.add(new Comments("MyronEvans", "hey", false, false));
-//        list.add(new Comments("MyronEvans", "all goood, whats up?", false, false));
-//        list.add(new Comments("MyronEvans", "helllo everyone", false, false));
-//        list.add(new Comments("MyronEvans", "hey", false, false));
-//    }
-
 
 
     @NonNull
@@ -63,45 +67,45 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         holder.name.setText(commentList.get(position).getUsername());
         holder.desc.setText(commentList.get(position).getComments().getComment());
 
+        userId = commentList.get(position).getUserId();
+        commentId = commentList.get(position).getComments().getCommentId();
+        postId = commentList.get(position).getComments().getPostId();
+
+        Log.e("commentId", "" + commentId);
+        Log.e("userId", "" + userId);
+        Log.e("postId", "" + postId);
 
 //        if (selected_index == position) {
-//
-//        if (list.get(position).isSelected) {
-//            holder.relativeLayout.setBackgroundColor(Color.parseColor("#88000000"));
-//            holder.name.setTextColor(mContext.getResources().getColor(R.color.white));
-//            holder.desc.setTextColor(mContext.getResources().getColor(R.color.white));
-//            holder.time.setTextColor(mContext.getResources().getColor(R.color.white));
-//            holder.like.setTextColor(mContext.getResources().getColor(R.color.white));
-//            holder.reply.setTextColor(mContext.getResources().getColor(R.color.white));
-//            holder.delete.setVisibility(View.VISIBLE);
-//
-//
-//        } else {
-//            holder.relativeLayout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
-//            holder.name.setTextColor(mContext.getResources().getColor(R.color.black));
-//            holder.desc.setTextColor(mContext.getResources().getColor(R.color.black));
-//            holder.time.setTextColor(mContext.getResources().getColor(R.color.black));
-//            holder.like.setTextColor(mContext.getResources().getColor(R.color.black));
-//            holder.reply.setTextColor(mContext.getResources().getColor(R.color.black));
-//            holder.delete.setVisibility(View.GONE);
-//
-//        }
-//        }
+//            Log.e("selected_index..",""+selected_index);
+
+        if (commentList.get(position).isSelected) {
+            holder.relativeLayout.setBackgroundColor(Color.parseColor("#88000000"));
+            holder.name.setTextColor(mContext.getResources().getColor(R.color.white));
+            holder.desc.setTextColor(mContext.getResources().getColor(R.color.white));
+            holder.time.setTextColor(mContext.getResources().getColor(R.color.white));
+            holder.like.setTextColor(mContext.getResources().getColor(R.color.white));
+            holder.reply.setTextColor(mContext.getResources().getColor(R.color.white));
+            holder.delete.setVisibility(View.VISIBLE);
+
+
+        } else {
+            holder.relativeLayout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
+            holder.name.setTextColor(mContext.getResources().getColor(R.color.black));
+            holder.desc.setTextColor(mContext.getResources().getColor(R.color.black));
+            holder.time.setTextColor(mContext.getResources().getColor(R.color.black));
+            holder.like.setTextColor(mContext.getResources().getColor(R.color.black));
+            holder.reply.setTextColor(mContext.getResources().getColor(R.color.black));
+            holder.delete.setVisibility(View.GONE);
+
+        }
+        //   }
     }
 
     @Override
     public int getItemCount() {
-        Log.e("commentList",""+commentList.size());
         return commentList.size();
     }
 
-//    public void addComment(EditText edittxt_add_comment) {
-//        list.add(new Comments("Myron", edittxt_add_comment.getText().toString(), false, false));
-//        ref.ChangeCount(list.size());
-//        Log.d("Added comment", "added");
-//        notifyDataSetChanged();
-//        edittxt_add_comment.setText("");
-//    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView name, desc, like, reply, time;
@@ -120,52 +124,132 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             name.setTypeface(Typeface.DEFAULT_BOLD);
 
 
-//            delete.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    int selected_index = getAdapterPosition();
-//                    list.get(selected_index).setDeleted(true);
-//
-//                    commentdeleted(selected_index);
-//
-//                }
-//            });
-//            relativeLayout.setOnLongClickListener(v -> {
-//                int selected_index = getAdapterPosition();
-//                if (!list.get(selected_index).isSelected) {
-//
-//                    for (int i = 0; i < list.size(); i++) {
-//                        if (selected_index != i) {
-//                            list.get(i).setSelected(false);
-//                        } else {
-//                            list.get(selected_index).setSelected(true);
-//                        }
-//
-//                    }
-//
-//                    notifyDataSetChanged();
-//                } else {
-//                    list.get(selected_index).setSelected(false);
-//                    notifyDataSetChanged();
-//                }
-//                return true;
-//            });
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    selected_index = getAdapterPosition();
+                    commentList.get(selected_index).setDeleted(true);
+                    callDeleteCommentApi();
+                    //  commentdeleted(selected_index);
+
+
+                }
+            });
+            relativeLayout.setOnLongClickListener(v -> {
+
+                int selected_index = getAdapterPosition();
+                Log.e("relativeLayout", "relativeLayout" + selected_index);
+                if (!commentList.get(selected_index).isSelected) {
+
+                    for (int i = 0; i < commentList.size(); i++) {
+                        if (selected_index != i) {
+                            commentList.get(i).setSelected(false);
+                        } else {
+                            commentList.get(selected_index).setSelected(true);
+                        }
+
+                    }
+
+                    notifyDataSetChanged();
+                } else {
+                    commentList.get(selected_index).setSelected(false);
+                    notifyDataSetChanged();
+                }
+                return true;
+            });
 
         }
 
     }
 
+    private void callDeleteCommentApi() {
+        SessionPref pref = SessionPref.getInstance(mContext);
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("userId", userId);
+        hashMap.put("postId", postId);
+        hashMap.put("commentId", commentId);
+        Call<GetCommentModel> call = service.deletePostComment("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new retrofit2.Callback<GetCommentModel>() {
+            @Override
+            public void onResponse(Call<GetCommentModel> call, Response<GetCommentModel> response) {
+//                pd.cancel();
+                if (response.code() == 200) {
+                    if (response.body().getStatus() == 1) {
+                        commentdeleted(selected_index);
+                        callGetCommentApi();
+
+                    } else {
+
+                    }
+                } else {
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<GetCommentModel> call, Throwable t) {
+                t.printStackTrace();
+//                pd.cancel();
+//                Toast.makeText(BioActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void commentdeleted(int selected_index) {
-        if (list.get(selected_index).isDeleted) {
+
+
+        if (commentList.get(selected_index).isDeleted) {
             FragmentManager fragmentManager = ((AppCompatActivity) mContext).getSupportFragmentManager();
             FragCommentDeleted deleted = new FragCommentDeleted();
             deleted.show(fragmentManager, "comment deleted");
-            list.remove(selected_index);
+            commentList.remove(selected_index);
             notifyDataSetChanged();
-            ref.ChangeCount(list.size());
+          //  ref.ChangeCount(commentList.size());
         } else {
             //code for undo
         }
+
+    }
+
+    private void callGetCommentApi() {
+
+        SessionPref pref = SessionPref.getInstance(mContext);
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("postId", postId);
+        Call<GetCommentModel> call = service.getPostComment("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new retrofit2.Callback<GetCommentModel>() {
+            @Override
+            public void onResponse(Call<GetCommentModel> call, Response<GetCommentModel> response) {
+//                pd.cancel();
+                if (response.code() == 200) {
+                    if (response.body().getStatus() == 1) {
+                        commentList = (ArrayList<GetCommentData>) response.body().getData();
+                        if (commentList == null) {
+                            commentList = new ArrayList<>();
+                        }
+                        notifyDataSetChanged();
+
+                    } else {
+
+                    }
+                } else {
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<GetCommentModel> call, Throwable t) {
+                t.printStackTrace();
+//                pd.cancel();
+//                Toast.makeText(BioActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 

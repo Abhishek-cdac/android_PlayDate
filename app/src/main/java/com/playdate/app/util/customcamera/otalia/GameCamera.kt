@@ -24,6 +24,7 @@ import com.otaliastudios.cameraview.filter.Filters
 import com.otaliastudios.cameraview.frame.Frame
 import com.otaliastudios.cameraview.frame.FrameProcessor
 import com.playdate.app.R
+import com.playdate.app.ui.social.upload_media.PostMediaActivity
 import java.io.ByteArrayOutputStream
 import java.io.File
 
@@ -244,7 +245,7 @@ class GameCamera : AppCompatActivity(), View.OnClickListener, OptionView.Callbac
 
         override fun onPictureTaken(result: PictureResult) {
             super.onPictureTaken(result)
-            val intent = Intent(this@GameCamera, VideoPreviewActivity::class.java)
+            val intent = Intent(this@GameCamera, PostMediaActivity::class.java)
             var mIntent=getIntent()
             if(mIntent.getBooleanExtra("fromProfile",false)){
                 intent.putExtra("fromProfile",true)

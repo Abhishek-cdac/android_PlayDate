@@ -87,6 +87,7 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
 
         iv_edit_bio = view.findViewById(R.id.iv_edit_bio);
         txt_bio = view.findViewById(R.id.txt_bio_detail);
+
         iv_reset_pass = view.findViewById(R.id.iv_reset_pass);
         iv_change_bio_video = view.findViewById(R.id.iv_change_bio_video);
         profile_image = view.findViewById(R.id.profile_image);
