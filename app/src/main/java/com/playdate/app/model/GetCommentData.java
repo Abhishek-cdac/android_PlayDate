@@ -5,6 +5,24 @@ package com.playdate.app.model;
 import com.google.gson.annotations.Expose;
 
 public class GetCommentData {
+    public boolean isSelected = false;
+    public  boolean isDeleted = false;
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
+    }
 
     @Expose
     private Comments comments;
