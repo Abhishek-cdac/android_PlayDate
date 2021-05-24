@@ -89,6 +89,8 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     ImageView iv_coupons;
     ImageView iv_date;
 
+
+
     //    SwipeRefreshLayout mSwipeRefreshLayout;
     LinearLayout ll_mainMenu, ll_her;
     LinearLayout ll_friends;
@@ -542,12 +544,15 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             ll_camera_option.setVisibility(View.VISIBLE);
             ll_profile_drop_menu.setVisibility(View.GONE);
             iv_play_date_logo.setVisibility(View.VISIBLE);
+
         } else if (id == R.id.iv_coupons) {
             iv_love.setImageResource(R.drawable.love);
             iv_love.setBackground(getDrawable((R.color.transparent)));
-            iv_coupons.setImageResource(R.drawable.my_coupon);
+            iv_coupons.setImageResource(R.drawable.badgepink);
             iv_coupons.setBackground(getDrawable(R.drawable.rectangle_back));
             ReplaceFrag(new FragCouponStore());
+         
+
             ll_friends.setVisibility(View.VISIBLE);
             ll_mainMenu.setVisibility(View.VISIBLE);
             ll_her.setVisibility(View.VISIBLE);
