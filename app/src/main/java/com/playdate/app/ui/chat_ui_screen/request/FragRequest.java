@@ -1,4 +1,4 @@
-package com.playdate.app.ui.chat.request;
+package com.playdate.app.ui.chat_ui_screen.request;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
 import com.playdate.app.model.Inbox;
-import com.playdate.app.ui.dashboard.adapter.SuggestedFriendAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

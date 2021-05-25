@@ -1,4 +1,4 @@
-package com.playdate.app.ui.chat.request;
+package com.playdate.app.ui.chat_ui_screen.request;
 
 import android.os.Bundle;
 
@@ -12,7 +12,6 @@ import android.widget.RelativeLayout;
 
 import com.google.android.material.tabs.TabLayout;
 import com.playdate.app.R;
-import com.playdate.app.ui.dashboard.adapter.MoreSuggestionPagerAdapter;
 import com.playdate.app.util.common.CommonClass;
 
 public class RequestChatFragment extends Fragment {

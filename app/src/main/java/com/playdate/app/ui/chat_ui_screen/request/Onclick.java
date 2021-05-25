@@ -1,4 +1,4 @@
-package com.playdate.app.ui.chat.request;
+package com.playdate.app.ui.chat_ui_screen.request;
 
 import android.view.View;
 

@@ -257,6 +257,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     assert response.body() != null;
                     if (response.body().getStatus() == 1) {
 
+
                         checkForTheLastActivity(response.body());
 
                     } else {

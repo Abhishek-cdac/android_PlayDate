@@ -131,7 +131,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.coupons.ActivityCoupons" />
-        <activity android:name=".ui.chat.ChatActivity" />
+        <activity android:name=".ui.chat_ui_screen.ChatActivity" />
         <activity
             android:name=".util.customcamera.otalia.VideoPreviewActivity"
             android:screenOrientation="portrait" />

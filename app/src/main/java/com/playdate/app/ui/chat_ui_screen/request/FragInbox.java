@@ -1,25 +1,38 @@
-package com.playdate.app.ui.chat.request;
+package com.playdate.app.ui.chat_ui_screen.request;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.gson.JsonObject;
 import com.playdate.app.R;
+import com.playdate.app.model.ChattingGetChats;
 import com.playdate.app.model.Inbox;
-import com.playdate.app.ui.chat.ChatActivity;
+import com.playdate.app.ui.chat_ui_screen.ChatActivity;
+import com.playdate.app.ui.chat_ui_screen.ChattingAdapter;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FragInbox extends Fragment {
     InboxAdapter inboxAdapter;
     private List<Inbox> inboxList = new ArrayList<>();
+    ArrayList<ChattingGetChats> arrayList = new ArrayList<>();
     RecyclerView recyclerView;
     Onclick itemClick;
 
@@ -48,12 +61,16 @@ public class FragInbox extends Fragment {
 
             }
         };
-        setAdapter();
+        try {
+            setAdapter();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         return view;
     }
 
-    private void setAdapter() {
+    private void setAdapter() throws JSONException {
 
         inboxAdapter = new InboxAdapter(inboxList, itemClick);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
@@ -61,7 +78,55 @@ public class FragInbox extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(inboxAdapter);
         prepareInboxData();
+//        callApiForChats();
     }
+
+
+
+
+//    private void callApiForChats() throws JSONException {
+//        try {
+//            JSONObject object1 = new JSONObject(loadJSONFromAssets());
+//            JSONArray m_jArry = object1.getJSONArray("chats");
+//            for (int i = 0; i < m_jArry.length(); i++) {
+//                JSONObject jsonObject = m_jArry.getJSONObject(i);
+//
+//                String id = jsonObject.getString("id");
+//                String first_name = jsonObject.getString("name");
+//
+//                ChattingGetChats getChats = new ChattingGetChats();
+//                getChats.setId(id);
+//                getChats.setName(first_name);
+//                arrayList.add(getChats);
+//            }
+//
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+
+//        inboxAdapter = new ChattingAdapter(arrayList, itemClick);
+//        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+//        recyclerView.setLayoutManager(mLayoutManager);
+//        recyclerView.setItemAnimator(new DefaultItemAnimator());
+//        recyclerView.setAdapter(inboxAdapter);
+//    }
+
+    private String loadJSONFromAssets() {
+        String json = null;
+        try {
+            InputStream is = getActivity().getAssets().open("chats.json");
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return json;
+    }
+
 
     private void prepareInboxData() {
 

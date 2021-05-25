@@ -1,4 +1,4 @@
-package com.playdate.app.ui.chat;
+package com.playdate.app.ui.chat_ui_screen;
 
 import android.Manifest;
 import android.content.Intent;
@@ -22,8 +22,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
-import com.playdate.app.ui.anonymous_question.CommentBottomSheet;
-import com.playdate.app.ui.dashboard.DashboardActivity;
 
 import java.io.IOException;
 
@@ -101,13 +99,13 @@ public class ChatActivity extends AppCompatActivity {
         iv_mic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                String[] PERMISSIONS = {
-//                        RECORD_AUDIO,WRITE_EXTERNAL_STORAGE
-//                };
-//                ActivityCompat.requestPermissions(ChatActivity.this,
-//                        PERMISSIONS,
-//                        ALL_PERMISSIONS_RESULT);
-            // openRecorder();
+                String[] PERMISSIONS = {
+                        RECORD_AUDIO,WRITE_EXTERNAL_STORAGE
+                };
+                ActivityCompat.requestPermissions(ChatActivity.this,
+                        PERMISSIONS,
+                        ALL_PERMISSIONS_RESULT);
+             openRecorder();
 
             }
         });

@@ -33,7 +33,7 @@ import com.playdate.app.model.FriendsListModel;
 import com.playdate.app.model.MatchListUser;
 import com.playdate.app.ui.anonymous_question.AnonymousQuestionActivity;
 import com.playdate.app.ui.card_swipe.FragCardSwipe;
-import com.playdate.app.ui.chat.request.RequestChatFragment;
+import com.playdate.app.ui.chat_ui_screen.request.RequestChatFragment;
 import com.playdate.app.ui.coupons.FragCouponStore;
 import com.playdate.app.ui.dashboard.adapter.FriendAdapter;
 import com.playdate.app.ui.dashboard.fragments.FragLanding;
@@ -88,7 +88,6 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     ImageView iv_dashboard_notification;
     ImageView iv_coupons;
     ImageView iv_date;
-
 
 
     //    SwipeRefreshLayout mSwipeRefreshLayout;
@@ -395,6 +394,8 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             txt_social.setTextColor(getResources().getColor(android.R.color.darker_gray));
             txt_chat.setBackground(getResources().getDrawable(R.drawable.menu_button));
             txt_chat.setTextColor(getResources().getColor(R.color.white));
+            iv_love.setBackground(getDrawable((R.color.transparent)));
+            iv_coupons.setImageResource(R.drawable.badge);
             ReplaceFrag(new RequestChatFragment());
 //                Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
 //                startActivity(intent);
@@ -435,6 +436,8 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             iv_love.setImageResource(R.drawable.love);
             iv_profile_sett.setBackground(getDrawable(R.drawable.rectangle_back));
             iv_profile_sett.setImageResource(R.drawable.tech_support_red);
+            iv_love.setBackground(getDrawable((R.color.transparent)));
+            iv_coupons.setImageResource(R.drawable.badge);
             ReplaceFrag(new FragMyProfileDetails());
 
         } else if (id == R.id.ll_love_bottom) {
@@ -449,6 +452,8 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             iv_profile_sett.setImageResource(R.drawable.tech_support);
             iv_love.setBackground(getDrawable(R.drawable.rectangle_back));
             iv_love.setImageResource(R.drawable.love_high);
+            iv_love.setBackground(getDrawable((R.color.transparent)));
+            iv_coupons.setImageResource(R.drawable.badge);
             checkFirstFrag();
             Fragment frag;
             if (!checkFirstFrag()) {
@@ -551,7 +556,6 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             iv_coupons.setImageResource(R.drawable.badgepink);
             iv_coupons.setBackground(getDrawable(R.drawable.rectangle_back));
             ReplaceFrag(new FragCouponStore());
-         
 
             ll_friends.setVisibility(View.VISIBLE);
             ll_mainMenu.setVisibility(View.VISIBLE);

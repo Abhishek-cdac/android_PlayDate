@@ -1,11 +1,10 @@
-package com.playdate.app.ui.chat;
+package com.playdate.app.ui.chat_ui_screen;
 
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
