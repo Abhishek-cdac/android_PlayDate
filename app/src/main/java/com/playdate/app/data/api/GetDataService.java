@@ -163,5 +163,9 @@ public interface GetDataService {
     @POST("user/delete-post-comment")
     Call<GetCommentModel> deletePostComment(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
+    @FormUrlEncoded
+    @POST("user/reported-post-comment")
+    Call<GetCommentModel> reportPostComment(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
 
 }

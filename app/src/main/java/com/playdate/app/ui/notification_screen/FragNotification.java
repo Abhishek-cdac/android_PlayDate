@@ -76,13 +76,14 @@ public class FragNotification extends Fragment {
             public void onItemClicks(View v, int adapterPosition, int i, String notifiationId, String userId) {
                 if (i == 22) {
                     callUpdateNotificationStatusAPI(notifiationId, userId, "read");
-
-                    Log.e("read", "read");
                 } else if (i == 23) {
                     callUpdateNotificationStatusAPI(notifiationId, userId, "delete");
-                    Log.e("read", "read");
-
                 }
+            }
+
+            @Override
+            public void onItemClicks(View v, int absoluteAdapterPosition, int i, String commentId, String postId, String userId) {
+
             }
         };
         callGetNotificationAPI();

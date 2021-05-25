@@ -50,6 +50,11 @@ public class FragInbox extends Fragment {
             public void onItemClicks(View v, int adapterPosition, int i, String notifiationId, String userId) {
 
             }
+
+            @Override
+            public void onItemClicks(View v, int absoluteAdapterPosition, int i, String commentId, String postId, String userId) {
+
+            }
         };
         setAdapter();
 
