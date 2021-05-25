@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,49 +8,50 @@
     android:orientation="vertical">
 
 
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_photos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_margin="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_photos"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_10sdp"
+        app:layout_constraintTop_toTopOf="parent">
 
-            android:layout_marginTop="@dimen/_15sdp">
-
-        </androidx.recyclerview.widget.RecyclerView>
+    </androidx.recyclerview.widget.RecyclerView>
 
 
-        <com.allattentionhere.autoplayvideos.AAH_CustomRecyclerView
-            android:id="@+id/recycler_view_feed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fadingEdge="none"
-            android:overScrollMode="never"
-            android:nestedScrollingEnabled="false"
-            tools:ignore="MissingConstraints" />
+    <com.allattentionhere.autoplayvideos.AAH_CustomRecyclerView
+        android:id="@+id/recycler_view_feed"
+        android:layout_width="match_parent"
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:visibility="gone"
-            android:padding="@dimen/_15sdp"
-            android:id="@+id/txt_no_media"
-            android:textColor="@color/black"
-            android:text="No media found"
-            android:textSize="@dimen/_10sdp"
-            android:textStyle="bold">
+        android:layout_height="wrap_content"
+        android:fadingEdge="none"
+        android:overScrollMode="never"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
 
 
-        </TextView>
+    <TextView
+        android:id="@+id/txt_no_media"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="@dimen/_15sdp"
+        android:text="No media found"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_10sdp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
 
-    </LinearLayout>
+    </TextView>
 
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -58,6 +58,7 @@ public class FragSocialFeed extends Fragment {
     public void onStop() {
         try {
             recycler_view_feed.stopVideos();
+//            Toast.makeText(getActivity(), "Video Stopped", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -68,7 +69,7 @@ public class FragSocialFeed extends Fragment {
     private void callAPI() {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("limit", "50");// format 1990-08-12
+        hashMap.put("limit", "100");// format 1990-08-12
         hashMap.put("pageNo", "1");// format 1990-08-12
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
         pd.show();
@@ -86,8 +87,6 @@ public class FragSocialFeed extends Fragment {
                         lst = new ArrayList<>();
                     }
                     SocialFeedAdapter adapter = new SocialFeedAdapter(getActivity(), lst);
-
-
                     LinearLayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
                     recycler_view_feed.setLayoutManager(manager);
                     recycler_view_feed.setItemAnimator(new DefaultItemAnimator());

@@ -255,23 +255,23 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            if (lst.get(position).getIsSaved() == 1) {
+            if (lst.get(position).getIsGallerySave() == 1) {
                 userViewHolder.savePost.setImageResource(R.drawable.ic_icons8_bookmark);
             } else {
                 userViewHolder.savePost.setImageResource(R.drawable.ic_icons8_bookmark_border);
             }
 
             userViewHolder.savePost.setOnClickListener(view -> {
-                if (lst.get(position).getIsSaved() == 1) {
-                    lst.get(position).setIsSaved(0);
+                if (lst.get(position).getIsGallerySave() == 1) {
+                    lst.get(position).setIsGallerySave(0);
                     userViewHolder.savePost.setImageResource(R.drawable.ic_icons8_bookmark_border);
                     notifyDataSetChanged();
-                    callSavePostAPI(lst.get(position).getPostId(), lst.get(position).getIsSaved());
-                } else if (lst.get(position).getIsSaved() == 0) {
+                    callSavePostAPI(lst.get(position).getPostId(), lst.get(position).getIsGallerySave());
+                } else if (lst.get(position).getIsGallerySave() == 0) {
                     userViewHolder.savePost.setImageResource(R.drawable.ic_icons8_bookmark);
-                    lst.get(position).setIsSaved(1);
+                    lst.get(position).setIsGallerySave(1);
                     notifyDataSetChanged();
-                    callSavePostAPI(lst.get(position).getPostId(), lst.get(position).getIsSaved());
+                    callSavePostAPI(lst.get(position).getPostId(), lst.get(position).getIsGallerySave());
                 }
             });
 
@@ -368,23 +368,23 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            if (lst.get(position).getIsSaved() == 1) {
+            if (lst.get(position).getIsGallerySave() == 1) {
                 videoHolder.savePost.setImageResource(R.drawable.ic_icons8_bookmark);
             } else {
                 videoHolder.savePost.setImageResource(R.drawable.ic_icons8_bookmark_border);
             }
 
             videoHolder.savePost.setOnClickListener(view -> {
-                if (lst.get(position).getIsSaved() == 1) {
-                    lst.get(position).setIsSaved(0);
+                if (lst.get(position).getIsGallerySave() == 1) {
+                    lst.get(position).setIsGallerySave(0);
                     videoHolder.savePost.setImageResource(R.drawable.ic_icons8_bookmark_border);
                     notifyDataSetChanged();
-                    callSavePostAPI(lst.get(position).getPostId(), lst.get(position).getIsSaved());
-                } else if (lst.get(position).getIsSaved() == 0) {
+                    callSavePostAPI(lst.get(position).getPostId(), lst.get(position).getIsGallerySave());
+                } else if (lst.get(position).getIsGallerySave() == 0) {
                     videoHolder.savePost.setImageResource(R.drawable.ic_icons8_bookmark);
-                    lst.get(position).setIsSaved(1);
+                    lst.get(position).setIsGallerySave(1);
                     notifyDataSetChanged();
-                    callSavePostAPI(lst.get(position).getPostId(), lst.get(position).getIsSaved());
+                    callSavePostAPI(lst.get(position).getPostId(), lst.get(position).getIsGallerySave());
                 }
             });
 
@@ -496,7 +496,6 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
         ImageView iv_post_image, iv_more_options;
         CardView card_image;
         TextView name_friend;
-        //        EditText et_comment;
         TextView et_comment;
         TextView txt_heart_count;
         ImageView savePost;
@@ -534,7 +533,11 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
             });
 
             iv_msg.setOnClickListener(v -> v.getContext().startActivity(new Intent(v.getContext(), AnonymousQuestionActivity.class)));
-            et_comment.setOnClickListener(v -> v.getContext().startActivity(new Intent(v.getContext(), AnonymousQuestionActivity.class)));
+            et_comment.setOnClickListener(v -> {
+                Intent mIntent=new Intent(v.getContext(), AnonymousQuestionActivity.class);
+                mIntent.putExtra("post_id",lst.get(getAdapterPosition()).getPostId());
+                v.getContext().startActivity(mIntent);
+            });
             iv_mute_unmute.setOnClickListener(new View.OnClickListener() {
 
                 @Override
@@ -599,7 +602,6 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
         ImageView iv_post_image, iv_more_options;
         CardView card_image;
         TextView name_friend;
-        //        EditText et_comment;
         TextView et_comment;
         TextView txt_heart_count;
         ImageView savePost;
@@ -631,7 +633,11 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
 
 //            iv_msg.setOnClickListener(v ->
 //                    v.getContext().startActivity(new Intent(v.getContext(), AnonymousQuestionActivity.class)));
-            et_comment.setOnClickListener(v -> v.getContext().startActivity(new Intent(v.getContext(), AnonymousQuestionActivity.class)));
+            et_comment.setOnClickListener(v -> {
+                Intent mIntent=new Intent(v.getContext(), AnonymousQuestionActivity.class);
+                mIntent.putExtra("post_id",lst.get(getAdapterPosition()).getPostId());
+                v.getContext().startActivity(mIntent);
+            });
 
         }
     }
