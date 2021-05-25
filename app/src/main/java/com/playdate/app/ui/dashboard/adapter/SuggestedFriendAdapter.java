@@ -17,7 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.playdate.app.R;
 import com.playdate.app.model.FriendRequest;
 import com.playdate.app.model.GetUserSuggestionData;
-import com.playdate.app.ui.chat_ui_screen.request.Onclick;
+import com.playdate.app.ui.chat.request.FragRequest;
+import com.playdate.app.ui.chat.request.Onclick;
+import com.playdate.app.ui.dashboard.fragments.FragSearchUser;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -32,11 +34,12 @@ public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriend
 
     Onclick itemClick;
 
-
-    public SuggestedFriendAdapter(ArrayList<GetUserSuggestionData> lst_getUserSuggestions, Onclick itemClick) {
+    FragSearchUser userFrag;
+    public SuggestedFriendAdapter(ArrayList<GetUserSuggestionData> lst_getUserSuggestions, Onclick itemClick, FragSearchUser userFrag) {
         this.suggestions_list = lst_getUserSuggestions;
         this.suggestionsListFiltered = lst_getUserSuggestions;
         this.itemClick = itemClick;
+        this.userFrag = userFrag;
 
     }
 
@@ -56,6 +59,19 @@ public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriend
         if (suggestionsListFiltered.get(position).getProfilePicPath() == null) {
             holder.image.setBackgroundColor(mcontext.getResources().getColor(R.color.color_grey_light));
         }
+        holder.name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OnUserClick(position);
+            }
+        });
+        holder.image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OnUserClick(position);
+            }
+        });
+
         Picasso.get().load(suggestionsListFiltered.get(position).getProfilePicPath()).placeholder(R.drawable.ic_baseline_person_24)
                 .fit()
                 .placeholder(R.drawable.profile)
@@ -84,6 +100,17 @@ public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriend
 
     }
 
+    private void OnUserClick(int pos) {
+//       boolean isFriend=false;
+//        if(suggestionsListFiltered.get(pos).getFriendRequest().get(0).getStatus().toLowerCase().trim().equals("pending")){
+//
+//        }else{
+//
+//        }
+    userFrag.OnUserProfileSelected(false,suggestions_list.get(pos).getId());
+
+    }
+
     @Override
     public int getItemCount() {
         Log.e("suggestionsListFiltered", "" + suggestionsListFiltered.size());
@@ -105,7 +132,7 @@ public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriend
                         Log.e("rowrow", "" + row.getUsername());
                         // name match condition. this might differ depending on your requirement
                         // here we are looking for name or phone number match
-                        if(row.getUsername()!=null){
+                        if (row.getUsername() != null) {
                             if (row.getUsername().toLowerCase().contains(charString.toLowerCase()) || row.getFullName().contains(charSequence)) {
                                 filteredList.add(row);
                             }
@@ -148,7 +175,7 @@ public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriend
             request.setOnClickListener(v -> {
                 int position = getAdapterPosition();
                 String userId = suggestions_list.get(position).getId();
-                Log.e("request_sent_userID",""+userId);
+                Log.e("request_sent_userID", "" + userId);
 
                 if (null != suggestions_list.get(position).getFriendRequest()) {
                     if (suggestions_list.get(position).getFriendRequest().size() == 0) {

@@ -19,6 +19,8 @@ import com.playdate.app.ui.date.fragments.FragLocationConfirmation;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 
 public class FragLocationTracing extends Fragment {
+    public FragLocationTracing() {
+    }
 
     SpinKitView spin_kit_location_trace;
     SpinKitView spin_kit_dots1;

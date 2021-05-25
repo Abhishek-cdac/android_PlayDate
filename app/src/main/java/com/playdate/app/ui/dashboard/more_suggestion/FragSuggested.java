@@ -43,6 +43,9 @@ public class FragSuggested extends Fragment {
     private CommonClass clsCommon;
     private Onclick itemClick;
 
+    public FragSuggested() {
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -143,7 +146,7 @@ public class FragSuggested extends Fragment {
                         }
                         RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
                         recyclerView.setLayoutManager(manager);
-                        SuggestedFriendAdapter adapter = new SuggestedFriendAdapter(lst_getUserSuggestions, itemClick);
+                        SuggestedFriendAdapter adapter = new SuggestedFriendAdapter(lst_getUserSuggestions, itemClick,null);
                         recyclerView.setAdapter(adapter);
                     }
                 } else {

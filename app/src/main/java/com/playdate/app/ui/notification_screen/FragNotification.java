@@ -36,6 +36,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FragNotification extends Fragment {
+    public FragNotification() {
+    }
+
     RecyclerView rv_notification;
     CommonClass clsCommon;
     List<NotificationData> lst_notifications;

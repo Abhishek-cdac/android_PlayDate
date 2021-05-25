@@ -36,6 +36,9 @@ public class FragMyProfilePersonal extends Fragment implements View.OnClickListe
     TextView interestin;
     CircleImageView profile_image;
 
+    public FragMyProfilePersonal() {
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

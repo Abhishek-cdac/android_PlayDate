@@ -30,8 +30,6 @@ public class SessionPref {
     }
 
 
-
-
     public void saveStringKeyVal(String key, String val) {
         editor.putString(key, val);
         editor.commit();
@@ -79,11 +77,12 @@ public class SessionPref {
     public static String LoginUserinterested = "interested";
     public static String LoginUserinterestedIn = "interestedIn";
     public static String LoginUserrestaurants = "restaurants";
- public static String LoginUserSourceType = "sourceType";
- public static String LoginUsersourceSocialId = "sourceSocialId";
- public static String LoginUserinviteCode = "inviteCode";
- public static String LoginUserpaymentMode = "paymentMode";
- public static String LoginUserSuggestionShown = "LoginUserSuggestionShown";
+    public static String LoginUserInterestsIDS = "LoginUserInterestsIDS";
+    public static String LoginUserSourceType = "sourceType";
+    public static String LoginUsersourceSocialId = "sourceSocialId";
+    public static String LoginUserinviteCode = "inviteCode";
+    public static String LoginUserpaymentMode = "paymentMode";
+    public static String LoginUserSuggestionShown = "LoginUserSuggestionShown";
 
 
     public void saveLoginUser(String id,
@@ -103,7 +102,7 @@ public class SessionPref {
                               String interested,
                               String interestedIn,
                               String restaurants,
-                               String sourceType,
+                              String sourceType,
                               String sourceSocialId,
                               String inviteCode,
                               String paymentMode

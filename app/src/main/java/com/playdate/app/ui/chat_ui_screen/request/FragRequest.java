@@ -24,6 +24,9 @@ public class FragRequest  extends Fragment {
     RecyclerView recyclerView;
     Onclick itemClick;
 
+    public FragRequest() {
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

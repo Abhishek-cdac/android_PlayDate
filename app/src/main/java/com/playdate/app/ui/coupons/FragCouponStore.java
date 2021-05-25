@@ -16,6 +16,9 @@ import com.playdate.app.ui.coupons.adapters.CouponStoreAdapter;
 import com.playdate.app.ui.coupons.adapters.MyCouponAdapter;
 
 public class FragCouponStore extends Fragment {
+    public FragCouponStore() {
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

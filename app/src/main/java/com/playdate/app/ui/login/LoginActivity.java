@@ -45,6 +45,7 @@ import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.databinding.ActivityLoginBinding;
+import com.playdate.app.model.Interest;
 import com.playdate.app.model.LoginResponse;
 import com.playdate.app.model.LoginUser;
 import com.playdate.app.model.LoginUserDetails;
@@ -70,6 +71,7 @@ import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -80,6 +82,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.playdate.app.data.api.RetrofitClientInstance.DEVICE_TYPE;
+import static com.playdate.app.util.session.SessionPref.LoginUserInterestsIDS;
 import static com.playdate.app.util.session.SessionPref.LoginVerified;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
@@ -302,7 +305,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     user.getProfileVideoPath(),
                     user.getRelationship(),
                     user.getPersonalBio(),
-                    user.getInterested().toString().replace("[", "").replace("]", ""),
+                    getData(user.getInterested()),
                     user.getInterestedIn(),
                     "",
                     user.getSourceType(),
@@ -349,6 +352,24 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             e.printStackTrace();
         }
 
+    }
+
+    private String getData(ArrayList<Interest> interested) {
+        String interest = "";
+        String interestIDs = "";
+        for (int i = 0; i < interested.size(); i++) {
+            if (interest.isEmpty()) {
+                interest = interested.get(i).getName();
+                interestIDs = interested.get(i).get_id();
+            } else {
+                interest = interest + "," + interested.get(i).getName();
+                interestIDs = interestIDs + "," + interested.get(i).get_id();
+            }
+        }
+
+        SessionPref.getInstance(this).saveStringKeyVal(LoginUserInterestsIDS, interestIDs);
+
+        return interest;
     }
 
 

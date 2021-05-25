@@ -43,7 +43,8 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/_6sdp"
             android:text="2h"
-            android:textColor="@color/black" />
+            android:visibility="visible"
+            android:textColor="@color/color_grey" />
 
         <TextView
             android:id="@+id/comment_like"
@@ -51,15 +52,17 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/_6sdp"
             android:text="@string/Like"
-            android:textColor="@color/black" />
+            android:visibility="visible"
+            android:textColor="@color/color_grey" />
 
         <TextView
             android:id="@+id/comment_reply"
+            android:visibility="visible"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/_8sdp"
             android:text="@string/reply"
-            android:textColor="@android:color/black" />
+            android:textColor="@color/color_grey" />
 
         <ImageView
             android:id="@+id/dustbin"

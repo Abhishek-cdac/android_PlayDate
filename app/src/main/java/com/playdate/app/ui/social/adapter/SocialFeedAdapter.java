@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.allattentionhere.autoplayvideos.AAH_CustomViewHolder;
+import com.allattentionhere.autoplayvideos.AAH_VideoImage;
 import com.allattentionhere.autoplayvideos.AAH_VideosAdapter;
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
@@ -246,7 +247,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                 }
             });
             try {
-                userViewHolder.txt_heart_count.setText(lst.get(position).getLikes() + " Hearts");
+                userViewHolder.txt_heart_count.setText(lst.get(position).getLikes() + " Loves");
                 if (null != lst.get(position).getTag()) {
                     String s = "<b>" + lst.get(position).getLstpostby().get(0).getUsername() + "</b> " + lst.get(position).getTag();
                     userViewHolder.txt_chat.setText(Html.fromHtml(s));
@@ -278,7 +279,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(v.getContext(), AnonymousQuestionActivity.class);
-                    i.putExtra("post_id",lst.get(position).getPostId());
+                    i.putExtra("post_id", lst.get(position).getPostId());
                     v.getContext().startActivity(i);
                 }
             });
@@ -320,10 +321,14 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(v.getContext(), AnonymousQuestionActivity.class);
-                    i.putExtra("post_id",lst.get(position).getPostId());
+                    i.putExtra("post_id", lst.get(position).getPostId());
                     v.getContext().startActivity(i);
                 }
             });
+
+            Picasso.get().load(lst.get(position).getPostMedia().get(0).getMediaThumbName())
+                    .into(videoHolder.videoImg.getImageView());
+
 
             Picasso.get().load(lst.get(position).getLstpostby().get(0).getProfilePicPath())
                     .placeholder(R.drawable.cupertino_activity_indicator)
@@ -356,7 +361,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                 }
             });
             try {
-                videoHolder.txt_heart_count.setText(lst.get(position).getLikes() + " Hearts");
+                videoHolder.txt_heart_count.setText(lst.get(position).getLikes() + " Loves");
                 if (null != lst.get(position).getTag()) {
                     String s = "<b>" + lst.get(position).getLstpostby().get(0).getUsername() + "</b> " + lst.get(position).getTag();
                     videoHolder.txt_chat.setText(Html.fromHtml(s));
@@ -407,8 +412,6 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
 
 
         }
-
-
 
 
 //        else if (holder.getItemViewType() == FragSocialFeed.RESTAURANT) {
@@ -501,12 +504,15 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
         ImageView iv_mute_unmute;
         ImageView img_playback;
         TextView txt_chat;
-        boolean isMuted=false;
-        boolean isPlaying=true;
+        AAH_VideoImage videoImg;
+        boolean isMuted = false;
+        boolean isPlaying = true;
+
         public ViewHolderUserVideo(@NonNull View itemView) {
             super(itemView);
             savePost = itemView.findViewById(R.id.save);
             iv_mute_unmute = itemView.findViewById(R.id.iv_mute_unmute);
+            videoImg = itemView.findViewById(R.id.videoImg);
             img_playback = itemView.findViewById(R.id.img_playback);
             iv_heart_red = itemView.findViewById(R.id.iv_heart_red);
             iv_profile = itemView.findViewById(R.id.iv_profile);
@@ -535,11 +541,11 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                 @Override
                 public void onClick(View v) {
                     if (!isMuted) {
-                        isMuted=true;
+                        isMuted = true;
                         muteVideo();
                         iv_mute_unmute.setImageResource(R.drawable.ic_mute);
                     } else {
-                        isMuted=false;
+                        isMuted = false;
                         unmuteVideo();
                         iv_mute_unmute.setImageResource(R.drawable.ic_unmute);
                     }
@@ -548,13 +554,13 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
             img_playback.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(isPlaying){
-                        isPlaying=false;
+                    if (isPlaying) {
+                        isPlaying = false;
                         pauseVideo();
                         img_playback.setImageResource(R.drawable.play_circle);
 
-                    }else{
-                        isPlaying=true;
+                    } else {
+                        isPlaying = true;
                         playVideo();
                         img_playback.setImageResource(R.drawable.ic_pause);
                     }
@@ -620,7 +626,6 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                     showBottomSheet(getAdapterPosition());
                 }
             });
-
 
 
 //            iv_msg.setOnClickListener(v ->

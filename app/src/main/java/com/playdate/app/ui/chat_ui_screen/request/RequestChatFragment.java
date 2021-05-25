@@ -16,6 +16,8 @@ import com.playdate.app.util.common.CommonClass;
 
 public class RequestChatFragment extends Fragment {
 
+    public RequestChatFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

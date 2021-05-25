@@ -2,6 +2,15 @@ package com.playdate.app.ui.social.model;
 
 public class PostMedia {
     private String mediaFullPath;
+    private String mediaThumbName;
+
+    public String getMediaThumbName() {
+        return mediaThumbName;
+    }
+
+    public void setMediaThumbName(String mediaThumbName) {
+        this.mediaThumbName = mediaThumbName;
+    }
 
     private String mediaId;
 

@@ -17,6 +17,9 @@ import com.playdate.app.ui.date.games.FragTimesUp2;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 
 public class FragRestaurantSelection extends Fragment implements restaurantSelecteListener {
+    public FragRestaurantSelection() {
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

@@ -14,6 +14,9 @@ import androidx.fragment.app.Fragment;
 import com.playdate.app.R;
 
 public class GetStartedFragment3 extends Fragment {
+    public GetStartedFragment3() {
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
