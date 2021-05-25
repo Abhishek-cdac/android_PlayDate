@@ -1,32 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:id="@+id/rl_page"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/ll_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
-            app:tabGravity="fill"
+            android:foregroundGravity="center"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-            app:tabIndicatorColor="@color/color_pink"
-            app:tabIndicatorGravity="bottom"
-            app:tabSelectedTextColor="@color/black"
-            app:tabTextAppearance="@style/CustomTabs"
-            app:tabTextColor="@color/blue_grey" />
+            <TextView
+                android:id="@+id/txt_header1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="@dimen/_5sdp"
+                android:text="My Feed"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_13sdp"
+                android:textStyle="bold">
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/viewpager"
+            </TextView>
+
+            <TextView
+                android:id="@+id/txt_header2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="@dimen/_5sdp"
+                android:text="Liked Media"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_13sdp">
+
+            </TextView>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_btn_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll_btn"
+            android:foregroundGravity="center"
+            android:gravity="center"
+
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/view_1"
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:layout_gravity="center|top"
+                android:layout_weight="4.5"
+                android:background="@color/color_pink">
+
+            </View>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:layout_gravity="center|top"
+                android:layout_weight="1"
+                android:background="@color/white">
+
+            </View>
+
+            <View
+                android:id="@+id/view_2"
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:layout_gravity="center|top"
+                android:layout_weight="4.5"
+                android:background="@color/color_grey">
+
+            </View>
+
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_myPhotos"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/tab" />
+            android:layout_below="@+id/ll_btn_indicator"
+            android:layout_alignParentBottom="true">
+
+        </FrameLayout>
 
     </RelativeLayout>
 

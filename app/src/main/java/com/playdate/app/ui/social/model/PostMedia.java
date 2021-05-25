@@ -13,6 +13,16 @@ public class PostMedia {
     }
 
     private String mediaId;
+    private String mediaType;
+
+
+    public String getMediaType() {
+        return mediaType;
+    }
+
+    public void setMediaType(String mediaType) {
+        this.mediaType = mediaType;
+    }
 
     public String getMediaFullPath() {
         return mediaFullPath;

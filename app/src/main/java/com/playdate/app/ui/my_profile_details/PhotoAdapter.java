@@ -7,12 +7,15 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.playdate.app.ui.chat.request.FragInbox;
 import com.playdate.app.ui.chat.request.FragRequest;
+import com.playdate.app.util.session.SessionPref;
 
 public class PhotoAdapter  extends FragmentStatePagerAdapter {
     int totalTabs;
 
-    public PhotoAdapter(@NonNull FragmentManager fm, int totalTabs) {
+    String UserID;
+    public PhotoAdapter(@NonNull FragmentManager fm, int totalTabs, String UserID) {
         super(fm);
+        this.UserID=UserID;
         this.totalTabs = totalTabs;
     }
 
@@ -21,7 +24,7 @@ public class PhotoAdapter  extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new FragSavedPost();
+                return new FragMyUploadMedia(UserID);
             case 1:
                 return new FragSavedPost();
         }

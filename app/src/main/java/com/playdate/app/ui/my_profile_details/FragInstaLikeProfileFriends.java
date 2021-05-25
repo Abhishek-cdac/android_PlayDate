@@ -14,6 +14,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
@@ -34,6 +36,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -81,6 +84,17 @@ public class FragInstaLikeProfileFriends extends Fragment implements onPhotoClic
 //        recycler_photos = view.findViewById(R.id.recycler_photos);
         txt_bio = view.findViewById(R.id.txt_bio);
         txt_login_user = view.findViewById(R.id.txt_login_user);
+
+        try {
+            FragmentManager fm= getChildFragmentManager();
+            FragmentTransaction ft=fm.beginTransaction();
+            ft.add(R.id.fl_fragment,new FragMyUploadMedia(LoginId));
+            ft.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
         callAPI(LoginId);
         if (isFriend) {
             iv_send_request.setImageResource(R.drawable.sent_request_sel);
@@ -231,15 +245,63 @@ public class FragInstaLikeProfileFriends extends Fragment implements onPhotoClic
         });
     }
 
+    private void callRemoveFriendRequestApi(String toUserID) {
+
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        SessionPref pref = SessionPref.getInstance(getActivity());
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("friendId", toUserID);
+        hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
+
+
+        Call<CommonModel> call = service.removeFriend("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new Callback<CommonModel>() {
+            @Override
+            public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
+//                pd.cancel();
+                if (response.code() == 200) {
+                    assert response.body() != null;
+                    if (response.body().getStatus() == 1) {
+
+//                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", "" + response.body().getMessage(), "Ok");
+                    } else {
+//                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", "" + response.body().getMessage(), "Ok");
+                    }
+                } else {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message").toString(), "Ok");
+                    } catch (Exception e) {
+                        Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CommonModel> call, Throwable t) {
+                t.printStackTrace();
+//                pd.cancel();
+                Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     @Override
     public void onClick(View view) {
         int id = view.getId();
         if (id == R.id.iv_send_request) {
-            iv_send_request.setImageResource(R.drawable.sent_request_sel);
-//            iv_chat.setImageResource(R.drawable.chat_sel);
-            callAddFriendRequestApi(LoginId);
-            InstaPhotosAdapter.isLocked = false;
-            onTypeChange(0);
+            if(isFriend){
+                InstaPhotosAdapter.isLocked = true;
+                iv_send_request.setImageResource(R.drawable.sent_request);
+                iv_chat.setImageResource(R.drawable.chat_black);
+                callRemoveFriendRequestApi(LoginId);
+            }else{
+                iv_send_request.setImageResource(R.drawable.sent_request_sel);
+                callAddFriendRequestApi(LoginId);
+            }
+
+
+//            onTypeChange(0);
         } else if (id == R.id.profile_image) {
             try {
                 if (videopath == null) {

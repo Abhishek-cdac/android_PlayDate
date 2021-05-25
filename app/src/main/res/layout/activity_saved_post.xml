@@ -3,31 +3,54 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/white"
     android:orientation="vertical">
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_photos"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_15sdp">
+        android:orientation="vertical">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_photos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10sdp"
 
-    <com.allattentionhere.autoplayvideos.AAH_CustomRecyclerView
-        android:id="@+id/recycler_view_feed"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fadingEdge="none"
-        android:overScrollMode="never"
-        android:visibility="gone"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" />
+            android:layout_marginTop="@dimen/_15sdp">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+
+        <com.allattentionhere.autoplayvideos.AAH_CustomRecyclerView
+            android:id="@+id/recycler_view_feed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fadingEdge="none"
+            android:overScrollMode="never"
+            android:nestedScrollingEnabled="false"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:visibility="gone"
+            android:padding="@dimen/_15sdp"
+            android:id="@+id/txt_no_media"
+            android:textColor="@color/black"
+            android:text="No media found"
+            android:textSize="@dimen/_10sdp"
+            android:textStyle="bold">
+
+
+        </TextView>
+
+
+    </LinearLayout>
 
 
 </LinearLayout>

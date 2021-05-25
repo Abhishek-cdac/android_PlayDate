@@ -159,9 +159,18 @@ public interface GetDataService {
     @FormUrlEncoded
     @POST("user/get-post-comments")
     Call<GetCommentModel> getPostComment(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
     @FormUrlEncoded
     @POST("user/delete-post-comment")
     Call<GetCommentModel> deletePostComment(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
+    @FormUrlEncoded
+    @POST("user/get-my-post-feed")
+    Call<PostHistory> getMyPostFeed(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
+    @FormUrlEncoded
+    @POST("user/remove-friend")
+    Call<CommonModel> removeFriend(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
 
 }

@@ -181,14 +181,16 @@
         android:textStyle="bold" />
 
 
-    <fragment
-        android:id="@+id/frag_gallery"
-        android:name="com.playdate.app.ui.my_profile_details.FragMyUploadMedia"
+    <FrameLayout
+        android:id="@+id/fl_fragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_5sdp">
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
 
-    </fragment>
+        >
+
+    </FrameLayout>
 
 
 </LinearLayout>

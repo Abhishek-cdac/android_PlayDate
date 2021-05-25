@@ -53,8 +53,15 @@ public class InstaPhotosAdapter extends RecyclerView.Adapter<InstaPhotosAdapter.
             holder.iv_payment.getLayoutParams().width = (int) mContext.getResources().getDimension(R.dimen._30sdp);
             holder.iv_payment.getLayoutParams().height = (int) mContext.getResources().getDimension(R.dimen._30sdp);
         } else {
-            Picasso.get().load(lst.get(position).getPostMedia().get(0).getMediaThumbName())
-                    .into(holder.iv_payment);
+            if(lst.get(position).getPostMedia().get(0).getMediaType().toLowerCase().equals("image")){
+                Picasso.get().load(lst.get(position).getPostMedia().get(0).getMediaFullPath())
+                        .into(holder.iv_payment);
+            }else{
+                holder.iv_play.setVisibility(View.VISIBLE);
+                Picasso.get().load(lst.get(position).getPostMedia().get(0).getMediaThumbName())
+                        .into(holder.iv_payment);
+            }
+
             holder.card_grid.setCardBackgroundColor(mContext.getResources().getColor(R.color.white));
         }
 
@@ -67,12 +74,14 @@ public class InstaPhotosAdapter extends RecyclerView.Adapter<InstaPhotosAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView iv_payment;
+        ImageView iv_play;
         //        ImageView iv_chat;
         CardView card_grid;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             iv_payment = itemView.findViewById(R.id.iv_payment);
+            iv_play = itemView.findViewById(R.id.iv_play);
             card_grid = itemView.findViewById(R.id.card_grid);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
