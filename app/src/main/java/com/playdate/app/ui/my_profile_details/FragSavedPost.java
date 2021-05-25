@@ -27,8 +27,6 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 public class FragSavedPost extends Fragment {
-    public FragSavedPost() {
-    }
 
     RecyclerView recyclerView;
     private List<SavedPostData> savedPostDataList ;

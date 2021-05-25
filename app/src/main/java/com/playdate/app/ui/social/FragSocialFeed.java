@@ -41,7 +41,7 @@ public class FragSocialFeed extends Fragment {
     //    public static final String RESTAURANT = 1;
 //    public static final String ANONYMUSQUESTION = 2;
 //    public static final String ADDS = 3;
-    AAH_CustomRecyclerView recycler_view_feed;
+    private AAH_CustomRecyclerView recycler_view_feed;
 
     @Nullable
     @Override
@@ -93,21 +93,22 @@ public class FragSocialFeed extends Fragment {
                     recycler_view_feed.setItemAnimator(new DefaultItemAnimator());
                     recycler_view_feed.setActivity(getActivity());
                     recycler_view_feed.setCheckForMp4(false);
-                    recycler_view_feed.setDownloadPath(Environment.getExternalStorageDirectory() + "/MyVideo"); // (Environment.getExternalStorageDirectory() + "/Video") by default
-                    recycler_view_feed.setDownloadVideos(true); // false by default
+
+//                    recycler_view_feed.setDownloadPath(Environment.getExternalStorageDirectory() + "/MyVideo"); // (Environment.getExternalStorageDirectory() + "/Video") by default
+//                    recycler_view_feed.setDownloadVideos(true); // false by default
                     //extra - start downloading all videos in background before loading RecyclerView
-                    List<String> urls = null;
-                    try {
-                        urls = new ArrayList<>();
-                        for (PostDetails object : lst) {
-                            if (object.getPostMedia().get(0).getMediaFullPath().toLowerCase().contains(".mp4"))
-                                urls.add(object.getPostMedia().get(0).getMediaFullPath());
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Toast.makeText(getActivity(), ""+e.toString(), Toast.LENGTH_SHORT).show();
-                    }
-                    recycler_view_feed.preDownload(urls);
+//                    List<String> urls = null;
+//                    try {
+//                        urls = new ArrayList<>();
+//                        for (PostDetails object : lst) {
+//                            if (object.getPostMedia().get(0).getMediaFullPath().toLowerCase().contains(".mp4"))
+//                                urls.add(object.getPostMedia().get(0).getMediaFullPath());
+//                        }
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                        Toast.makeText(getActivity(), ""+e.toString(), Toast.LENGTH_SHORT).show();
+//                    }
+//                    recycler_view_feed.preDownload(urls);
                     recycler_view_feed.setVisiblePercent(70);
                     recycler_view_feed.setPlayOnlyFirstVideo(true);
                     recycler_view_feed.setAdapter(adapter);

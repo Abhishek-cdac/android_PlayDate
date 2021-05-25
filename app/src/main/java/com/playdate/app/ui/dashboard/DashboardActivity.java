@@ -92,7 +92,6 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     ImageView iv_date;
 
 
-
     //    SwipeRefreshLayout mSwipeRefreshLayout;
     LinearLayout ll_mainMenu, ll_her;
     LinearLayout ll_friends;
@@ -303,14 +302,34 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     }
 
 
+    Handler handler;
+
+    @Override
+    protected void onDestroy() {
+        if (null != handler) {
+            try {
+                handler.removeCallbacksAndMessages(null);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        super.onDestroy();
+    }
+
     @Override
     public void ReplaceFrag(Fragment fragment) {
         try {
-
             ft = fm.beginTransaction();
+
             ft.replace(R.id.flFragment, fragment, fragment.getClass().getSimpleName());
 //        ft.addToBackStack("tags");
-            ft.commitAllowingStateLoss();
+//            ft.setCustomAnimations(R.anim.slide_in_left,R.anim.slide_out_right);
+
+//            ft.show(fragment);
+//            ft.commitAllowingStateLoss();
+            ft.setTransition(
+                    FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            ft.commit();
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(this, "" + e.toString(), Toast.LENGTH_SHORT).show();
@@ -332,8 +351,17 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
 
     @Override
-    public void loadProfile() {
-        ll_profile_insta.performClick();
+    public void loadProfile(String UserID) {
+        SessionPref pref = SessionPref.getInstance(this);
+        if (pref.getStringVal(SessionPref.LoginUserID).equals(UserID)) {
+            ll_profile_insta.performClick();
+        } else {
+            ll_friends.setVisibility(View.GONE);
+            ll_option_love.setVisibility(View.GONE);
+            ReplaceFragWithStack(new FragInstaLikeProfileFriends(true, UserID));
+        }
+
+
     }
 
 
@@ -457,6 +485,9 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             iv_profile_sett.setBackground(null);
             iv_profile_sett.setImageResource(R.drawable.tech_support);
 
+//            txt_match.setBackground(null);
+//            txt_chat.setBackground(null);
+
 
             checkFirstFrag();
             Fragment frag;
@@ -476,7 +507,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             txt_social.setTextColor(getResources().getColor(R.color.white));
             txt_social.setBackground(getResources().getDrawable(R.drawable.menu_button));
 
-
+            callAPIFriends();
         } else if (id == R.id.iv_coupons) {
             OPTION_CLICK = 1;
             iv_love.setImageResource(R.drawable.love);

@@ -41,7 +41,7 @@ public class DateBaseActivity extends AppCompatActivity implements OnInnerFragme
     }
 
     @Override
-    public void loadProfile() {
+    public void loadProfile(String id) {
 
     }
 }

@@ -187,7 +187,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
 
             userViewHolder.name_friend.setOnClickListener(view -> {
                 OnInnerFragmentClicks ref = (OnInnerFragmentClicks) mContext;
-                ref.loadProfile();
+                ref.loadProfile(lst.get(position).getUserId());
             });
 
             userViewHolder.iv_post_image.setOnClickListener(view -> {
@@ -315,7 +315,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
 
             videoHolder.name_friend.setOnClickListener(view -> {
                 OnInnerFragmentClicks ref = (OnInnerFragmentClicks) mContext;
-                ref.loadProfile();
+                ref.loadProfile(lst.get(position).getUserId());
             });
             videoHolder.iv_msg.setOnClickListener(new View.OnClickListener() {
                 @Override

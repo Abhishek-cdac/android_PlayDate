@@ -2,6 +2,7 @@ package com.playdate.app.ui.my_profile_details;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
+import com.playdate.app.model.CommonModel;
 import com.playdate.app.model.GetProfileDetails;
 import com.playdate.app.model.GetProileDetailData;
 import com.playdate.app.ui.dashboard.OnFriendSelected;
@@ -191,12 +193,51 @@ public class FragInstaLikeProfileFriends extends Fragment implements onPhotoClic
 
     String videopath = "";
 
+    private void callAddFriendRequestApi(String toUserID) {
+
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("toUserID", toUserID);
+        SessionPref pref = SessionPref.getInstance(getActivity());
+
+        Call<CommonModel> call = service.addFriendRequest("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new Callback<CommonModel>() {
+            @Override
+            public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
+//                pd.cancel();
+                if (response.code() == 200) {
+                    assert response.body() != null;
+                    if (response.body().getStatus() == 1) {
+//                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", "" + response.body().getMessage(), "Ok");
+                    } else {
+//                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", "" + response.body().getMessage(), "Ok");
+                    }
+                } else {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message").toString(), "Ok");
+                    } catch (Exception e) {
+                        Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CommonModel> call, Throwable t) {
+                t.printStackTrace();
+//                pd.cancel();
+                Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     @Override
     public void onClick(View view) {
         int id = view.getId();
         if (id == R.id.iv_send_request) {
             iv_send_request.setImageResource(R.drawable.sent_request_sel);
-            iv_chat.setImageResource(R.drawable.chat_sel);
+//            iv_chat.setImageResource(R.drawable.chat_sel);
+            callAddFriendRequestApi(LoginId);
             InstaPhotosAdapter.isLocked = false;
             onTypeChange(0);
         } else if (id == R.id.profile_image) {

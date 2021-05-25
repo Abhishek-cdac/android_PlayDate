@@ -149,6 +149,7 @@ public class FragNotification extends Fragment {
                     assert response.body() != null;
                     if (response.body().getStatus() == 1) {
 
+                        callGetNotificationAPI();
                         Toast.makeText(getActivity(), ""+ response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 } else {

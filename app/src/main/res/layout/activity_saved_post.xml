@@ -17,4 +17,17 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
+    <com.allattentionhere.autoplayvideos.AAH_CustomRecyclerView
+        android:id="@+id/recycler_view_feed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fadingEdge="none"
+        android:overScrollMode="never"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+
 </LinearLayout>

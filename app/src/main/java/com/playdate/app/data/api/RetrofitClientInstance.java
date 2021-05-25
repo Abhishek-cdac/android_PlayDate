@@ -30,7 +30,6 @@ public class RetrofitClientInstance {
                     .baseUrl(BASE_URL)
                     .client(getRequestHeader())
                     .addConverterFactory(GsonConverterFactory.create())
-
                     .build();
         }
         return retrofit;

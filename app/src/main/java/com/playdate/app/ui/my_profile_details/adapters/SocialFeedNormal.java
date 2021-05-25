@@ -122,7 +122,7 @@ public class SocialFeedNormal extends RecyclerView.Adapter<RecyclerView.ViewHold
 
             userViewHolder.name_friend.setOnClickListener(view -> {
                 OnInnerFragmentClicks ref = (OnInnerFragmentClicks) mContext;
-                ref.loadProfile();
+                ref.loadProfile(lst.get(position).getImage());
             });
 
             userViewHolder.iv_post_image.setOnClickListener(view -> {
