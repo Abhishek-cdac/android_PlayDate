@@ -30,8 +30,8 @@
 
         <ImageView
             android:id="@+id/more_option"
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
+            android:layout_width="27dp"
+            android:layout_height="22dp"
             android:layout_gravity="center"
             android:rotation="90"
             android:src="@drawable/ic_baseline_more_horizontal" />

@@ -329,7 +329,6 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
             Picasso.get().load(lst.get(position).getPostMedia().get(0).getMediaThumbName())
                     .into(videoHolder.videoImg.getImageView());
 
-
             Picasso.get().load(lst.get(position).getLstpostby().get(0).getProfilePicPath())
                     .placeholder(R.drawable.cupertino_activity_indicator)
                     .into(videoHolder.iv_profile);
@@ -568,6 +567,8 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                 }
             });
         }
+
+
 
         @Override
         public void videoStarted() {

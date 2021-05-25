@@ -28,6 +28,7 @@ import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.GetCommentData;
 import com.playdate.app.model.GetCommentModel;
+import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.util.session.SessionPref;
 
 import java.util.ArrayList;
@@ -42,14 +43,17 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     ArrayList<GetCommentData> commentList = new ArrayList<>();
     boolean selected = false;
     int selected_index = -1;
+    Onclick itemClick;
 
     Context mContext;
     onCommentDelete ref;
     String userId, postId, commentId;
 
-    public CommentAdapter(Context applicationContext, ArrayList<GetCommentData> lst_getComment) {
+    public CommentAdapter(Context applicationContext, ArrayList<GetCommentData> lst_getComment, Onclick itemClick) {
         this.commentList = lst_getComment;
         this.mContext = applicationContext;
+        this.itemClick = itemClick;
+
 
     }
 
@@ -71,9 +75,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         commentId = commentList.get(position).getComments().getCommentId();
         postId = commentList.get(position).getComments().getPostId();
 
-        Log.e("commentId", "" + commentId);
-        Log.e("userId", "" + userId);
-        Log.e("postId", "" + postId);
 
 //        if (selected_index == position) {
 //            Log.e("selected_index..",""+selected_index);
@@ -86,8 +87,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             holder.like.setTextColor(mContext.getResources().getColor(R.color.white));
             holder.reply.setTextColor(mContext.getResources().getColor(R.color.white));
             holder.delete.setVisibility(View.VISIBLE);
-
-
         } else {
             holder.relativeLayout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
             holder.name.setTextColor(mContext.getResources().getColor(R.color.black));
@@ -98,6 +97,31 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             holder.delete.setVisibility(View.GONE);
 
         }
+
+        holder.relativeLayout.setOnLongClickListener(v -> {
+            int selected_index = position;
+            Log.e("relativeLayout", "relativeLayout" + selected_index);
+            if (!commentList.get(selected_index).isSelected) {
+
+                for (int i = 0; i < commentList.size(); i++) {
+                    if (selected_index != i) {
+                        commentList.get(i).setSelected(false);
+                    } else {
+                        commentList.get(selected_index).setSelected(true);
+                        itemClick.onItemClicks(v, selected_index, 11, commentList.get(position).getComments().getCommentId(), postId, commentList.get(position).getUserId());
+                    }
+                }
+
+                notifyDataSetChanged();
+
+
+            } else {
+                commentList.get(selected_index).setSelected(false);
+                notifyDataSetChanged();
+            }
+            return true;
+        });
+
         //   }
     }
 
@@ -134,28 +158,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
 
                 }
-            });
-            relativeLayout.setOnLongClickListener(v -> {
-
-                int selected_index = getAdapterPosition();
-                Log.e("relativeLayout", "relativeLayout" + selected_index);
-                if (!commentList.get(selected_index).isSelected) {
-
-                    for (int i = 0; i < commentList.size(); i++) {
-                        if (selected_index != i) {
-                            commentList.get(i).setSelected(false);
-                        } else {
-                            commentList.get(selected_index).setSelected(true);
-                        }
-
-                    }
-
-                    notifyDataSetChanged();
-                } else {
-                    commentList.get(selected_index).setSelected(false);
-                    notifyDataSetChanged();
-                }
-                return true;
             });
 
         }
@@ -207,7 +209,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             deleted.show(fragmentManager, "comment deleted");
             commentList.remove(selected_index);
             notifyDataSetChanged();
-          //  ref.ChangeCount(commentList.size());
+            //  ref.ChangeCount(commentList.size());
         } else {
             //code for undo
         }
@@ -231,6 +233,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                         if (commentList == null) {
                             commentList = new ArrayList<>();
                         }
+
                         notifyDataSetChanged();
 
                     } else {
