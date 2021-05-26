@@ -320,3 +320,4 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
 interface onCommentDelete {
     void ChangeCount(int listCount);
 }
+

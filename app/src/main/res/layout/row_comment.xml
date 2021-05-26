@@ -52,12 +52,13 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/_6sdp"
             android:text="@string/Like"
-            android:visibility="visible"
+            android:visibility="gone"
             android:textColor="@color/color_grey" />
 
         <TextView
             android:id="@+id/comment_reply"
-            android:visibility="visible"
+            android:visibility="gone"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/_8sdp"

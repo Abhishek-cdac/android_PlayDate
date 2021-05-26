@@ -2,6 +2,7 @@ package com.playdate.app.ui.my_profile_details;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,8 @@ import com.google.android.gms.tasks.Task;
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
+import com.playdate.app.model.GetProfileDetails;
+import com.playdate.app.model.GetProileDetailData;
 import com.playdate.app.model.Interest;
 import com.playdate.app.model.InterestsMain;
 import com.playdate.app.ui.dashboard.OnProfilePhotoChageListerner;
@@ -37,9 +40,12 @@ import com.playdate.app.ui.register.bio.BioActivity;
 import com.playdate.app.ui.register.interest.InterestActivity;
 import com.playdate.app.ui.register.profile.UploadProfileActivity;
 import com.playdate.app.ui.register.username.UserNameActivity;
+import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.customcamera.otalia.CameraActivity;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -72,6 +78,9 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
     private GoogleApiClient googleApiClient;
     GoogleSignInClient mGoogleSignInClient;
 
+    private ArrayList<GetProileDetailData> lst_getPostDetail;
+    String inviteCode;
+    String inviteLink;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -84,7 +93,7 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
 
-
+        callAPI();
         iv_edit_bio = view.findViewById(R.id.iv_edit_bio);
         txt_bio = view.findViewById(R.id.txt_bio_detail);
 
@@ -100,6 +109,7 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
         txt_upgrade = view.findViewById(R.id.txt_upgrade);
         logout = view.findViewById(R.id.logout);
         TextView txt_change_photo = view.findViewById(R.id.txt_change_photo);
+
 
         profile_image.setOnClickListener(this);
         iv_change_bio_video.setOnClickListener(this);
@@ -150,11 +160,7 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
 //                        if (lst_interest == null) {
 //                            lst_interest = new ArrayList<>();
 //                        }
-//
-//
-//
-//
-//
+
 //
 //                        for (int i = 0; i < lst_interest.size(); i++) {
 //                            for (String s : interestList) {
@@ -247,7 +253,11 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
             }
 
         } else if (id == R.id.txt_invite) {
-            startActivity(new Intent(getActivity(), InviteFriendActivity.class));
+
+            Intent intent = new Intent(getActivity(), InviteFriendActivity.class);
+            intent.putExtra("inviteCode", inviteCode);
+            intent.putExtra("inviteLink", inviteLink);
+            startActivity(intent);
         } else if (id == R.id.logout) {
             showYesNoDialog();
         }else if (id == R.id.txt_upgrade) {
@@ -321,5 +331,59 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
         OnProfilePhotoChageListerner inf = (OnProfilePhotoChageListerner) getActivity();
         inf.updateImage();
     }
+    private void callAPI() {
+        SessionPref pref = SessionPref.getInstance(getActivity());
+
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+
+        hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
+
+        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
+        pd.show();
+//        Toast.makeText(this, ""+pref.getStringVal(SessionPref.LoginUsertoken), Toast.LENGTH_SHORT).show();
+
+
+        Call<GetProfileDetails> call = service.getProfileDetails("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new Callback<GetProfileDetails>() {
+            @Override
+            public void onResponse(Call<GetProfileDetails> call, Response<GetProfileDetails> response) {
+                pd.cancel();
+                if (response.code() == 200) {
+                    if (response.body().getStatus() == 1) {
+                        lst_getPostDetail = (ArrayList<GetProileDetailData>) response.body().getData();
+                        if (lst_getPostDetail == null) {
+                            lst_getPostDetail = new ArrayList<>();
+                        }
+                        inviteCode = String.valueOf(lst_getPostDetail.get(0).getInviteCode());
+                        inviteLink= String.valueOf(lst_getPostDetail.get(0).getInviteLink());
+                        Log.e("inviteCode",""+ inviteCode);
+                        Log.e("inviteLink",""+ inviteLink);
+                    } else {
+                       // clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
+                    }
+                } else {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                     //   clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message").toString(), "Ok");
+                    } catch (Exception e) {
+                        Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<GetProfileDetails> call, Throwable t) {
+                t.printStackTrace();
+                pd.cancel();
+                Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
 
 }

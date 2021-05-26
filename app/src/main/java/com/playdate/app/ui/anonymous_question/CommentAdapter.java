@@ -31,9 +31,14 @@ import com.playdate.app.model.GetCommentModel;
 import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.util.session.SessionPref;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -48,6 +53,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     Context mContext;
     onCommentDelete ref;
     String userId, postId, commentId;
+    String timeFormat, timeFormat_new;
 
     public CommentAdapter(Context applicationContext, ArrayList<GetCommentData> lst_getComment, Onclick itemClick) {
         this.commentList = lst_getComment;
@@ -70,11 +76,21 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     public void onBindViewHolder(@NonNull CommentAdapter.ViewHolder holder, int position) {
         holder.name.setText(commentList.get(position).getUsername());
         holder.desc.setText(commentList.get(position).getComments().getComment());
-
         userId = commentList.get(position).getUserId();
         commentId = commentList.get(position).getComments().getCommentId();
         postId = commentList.get(position).getComments().getPostId();
+     timeFormat = commentList.get(position).getComments().getEntryDate();
+//        Date date= new Date(timeFormat);
+//
+//        String stringDate = DateFormat.getDateTimeInstance().format(date);
 
+        TimeAgo2 timeAgo2 = new TimeAgo2();
+        String MyFinalValue = timeAgo2.covertTimeToText(timeFormat);
+        holder.time.setText(MyFinalValue);
+        Log.e("MyFinalValue",""+MyFinalValue);
+        Log.e("CommentTime",""+timeFormat);
+      //  Log.e("stringDate",""+stringDate);
+        Log.e("Comment",""+commentList.get(position).getComments().getComment());
 
 //        if (selected_index == position) {
 //            Log.e("selected_index..",""+selected_index);
@@ -95,7 +111,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             holder.like.setTextColor(mContext.getResources().getColor(R.color.black));
             holder.reply.setTextColor(mContext.getResources().getColor(R.color.black));
             holder.delete.setVisibility(View.GONE);
-
         }
 
         holder.relativeLayout.setOnLongClickListener(v -> {
@@ -258,3 +273,5 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
 
 }
+
+
