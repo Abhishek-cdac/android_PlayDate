@@ -255,7 +255,7 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
 
             try {
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                DashboardActivity.bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                DashboardActivity.bitmap.compress(Bitmap.CompressFormat.PNG, 50, stream);
                 byte[] byteArray = stream.toByteArray();
                 fos.write(byteArray);
             } catch (Exception e) {

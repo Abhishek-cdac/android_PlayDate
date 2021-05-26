@@ -69,8 +69,8 @@ public class FragSocialFeed extends Fragment {
     private void callAPI() {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("limit", "100");// format 1990-08-12
-        hashMap.put("pageNo", "1");// format 1990-08-12
+        hashMap.put("limit", "50");// Hardcode
+        hashMap.put("pageNo", "1");// Hardcode
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
         pd.show();
         SessionPref pref = SessionPref.getInstance(getActivity());
