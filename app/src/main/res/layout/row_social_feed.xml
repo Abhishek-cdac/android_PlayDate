@@ -8,7 +8,7 @@
     <com.allattentionhere.autoplayvideos.AAH_CustomRecyclerView
         android:id="@+id/recycler_view_feed"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:fadingEdge="none"
         android:overScrollMode="never"
         app:layout_constraintLeft_toLeftOf="parent"
