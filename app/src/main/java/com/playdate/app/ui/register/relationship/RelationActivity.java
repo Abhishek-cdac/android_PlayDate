@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 
 import com.playdate.app.R;
+import com.playdate.app.couple.ui.register.connect.ConnectYourPartner;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.databinding.ActivityRelationshipBinding;
@@ -141,8 +142,12 @@ public class RelationActivity extends AppCompatActivity {
 
                             finish();
                         } else {
-                            startActivity(new Intent(RelationActivity.this, InterestActivity
-                                    .class));
+                            if(selectedRelationShip==1){
+                                startActivity(new Intent(RelationActivity.this, ConnectYourPartner.class));
+                            }else{
+                                startActivity(new Intent(RelationActivity.this, InterestActivity.class));
+                            }
+
                         }
 
                     } else {

@@ -36,6 +36,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PlayDate"
         android:usesCleartextTraffic="true">
+        <activity android:name=".couple.ui.register.invitecode.InviteCodeActivity"/>
+        <activity android:name=".couple.ui.register.invitesent.InviteSentActivity" />
+        <activity android:name=".couple.ui.register.invitepartner.InvitePartnerActivity" />
+        <activity android:name=".couple.ui.register.connect.ConnectYourPartner" />
         <!-- fb start -->
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -71,20 +75,22 @@
 
         <activity
             android:name=".ui.dashboard.DashboardActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".ui.date.DateBaseActivity"></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.date.DateBaseActivity" />
         <activity
             android:name=".ui.anonymous_question.AnonymousQuestionActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.login.LoginActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".util.customcamera.otalia.GameCamera"/>
-      <!--  <activity android:name=".ui.date.fragments.FragSelectPartner"></activity>
+        <activity android:name=".util.customcamera.otalia.GameCamera" />
+        <!--
+  <activity android:name=".ui.date.fragments.FragSelectPartner"></activity>
         <activity android:name=".ui.date.fragments.FragLocationTracing" />
         <activity android:name=".ui.date.fragments.FragPartnerSelected" />
         <activity android:name=".ui.date.fragments.FragSelectDate"></activity>
-        <activity android:name=".ui.date.fragments.FragLocationConfirmation" />-->
+        <activity android:name=".ui.date.fragments.FragLocationConfirmation" />
+        -->
         <activity
             android:name=".ui.register.RegisterActivity"
             android:screenOrientation="portrait" />

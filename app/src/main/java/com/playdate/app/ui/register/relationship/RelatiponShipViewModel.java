@@ -20,7 +20,6 @@ public class RelatiponShipViewModel extends ViewModel {
             RegisterClick = new MutableLiveData<>();
         }
         return RegisterClick;
-
     }
 
     public void setTaken(){
