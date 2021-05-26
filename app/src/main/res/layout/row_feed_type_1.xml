@@ -26,17 +26,23 @@
             app:civ_border_width="1dp" />
 
 
-        <TextView
-            android:id="@+id/name_friend"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:fontFamily="@font/lato_bold"
-            android:paddingHorizontal="@dimen/_6sdp"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_12sdp"
-            android:textStyle="bold" />
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/name_friend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/lato_bold"
+                android:paddingHorizontal="@dimen/_6sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/friend_request"
@@ -72,12 +78,6 @@
                 android:layout_gravity="center"
                 android:background="@color/color_grey_too_light"
                 android:foregroundGravity="center" />
-
-            <com.google.android.exoplayer2.ui.PlayerView
-                android:id="@+id/ep_video_view"
-                android:layout_width="match_parent"
-                android:visibility="gone"
-                android:layout_height="match_parent" />
 
 
             <com.airbnb.lottie.LottieAnimationView
@@ -147,11 +147,11 @@
             android:visibility="gone" />
 
         <ImageView
+            android:id="@+id/save"
             android:layout_width="@dimen/_15sdp"
             android:layout_height="@dimen/_15sdp"
             android:layout_alignParentEnd="true"
             android:layout_centerHorizontal="true"
-            android:id="@+id/save"
             android:layout_margin="@dimen/_5sdp"
             android:background="@color/white"
             android:src="@drawable/bookmark" />
@@ -185,26 +185,6 @@
         android:textSize="@dimen/_10sdp"
         android:textStyle="bold" />
 
-    <!--    <EditText-->
-    <!--        android:id="@+id/edt_comment"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_below="@+id/txt_chat"-->
-    <!--        android:layout_marginLeft="@dimen/_10sdp"-->
-    <!--        android:layout_marginTop="@dimen/_2sdp"-->
-    <!--        android:layout_marginRight="@dimen/_10sdp"-->
-    <!--        android:background="@null"-->
-    <!--        android:hint="Add a comment..."-->
-    <!--        android:maxLines="1"-->
-    <!--        android:padding="@dimen/_8sdp"-->
-    <!--        android:paddingLeft="-10dp"-->
-    <!--        android:paddingRight="0dp"-->
-    <!--        android:singleLine="true"-->
-    <!--        android:textColor="@android:color/black"-->
-    <!--        android:textColorHint="@android:color/darker_gray"-->
-    <!--        android:textSize="@dimen/_11sdp">-->
-
-    <!--    </EditText>-->
 
     <TextView
         android:id="@+id/edt_comment"

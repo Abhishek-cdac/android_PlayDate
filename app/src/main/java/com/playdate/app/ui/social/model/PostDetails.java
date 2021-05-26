@@ -23,6 +23,26 @@ public class PostDetails {
     private String comments;
     private int isLike;
     private String notifyStatus;
+    private int isGallerySave;
+
+    @SerializedName("comments_list")
+    private ArrayList<CommentList> comments_list;
+
+    public ArrayList<CommentList> getComments_list() {
+        return comments_list;
+    }
+
+    public void setComments_list(ArrayList<CommentList> comments_list) {
+        this.comments_list = comments_list;
+    }
+
+    public int getIsGallerySave() {
+        return isGallerySave;
+    }
+
+    public void setIsGallerySave(int isGallerySave) {
+        this.isGallerySave = isGallerySave;
+    }
 
     public String getNotifyStatus() {
         return notifyStatus;
@@ -32,15 +52,6 @@ public class PostDetails {
         this.notifyStatus = notifyStatus;
     }
 
-    public int getIsSaved() {
-        return isSaved;
-    }
-
-    public void setIsSaved(int isSaved) {
-        this.isSaved = isSaved;
-    }
-
-    private int isSaved;
 
     public String getTag() {
         return tag;

@@ -319,16 +319,14 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     @Override
     public void ReplaceFrag(Fragment fragment) {
         try {
-            ft = fm.beginTransaction();
+            getSupportFragmentManager().executePendingTransactions();
+            FragmentTransaction ft=getSupportFragmentManager().beginTransaction();
 
             ft.replace(R.id.flFragment, fragment, fragment.getClass().getSimpleName());
-//        ft.addToBackStack("tags");
-//            ft.setCustomAnimations(R.anim.slide_in_left,R.anim.slide_out_right);
-
-//            ft.show(fragment);
-//            ft.commitAllowingStateLoss();
+            ft.addToBackStack("tags");
             ft.setTransition(
                     FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+
             ft.commit();
         } catch (Exception e) {
             e.printStackTrace();

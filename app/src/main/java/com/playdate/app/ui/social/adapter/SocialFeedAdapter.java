@@ -36,6 +36,7 @@ import com.playdate.app.model.LoginResponse;
 import com.playdate.app.ui.anonymous_question.AnonymousQuestionActivity;
 import com.playdate.app.ui.anonymous_question.CommentBottomSheet;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
+import com.playdate.app.ui.social.model.CommentList;
 import com.playdate.app.ui.social.model.PostDetails;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Callback;
@@ -229,6 +230,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
             userViewHolder.iv_heart.setOnClickListener(view -> {
                 if (lst.get(position).getIsLike() == 1) {
                     lst.get(position).setIsLike(0);
+                    lst.get(position).setLikes(lst.get(position).getLikes() - 1);
                     userViewHolder.iv_heart.setImageResource(R.drawable.heart);
                     lst.get(position).setTapCount(0);
 //                    lst.get(position).setHeartSelected(false);
@@ -248,30 +250,48 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
             });
             try {
                 userViewHolder.txt_heart_count.setText(lst.get(position).getLikes() + " Loves");
+                String owner = "";
                 if (null != lst.get(position).getTag()) {
-                    String s = "<b>" + lst.get(position).getLstpostby().get(0).getUsername() + "</b> " + lst.get(position).getTag();
-                    userViewHolder.txt_chat.setText(Html.fromHtml(s));
+                    owner = "<b>" + lst.get(position).getLstpostby().get(0).getUsername() + "</b> " + lst.get(position).getTag();
+
                 }
+                if (null != lst.get(position).getComments_list()) {
+                    ArrayList<CommentList> lstComm = lst.get(position).getComments_list();
+
+                    String temp = "";
+                    for (int i = 0; i < lstComm.size(); i++) {
+                        String s = "<b>" + "Username" + "</b> " + lstComm.get(i).getComment();
+                        if (temp.isEmpty()) {
+                            temp = s;
+                        } else {
+                            temp = temp + "<br>" + s;
+                        }
+                    }
+                    userViewHolder.txt_chat.setText(Html.fromHtml(owner+"<br>"+ temp));
+
+
+                }
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            if (lst.get(position).getIsSaved() == 1) {
+            if (lst.get(position).getIsGallerySave() == 1) {
                 userViewHolder.savePost.setImageResource(R.drawable.ic_icons8_bookmark);
             } else {
                 userViewHolder.savePost.setImageResource(R.drawable.ic_icons8_bookmark_border);
             }
 
             userViewHolder.savePost.setOnClickListener(view -> {
-                if (lst.get(position).getIsSaved() == 1) {
-                    lst.get(position).setIsSaved(0);
+                if (lst.get(position).getIsGallerySave() == 1) {
+                    lst.get(position).setIsGallerySave(0);
                     userViewHolder.savePost.setImageResource(R.drawable.ic_icons8_bookmark_border);
                     notifyDataSetChanged();
-                    callSavePostAPI(lst.get(position).getPostId(), lst.get(position).getIsSaved());
-                } else if (lst.get(position).getIsSaved() == 0) {
+                    callSavePostAPI(lst.get(position).getPostId(), lst.get(position).getIsGallerySave());
+                } else if (lst.get(position).getIsGallerySave() == 0) {
                     userViewHolder.savePost.setImageResource(R.drawable.ic_icons8_bookmark);
-                    lst.get(position).setIsSaved(1);
+                    lst.get(position).setIsGallerySave(1);
                     notifyDataSetChanged();
-                    callSavePostAPI(lst.get(position).getPostId(), lst.get(position).getIsSaved());
+                    callSavePostAPI(lst.get(position).getPostId(), lst.get(position).getIsGallerySave());
                 }
             });
 
@@ -288,7 +308,9 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                 if (lst.get(position).getLikes() != 1) {
                     if (lst.get(position).getTapCount() == 1) {
 
-                        lst.get(position).setLikes(1);
+                        lst.get(position).setIsLike(1);
+                        lst.get(position).setLikes(lst.get(position).getLikes() + 1);
+
                         userViewHolder.iv_heart_red.setVisibility(View.VISIBLE);
                         callAPI(lst.get(position).getPostId(), lst.get(position).getLikes());
                         animateHeart(userViewHolder.iv_heart_red, userViewHolder.iv_heart_red);
@@ -342,6 +364,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
             videoHolder.iv_heart.setOnClickListener(view -> {
                 if (lst.get(position).getIsLike() == 1) {
                     lst.get(position).setIsLike(0);
+                    lst.get(position).setLikes(lst.get(position).getLikes() - 1);
                     videoHolder.iv_heart.setImageResource(R.drawable.heart);
                     lst.get(position).setTapCount(0);
 //                    lst.get(position).setHeartSelected(false);
@@ -361,30 +384,47 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
             });
             try {
                 videoHolder.txt_heart_count.setText(lst.get(position).getLikes() + " Loves");
+                String owner = "";
                 if (null != lst.get(position).getTag()) {
-                    String s = "<b>" + lst.get(position).getLstpostby().get(0).getUsername() + "</b> " + lst.get(position).getTag();
-                    videoHolder.txt_chat.setText(Html.fromHtml(s));
+                    owner = "<b>" + lst.get(position).getLstpostby().get(0).getUsername() + "</b> " + lst.get(position).getTag();
+
                 }
+                if (null != lst.get(position).getComments_list()) {
+                    ArrayList<CommentList> lstComm = lst.get(position).getComments_list();
+
+                    String temp = "";
+                    for (int i = 0; i < lstComm.size(); i++) {
+                        String s = "<b>" + "Username" + "</b> " + lstComm.get(i).getComment();
+                        if (temp.isEmpty()) {
+                            temp = s;
+                        } else {
+                            temp = temp + "<br>" + s;
+                        }
+                    }
+                    videoHolder.txt_chat.setText(Html.fromHtml(owner+"<br>"+ temp));
+
+                }
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            if (lst.get(position).getIsSaved() == 1) {
+            if (lst.get(position).getIsGallerySave() == 1) {
                 videoHolder.savePost.setImageResource(R.drawable.ic_icons8_bookmark);
             } else {
                 videoHolder.savePost.setImageResource(R.drawable.ic_icons8_bookmark_border);
             }
 
             videoHolder.savePost.setOnClickListener(view -> {
-                if (lst.get(position).getIsSaved() == 1) {
-                    lst.get(position).setIsSaved(0);
+                if (lst.get(position).getIsGallerySave() == 1) {
+                    lst.get(position).setIsGallerySave(0);
                     videoHolder.savePost.setImageResource(R.drawable.ic_icons8_bookmark_border);
                     notifyDataSetChanged();
-                    callSavePostAPI(lst.get(position).getPostId(), lst.get(position).getIsSaved());
-                } else if (lst.get(position).getIsSaved() == 0) {
+                    callSavePostAPI(lst.get(position).getPostId(), lst.get(position).getIsGallerySave());
+                } else if (lst.get(position).getIsGallerySave() == 0) {
                     videoHolder.savePost.setImageResource(R.drawable.ic_icons8_bookmark);
-                    lst.get(position).setIsSaved(1);
+                    lst.get(position).setIsGallerySave(1);
                     notifyDataSetChanged();
-                    callSavePostAPI(lst.get(position).getPostId(), lst.get(position).getIsSaved());
+                    callSavePostAPI(lst.get(position).getPostId(), lst.get(position).getIsGallerySave());
                 }
             });
 
@@ -394,7 +434,8 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                 if (lst.get(position).getLikes() != 1) {
                     if (lst.get(position).getTapCount() == 1) {
 
-                        lst.get(position).setLikes(1);
+                        lst.get(position).setIsLike(1);
+                        lst.get(position).setLikes(lst.get(position).getLikes() + 1);
                         videoHolder.iv_heart_red.setVisibility(View.VISIBLE);
                         callAPI(lst.get(position).getPostId(), lst.get(position).getLikes());
                         animateHeart(videoHolder.iv_heart_red, videoHolder.iv_heart_red);
@@ -496,7 +537,6 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
         ImageView iv_post_image, iv_more_options;
         CardView card_image;
         TextView name_friend;
-        //        EditText et_comment;
         TextView et_comment;
         TextView txt_heart_count;
         ImageView savePost;
@@ -534,7 +574,11 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
             });
 
             iv_msg.setOnClickListener(v -> v.getContext().startActivity(new Intent(v.getContext(), AnonymousQuestionActivity.class)));
-            et_comment.setOnClickListener(v -> v.getContext().startActivity(new Intent(v.getContext(), AnonymousQuestionActivity.class)));
+            et_comment.setOnClickListener(v -> {
+                Intent mIntent = new Intent(v.getContext(), AnonymousQuestionActivity.class);
+                mIntent.putExtra("post_id", lst.get(getAdapterPosition()).getPostId());
+                v.getContext().startActivity(mIntent);
+            });
             iv_mute_unmute.setOnClickListener(new View.OnClickListener() {
 
                 @Override
@@ -569,7 +613,6 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
         }
 
 
-
         @Override
         public void videoStarted() {
             super.videoStarted();
@@ -599,7 +642,6 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
         ImageView iv_post_image, iv_more_options;
         CardView card_image;
         TextView name_friend;
-        //        EditText et_comment;
         TextView et_comment;
         TextView txt_heart_count;
         ImageView savePost;
@@ -631,7 +673,11 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
 
 //            iv_msg.setOnClickListener(v ->
 //                    v.getContext().startActivity(new Intent(v.getContext(), AnonymousQuestionActivity.class)));
-            et_comment.setOnClickListener(v -> v.getContext().startActivity(new Intent(v.getContext(), AnonymousQuestionActivity.class)));
+            et_comment.setOnClickListener(v -> {
+                Intent mIntent = new Intent(v.getContext(), AnonymousQuestionActivity.class);
+                mIntent.putExtra("post_id", lst.get(getAdapterPosition()).getPostId());
+                v.getContext().startActivity(mIntent);
+            });
 
         }
     }

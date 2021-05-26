@@ -2,7 +2,6 @@ package com.playdate.app.ui.my_profile_details;
 
 import android.os.Bundle;
 import android.os.Environment;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +11,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,7 +20,6 @@ import com.allattentionhere.autoplayvideos.AAH_CustomRecyclerView;
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
-import com.playdate.app.ui.dashboard.OnFriendSelected;
 import com.playdate.app.ui.my_profile_details.adapters.InstaPhotosAdapter;
 import com.playdate.app.ui.social.adapter.SocialFeedAdapter;
 import com.playdate.app.ui.social.model.PostDetails;
@@ -42,8 +38,9 @@ import retrofit2.Response;
 
 public class FragMyUploadMedia extends Fragment {
     String loginId;
+
     public FragMyUploadMedia(String loginId) {
-    this.loginId=loginId;
+        this.loginId = loginId;
     }
 
     TextView txt_no_media;
@@ -58,28 +55,10 @@ public class FragMyUploadMedia extends Fragment {
         View view = inflater.inflate(R.layout.activity_saved_post, container, false);
         recyclerView = view.findViewById(R.id.recycler_photos);
         recycler_view_feed = view.findViewById(R.id.recycler_view_feed);
-        txt_no_media=view.findViewById(R.id.txt_no_media);
+        txt_no_media = view.findViewById(R.id.txt_no_media);
 
         callAPI();
 
-
-
-//        view.setFocusableInTouchMode(true);
-//        view.requestFocus();
-//        view.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if (keyCode == KeyEvent.KEYCODE_BACK) {
-//                    if(viewType==1){
-//                        setView(0);
-//                    }else{
-//                        return true;
-//                    }
-//
-//                }
-//                return false;
-//            }
-//        });
 
         return view;
     }
@@ -88,9 +67,9 @@ public class FragMyUploadMedia extends Fragment {
     private void callAPI() {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("userId",loginId);
-        hashMap.put("limit","100");//hardcode
-        hashMap.put("pageNo","1");//hardcode
+        hashMap.put("userId", loginId);
+        hashMap.put("limit", "100");//hardcode
+        hashMap.put("pageNo", "1");//hardcode
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
         pd.show();
         SessionPref pref = SessionPref.getInstance(getActivity());
@@ -102,20 +81,19 @@ public class FragMyUploadMedia extends Fragment {
                 pd.cancel();
                 if (response.code() == 200) {
                     assert response.body() != null;
-                     lst = response.body().getPostDetails();
+                    lst = response.body().getPostDetails();
                     if (lst == null) {
                         lst = new ArrayList<>();
                     }
 
-                    if(lst.size()==0){
+                    if (lst.size() == 0) {
                         txt_no_media.setVisibility(View.VISIBLE);
                         recycler_view_feed.setVisibility(View.GONE);
                         recyclerView.setVisibility(View.GONE);
-                    }else{
+                    } else {
                         txt_no_media.setVisibility(View.GONE);
-                        setView(0,0);
+                        setView(0, 0);
                     }
-
 
 
                 } else {
@@ -138,12 +116,11 @@ public class FragMyUploadMedia extends Fragment {
     }
 
 
-    int viewType=0;
+    int viewType = 0;
 
 
-
-    public void setView(int view,int pos) {
-        viewType=view;
+    public void setView(int view, int pos) {
+        viewType = view;
         if (view == 0) {
             recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
             InstaPhotosAdapter adapter = new InstaPhotosAdapter(getActivity(), lst, FragMyUploadMedia.this);
@@ -152,33 +129,18 @@ public class FragMyUploadMedia extends Fragment {
         } else {
             recyclerView.setVisibility(View.GONE);
             recycler_view_feed.setVisibility(View.VISIBLE);
-//            recycler_view_feed.getLayoutParams().height=4500;
             SocialFeedAdapter adapter = new SocialFeedAdapter(getActivity(), lst);
             LinearLayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
             recycler_view_feed.setLayoutManager(manager);
             recycler_view_feed.setItemAnimator(new DefaultItemAnimator());
             recycler_view_feed.setActivity(getActivity());
             recycler_view_feed.setCheckForMp4(false);
-            recycler_view_feed.setDownloadPath(Environment.getExternalStorageDirectory() + "/MyVideo"); // (Environment.getExternalStorageDirectory() + "/Video") by default
-            recycler_view_feed.setDownloadVideos(true); // false by default
-            //extra - start downloading all videos in background before loading RecyclerView
-            List<String> urls = null;
-            try {
-                urls = new ArrayList<>();
-                for (PostDetails object : lst) {
-                    if (object.getPostMedia().get(0).getMediaFullPath().toLowerCase().contains(".mp4"))
-                        urls.add(object.getPostMedia().get(0).getMediaFullPath());
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                Toast.makeText(getActivity(), "" + e.toString(), Toast.LENGTH_SHORT).show();
-            }
-            recycler_view_feed.preDownload(urls);
-//            recycler_view_feed.setVisiblePercent(70);
+            recycler_view_feed.setVisiblePercent(70);
             recycler_view_feed.setPlayOnlyFirstVideo(true);
             recycler_view_feed.setAdapter(adapter);
-//            recycler_view_feed.getLayoutManager().scrollToPosition(pos);
-//            recycler_view_feed.smoothScrollToPosition(pos);
+
+
+
 
         }
     }
