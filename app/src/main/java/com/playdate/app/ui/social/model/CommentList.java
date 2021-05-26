@@ -1,11 +1,26 @@
 package com.playdate.app.ui.social.model;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
+
 public class CommentList {
     String _id;
     String postId;
     String comment;
     String entryDate;
     String commentId;
+
+    @SerializedName("commentBy")
+    ArrayList<commentBy> commentBy;
+
+    public ArrayList<com.playdate.app.ui.social.model.commentBy> getCommentBy() {
+        return commentBy;
+    }
+
+    public void setCommentBy(ArrayList<com.playdate.app.ui.social.model.commentBy> commentBy) {
+        this.commentBy = commentBy;
+    }
 
     public String get_id() {
         return _id;

@@ -260,14 +260,14 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
 
                     String temp = "";
                     for (int i = 0; i < lstComm.size(); i++) {
-                        String s = "<b>" + "Username" + "</b> " + lstComm.get(i).getComment();
+                        String s = "<b>" + lstComm.get(i).getCommentBy().get(0).getUsername() + "</b> " + lstComm.get(i).getComment();
                         if (temp.isEmpty()) {
                             temp = s;
                         } else {
                             temp = temp + "<br>" + s;
                         }
                     }
-                    userViewHolder.txt_chat.setText(Html.fromHtml(owner+"<br>"+ temp));
+                    userViewHolder.txt_chat.setText(Html.fromHtml(owner + "<br>" + temp));
 
 
                 }
@@ -394,14 +394,14 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
 
                     String temp = "";
                     for (int i = 0; i < lstComm.size(); i++) {
-                        String s = "<b>" + "Username" + "</b> " + lstComm.get(i).getComment();
+                        String s = "<b>" + lstComm.get(i).getCommentBy().get(0).getUsername() + "</b> " + lstComm.get(i).getComment();
                         if (temp.isEmpty()) {
                             temp = s;
                         } else {
                             temp = temp + "<br>" + s;
                         }
                     }
-                    videoHolder.txt_chat.setText(Html.fromHtml(owner+"<br>"+ temp));
+                    videoHolder.txt_chat.setText(Html.fromHtml(owner + "<br>" + temp));
 
                 }
 

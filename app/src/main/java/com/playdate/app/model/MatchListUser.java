@@ -18,6 +18,15 @@ public class MatchListUser {
 
     private String fullName;
     private String userId;
+    private String friendId;
+
+    public String getFriendId() {
+        return friendId;
+    }
+
+    public void setFriendId(String friendId) {
+        this.friendId = friendId;
+    }
 
     public String getUserId() {
         return userId;

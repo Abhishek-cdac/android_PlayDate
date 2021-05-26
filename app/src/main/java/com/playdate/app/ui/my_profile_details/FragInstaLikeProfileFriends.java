@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -63,11 +64,21 @@ public class FragInstaLikeProfileFriends extends Fragment implements onPhotoClic
 
     boolean isFriend = true;
     String LoginId;
+    String friendID;
 
     public FragInstaLikeProfileFriends(boolean isFriend, String LoginId) {
         this.isFriend = isFriend;
         this.LoginId = LoginId;
     }
+
+
+    public FragInstaLikeProfileFriends(boolean isFriend, String LoginId, String friendID) {
+        this.isFriend = isFriend;
+        this.LoginId = LoginId;
+        this.friendID = friendID;
+    }
+
+    FragMyUploadMedia mediaFrag;
 
     @Nullable
     @Override
@@ -76,6 +87,11 @@ public class FragInstaLikeProfileFriends extends Fragment implements onPhotoClic
 
         clsCommon = CommonClass.getInstance();
 
+        if (isFriend) {
+            InstaPhotosAdapter.isLocked = false;
+        } else {
+            InstaPhotosAdapter.isLocked = true;
+        }
         txtTotalFriend = view.findViewById(R.id.friend_count);
         txtTotalPost = view.findViewById(R.id.post_count);
         iv_send_request = view.findViewById(R.id.iv_send_request);
@@ -86,9 +102,10 @@ public class FragInstaLikeProfileFriends extends Fragment implements onPhotoClic
         txt_login_user = view.findViewById(R.id.txt_login_user);
 
         try {
-            FragmentManager fm= getChildFragmentManager();
-            FragmentTransaction ft=fm.beginTransaction();
-            ft.add(R.id.fl_fragment,new FragMyUploadMedia(LoginId));
+            FragmentManager fm = getChildFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            mediaFrag = new FragMyUploadMedia(LoginId);
+            ft.add(R.id.fl_fragment, mediaFrag);
             ft.commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -245,12 +262,12 @@ public class FragInstaLikeProfileFriends extends Fragment implements onPhotoClic
         });
     }
 
-    private void callRemoveFriendRequestApi(String toUserID) {
+    private void callRemoveFriendRequestApi() {
 
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         SessionPref pref = SessionPref.getInstance(getActivity());
         Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("friendId", toUserID);
+        hashMap.put("friendId", friendID);
         hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
 
 
@@ -286,16 +303,34 @@ public class FragInstaLikeProfileFriends extends Fragment implements onPhotoClic
         });
     }
 
+    private void showYesNoDialog() {
+        new AlertDialog.Builder(getActivity())
+
+                .setInverseBackgroundForced(true)
+                .setMessage("Are you sure you want to unfriend " + txt_login_user.getText().toString() + " ?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", (dialog, id) -> removeFriend())
+                .setNegativeButton("No", null)
+                .show();
+    }
+
+    private void removeFriend() {
+        iv_send_request.setImageResource(R.drawable.sent_request);
+        iv_chat.setImageResource(R.drawable.chat_black);
+        InstaPhotosAdapter.isLocked = true;
+        callRemoveFriendRequestApi();
+        isFriend = false;
+        mediaFrag.setView(0, 0);
+    }
+
     @Override
     public void onClick(View view) {
         int id = view.getId();
         if (id == R.id.iv_send_request) {
-            if(isFriend){
-                InstaPhotosAdapter.isLocked = true;
-                iv_send_request.setImageResource(R.drawable.sent_request);
-                iv_chat.setImageResource(R.drawable.chat_black);
-                callRemoveFriendRequestApi(LoginId);
-            }else{
+            if (isFriend) {
+                showYesNoDialog();
+
+            } else {
                 iv_send_request.setImageResource(R.drawable.sent_request_sel);
                 callAddFriendRequestApi(LoginId);
             }

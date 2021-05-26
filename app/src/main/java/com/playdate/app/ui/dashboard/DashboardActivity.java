@@ -1,9 +1,12 @@
 package com.playdate.app.ui.dashboard;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -32,6 +35,7 @@ import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.FriendsListModel;
 import com.playdate.app.model.MatchListUser;
+import com.playdate.app.service.LocationService;
 import com.playdate.app.ui.anonymous_question.AnonymousQuestionActivity;
 import com.playdate.app.ui.card_swipe.FragCardSwipe;
 import com.playdate.app.ui.chat.request.RequestChatFragment;
@@ -320,7 +324,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     public void ReplaceFrag(Fragment fragment) {
         try {
             getSupportFragmentManager().executePendingTransactions();
-            FragmentTransaction ft=getSupportFragmentManager().beginTransaction();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
             ft.replace(R.id.flFragment, fragment, fragment.getClass().getSimpleName());
             ft.addToBackStack("tags");
@@ -790,10 +794,10 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     }
 
     @Override
-    public void OnSingleFriendSelected(String Id) {
+    public void OnSingleFriendSelected(String Id, String FreindID) {
         ll_friends.setVisibility(View.GONE);
         ll_option_love.setVisibility(View.GONE);
-        ReplaceFragWithStack(new FragInstaLikeProfileFriends(true, Id));
+        ReplaceFragWithStack(new FragInstaLikeProfileFriends(true, Id, FreindID));
     }
 
     @Override
@@ -821,6 +825,27 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         ll_her.setVisibility(View.VISIBLE);
 
         ReplaceFragWithStack(new FragInstaLikeProfileFriends(isFriend, id));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        try {
+            boolean permissionGranted = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+
+            if (permissionGranted) {
+//                Toast.makeText(this, "Location permission granted", Toast.LENGTH_SHORT).show();
+                startService(new Intent(getApplicationContext(), LocationService.class));
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 200);
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+
+
     }
 }
 

@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.allattentionhere.autoplayvideos.AAH_CustomRecyclerView;
 import com.playdate.app.R;
@@ -48,7 +49,6 @@ public class FragSocialFeed extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.row_social_feed, container, false);
         recycler_view_feed = view.findViewById(R.id.recycler_view_feed);
-
         callAPI();
 
         return view;
@@ -128,5 +128,6 @@ public class FragSocialFeed extends Fragment {
         });
 
     }
+
 
 }

@@ -53,10 +53,10 @@ public class InstaPhotosAdapter extends RecyclerView.Adapter<InstaPhotosAdapter.
             holder.iv_payment.getLayoutParams().width = (int) mContext.getResources().getDimension(R.dimen._30sdp);
             holder.iv_payment.getLayoutParams().height = (int) mContext.getResources().getDimension(R.dimen._30sdp);
         } else {
-            if(lst.get(position).getPostMedia().get(0).getMediaType().toLowerCase().equals("image")){
+            if (lst.get(position).getPostMedia().get(0).getMediaType().toLowerCase().equals("image")) {
                 Picasso.get().load(lst.get(position).getPostMedia().get(0).getMediaFullPath())
                         .into(holder.iv_payment);
-            }else{
+            } else {
                 holder.iv_play.setVisibility(View.VISIBLE);
                 Picasso.get().load(lst.get(position).getPostMedia().get(0).getMediaThumbName())
                         .into(holder.iv_payment);
@@ -86,7 +86,10 @@ public class InstaPhotosAdapter extends RecyclerView.Adapter<InstaPhotosAdapter.
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    frag.setView(1,getAbsoluteAdapterPosition());
+                    if (!isLocked) {
+                        frag.setView(1, getAbsoluteAdapterPosition());
+                    }
+
                 }
             });
 //            iv_payment.setOnClickListener(view -> fragInstaLikeProfile.onTypeChange(1));
