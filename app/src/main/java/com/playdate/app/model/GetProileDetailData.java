@@ -26,7 +26,7 @@ public class GetProileDetailData {
     @Expose
     private String interestedIn;
     @Expose
-    private Long inviteCode;
+    private int inviteCode;
     @Expose
     private String onlineStatus;
     @Expose
@@ -51,6 +51,17 @@ public class GetProileDetailData {
     private String userId;
     @Expose
     private String username;
+
+    public String getInviteLink() {
+        return inviteLink;
+    }
+
+    public void setInviteLink(String inviteLink) {
+        this.inviteLink = inviteLink;
+    }
+
+    @Expose
+    private String inviteLink;
 
     public String get_id() {
         return _id;
@@ -124,11 +135,11 @@ public class GetProileDetailData {
         this.interestedIn = interestedIn;
     }
 
-    public Long getInviteCode() {
+    public int getInviteCode() {
         return inviteCode;
     }
 
-    public void setInviteCode(Long inviteCode) {
+    public void setInviteCode(int inviteCode) {
         this.inviteCode = inviteCode;
     }
 

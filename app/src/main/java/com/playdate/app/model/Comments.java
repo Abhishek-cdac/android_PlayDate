@@ -12,6 +12,16 @@ public class Comments {
     private String commentId;
     @Expose
     private String postId;
+ @Expose
+    private String entryDate;
+
+    public String getEntryDate() {
+        return entryDate;
+    }
+
+    public void setEntryDate(String entryDate) {
+        this.entryDate = entryDate;
+    }
 
     public String getComment() {
         return comment;
