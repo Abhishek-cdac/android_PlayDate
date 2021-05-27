@@ -614,6 +614,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
         }
 
 
+
         @Override
         public void videoStarted() {
             super.videoStarted();

@@ -15,6 +15,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -94,6 +95,8 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     ImageView iv_dashboard_notification;
     ImageView iv_coupons;
     ImageView iv_date;
+    FrameLayout flFragment;
+//    FrameLayout flFeed;
 
 
     //    SwipeRefreshLayout mSwipeRefreshLayout;
@@ -132,6 +135,9 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         profile_image = findViewById(R.id.profile_image);
         txt_chat = findViewById(R.id.txt_chat);
         rl_main = findViewById(R.id.rl_main);
+        flFragment=findViewById(R.id.flFragment);
+//        flFeed=findViewById(R.id.flFeed);
+
         ll_her = findViewById(R.id.ll_her);
         ll_mainMenu = findViewById(R.id.ll_mainMenu);
         ll_friends = findViewById(R.id.ll_friends);
@@ -319,6 +325,8 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     @Override
     public void ReplaceFrag(Fragment fragment) {
         try {
+
+//            flFragment.removeAllViews();
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction ft = fragmentManager.beginTransaction();
             if (fragmentManager.getFragments().size() > 0) {
@@ -329,6 +337,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             ft.addToBackStack(null);
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             ft.commit();
+//            rl_main.invalidate();
 
         } catch (Exception e) {
             e.printStackTrace();

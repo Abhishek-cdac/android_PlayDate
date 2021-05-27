@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -18,11 +19,14 @@ import com.allattentionhere.autoplayvideos.AAH_CustomRecyclerView;
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
+import com.playdate.app.ui.social.adapter.PaginationListener;
 import com.playdate.app.ui.social.adapter.SocialFeedAdapter;
 import com.playdate.app.ui.social.model.PostDetails;
 import com.playdate.app.ui.social.model.PostHistory;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,12 +48,23 @@ public class FragSocialFeed extends Fragment {
 //    public static final String ADDS = 3;
     private AAH_CustomRecyclerView recycler_view_feed;
 
+    boolean onBottomNow = false;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.row_social_feed, container, false);
         recycler_view_feed = view.findViewById(R.id.recycler_view_feed);
+        LinearLayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
+        recycler_view_feed.setLayoutManager(manager);
+        recycler_view_feed.setHasFixedSize(true);
 
+        recycler_view_feed.addOnScrollListener(new EndlessRecyclerViewScrollListener(manager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                Toast.makeText(getActivity(), "LAst", Toast.LENGTH_LONG).show();
+            }
+        });
         callAPI();
 
         return view;
@@ -70,7 +85,7 @@ public class FragSocialFeed extends Fragment {
     private void callAPI() {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("limit", "100");// Hardcode
+        hashMap.put("limit", "10");// Hardcode
         hashMap.put("pageNo", "1");// Hardcode
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
         pd.show();
@@ -88,8 +103,7 @@ public class FragSocialFeed extends Fragment {
                         lst = new ArrayList<>();
                     }
                     SocialFeedAdapter adapter = new SocialFeedAdapter(getActivity(), lst);
-                    LinearLayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
-                    recycler_view_feed.setLayoutManager(manager);
+
                     recycler_view_feed.setItemAnimator(new DefaultItemAnimator());
                     recycler_view_feed.setActivity(getActivity());
                     recycler_view_feed.setCheckForMp4(false);
@@ -106,14 +120,14 @@ public class FragSocialFeed extends Fragment {
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
-                        Toast.makeText(getActivity(), ""+e.toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "" + e.toString(), Toast.LENGTH_SHORT).show();
                     }
                     recycler_view_feed.preDownload(urls);
                     recycler_view_feed.setVisiblePercent(70);
                     recycler_view_feed.setPlayOnlyFirstVideo(true);
                     recycler_view_feed.setAdapter(adapter);
-                    recycler_view_feed.smoothScrollBy(0,1);
-                    recycler_view_feed.smoothScrollBy(0,-1);
+                    recycler_view_feed.smoothScrollBy(0, 1);
+                    recycler_view_feed.smoothScrollBy(0, -1);
                 } else {
 
 
