@@ -21,7 +21,7 @@ import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.CommonModel;
 import com.playdate.app.model.GetUserSuggestion;
 import com.playdate.app.model.GetUserSuggestionData;
-import com.playdate.app.ui.chat_ui_screen.request.Onclick;
+import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.ui.dashboard.adapter.SuggestionAdapter;
 import com.playdate.app.ui.dashboard.more_suggestion.FragMoreSuggestion;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;

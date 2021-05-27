@@ -2,31 +2,47 @@ package com.playdate.app.model;
 
 public class ChattingGetChats {
 
-    String id;
-    String name;
-    String messages;
+    String type;
+    String text;
+    String sender_name;
+    String from;
 
-    public String getId() {
-        return id;
+    public ChattingGetChats(String type, String text, String sender_name, String from) {
+        this.type = type;
+        this.text = text;
+        this.sender_name = sender_name;
+        this.from = from;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getType() {
+        return type;
     }
 
-    public String getName() {
-        return name;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getText() {
+        return text;
     }
 
-    public String getMessages() {
-        return messages;
+    public void setText(String text) {
+        this.text = text;
     }
 
-    public void setMessages(String messages) {
-        this.messages = messages;
+    public String getSender_name() {
+        return sender_name;
+    }
+
+    public void setSender_name(String sender_name) {
+        this.sender_name = sender_name;
+    }
+
+    public String getFrom() {
+        return from;
+    }
+
+    public void setFrom(String from) {
+        this.from = from;
     }
 }

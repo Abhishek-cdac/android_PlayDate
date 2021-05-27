@@ -1,5 +1,6 @@
-package com.playdate.app.ui.chat_ui_screen;
+package com.playdate.app.ui.chat;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,31 +13,37 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
 import com.playdate.app.model.ChattingGetChats;
-import com.playdate.app.model.Inbox;
-import com.playdate.app.ui.chat_ui_screen.request.InboxAdapter;
-import com.playdate.app.ui.chat_ui_screen.request.Onclick;
+import com.playdate.app.model.chat_models.ChatExample;
+import com.playdate.app.model.chat_models.ChatMessage;
+import com.playdate.app.ui.chat.request.FragInbox;
+import com.playdate.app.ui.chat.request.Onclick;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyViewHolder> {
-    private List<ChattingAdapter> inboxList;
+    private ArrayList<ChatExample> inboxList;
+    Context mcontext;
     Onclick itemClick;
+    private FragInbox frag;
+    int selectedIndex = -1;
 
-    public ChattingAdapter(List<ChattingAdapter> inboxList, Onclick itemClick) {
+    public ChattingAdapter(ArrayList<ChatExample> inboxList, Onclick itemClick, FragInbox frag) {
         this.inboxList = inboxList;
         this.itemClick = itemClick;
+        this.frag = frag;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView title, msg, txt_notify, txt_time;
+        public TextView user_name, msg, txt_notify, txt_time;
         public ImageView profile_image, img_more;
         public RelativeLayout main_menu;
 
         public MyViewHolder(View view) {
             super(view);
             txt_time = (TextView) view.findViewById(R.id.txt_time);
-            title = (TextView) view.findViewById(R.id.user_name);
+            user_name = (TextView) view.findViewById(R.id.user_name);
             txt_notify = (TextView) view.findViewById(R.id.txt_notify);
             msg = (TextView) view.findViewById(R.id.txt_msg);
             main_menu = view.findViewById(R.id.main_rl);
@@ -46,10 +53,11 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
             main_menu.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    itemClick.onItemClick(v, getAdapterPosition(), 12);
+                    selectedIndex = getAdapterPosition();
+                    frag.onClickEvent(selectedIndex);
+
                 }
             });
-
 
 
         }
@@ -65,22 +73,11 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.title.setText(inboxList.get(position).);
-        ChattingGetChats inbox = inboxList.get(position);
-        holder.title.setText(inbox.getName());
-//        holder.msg.setText(inbox.getMessages());
-//        Picasso.get().load(inbox.getImageUrl()).into(holder.profile_image);
-//        holder.txt_time.setVisibility(View.VISIBLE);
-//        holder.txt_time.setText(inbox.getTime());
-//
-//        if (position >= 4) {
-//            holder.txt_notify.setVisibility(View.GONE);
-//            holder.img_more.setVisibility(View.VISIBLE);
-//        } else {
-//            holder.txt_notify.setVisibility(View.VISIBLE);
-//            holder.txt_notify.setText(inbox.getNotification());
-//            holder.img_more.setVisibility(View.GONE);
-//        }
+        holder.user_name.setText(inboxList.get(position).getSenderName());
+        Picasso.get().load(inboxList.get(position).getProfilePhoto())
+                .placeholder(R.drawable.cupertino_activity_indicator).into(holder.profile_image);
+//        holder.msg.setText(inboxList.get(position).getText());
+
     }
 
 

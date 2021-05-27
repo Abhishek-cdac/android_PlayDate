@@ -23,12 +23,30 @@
         android:layout_toRightOf="@+id/profile_image_oponent"
         android:background="@drawable/btn_pink_filled"
         android:paddingHorizontal="@dimen/_12sdp"
-        android:textSize="@dimen/_10sdp"
         android:paddingVertical="@dimen/_8sdp"
         android:text="Hey myron! how are you"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:textSize="@dimen/_10sdp" />
 
 
+    <ImageView
+        android:id="@+id/chat_image"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_centerVertical="true"
+        android:visibility="gone"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:layout_toRightOf="@+id/profile_image_oponent"
+        android:src="@drawable/profile" />
+
+    <VideoView
+        android:layout_width="@dimen/_150sdp"
+        android:id="@+id/chat_video"
+        android:visibility="gone"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:layout_toRightOf="@+id/profile_image_oponent"
+        android:layout_height="@dimen/_100sdp"/>
 
 
 </RelativeLayout>

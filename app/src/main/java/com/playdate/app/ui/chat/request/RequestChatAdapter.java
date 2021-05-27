@@ -1,4 +1,4 @@
-package com.playdate.app.ui.chat_ui_screen.request;
+package com.playdate.app.ui.chat.request;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

@@ -19,7 +19,7 @@ import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.CommonModel;
 import com.playdate.app.model.NotificationData;
 import com.playdate.app.model.NotificationModel;
-import com.playdate.app.ui.chat_ui_screen.request.Onclick;
+import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;

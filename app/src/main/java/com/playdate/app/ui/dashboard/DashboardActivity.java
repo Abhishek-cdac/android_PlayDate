@@ -72,7 +72,7 @@ import static com.playdate.app.ui.register.profile.UploadProfileActivity.REQUEST
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.TAKE_PHOTO_CODE;
 import static com.playdate.app.util.session.SessionPref.CompleteProfile;
 
-public class DashboardActivity extends AppCompatActivity implements OnInnerFragmentClicks, View.OnClickListener, OnProfilePhotoChageListerner, OnFriendSelected {
+public class DashboardActivity extends AppCompatActivity implements OnInnerFragmentClicks,bottomNavigationGoneListener, View.OnClickListener, OnProfilePhotoChageListerner, OnFriendSelected {
     FragmentManager fm;
     FragmentTransaction ft;
     TextView txt_match, txt_chat;
@@ -90,7 +90,6 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     ImageView iv_dashboard_notification;
     ImageView iv_coupons;
     ImageView iv_date;
-
 
 
     //    SwipeRefreshLayout mSwipeRefreshLayout;
@@ -309,7 +308,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
             ft = fm.beginTransaction();
             ft.replace(R.id.flFragment, fragment, fragment.getClass().getSimpleName());
-//        ft.addToBackStack("tags");
+            ft.addToBackStack("tags");
             ft.commitAllowingStateLoss();
         } catch (Exception e) {
             e.printStackTrace();
@@ -793,5 +792,14 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
         ReplaceFragWithStack(new FragInstaLikeProfileFriends(isFriend, id));
     }
+
+    @Override
+    public void bottomNavigationGone() {
+        bottomNavigationView.setVisibility(View.INVISIBLE);
+    }
+}
+
+interface bottomNavigationGoneListener {
+    void bottomNavigationGone();
 }
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.chat_ui_screen.request.RequestChatFragment">
+    tools:context=".ui.chat.request.RequestChatFragment">
 
     <RelativeLayout
         android:id="@+id/main_menu"

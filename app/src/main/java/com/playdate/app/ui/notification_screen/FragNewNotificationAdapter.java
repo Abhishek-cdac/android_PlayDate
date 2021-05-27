@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
 import com.playdate.app.model.NotificationData;
-import com.playdate.app.ui.chat_ui_screen.request.Onclick;
+import com.playdate.app.ui.chat.request.Onclick;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

@@ -24,7 +24,7 @@ import com.playdate.app.model.Interest;
 import com.playdate.app.model.InterestsMain;
 import com.playdate.app.model.MatchListModel;
 import com.playdate.app.model.MatchListUser;
-import com.playdate.app.ui.chat_ui_screen.request.Onclick;
+import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;

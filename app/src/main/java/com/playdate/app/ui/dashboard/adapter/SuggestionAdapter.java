@@ -15,7 +15,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import com.playdate.app.R;
 import com.playdate.app.model.FriendRequest;
 import com.playdate.app.model.GetUserSuggestionData;
-import com.playdate.app.ui.chat_ui_screen.request.Onclick;
+import com.playdate.app.ui.chat.request.Onclick;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

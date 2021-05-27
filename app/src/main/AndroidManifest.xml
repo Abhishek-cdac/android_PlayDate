@@ -129,9 +129,14 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity android:name=".ui.coupons.ActivityCoupons" />
-        <activity android:name=".ui.chat_ui_screen.ChatActivity" />
+
+        <activity android:name=".ui.SampleActivity">
+
+        </activity>
+        <activity android:name=".ui.chat.FragChatMain" />
         <activity
             android:name=".util.customcamera.otalia.VideoPreviewActivity"
             android:screenOrientation="portrait" />

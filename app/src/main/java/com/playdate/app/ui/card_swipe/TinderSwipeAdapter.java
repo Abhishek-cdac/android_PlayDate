@@ -27,7 +27,7 @@ import com.google.android.exoplayer2.util.Util;
 import com.playdate.app.R;
 import com.playdate.app.model.Interest;
 import com.playdate.app.model.MatchListUser;
-import com.playdate.app.ui.chat_ui_screen.request.Onclick;
+import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.ui.playvideo.ExoPlayerActivity;
 import com.squareup.picasso.Picasso;
 

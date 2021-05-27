@@ -1,4 +1,4 @@
-package com.playdate.app.ui.chat_ui_screen.request;
+package com.playdate.app.ui.chat.request;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

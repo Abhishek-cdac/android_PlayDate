@@ -23,9 +23,66 @@
         android:layout_toLeftOf="@+id/profile_image_me"
         android:background="@drawable/btn_black_filled"
         android:paddingHorizontal="@dimen/_12sdp"
-        android:textSize="@dimen/_10sdp"
         android:paddingVertical="@dimen/_8sdp"
         android:text="Hey myron! how are you"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:textSize="@dimen/_10sdp"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/chat_image"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/_5sdp"
+        android:layout_toLeftOf="@+id/profile_image_me"
+        android:src="@drawable/profile"
+        android:visibility="gone" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="@dimen/_120sdp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/_5sdp"
+        android:layout_toLeftOf="@+id/profile_image_me"
+        app:cardBackgroundColor="@color/white"
+        android:id="@+id/card_image"
+        app:cardCornerRadius="@dimen/_10sdp">
+
+        <ImageView
+            android:id="@+id/iv_post_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@color/color_grey_too_light"
+            android:foregroundGravity="center"
+            android:src="@drawable/profile"
+            android:visibility="gone" />
+
+        <VideoView
+            android:id="@+id/chat_video"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/img_playback"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_pause"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/iv_mute_unmute"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_gravity="bottom|start"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:src="@drawable/ic_unmute"/>
+
+    </androidx.cardview.widget.CardView>
+
 
 </RelativeLayout>

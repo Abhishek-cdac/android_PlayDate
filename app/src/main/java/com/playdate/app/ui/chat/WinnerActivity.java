@@ -1,4 +1,4 @@
-package com.playdate.app.ui.chat_ui_screen;
+package com.playdate.app.ui.chat;
 
 import androidx.appcompat.app.AppCompatActivity;
 
