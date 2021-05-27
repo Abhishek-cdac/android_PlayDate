@@ -1,20 +1,20 @@
 {
   "project_info": {
-    "project_number": "998105748338",
-    "project_id": "playdate-1620799505982",
-    "storage_bucket": "playdate-1620799505982.appspot.com"
+    "project_number": "91277596407",
+    "project_id": "playdate-1622088877615",
+    "storage_bucket": "playdate-1622088877615.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:998105748338:android:83d9ad2aee7d3408bbc3eb",
+        "mobilesdk_app_id": "1:91277596407:android:3a982abe44de9068bd65f2",
         "android_client_info": {
           "package_name": "com.playdate.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "998105748338-rb00anbgi2cosa5e2maislmt8dj3rpht.apps.googleusercontent.com",
+          "client_id": "91277596407-9ffep8kg2ul6g875h0mkejfcmunc9kk8.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.playdate.app",
@@ -22,20 +22,20 @@
           }
         },
         {
-          "client_id": "998105748338-hujtc2ec9go8mpuekgv9iet1ecejfblc.apps.googleusercontent.com",
+          "client_id": "91277596407-7hu6ncse62dal92pm0fqs29r9sh3ihla.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyADVuDJR55vtKhh2Etm9hCrBvc0Gw0mFYI"
+          "current_key": "AIzaSyDG7_FzCCmXBZ7P-w9A5KvkIlOsCBas9pU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "998105748338-hujtc2ec9go8mpuekgv9iet1ecejfblc.apps.googleusercontent.com",
+              "client_id": "91277596407-7hu6ncse62dal92pm0fqs29r9sh3ihla.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

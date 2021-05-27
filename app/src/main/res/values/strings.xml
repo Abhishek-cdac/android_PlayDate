@@ -148,7 +148,7 @@
 
 
     <!--couple-->
-    <string name="join">Join</string>
+    <string name="join">Join</string>  <string name="delete_notification">Delete Notification</string>
     <string name="please_type">Please type it below</string>
     <string name="invite_code">Your Invite Code</string>
     <string name="invite_sent">Invite Sent</string>

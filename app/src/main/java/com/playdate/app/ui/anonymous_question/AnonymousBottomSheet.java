@@ -30,6 +30,7 @@ public class AnonymousBottomSheet extends BottomSheetDialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag_anonymous_bottom_sheet, container, false);
+
         Bundle bundle = this.getArguments();
         String postId = bundle.getString("postIdAQ");
         String userId = bundle.getString("userIdAQ");
@@ -40,6 +41,7 @@ public class AnonymousBottomSheet extends BottomSheetDialogFragment {
         report_comment_rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 callReportCommentApi(postId, userId, commentId);
             }
         });
@@ -74,8 +76,6 @@ public class AnonymousBottomSheet extends BottomSheetDialogFragment {
                 } else {
 
                 }
-
-
             }
 
             @Override

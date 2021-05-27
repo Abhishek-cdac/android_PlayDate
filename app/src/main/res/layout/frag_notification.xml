@@ -41,6 +41,7 @@
         android:layout_below="@+id/main_menu"
         android:layout_marginTop="@dimen/_8sdp"
         android:text="Today"
+        android:visibility="gone"
         android:textColor="@color/black"
         android:textSize="@dimen/_14sdp"
         android:textStyle="bold" />

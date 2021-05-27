@@ -1,7 +1,7 @@
 package com.playdate.app.ui.dashboard.adapter;
 
 import android.content.Context;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +11,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
-
 import com.playdate.app.R;
 import com.playdate.app.model.FriendRequest;
 import com.playdate.app.model.GetUserSuggestionData;
 import com.playdate.app.ui.chat.request.Onclick;
 import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,18 +61,15 @@ public class SuggestionAdapter extends PagerAdapter {
 
         ImageView iv_send_request, profile_image, iv_chat_icon;
         TextView title, desc, txt_header_Suggestions;
-
         profile_image = view.findViewById(R.id.profile_image);
         iv_send_request = view.findViewById(R.id.iv_send_request);
         iv_chat_icon = view.findViewById(R.id.iv_chat_icon);
         txt_header_Suggestions = view.findViewById(R.id.txt_header_Suggestions);
         txt_header_Suggestions.setText(suggestions_list.get(position).getUsername());
 
-
         if (suggestions_list.get(position).getProfilePicPath() == null) {
             profile_image.setBackgroundColor(context.getResources().getColor(R.color.color_grey_light));
         }
-
 
         Picasso.get().load(suggestions_list.get(position).getProfilePicPath()).placeholder(R.drawable.ic_baseline_person_24)
                 .fit()
@@ -83,8 +78,6 @@ public class SuggestionAdapter extends PagerAdapter {
 
 
         String userId = suggestions_list.get(position).getId();
-        Log.e("request_sent_userID",""+userId);
-
         if (suggestions_list.get(position).getFriendRequest() != null) {
             if (suggestions_list.get(position).getFriendRequest().size() > 0) {
                 if (suggestions_list.get(position).getFriendRequest().get(0).getStatus().toLowerCase().equals("pending")) {
