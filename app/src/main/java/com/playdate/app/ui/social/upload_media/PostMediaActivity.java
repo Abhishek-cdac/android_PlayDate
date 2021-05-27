@@ -1,31 +1,17 @@
 package com.playdate.app.ui.social.upload_media;
 
-import android.Manifest;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.drawable.ColorDrawable;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -43,21 +29,16 @@ import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.FriendsListModel;
-import com.playdate.app.model.GetUserSuggestion;
-import com.playdate.app.model.GetUserSuggestionData;
 import com.playdate.app.model.LoginResponse;
 import com.playdate.app.model.LoginUserDetails;
 import com.playdate.app.model.MatchListUser;
 import com.playdate.app.ui.dashboard.DashboardActivity;
-import com.playdate.app.ui.dashboard.adapter.SuggestedFriendAdapter;
 import com.playdate.app.ui.dialogs.FriendDialog;
 import com.playdate.app.ui.social.upload_media.adapter.ChipsAdapter;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
-
-import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -66,8 +47,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import okhttp3.MediaType;
@@ -77,7 +56,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.content.ContentValues.TAG;
 import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 
 public class PostMediaActivity extends AppCompatActivity implements View.OnClickListener {
@@ -143,21 +121,11 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
         }
 
 
-        LocationManager locationManager = (LocationManager)
-                getSystemService(Context.LOCATION_SERVICE);
         edt_location.setHint("fetching loaction...");
-        LocationListener locationListener = new MyLocationListener(this, edt_location, iv_location, animationView);
+
+
 
         setData();
-        boolean permissionGranted = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
-
-        if (permissionGranted) {
-            locationManager.requestLocationUpdates(
-                    LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
-
-        } else {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 200);
-        }
 
 
         callGetUserSuggestionAPI();
@@ -227,6 +195,7 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
 
     private void setData() {
         SessionPref pref = SessionPref.getInstance(this);
+        edt_location.setText(pref.getStringVal("LastCity"));
         String img = pref.getStringVal(SessionPref.LoginUserprofilePic);
         if (img.contains("http")) {
             Picasso.get().load(img)
@@ -286,7 +255,7 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
 
             try {
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                DashboardActivity.bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                DashboardActivity.bitmap.compress(Bitmap.CompressFormat.PNG, 50, stream);
                 byte[] byteArray = stream.toByteArray();
                 fos.write(byteArray);
             } catch (Exception e) {
@@ -361,7 +330,7 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
                     if (tagFriends.isEmpty()) {
                         tagFriends = lstUserSuggestions.get(i).get_id();
                     } else {
-                        tagFriends = tagFriends +","+ lstUserSuggestions.get(i).get_id();
+                        tagFriends = tagFriends + "," + lstUserSuggestions.get(i).get_id();
                     }
                 }
             }
@@ -430,60 +399,3 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
 }
 
 
-class MyLocationListener implements LocationListener {
-    PostMediaActivity activity;
-    TextView txt_location;
-    ImageView ivLocation;
-    LottieAnimationView loader;
-
-    public MyLocationListener(PostMediaActivity activity, TextView txt_location, ImageView ivLocation, LottieAnimationView loader) {
-        this.activity = activity;
-        this.txt_location = txt_location;
-        this.ivLocation = ivLocation;
-        this.loader = loader;
-    }
-
-    @Override
-    public void onLocationChanged(Location loc) {
-
-        String longitude = "Longitude: " + loc.getLongitude();
-        Log.v(TAG, longitude);
-        String latitude = "Latitude: " + loc.getLatitude();
-        Log.v(TAG, latitude);
-
-        /*------- To get city name from coordinates -------- */
-        String cityName = null;
-        Geocoder gcd = new Geocoder(activity, Locale.getDefault());
-        List<Address> addresses;
-        try {
-            addresses = gcd.getFromLocation(loc.getLatitude(),
-                    loc.getLongitude(), 1);
-            if (addresses.size() > 0) {
-                System.out.println(addresses.get(0).getLocality());
-                cityName = addresses.get(0).getLocality();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        String s = longitude + "\n" + latitude + "\n\nMy Current City is: "
-                + cityName;
-        txt_location.setText(cityName);
-        ivLocation.setVisibility(View.VISIBLE);
-        loader.setVisibility(View.GONE);
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-    }
-
-
-}

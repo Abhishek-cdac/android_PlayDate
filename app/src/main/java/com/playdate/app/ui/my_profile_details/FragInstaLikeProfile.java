@@ -78,6 +78,7 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
         if (itsMe) {
             iv_send_request.setVisibility(View.GONE);
             iv_chat.setVisibility(View.GONE);
+            InstaPhotosAdapter.isLocked=false;
         } else {
             iv_send_request.setVisibility(View.VISIBLE);
             iv_chat.setVisibility(View.VISIBLE);

@@ -7,6 +7,7 @@
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the "MyLocation" functionality.
     -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
@@ -30,6 +31,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:networkSecurityConfig="@xml/network_security_config"
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
@@ -78,12 +80,12 @@
         <activity
             android:name=".ui.login.LoginActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".util.customcamera.otalia.GameCamera"/>
-      <!--  <activity android:name=".ui.date.fragments.FragSelectPartner"></activity>
-        <activity android:name=".ui.date.fragments.FragLocationTracing" />
-        <activity android:name=".ui.date.fragments.FragPartnerSelected" />
-        <activity android:name=".ui.date.fragments.FragSelectDate"></activity>
-        <activity android:name=".ui.date.fragments.FragLocationConfirmation" />-->
+        <activity android:name=".util.customcamera.otalia.GameCamera" />
+        <!--  <activity android:name=".ui.date.fragments.FragSelectPartner"></activity>
+          <activity android:name=".ui.date.fragments.FragLocationTracing" />
+          <activity android:name=".ui.date.fragments.FragPartnerSelected" />
+          <activity android:name=".ui.date.fragments.FragSelectDate"></activity>
+          <activity android:name=".ui.date.fragments.FragLocationConfirmation" />-->
         <activity
             android:name=".ui.register.RegisterActivity"
             android:screenOrientation="portrait" />
@@ -160,6 +162,13 @@
             android:name=".ui.register.gender.GenderSelActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".ui.invite.InviteFriendActivity" />
+
+        <service android:name=".service.LocationService" />
+        <receiver android:name=".broadcast.ConnectionBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

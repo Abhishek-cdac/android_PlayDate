@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,22 +18,35 @@ import android.widget.TextView;
 import androidx.annotation.LongDef;
 import androidx.annotation.NonNull;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.github.marlonlom.utilities.timeago.TimeAgo;
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.GetCommentData;
 import com.playdate.app.model.GetCommentModel;
+import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.util.session.SessionPref;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -42,14 +56,18 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     ArrayList<GetCommentData> commentList = new ArrayList<>();
     boolean selected = false;
     int selected_index = -1;
-
+    Onclick itemClick;
+    String DATE_FORMAT_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
     Context mContext;
     onCommentDelete ref;
     String userId, postId, commentId;
+    String timeFormat, timeFormat_new;
 
-    public CommentAdapter(Context applicationContext, ArrayList<GetCommentData> lst_getComment) {
+    public CommentAdapter(Context applicationContext, ArrayList<GetCommentData> lst_getComment, Onclick itemClick) {
         this.commentList = lst_getComment;
         this.mContext = applicationContext;
+        this.itemClick = itemClick;
+
 
     }
 
@@ -62,18 +80,56 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         return new ViewHolder(view);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull CommentAdapter.ViewHolder holder, int position) {
         holder.name.setText(commentList.get(position).getUsername());
         holder.desc.setText(commentList.get(position).getComments().getComment());
-
         userId = commentList.get(position).getUserId();
         commentId = commentList.get(position).getComments().getCommentId();
         postId = commentList.get(position).getComments().getPostId();
+        timeFormat = commentList.get(position).getComments().getEntryDate();
 
-        Log.e("commentId", "" + commentId);
-        Log.e("userId", "" + userId);
-        Log.e("postId", "" + postId);
+       /* Date date=null;
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        String temp = timeFormat;
+        try {
+            date = formatter.parse(temp);
+            Log.e("formated date ", date + "");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        String formateDate = new SimpleDateFormat("MM-dd-yyyy HH:mm aa").format(date);
+        Log.v("output date ",formateDate);*/
+//        TimeAgo2 timeAgo2 = new TimeAgo2();
+        timeFormat=timeFormat.replace("T"," ");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+        df.setTimeZone(TimeZone.getTimeZone("GTC"));
+        Date date = null;
+        try {
+            date = df.parse(timeFormat);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        df.setTimeZone(TimeZone.getDefault());
+        String formattedDate = df.format(date);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date ddd = null;
+        try {
+            ddd = sdf.parse(formattedDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        long millis = ddd.getTime();
+        String text = TimeAgo.using(millis);
+
+
+//        String MyFinalValue = timeAgo2.covertTimeToText(formattedDate);
+        holder.time.setText(text.toLowerCase());
+        Log.e("MyFinalValue", "" + text);
+
 
 //        if (selected_index == position) {
 //            Log.e("selected_index..",""+selected_index);
@@ -86,8 +142,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             holder.like.setTextColor(mContext.getResources().getColor(R.color.white));
             holder.reply.setTextColor(mContext.getResources().getColor(R.color.white));
             holder.delete.setVisibility(View.VISIBLE);
-
-
         } else {
             holder.relativeLayout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
             holder.name.setTextColor(mContext.getResources().getColor(R.color.black));
@@ -96,8 +150,32 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             holder.like.setTextColor(mContext.getResources().getColor(R.color.black));
             holder.reply.setTextColor(mContext.getResources().getColor(R.color.black));
             holder.delete.setVisibility(View.GONE);
-
         }
+
+        holder.relativeLayout.setOnLongClickListener(v -> {
+            int selected_index = position;
+            Log.e("relativeLayout", "relativeLayout" + selected_index);
+            if (!commentList.get(selected_index).isSelected) {
+
+                for (int i = 0; i < commentList.size(); i++) {
+                    if (selected_index != i) {
+                        commentList.get(i).setSelected(false);
+                    } else {
+                        commentList.get(selected_index).setSelected(true);
+                        itemClick.onItemClicks(v, selected_index, 11, commentList.get(position).getComments().getCommentId(), postId, commentList.get(position).getUserId());
+                    }
+                }
+
+                notifyDataSetChanged();
+
+
+            } else {
+                commentList.get(selected_index).setSelected(false);
+                notifyDataSetChanged();
+            }
+            return true;
+        });
+
         //   }
     }
 
@@ -134,28 +212,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
 
                 }
-            });
-            relativeLayout.setOnLongClickListener(v -> {
-
-                int selected_index = getAdapterPosition();
-                Log.e("relativeLayout", "relativeLayout" + selected_index);
-                if (!commentList.get(selected_index).isSelected) {
-
-                    for (int i = 0; i < commentList.size(); i++) {
-                        if (selected_index != i) {
-                            commentList.get(i).setSelected(false);
-                        } else {
-                            commentList.get(selected_index).setSelected(true);
-                        }
-
-                    }
-
-                    notifyDataSetChanged();
-                } else {
-                    commentList.get(selected_index).setSelected(false);
-                    notifyDataSetChanged();
-                }
-                return true;
             });
 
         }
@@ -207,7 +263,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             deleted.show(fragmentManager, "comment deleted");
             commentList.remove(selected_index);
             notifyDataSetChanged();
-          //  ref.ChangeCount(commentList.size());
+            //  ref.ChangeCount(commentList.size());
         } else {
             //code for undo
         }
@@ -231,6 +287,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                         if (commentList == null) {
                             commentList = new ArrayList<>();
                         }
+
                         notifyDataSetChanged();
 
                     } else {
@@ -254,4 +311,13 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     }
 
 
+    private String getFormattedDate(Date timeZone) {
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = df.format(timeZone);
+        return formattedDate;
+
+    }
 }
+
+

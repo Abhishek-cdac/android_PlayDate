@@ -174,8 +174,8 @@ public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriend
 
             request.setOnClickListener(v -> {
                 int position = getAdapterPosition();
-                String userId = suggestions_list.get(position).getId();
-                Log.e("request_sent_userID", "" + userId);
+//                String userId = suggestions_list.get(position).getId();
+//                Log.e("request_sent_userID", "" + userId);
 
                 if (null != suggestions_list.get(position).getFriendRequest()) {
                     if (suggestions_list.get(position).getFriendRequest().size() == 0) {
@@ -185,7 +185,7 @@ public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriend
                         lst.add(fr);
                         suggestions_list.get(position).setFriendRequest(lst);
                         notifyDataSetChanged();
-                        itemClick.onItemClicks(v, position, 10, userId);
+                        itemClick.onItemClicks(v, position, 10, suggestions_list.get(position).getId());
 
                     } else {
 

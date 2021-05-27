@@ -4,5 +4,5 @@ import androidx.fragment.app.Fragment;
 
 public interface OnInnerFragmentClicks {
     void ReplaceFrag(Fragment fragment);
-    void loadProfile();
+    void loadProfile(String UserID);
 }

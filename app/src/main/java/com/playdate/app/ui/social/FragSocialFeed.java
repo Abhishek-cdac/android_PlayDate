@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.allattentionhere.autoplayvideos.AAH_CustomRecyclerView;
 import com.playdate.app.R;
@@ -41,7 +42,7 @@ public class FragSocialFeed extends Fragment {
     //    public static final String RESTAURANT = 1;
 //    public static final String ANONYMUSQUESTION = 2;
 //    public static final String ADDS = 3;
-    AAH_CustomRecyclerView recycler_view_feed;
+    private AAH_CustomRecyclerView recycler_view_feed;
 
     @Nullable
     @Override
@@ -58,6 +59,7 @@ public class FragSocialFeed extends Fragment {
     public void onStop() {
         try {
             recycler_view_feed.stopVideos();
+//            Toast.makeText(getActivity(), "Video Stopped", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -68,8 +70,8 @@ public class FragSocialFeed extends Fragment {
     private void callAPI() {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("limit", "50");// format 1990-08-12
-        hashMap.put("pageNo", "1");// format 1990-08-12
+        hashMap.put("limit", "100");// Hardcode
+        hashMap.put("pageNo", "1");// Hardcode
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
         pd.show();
         SessionPref pref = SessionPref.getInstance(getActivity());
@@ -86,16 +88,15 @@ public class FragSocialFeed extends Fragment {
                         lst = new ArrayList<>();
                     }
                     SocialFeedAdapter adapter = new SocialFeedAdapter(getActivity(), lst);
-
-
                     LinearLayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
                     recycler_view_feed.setLayoutManager(manager);
                     recycler_view_feed.setItemAnimator(new DefaultItemAnimator());
                     recycler_view_feed.setActivity(getActivity());
                     recycler_view_feed.setCheckForMp4(false);
-                    recycler_view_feed.setDownloadPath(Environment.getExternalStorageDirectory() + "/MyVideo"); // (Environment.getExternalStorageDirectory() + "/Video") by default
+
+                    recycler_view_feed.setDownloadPath(Environment.getExternalStorageDirectory() + "/PlayDate/Video");
                     recycler_view_feed.setDownloadVideos(true); // false by default
-                    //extra - start downloading all videos in background before loading RecyclerView
+//                    extra - start downloading all videos in background before loading RecyclerView
                     List<String> urls = null;
                     try {
                         urls = new ArrayList<>();
@@ -111,7 +112,8 @@ public class FragSocialFeed extends Fragment {
                     recycler_view_feed.setVisiblePercent(70);
                     recycler_view_feed.setPlayOnlyFirstVideo(true);
                     recycler_view_feed.setAdapter(adapter);
-
+                    recycler_view_feed.smoothScrollBy(0,1);
+                    recycler_view_feed.smoothScrollBy(0,-1);
                 } else {
 
 
@@ -127,6 +129,17 @@ public class FragSocialFeed extends Fragment {
             }
         });
 
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        try {
+            recycler_view_feed.playAvailableVideos(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

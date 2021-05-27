@@ -84,6 +84,11 @@ public class FragCardSwipe extends Fragment {
             public void onItemClicks(View v, int adapterPosition, int i, String notifiationId, String userId) {
 
             }
+
+            @Override
+            public void onItemClicks(View v, int absoluteAdapterPosition, int i, String commentId, String postId, String userId) {
+
+            }
         };
         cardStackView = view.findViewById(R.id.card_stack_view);
         ConstraintLayout cl_page = view.findViewById(R.id.cl_page);

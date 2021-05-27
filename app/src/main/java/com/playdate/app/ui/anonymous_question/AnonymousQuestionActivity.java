@@ -21,11 +21,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
+import com.playdate.app.model.Comments;
 import com.playdate.app.model.CommonModel;
 import com.playdate.app.model.GetCommentData;
 import com.playdate.app.model.GetCommentModel;
 import com.playdate.app.model.GetUserSuggestionData;
 import com.playdate.app.model.LoginResponse;
+import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.ui.dashboard.adapter.SuggestedFriendAdapter;
 import com.playdate.app.util.session.SessionPref;
 
@@ -49,12 +51,45 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
     EditText ext_question;
     boolean isForNew = false;
     String postId;
-
+    private Onclick itemClick;
+    String commentIdAq , userIDAq ;
+    Bundle bundle;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anonymous_ques);
         mIntent = getIntent();
+        itemClick = new Onclick() {
+            @Override
+            public void onItemClick(View view, int position, int value) {
+
+            }
+
+            @Override
+            public void onItemClicks(View view, int position, int value, String id) {
+
+            }
+
+            @Override
+            public void onItemClicks(View v, int adapterPosition, int i, String notifiationId, String userId) {
+
+            }
+
+            @Override
+            public void onItemClicks(View v, int absoluteAdapterPosition, int i, String commentId, String postId, String userId) {
+                if (i == 11) {
+
+                    bundle = new Bundle();
+                    bundle.putString("postIdAQ", postId );
+                    bundle.putString("userIdAQ", userId );
+                    bundle.putString("commentIdAQ", commentId );
+
+                     }
+            }
+        };
+
+
+
         text_count = findViewById(R.id.comment_number);
         add_comment = findViewById(R.id.add_comment);
         ext_question = findViewById(R.id.ext_question);
@@ -65,7 +100,7 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             postId = extras.getString("post_id");
-            Log.e("postiddddddd",""+ postId);
+            Log.e("postiddddddd", "" + postId);
             //The key argument here must match that used in the other activity
         }
         TextView text = findViewById(R.id.anun);
@@ -160,17 +195,22 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
                             lst_getComment = new ArrayList<>();
                         }
 
+
                         RecyclerView.LayoutManager manager = new LinearLayoutManager(AnonymousQuestionActivity.this, RecyclerView.VERTICAL, false);
                         recyclerView.setLayoutManager(manager);
-                        CommentAdapter adapter = new CommentAdapter(getApplicationContext(), lst_getComment);
+                        CommentAdapter adapter = new CommentAdapter(getApplicationContext(), lst_getComment, itemClick);
                         recyclerView.setAdapter(adapter);
+
+
                         int number = adapter.getItemCount();
-                        Log.d("selected_click", String.valueOf(number));
+                        //  String number = lst_getComment.get(0).get;
+                        //   Log.d("selected_click", String.valueOf(number));
+                        Log.e("selected_click", "" + number);
 
                         if (number == 0) {
-                            text_count.setText("No Answer");
+                            text_count.setText("No Comments");
                         } else {
-                            text_count.setText(number + " Answer");
+                            text_count.setText(number + " Comments");
                         }
                     } else {
 
@@ -271,6 +311,8 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
 
     private void showModel() {
         AnonymousBottomSheet bottomSheet = new AnonymousBottomSheet();
+        bottomSheet.setArguments(bundle);
+
         bottomSheet.show(getSupportFragmentManager(), "ModalBottomSheet");
     }
 }
@@ -278,3 +320,4 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
 interface onCommentDelete {
     void ChangeCount(int listCount);
 }
+

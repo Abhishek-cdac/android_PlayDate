@@ -67,7 +67,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
                 public void onClick(View v) {
 
                     OnFriendSelected inf= dashboardActivity;
-                    inf.OnSingleFriendSelected(lst.get(getAdapterPosition()).getUserId());
+                    inf.OnSingleFriendSelected(lst.get(getAdapterPosition()).getUserId(),lst.get(getAbsoluteAdapterPosition()).getFriendId());
                 }
             });
         }

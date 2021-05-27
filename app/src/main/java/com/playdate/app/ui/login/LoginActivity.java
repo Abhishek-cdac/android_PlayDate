@@ -12,6 +12,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,6 +29,7 @@ import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
+import com.facebook.login.Login;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.android.gms.auth.api.Auth;
@@ -42,6 +44,9 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.Task;
 import com.playdate.app.R;
+import com.playdate.app.couple.ui.register.connect.ConnectYourPartner;
+import com.playdate.app.couple.ui.register.invitecode.InviteCodeActivity;
+import com.playdate.app.couple.ui.register.invitepartner.InvitePartnerActivity;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.databinding.ActivityLoginBinding;
@@ -91,7 +96,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private LoginManager loginManager;
     String ServerAuthCode = null;
     private GoogleApiClient googleApiClient;
-
+private RelativeLayout rl_couple;
     private LoginViewModel loginViewModel;
 
     private ActivityLoginBinding binding;
@@ -107,7 +112,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         FacebookSdk.sdkInitialize(this);
 
         callbackManager = CallbackManager.Factory.create();
-
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
 
@@ -130,6 +134,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         binding.setLifecycleOwner(this);
         binding.setLoginViewModel(loginViewModel);
         Button logout = binding.logout;
+        rl_couple =findViewById(R.id.rl_couple);
+        rl_couple.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, ConnectYourPartner.class));
+
+            }
+        });
 
         loginViewModel.getUser().observe(this, loginUser -> {
 
@@ -446,6 +458,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         hashMap.put("sourceType", "Google");
         hashMap.put("deviceID", "12345");//Hardcode
         hashMap.put("deviceType", DEVICE_TYPE);
+        hashMap.put("inviteCode", "");
         //   hashMap.put("deviceToken", "12345");//Hardc
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
         pd.show();
@@ -549,6 +562,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         hashMap.put("sourceType", "Facebook");
         hashMap.put("deviceID", "12345");//Hardcode
         hashMap.put("deviceType", DEVICE_TYPE);
+        hashMap.put("inviteCode", "");
 
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
         pd.show();

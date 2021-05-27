@@ -147,4 +147,17 @@
     <string name="more_suggestion">See More Suggestions</string>
     <string name="moresugesstion_foru">Suggestions For You</string>
     <string name="sarchfriendhere">Connect with friends, Search them Now</string>
+
+
+    <!--couple-->
+    <string name="join">Join</string>
+    <string name="please_type">Please type it below</string>
+    <string name="invite_code">Your Invite Code</string>
+    <string name="invite_sent">Invite Sent</string>
+    <string name="invite_code_desc">An Invitation contain a code which has been Sent to you by your partner.</string>
+    <string name="connect">Connect with your partner</string>
+    <string name="invite_partner">Invite partner</string>
+    <string name="connect_desc">Please select an action for your partner</string>
+    <string name="invite_desc">Start a couple with your partner on playdate</string>
+
 </resources>

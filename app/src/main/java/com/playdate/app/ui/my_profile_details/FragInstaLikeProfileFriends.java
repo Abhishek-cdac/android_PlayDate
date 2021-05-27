@@ -2,6 +2,7 @@ package com.playdate.app.ui.my_profile_details;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +13,15 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
+import com.playdate.app.model.CommonModel;
 import com.playdate.app.model.GetProfileDetails;
 import com.playdate.app.model.GetProileDetailData;
 import com.playdate.app.ui.dashboard.OnFriendSelected;
@@ -32,6 +37,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -58,11 +64,21 @@ public class FragInstaLikeProfileFriends extends Fragment implements onPhotoClic
 
     boolean isFriend = true;
     String LoginId;
+    String friendID;
 
     public FragInstaLikeProfileFriends(boolean isFriend, String LoginId) {
         this.isFriend = isFriend;
         this.LoginId = LoginId;
     }
+
+
+    public FragInstaLikeProfileFriends(boolean isFriend, String LoginId, String friendID) {
+        this.isFriend = isFriend;
+        this.LoginId = LoginId;
+        this.friendID = friendID;
+    }
+
+    FragMyUploadMedia mediaFrag;
 
     @Nullable
     @Override
@@ -71,6 +87,11 @@ public class FragInstaLikeProfileFriends extends Fragment implements onPhotoClic
 
         clsCommon = CommonClass.getInstance();
 
+        if (isFriend) {
+            InstaPhotosAdapter.isLocked = false;
+        } else {
+            InstaPhotosAdapter.isLocked = true;
+        }
         txtTotalFriend = view.findViewById(R.id.friend_count);
         txtTotalPost = view.findViewById(R.id.post_count);
         iv_send_request = view.findViewById(R.id.iv_send_request);
@@ -79,6 +100,18 @@ public class FragInstaLikeProfileFriends extends Fragment implements onPhotoClic
 //        recycler_photos = view.findViewById(R.id.recycler_photos);
         txt_bio = view.findViewById(R.id.txt_bio);
         txt_login_user = view.findViewById(R.id.txt_login_user);
+
+        try {
+            FragmentManager fm = getChildFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            mediaFrag = new FragMyUploadMedia(LoginId);
+            ft.add(R.id.fl_fragment, mediaFrag);
+            ft.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
         callAPI(LoginId);
         if (isFriend) {
             iv_send_request.setImageResource(R.drawable.sent_request_sel);
@@ -191,14 +224,119 @@ public class FragInstaLikeProfileFriends extends Fragment implements onPhotoClic
 
     String videopath = "";
 
+    private void callAddFriendRequestApi(String toUserID) {
+
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("toUserID", toUserID);
+        SessionPref pref = SessionPref.getInstance(getActivity());
+
+        Call<CommonModel> call = service.addFriendRequest("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new Callback<CommonModel>() {
+            @Override
+            public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
+//                pd.cancel();
+                if (response.code() == 200) {
+                    assert response.body() != null;
+                    if (response.body().getStatus() == 1) {
+//                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", "" + response.body().getMessage(), "Ok");
+                    } else {
+//                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", "" + response.body().getMessage(), "Ok");
+                    }
+                } else {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message").toString(), "Ok");
+                    } catch (Exception e) {
+                        Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CommonModel> call, Throwable t) {
+                t.printStackTrace();
+//                pd.cancel();
+                Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void callRemoveFriendRequestApi() {
+
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        SessionPref pref = SessionPref.getInstance(getActivity());
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("friendId", friendID);
+        hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
+
+
+        Call<CommonModel> call = service.removeFriend("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new Callback<CommonModel>() {
+            @Override
+            public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
+//                pd.cancel();
+                if (response.code() == 200) {
+                    assert response.body() != null;
+                    if (response.body().getStatus() == 1) {
+
+//                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", "" + response.body().getMessage(), "Ok");
+                    } else {
+//                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", "" + response.body().getMessage(), "Ok");
+                    }
+                } else {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message").toString(), "Ok");
+                    } catch (Exception e) {
+                        Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CommonModel> call, Throwable t) {
+                t.printStackTrace();
+//                pd.cancel();
+                Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void showYesNoDialog() {
+        new AlertDialog.Builder(getActivity())
+
+                .setInverseBackgroundForced(true)
+                .setMessage("Are you sure you want to unfriend " + txt_login_user.getText().toString() + " ?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", (dialog, id) -> removeFriend())
+                .setNegativeButton("No", null)
+                .show();
+    }
+
+    private void removeFriend() {
+        iv_send_request.setImageResource(R.drawable.sent_request);
+        iv_chat.setImageResource(R.drawable.chat_black);
+        InstaPhotosAdapter.isLocked = true;
+        callRemoveFriendRequestApi();
+        isFriend = false;
+        mediaFrag.setView(0, 0);
+    }
+
     @Override
     public void onClick(View view) {
         int id = view.getId();
         if (id == R.id.iv_send_request) {
-            iv_send_request.setImageResource(R.drawable.sent_request_sel);
-            iv_chat.setImageResource(R.drawable.chat_sel);
-            InstaPhotosAdapter.isLocked = false;
-            onTypeChange(0);
+            if (isFriend) {
+                showYesNoDialog();
+
+            } else {
+                iv_send_request.setImageResource(R.drawable.sent_request_sel);
+                callAddFriendRequestApi(LoginId);
+            }
+
+
+//            onTypeChange(0);
         } else if (id == R.id.profile_image) {
             try {
                 if (videopath == null) {

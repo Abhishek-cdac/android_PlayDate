@@ -35,6 +35,17 @@ public class GetCommentData {
     @Expose
     private String username;
 
+    public String getEntryDate() {
+        return entryDate;
+    }
+
+    public void setEntryDate(String entryDate) {
+        this.entryDate = entryDate;
+    }
+
+    @Expose
+    private String entryDate;
+
     public Comments getComments() {
         return comments;
     }

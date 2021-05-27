@@ -27,8 +27,6 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 public class FragSavedPost extends Fragment {
-    public FragSavedPost() {
-    }
 
     RecyclerView recyclerView;
     private List<SavedPostData> savedPostDataList ;
@@ -48,6 +46,8 @@ public class FragSavedPost extends Fragment {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
+        hashMap.put("limit", "100");
+        hashMap.put("pageNo", "1");
 //        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(mContext);
 //        pd.show();
         Call<SavedPostModel> call = service.getPostSaveGallery("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);

@@ -1,9 +1,12 @@
 package com.playdate.app.ui.dashboard;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -32,6 +35,7 @@ import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.FriendsListModel;
 import com.playdate.app.model.MatchListUser;
+import com.playdate.app.service.LocationService;
 import com.playdate.app.ui.anonymous_question.AnonymousQuestionActivity;
 import com.playdate.app.ui.card_swipe.FragCardSwipe;
 import com.playdate.app.ui.chat.request.RequestChatFragment;
@@ -72,9 +76,9 @@ import static com.playdate.app.ui.register.profile.UploadProfileActivity.REQUEST
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.TAKE_PHOTO_CODE;
 import static com.playdate.app.util.session.SessionPref.CompleteProfile;
 
-public class DashboardActivity extends AppCompatActivity implements OnInnerFragmentClicks,bottomNavigationGoneListener, View.OnClickListener, OnProfilePhotoChageListerner, OnFriendSelected {
-    FragmentManager fm;
-    FragmentTransaction ft;
+public class DashboardActivity extends AppCompatActivity implements OnInnerFragmentClicks, View.OnClickListener, OnProfilePhotoChageListerner, OnFriendSelected {
+    //    FragmentManager fm;
+//    FragmentTransaction ft;
     TextView txt_match, txt_chat;
     TextView txt_social;
     TextView txt_payment;
@@ -177,8 +181,6 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         ll_upload_video.setOnClickListener(this);
         search.setOnClickListener(this);
 
-        fm = getSupportFragmentManager();
-        ft = fm.beginTransaction();
 
         rv_friends = findViewById(R.id.rv_friends);
         boolean isFirstTime = checkFirstFrag();
@@ -189,9 +191,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         } else {
             fragOne = new FragSocialFeed();
         }
-        ft.add(R.id.flFragment, fragOne);
-        ft.commit();
-
+        ReplaceFrag(fragOne);
         txt_match.setOnClickListener(this);
         txt_chat.setOnClickListener(this);
         iv_date.setOnClickListener(this);
@@ -302,14 +302,34 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     }
 
 
+    Handler handler;
+
+    @Override
+    protected void onDestroy() {
+        if (null != handler) {
+            try {
+                handler.removeCallbacksAndMessages(null);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        super.onDestroy();
+    }
+
     @Override
     public void ReplaceFrag(Fragment fragment) {
         try {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            if (fragmentManager.getFragments().size() > 0) {
+                ft.replace(R.id.flFragment, fragment, fragment.getClass().getSimpleName());
+            } else {
+                ft.add(R.id.flFragment, fragment, fragment.getClass().getSimpleName());
+            }
+            ft.addToBackStack(null);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            ft.commit();
 
-            ft = fm.beginTransaction();
-            ft.replace(R.id.flFragment, fragment, fragment.getClass().getSimpleName());
-            ft.addToBackStack("tags");
-            ft.commitAllowingStateLoss();
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(this, "" + e.toString(), Toast.LENGTH_SHORT).show();
@@ -318,8 +338,8 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
     public void ReplaceFragWithStack(Fragment fragment) {
         try {
-
-            ft = fm.beginTransaction();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction ft = fragmentManager.beginTransaction();
             ft.replace(R.id.flFragment, fragment, fragment.getClass().getSimpleName());
             ft.addToBackStack("tags");
             ft.commitAllowingStateLoss();
@@ -331,8 +351,17 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
 
     @Override
-    public void loadProfile() {
-        ll_profile_insta.performClick();
+    public void loadProfile(String UserID) {
+        SessionPref pref = SessionPref.getInstance(this);
+        if (pref.getStringVal(SessionPref.LoginUserID).equals(UserID)) {
+            ll_profile_insta.performClick();
+        } else {
+            ll_friends.setVisibility(View.GONE);
+            ll_option_love.setVisibility(View.GONE);
+            ReplaceFragWithStack(new FragInstaLikeProfileFriends(true, UserID));
+        }
+
+
     }
 
 
@@ -456,6 +485,9 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             iv_profile_sett.setBackground(null);
             iv_profile_sett.setImageResource(R.drawable.tech_support);
 
+//            txt_match.setBackground(null);
+//            txt_chat.setBackground(null);
+
 
             checkFirstFrag();
             Fragment frag;
@@ -475,7 +507,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             txt_social.setTextColor(getResources().getColor(R.color.white));
             txt_social.setBackground(getResources().getDrawable(R.drawable.menu_button));
 
-
+            callAPIFriends();
         } else if (id == R.id.iv_coupons) {
             OPTION_CLICK = 1;
             iv_love.setImageResource(R.drawable.love);
@@ -760,10 +792,10 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     }
 
     @Override
-    public void OnSingleFriendSelected(String Id) {
+    public void OnSingleFriendSelected(String Id, String FreindID) {
         ll_friends.setVisibility(View.GONE);
         ll_option_love.setVisibility(View.GONE);
-        ReplaceFragWithStack(new FragInstaLikeProfileFriends(true, Id));
+        ReplaceFragWithStack(new FragInstaLikeProfileFriends(true, Id, FreindID));
     }
 
     @Override
@@ -794,12 +826,24 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     }
 
     @Override
-    public void bottomNavigationGone() {
-        bottomNavigationView.setVisibility(View.INVISIBLE);
-    }
-}
+    protected void onResume() {
+        super.onResume();
 
-interface bottomNavigationGoneListener {
-    void bottomNavigationGone();
+        try {
+            boolean permissionGranted = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+
+            if (permissionGranted) {
+//                Toast.makeText(this, "Location permission granted", Toast.LENGTH_SHORT).show();
+                startService(new Intent(getApplicationContext(), LocationService.class));
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 200);
+            }
+        } catch (Exception e) {
+//            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+
+
+    }
 }
 

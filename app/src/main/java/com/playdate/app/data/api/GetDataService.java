@@ -52,6 +52,7 @@ public interface GetDataService {
     @POST("user/reset-password")
     Call<LoginResponse> resetPassword(@FieldMap Map<String, String> param);
 
+
     @FormUrlEncoded
     @POST("user/forgot-password-sent-otp")
     Call<LoginResponse> forgotPasswordSentOtp(@FieldMap Map<String, String> param);
@@ -142,6 +143,10 @@ public interface GetDataService {
     Call<LoginResponse> addPostLikeUnlike(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
     @FormUrlEncoded
+    @POST("user/add-user-report-block")
+    Call<LoginResponse> addUserReportBlock(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
+    @FormUrlEncoded
     @POST("user/post-notification-on-off")
     Call<LoginResponse> notificationOnOff(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
@@ -164,11 +169,26 @@ public interface GetDataService {
     @FormUrlEncoded
     @POST("user/get-post-comments")
     Call<GetCommentModel> getPostComment(@Header("Authorization") String token, @FieldMap Map<String, String> param);
-
     @FormUrlEncoded
     @POST("user/delete-post-comment")
     Call<GetCommentModel> deletePostComment(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
+    @FormUrlEncoded
+    @POST("user/reported-post-comment")
+    Call<GetCommentModel> reportPostComment(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
+
+    @FormUrlEncoded
+    @POST("user/get-my-post-feed")
+    Call<PostHistory> getMyPostFeed(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
+    @FormUrlEncoded
+    @POST("user/remove-friend")
+    Call<CommonModel> removeFriend(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
+    @FormUrlEncoded
+    @POST("user/change-password")
+    Call<LoginResponse> changePassword(@Header("Authorization") String token, @FieldMap Map<String, String> param);
     @GET("09fdedc6-7c7e-42bd-94fa-07be912504ef")
     Call<ChatUserList> getChats();
 
