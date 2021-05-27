@@ -77,8 +77,8 @@ import static com.playdate.app.ui.register.profile.UploadProfileActivity.TAKE_PH
 import static com.playdate.app.util.session.SessionPref.CompleteProfile;
 
 public class DashboardActivity extends AppCompatActivity implements OnInnerFragmentClicks, View.OnClickListener, OnProfilePhotoChageListerner, OnFriendSelected {
-    FragmentManager fm;
-    FragmentTransaction ft;
+    //    FragmentManager fm;
+//    FragmentTransaction ft;
     TextView txt_match, txt_chat;
     TextView txt_social;
     TextView txt_payment;
@@ -181,8 +181,6 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         ll_upload_video.setOnClickListener(this);
         search.setOnClickListener(this);
 
-        fm = getSupportFragmentManager();
-        ft = fm.beginTransaction();
 
         rv_friends = findViewById(R.id.rv_friends);
         boolean isFirstTime = checkFirstFrag();
@@ -193,9 +191,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         } else {
             fragOne = new FragSocialFeed();
         }
-        ft.add(R.id.flFragment, fragOne);
-        ft.commit();
-
+        ReplaceFrag(fragOne);
         txt_match.setOnClickListener(this);
         txt_chat.setOnClickListener(this);
         iv_date.setOnClickListener(this);
@@ -323,15 +319,17 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     @Override
     public void ReplaceFrag(Fragment fragment) {
         try {
-            getSupportFragmentManager().executePendingTransactions();
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-
-            ft.replace(R.id.flFragment, fragment, fragment.getClass().getSimpleName());
-            ft.addToBackStack("tags");
-            ft.setTransition(
-                    FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            if (fragmentManager.getFragments().size() > 0) {
+                ft.replace(R.id.flFragment, fragment, fragment.getClass().getSimpleName());
+            } else {
+                ft.add(R.id.flFragment, fragment, fragment.getClass().getSimpleName());
+            }
+            ft.addToBackStack(null);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             ft.commit();
+
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(this, "" + e.toString(), Toast.LENGTH_SHORT).show();
@@ -340,8 +338,8 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
     public void ReplaceFragWithStack(Fragment fragment) {
         try {
-
-            ft = fm.beginTransaction();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction ft = fragmentManager.beginTransaction();
             ft.replace(R.id.flFragment, fragment, fragment.getClass().getSimpleName());
             ft.addToBackStack("tags");
             ft.commitAllowingStateLoss();

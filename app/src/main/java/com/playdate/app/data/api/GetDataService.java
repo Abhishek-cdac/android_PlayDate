@@ -35,6 +35,8 @@ public interface GetDataService {
     @POST("user/login")
     Call<LoginResponse> login(@FieldMap Map<String, String> param);
 
+
+
     @FormUrlEncoded
     @POST("user/verify-otp")
     Call<LoginResponse> verifyOtp(@FieldMap Map<String, String> param);

@@ -49,6 +49,7 @@ public class FragSocialFeed extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.row_social_feed, container, false);
         recycler_view_feed = view.findViewById(R.id.recycler_view_feed);
+
         callAPI();
 
         return view;
@@ -93,25 +94,26 @@ public class FragSocialFeed extends Fragment {
                     recycler_view_feed.setActivity(getActivity());
                     recycler_view_feed.setCheckForMp4(false);
 
-//                    recycler_view_feed.setDownloadPath(Environment.getExternalStorageDirectory() + "/MyVideo"); // (Environment.getExternalStorageDirectory() + "/Video") by default
-//                    recycler_view_feed.setDownloadVideos(true); // false by default
-                    //extra - start downloading all videos in background before loading RecyclerView
-//                    List<String> urls = null;
-//                    try {
-//                        urls = new ArrayList<>();
-//                        for (PostDetails object : lst) {
-//                            if (object.getPostMedia().get(0).getMediaFullPath().toLowerCase().contains(".mp4"))
-//                                urls.add(object.getPostMedia().get(0).getMediaFullPath());
-//                        }
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                        Toast.makeText(getActivity(), ""+e.toString(), Toast.LENGTH_SHORT).show();
-//                    }
-//                    recycler_view_feed.preDownload(urls);
+                    recycler_view_feed.setDownloadPath(Environment.getExternalStorageDirectory() + "/PlayDate/Video");
+                    recycler_view_feed.setDownloadVideos(true); // false by default
+//                    extra - start downloading all videos in background before loading RecyclerView
+                    List<String> urls = null;
+                    try {
+                        urls = new ArrayList<>();
+                        for (PostDetails object : lst) {
+                            if (object.getPostMedia().get(0).getMediaFullPath().toLowerCase().contains(".mp4"))
+                                urls.add(object.getPostMedia().get(0).getMediaFullPath());
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(getActivity(), ""+e.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                    recycler_view_feed.preDownload(urls);
                     recycler_view_feed.setVisiblePercent(70);
                     recycler_view_feed.setPlayOnlyFirstVideo(true);
                     recycler_view_feed.setAdapter(adapter);
-
+                    recycler_view_feed.smoothScrollBy(0,1);
+                    recycler_view_feed.smoothScrollBy(0,-1);
                 } else {
 
 
@@ -129,5 +131,15 @@ public class FragSocialFeed extends Fragment {
 
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        try {
+            recycler_view_feed.playAvailableVideos(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }
