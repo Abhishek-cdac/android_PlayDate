@@ -119,6 +119,45 @@ public class CommentBottomSheet extends BottomSheetDialogFragment {
 
     }
 
+
+  private void callUnBlockUser(String toUserId) {
+        SessionPref pref = SessionPref.getInstance(getActivity());
+
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
+        hashMap.put("action", "Block");//Block or Report
+        hashMap.put("toUserId", toUserId);
+
+        Call<LoginResponse> call = service.removeUserReportBlock("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new retrofit2.Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+//                pd.cancel();
+                if (response.code() == 200) {
+                    if (response.body().getStatus() == 1) {
+//                        socialFeedAdapter.notifyDataSetChanged();
+                        dismiss();
+
+                    } else {
+                    }
+                } else {
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                t.printStackTrace();
+//                pd.cancel();
+//                Toast.makeText(BioActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
     private void callAPI(String postId, String Status) {
         SessionPref pref = SessionPref.getInstance(getActivity());
 

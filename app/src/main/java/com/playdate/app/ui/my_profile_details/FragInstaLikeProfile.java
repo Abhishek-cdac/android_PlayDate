@@ -71,7 +71,7 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
         iv_send_request = view.findViewById(R.id.iv_send_request);
         profile_image = view.findViewById(R.id.profile_image);
         iv_chat = view.findViewById(R.id.iv_chat);
-//        recycler_photos = view.findViewById(R.id.recycler_photos);
+//      recycler_photos = view.findViewById(R.id.recycler_photos);
         txt_bio = view.findViewById(R.id.txt_bio);
         txt_login_user = view.findViewById(R.id.txt_login_user);
         callAPI();

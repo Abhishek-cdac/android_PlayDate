@@ -268,7 +268,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                             temp = temp + "<br>" + s;
                         }
                     }
-                    userViewHolder.txt_chat.setText(Html.fromHtml(owner + "<br>" + temp));
+                    userViewHolder.txt_chat.setText(Html.fromHtml("<b>"+owner+"</b>" + "<br>" + temp));
 
 
                 }

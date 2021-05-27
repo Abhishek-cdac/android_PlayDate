@@ -6,6 +6,15 @@ import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
 public class NotificationData {
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
+    public boolean isSelected = false;
 
     @SerializedName("entryDate")
     private String mEntryDate;

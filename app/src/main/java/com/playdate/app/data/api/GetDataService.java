@@ -187,4 +187,14 @@ public interface GetDataService {
     @POST("user/change-password")
     Call<LoginResponse> changePassword(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
+    @FormUrlEncoded
+    @POST("user/remove-user-report-block")
+    Call<LoginResponse> removeUserReportBlock(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
+    @FormUrlEncoded
+    @POST("user/post-comment-on-off")
+    Call<LoginResponse> postCommentOnOff(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
 }
+
+

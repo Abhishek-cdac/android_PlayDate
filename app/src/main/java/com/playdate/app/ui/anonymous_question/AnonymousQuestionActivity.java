@@ -53,7 +53,7 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
     String postId;
     private Onclick itemClick;
     String commentIdAq , userIDAq ;
-    Bundle bundle;
+    Bundle bundle= new Bundle();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,10 +79,11 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
             public void onItemClicks(View v, int absoluteAdapterPosition, int i, String commentId, String postId, String userId) {
                 if (i == 11) {
 
-                    bundle = new Bundle();
-                    bundle.putString("postIdAQ", postId );
-                    bundle.putString("userIdAQ", userId );
-                    bundle.putString("commentIdAQ", commentId );
+
+                        bundle.putString("postIdAQ", postId);
+                        bundle.putString("userIdAQ", userId);
+                        bundle.putString("commentIdAQ", commentId);
+
 
                      }
             }
@@ -312,7 +313,6 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
     private void showModel() {
         AnonymousBottomSheet bottomSheet = new AnonymousBottomSheet();
         bottomSheet.setArguments(bundle);
-
         bottomSheet.show(getSupportFragmentManager(), "ModalBottomSheet");
     }
 }

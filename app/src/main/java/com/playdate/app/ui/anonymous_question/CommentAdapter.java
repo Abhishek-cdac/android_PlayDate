@@ -83,6 +83,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull CommentAdapter.ViewHolder holder, int position) {
+        SessionPref pref = SessionPref.getInstance(mContext);
         holder.name.setText(commentList.get(position).getUsername());
         holder.desc.setText(commentList.get(position).getComments().getComment());
         userId = commentList.get(position).getUserId();
@@ -99,11 +100,10 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
         String formateDate = new SimpleDateFormat("MM-dd-yyyy HH:mm aa").format(date);
         Log.v("output date ",formateDate);*/
 //        TimeAgo2 timeAgo2 = new TimeAgo2();
-        timeFormat=timeFormat.replace("T"," ");
+        timeFormat = timeFormat.replace("T", " ");
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
         df.setTimeZone(TimeZone.getTimeZone("GTC"));
         Date date = null;
@@ -141,7 +141,11 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             holder.time.setTextColor(mContext.getResources().getColor(R.color.white));
             holder.like.setTextColor(mContext.getResources().getColor(R.color.white));
             holder.reply.setTextColor(mContext.getResources().getColor(R.color.white));
-            holder.delete.setVisibility(View.VISIBLE);
+            if (commentList.get(position).getUserId().equals(pref.getStringVal(SessionPref.LoginUserID))) {
+                holder.delete.setVisibility(View.VISIBLE);
+            } else {
+                holder.delete.setVisibility(View.GONE);
+            }
         } else {
             holder.relativeLayout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
             holder.name.setTextColor(mContext.getResources().getColor(R.color.black));
@@ -150,6 +154,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             holder.like.setTextColor(mContext.getResources().getColor(R.color.black));
             holder.reply.setTextColor(mContext.getResources().getColor(R.color.black));
             holder.delete.setVisibility(View.GONE);
+
+
         }
 
         holder.relativeLayout.setOnLongClickListener(v -> {
@@ -319,5 +325,4 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
     }
 }
-
 
