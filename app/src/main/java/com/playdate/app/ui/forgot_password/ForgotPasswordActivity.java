@@ -18,6 +18,7 @@ import com.playdate.app.model.LoginResponse;
 import com.playdate.app.ui.register.otp.OTPActivity;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
+import com.playdate.app.util.session.SessionPref;
 
 import org.json.JSONObject;
 
@@ -33,6 +34,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     ForgotViewModel viewModel;
     private ActivityForgotPasswordBinding binding;
     CommonClass clsCommon;
+    Intent mIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,12 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(ForgotPasswordActivity.this, R.layout.activity_forgot_password);
         binding.setLifecycleOwner(this);
         binding.setForgotViewModel(viewModel);
+
+
+        mIntent = getIntent();
+        if (mIntent.getBooleanExtra("fromProfile", false)) {
+            showChangePasswordScreen();
+        }
 
         viewModel.getResetPass().observe(this, new Observer<String>() {
             @Override
@@ -71,7 +79,12 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                     clsCommon.showDialogMsg(ForgotPasswordActivity.this, "PlayDate", "Confirm new password", "Ok");
 
                 } else if (viewModel.newPassConfirm.getValue().equals(viewModel.newPass.getValue())) {
-                    callAPIReset(viewModel.newPass.getValue());
+                    if (mIntent.getBooleanExtra("fromProfile", false)) {
+                        callDirectResetAPI(viewModel.newPass.getValue(), viewModel.old_password.getValue());
+                    } else {
+                        callAPIReset(viewModel.newPass.getValue());
+                    }
+
                 } else {
                     clsCommon.showDialogMsg(ForgotPasswordActivity.this, "PlayDate", "Confirm password and new password does not match", "Ok");
                 }
@@ -79,6 +92,52 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    private void callDirectResetAPI(String newPass, String oldPass) {
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        SessionPref pref = SessionPref.getInstance(this);
+        hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
+        hashMap.put("oldPassword", oldPass);
+        hashMap.put("newPassword", newPass);
+        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
+        pd.show();
+        Call<LoginResponse> call = service.changePassword("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                pd.cancel();
+                if (response.code() == 200) {
+                    if (response.body().getStatus() == 1) {
+
+                        clsCommon.showDialogMsg(ForgotPasswordActivity.this, "PlayDate", "Password changed success!", "Ok");
+                        finish();
+                    } else {
+                        clsCommon.showDialogMsg(ForgotPasswordActivity.this, "PlayDate", response.body().getMessage(), "Ok");
+                    }
+                } else {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        clsCommon.showDialogMsg(ForgotPasswordActivity.this, "PlayDate", jObjError.getJSONArray("data").getJSONObject(0).getString("msg"), "Ok");
+                    } catch (Exception e) {
+                        Toast.makeText(ForgotPasswordActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                t.printStackTrace();
+                pd.cancel();
+                Toast.makeText(ForgotPasswordActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
     }
 
@@ -196,5 +255,16 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         binding.txtHeader.setText("Enter new password");
         binding.sendMail.setVisibility(View.GONE);
         binding.changePassword.setVisibility(View.VISIBLE);
+    }
+
+    private void showChangePasswordScreen() {
+        binding.newPassword.setVisibility(View.VISIBLE);
+        binding.newPasswordConfirm.setVisibility(View.VISIBLE);
+        binding.oldPassword.setVisibility(View.VISIBLE);
+        binding.forgotEmail.setVisibility(View.GONE);
+        binding.txtHeader.setText("Enter new password");
+        binding.sendMail.setVisibility(View.GONE);
+        binding.changePassword.setVisibility(View.VISIBLE);
+        binding.changePassword.setText("Change Password");
     }
 }

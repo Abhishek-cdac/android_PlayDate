@@ -25,6 +25,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.github.marlonlom.utilities.timeago.TimeAgo;
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
@@ -42,6 +43,7 @@ import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
@@ -100,10 +102,33 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
         String formateDate = new SimpleDateFormat("MM-dd-yyyy HH:mm aa").format(date);
         Log.v("output date ",formateDate);*/
-        TimeAgo2 timeAgo2 = new TimeAgo2();
-        String MyFinalValue = timeAgo2.covertTimeToText(timeFormat);
-        holder.time.setText(MyFinalValue);
-        Log.e("MyFinalValue", "" + MyFinalValue);
+//        TimeAgo2 timeAgo2 = new TimeAgo2();
+        timeFormat=timeFormat.replace("T"," ");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+        df.setTimeZone(TimeZone.getTimeZone("GTC"));
+        Date date = null;
+        try {
+            date = df.parse(timeFormat);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        df.setTimeZone(TimeZone.getDefault());
+        String formattedDate = df.format(date);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date ddd = null;
+        try {
+            ddd = sdf.parse(formattedDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        long millis = ddd.getTime();
+        String text = TimeAgo.using(millis);
+
+
+//        String MyFinalValue = timeAgo2.covertTimeToText(formattedDate);
+        holder.time.setText(text.toLowerCase());
+        Log.e("MyFinalValue", "" + text);
 
 
 //        if (selected_index == position) {
