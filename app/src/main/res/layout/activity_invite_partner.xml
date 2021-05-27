@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="InvitepartnerViewModel"
+            type="com.playdate.app.couple.ui.register.invitepartner.InvitepartnerViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_20sdp"
+            android:orientation="vertical">
+
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:onClick="@{(v) -> InvitepartnerViewModel.onBack(v)}"
+                android:padding="@dimen/_2sdp"
+                android:src="@drawable/arrow_back" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_below="@+id/ll_top"
+            android:id="@+id/ll_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:src="@drawable/loveletter"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+
+                android:id="@+id/txt_invite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:fontFamily="@font/lato_bold"
+                android:gravity="center"
+                android:text="@string/invite_partner"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_25sdp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:fontFamily="@font/lato_bold"
+                android:gravity="center"
+                android:text="@string/invite_desc"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_16sdp" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_marginTop="@dimen/_30sdp"
+            android:gravity="center"
+            android:layout_below="@+id/ll_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:layout_centerInParent="true"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_15sdp"
+                android:padding="@dimen/_8sdp"
+                android:layout_weight=".5"
+                android:src="@drawable/messenger" />
+            <ImageView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="@dimen/_15sdp"
+                android:background="@drawable/circle_pink"
+                android:padding="4dp"
+                android:src="@drawable/white_heart" />
+
+            <ImageView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_15sdp"
+                android:layout_weight=".5"
+
+                android:background="@drawable/bg_purple_rect"
+                android:padding="@dimen/_8sdp"
+                android:src="@drawable/speech_bubble" />
+
+
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/iv_next"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:visibility="visible"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/_30sdp"
+            android:background="@drawable/arrow_back_circle"
+
+            android:padding="@dimen/_12sdp"
+            android:src="@drawable/arrow_right" />
+        <!--    android:onClick="@{(v) -> InvitepartnerViewModel.onNext(v)}"-->
+    </RelativeLayout>
+
+</layout>

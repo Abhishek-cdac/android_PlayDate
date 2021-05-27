@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import androidx.annotation.LongDef;
 import androidx.annotation.NonNull;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -34,10 +36,14 @@ import com.playdate.app.util.session.SessionPref;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
@@ -49,7 +55,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     boolean selected = false;
     int selected_index = -1;
     Onclick itemClick;
-
+    String DATE_FORMAT_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
     Context mContext;
     onCommentDelete ref;
     String userId, postId, commentId;
@@ -72,6 +78,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         return new ViewHolder(view);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull CommentAdapter.ViewHolder holder, int position) {
         holder.name.setText(commentList.get(position).getUsername());
@@ -79,18 +86,25 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         userId = commentList.get(position).getUserId();
         commentId = commentList.get(position).getComments().getCommentId();
         postId = commentList.get(position).getComments().getPostId();
-     timeFormat = commentList.get(position).getComments().getEntryDate();
-//        Date date= new Date(timeFormat);
-//
-//        String stringDate = DateFormat.getDateTimeInstance().format(date);
+        timeFormat = commentList.get(position).getComments().getEntryDate();
 
+       /* Date date=null;
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        String temp = timeFormat;
+        try {
+            date = formatter.parse(temp);
+            Log.e("formated date ", date + "");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        String formateDate = new SimpleDateFormat("MM-dd-yyyy HH:mm aa").format(date);
+        Log.v("output date ",formateDate);*/
         TimeAgo2 timeAgo2 = new TimeAgo2();
         String MyFinalValue = timeAgo2.covertTimeToText(timeFormat);
         holder.time.setText(MyFinalValue);
-        Log.e("MyFinalValue",""+MyFinalValue);
-        Log.e("CommentTime",""+timeFormat);
-      //  Log.e("stringDate",""+stringDate);
-        Log.e("Comment",""+commentList.get(position).getComments().getComment());
+        Log.e("MyFinalValue", "" + MyFinalValue);
+
 
 //        if (selected_index == position) {
 //            Log.e("selected_index..",""+selected_index);
@@ -272,6 +286,13 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     }
 
 
+    private String getFormattedDate(Date timeZone) {
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = df.format(timeZone);
+        return formattedDate;
+
+    }
 }
 
 

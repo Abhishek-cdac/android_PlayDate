@@ -180,6 +180,7 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
         hashMap.put("phoneNo", registerUser.getPhoneNo());
         hashMap.put("password", registerUser.getPassword());
         hashMap.put("userType", mIntent.getStringExtra("userType"));
+        hashMap.put("inviteCode", "");
 
         String android_id = Settings.Secure.getString(this.getContentResolver(),
                 Settings.Secure.ANDROID_ID);

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="InviteCodeViewModel"
+            type="com.playdate.app.couple.ui.register.invitecode.InviteCodeViewModel" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_20sdp"
+            android:orientation="vertical">
+
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:onClick="@{(v) -> InviteCodeViewModel.onBack(v)}"
+                android:padding="@dimen/_2sdp"
+                android:src="@drawable/arrow_back" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+
+            <ImageView
+                android:src="@drawable/balloons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </ImageView>
+            <TextView
+
+                android:id="@+id/txt_invite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:fontFamily="@font/lato_bold"
+                android:gravity="center"
+                android:text="@string/invite_code"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_25sdp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_12sdp"
+                android:layout_marginRight="@dimen/_12sdp"
+                android:fontFamily="@font/lato_bold"
+                android:gravity="center"
+                android:padding="@dimen/_4sdp"
+                android:text="@string/invite_code_desc"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_16sdp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:padding="@dimen/_8sdp"
+                android:fontFamily="@font/lato_bold"
+                android:gravity="center"
+                android:text="@string/please_type"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_16sdp" />
+            <EditText
+                android:id="@+id/edt_otp"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/_10sdp"
+                android:background="@color/white"
+                android:digits="0123456789"
+                android:fontFamily="@font/lato_bold"
+                android:gravity="center"
+                android:inputType="number"
+                android:letterSpacing="0.5"
+                android:maxLength="5"
+                android:padding="@dimen/_10sdp"
+                android:singleLine="true"
+                android:text="@={InviteCodeViewModel.txtOTP}"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_22sdp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/login_button"
+                android:layout_width="@dimen/_170sdp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edt_otp"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_25sdp"
+                android:background="@drawable/normal_btn_back"
+                android:elevation="@dimen/_15sdp"
+                android:onClick="@{(v) -> InviteCodeViewModel.onSubmit(v)}"
+                android:text="@string/submit"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold" />
+
+
+
+
+        </LinearLayout>
+
+
+
+
+<LinearLayout
+    android:layout_below="@+id/ll_header"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/_12sdp"
+    android:layout_alignParentBottom="true"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/txt_resend"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:fontFamily="@font/lato_bold"
+        android:gravity="center"
+        android:text="@string/didn_t_get_a_code"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12sdp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txt_resend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/_30sdp"
+        android:fontFamily="@font/lato_bold"
+        android:gravity="center"
+        android:onClick="@{(v) -> InviteCodeViewModel.onResend(v)}"
+        android:text="@string/resend"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_15sdp"
+        android:textStyle="bold"/>
+
+</LinearLayout>
+
+
+    </RelativeLayout>
+
+</layout>
