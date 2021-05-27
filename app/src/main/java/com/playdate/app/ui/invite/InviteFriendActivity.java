@@ -1,15 +1,11 @@
 package com.playdate.app.ui.invite;
 
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Telephony;
-import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,9 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.playdate.app.R;
 
-import java.io.File;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class InviteFriendActivity extends AppCompatActivity implements View.OnClickListener {
     String inviteCode, inviteLink;
@@ -33,12 +27,12 @@ public class InviteFriendActivity extends AppCompatActivity implements View.OnCl
     protected void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_invite_friend);
-         inviteCode = getIntent().getStringExtra("inviteCode");
-         inviteLink = getIntent().getStringExtra("inviteLink");
-        Log.e("inviteCode...",""+ inviteCode);
-        Log.e("inviteLink...",""+ inviteLink);
+        inviteCode = getIntent().getStringExtra("inviteCode");
+        inviteLink = getIntent().getStringExtra("inviteLink");
+        Log.e("inviteCode...", "" + inviteCode);
+        Log.e("inviteLink...", "" + inviteLink);
         ImageView whtasapp_coupan = findViewById(R.id.whtasapp_coupan);
-         ImageView facebook_coupan = findViewById(R.id.facebook_coupan);
+        ImageView facebook_coupan = findViewById(R.id.facebook_coupan);
         ImageView iv_back = findViewById(R.id.iv_back);
         ImageView message_coupan = findViewById(R.id.message_coupan);
         ImageView instagram_coupan = findViewById(R.id.instagram_coupan);
@@ -53,7 +47,7 @@ public class InviteFriendActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.facebook_coupan) {
-           // SharingToSocialMedia("com.facebook.katana");
+            // SharingToSocialMedia("com.facebook.katana");
             Intent fbIntent = new Intent(Intent.ACTION_SEND);
             fbIntent.setType("text/plain");
             fbIntent.setPackage("com.facebook.katana");
@@ -65,7 +59,8 @@ public class InviteFriendActivity extends AppCompatActivity implements View.OnCl
                         "Facebook have not been installed.", Toast.LENGTH_SHORT).show();
 
             }
-        } if (id == R.id.message_coupan) {
+        }
+        if (id == R.id.message_coupan) {
 
             shareTextUrl();
 //            Intent intent = new Intent(Intent.ACTION_MAIN);
@@ -76,7 +71,7 @@ public class InviteFriendActivity extends AppCompatActivity implements View.OnCl
 //            startActivity(intent);
 
 
-        }else if(id==R.id.instagram_coupan){
+        } else if (id == R.id.instagram_coupan) {
             Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
             whatsappIntent.setType("text/plain");
             whatsappIntent.setPackage("com.instagram.android");
@@ -89,7 +84,7 @@ public class InviteFriendActivity extends AppCompatActivity implements View.OnCl
 
             }
 
-        }else if(id==R.id.whtasapp_coupan){
+        } else if (id == R.id.whtasapp_coupan) {
             Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
             whatsappIntent.setType("text/plain");
             whatsappIntent.setPackage("com.whatsapp");
@@ -102,12 +97,10 @@ public class InviteFriendActivity extends AppCompatActivity implements View.OnCl
 
             }
 
-        }else if(id==R.id.iv_back){
+        } else if (id == R.id.iv_back) {
             finish();
         }
     }
-
-
 
 
     // Method to share either text or URL.
@@ -121,7 +114,7 @@ public class InviteFriendActivity extends AppCompatActivity implements View.OnCl
 
 
     @Nullable
-    public  String getDefaultSmsAppPackageName(@NonNull final Context context) {
+    public String getDefaultSmsAppPackageName(@NonNull final Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
             try {
                 return Telephony.Sms.getDefaultSmsPackage(context);

@@ -148,6 +148,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
         } else return 0;
 
 
+
     }
 
     @Override

@@ -36,7 +36,6 @@ public interface GetDataService {
     Call<LoginResponse> login(@FieldMap Map<String, String> param);
 
 
-
     @FormUrlEncoded
     @POST("user/verify-otp")
     Call<LoginResponse> verifyOtp(@FieldMap Map<String, String> param);
@@ -48,6 +47,7 @@ public interface GetDataService {
     @FormUrlEncoded
     @POST("user/reset-password")
     Call<LoginResponse> resetPassword(@FieldMap Map<String, String> param);
+
 
     @FormUrlEncoded
     @POST("user/forgot-password-sent-otp")
@@ -139,6 +139,10 @@ public interface GetDataService {
     Call<LoginResponse> addPostLikeUnlike(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
     @FormUrlEncoded
+    @POST("user/add-user-report-block")
+    Call<LoginResponse> addUserReportBlock(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
+    @FormUrlEncoded
     @POST("user/post-notification-on-off")
     Call<LoginResponse> notificationOnOff(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
@@ -179,5 +183,8 @@ public interface GetDataService {
     @POST("user/remove-friend")
     Call<CommonModel> removeFriend(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
+    @FormUrlEncoded
+    @POST("user/change-password")
+    Call<LoginResponse> changePassword(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
 }
