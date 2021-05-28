@@ -34,12 +34,14 @@ public class InstaPhotosAdapter extends RecyclerView.Adapter<InstaPhotosAdapter.
         this.frag = frag;
     }
 
+    Picasso picasso;
 
     @NonNull
     @Override
     public InstaPhotosAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_photos, null);
         mContext = parent.getContext();
+        picasso = Picasso.get();
         return new InstaPhotosAdapter.ViewHolder(view);
     }
 
@@ -53,12 +55,12 @@ public class InstaPhotosAdapter extends RecyclerView.Adapter<InstaPhotosAdapter.
             holder.iv_payment.getLayoutParams().width = (int) mContext.getResources().getDimension(R.dimen._30sdp);
             holder.iv_payment.getLayoutParams().height = (int) mContext.getResources().getDimension(R.dimen._30sdp);
         } else {
-            if (lst.get(position).getPostMedia().get(0).getMediaType().toLowerCase().equals("image")) {
-                Picasso.get().load(lst.get(position).getPostMedia().get(0).getMediaFullPath())
+            if (!lst.get(position).getPostMedia().get(0).getMediaType().equals("Video")) {
+                picasso.load(lst.get(position).getPostMedia().get(0).getMediaFullPath())
                         .into(holder.iv_payment);
             } else {
                 holder.iv_play.setVisibility(View.VISIBLE);
-                Picasso.get().load(lst.get(position).getPostMedia().get(0).getMediaThumbName())
+                picasso.load(lst.get(position).getPostMedia().get(0).getMediaThumbName())
                         .into(holder.iv_payment);
             }
 

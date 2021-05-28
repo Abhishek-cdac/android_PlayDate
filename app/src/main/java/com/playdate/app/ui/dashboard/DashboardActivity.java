@@ -1,12 +1,10 @@
 package com.playdate.app.ui.dashboard;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -14,7 +12,7 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
+import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -56,6 +54,7 @@ import com.playdate.app.ui.my_profile_details.FragMyProfilePersonal;
 import com.playdate.app.ui.my_profile_details.FragSavedPost;
 import com.playdate.app.ui.notification_screen.FragNotification;
 import com.playdate.app.ui.social.FragSocialFeed;
+import com.playdate.app.ui.social.TestFrag;
 import com.playdate.app.ui.social.upload_media.PostMediaActivity;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
@@ -66,6 +65,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -100,6 +100,8 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     FrameLayout flFragment;
 //    FrameLayout flFeed;
 
+    protected static final String strProStaFin_CONTENT_TAG_1 = "contenFragments_1";
+    private HashMap<String, Stack<Fragment>> pri_hMap_FragmentsStack;
 
     //    SwipeRefreshLayout mSwipeRefreshLayout;
     LinearLayout ll_mainMenu, ll_her;
@@ -124,21 +126,26 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     RecyclerView rv_friends;
     SessionPref pref;
     TextView txt_serachfriend;
-NestedScrollView nsv;
+    NestedScrollView nsv;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+
+        pri_hMap_FragmentsStack = new HashMap<>();
+        pri_hMap_FragmentsStack.put(strProStaFin_CONTENT_TAG_1, new Stack<>());
+
+
         txt_serachfriend = findViewById(R.id.txt_serachfriend);
-        nsv=findViewById(R.id.nsv);
+        nsv = findViewById(R.id.nsv);
         search = findViewById(R.id.iv_search);
         pref = SessionPref.getInstance(this);
         ll_profile_insta = findViewById(R.id.ll_profile_insta);
         profile_image = findViewById(R.id.profile_image);
         txt_chat = findViewById(R.id.txt_chat);
         rl_main = findViewById(R.id.rl_main);
-        flFragment=findViewById(R.id.flFragment);
+        flFragment = findViewById(R.id.flFragment);
 //        flFeed=findViewById(R.id.flFeed);
 
         ll_her = findViewById(R.id.ll_her);
@@ -200,6 +207,7 @@ NestedScrollView nsv;
         } else {
             fragOne = new FragSocialFeed();
         }
+//        addFirst();
         ReplaceFrag(fragOne);
         txt_match.setOnClickListener(this);
         txt_chat.setOnClickListener(this);
@@ -216,34 +224,37 @@ NestedScrollView nsv;
         callAPIFriends();
 
 
-            nsv.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-                @Override
-                public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+        nsv.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
 
-                    if (scrollY > oldScrollY) {
-                        Log.i(TAG, "Scroll DOWN");
-                    }
-                    if (scrollY < oldScrollY) {
-                        Log.i(TAG, "Scroll UP");
-                    }
+                if (scrollY > oldScrollY) {
+                    Log.i(TAG, "Scroll DOWN");
+                }
+                if (scrollY < oldScrollY) {
+                    Log.i(TAG, "Scroll UP");
+                }
 
-                    if (scrollY == 0) {
-                        Log.i(TAG, "TOP SCROLL");
-                    }
+                if (scrollY == 0) {
+                    Log.i(TAG, "TOP SCROLL");
+                }
 
-                    if (scrollY == ( v.getMeasuredHeight() - v.getChildAt(0).getMeasuredHeight() )*-1) {
-                        Log.i(TAG, "BOTTOM SCROLL");
+                if (scrollY == (v.getMeasuredHeight() - v.getChildAt(0).getMeasuredHeight()) * -1) {
+                    Log.i(TAG, "BOTTOM SCROLL");
 //                        Toast.makeText(DashboardActivity.this, "At the bottom", Toast.LENGTH_SHORT).show();
-                        if(null!=CurrentFrag){
-                            if(CurrentFrag.getClass().getSimpleName().equals("FragSocialFeed")){
-                                FragSocialFeed frag= (FragSocialFeed) CurrentFrag;
-                                frag.addMoreData();
-                            }
+                    if (null != CurrentFrag) {
+                        if (CurrentFrag.getClass().getSimpleName().equals("FragSocialFeed")) {
+                            FragSocialFeed frag = (FragSocialFeed) CurrentFrag;
+                            frag.addMoreData();
                         }
                     }
                 }
-            });
+            }
+        });
+
+
     }
+
 
     private boolean checkFirstFrag() {
         return pref.getBoolVal(SessionPref.LoginUserSuggestionShown);
@@ -353,23 +364,34 @@ NestedScrollView nsv;
     }
 
     Fragment CurrentFrag;
+
     @Override
     public void ReplaceFrag(Fragment fragment) {
         try {
 
-            CurrentFrag=fragment;
-//            flFragment.removeAllViews();
+            CurrentFrag = fragment;
+
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction ft = fragmentManager.beginTransaction();
-            if (fragmentManager.getFragments().size() > 0) {
-                ft.replace(R.id.flFragment, fragment, fragment.getClass().getSimpleName());
-            } else {
+
+            if (pri_hMap_FragmentsStack.get(strProStaFin_CONTENT_TAG_1).empty()) {
+                pri_hMap_FragmentsStack.get(strProStaFin_CONTENT_TAG_1).push(fragment);
                 ft.add(R.id.flFragment, fragment, fragment.getClass().getSimpleName());
+
+            } else {
+                pri_hMap_FragmentsStack.get(strProStaFin_CONTENT_TAG_1).lastElement().onPause();
+                ft.hide(pri_hMap_FragmentsStack.get(strProStaFin_CONTENT_TAG_1).lastElement());
+                ft.remove(pri_hMap_FragmentsStack.get(strProStaFin_CONTENT_TAG_1).lastElement());
+                pri_hMap_FragmentsStack.get(strProStaFin_CONTENT_TAG_1).pop();
+                ft.add(R.id.flFragment, fragment, fragment.getClass().getSimpleName());
+                pri_hMap_FragmentsStack.get(strProStaFin_CONTENT_TAG_1).push(fragment);
+
             }
-            ft.addToBackStack(null);
+
+            ft.addToBackStack(fragment.getClass().getSimpleName());
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            ft.commit();
-//            rl_main.invalidate();
+            ft.commitAllowingStateLoss();
+
 
         } catch (Exception e) {
             e.printStackTrace();

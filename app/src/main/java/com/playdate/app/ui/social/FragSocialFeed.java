@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.allattentionhere.autoplayvideos.AAH_CustomRecyclerView;
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
@@ -23,6 +22,7 @@ import com.playdate.app.ui.social.adapter.PaginationListener;
 import com.playdate.app.ui.social.adapter.SocialFeedAdapter;
 import com.playdate.app.ui.social.model.PostDetails;
 import com.playdate.app.ui.social.model.PostHistory;
+import com.playdate.app.ui.social.videoplay.AAH_CustomRecyclerView;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
 
@@ -92,12 +92,12 @@ public class FragSocialFeed extends Fragment {
 
     }
 
+
     @Override
     public void onStop() {
         try {
             recycler_view_feed.stopVideos();
-            recycler_view_feed.removeAllViews();
-//            Toast.makeText(getActivity(), "Video Stopped", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Video Stopped", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             e.printStackTrace();
         }
