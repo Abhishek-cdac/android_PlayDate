@@ -80,8 +80,6 @@
             android:id="@+id/ll_ques"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_220sdp"
-
-
             android:orientation="vertical">
 
             <TextView
