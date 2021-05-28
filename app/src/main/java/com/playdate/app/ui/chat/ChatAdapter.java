@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
@@ -160,10 +161,9 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             } else if (chatmsgList.get(position).getType().equals("video")) {
                 viewHolderMe.tv_msg.setVisibility(View.GONE);
                 viewHolderMe.chat_image.setVisibility(View.GONE);
-                viewHolderMe.iv_post_image.setVisibility(View.VISIBLE);
-                viewHolderMe.chat_video.setVisibility(View.VISIBLE);
+                viewHolderMe.card_image.setVisibility(View.VISIBLE);
 
-                viewHolderMe.iv_post_image.setImageResource(R.drawable.profile);
+                viewHolderMe.chat_video.setVisibility(View.VISIBLE);
 
                 viewHolderMe.chat_video.setVideoURI(chatmsgList.get(position).getUri());
 
@@ -172,9 +172,12 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     public void onClick(View v) {
                         if(viewHolderMe.chat_video.isPlaying()){
                             viewHolderMe.chat_video.pause();
+                            viewHolderMe.img_playback.setImageResource(R.drawable.ic_play_button);
                         }else{
-                            viewHolderMe.iv_post_image.setVisibility(View.GONE);
+//                            viewHolderMe.iv_post_image.setVisibility(View.GONE);
                             viewHolderMe.chat_video.start();
+                            viewHolderMe.img_playback.setImageResource(R.drawable.ic_pause);
+
                         }
                     }
                 });
@@ -233,8 +236,6 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public void addToListText(EditText et_msg) {
-//        chat_list.add(new Chat(et_msg.getText().toString(), "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg", ME));
-
         chatmsgList.add(new ChatMessage("text", myId, "jid_1109", et_msg.getText().toString()));
         notifyDataSetChanged();
         et_msg.setText("");
@@ -331,9 +332,10 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         ImageView chat_image;
         TextView tv_msg;
         VideoView chat_video;
-        ImageView iv_post_image;
+//        ImageView iv_post_image;
         ImageView img_playback;
         ImageView iv_mute_unmute;
+        CardView card_image;
 
         public ViewHolderMe(View view) {
             super(view);
@@ -341,9 +343,10 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             chat_image = view.findViewById(R.id.chat_image);
             tv_msg = view.findViewById(R.id.tv_chat);
             chat_video = view.findViewById(R.id.chat_video);
-            iv_post_image = view.findViewById(R.id.iv_post_image);
+//            iv_post_image = view.findViewById(R.id.iv_post_image);
             img_playback = view.findViewById(R.id.img_playback);
             iv_mute_unmute = view.findViewById(R.id.iv_mute_unmute);
+            card_image = view.findViewById(R.id.card_image);
         }
     }
 

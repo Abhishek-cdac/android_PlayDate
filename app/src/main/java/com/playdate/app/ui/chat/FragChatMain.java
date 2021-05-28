@@ -84,6 +84,7 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
         this.sender_name = sender_name;
     }
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
