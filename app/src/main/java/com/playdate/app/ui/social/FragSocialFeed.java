@@ -59,7 +59,7 @@ public class FragSocialFeed extends Fragment {
         recycler_view_feed = view.findViewById(R.id.recycler_view_feed);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         recycler_view_feed.setLayoutManager(manager);
-        recycler_view_feed.setHasFixedSize(true);
+//        recycler_view_feed.setHasFixedSize(true);
 
 //        recycler_view_feed.addOnScrollListener(new EndlessRecyclerViewScrollListener(manager) {
 //            @Override
@@ -96,6 +96,7 @@ public class FragSocialFeed extends Fragment {
     public void onStop() {
         try {
             recycler_view_feed.stopVideos();
+            recycler_view_feed.removeAllViews();
 //            Toast.makeText(getActivity(), "Video Stopped", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             e.printStackTrace();
