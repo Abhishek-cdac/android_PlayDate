@@ -89,6 +89,37 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/rl_delete"
+        android:visibility="gone"
+        android:orientation="horizontal"
+        android:paddingVertical="@dimen/_2sdp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:text="Delete Post"
+            android:gravity="center|start"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12sdp" />
+
+        <ImageView
+            android:layout_width="@dimen/_20sdp"
+            android:layout_centerHorizontal="true"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center"
+            android:id="@+id/iv_delete_post"
+            android:src="@drawable/ic_baseline_delete_24" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:visibility="gone"
         android:paddingVertical="@dimen/_2sdp">

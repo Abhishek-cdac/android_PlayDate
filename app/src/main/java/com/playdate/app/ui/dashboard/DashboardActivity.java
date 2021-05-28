@@ -25,6 +25,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -70,6 +71,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.content.ContentValues.TAG;
 import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.ALL_PERMISSIONS_RESULT;
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.PICK_PHOTO_FOR_AVATAR;
@@ -122,13 +124,14 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     RecyclerView rv_friends;
     SessionPref pref;
     TextView txt_serachfriend;
-
+NestedScrollView nsv;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         txt_serachfriend = findViewById(R.id.txt_serachfriend);
+        nsv=findViewById(R.id.nsv);
         search = findViewById(R.id.iv_search);
         pref = SessionPref.getInstance(this);
         ll_profile_insta = findViewById(R.id.ll_profile_insta);
@@ -213,6 +216,33 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         callAPIFriends();
 
 
+            nsv.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+                @Override
+                public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+
+                    if (scrollY > oldScrollY) {
+                        Log.i(TAG, "Scroll DOWN");
+                    }
+                    if (scrollY < oldScrollY) {
+                        Log.i(TAG, "Scroll UP");
+                    }
+
+                    if (scrollY == 0) {
+                        Log.i(TAG, "TOP SCROLL");
+                    }
+
+                    if (scrollY == ( v.getMeasuredHeight() - v.getChildAt(0).getMeasuredHeight() )*-1) {
+                        Log.i(TAG, "BOTTOM SCROLL");
+//                        Toast.makeText(DashboardActivity.this, "At the bottom", Toast.LENGTH_SHORT).show();
+                        if(null!=CurrentFrag){
+                            if(CurrentFrag.getClass().getSimpleName().equals("FragSocialFeed")){
+                                FragSocialFeed frag= (FragSocialFeed) CurrentFrag;
+                                frag.addMoreData();
+                            }
+                        }
+                    }
+                }
+            });
     }
 
     private boolean checkFirstFrag() {
@@ -322,10 +352,12 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         super.onDestroy();
     }
 
+    Fragment CurrentFrag;
     @Override
     public void ReplaceFrag(Fragment fragment) {
         try {
 
+            CurrentFrag=fragment;
 //            flFragment.removeAllViews();
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction ft = fragmentManager.beginTransaction();

@@ -53,6 +53,18 @@ import retrofit2.Response;
 public class SocialFeedAdapter extends AAH_VideosAdapter {
 
 
+    public void DeleteItem(int index){
+        try {
+            if(null!=lst){
+
+                lst.remove(index);
+                notifyDataSetChanged();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private Context mContext;
 
 
@@ -143,10 +155,12 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
     @Override
     public int getItemViewType(int position) {
 
-        if (lst.get(position).getPostMedia().get(0).getMediaFullPath().toLowerCase().contains(".mp4")) {
+        if (lst.get(position).getPostType().equals("Load")) {
+            return 100;
+        } else if (lst.get(position).getPostMedia().get(0).getMediaFullPath().toLowerCase().contains(".mp4")) {
             return 1;
-        } else return 0;
-
+        }
+        return 0;
 
 
     }
@@ -157,7 +171,10 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
         View view = null;
         AAH_CustomViewHolder viewHolder = null;
         mContext = parent.getContext();
-        if (viewType == 0) {
+        if (viewType == 100) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_load_more, parent, false);
+            viewHolder = new ViewHolderLoadMore(view);
+        } else if (viewType == 0) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_feed_type_1, parent, false);
             viewHolder = new ViewHolderUser(view);
         } else {
@@ -268,7 +285,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                             temp = temp + "<br>" + s;
                         }
                     }
-                    userViewHolder.txt_chat.setText(Html.fromHtml("<b>"+owner+"</b>" + "<br>" + temp));
+                    userViewHolder.txt_chat.setText(Html.fromHtml("<b>" + owner + "</b>" + "<br>" + temp));
 
 
                 }
@@ -326,7 +343,9 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                 }
             });
 
-        } else {
+        }else if(holder.getItemViewType() == 100){
+
+        }else if(holder.getItemViewType()==1){
             ViewHolderUserVideo videoHolder;
             holder.setVideoUrl(lst.get(position).getPostMedia().get(0).getMediaFullPath());
 
@@ -614,7 +633,6 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
         }
 
 
-
         @Override
         public void videoStarted() {
             super.videoStarted();
@@ -632,6 +650,13 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
         public void pauseVideo() {
             super.pauseVideo();
             img_playback.setImageResource(R.drawable.play_circle);
+        }
+    }
+
+    public class ViewHolderLoadMore extends AAH_CustomViewHolder {
+
+        public ViewHolderLoadMore(View view) {
+            super(view);
         }
     }
 
@@ -686,8 +711,10 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
 
     private void showBottomSheet(int adapterPosition) {
         boolean notification = lst.get(adapterPosition).getNotifyStatus().equals("On");
+
+
         FragmentManager fragmentManager = ((AppCompatActivity) mContext).getSupportFragmentManager();
-        CommentBottomSheet sheet = new CommentBottomSheet(notification, lst.get(adapterPosition), this);
+        CommentBottomSheet sheet = new CommentBottomSheet(notification, lst.get(adapterPosition), this,adapterPosition);
         sheet.show(fragmentManager, "comment bootom sheet");
     }
 
