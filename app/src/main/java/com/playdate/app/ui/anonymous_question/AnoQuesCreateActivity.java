@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -30,6 +31,7 @@ import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,8 +50,19 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
     ImageView back_anonymous;
     ImageView more_option;
     ArrayList<Integer> lst = new ArrayList<>();
-    ArrayList<Integer> lstSmiley = new ArrayList<>();
+    ArrayList<Integer> lstSmiley = new ArrayList<Integer>();
     private ArrayList<MatchListUser> lstUserSuggestions = new ArrayList<>();
+
+
+    Integer[] intEmoji= {
+            0x1F600, 0x1F603, 0x1F604, 0x1F601, 0x1F606, 0x1F605, 0x1F923, 0x1F602, 0x1F61A, 0x1F619,
+            0x1F642, 0x1F643, 0x1F609, 0x1F60A, 0x1F607, 0x1F60B, 0x1F60D, 0x1F929, 0x1F618, 0x1F617,
+            0x1F61C, 0x1F92A, 0x1F61D, 0x1F911, 0x1F917, 0x1F92B, 0x1F914, 0x1F910, 0x1F928, 0x1F610,
+            0x1F611, 0x1F636, 0x1F60F, 0x1F644, 0x1F62C, 0x1F925, 0x1F60C, 0x1F62A, 0x1F634, 0x1F637,
+            0x1F927, 0x1F92C, 0x1F608, 0x1F47B, 0x1F635, 0x1F92F, 0x1F920, 0x1F649, 0x1F64A, 0x1F60E,
+            0x1F913, 0x1F9D0, 0x1F615, 0x1F641, 0x1F62F, 0x1F632, 0x1F633, 0x1F97A, 0x1F626, 0x1F627,
+            0x1F622, 0x1F62D, 0x1F631, 0x1F616, 0x1F61E, 0x1F613, 0x1F629, 0x1F62B, 0x1F971, 0x1F624
+    };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,18 +93,7 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
 
 
     public void CreateList() {
-//  lst.add((Color.parseColor("0xffd13a6f")));
-//        lst.add("#1D1375");
-//        lst.add("#1D1375");
-//        lst.add("#65FF00");
-//        lst.add("#FF000000");
-//        lst.add("#E6FF00");
-//        lst.add("#3AC7D1");
-//        lst.add("#D1763A");
-//        lst.add("#3A3AD1");
-//        lst.add("#989798");
-//        lst.add("#117106");
-//        lst.add("#D13A3A");
+
         lst.add(R.color.color_violet);
         lst.add(R.color.color_violet1);
         lst.add(R.color.color_green_fresh);
@@ -108,6 +110,7 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
     }
 
     public void CreateSmilyList() {
+
         lstSmiley.add(R.drawable.face1);
         lstSmiley.add(R.drawable.face2);
         lstSmiley.add(R.drawable.face3);
@@ -209,12 +212,12 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("location", Location);
-        hashMap.put("mediaId", "60a781800d80b81418e253a8");
-        hashMap.put("postType", "Question");// Hardcode
-      //  hashMap.put("tagFriend", "harshita");
+        hashMap.put("mediaId", "60b0993b291a0503100168db");// Hardcode
+        hashMap.put("postType", "Question");
+      //hashMap.put("tagFriend", "harshita");
         hashMap.put("tag", add_comment.getText().toString());
         hashMap.put("colorCode", "");
-        hashMap.put("emojiCode", "");
+        hashMap.put("emojiCode", "128514");
 
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
         pd.show();
@@ -226,7 +229,7 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
                 pd.cancel();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
-                        DashboardActivity.bitmap = null;
+                       // DashboardActivity.bitmap = null;
                         finish();
                     } else {
 //                        clsCommon.showDialogMsg(BioActivity.this, "PlayDate", response.body().getMessage(), "Ok");

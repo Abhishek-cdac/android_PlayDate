@@ -37,6 +37,7 @@ public class SmileyAdapter extends RecyclerView.Adapter<SmileyAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull SmileyAdapter.ViewHolder holder, int position) {
         holder.ll_color.setBackground(mContext.getDrawable(lst.get(position)));
+
     }
 
     @Override

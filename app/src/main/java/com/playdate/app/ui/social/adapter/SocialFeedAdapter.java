@@ -43,6 +43,8 @@ import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -76,10 +78,11 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
 
     ArrayList<PostDetails> lst;
     Picasso picasso;
+
     public SocialFeedAdapter(FragmentActivity activity, ArrayList<PostDetails> lst) {
         this.mContext = activity;
         this.lst = lst;
-        picasso=Picasso.get();
+        picasso = Picasso.get();
 
     }
 
@@ -363,11 +366,9 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                 }
             });
 
-        }
-        else if (holder.getItemViewType() == 100) {
+        } else if (holder.getItemViewType() == 100) {
 
-        }
-        else if (holder.getItemViewType() == 1) {
+        } else if (holder.getItemViewType() == 1) {
             ViewHolderUserVideo videoHolder;
             holder.setVideoUrl(lst.get(position).getPostMedia().get(0).getMediaFullPath());
 
@@ -511,15 +512,12 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
             });
 
 
-        }
-
-        else  if (holder.getItemViewType() == 2) {
+        } else if (holder.getItemViewType() == 2) {
             ViewHolderAnonymQuestion viewHolderAnonymQuestion;
             viewHolderAnonymQuestion = (ViewHolderAnonymQuestion) holder;
             viewHolderAnonymQuestion.name_friend.setText("Anonymous Question");
             viewHolderAnonymQuestion.question_Anonymous.setText(lst.get(position).getTag());
-        }
-        else{
+        } else {
 
         }
 
@@ -815,7 +813,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
         ImageView iv_post_image;
         CardView card_image;
         TextView name_friend, question_Anonymous;
-        Button respond;
+        Button respond, delete_btn;
 
         //        ImageView iv_profile;
         public ViewHolderAnonymQuestion(@NonNull View itemView) {
@@ -828,6 +826,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
 //            iv_profile = itemView.findViewById(R.id.iv_profile);
             name_friend = itemView.findViewById(R.id.name_friend);
             respond = itemView.findViewById(R.id.respond);
+            delete_btn = itemView.findViewById(R.id.delete_btn);
 
             respond.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -836,6 +835,12 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                     Intent mIntent = new Intent(origin, AnonymousQuestionActivity.class);
                     mIntent.putExtra("Anonymous", true);
                     origin.startActivityForResult(mIntent, 410);
+                }
+            });
+            delete_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
                 }
             });
 //            respomd.setOnClickListener(v -> v.getContext().startActivity(new Intent(v.getContext(), AnonymousQuestionActivity.class)));
