@@ -126,15 +126,19 @@ public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriend
                     suggestionsListFiltered = suggestions_list;
                 } else {
                     List<GetUserSuggestionData> filteredList = new ArrayList<>();
-                    for (GetUserSuggestionData row : suggestions_list) {
+                    try {
+                        for (GetUserSuggestionData row : suggestions_list) {
 
-                        // name match condition. this might differ depending on your requirement
-                        // here we are looking for name or phone number match
-                        if (row.getUsername() != null) {
-                            if (row.getUsername().toLowerCase().contains(charString.toLowerCase()) || row.getFullName().contains(charSequence)) {
-                                filteredList.add(row);
+                            // name match condition. this might differ depending on your requirement
+                            // here we are looking for name or phone number match
+                            if (row.getUsername() != null) {
+                                if (row.getUsername().toLowerCase().contains(charString.toLowerCase()) || row.getFullName().contains(charSequence)) {
+                                    filteredList.add(row);
+                                }
                             }
                         }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                     suggestionsListFiltered = filteredList;
                 }

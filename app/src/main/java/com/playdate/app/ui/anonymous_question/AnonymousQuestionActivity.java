@@ -51,8 +51,9 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
     EditText ext_question;
     boolean isForNew = false;
     String postId;
+    String UserID;
     private Onclick itemClick;
-    String commentIdAq , userIDAq ;
+//    String commentIdAq , userIDAq ;
     Bundle bundle= new Bundle();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -101,6 +102,11 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             postId = extras.getString("post_id");
+            UserID = extras.getString("user_id");
+
+            bundle.putString("post_id", postId);
+            bundle.putString("user_id", UserID);
+
             Log.e("postiddddddd", "" + postId);
             //The key argument here must match that used in the other activity
         }
