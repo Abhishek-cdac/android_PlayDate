@@ -140,7 +140,7 @@
             android:backgroundTint="@android:color/transparent"
             android:hint="Post in feed...!"
             android:textColor="@color/white"
-            android:enabled="false"
+            android:enabled="true"
             android:textColorHint="@color/white"
             android:textSize="@dimen/_12sdp" />
 

@@ -61,17 +61,32 @@
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginRight="@dimen/_10sdp"
             android:background="@color/white"
-            app:cardBackgroundColor="@color/white"
+            app:cardBackgroundColor="@color/color_pink"
             app:cardCornerRadius="@dimen/_10sdp"
             app:cardElevation="0dp">
 
+            <TextView
+                android:id="@+id/question_Anonymous"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|top"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:gravity="center"
+                android:text="Hey"
+                android:fontFamily="@font/lato_bold"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_16sdp" />
+
             <ImageView
                 android:id="@+id/iv_post_image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white"
-                android:scaleType="fitXY"
-                android:src="@drawable/annom_ques" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|bottom"
+                android:padding="@dimen/_20sdp"
+                android:src="@drawable/sad" />
+
+
+            <!-- android:src="@drawable/annom_ques" />-->
 
         </androidx.cardview.widget.CardView>
 
@@ -98,12 +113,11 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/respond"
             android:layout_width="@dimen/_120sdp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:id="@+id/respond"
             android:layout_gravity="center"
-
             android:background="@drawable/btn_pink_filled"
             android:fontFamily="@font/lato_bold"
             android:text="Respond"
