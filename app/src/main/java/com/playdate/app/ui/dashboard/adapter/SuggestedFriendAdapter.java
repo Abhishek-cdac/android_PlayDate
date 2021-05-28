@@ -113,9 +113,7 @@ public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriend
 
     @Override
     public int getItemCount() {
-        Log.e("suggestionsListFiltered", "" + suggestionsListFiltered.size());
-
-        return suggestionsListFiltered.size();
+       return suggestionsListFiltered.size();
     }
 
     @Override
@@ -128,15 +126,19 @@ public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriend
                     suggestionsListFiltered = suggestions_list;
                 } else {
                     List<GetUserSuggestionData> filteredList = new ArrayList<>();
-                    for (GetUserSuggestionData row : suggestions_list) {
-                        Log.e("rowrow", "" + row.getUsername());
-                        // name match condition. this might differ depending on your requirement
-                        // here we are looking for name or phone number match
-                        if (row.getUsername() != null) {
-                            if (row.getUsername().toLowerCase().contains(charString.toLowerCase()) || row.getFullName().contains(charSequence)) {
-                                filteredList.add(row);
+                    try {
+                        for (GetUserSuggestionData row : suggestions_list) {
+
+                            // name match condition. this might differ depending on your requirement
+                            // here we are looking for name or phone number match
+                            if (row.getUsername() != null) {
+                                if (row.getUsername().toLowerCase().contains(charString.toLowerCase()) || row.getFullName().contains(charSequence)) {
+                                    filteredList.add(row);
+                                }
                             }
                         }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                     suggestionsListFiltered = filteredList;
                 }

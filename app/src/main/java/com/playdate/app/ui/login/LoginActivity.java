@@ -45,8 +45,6 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.Task;
 import com.playdate.app.R;
 import com.playdate.app.couple.ui.register.connect.ConnectYourPartner;
-import com.playdate.app.couple.ui.register.invitecode.InviteCodeActivity;
-import com.playdate.app.couple.ui.register.invitepartner.InvitePartnerActivity;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.databinding.ActivityLoginBinding;
@@ -104,10 +102,16 @@ private RelativeLayout rl_couple;
     CommonClass clsCommon;
     private GoogleSignInClient mGoogleSignInClient;
 
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+//    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        myshakey();
+
         clsCommon = CommonClass.getInstance();
         FacebookSdk.sdkInitialize(this);
 
@@ -229,29 +233,6 @@ private RelativeLayout rl_couple;
 
     }
 
-    void myshakey() {
-
-        Log.e("Playdate myshakey ---", "-- Called --");
-        // Add code to print out the key hash
-        try {
-            PackageInfo info = getPackageManager().getPackageInfo(
-                    "com.playdate.app",
-                    PackageManager.GET_SIGNATURES);
-            Log.e("Playdate myshakey", "----");
-            for (Signature signature : info.signatures) {
-                Log.e("Playdate", "-- Called --");
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                Log.e("Playdate KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT).toString() + "--");
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-            Log.e("Playdate EXCP 1---", "");
-            e.printStackTrace();
-
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-    }
 
     private void callLoginAPI(LoginUser loginUser) {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
@@ -427,7 +408,7 @@ private RelativeLayout rl_couple;
             if (acct != null) {
                 String personName = acct.getDisplayName();
                 String personGivenName = acct.getGivenName();
-                //  String ServerAuthCode = acct.getIdToken();
+             //  String ServerAuthCode = acct.getIdToken();
 
                 String personEmail = acct.getEmail();
                 String personId = acct.getId();
@@ -438,9 +419,7 @@ private RelativeLayout rl_couple;
                 Log.e("personId", "" + personId);
                 Log.e("personPhoto", "" + personPhoto);
                 Log.e("personName", "" + personName);
-
                 callGmailSocialLoginAPI(personEmail, personId, ServerAuthCode);
-
             }
 
 

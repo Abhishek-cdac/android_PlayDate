@@ -51,9 +51,10 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
     EditText ext_question;
     boolean isForNew = false;
     String postId;
+    String UserID;
     private Onclick itemClick;
-    String commentIdAq , userIDAq ;
-    Bundle bundle;
+//    String commentIdAq , userIDAq ;
+    Bundle bundle= new Bundle();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,10 +80,11 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
             public void onItemClicks(View v, int absoluteAdapterPosition, int i, String commentId, String postId, String userId) {
                 if (i == 11) {
 
-                    bundle = new Bundle();
-                    bundle.putString("postIdAQ", postId );
-                    bundle.putString("userIdAQ", userId );
-                    bundle.putString("commentIdAQ", commentId );
+
+                        bundle.putString("postIdAQ", postId);
+                        bundle.putString("userIdAQ", userId);
+                        bundle.putString("commentIdAQ", commentId);
+
 
                      }
             }
@@ -100,6 +102,11 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             postId = extras.getString("post_id");
+            UserID = extras.getString("user_id");
+
+            bundle.putString("post_id", postId);
+            bundle.putString("user_id", UserID);
+
             Log.e("postiddddddd", "" + postId);
             //The key argument here must match that used in the other activity
         }
@@ -312,7 +319,6 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
     private void showModel() {
         AnonymousBottomSheet bottomSheet = new AnonymousBottomSheet();
         bottomSheet.setArguments(bundle);
-
         bottomSheet.show(getSupportFragmentManager(), "ModalBottomSheet");
     }
 }

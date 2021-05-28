@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,11 +32,13 @@ public class CommentBottomSheet extends BottomSheetDialogFragment {
     boolean notification;
     PostDetails postDetails;
     SocialFeedAdapter socialFeedAdapter;
+    int index;
 
-    public CommentBottomSheet(boolean notification, PostDetails postDetails, SocialFeedAdapter socialFeedAdapter) {
+    public CommentBottomSheet(boolean notification, PostDetails postDetails, SocialFeedAdapter socialFeedAdapter, int adapterPosition) {
         this.notification = notification;
         this.postDetails = postDetails;
         this.socialFeedAdapter = socialFeedAdapter;
+        this.index = adapterPosition;
     }
 
     @Nullable
@@ -45,6 +48,8 @@ public class CommentBottomSheet extends BottomSheetDialogFragment {
         SwitchCompat switch_on_off = view.findViewById(R.id.switch_on_off);
         TextView text_on_off = view.findViewById(R.id.text_on_off);
         ImageView iv_block = view.findViewById(R.id.iv_block);
+        RelativeLayout rl_delete = view.findViewById(R.id.rl_delete);
+        ImageView iv_delete_post = view.findViewById(R.id.iv_delete_post);
 
         if (notification) {
             switch_on_off.setChecked(true);
@@ -53,7 +58,16 @@ public class CommentBottomSheet extends BottomSheetDialogFragment {
             switch_on_off.setChecked(false);
             text_on_off.setText("Turn Post Notification ON");
         }
-
+        SessionPref pref = SessionPref.getInstance(getActivity());
+        if (postDetails.getUserId().equals(pref.getStringVal(SessionPref.LoginUserID))) {
+            rl_delete.setVisibility(View.VISIBLE);
+        }
+        iv_delete_post.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callAPIDeletePost();
+            }
+        });
         iv_block.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -77,6 +91,44 @@ public class CommentBottomSheet extends BottomSheetDialogFragment {
         return view;
     }
 
+    private void callAPIDeletePost() {
+        SessionPref pref = SessionPref.getInstance(getActivity());
+        socialFeedAdapter.DeleteItem(index);
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
+        hashMap.put("postId", postDetails.getPostId());
+
+        Call<LoginResponse> call = service.deletePost("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        dismiss();
+        call.enqueue(new retrofit2.Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+//                pd.cancel();
+                if (response.code() == 200) {
+                    if (response.body().getStatus() == 1) {
+
+
+
+                    } else {
+                    }
+                } else {
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                t.printStackTrace();
+//                pd.cancel();
+//                Toast.makeText(BioActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
     private void callBlockUser(String toUserId) {
         SessionPref pref = SessionPref.getInstance(getActivity());
 
@@ -91,6 +143,45 @@ public class CommentBottomSheet extends BottomSheetDialogFragment {
 //        pd.show();
 
         Call<LoginResponse> call = service.addUserReportBlock("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new retrofit2.Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+//                pd.cancel();
+                if (response.code() == 200) {
+                    if (response.body().getStatus() == 1) {
+//                        socialFeedAdapter.notifyDataSetChanged();
+                        dismiss();
+
+                    } else {
+                    }
+                } else {
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                t.printStackTrace();
+//                pd.cancel();
+//                Toast.makeText(BioActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+
+    private void callUnBlockUser(String toUserId) {
+        SessionPref pref = SessionPref.getInstance(getActivity());
+
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
+        hashMap.put("action", "Block");//Block or Report
+        hashMap.put("toUserId", toUserId);
+
+        Call<LoginResponse> call = service.removeUserReportBlock("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new retrofit2.Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {

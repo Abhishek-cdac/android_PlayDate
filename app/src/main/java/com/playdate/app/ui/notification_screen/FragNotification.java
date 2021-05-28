@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -43,7 +44,7 @@ public class FragNotification extends Fragment {
     CommonClass clsCommon;
     List<NotificationData> lst_notifications;
     Onclick itemClick;
-
+    Bundle bundle;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -70,14 +71,27 @@ public class FragNotification extends Fragment {
                 }else if(value == 25){
                     callMatchRequestStatusUpdateAPI(s, "Rejected");
                 }
+                else if (value==11){
+
+
+                }
             }
 
             @Override
             public void onItemClicks(View v, int adapterPosition, int i, String notifiationId, String userId) {
                 if (i == 22) {
                     callUpdateNotificationStatusAPI(notifiationId, userId, "read");
-                } else if (i == 23) {
-                    callUpdateNotificationStatusAPI(notifiationId, userId, "delete");
+                } else if (i == 11) {
+
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    NotificationBottomSheet sheet = new NotificationBottomSheet();
+                    bundle = new Bundle();
+                    bundle.putString("notifiationId", notifiationId);
+                    bundle.putString("userId", userId);
+                    sheet.setArguments(bundle);
+                    sheet.show(fragmentManager, "notification bottom sheet");
+
+
                 }
             }
 
@@ -248,10 +262,6 @@ public class FragNotification extends Fragment {
                         rv_notification.setLayoutManager(manager);
                         FragNewNotificationAdapter adapter = new FragNewNotificationAdapter(getActivity(), (ArrayList<NotificationData>) lst_notifications, itemClick);
                         rv_notification.setAdapter(adapter);
-
-
-                        //  FragNotificationAdapter adapter = new FragNotificationAdapter();
-//  rv_notification.setAdapter(adapter);
 
                     }
                 } else {

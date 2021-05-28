@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/rl_comment_on_off"
         android:paddingVertical="@dimen/_2sdp">
 
         <TextView
@@ -25,6 +26,7 @@
         <androidx.appcompat.widget.SwitchCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/switch_comment_onoff"
             android:layout_alignParentEnd="true"
             android:layout_gravity="center"
             app:track="@drawable/track" />

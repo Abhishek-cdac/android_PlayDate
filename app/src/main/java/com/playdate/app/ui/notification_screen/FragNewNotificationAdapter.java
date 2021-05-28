@@ -1,6 +1,7 @@
 package com.playdate.app.ui.notification_screen;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,10 +13,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
 import com.playdate.app.model.NotificationData;
+import com.playdate.app.ui.chat.ChatBottomSheet;
 import com.playdate.app.ui.chat.request.Onclick;
 import com.squareup.picasso.Picasso;
 
@@ -59,13 +62,47 @@ public class FragNewNotificationAdapter extends RecyclerView.Adapter<FragNewNoti
             holder.tv_desc.setText(notification_list.get(position).getNotificationMessage());
             holder.tv_name.setText(notification_list.get(position).getFriendRequest().get(0).getUserInfo().get(0).getUsername());
             requestId = notification_list.get(position).getFriendRequest().get(0).getRequestId();
-            Log.e("requestId",""+requestId);
+            Log.e("requestId", "" + requestId);
             Picasso.get().load(notification_list.get(position).getFriendRequest().get(0).getUserInfo().get(0).getProfilePicPath())
                     //.placeholder(R.drawable.cupertino_activity_indicator)
                     .placeholder(R.drawable.profile)
                     .fit()
                     .centerCrop()
                     .into(holder.profile_image);
+
+            if (notification_list.get(position).isSelected) {
+                holder.rl_notification.setBackgroundColor(Color.parseColor("#DA8EA9"));
+
+
+            } else {
+                holder.rl_notification.setBackgroundColor(mcontext.getResources().getColor(R.color.white));
+
+            }
+
+            holder.rl_notification.setOnLongClickListener(v -> {
+                int selected_index = position;
+                Log.e("relativeLayout", "relativeLayout" + selected_index);
+                if (!notification_list.get(selected_index).isSelected) {
+
+                    for (int i = 0; i < notification_list.size(); i++) {
+                        if (selected_index != i) {
+                            notification_list.get(i).setSelected(false);
+                        } else {
+                            notification_list.get(selected_index).setSelected(true);
+                            itemClick.onItemClicks(v, selected_index, 11, notification_list.get(position).getNotificationId(), notification_list.get(position).getUserID());
+                        }
+                    }
+
+                    notifyDataSetChanged();
+
+
+                } else {
+                    notification_list.get(selected_index).setSelected(false);
+                    notifyDataSetChanged();
+                }
+                return true;
+            });
+
 
         } else {
             holder.rl_notification.setVisibility(View.GONE);
@@ -100,16 +137,13 @@ public class FragNewNotificationAdapter extends RecyclerView.Adapter<FragNewNoti
             icons.setVisibility(View.GONE);
 
 
-
             iv_right.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                    if (patternID.equals("Friend")){
+                    if (patternID.equals("Friend")) {
                         itemClick.onItemClicks(v, getAdapterPosition(), 20, requestId);
-                    }
-                    else if (patternID.equals("Match"))
-                    {
+                    } else if (patternID.equals("Match")) {
                         itemClick.onItemClicks(v, getAdapterPosition(), 24, requestId);
 
                     }
@@ -122,14 +156,11 @@ public class FragNewNotificationAdapter extends RecyclerView.Adapter<FragNewNoti
                 public void onClick(View v) {
                     Log.e("requestId", "" + requestId);
 
-                    if (patternID.equals("Friend")){
+                    if (patternID.equals("Friend")) {
                         itemClick.onItemClicks(v, getAdapterPosition(), 21, requestId);
-                    }
-                    else if (patternID.equals("Match"))
-                    {
+                    } else if (patternID.equals("Match")) {
                         itemClick.onItemClicks(v, getAdapterPosition(), 25, requestId);
                     }
-
 
 
                     //  removeAt(getAdapterPosition());

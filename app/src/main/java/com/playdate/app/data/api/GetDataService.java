@@ -193,4 +193,18 @@ public interface GetDataService {
     Call<ChatUserList> getChats();
 
 
+    @FormUrlEncoded
+    @POST("user/remove-user-report-block")
+    Call<LoginResponse> removeUserReportBlock(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
+    @FormUrlEncoded
+    @POST("user/post-comment-on-off")
+    Call<LoginResponse> postCommentOnOff(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
+    @FormUrlEncoded
+    @POST("user/delete-post")
+    Call<LoginResponse> deletePost(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
 }
+
+
