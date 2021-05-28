@@ -211,10 +211,6 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                 ref.loadProfile(lst.get(position).getUserId());
             });
 
-            userViewHolder.iv_post_image.setOnClickListener(view -> {
-//                    OnInnerFragmentClicks ref = (OnInnerFragmentClicks) mContext;
-//                    ref.loadProfile();
-            });
 
             if (null != lst.get(position).getPostMedia().get(0).getMediaFullPath()) {
                 if (lst.get(position).getPostMedia().get(0).getMediaType().contains("video")) {
@@ -343,7 +339,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
             });
             userViewHolder.iv_post_image.setOnClickListener(view -> {
 
-                if (lst.get(position).getLikes() != 1) {
+                if (lst.get(position).getIsLike() != 1) {
                     if (lst.get(position).getTapCount() == 1) {
 
                         lst.get(position).setIsLike(1);
