@@ -88,7 +88,6 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
 
         setValue();
 
-
         iv_send_request.setOnClickListener(this);
         profile_image.setOnClickListener(this);
 

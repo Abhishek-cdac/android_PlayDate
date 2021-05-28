@@ -18,6 +18,25 @@ public class PostDetails {
     }
 
     private String postType;
+    private int colorCode;
+    private String emojiCode;
+
+    public int getColorCode() {
+        return colorCode;
+    }
+
+    public void setColorCode(int colorCode) {
+        this.colorCode = colorCode;
+    }
+
+    public String getEmojiCode() {
+        return emojiCode;
+    }
+
+    public void setEmojiCode(String emojiCode) {
+        this.emojiCode = emojiCode;
+    }
+
     boolean commentStatus;
 
     public boolean isCommentStatus() {

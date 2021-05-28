@@ -79,13 +79,9 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
             @Override
             public void onItemClicks(View v, int absoluteAdapterPosition, int i, String commentId, String postId, String userId) {
                 if (i == 11) {
-
-
                         bundle.putString("postIdAQ", postId);
                         bundle.putString("userIdAQ", userId);
                         bundle.putString("commentIdAQ", commentId);
-
-
                      }
             }
         };
