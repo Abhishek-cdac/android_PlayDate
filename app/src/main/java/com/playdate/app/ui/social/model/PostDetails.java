@@ -18,6 +18,15 @@ public class PostDetails {
     }
 
     private String postType;
+    boolean commentStatus;
+
+    public boolean isCommentStatus() {
+        return commentStatus;
+    }
+
+    public void setCommentStatus(boolean commentStatus) {
+        this.commentStatus = commentStatus;
+    }
 
     private String tag;
     private String comments;

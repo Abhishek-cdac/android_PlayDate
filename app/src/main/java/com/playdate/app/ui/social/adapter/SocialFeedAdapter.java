@@ -53,9 +53,9 @@ import retrofit2.Response;
 public class SocialFeedAdapter extends AAH_VideosAdapter {
 
 
-    public void DeleteItem(int index){
+    public void DeleteItem(int index) {
         try {
-            if(null!=lst){
+            if (null != lst) {
 
                 lst.remove(index);
                 notifyDataSetChanged();
@@ -268,27 +268,44 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
             });
             try {
                 userViewHolder.txt_heart_count.setText(lst.get(position).getLikes() + " Loves");
+
+
                 String owner = "";
                 if (null != lst.get(position).getTag()) {
-                    owner = "<b>" + lst.get(position).getLstpostby().get(0).getUsername() + "</b> " + lst.get(position).getTag();
-
-                }
-                if (null != lst.get(position).getComments_list()) {
-                    ArrayList<CommentList> lstComm = lst.get(position).getComments_list();
-
-                    String temp = "";
-                    for (int i = 0; i < lstComm.size(); i++) {
-                        String s = "<b>" + lstComm.get(i).getCommentBy().get(0).getUsername() + "</b> " + lstComm.get(i).getComment();
-                        if (temp.isEmpty()) {
-                            temp = s;
-                        } else {
-                            temp = temp + "<br>" + s;
-                        }
+                    if (lst.get(position).getTag().isEmpty()) {
+                        owner = "";
+                    } else {
+                        owner = "<b>" + lst.get(position).getLstpostby().get(0).getUsername() + "</b> " + lst.get(position).getTag();
                     }
-                    userViewHolder.txt_chat.setText(Html.fromHtml("<b>" + owner + "</b>" + "<br>" + temp));
-
 
                 }
+                if (lst.get(position).isCommentStatus()) {
+                    if (null != lst.get(position).getComments_list()) {
+                        ArrayList<CommentList> lstComm = lst.get(position).getComments_list();
+
+                        String temp = "";
+                        for (int i = 0; i < lstComm.size(); i++) {
+                            String s = "<b>" + lstComm.get(i).getCommentBy().get(0).getUsername() + "</b> " + lstComm.get(i).getComment();
+                            if (temp.isEmpty()) {
+                                temp = s;
+                            } else {
+                                temp = temp + "<br>" + s;
+                            }
+                        }
+                        userViewHolder.txt_chat.setText(Html.fromHtml("<b>" + owner + "</b>" + "<br>" + temp));
+
+
+                    }
+                } else {
+                    userViewHolder.et_comment.setVisibility(View.GONE);
+                    if (owner.isEmpty()) {
+                        userViewHolder.txt_chat.setVisibility(View.GONE);
+                    } else {
+                        userViewHolder.txt_chat.setText(Html.fromHtml("<b>" + owner + "</b>"));
+                    }
+
+                }
+
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -318,6 +335,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                 public void onClick(View v) {
                     Intent i = new Intent(v.getContext(), AnonymousQuestionActivity.class);
                     i.putExtra("post_id", lst.get(position).getPostId());
+                    i.putExtra("user_id", lst.get(position).getUserId());
                     v.getContext().startActivity(i);
                 }
             });
@@ -343,9 +361,9 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                 }
             });
 
-        }else if(holder.getItemViewType() == 100){
+        } else if (holder.getItemViewType() == 100) {
 
-        }else if(holder.getItemViewType()==1){
+        } else if (holder.getItemViewType() == 1) {
             ViewHolderUserVideo videoHolder;
             holder.setVideoUrl(lst.get(position).getPostMedia().get(0).getMediaFullPath());
 
@@ -364,6 +382,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                 public void onClick(View v) {
                     Intent i = new Intent(v.getContext(), AnonymousQuestionActivity.class);
                     i.putExtra("post_id", lst.get(position).getPostId());
+                    i.putExtra("user_id", lst.get(position).getUserId());
                     v.getContext().startActivity(i);
                 }
             });
@@ -404,26 +423,44 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
             });
             try {
                 videoHolder.txt_heart_count.setText(lst.get(position).getLikes() + " Loves");
+
+
                 String owner = "";
                 if (null != lst.get(position).getTag()) {
-                    owner = "<b>" + lst.get(position).getLstpostby().get(0).getUsername() + "</b> " + lst.get(position).getTag();
-
-                }
-                if (null != lst.get(position).getComments_list()) {
-                    ArrayList<CommentList> lstComm = lst.get(position).getComments_list();
-
-                    String temp = "";
-                    for (int i = 0; i < lstComm.size(); i++) {
-                        String s = "<b>" + lstComm.get(i).getCommentBy().get(0).getUsername() + "</b> " + lstComm.get(i).getComment();
-                        if (temp.isEmpty()) {
-                            temp = s;
-                        } else {
-                            temp = temp + "<br>" + s;
-                        }
+                    if (lst.get(position).getTag().isEmpty()) {
+                        owner = "";
+                    } else {
+                        owner = "<b>" + lst.get(position).getLstpostby().get(0).getUsername() + "</b> " + lst.get(position).getTag();
                     }
-                    videoHolder.txt_chat.setText(Html.fromHtml(owner + "<br>" + temp));
 
                 }
+                if (lst.get(position).isCommentStatus()) {
+                    if (null != lst.get(position).getComments_list()) {
+                        ArrayList<CommentList> lstComm = lst.get(position).getComments_list();
+
+                        String temp = "";
+                        for (int i = 0; i < lstComm.size(); i++) {
+                            String s = "<b>" + lstComm.get(i).getCommentBy().get(0).getUsername() + "</b> " + lstComm.get(i).getComment();
+                            if (temp.isEmpty()) {
+                                temp = s;
+                            } else {
+                                temp = temp + "<br>" + s;
+                            }
+                        }
+                        videoHolder.txt_chat.setText(Html.fromHtml("<b>" + owner + "</b>" + "<br>" + temp));
+
+
+                    }
+                } else {
+                    videoHolder.et_comment.setVisibility(View.GONE);
+                    if (owner.isEmpty()) {
+                        videoHolder.txt_chat.setVisibility(View.GONE);
+                    } else {
+                        videoHolder.txt_chat.setText(Html.fromHtml("<b>" + owner + "</b>"));
+                    }
+
+                }
+
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -597,6 +634,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
             et_comment.setOnClickListener(v -> {
                 Intent mIntent = new Intent(v.getContext(), AnonymousQuestionActivity.class);
                 mIntent.putExtra("post_id", lst.get(getAdapterPosition()).getPostId());
+                mIntent.putExtra("user_id", lst.get(getAdapterPosition()).getUserId());
                 v.getContext().startActivity(mIntent);
             });
             iv_mute_unmute.setOnClickListener(new View.OnClickListener() {
@@ -703,6 +741,8 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
             et_comment.setOnClickListener(v -> {
                 Intent mIntent = new Intent(v.getContext(), AnonymousQuestionActivity.class);
                 mIntent.putExtra("post_id", lst.get(getAdapterPosition()).getPostId());
+                mIntent.putExtra("user_id", lst.get(getAdapterPosition()).getUserId());
+
                 v.getContext().startActivity(mIntent);
             });
 
@@ -714,7 +754,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
 
 
         FragmentManager fragmentManager = ((AppCompatActivity) mContext).getSupportFragmentManager();
-        CommentBottomSheet sheet = new CommentBottomSheet(notification, lst.get(adapterPosition), this,adapterPosition);
+        CommentBottomSheet sheet = new CommentBottomSheet(notification, lst.get(adapterPosition), this, adapterPosition);
         sheet.show(fragmentManager, "comment bootom sheet");
     }
 
