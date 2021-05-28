@@ -74,10 +74,12 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
     }
 
     ArrayList<PostDetails> lst;
-
+    Picasso picasso;
     public SocialFeedAdapter(FragmentActivity activity, ArrayList<PostDetails> lst) {
         this.mContext = activity;
         this.lst = lst;
+        picasso=Picasso.get();
+
     }
 
     public void animateHeart(final ImageView view, View iv) {
@@ -157,7 +159,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
 
         if (lst.get(position).getPostType().equals("Load")) {
             return 100;
-        } else if (lst.get(position).getPostMedia().get(0).getMediaFullPath().toLowerCase().contains(".mp4")) {
+        } else if (lst.get(position).getPostMedia().get(0).getMediaType().contains("video")) {
             return 1;
         }
         return 0;
@@ -215,12 +217,12 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
             });
 
             if (null != lst.get(position).getPostMedia().get(0).getMediaFullPath()) {
-                if (lst.get(position).getPostMedia().get(0).getMediaFullPath().contains(".mp4")) {
+                if (lst.get(position).getPostMedia().get(0).getMediaType().contains("video")) {
 
                     // video
 
                 } else {
-                    Picasso.get().load(lst.get(position).getPostMedia().get(0).getMediaFullPath())
+                    picasso.load(lst.get(position).getPostMedia().get(0).getMediaFullPath())
 
 
                             .into(userViewHolder.iv_post_image, new ImageLoadedCallback(userViewHolder.animationView) {
@@ -235,7 +237,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
             }
 
 
-            Picasso.get().load(lst.get(position).getLstpostby().get(0).getProfilePicPath())
+            picasso.load(lst.get(position).getLstpostby().get(0).getProfilePicPath())
                     .placeholder(R.drawable.cupertino_activity_indicator)
                     .into(userViewHolder.iv_profile);
 
@@ -387,10 +389,10 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                 }
             });
 
-            Picasso.get().load(lst.get(position).getPostMedia().get(0).getMediaThumbName())
+            picasso.load(lst.get(position).getPostMedia().get(0).getMediaThumbName())
                     .into(videoHolder.videoImg.getImageView());
 
-            Picasso.get().load(lst.get(position).getLstpostby().get(0).getProfilePicPath())
+            picasso.load(lst.get(position).getLstpostby().get(0).getProfilePicPath())
                     .placeholder(R.drawable.cupertino_activity_indicator)
                     .into(videoHolder.iv_profile);
 
