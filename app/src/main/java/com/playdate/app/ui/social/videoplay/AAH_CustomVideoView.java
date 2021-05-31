@@ -75,45 +75,23 @@ public class AAH_CustomVideoView extends TextureView implements TextureView.Surf
                     Surface surface = new Surface(this.getSurfaceTexture());
                     try {
                         mMediaPlayer = new MediaPlayer();
-                        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN) {
-                            mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                                @Override
-                                public void onPrepared(MediaPlayer mp) {
-                                    _act.runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            try {
-                                                myFuncIn.call();
-                                            } catch (Exception e) {
-                                                e.printStackTrace();
-                                            }
-
+                        mMediaPlayer.setOnInfoListener((mp, what, extra) -> {
+                            if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
+                                _act.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        try {
+                                            myFuncIn.call();
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
                                         }
-                                    });
-                                }
-                            });
-                        } else {
-                            mMediaPlayer.setOnInfoListener(new MediaPlayer.OnInfoListener() {
-                                @Override
-                                public boolean onInfo(MediaPlayer mp, int what, int extra) {
-                                    if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
-                                        _act.runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                try {
-                                                    myFuncIn.call();
-                                                } catch (Exception e) {
-                                                    e.printStackTrace();
-                                                }
-
-                                            }
-                                        });
 
                                     }
-                                    return false;
-                                }
-                            });
-                        }
+                                });
+
+                            }
+                            return false;
+                        });
 
 //                  mMediaPlayer.setOnCompletionListener(mCompletionListener);
 //                  mMediaPlayer.setOnBufferingUpdateListener(this);
@@ -124,13 +102,7 @@ public class AAH_CustomVideoView extends TextureView implements TextureView.Surf
                         mMediaPlayer.setSurface(surface);
                         mMediaPlayer.prepare();
                         if (mMediaPlayer != null) mMediaPlayer.start();
-                    } catch (IllegalArgumentException e) {
-                        e.printStackTrace();
-                    } catch (SecurityException e) {
-                        e.printStackTrace();
-                    } catch (IllegalStateException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
+                    } catch (IllegalArgumentException | SecurityException | IllegalStateException | IOException e) {
                         e.printStackTrace();
                     }
                 }

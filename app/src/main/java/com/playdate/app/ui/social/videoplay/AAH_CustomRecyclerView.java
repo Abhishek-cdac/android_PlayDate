@@ -2,6 +2,7 @@ package com.playdate.app.ui.social.videoplay;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Environment;
@@ -211,12 +212,12 @@ public class AAH_CustomRecyclerView extends RecyclerView {
         if (!AAH_Utils.isConnected(_act)) return;
         /* Starting Download Service */
         if ((getString(_act, url) == null || !(new File(getString(_act, url)).exists())) && url != null && !url.equalsIgnoreCase("null")) {
-//            Intent intent = new Intent(Intent.ACTION_SYNC, null, _act, AAH_DownloadService.class);
-//            /* Send optional extras to Download IntentService */
-//            intent.putExtra("url", url);
-//            intent.putExtra("path", downloadPath);
-//            intent.putExtra("requestId", 101);
-//            _act.startService(intent);
+            Intent intent = new Intent(Intent.ACTION_SYNC, null, _act, AAH_DownloadService.class);
+            /* Send optional extras to Download IntentService */
+            intent.putExtra("url", url);
+            intent.putExtra("path", downloadPath);
+            intent.putExtra("requestId", 101);
+            _act.startService(intent);
         }
     }
 
@@ -236,11 +237,11 @@ public class AAH_CustomRecyclerView extends RecyclerView {
         urls.addAll(hashSet);
         for (int i = 0; i < urls.size(); i++) {
             if ((getString(_act, urls.get(i)) == null || !(new File(getString(_act, urls.get(i))).exists())) && urls.get(i) != null && !urls.get(i).equalsIgnoreCase("null")) {
-//                Intent intent = new Intent(Intent.ACTION_SYNC, null, _act, AAH_DownloadService.class);
-//                intent.putExtra("url", urls.get(i));
-//                intent.putExtra("path", downloadPath);
-//                intent.putExtra("requestId", 101);
-//                _act.startService(intent);
+                Intent intent = new Intent(Intent.ACTION_SYNC, null, _act, AAH_DownloadService.class);
+                intent.putExtra("url", urls.get(i));
+                intent.putExtra("path", downloadPath);
+                intent.putExtra("requestId", 101);
+                _act.startService(intent);
             }
         }
     }
@@ -259,11 +260,7 @@ public class AAH_CustomRecyclerView extends RecyclerView {
                 }
             }
         }
-        try {
-//            handler.removeCallbacksAndMessages(null);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
     }
 
     public void setVisiblePercent(float visiblePercent) {

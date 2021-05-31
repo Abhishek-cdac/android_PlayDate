@@ -12,7 +12,6 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -37,7 +36,6 @@ import com.playdate.app.model.FriendsListModel;
 import com.playdate.app.model.MatchListUser;
 import com.playdate.app.service.LocationService;
 import com.playdate.app.ui.anonymous_question.AnoQuesCreateActivity;
-import com.playdate.app.ui.anonymous_question.AnonymousQuestionActivity;
 import com.playdate.app.ui.card_swipe.FragCardSwipe;
 import com.playdate.app.ui.chat.request.RequestChatFragment;
 import com.playdate.app.ui.coupons.FragCouponStore;
@@ -55,7 +53,6 @@ import com.playdate.app.ui.my_profile_details.FragMyProfilePersonal;
 import com.playdate.app.ui.my_profile_details.FragSavedPost;
 import com.playdate.app.ui.notification_screen.FragNotification;
 import com.playdate.app.ui.social.FragSocialFeed;
-import com.playdate.app.ui.social.TestFrag;
 import com.playdate.app.ui.social.upload_media.PostMediaActivity;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
@@ -66,7 +63,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Stack;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -101,8 +97,8 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     FrameLayout flFragment;
 //    FrameLayout flFeed;
 
-    protected static final String strProStaFin_CONTENT_TAG_1 = "contenFragments_1";
-    private HashMap<String, Stack<Fragment>> pri_hMap_FragmentsStack;
+//    protected static final String strProStaFin_CONTENT_TAG_1 = "contenFragments_1";
+//    private HashMap<String, Stack<Fragment>> pri_hMap_FragmentsStack;
 
     //    SwipeRefreshLayout mSwipeRefreshLayout;
     LinearLayout ll_mainMenu, ll_her;
@@ -134,8 +130,8 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        pri_hMap_FragmentsStack = new HashMap<>();
-        pri_hMap_FragmentsStack.put(strProStaFin_CONTENT_TAG_1, new Stack<>());
+//        pri_hMap_FragmentsStack = new HashMap<>();
+//        pri_hMap_FragmentsStack.put(strProStaFin_CONTENT_TAG_1, new Stack<>());
 
 
         txt_serachfriend = findViewById(R.id.txt_serachfriend);
@@ -374,25 +370,14 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction ft = fragmentManager.beginTransaction();
-
-            if (pri_hMap_FragmentsStack.get(strProStaFin_CONTENT_TAG_1).empty()) {
-                pri_hMap_FragmentsStack.get(strProStaFin_CONTENT_TAG_1).push(fragment);
-                ft.add(R.id.flFragment, fragment, fragment.getClass().getSimpleName());
-
+            if (fragmentManager.getFragments().size() > 0) {
+                ft.replace(R.id.flFragment, fragment, fragment.getClass().getSimpleName());
             } else {
-                pri_hMap_FragmentsStack.get(strProStaFin_CONTENT_TAG_1).lastElement().onPause();
-                ft.hide(pri_hMap_FragmentsStack.get(strProStaFin_CONTENT_TAG_1).lastElement());
-                ft.remove(pri_hMap_FragmentsStack.get(strProStaFin_CONTENT_TAG_1).lastElement());
-                pri_hMap_FragmentsStack.get(strProStaFin_CONTENT_TAG_1).pop();
                 ft.add(R.id.flFragment, fragment, fragment.getClass().getSimpleName());
-                pri_hMap_FragmentsStack.get(strProStaFin_CONTENT_TAG_1).push(fragment);
-
             }
 
-            ft.addToBackStack(fragment.getClass().getSimpleName());
-            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            ft.addToBackStack(null);
             ft.commitAllowingStateLoss();
-
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -640,7 +625,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             iv_plus.setVisibility(View.VISIBLE);
             iv_play_date_logo.setVisibility(View.VISIBLE);
             Intent mIntent = new Intent(DashboardActivity.this, AnoQuesCreateActivity.class);
-           //AnonymousQuestionActivity
+            //AnonymousQuestionActivity
             mIntent.putExtra("new", true);
             startActivity(mIntent);
         } else if (id == R.id.ll_take_photo) {

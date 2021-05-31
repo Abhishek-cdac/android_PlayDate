@@ -97,7 +97,7 @@ public class FragSocialFeed extends Fragment {
     public void onStop() {
         try {
             recycler_view_feed.stopVideos();
-            Toast.makeText(getActivity(), "Video Stopped", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getActivity(), "Video Stopped", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             e.printStackTrace();
         }
