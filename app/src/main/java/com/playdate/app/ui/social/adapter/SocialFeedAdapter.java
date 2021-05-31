@@ -901,7 +901,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
         TextView name_friend, question_Anonymous;
         TextView txt_ano_question;
         TextView txt_chat;
-        EditText edt_comment;
+        TextView edt_comment;
         Button respond, delete_btn;
 
         //        ImageView iv_profile;
