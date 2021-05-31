@@ -15,6 +15,7 @@ public class ConnectionBroadcastReceiver extends BroadcastReceiver {
 //        }
     }
 
+
     boolean checkInternet(Context context) {
         ServiceManager serviceManager = new ServiceManager(context);
         return serviceManager.isNetworkAvailable();
