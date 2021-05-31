@@ -533,17 +533,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                     viewHolderAnonymQuestion.card_image.setCardBackgroundColor(Color.parseColor(lst.get(position).getColorCode()));
 
                 String ques = lst.get(position).getTag();
-                if (ques.length() < 5) {
-                    viewHolderAnonymQuestion.question_Anonymous.setTextSize(mContext.getResources().getDimension(R.dimen._14sdp));
-                } else if (ques.length() < 10) {
-                    viewHolderAnonymQuestion.question_Anonymous.setTextSize(mContext.getResources().getDimension(R.dimen._13sdp));
-                } else if (ques.length() < 20) {
-                    viewHolderAnonymQuestion.question_Anonymous.setTextSize(mContext.getResources().getDimension(R.dimen._12sdp));
-                } else if (ques.length() < 30) {
-                    viewHolderAnonymQuestion.question_Anonymous.setTextSize(mContext.getResources().getDimension(R.dimen._11sdp));
-                } else if (ques.length() < 40) {
-                    viewHolderAnonymQuestion.question_Anonymous.setTextSize(mContext.getResources().getDimension(R.dimen._10sdp));
-                }
+
                 viewHolderAnonymQuestion.question_Anonymous.setText(lst.get(position).getTag());
 //                String s = Integer.toString(lst.get(position).getEmojiCode(), 16);
                 viewHolderAnonymQuestion.txt_ano_question.setText(new String(Character.toChars(lst.get(position).getEmojiCode())));
@@ -553,6 +543,40 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                     viewHolderAnonymQuestion.delete_btn.setVisibility(View.VISIBLE);
                 } else {
                     viewHolderAnonymQuestion.delete_btn.setVisibility(View.INVISIBLE);
+                }
+
+                try {
+
+                    if (lst.get(position).isCommentStatus()) {
+                        if (null != lst.get(position).getComments_list()) {
+                            ArrayList<CommentList> lstComm = lst.get(position).getComments_list();
+
+                            String temp = "";
+                            for (int i = 0; i < lstComm.size(); i++) {
+                                String s = "<b>" + lstComm.get(i).getCommentBy().get(0).getUsername() + "</b> " + lstComm.get(i).getComment();
+                                if (temp.isEmpty()) {
+                                    temp = s;
+                                } else {
+                                    temp = temp + "<br>" + s;
+                                }
+                            }
+                            viewHolderAnonymQuestion.txt_chat.setText(Html.fromHtml( temp));
+
+                            viewHolderAnonymQuestion.txt_chat.setVisibility(View.VISIBLE);
+                        }
+                    } else {
+//                        viewHolderAnonymQuestion.et_comment.setVisibility(View.GONE);
+//                        if (owner.isEmpty()) {
+//                            viewHolderAnonymQuestion.txt_chat.setVisibility(View.GONE);
+//                        } else {
+//                            viewHolderAnonymQuestion.txt_chat.setText(Html.fromHtml("<b>" + owner + "</b>"));
+//                        }
+
+                    }
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
 
 
@@ -863,6 +887,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
         CardView card_image;
         TextView name_friend, question_Anonymous;
         TextView txt_ano_question;
+        TextView txt_chat;
         Button respond, delete_btn;
 
         //        ImageView iv_profile;
@@ -876,6 +901,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
 //            iv_heart = itemView.findViewById(R.id.iv_heart);
 //            iv_profile = itemView.findViewById(R.id.iv_profile);
             name_friend = itemView.findViewById(R.id.name_friend);
+            txt_chat = itemView.findViewById(R.id.txt_chat);
             respond = itemView.findViewById(R.id.respond);
             delete_btn = itemView.findViewById(R.id.delete_btn);
 
