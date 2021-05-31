@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -20,9 +19,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.cardview.widget.CardView;
-import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -888,6 +885,8 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                     Activity origin = (Activity) mContext;
                     Intent mIntent = new Intent(origin, AnonymousQuestionActivity.class);
                     mIntent.putExtra("Anonymous", true);
+                    mIntent.putExtra("post_id", lst.get(getAdapterPosition()).getPostId());
+                    mIntent.putExtra("user_id", lst.get(getAdapterPosition()).getUserId());
                     origin.startActivityForResult(mIntent, 410);
                 }
             });
