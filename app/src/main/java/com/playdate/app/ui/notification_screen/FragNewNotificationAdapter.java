@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
+import com.playdate.app.model.FriendRequest;
 import com.playdate.app.model.NotificationData;
 import com.playdate.app.ui.chat.ChatBottomSheet;
 import com.playdate.app.ui.chat.request.Onclick;
@@ -53,8 +54,80 @@ public class FragNewNotificationAdapter extends RecyclerView.Adapter<FragNewNoti
     @Override
     public void onBindViewHolder(@NonNull FragNewNotificationAdapter.ViewHolder holder, int position) {
 
+       if (notification_list.get(position).getFriendRequest() != null) {
 
-        if (notification_list.get(position).getFriendRequest().size() > 0) {
+            if (notification_list.get(position).getFriendRequest().size() > 0) {
+                if (notification_list.get(position).getFriendRequest().get(0).getStatus().toLowerCase().equals("pending")) {
+                    patternID = notification_list.get(position).getPatternID();
+                    Log.e("patternID", "" + patternID);
+                    holder.rl_notification.setVisibility(View.VISIBLE);
+                    holder.ll_no_notify.setVisibility(View.GONE);
+                    notifiationId = notification_list.get(position).getNotificationId();
+                    userId = notification_list.get(position).getUserID();
+                    holder.tv_desc.setText(notification_list.get(position).getNotificationMessage());
+                    holder.tv_name.setText(notification_list.get(position).getFriendRequest().get(0).getUserInfo().get(0).getUsername());
+                    requestId = notification_list.get(position).getFriendRequest().get(0).getRequestId();
+                    Log.e("requestId", "" + requestId);
+                    Picasso.get().load(notification_list.get(position).getFriendRequest().get(0).getUserInfo().get(0).getProfilePicPath())
+                            //.placeholder(R.drawable.cupertino_activity_indicator)
+                            .placeholder(R.drawable.profile)
+                            .fit()
+                            .centerCrop()
+                            .into(holder.profile_image);
+
+                    if (notification_list.get(position).isSelected) {
+                        holder.rl_notification.setBackgroundColor(Color.parseColor("#DA8EA9"));
+
+
+                    } else {
+                        holder.rl_notification.setBackgroundColor(mcontext.getResources().getColor(R.color.white));
+
+                    }
+
+                    holder.rl_notification.setOnLongClickListener(v -> {
+                        int selected_index = position;
+                        Log.e("relativeLayout", "relativeLayout" + selected_index);
+                        if (!notification_list.get(selected_index).isSelected) {
+
+                            for (int i = 0; i < notification_list.size(); i++) {
+                                if (selected_index != i) {
+                                    notification_list.get(i).setSelected(false);
+                                } else {
+                                    notification_list.get(selected_index).setSelected(true);
+                                    itemClick.onItemClicks(v, selected_index, 11, notification_list.get(position).getNotificationId(), notification_list.get(position).getUserID());
+                                }
+                            }
+
+                            notifyDataSetChanged();
+
+
+                        } else {
+                            notification_list.get(selected_index).setSelected(false);
+                            notifyDataSetChanged();
+                        }
+                        return true;
+                    });                } else {
+                //    iv_send_request.setImageResource(R.drawable.sent_request);
+                }
+
+
+            }
+        }
+
+          if (notification_list.get(position).getFriendRequest() != null) {
+                if (notification_list.get(position).getFriendRequest().size() == 0) {
+                    List<FriendRequest> lst = new ArrayList<>();
+                    FriendRequest fr = new FriendRequest();
+                    fr.setStatus("Pending");
+                    lst.add(fr);
+                    notification_list.get(position).setFriendRequest(lst);
+//                    itemClick.onItemClicks(v, position, 10, userId);
+                    notifyDataSetChanged();
+                }
+            }
+
+      /*  if (notification_list.get(position).getFriendRequest().size() > 0)
+        {
             patternID = notification_list.get(position).getPatternID();
             Log.e("patternID", "" + patternID);
             holder.rl_notification.setVisibility(View.VISIBLE);
@@ -110,7 +183,7 @@ public class FragNewNotificationAdapter extends RecyclerView.Adapter<FragNewNoti
             holder.rl_notification.setVisibility(View.GONE);
             holder.ll_no_notify.setVisibility(View.VISIBLE);
 
-        }
+        }*/
 
     }
 

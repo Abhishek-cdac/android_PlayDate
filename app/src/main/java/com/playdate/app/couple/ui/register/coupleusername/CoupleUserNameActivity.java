@@ -1,10 +1,9 @@
-package com.playdate.app.couple.ui.register;
+package com.playdate.app.couple.ui.register.coupleusername;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,26 +11,10 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 
 import com.playdate.app.R;
-import com.playdate.app.data.api.GetDataService;
-import com.playdate.app.data.api.RetrofitClientInstance;
+import com.playdate.app.couple.ui.register.couplebio.CoupleBioActivity;
 import com.playdate.app.databinding.ActivityCoupleUsernameBinding;
-import com.playdate.app.databinding.ActivityUsernameBinding;
-import com.playdate.app.model.LoginResponse;
-import com.playdate.app.ui.register.bio.BioActivity;
+
 import com.playdate.app.util.common.CommonClass;
-import com.playdate.app.util.common.TransparentProgressDialog;
-import com.playdate.app.util.session.SessionPref;
-
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import static com.playdate.app.util.session.SessionPref.LoginUserusername;
 
 public class CoupleUserNameActivity extends AppCompatActivity {
     CoupleUserNameViewModel coupleUserNameViewModel;
@@ -54,6 +37,9 @@ public class CoupleUserNameActivity extends AppCompatActivity {
         coupleUserNameViewModel.OnNextClick().observe(this, click -> {
 
             if (coupleUserNameViewModel.UserName.getValue() != null) {
+
+                startActivity(new Intent(CoupleUserNameActivity.this, CoupleBioActivity
+                        .class));
 
             }
 

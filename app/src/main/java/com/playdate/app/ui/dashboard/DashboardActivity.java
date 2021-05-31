@@ -197,6 +197,13 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
 
         rv_friends = findViewById(R.id.rv_friends);
+
+
+        if (pref.getStringVal(SessionPref.LoginUserrelationship).equals("Single")) {
+            txt_match.setVisibility(View.VISIBLE);
+        } else {
+            txt_match.setVisibility(View.GONE);
+        }
         boolean isFirstTime = checkFirstFrag();
         Fragment fragOne;
         if (!isFirstTime) {

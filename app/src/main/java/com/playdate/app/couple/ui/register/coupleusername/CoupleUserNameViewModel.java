@@ -1,4 +1,4 @@
-package com.playdate.app.couple.ui.register;
+package com.playdate.app.couple.ui.register.coupleusername;
 
 import android.view.View;
 
