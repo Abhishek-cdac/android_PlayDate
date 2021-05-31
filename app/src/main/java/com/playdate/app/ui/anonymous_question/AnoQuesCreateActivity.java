@@ -68,7 +68,7 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
         add_comment = findViewById(R.id.add_comment);
         txt_ques = findViewById(R.id.txt_ques);
         add_comment.setEnabled(false);
-        txt_post_comment = findViewById(R.id.txt_post_comment);
+        txt_post_comment = findViewById(R.id.txt_post_comments);
         back_anonymous = findViewById(R.id.back_anonymous);
         more_option = findViewById(R.id.more_option);
         ll_ques = findViewById(R.id.ll_ques);
@@ -171,7 +171,7 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
             finish();
         } else if (id == R.id.more_option) {
             showModel();
-        } else if (id == R.id.txt_post_comment) {
+        } else if (id == R.id.txt_post_comments) {
             // postQues();
             callAPIFeedPost();
 
