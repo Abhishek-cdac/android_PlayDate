@@ -90,7 +90,13 @@
             android:name=".ui.register.RegisterActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".couple.ui.register.CoupleUserNameActivity"
+            android:name=".couple.ui.register.coupleusername.CoupleUserNameActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".couple.ui.register.couplebio.CoupleBioActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".couple.ui.register.coupleprofile.CoupleUploadProfileActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.register.otp.OTPActivity"
