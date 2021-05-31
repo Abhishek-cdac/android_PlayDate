@@ -64,6 +64,7 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
         rec_view_colors = findViewById(R.id.rec_view_colors);
         add_comment = findViewById(R.id.add_comment);
         txt_ques = findViewById(R.id.txt_ques);
+
         txt_post_comment = findViewById(R.id.txt_post_comment);
         back_anonymous = findViewById(R.id.back_anonymous);
         more_option = findViewById(R.id.more_option);
@@ -72,8 +73,10 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
         mIntent = getIntent();
         txt_ques.setText(mIntent.getStringExtra("question"));
 
-
-        CreateList();
+        int originalUnicode=0x1F601;
+          //textView.setText(getEmoticon(originalUnicode));
+                                     Log.e("",""+getEmoticon(originalUnicode))  ;
+          CreateList();
 
         CreateSmilyList();
         OnColorChange(0);
@@ -86,7 +89,31 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
         txt_post_comment.setOnClickListener(this);
     }
 
+//    private String getEmoticon(Integer[] intEmoji) {
+//
+//        for (int i=0 ;i<=intEmoji.length;i++){
+//
+//
+//            emoji= new String(Character.toChars(i));
+//            try{
+//                lstSmiley.add(Integer.valueOf(emoji));
+//                Log.e("emoji",""+ Integer.valueOf(emoji));
+//            } catch(NumberFormatException ex){ // handle your exception
+//                Log.e("emojicatch",""+ ex);
+//            }
+//
+//
+//
+//
+//        }
+//        return emoji;
+//
+//    }
 
+
+    public String getEmoticon(int originalUnicode) {
+        return new String(Character.toChars(originalUnicode));
+    }
     public void CreateList() {
 
         lst.add(R.color.color_violet);
@@ -224,7 +251,7 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
                 pd.cancel();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
-                       // DashboardActivity.bitmap = null;
+
                         finish();
                     } else {
 //                        clsCommon.showDialogMsg(BioActivity.this, "PlayDate", response.body().getMessage(), "Ok");
