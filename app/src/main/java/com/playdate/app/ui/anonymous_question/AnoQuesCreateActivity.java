@@ -232,8 +232,7 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
                 pd.cancel();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
-
-                        postQues();
+                       postQues();
                     } else {
 //                        clsCommon.showDialogMsg(BioActivity.this, "PlayDate", response.body().getMessage(), "Ok");
                     }
