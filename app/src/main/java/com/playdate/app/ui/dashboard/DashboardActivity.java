@@ -36,6 +36,7 @@ import com.playdate.app.model.FriendsListModel;
 import com.playdate.app.model.MatchListUser;
 import com.playdate.app.service.LocationService;
 import com.playdate.app.ui.anonymous_question.AnoQuesCreateActivity;
+import com.playdate.app.ui.anonymous_question.AnonymousQuestionActivity;
 import com.playdate.app.ui.card_swipe.FragCardSwipe;
 import com.playdate.app.ui.chat.request.RequestChatFragment;
 import com.playdate.app.ui.coupons.FragCouponStore;
@@ -624,7 +625,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             ll_profile_drop_menu.setVisibility(View.GONE);
             iv_plus.setVisibility(View.VISIBLE);
             iv_play_date_logo.setVisibility(View.VISIBLE);
-            Intent mIntent = new Intent(DashboardActivity.this, AnoQuesCreateActivity.class);
+            Intent mIntent = new Intent(DashboardActivity.this, AnonymousQuestionActivity.class);
             //AnonymousQuestionActivity
             mIntent.putExtra("new", true);
             startActivity(mIntent);

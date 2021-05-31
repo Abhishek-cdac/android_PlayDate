@@ -55,13 +55,17 @@ public class InstaPhotosAdapter extends RecyclerView.Adapter<InstaPhotosAdapter.
             holder.iv_payment.getLayoutParams().width = (int) mContext.getResources().getDimension(R.dimen._30sdp);
             holder.iv_payment.getLayoutParams().height = (int) mContext.getResources().getDimension(R.dimen._30sdp);
         } else {
-            if (!lst.get(position).getPostMedia().get(0).getMediaType().equals("Video")) {
-                picasso.load(lst.get(position).getPostMedia().get(0).getMediaFullPath())
-                        .into(holder.iv_payment);
-            } else {
-                holder.iv_play.setVisibility(View.VISIBLE);
-                picasso.load(lst.get(position).getPostMedia().get(0).getMediaThumbName())
-                        .into(holder.iv_payment);
+            if(lst.get(position).getPostType().equals("Question")){
+
+            }else if(lst.get(position).getPostType().equals("Normal")){
+                if (!lst.get(position).getPostMedia().get(0).getMediaType().equals("Video")) {
+                    picasso.load(lst.get(position).getPostMedia().get(0).getMediaFullPath())
+                            .into(holder.iv_payment);
+                } else {
+                    holder.iv_play.setVisibility(View.VISIBLE);
+                    picasso.load(lst.get(position).getPostMedia().get(0).getMediaThumbName())
+                            .into(holder.iv_payment);
+                }
             }
 
             holder.card_grid.setCardBackgroundColor(mContext.getResources().getColor(R.color.white));

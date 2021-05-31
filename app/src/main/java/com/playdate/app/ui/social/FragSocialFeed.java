@@ -158,7 +158,7 @@ public class FragSocialFeed extends Fragment {
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
-                            Toast.makeText(getActivity(), "" + e.toString(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getActivity(), "" + e.toString(), Toast.LENGTH_SHORT).show();
                         }
                         recycler_view_feed.preDownload(urls);
                         recycler_view_feed.setVisiblePercent(70);

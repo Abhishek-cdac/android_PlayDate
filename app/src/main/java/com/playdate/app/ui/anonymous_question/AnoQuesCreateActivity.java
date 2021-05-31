@@ -1,6 +1,7 @@
 package com.playdate.app.ui.anonymous_question;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -43,19 +44,21 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
     RecyclerView rec_view_colors;
     TextView txt_ques;
     TextView emojitxt;
+    TextView txt_smiley;
     TextView txt_post_comment;
     ImageView back_anonymous;
     ImageView more_option;
-    ArrayList<Integer> lst = new ArrayList<>();
-    ArrayList<Integer> lstSmiley = new ArrayList<Integer>();
+    ArrayList<String> lst = new ArrayList<>();
+    ArrayList<Integer> lstSmiley = new ArrayList<>();
     private ArrayList<MatchListUser> lstUserSuggestions = new ArrayList<>();
-    String emoji ;
 
-    Integer[] intEmoji= {
+
+    Integer[] intEmoji = {
             0x1F600, 0x1F603, 0x1F604, 0x1F601, 0x1F606, 0x1F605, 0x1F923, 0x1F602, 0x1F61A, 0x1F619,
             0x1F642, 0x1F643, 0x1F609, 0x1F60A, 0x1F607, 0x1F60B, 0x1F60D, 0x1F929, 0x1F618, 0x1F617,
             0x1F61C, 0x1F92A, 0x1F61D, 0x1F911, 0x1F917, 0x1F92B, 0x1F914, 0x1F910, 0x1F928, 0x1F610,
     };
+    String ques;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,21 +67,35 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
         rec_view_colors = findViewById(R.id.rec_view_colors);
         add_comment = findViewById(R.id.add_comment);
         txt_ques = findViewById(R.id.txt_ques);
-
+        add_comment.setEnabled(false);
         txt_post_comment = findViewById(R.id.txt_post_comment);
         back_anonymous = findViewById(R.id.back_anonymous);
         more_option = findViewById(R.id.more_option);
         ll_ques = findViewById(R.id.ll_ques);
         ll_smily = findViewById(R.id.ll_smily);
+        txt_smiley = findViewById(R.id.txt_smiley);
         mIntent = getIntent();
-        txt_ques.setText(mIntent.getStringExtra("question"));
+        ques = mIntent.getStringExtra("question");
+        if (ques.length() < 5) {
+            txt_ques.setTextSize(getResources().getDimension(R.dimen._14sdp));
+        } else if (ques.length() < 10) {
+            txt_ques.setTextSize(getResources().getDimension(R.dimen._13sdp));
+        } else if (ques.length() < 20) {
+            txt_ques.setTextSize(getResources().getDimension(R.dimen._12sdp));
+        } else if (ques.length() < 30) {
+            txt_ques.setTextSize(getResources().getDimension(R.dimen._11sdp));
+        } else if (ques.length() < 40) {
+            txt_ques.setTextSize(getResources().getDimension(R.dimen._10sdp));
+        }
+        txt_ques.setText(ques);
 
-        int originalUnicode=0x1F601;
-          //textView.setText(getEmoticon(originalUnicode));
-                                     Log.e("",""+getEmoticon(originalUnicode))  ;
-          CreateList();
+        int originalUnicode = 0x1F601;
+        //textView.setText(getEmoticon(originalUnicode));
+        Log.e("", "" + getEmoticon(originalUnicode));
+        CreateList();
 
-        CreateSmilyList();
+//        CreateSmilyList();
+        getEmoticon();
         OnColorChange(0);
         ColorAdapter adapter = new ColorAdapter(lst, this);
         rec_view_colors.setLayoutManager(new GridLayoutManager(this, 4));
@@ -89,96 +106,62 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
         txt_post_comment.setOnClickListener(this);
     }
 
-//    private String getEmoticon(Integer[] intEmoji) {
-//
-//        for (int i=0 ;i<=intEmoji.length;i++){
-//
-//
-//            emoji= new String(Character.toChars(i));
-//            try{
-//                lstSmiley.add(Integer.valueOf(emoji));
-//                Log.e("emoji",""+ Integer.valueOf(emoji));
-//            } catch(NumberFormatException ex){ // handle your exception
-//                Log.e("emojicatch",""+ ex);
-//            }
-//
-//
-//
-//
-//        }
-//        return emoji;
-//
-//    }
+    private void getEmoticon() {
+
+        for (int i = 0; i <= intEmoji.length; i++) {
+//            String emoji = new String(Character.toChars(i));
+            try {
+                lstSmiley.add(intEmoji[i]);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+        }
+
+
+    }
 
 
     public String getEmoticon(int originalUnicode) {
         return new String(Character.toChars(originalUnicode));
     }
+
+
     public void CreateList() {
 
-        lst.add(R.color.color_violet);
-        lst.add(R.color.color_violet1);
-        lst.add(R.color.color_green_fresh);
-        lst.add(R.color.black);
-        lst.add(R.color.color_yellow);
-        lst.add(R.color.color_blue_ligth);
-        lst.add(R.color.color_brown);
-        lst.add(R.color.color_blue);
-        lst.add(R.color.color_grey);
-        lst.add(R.color.color_green_dark);
-        lst.add(R.color.color_red);
+        lst.add("#1D1375");
+        lst.add("#C50AF2");
+        lst.add("#65FF00");
+        lst.add("#000000");
+        lst.add("#E6FF00");
+        lst.add("#3AC7D1");
+        lst.add("#D1763A");
+        lst.add("#3A3AD1");
+        lst.add("#989798");
+        lst.add("#117106");
+        lst.add("#D13A3A");
 
 
     }
 
-    public void CreateSmilyList() {
-
-        lstSmiley.add(R.drawable.face1);
-        lstSmiley.add(R.drawable.face2);
-        lstSmiley.add(R.drawable.face3);
-        lstSmiley.add(R.drawable.face4);
-        lstSmiley.add(R.drawable.face5);
-        lstSmiley.add(R.drawable.face6);
-        lstSmiley.add(R.drawable.face7);
-        lstSmiley.add(R.drawable.face8);
-        lstSmiley.add(R.drawable.face9);
-        lstSmiley.add(R.drawable.face10);
-        lstSmiley.add(R.drawable.face11);
-        lstSmiley.add(R.drawable.face12);
-        lstSmiley.add(R.drawable.face13);
-        lstSmiley.add(R.drawable.face14);
-        lstSmiley.add(R.drawable.face15);
-        lstSmiley.add(R.drawable.face16);
-        lstSmiley.add(R.drawable.face17);
-        lstSmiley.add(R.drawable.face18);
-        lstSmiley.add(R.drawable.face19);
-        lstSmiley.add(R.drawable.face20);
-        lstSmiley.add(R.drawable.face21);
-        lstSmiley.add(R.drawable.face22);
-        lstSmiley.add(R.drawable.face23);
-        lstSmiley.add(R.drawable.face24);
-        lstSmiley.add(R.drawable.face25);
-        lstSmiley.add(R.drawable.face26);
-        lstSmiley.add(R.drawable.face27);
-        lstSmiley.add(R.drawable.face28);
-        lstSmiley.add(R.drawable.face29);
-
-
-    }
+    String HexColor = "";
 
     @Override
     public void OnColorChange(int index) {
-        // ll_ques.setBackground(getDrawable(Integer.parseInt(lst.get(index))));
-        ll_ques.setBackground(getDrawable(lst.get(index)));
+        ll_ques.setBackgroundColor(Color.parseColor(lst.get(index)));
+        HexColor = lst.get(index);
         SmileyAdapter adapter = new SmileyAdapter(lstSmiley, this);
         rec_view_colors.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         rec_view_colors.setAdapter(adapter);
 
     }
 
+    int selectedSmileyIndex = -1;
+
     @Override
     public void onSmileySelect(int index) {
-        ll_smily.setBackground(getDrawable(lstSmiley.get(index)));
+        selectedSmileyIndex = index;
+        txt_smiley.setText(new String(Character.toChars(lstSmiley.get(index))));
     }
 
     @Override
@@ -190,11 +173,7 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
             showModel();
         } else if (id == R.id.txt_post_comment) {
             // postQues();
-            if (add_comment.getText().toString().equals("")) {
-                Toast.makeText(getApplicationContext(), "Please enter your question here", Toast.LENGTH_SHORT).show();
-            } else {
-                callAPIFeedPost();
-            }
+            callAPIFeedPost();
 
         }
     }
@@ -205,8 +184,12 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
     }
 
     private void showModel() {
-        AnonymousBottomSheet bottomSheet = new AnonymousBottomSheet();
-        bottomSheet.show(getSupportFragmentManager(), "ModalBottomSheet");
+        try {
+            AnonymousBottomSheet bottomSheet = new AnonymousBottomSheet();
+            bottomSheet.show(getSupportFragmentManager(), "ModalBottomSheet");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void callAPIFeedPost() {
@@ -226,20 +209,18 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
         }
 
         SessionPref pref = SessionPref.getInstance(this);
-        //  String Location = edt_location.getText().toString();
-        String Location = "";
+        String Location = pref.getStringVal("LastCity");
         if (Location.isEmpty()) {
-            Location = "India";// Hardcode
+            Location = "India";
         }
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("location", Location);
-        hashMap.put("mediaId", "60b0993b291a0503100168db");// Hardcode
+//        hashMap.put("mediaId", "");
         hashMap.put("postType", "Question");
-      //hashMap.put("tagFriend", "harshita");
-        hashMap.put("tag", add_comment.getText().toString());
-        hashMap.put("colorCode", "");
-        hashMap.put("emojiCode", "128514");
+        hashMap.put("tag", ques);
+        hashMap.put("colorCode", HexColor);
+        hashMap.put("emojiCode", "" + lstSmiley.get(selectedSmileyIndex));
 
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
         pd.show();
@@ -252,7 +233,7 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
 
-                        finish();
+                        postQues();
                     } else {
 //                        clsCommon.showDialogMsg(BioActivity.this, "PlayDate", response.body().getMessage(), "Ok");
                     }
