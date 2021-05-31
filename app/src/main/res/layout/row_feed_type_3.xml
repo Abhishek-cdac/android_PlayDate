@@ -192,7 +192,7 @@
         android:layout_marginLeft="@dimen/_10sdp"
         android:layout_marginRight="@dimen/_10sdp"
         android:background="@null"
-        android:enabled="false"
+        android:enabled="true"
         android:hint="Be the first to answer..."
         android:maxLines="1"
         android:padding="@dimen/_5sdp"
