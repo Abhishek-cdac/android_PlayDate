@@ -37,7 +37,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorCodeSelect, View.OnClickListener {
-    RelativeLayout ll_ques;
+    LinearLayout ll_ques;
     LinearLayout ll_smily;
     Intent mIntent;
     EditText add_comment;
@@ -76,17 +76,7 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
         txt_smiley = findViewById(R.id.txt_smiley);
         mIntent = getIntent();
         ques = mIntent.getStringExtra("question");
-        if (ques.length() < 5) {
-            txt_ques.setTextSize(getResources().getDimension(R.dimen._14sdp));
-        } else if (ques.length() < 10) {
-            txt_ques.setTextSize(getResources().getDimension(R.dimen._13sdp));
-        } else if (ques.length() < 20) {
-            txt_ques.setTextSize(getResources().getDimension(R.dimen._12sdp));
-        } else if (ques.length() < 30) {
-            txt_ques.setTextSize(getResources().getDimension(R.dimen._11sdp));
-        } else if (ques.length() < 40) {
-            txt_ques.setTextSize(getResources().getDimension(R.dimen._10sdp));
-        }
+
         txt_ques.setText(ques);
 
         int originalUnicode = 0x1F601;

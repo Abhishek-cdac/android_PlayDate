@@ -66,8 +66,11 @@
             app:cardCornerRadius="@dimen/_10sdp"
             app:cardElevation="0dp">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_gravity="center"
                 android:layout_height="wrap_content">
 
                 <TextView
@@ -82,7 +85,7 @@
                     android:fontFamily="@font/lato_bold"
                     android:gravity="center"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/_10sdp" />
+                    android:textSize="@dimen/_17sdp" />
 
                 <TextView
                     android:id="@+id/txt_ano_question"
@@ -93,7 +96,7 @@
                     android:layout_marginTop="@dimen/_15sdp"
                     android:gravity="center"
                     android:textSize="@dimen/_55sdp" />
-            </RelativeLayout>
+            </LinearLayout>
 
         </androidx.cardview.widget.CardView>
 
