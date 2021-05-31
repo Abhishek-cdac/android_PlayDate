@@ -25,6 +25,7 @@ import com.playdate.app.model.LoginResponse;
 import com.playdate.app.model.MatchListUser;
 import com.playdate.app.ui.anonymous_question.adapter.ColorAdapter;
 import com.playdate.app.ui.anonymous_question.adapter.SmileyAdapter;
+import com.playdate.app.ui.dashboard.DashboardActivity;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
 
@@ -183,22 +184,7 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
     }
 
     private void callAPIFeedPost() {
-
-
-        String tagFriends = "";
-        if (null != lstUserSuggestions) {
-            for (int i = 0; i < lstUserSuggestions.size(); i++) {
-                if (lstUserSuggestions.get(i).isSelected()) {
-                    if (tagFriends.isEmpty()) {
-                        tagFriends = lstUserSuggestions.get(i).get_id();
-                    } else {
-                        tagFriends = tagFriends + "," + lstUserSuggestions.get(i).get_id();
-                    }
-                }
-            }
-        }
-
-        SessionPref pref = SessionPref.getInstance(this);
+    SessionPref pref = SessionPref.getInstance(this);
         String Location = pref.getStringVal("LastCity");
         if (Location.isEmpty()) {
             Location = "India";
@@ -206,7 +192,6 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("location", Location);
-//        hashMap.put("mediaId", "");
         hashMap.put("postType", "Question");
         hashMap.put("tag", ques);
         hashMap.put("colorCode", HexColor);
@@ -222,7 +207,10 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
                 pd.cancel();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
-                       postQues();
+
+                        Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
+                        startActivity(intent);
+                      // postQues();
                     } else {
 //                        clsCommon.showDialogMsg(BioActivity.this, "PlayDate", response.body().getMessage(), "Ok");
                     }
