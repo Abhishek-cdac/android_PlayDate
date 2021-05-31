@@ -75,7 +75,7 @@
                 android:visibility="gone" />
 
 
-            <com.allattentionhere.autoplayvideos.AAH_VideoImage
+            <com.playdate.app.ui.social.videoplay.AAH_VideoImage
                 android:layout_width="match_parent"
                 android:id="@+id/videoImg"
                 android:layout_height="match_parent"

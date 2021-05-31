@@ -17,11 +17,11 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentActivity;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.allattentionhere.autoplayvideos.AAH_CustomViewHolder;
-import com.allattentionhere.autoplayvideos.AAH_VideosAdapter;
 import com.playdate.app.R;
 
 import com.playdate.app.model.SavedPostData;
+import com.playdate.app.ui.social.videoplay.AAH_CustomViewHolder;
+import com.playdate.app.ui.social.videoplay.AAH_VideosAdapter;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 

@@ -161,6 +161,19 @@ public class UserNameActivity extends AppCompatActivity {
 
     Handler handler;
 
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        try {
+            if(null!=handler){
+                handler.removeCallbacksAndMessages(null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void startTimer() {
         binding.spinKit.setVisibility(View.VISIBLE);
         new CommonClass().hideKeyboard(binding.spinKit, this);

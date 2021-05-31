@@ -26,9 +26,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.allattentionhere.autoplayvideos.AAH_CustomViewHolder;
-import com.allattentionhere.autoplayvideos.AAH_VideoImage;
-import com.allattentionhere.autoplayvideos.AAH_VideosAdapter;
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
@@ -39,6 +36,9 @@ import com.playdate.app.ui.anonymous_question.CommentBottomSheet;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.ui.social.model.CommentList;
 import com.playdate.app.ui.social.model.PostDetails;
+import com.playdate.app.ui.social.videoplay.AAH_CustomViewHolder;
+import com.playdate.app.ui.social.videoplay.AAH_VideoImage;
+import com.playdate.app.ui.social.videoplay.AAH_VideosAdapter;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -163,7 +163,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
 
         if (lst.get(position).getPostType().equals("Load")) {
             return 100;
-        } else if (lst.get(position).getPostMedia().get(0).getMediaType().contains("video")) {
+        } else if (lst.get(position).getPostMedia().get(0).getMediaType().equals("Video")) {
             return 1;
         } else if (lst.get(position).getPostType().equals("Question")) {
             return 2;
@@ -220,7 +220,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
 
 
             if (null != lst.get(position).getPostMedia().get(0).getMediaFullPath()) {
-                if (lst.get(position).getPostMedia().get(0).getMediaType().contains("video")) {
+                if (lst.get(position).getPostMedia().get(0).getMediaType().equals("Video")) {
 
                     // video
 
@@ -372,7 +372,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
             ViewHolderUserVideo videoHolder;
             holder.setVideoUrl(lst.get(position).getPostMedia().get(0).getMediaFullPath());
 
-            holder.setLooping(true); //optional - true by default
+            holder.setLooping(false); //optional - true by default
 
 
             videoHolder = (ViewHolderUserVideo) holder;

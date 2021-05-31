@@ -24,7 +24,7 @@
     </androidx.recyclerview.widget.RecyclerView>
 
 
-    <com.allattentionhere.autoplayvideos.AAH_CustomRecyclerView
+    <com.playdate.app.ui.social.videoplay.AAH_CustomRecyclerView
         android:id="@+id/recycler_view_feed"
         android:layout_width="match_parent"
 

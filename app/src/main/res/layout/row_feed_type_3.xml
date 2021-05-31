@@ -71,9 +71,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|top"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:gravity="center"
-                android:text="Hey"
                 android:fontFamily="@font/lato_bold"
+                android:gravity="center"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_16sdp" />
 
@@ -84,10 +83,9 @@
                 android:layout_gravity="center|bottom"
                 android:padding="@dimen/_20sdp"
 
-                android:src="@drawable/sad"
-                 />
+                android:src="@drawable/sad" />
 
-<!--            android:src="@drawable/sad"-->
+            <!--            android:src="@drawable/sad"-->
             <!-- android:src="@drawable/annom_ques" />-->
 
         </androidx.cardview.widget.CardView>
@@ -183,6 +181,7 @@
         android:layout_marginLeft="@dimen/_10sdp"
         android:layout_marginRight="@dimen/_10sdp"
         android:background="@null"
+        android:enabled="false"
         android:hint="Be the first to answer..."
         android:maxLines="1"
         android:padding="@dimen/_5sdp"
