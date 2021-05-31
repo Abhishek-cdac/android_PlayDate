@@ -95,7 +95,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:gravity="center"
-                    android:textSize="@dimen/_55sdp" />
+                    android:textSize="@dimen/_90sdp" />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
