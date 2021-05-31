@@ -14,6 +14,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.ScaleAnimation;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -548,6 +549,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                 try {
 
                     if (lst.get(position).isCommentStatus()) {
+                        viewHolderAnonymQuestion.txt_chat.setVisibility(View.VISIBLE);
                         if (null != lst.get(position).getComments_list()) {
                             ArrayList<CommentList> lstComm = lst.get(position).getComments_list();
 
@@ -560,12 +562,23 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                                     temp = temp + "<br>" + s;
                                 }
                             }
-                            viewHolderAnonymQuestion.txt_chat.setText(Html.fromHtml( temp));
+                            if(temp.isEmpty()){
+                                viewHolderAnonymQuestion.txt_chat.setText(Html.fromHtml("<b> No Answer </b>"));
+                            }else{
+                                viewHolderAnonymQuestion.txt_chat.setText(Html.fromHtml(temp));
+                                viewHolderAnonymQuestion.edt_comment.setHint("Add a comment...");
+                            }
 
-                            viewHolderAnonymQuestion.txt_chat.setVisibility(View.VISIBLE);
+
+                        } else if (lst.get(position).getComments_list()==null)  {
+
+                            viewHolderAnonymQuestion.txt_chat.setText(Html.fromHtml("<b> No Answer </b>"));
+                        } else if (lst.get(position).getComments_list().isEmpty())  {
+
+                            viewHolderAnonymQuestion.txt_chat.setText((Html.fromHtml("<b> No Answer </b>")));
                         }
                     } else {
-//                        viewHolderAnonymQuestion.et_comment.setVisibility(View.GONE);
+                        viewHolderAnonymQuestion.txt_chat.setVisibility(View.GONE);
 //                        if (owner.isEmpty()) {
 //                            viewHolderAnonymQuestion.txt_chat.setVisibility(View.GONE);
 //                        } else {
@@ -888,6 +901,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
         TextView name_friend, question_Anonymous;
         TextView txt_ano_question;
         TextView txt_chat;
+        EditText edt_comment;
         Button respond, delete_btn;
 
         //        ImageView iv_profile;
@@ -896,6 +910,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
             iv_more = itemView.findViewById(R.id.iv_more);
             card_image = itemView.findViewById(R.id.card_image);
             iv_post_image = itemView.findViewById(R.id.iv_post_image);
+            edt_comment = itemView.findViewById(R.id.edt_comment);
             question_Anonymous = itemView.findViewById(R.id.question_Anonymous);
             txt_ano_question = itemView.findViewById(R.id.txt_ano_question);
 //            iv_heart = itemView.findViewById(R.id.iv_heart);
@@ -915,6 +930,17 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                     mIntent.putExtra("user_id", lst.get(getAdapterPosition()).getUserId());
                     origin.startActivityForResult(mIntent, 410);
                 }
+            }); edt_comment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Activity origin = (Activity) mContext;
+                    Intent mIntent = new Intent(origin, AnonymousQuestionActivity.class);
+                    mIntent.putExtra("Anonymous", true);
+                    mIntent.putExtra("post_id", lst.get(getAdapterPosition()).getPostId());
+                    mIntent.putExtra("user_id", lst.get(getAdapterPosition()).getUserId());
+                    origin.startActivityForResult(mIntent, 410);
+                }
+
             });
             delete_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
