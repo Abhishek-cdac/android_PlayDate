@@ -95,7 +95,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:gravity="center"
-                    android:textSize="@dimen/_55sdp" />
+                    android:textSize="@dimen/_90sdp" />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
@@ -162,6 +162,7 @@
         android:layout_marginLeft="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_5sdp"
         android:layout_marginRight="@dimen/_10sdp"
+        android:visibility="gone"
         android:fontFamily="@font/lato_bold"
         android:text="No Answers"
         android:textColor="@color/black"
@@ -183,7 +184,7 @@
         android:textStyle="bold"
         android:visibility="gone" />
 
-    <EditText
+    <TextView
         android:id="@+id/edt_comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -191,7 +192,7 @@
         android:layout_marginLeft="@dimen/_10sdp"
         android:layout_marginRight="@dimen/_10sdp"
         android:background="@null"
-        android:enabled="false"
+        android:enabled="true"
         android:hint="Be the first to answer..."
         android:maxLines="1"
         android:padding="@dimen/_5sdp"
@@ -202,7 +203,7 @@
         android:textColorHint="@android:color/darker_gray"
         android:textSize="@dimen/_11sdp">
 
-    </EditText>
+    </TextView>
 
     <Space
         android:layout_width="match_parent"
