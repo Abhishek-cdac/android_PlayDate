@@ -1,8 +1,6 @@
 package com.playdate.app.ui.anonymous_question.adapter;
 
-import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +17,10 @@ import java.util.ArrayList;
 public class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.ViewHolder> {
 
 
-    Context mContext;
-    ArrayList<Integer> lst;
+    ArrayList<String> lst;
     AnoQuesCreateActivity ref;
 
-    public ColorAdapter(ArrayList<Integer> lst, AnoQuesCreateActivity anoQuesCreateActivity) {
+    public ColorAdapter(ArrayList<String> lst, AnoQuesCreateActivity anoQuesCreateActivity) {
         this.lst = lst;
         this.ref = anoQuesCreateActivity;
     }
@@ -32,13 +29,12 @@ public class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_color_sel, parent, false);
-        mContext = parent.getContext();
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.ll_color.setBackground(mContext.getDrawable(lst.get(position)));
+        holder.ll_color.setBackgroundColor(Color.parseColor(lst.get(position)));
     }
 
     @Override

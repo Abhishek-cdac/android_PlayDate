@@ -61,32 +61,39 @@
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginRight="@dimen/_10sdp"
             android:background="@color/white"
+
             app:cardBackgroundColor="@color/color_pink"
             app:cardCornerRadius="@dimen/_10sdp"
             app:cardElevation="0dp">
 
-            <TextView
-                android:id="@+id/question_Anonymous"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center|top"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:fontFamily="@font/lato_bold"
-                android:gravity="center"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_16sdp" />
+                android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/iv_post_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center|bottom"
-                android:padding="@dimen/_20sdp"
+                <TextView
+                    android:id="@+id/question_Anonymous"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|top"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
 
-                android:src="@drawable/sad" />
+                    android:fontFamily="@font/lato_bold"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_10sdp" />
 
-            <!--            android:src="@drawable/sad"-->
-            <!-- android:src="@drawable/annom_ques" />-->
+                <TextView
+                    android:id="@+id/txt_ano_question"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/question_Anonymous"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:gravity="center"
+                    android:textSize="@dimen/_55sdp" />
+            </RelativeLayout>
 
         </androidx.cardview.widget.CardView>
 

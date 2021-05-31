@@ -18,22 +18,22 @@ public class PostDetails {
     }
 
     private String postType;
-    private int colorCode;
-    private String emojiCode;
+    private String colorCode;
+    private int emojiCode;
 
-    public int getColorCode() {
+    public String getColorCode() {
         return colorCode;
     }
 
-    public void setColorCode(int colorCode) {
+    public void setColorCode(String colorCode) {
         this.colorCode = colorCode;
     }
 
-    public String getEmojiCode() {
+    public int getEmojiCode() {
         return emojiCode;
     }
 
-    public void setEmojiCode(String emojiCode) {
+    public void setEmojiCode(int emojiCode) {
         this.emojiCode = emojiCode;
     }
 

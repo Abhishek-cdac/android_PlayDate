@@ -3,10 +3,10 @@ package com.playdate.app.ui.social.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +20,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.cardview.widget.CardView;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -42,8 +44,6 @@ import com.playdate.app.ui.social.videoplay.AAH_VideosAdapter;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -73,16 +73,21 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
 
     @Override
     public int getItemCount() {
+        if (lst == null) {
+            return 0;
+        }
         return lst.size();
     }
 
     ArrayList<PostDetails> lst;
     Picasso picasso;
+    SessionPref pref;
 
     public SocialFeedAdapter(FragmentActivity activity, ArrayList<PostDetails> lst) {
         this.mContext = activity;
         this.lst = lst;
         picasso = Picasso.get();
+        pref = SessionPref.getInstance(mContext);
 
     }
 
@@ -161,10 +166,19 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
     @Override
     public int getItemViewType(int position) {
 
-        if (lst.get(position).getPostType().equals("Load")) {
+        if (lst == null) {
+            return 0;
+        } else if (lst.size() == 0) {
+            return 0;
+        } else if (lst.get(position).getPostType().equals("Load")) {
             return 100;
-        } else if (lst.get(position).getPostMedia().get(0).getMediaType().equals("Video")) {
-            return 1;
+        } else if (lst.get(position).getPostType().equals("Normal")) {
+            if (lst.get(position).getPostMedia().get(0).getMediaType().equals("Video")) {
+                return 1;
+            }
+//            else if (lst.get(position).getPostType().equals("Question")) {
+//
+//            }
         } else if (lst.get(position).getPostType().equals("Question")) {
             return 2;
         }
@@ -513,10 +527,48 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
 
 
         } else if (holder.getItemViewType() == 2) {
-            ViewHolderAnonymQuestion viewHolderAnonymQuestion;
-            viewHolderAnonymQuestion = (ViewHolderAnonymQuestion) holder;
-            viewHolderAnonymQuestion.name_friend.setText("Anonymous Question");
-            viewHolderAnonymQuestion.question_Anonymous.setText(lst.get(position).getTag());
+            try {
+                ViewHolderAnonymQuestion viewHolderAnonymQuestion;
+                viewHolderAnonymQuestion = (ViewHolderAnonymQuestion) holder;
+                viewHolderAnonymQuestion.name_friend.setText("Anonymous Question");
+
+                if (null != lst.get(position).getColorCode())
+                    viewHolderAnonymQuestion.card_image.setCardBackgroundColor(Color.parseColor(lst.get(position).getColorCode()));
+
+                String ques = lst.get(position).getTag();
+                if (ques.length() < 5) {
+                    viewHolderAnonymQuestion.question_Anonymous.setTextSize(mContext.getResources().getDimension(R.dimen._14sdp));
+                } else if (ques.length() < 10) {
+                    viewHolderAnonymQuestion.question_Anonymous.setTextSize(mContext.getResources().getDimension(R.dimen._13sdp));
+                } else if (ques.length() < 20) {
+                    viewHolderAnonymQuestion.question_Anonymous.setTextSize(mContext.getResources().getDimension(R.dimen._12sdp));
+                } else if (ques.length() < 30) {
+                    viewHolderAnonymQuestion.question_Anonymous.setTextSize(mContext.getResources().getDimension(R.dimen._11sdp));
+                } else if (ques.length() < 40) {
+                    viewHolderAnonymQuestion.question_Anonymous.setTextSize(mContext.getResources().getDimension(R.dimen._10sdp));
+                }
+                viewHolderAnonymQuestion.question_Anonymous.setText(lst.get(position).getTag());
+//                String s = Integer.toString(lst.get(position).getEmojiCode(), 16);
+                viewHolderAnonymQuestion.txt_ano_question.setText(new String(Character.toChars(lst.get(position).getEmojiCode())));
+
+
+                if (pref.getStringVal(SessionPref.LoginUserID).equals(lst.get(position).getUserId())) {
+                    viewHolderAnonymQuestion.delete_btn.setVisibility(View.VISIBLE);
+                } else {
+                    viewHolderAnonymQuestion.delete_btn.setVisibility(View.INVISIBLE);
+                }
+
+
+//                Drawable unwrappedDrawable = AppCompatResources.getDrawable(mContext, R.drawable.btn_pink_filled);
+//                Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
+//                if(null!=lst.get(position).getColorCode())
+//                DrawableCompat.setTint(wrappedDrawable, Color.parseColor(lst.get(position).getColorCode()));
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
         } else {
 
         }
@@ -813,6 +865,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
         ImageView iv_post_image;
         CardView card_image;
         TextView name_friend, question_Anonymous;
+        TextView txt_ano_question;
         Button respond, delete_btn;
 
         //        ImageView iv_profile;
@@ -822,6 +875,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
             card_image = itemView.findViewById(R.id.card_image);
             iv_post_image = itemView.findViewById(R.id.iv_post_image);
             question_Anonymous = itemView.findViewById(R.id.question_Anonymous);
+            txt_ano_question = itemView.findViewById(R.id.txt_ano_question);
 //            iv_heart = itemView.findViewById(R.id.iv_heart);
 //            iv_profile = itemView.findViewById(R.id.iv_profile);
             name_friend = itemView.findViewById(R.id.name_friend);
@@ -840,11 +894,43 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
             delete_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    callAPIDeletePost(lst.get(getAdapterPosition()).getPostId(), getAdapterPosition());
                 }
             });
 //            respomd.setOnClickListener(v -> v.getContext().startActivity(new Intent(v.getContext(), AnonymousQuestionActivity.class)));
         }
+    }
+
+    private void callAPIDeletePost(String postId, int adapterPosition) {
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
+        hashMap.put("postId", postId);
+
+        Call<LoginResponse> call = service.deletePost("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new retrofit2.Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                if (response.code() == 200) {
+                    if (response.body().getStatus() == 1) {
+
+
+                    } else {
+                    }
+                } else {
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+        lst.remove(adapterPosition);
+        notifyDataSetChanged();
     }
 }
 
