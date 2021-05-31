@@ -93,7 +93,7 @@
                 android:fontFamily="@font/lato_bold"
                 android:gravity="center"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_13sdp"
+                android:textSize="@dimen/_10sdp"
                 android:textStyle="bold">
 
 
