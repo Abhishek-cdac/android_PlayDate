@@ -235,6 +235,11 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
                 if (scrollY > oldScrollY) {
                     Log.i(TAG, "Scroll DOWN");
+                    if (CurrentFrag.getClass().getSimpleName().equals("FragInstaLikeProfile")) {
+                    if (iv_plus.getVisibility() == View.GONE) {
+                        setNormal();
+                    }
+                    }
                 }
                 if (scrollY < oldScrollY) {
                     Log.i(TAG, "Scroll UP");
@@ -384,7 +389,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
                 ft.add(R.id.flFragment, fragment, fragment.getClass().getSimpleName());
             }
 
-            ft.addToBackStack(null);
+//            ft.addToBackStack(null);
             ft.commitAllowingStateLoss();
 
         } catch (Exception e) {
@@ -405,7 +410,6 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             Toast.makeText(this, "" + e.toString(), Toast.LENGTH_SHORT).show();
         }
     }
-
 
     @Override
     public void loadProfile(String UserID) {
@@ -433,7 +437,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             startActivity(new Intent(DashboardActivity.this, DateBaseActivity.class));
 
         } else if (id == R.id.txt_social) {
-            txt_match.setBackground(null);
+
             txt_chat.setBackground(null);
             txt_social.setTextColor(getResources().getColor(R.color.white));
             txt_social.setBackground(getResources().getDrawable(R.drawable.menu_button));
@@ -443,10 +447,12 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
             txt_chat.setTextColor(getResources().getColor(android.R.color.darker_gray));
             txt_match.setTextColor(getResources().getColor(android.R.color.darker_gray));
-            ReplaceFrag(new FragSocialFeed());
+            txt_match.setBackground(null);
+
             ll_friends.setVisibility(View.VISIBLE);
             ll_mainMenu.setVisibility(View.VISIBLE);
             ll_her.setVisibility(View.VISIBLE);
+            ReplaceFrag(new FragSocialFeed());
 
         } else if (id == R.id.iv_dashboard_notification) {
             txt_match.setBackground(null);
@@ -456,12 +462,12 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             txt_chat.setBackground(null);
             txt_chat.setTextColor(getResources().getColor(android.R.color.darker_gray));
             iv_dashboard_notification.setBackground(getResources().getDrawable(R.drawable.menu_button));
-            // iv_dashboard_notification.setColorFilter(R.color.white);
             iv_dashboard_notification.setImageResource(R.drawable.ic_notifications_well);
-            ReplaceFrag(new FragNotification());
+
             ll_friends.setVisibility(View.GONE);
             ll_mainMenu.setVisibility(View.GONE);
             ll_her.setVisibility(View.GONE);
+            ReplaceFrag(new FragNotification());
         } else if (id == R.id.txt_payment) {
 
 
@@ -484,10 +490,11 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             txt_social.setTextColor(getResources().getColor(android.R.color.darker_gray));
             txt_chat.setTextColor(getResources().getColor(android.R.color.darker_gray));
             txt_match.setBackground(getResources().getDrawable(R.drawable.menu_button));
-            ReplaceFrag(new FragCardSwipe());
+
             ll_friends.setVisibility(View.VISIBLE);
             ll_mainMenu.setVisibility(View.VISIBLE);
             ll_her.setVisibility(View.VISIBLE);
+            ReplaceFrag(new FragCardSwipe());
         } else if (id == R.id.txt_chat) {
             txt_match.setBackground(null);
             txt_social.setBackground(null);
@@ -498,12 +505,11 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             txt_social.setTextColor(getResources().getColor(android.R.color.darker_gray));
             txt_chat.setBackground(getResources().getDrawable(R.drawable.menu_button));
             txt_chat.setTextColor(getResources().getColor(R.color.white));
-            ReplaceFrag(new RequestChatFragment());
-//                Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
-//                startActivity(intent);
+
             ll_friends.setVisibility(View.GONE);
             ll_mainMenu.setVisibility(View.GONE);
             ll_her.setVisibility(View.GONE);
+            ReplaceFrag(new RequestChatFragment());
         } else if (id == R.id.txt_personal) {
 
             txt_personal.setTextColor(getResources().getColor(R.color.white));
@@ -534,18 +540,16 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             ll_option_love.setVisibility(View.VISIBLE);
             ll_friends.setVisibility(View.VISIBLE);
             ll_profile_menu.setVisibility(View.GONE);
-
             iv_love.setBackground(getDrawable(R.drawable.rectangle_back));
             iv_love.setImageResource(R.drawable.love_high);
             iv_coupons.setBackground(null);
             iv_coupons.setImageResource(R.drawable.badge);
             iv_profile_sett.setBackground(null);
             iv_profile_sett.setImageResource(R.drawable.tech_support);
-
-//            txt_match.setBackground(null);
-//            txt_chat.setBackground(null);
-
-
+            txt_chat.setBackground(null);
+            txt_match.setBackground(null);
+            txt_match.setTextColor(getResources().getColor(android.R.color.darker_gray));
+            txt_chat.setTextColor(getResources().getColor(android.R.color.darker_gray));
             checkFirstFrag();
             Fragment frag;
             if (!checkFirstFrag()) {
@@ -554,7 +558,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             } else {
                 frag = new FragSocialFeed();
             }
-            ReplaceFrag(frag);
+
             ll_friends.setVisibility(View.VISIBLE);
             ll_mainMenu.setVisibility(View.VISIBLE);
             ll_her.setVisibility(View.VISIBLE);
@@ -563,7 +567,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             iv_dashboard_notification.setImageResource(R.drawable.ic_bell);
             txt_social.setTextColor(getResources().getColor(R.color.white));
             txt_social.setBackground(getResources().getDrawable(R.drawable.menu_button));
-
+            ReplaceFrag(frag);
             callAPIFriends();
         } else if (id == R.id.iv_coupons) {
             OPTION_CLICK = 1;
@@ -575,18 +579,15 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             iv_love.setImageResource(R.drawable.love);
             iv_profile_sett.setBackground(null);
             iv_profile_sett.setImageResource(R.drawable.tech_support);
-
-
-            ReplaceFrag(new FragCouponStore());
             ll_friends.setVisibility(View.VISIBLE);
             ll_mainMenu.setVisibility(View.VISIBLE);
             ll_her.setVisibility(View.VISIBLE);
+            ReplaceFrag(new FragCouponStore());
         } else if (id == R.id.ll_profile_support) {
             OPTION_CLICK = 3;
             iv_play_date_logo.setVisibility(View.VISIBLE);
             ll_profile_drop_menu.setVisibility(View.GONE);
             iv_plus.setVisibility(View.GONE);
-//            iv_saved.setVisibility(View.GONE);
             ll_option_love.setVisibility(View.GONE);
             ll_friends.setVisibility(View.GONE);
             ll_profile_menu.setVisibility(View.VISIBLE);
@@ -604,21 +605,15 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             iv_play_date_logo.setVisibility(View.VISIBLE);
             ll_profile_drop_menu.setVisibility(View.GONE);
             iv_plus.setVisibility(View.VISIBLE);
-//            iv_saved.setVisibility(View.VISIBLE);
             ll_option_love.setVisibility(View.GONE);
             ll_friends.setVisibility(View.GONE);
             ll_profile_menu.setVisibility(View.GONE);
             profile = new FragInstaLikeProfile(true);
-
-
-            iv_coupons.setImageResource(R.drawable.badge);
             iv_coupons.setBackground(null);
             iv_love.setBackground(null);
             iv_love.setImageResource(R.drawable.love);
             iv_profile_sett.setBackground(null);
             iv_profile_sett.setImageResource(R.drawable.tech_support);
-
-
             ReplaceFrag(profile);
         } else if (id == R.id.iv_plus) {
             ll_profile_drop_menu.setVisibility(View.VISIBLE);
@@ -633,7 +628,6 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             iv_plus.setVisibility(View.VISIBLE);
             iv_play_date_logo.setVisibility(View.VISIBLE);
             Intent mIntent = new Intent(DashboardActivity.this, AnonymousQuestionActivity.class);
-            //AnonymousQuestionActivity
             mIntent.putExtra("new", true);
             startActivity(mIntent);
         } else if (id == R.id.ll_take_photo) {
@@ -644,9 +638,10 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             ActivityCompat.requestPermissions(DashboardActivity.this,
                     PERMISSIONS,
                     ALL_PERMISSIONS_RESULT);
-            openCamera();
+
             bottomNavigationView.setVisibility(View.VISIBLE);
             ll_camera_option.setVisibility(View.GONE);
+            openCamera();
         } else if (id == R.id.ll_upload_photo) {
             String[] PERMISSIONS = {
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -655,16 +650,16 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             ActivityCompat.requestPermissions(DashboardActivity.this,
                     PERMISSIONS,
                     ALL_PERMISSIONS_RESULT);
-            pickImage();
-            bottomNavigationView.setVisibility(View.VISIBLE);
-            ll_camera_option.setVisibility(View.GONE);
-            iv_play_date_logo.setVisibility(View.VISIBLE);
 
-        } else if (id == R.id.ll_Record_video) {
-            takeVideoFromCamera();
             bottomNavigationView.setVisibility(View.VISIBLE);
             ll_camera_option.setVisibility(View.GONE);
             iv_play_date_logo.setVisibility(View.VISIBLE);
+            pickImage();
+        } else if (id == R.id.ll_Record_video) {
+            bottomNavigationView.setVisibility(View.VISIBLE);
+            ll_camera_option.setVisibility(View.GONE);
+            iv_play_date_logo.setVisibility(View.VISIBLE);
+            takeVideoFromCamera();
         } else if (id == R.id.ll_upload_video) {
             String[] PERMISSIONS = {
                     Manifest.permission.CAMERA,
@@ -672,11 +667,11 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             ActivityCompat.requestPermissions(DashboardActivity.this,
                     PERMISSIONS,
                     ALL_PERMISSIONS_RESULT);
-            pickVideo();
+
             bottomNavigationView.setVisibility(View.VISIBLE);
             ll_camera_option.setVisibility(View.GONE);
             iv_play_date_logo.setVisibility(View.VISIBLE);
-
+            pickVideo();
         } else if (id == R.id.iv_gallery) {
             iv_play_date_logo.setVisibility(View.VISIBLE);
             bottomNavigationView.setVisibility(View.GONE);
@@ -684,15 +679,17 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             ll_profile_drop_menu.setVisibility(View.GONE);
             iv_play_date_logo.setVisibility(View.VISIBLE);
         } else if (id == R.id.iv_search) {
+
+            ll_friends.setVisibility(View.GONE);
+            ll_mainMenu.setVisibility(View.GONE);
+            ll_her.setVisibility(View.GONE);
             ReplaceFrag(new FragSearchUser());
-            ll_friends.setVisibility(View.GONE);
-            ll_mainMenu.setVisibility(View.GONE);
-            ll_her.setVisibility(View.GONE);
         } else if (id == R.id.iv_saved) {
-            ReplaceFrag(new FragSavedPost());
+
             ll_friends.setVisibility(View.GONE);
             ll_mainMenu.setVisibility(View.GONE);
             ll_her.setVisibility(View.GONE);
+            ReplaceFrag(new FragSavedPost());
         }
 
     }
@@ -827,8 +824,13 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     @Override
     public void onBackPressed() {
 
-
-        if (null != profile) {
+        if (CurrentFrag.getClass().getSimpleName().equals("FragInstaLikeProfile")) {
+            if (iv_plus.getVisibility() == View.GONE) {
+                setNormal();
+            } else {
+                super.onBackPressed();
+            }
+        } else if (null != profile) {
             if (count == 0) {
                 count = 1;
                 profile.onTypeChange(0);
@@ -843,6 +845,13 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
     }
 
+    void setNormal(){
+        iv_plus.setVisibility(View.VISIBLE);
+        iv_play_date_logo.setVisibility(View.VISIBLE);
+        ll_profile_drop_menu.setVisibility(View.GONE);
+        ll_camera_option.setVisibility(View.GONE);
+        bottomNavigationView.setVisibility(View.VISIBLE);
+    }
 
     @Override
     public void updateImage() {
