@@ -157,7 +157,7 @@
 
 
         <TextView
-            android:id="@+id/txt_post_comment"
+            android:id="@+id/txt_post_comments"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"

@@ -110,18 +110,18 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
         text.setTypeface(Typeface.DEFAULT_BOLD);
         recyclerView = findViewById(R.id.comments_list);
 
-        callGetCommentApi();
         txt_post_comment.setTextColor(getResources().getColor(R.color.color_grey));
 
 
         if (mIntent.getBooleanExtra("new", false)) {
             isForNew = true;
             text.setText(R.string.anonymous);
-            text_count.setText("Add an anonymous question and receive responces");
+            text_count.setText("Add an anonymous question and receive responses");
             recyclerView.setVisibility(View.GONE);
             add_comment.setEnabled(true);
             add_comment.setHint("Add a question...!");
         } else {
+            callGetCommentApi();
             text.setText(R.string.comments);
         }
 

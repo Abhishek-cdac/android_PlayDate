@@ -25,6 +25,7 @@ import com.playdate.app.model.LoginResponse;
 import com.playdate.app.model.MatchListUser;
 import com.playdate.app.ui.anonymous_question.adapter.ColorAdapter;
 import com.playdate.app.ui.anonymous_question.adapter.SmileyAdapter;
+import com.playdate.app.ui.dashboard.DashboardActivity;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
 
@@ -68,7 +69,7 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
         add_comment = findViewById(R.id.add_comment);
         txt_ques = findViewById(R.id.txt_ques);
         add_comment.setEnabled(false);
-        txt_post_comment = findViewById(R.id.txt_post_comment);
+        txt_post_comment = findViewById(R.id.txt_post_comments);
         back_anonymous = findViewById(R.id.back_anonymous);
         more_option = findViewById(R.id.more_option);
         ll_ques = findViewById(R.id.ll_ques);
@@ -161,7 +162,7 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
             finish();
         } else if (id == R.id.more_option) {
             showModel();
-        } else if (id == R.id.txt_post_comment) {
+        } else if (id == R.id.txt_post_comments) {
             // postQues();
             callAPIFeedPost();
 
@@ -183,22 +184,7 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
     }
 
     private void callAPIFeedPost() {
-
-
-        String tagFriends = "";
-        if (null != lstUserSuggestions) {
-            for (int i = 0; i < lstUserSuggestions.size(); i++) {
-                if (lstUserSuggestions.get(i).isSelected()) {
-                    if (tagFriends.isEmpty()) {
-                        tagFriends = lstUserSuggestions.get(i).get_id();
-                    } else {
-                        tagFriends = tagFriends + "," + lstUserSuggestions.get(i).get_id();
-                    }
-                }
-            }
-        }
-
-        SessionPref pref = SessionPref.getInstance(this);
+    SessionPref pref = SessionPref.getInstance(this);
         String Location = pref.getStringVal("LastCity");
         if (Location.isEmpty()) {
             Location = "India";
@@ -206,7 +192,6 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("location", Location);
-//        hashMap.put("mediaId", "");
         hashMap.put("postType", "Question");
         hashMap.put("tag", ques);
         hashMap.put("colorCode", HexColor);
@@ -223,7 +208,9 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
 
-                        postQues();
+                        Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
+                        startActivity(intent);
+                      // postQues();
                     } else {
 //                        clsCommon.showDialogMsg(BioActivity.this, "PlayDate", response.body().getMessage(), "Ok");
                     }
