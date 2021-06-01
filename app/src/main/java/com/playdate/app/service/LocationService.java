@@ -19,7 +19,6 @@ public class LocationService extends Service {
 
         LocationListener locationListener = new MyLocationListener(this);
 
-//        Toast.makeText(this, "Location Service class", Toast.LENGTH_SHORT).show();
         LocationManager locationManager = (LocationManager)
                 getSystemService(Context.LOCATION_SERVICE);
 

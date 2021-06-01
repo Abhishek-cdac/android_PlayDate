@@ -173,8 +173,6 @@ public class FragLanding extends Fragment {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("toUserID", s);
-//        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
-//        pd.show();
         SessionPref pref = SessionPref.getInstance(getActivity());
         Log.e("CommonModel", "" + pref.getStringVal(SessionPref.LoginUsertoken));
 
@@ -186,21 +184,21 @@ public class FragLanding extends Fragment {
 //                pd.cancel();
                 if (response.code() == 200) {
                     assert response.body() != null;
-                    if (response.body().getStatus() == 1) {
-//                        FriendRequest friendRequest = new FriendRequest();
-//                        Log.e("FriendRequestStatus", "" + friendRequest.getStatus());
-
-                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", "" + response.body().getMessage(), "Ok");
-                    } else {
-                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", "" + response.body().getMessage(), "Ok");
-                    }
+//                    if (response.body().getStatus() == 1) {
+////                        FriendRequest friendRequest = new FriendRequest();
+////                        Log.e("FriendRequestStatus", "" + friendRequest.getStatus());
+//
+//                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", "" + response.body().getMessage(), "Ok");
+//                    } else {
+//                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", "" + response.body().getMessage(), "Ok");
+//                    }
                 } else {
-                    try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message").toString(), "Ok");
-                    } catch (Exception e) {
-                        Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-                    }
+//                    try {
+//                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+//                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message").toString(), "Ok");
+//                    } catch (Exception e) {
+//                        Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+//                    }
                 }
             }
 
@@ -208,7 +206,7 @@ public class FragLanding extends Fragment {
             public void onFailure(Call<CommonModel> call, Throwable t) {
                 t.printStackTrace();
 //                pd.cancel();
-                Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
     }

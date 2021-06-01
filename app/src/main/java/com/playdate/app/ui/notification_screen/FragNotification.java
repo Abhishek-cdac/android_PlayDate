@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,8 @@ import com.playdate.app.model.CommonModel;
 import com.playdate.app.model.NotificationData;
 import com.playdate.app.model.NotificationModel;
 import com.playdate.app.ui.chat.request.Onclick;
+import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
+import com.playdate.app.ui.social.FragSocialFeed;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
@@ -40,16 +43,18 @@ public class FragNotification extends Fragment {
     public FragNotification() {
     }
 
-    RecyclerView rv_notification;
-    CommonClass clsCommon;
-    List<NotificationData> lst_notifications;
-    Onclick itemClick;
-    Bundle bundle;
+    private RecyclerView rv_notification;
+    private CommonClass clsCommon;
+    private List<NotificationData> lst_notifications;
+    private Onclick itemClick;
+    private Bundle bundle;
+    private ImageView back_anonymous;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag_notification, container, false);
         rv_notification = view.findViewById(R.id.rv_notification);
+        back_anonymous=view.findViewById(R.id.back_anonymous);
         clsCommon = CommonClass.getInstance();
         itemClick = new Onclick() {
             @Override
@@ -100,6 +105,13 @@ public class FragNotification extends Fragment {
 
             }
         };
+        back_anonymous.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OnInnerFragmentClicks ref= (OnInnerFragmentClicks) getActivity();
+               ref.Reset();
+            }
+        });
         callGetNotificationAPI();
 
 

@@ -35,12 +35,11 @@ import com.yuyakaido.android.cardstackview.Direction;
 import com.yuyakaido.android.cardstackview.StackFrom;
 import com.yuyakaido.android.cardstackview.SwipeableMethod;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -51,8 +50,7 @@ public class FragCardSwipe extends Fragment {
     private CardStackLayoutManager manager;
     private TinderSwipeAdapter adapter;
     public ArrayList<Interest> lst_interest;
-    Onclick itemClick;
-    private CommonClass clsCommon;
+    private Onclick itemClick;
     private CardStackView cardStackView;
 
     public FragCardSwipe() {
@@ -61,7 +59,6 @@ public class FragCardSwipe extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        clsCommon = CommonClass.getInstance();
         View view = inflater.inflate(R.layout.tinder_swipe, container, false);
         itemClick = new Onclick() {
             @Override
@@ -178,18 +175,16 @@ public class FragCardSwipe extends Fragment {
             public void onResponse(Call<MatchListModel> call, Response<MatchListModel> response) {
                 pd.cancel();
                 if (response.code() == 200) {
-                    if (response.body().getStatus() == 1) {
+                    if (Objects.requireNonNull(response.body()).getStatus() == 1) {
 
                         setPages(response.body().getUsers());
-
-                    } else {
                     }
                 } else {
-                    try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-                    } catch (Exception e) {
-                        Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-                    }
+//                    try {
+//                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+//                    } catch (Exception e) {
+//                        Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+//                    }
 
                 }
 
@@ -211,40 +206,39 @@ public class FragCardSwipe extends Fragment {
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("toUserID", userId);
         hashMap.put("action", action);
-        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
-        pd.show();
+//        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
+//        pd.show();
         SessionPref pref = SessionPref.getInstance(getActivity());
         Call<CommonModel> call = service.addUserMatchRequest("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<CommonModel>() {
             @Override
             public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
-                pd.cancel();
-                if (response.code() == 200) {
-                    if (response.body().getStatus() == 1) {
-                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
-                    }
-                } else {
-                    try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
-                    } catch (Exception e) {
-                        Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-                    }
-                }
+//                pd.cancel();
+//                if (response.code() == 200) {
+//                    if (response.body().getStatus() == 1) {
+//                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
+//                    }
+//                } else {
+//                    try {
+//                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+//                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
+//                    } catch (Exception e) {
+//                        Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
             }
 
             @Override
             public void onFailure(Call<CommonModel> call, Throwable t) {
                 t.printStackTrace();
-                pd.cancel();
-                Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+//                pd.cancel();
+//                Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
 
-
-    private void setPages(ArrayList<MatchListUser> lstusers) {
+    private void setPages(ArrayList<MatchListUser> lstUsers) {
         manager = new CardStackLayoutManager(getActivity(), new CardStackListener() {
             @Override
             public void onCardDragging(Direction direction, float ratio) {
@@ -254,24 +248,30 @@ public class FragCardSwipe extends Fragment {
 
             @Override
             public void onCardSwiped(Direction direction) {
-                Log.d("OnCardSwiped: ", "onCardSwiped: p=" + manager.getTopPosition() + " d=" + direction);
-                if (direction == Direction.Right) {
-                    Log.e("Right", "Right");
+                try {
+                    Log.d("OnCardSwiped: ", "onCardSwiped: p=" + manager.getTopPosition() + " d=" + direction);
+                    String userID = lstUsers.get(manager.getTopPosition()).get_id();
+                    String liekDisLike = "Like";
+                    if (direction == Direction.Right) {
+                        Log.e("Right", "Right");
+                        liekDisLike = "Like";
+                    }
+                    if (direction == Direction.Top) {
+                        Log.e("Top", "Top");
+                        liekDisLike = "Like";
+                    }
+                    if (direction == Direction.Left) {
+                        Log.e("Left", "Left");
+                        liekDisLike = "Unlike";
+                    }
+                    if (direction == Direction.Bottom) {
+                        Log.e("Bottom", "Bottom");
+                        liekDisLike = "Unlike";
+                    }
+                    callAddUserMatchRequestAPI(userID, liekDisLike);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                if (direction == Direction.Top) {
-                    Log.e("Top", "Top");
-                }
-                if (direction == Direction.Left) {
-                    Log.e("Left", "Left");
-                }
-                if (direction == Direction.Bottom) {
-                    Log.e("Bottom", "Bottom");
-                }
-
-
-//                if (manager.getTopPosition() == adapter.getItemCount() - 5) {
-//                    paginate();
-//                }
 
             }
 
@@ -307,9 +307,10 @@ public class FragCardSwipe extends Fragment {
         manager.setMaxDegree(20.0f);
         manager.setDirections(Direction.FREEDOM);
         manager.setCanScrollHorizontal(true);
+//        manager.setCanScrollVertical(false);
         manager.setSwipeableMethod(SwipeableMethod.Manual);
         manager.setOverlayInterpolator(new LinearInterpolator());
-        adapter = new TinderSwipeAdapter(lstusers, lst_interest, itemClick);
+        adapter = new TinderSwipeAdapter(lstUsers, lst_interest, itemClick);
         cardStackView.setLayoutManager(manager);
         cardStackView.setAdapter(adapter);
         cardStackView.setItemAnimator(new DefaultItemAnimator());

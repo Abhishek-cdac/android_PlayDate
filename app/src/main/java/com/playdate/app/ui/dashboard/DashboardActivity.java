@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -35,7 +36,6 @@ import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.FriendsListModel;
 import com.playdate.app.model.MatchListUser;
 import com.playdate.app.service.LocationService;
-import com.playdate.app.ui.anonymous_question.AnoQuesCreateActivity;
 import com.playdate.app.ui.anonymous_question.AnonymousQuestionActivity;
 import com.playdate.app.ui.card_swipe.FragCardSwipe;
 import com.playdate.app.ui.chat.request.RequestChatFragment;
@@ -220,11 +220,11 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         iv_coupons.setOnClickListener(this);
         iv_dashboard_notification.setOnClickListener(this);
         txt_social.setOnClickListener(this);
-//        try {
-//            showPremium();
-//        } catch (WindowManager.BadTokenException e) {
-//            Log.e("BadTokenException", "" + e);
-//        }
+        try {
+            showPremium();
+        } catch (WindowManager.BadTokenException e) {
+            Log.e("BadTokenException", "" + e);
+        }
         setValue();
         callAPIFriends();
 
@@ -236,9 +236,9 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
                 if (scrollY > oldScrollY) {
                     Log.i(TAG, "Scroll DOWN");
                     if (CurrentFrag.getClass().getSimpleName().equals("FragInstaLikeProfile")) {
-                    if (iv_plus.getVisibility() == View.GONE) {
-                        setNormal();
-                    }
+                        if (iv_plus.getVisibility() == View.GONE) {
+                            setNormal();
+                        }
                     }
                 }
                 if (scrollY < oldScrollY) {
@@ -341,31 +341,26 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
     }
 
+    Handler mHandler;
+
     private void showPremium() {
+        mHandler = new Handler();
+        mHandler.postDelayed(() -> {
 
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
+            FullScreenDialog dialog = new FullScreenDialog(DashboardActivity.this);
 
-                FullScreenDialog dialog = new FullScreenDialog(DashboardActivity.this);
-
-                dialog.show();
-
-//                AnonymousMedalDialog dialog = new AnonymousMedalDialog(DashboardActivity.this);
-//                dialog.show();
-            }
-        }, 20000);
+            dialog.show();
+        }, 30000);
 
 
     }
 
 
-    Handler handler;
-
     @Override
     protected void onDestroy() {
-        if (null != handler) {
+        if (null != mHandler) {
             try {
-                handler.removeCallbacksAndMessages(null);
+                mHandler.removeCallbacksAndMessages(null);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -398,6 +393,28 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         }
     }
 
+    @Override
+    public void NoFriends() {
+        ReplaceFrag(new FragLanding());
+    }
+
+    @Override
+    public void Reset() {
+        txt_match.setBackground(null);
+        txt_social.setBackground(getResources().getDrawable(R.drawable.menu_button));
+        txt_match.setTextColor(getResources().getColor(android.R.color.darker_gray));
+        txt_social.setTextColor(getResources().getColor(android.R.color.white));
+        txt_chat.setBackground(null);
+        txt_chat.setTextColor(getResources().getColor(android.R.color.darker_gray));
+        iv_dashboard_notification.setBackground(null);
+        iv_dashboard_notification.setImageResource(R.drawable.ic_notifications_well);
+
+        ll_friends.setVisibility(View.VISIBLE);
+        ll_mainMenu.setVisibility(View.VISIBLE);
+        ll_her.setVisibility(View.VISIBLE);
+        ReplaceFrag(new FragSocialFeed());
+    }
+
     public void ReplaceFragWithStack(Fragment fragment) {
         try {
             FragmentManager fragmentManager = getSupportFragmentManager();
@@ -417,9 +434,33 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         if (pref.getStringVal(SessionPref.LoginUserID).equals(UserID)) {
             ll_profile_insta.performClick();
         } else {
+            txt_social.setTextColor(getResources().getColor(R.color.white));
+            txt_social.setBackground(getResources().getDrawable(R.drawable.menu_button));
+
+            txt_match.setTextColor(getResources().getColor(android.R.color.darker_gray));
+            txt_match.setBackground(null);
             ll_friends.setVisibility(View.GONE);
             ll_option_love.setVisibility(View.GONE);
             ReplaceFragWithStack(new FragInstaLikeProfileFriends(true, UserID));
+        }
+
+
+    }
+
+    @Override
+    public void loadMatchProfile(String UserID) {
+        SessionPref pref = SessionPref.getInstance(this);
+        if (pref.getStringVal(SessionPref.LoginUserID).equals(UserID)) {
+            ll_profile_insta.performClick();
+        } else {
+            txt_social.setTextColor(getResources().getColor(R.color.white));
+            txt_social.setBackground(getResources().getDrawable(R.drawable.menu_button));
+
+            txt_match.setTextColor(getResources().getColor(android.R.color.darker_gray));
+            txt_match.setBackground(null);
+            ll_friends.setVisibility(View.GONE);
+            ll_option_love.setVisibility(View.GONE);
+            ReplaceFragWithStack(new FragInstaLikeProfileFriends(false, UserID));
         }
 
 
@@ -845,7 +886,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
     }
 
-    void setNormal(){
+    void setNormal() {
         iv_plus.setVisibility(View.VISIBLE);
         iv_play_date_logo.setVisibility(View.VISIBLE);
         ll_profile_drop_menu.setVisibility(View.GONE);

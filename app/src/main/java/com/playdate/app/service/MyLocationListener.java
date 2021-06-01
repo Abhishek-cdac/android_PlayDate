@@ -26,8 +26,6 @@ import static android.content.ContentValues.TAG;
 
 class MyLocationListener implements LocationListener {
     Context mContext;
-//    LottieAnimationView loader;
-
     public MyLocationListener(Context ctx) {
         this.mContext = ctx;
     }

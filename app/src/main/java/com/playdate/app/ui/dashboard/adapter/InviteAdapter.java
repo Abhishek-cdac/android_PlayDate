@@ -1,10 +1,13 @@
 package com.playdate.app.ui.dashboard.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -14,9 +17,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
 import com.playdate.app.model.Invite;
-import com.playdate.app.ui.dashboard.FragPremium1;
 
 import java.util.ArrayList;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class InviteAdapter extends RecyclerView.Adapter<InviteAdapter.ViewHolder> {
 
@@ -24,19 +28,26 @@ public class InviteAdapter extends RecyclerView.Adapter<InviteAdapter.ViewHolder
 
     FragmentManager fm;
     FragmentTransaction ft;
+    String inviteCode;
+    String inviteLink;
 
-    public InviteAdapter() {
+    public InviteAdapter(String inviteCode, String inviteLink) {
+        this.inviteCode = inviteCode;
+        this.inviteLink = inviteLink;
+
         invite_list.add(new Invite(R.drawable.user, "Follow Contacts"));
         invite_list.add(new Invite(R.drawable.facebook, "Invite Friends by Facebook"));
-        invite_list.add(new Invite(R.drawable.message, "Invite Friends by SMS or Email"));
+        invite_list.add(new Invite(R.drawable.message, "Invite Friends by SMS"));
         invite_list.add(new Invite(R.drawable.upload, "Invite Friends by..."));
     }
 
+    Context mContext;
 
     @NonNull
     @Override
     public InviteAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_invite, parent, false);
+        mContext = parent.getContext();
         return new ViewHolder(view);
 
     }
@@ -53,17 +64,51 @@ public class InviteAdapter extends RecyclerView.Adapter<InviteAdapter.ViewHolder
         holder.title.setText(invite_list.get(position).getTitle());
         holder.icon.setImageResource(invite_list.get(position).getImage());
 
-//        holder.title.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
+        holder.title.setOnClickListener(v -> {
+            switch (position) {
+                case 0:
+                    break;
+
+                case 1:
+                    facebook();
+                    break;
+
+                case 2:
+                    shareTextUrl();
+                    break;
+                case 3:
+                    shareTextUrl();
+                    break;
+            }
 //                switch (position) {
 //                    case 0:
 //                        ReplaceFrag(new FragPremium1());
 //                }
-//            }
-//        });
+        });
 
 
+    }
+
+    private void shareTextUrl() {
+        Intent share = new Intent(android.content.Intent.ACTION_SEND);
+        share.setType("text/plain");
+        share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+        share.putExtra(Intent.EXTRA_TEXT, inviteLink);
+        mContext.startActivity(Intent.createChooser(share, "PlayDate InviteLink!"));
+    }
+
+    private void facebook() {
+        Intent fbIntent = new Intent(Intent.ACTION_SEND);
+        fbIntent.setType("text/plain");
+        fbIntent.setPackage("com.facebook.katana");
+        fbIntent.putExtra(Intent.EXTRA_STREAM, inviteLink);
+        try {
+            mContext.startActivity(fbIntent);
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(getApplicationContext(),
+                    "Facebook have not been installed.", Toast.LENGTH_SHORT).show();
+
+        }
     }
 
     @Override
