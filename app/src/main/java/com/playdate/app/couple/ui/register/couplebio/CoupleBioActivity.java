@@ -48,7 +48,13 @@ public class CoupleBioActivity extends AppCompatActivity {
         bioBinding.setLifecycleOwner(this);
         mIntent = getIntent();
         bioBinding.setCoupleBioViewModel(coupleBioViewModel);
+        if (mIntent.getBooleanExtra("fromProfile", false)) {
+            SessionPref pref = SessionPref.getInstance(this);
+           // coupleBioViewModel.BioText.setValue(pref.getStringVal(LoginUserpersonalBio));
+        } else {
 
+
+        }
         coupleBioViewModel.OnNextClick().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean click) {
@@ -57,7 +63,15 @@ public class CoupleBioActivity extends AppCompatActivity {
                 } else if (coupleBioViewModel.BioText.getValue().toString().trim().equals("")) {
                     clsCommon.showDialogMsg(CoupleBioActivity.this, "PlayDate", "Enter your couple bio.", "Ok");
                 } else {
-                                           startActivity(new Intent(CoupleBioActivity.this, CoupleUploadProfileActivity.class));
+
+                    if (mIntent.getBooleanExtra("fromProfile", false)) {
+                        Intent mIntent = new Intent();
+                        setResult(410, mIntent);
+                        finish();
+                    } else {
+                        startActivity(new Intent(CoupleBioActivity.this, CoupleUploadProfileActivity.class));
+
+                    }
                   //  callAPI();
                 }
 
@@ -83,7 +97,7 @@ public class CoupleBioActivity extends AppCompatActivity {
         hashMap.put("coupleBio", bio);// format 1990-08-12
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
         pd.show();
-//        Toast.makeText(this, ""+pref.getStringVal(SessionPref.LoginUsertoken), Toast.LENGTH_SHORT).show();
+//      Toast.makeText(this, ""+pref.getStringVal(SessionPref.LoginUsertoken), Toast.LENGTH_SHORT).show();
 
 
         Call<LoginResponse> call = service.updateProfile("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
@@ -97,7 +111,7 @@ public class CoupleBioActivity extends AppCompatActivity {
 
                         if (mIntent.getBooleanExtra("fromProfile", false)) {
                             Intent mIntent = new Intent();
-                            setResult(409, mIntent);
+                            setResult(410, mIntent);
                             finish();
                         } else {
 

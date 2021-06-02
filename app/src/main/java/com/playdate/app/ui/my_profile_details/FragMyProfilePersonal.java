@@ -35,7 +35,7 @@ public class FragMyProfilePersonal extends Fragment implements View.OnClickListe
     TextView txt_relationship;
     TextView interestin;
     CircleImageView profile_image;
-
+    SessionPref pref;
     public FragMyProfilePersonal() {
     }
 
@@ -43,6 +43,7 @@ public class FragMyProfilePersonal extends Fragment implements View.OnClickListe
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag_my_personal, container, false);
+        pref = SessionPref.getInstance(getActivity());
         email = view.findViewById(R.id.email);
         txt_phone = view.findViewById(R.id.txt_phone);
         txt_gender = view.findViewById(R.id.txt_gender);
@@ -64,7 +65,15 @@ public class FragMyProfilePersonal extends Fragment implements View.OnClickListe
         iv_edit_mail.setOnClickListener(this);
         iv_relationship.setOnClickListener(this);
         txt_change_photo.setOnClickListener(this);
+        if (pref.getStringVal(SessionPref.LoginUserrelationship).equals("Single")) {
 
+            txt_change_photo.setText("Change profile photo");
+            txt_relationship.setText("Single");
+        } else {
+            txt_change_photo.setText("Change couple profile photo");
+            txt_relationship.setText("In a relationship");
+
+        }
 
         setValues();
 

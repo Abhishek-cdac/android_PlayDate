@@ -484,7 +484,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             txt_social.setBackground(getResources().getDrawable(R.drawable.menu_button));
 
             iv_dashboard_notification.setBackground(null);
-            iv_dashboard_notification.setImageResource(R.drawable.ic_bell);
+            iv_dashboard_notification.setImageResource(R.drawable.notificationnew);
 
             txt_chat.setTextColor(getResources().getColor(android.R.color.darker_gray));
             txt_match.setTextColor(getResources().getColor(android.R.color.darker_gray));
@@ -526,7 +526,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             txt_chat.setBackground(null);
             txt_match.setTextColor(getResources().getColor(R.color.white));
             iv_dashboard_notification.setBackground(null);
-            iv_dashboard_notification.setImageResource(R.drawable.ic_bell);
+            iv_dashboard_notification.setImageResource(R.drawable.notificationnew);
 
             txt_social.setTextColor(getResources().getColor(android.R.color.darker_gray));
             txt_chat.setTextColor(getResources().getColor(android.R.color.darker_gray));
@@ -540,7 +540,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             txt_match.setBackground(null);
             txt_social.setBackground(null);
             iv_dashboard_notification.setBackground(null);
-            iv_dashboard_notification.setImageResource(R.drawable.ic_bell);
+            iv_dashboard_notification.setImageResource(R.drawable.notificationnew);
 
             txt_match.setTextColor(getResources().getColor(android.R.color.darker_gray));
             txt_social.setTextColor(getResources().getColor(android.R.color.darker_gray));
@@ -605,7 +605,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             ll_her.setVisibility(View.VISIBLE);
 
             iv_dashboard_notification.setBackground(null);
-            iv_dashboard_notification.setImageResource(R.drawable.ic_bell);
+            iv_dashboard_notification.setImageResource(R.drawable.notificationnew);
             txt_social.setTextColor(getResources().getColor(R.color.white));
             txt_social.setBackground(getResources().getDrawable(R.drawable.menu_button));
             ReplaceFrag(frag);
@@ -936,7 +936,11 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     @Override
     protected void onResume() {
         super.onResume();
-
+        if (pref.getStringVal(SessionPref.LoginUserrelationship).equals("Single")) {
+            txt_match.setVisibility(View.VISIBLE);
+        } else {
+            txt_match.setVisibility(View.GONE);
+        }
         try {
             boolean permissionGranted = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
 

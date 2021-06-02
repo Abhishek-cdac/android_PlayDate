@@ -20,8 +20,76 @@
         android:textColor="@color/black"
         android:textSize="@dimen/_12sdp"
         android:textStyle="bold" />
+    <RelativeLayout
+        android:id="@+id/couple_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_20sdp"
+        android:layout_marginRight="@dimen/_20sdp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/boy_profile_image"
+                android:layout_width="@dimen/_90sdp"
+                android:layout_height="@dimen/_90sdp"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:src="@drawable/profile"
+                app:civ_border_color="@color/white"
+                app:civ_border_width="1dp"
+                tools:ignore="MissingConstraints" />
+
+
+
+        </LinearLayout>
+
+        <ImageView
+            android:padding="@dimen/_10sdp"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/lovepink">
+
+        </ImageView>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/girl_profile_image"
+                android:layout_width="@dimen/_90sdp"
+                android:layout_height="@dimen/_90sdp"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:src="@drawable/profile"
+                app:civ_border_color="@color/white"
+                app:civ_border_width="1dp"
+                tools:ignore="MissingConstraints" />
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
     <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/single_person"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/_20sdp"
@@ -157,6 +225,7 @@
 
 
     <TextView
+        android:id="@+id/header_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -179,6 +248,16 @@
         android:textColor="@color/black"
         android:textSize="@dimen/_10sdp"
         android:textStyle="bold" />
+    <ImageView
+        android:id="@+id/connection_img"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_15sdp"
+        android:layout_gravity="center"
+        android:layout_centerInParent="true"
+        android:src="@drawable/connection">
+
+    </ImageView>
+
 
 
     <fragment
