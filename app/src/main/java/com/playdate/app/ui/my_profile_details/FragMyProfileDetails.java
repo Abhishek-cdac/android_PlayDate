@@ -24,6 +24,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.playdate.app.R;
+import com.playdate.app.couple.ui.register.couplebio.CoupleBioActivity;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.GetProfileDetails;
@@ -62,19 +63,19 @@ import static com.playdate.app.util.session.SessionPref.LoginVerified;
 public class FragMyProfileDetails extends Fragment implements View.OnClickListener {
     public FragMyProfileDetails() {
     }
-
+    TextView txt_change_photo;
     ImageView iv_dark_mode;
     ImageView profile_image;
     ImageView iv_reset_pass;
-    ImageView iv_edit_bio;
+    ImageView iv_edit_bio, iv_edit_couple_bio;
     TextView txt_bio;
     ImageView iv_change_bio_video;
-    TextView txt_user_name, logout;
+    TextView txt_user_name, logout, txt_username;
     TextView txt_interetsed;
-    TextView txt_invite;
+    TextView txt_invite, invite_partner, leave_partner, txt_HowWeMet_detail, txt_change_bio_video;
     TextView txt_upgrade;
     SessionPref pref;
-    RelativeLayout saved_rl;
+    RelativeLayout saved_rl, create_relation_rl, leave_relation_rl, change_bio_rl, change_howwemet_rl, change_bio_video_rl;
 
     private GoogleApiClient googleApiClient;
     GoogleSignInClient mGoogleSignInClient;
@@ -95,6 +96,27 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
         mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
 
         callAPI();
+        setInIt(view);
+
+        setValues();
+
+
+        return view;
+
+    }
+
+    private void setInIt(View view) {
+
+        iv_edit_couple_bio = view.findViewById(R.id.iv_edit_couple_bio);
+        leave_relation_rl = view.findViewById(R.id.leave_relation_rl);
+        change_bio_video_rl = view.findViewById(R.id.change_bio_video_rl);
+        txt_change_bio_video = view.findViewById(R.id.txt_change_bio_video);
+        txt_HowWeMet_detail = view.findViewById(R.id.txt_howwemet_detail);
+        change_howwemet_rl = view.findViewById(R.id.change_howwemet_rl);
+        change_bio_rl = view.findViewById(R.id.change_bio_rl);
+        leave_partner = view.findViewById(R.id.leave_partner);
+        invite_partner = view.findViewById(R.id.invite_partner);
+        create_relation_rl = view.findViewById(R.id.create_relation_rl);
         iv_edit_bio = view.findViewById(R.id.iv_edit_bio);
         txt_bio = view.findViewById(R.id.txt_bio_detail);
 
@@ -107,10 +129,11 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
         TextView txt_blocked = view.findViewById(R.id.txt_blocked);
         iv_dark_mode = view.findViewById(R.id.iv_dark_mode);
         txt_user_name = view.findViewById(R.id.txt_user_name);
+        txt_username = view.findViewById(R.id.txt_username);
         txt_invite = view.findViewById(R.id.txt_invite);
         txt_upgrade = view.findViewById(R.id.txt_upgrade);
         logout = view.findViewById(R.id.logout);
-        TextView txt_change_photo = view.findViewById(R.id.txt_change_photo);
+         txt_change_photo = view.findViewById(R.id.txt_change_photo);
 
 
         profile_image.setOnClickListener(this);
@@ -130,9 +153,35 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
 
         setValues();
 
+        iv_edit_couple_bio.setOnClickListener(this);
 
-        return view;
-
+        if (pref.getStringVal(SessionPref.LoginUserrelationship).equals("Single")) {
+            txt_username.setText("Username");
+            txt_change_photo.setText("Change profile photo");
+            create_relation_rl.setVisibility(View.VISIBLE);
+            invite_partner.setVisibility(View.VISIBLE);
+            leave_partner.setVisibility(View.GONE);
+            leave_relation_rl.setVisibility(View.GONE);
+            change_howwemet_rl.setVisibility(View.GONE);
+            txt_HowWeMet_detail.setVisibility(View.GONE);
+            txt_bio.setVisibility(View.VISIBLE);
+            change_bio_rl.setVisibility(View.VISIBLE);
+            txt_change_bio_video.setVisibility(View.VISIBLE);
+            change_bio_video_rl.setVisibility(View.VISIBLE);
+        } else {
+            txt_change_photo.setText("Change couple profile photo");
+            txt_username.setText("Couple Username");
+            create_relation_rl.setVisibility(View.GONE);
+            invite_partner.setVisibility(View.GONE);
+            leave_partner.setVisibility(View.VISIBLE);
+            leave_relation_rl.setVisibility(View.VISIBLE);
+            change_howwemet_rl.setVisibility(View.VISIBLE);
+            txt_bio.setVisibility(View.GONE);
+            txt_HowWeMet_detail.setVisibility(View.VISIBLE);
+            change_bio_rl.setVisibility(View.GONE);
+            change_bio_video_rl.setVisibility(View.GONE);
+            txt_change_bio_video.setVisibility(View.GONE);
+        }
     }
 
     ArrayList<Interest> lst_interest;
@@ -250,6 +299,10 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
             Intent mIntent = new Intent(getActivity(), InterestActivity.class);
             mIntent.putExtra("fromProfile", true);
             startActivityForResult(mIntent, 409);
+        } else if (id == R.id.iv_edit_couple_bio) {
+            Intent mIntent = new Intent(getActivity(), CoupleBioActivity.class);
+            mIntent.putExtra("fromProfile", true);
+            startActivityForResult(mIntent, 410);
         } else if (id == R.id.iv_dark_mode) {
             if (iv_dark_mode.getRotation() == 180) {
                 iv_dark_mode.setImageResource(R.drawable.dark_mode);
@@ -267,7 +320,7 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
             startActivity(intent);
         } else if (id == R.id.logout) {
             showYesNoDialog();
-        }else if (id == R.id.txt_upgrade) {
+        } else if (id == R.id.txt_upgrade) {
             OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
             frag.ReplaceFrag(new FragUpgradePremiun());
         } else if (id == R.id.iv_edit_bio) {
@@ -338,6 +391,7 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
         OnProfilePhotoChageListerner inf = (OnProfilePhotoChageListerner) getActivity();
         inf.updateImage();
     }
+
     private void callAPI() {
         SessionPref pref = SessionPref.getInstance(getActivity());
 
@@ -363,16 +417,16 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
                             lst_getPostDetail = new ArrayList<>();
                         }
                         inviteCode = String.valueOf(lst_getPostDetail.get(0).getInviteCode());
-                        inviteLink= String.valueOf(lst_getPostDetail.get(0).getInviteLink());
-                        Log.e("inviteCode",""+ inviteCode);
-                        Log.e("inviteLink",""+ inviteLink);
+                        inviteLink = String.valueOf(lst_getPostDetail.get(0).getInviteLink());
+                        Log.e("inviteCode", "" + inviteCode);
+                        Log.e("inviteLink", "" + inviteLink);
                     } else {
-                       // clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
+                        // clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
                     }
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                     //   clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message").toString(), "Ok");
+                        //   clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message").toString(), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                     }
@@ -390,7 +444,6 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
             }
         });
     }
-
 
 
 }

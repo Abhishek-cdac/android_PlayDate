@@ -52,6 +52,17 @@ public class GetProileDetailData {
     @Expose
     private String username;
 
+    public String getRelationship() {
+        return relationship;
+    }
+
+    public void setRelationship(String relationship) {
+        this.relationship = relationship;
+    }
+
+    @Expose
+    private String relationship;
+
     public String getInviteLink() {
         return inviteLink;
     }

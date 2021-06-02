@@ -29,6 +29,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
@@ -125,12 +126,27 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     SessionPref pref;
     TextView txt_serachfriend;
     NestedScrollView nsv;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+        mSwipeRefreshLayout = findViewById(R.id.swipeContainer);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Log.e("mSwipeRefreshLayout", "mSwipeRefreshLayout");
 
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Stop animation (This will be after 3 seconds)
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                }, 3000);
+            }
+        });
 //        pri_hMap_FragmentsStack = new HashMap<>();
 //        pri_hMap_FragmentsStack.put(strProStaFin_CONTENT_TAG_1, new Stack<>());
 
@@ -197,7 +213,6 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
 
         rv_friends = findViewById(R.id.rv_friends);
-
 
         if (pref.getStringVal(SessionPref.LoginUserrelationship).equals("Single")) {
             txt_match.setVisibility(View.VISIBLE);
@@ -484,7 +499,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             txt_social.setBackground(getResources().getDrawable(R.drawable.menu_button));
 
             iv_dashboard_notification.setBackground(null);
-            iv_dashboard_notification.setImageResource(R.drawable.ic_bell);
+            iv_dashboard_notification.setImageResource(R.drawable.notificationnew);
 
             txt_chat.setTextColor(getResources().getColor(android.R.color.darker_gray));
             txt_match.setTextColor(getResources().getColor(android.R.color.darker_gray));
@@ -526,7 +541,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             txt_chat.setBackground(null);
             txt_match.setTextColor(getResources().getColor(R.color.white));
             iv_dashboard_notification.setBackground(null);
-            iv_dashboard_notification.setImageResource(R.drawable.ic_bell);
+            iv_dashboard_notification.setImageResource(R.drawable.notificationnew);
 
             txt_social.setTextColor(getResources().getColor(android.R.color.darker_gray));
             txt_chat.setTextColor(getResources().getColor(android.R.color.darker_gray));
@@ -540,7 +555,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             txt_match.setBackground(null);
             txt_social.setBackground(null);
             iv_dashboard_notification.setBackground(null);
-            iv_dashboard_notification.setImageResource(R.drawable.ic_bell);
+            iv_dashboard_notification.setImageResource(R.drawable.notificationnew);
 
             txt_match.setTextColor(getResources().getColor(android.R.color.darker_gray));
             txt_social.setTextColor(getResources().getColor(android.R.color.darker_gray));
@@ -605,7 +620,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             ll_her.setVisibility(View.VISIBLE);
 
             iv_dashboard_notification.setBackground(null);
-            iv_dashboard_notification.setImageResource(R.drawable.ic_bell);
+            iv_dashboard_notification.setImageResource(R.drawable.notificationnew);
             txt_social.setTextColor(getResources().getColor(R.color.white));
             txt_social.setBackground(getResources().getDrawable(R.drawable.menu_button));
             ReplaceFrag(frag);
@@ -936,10 +951,13 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     @Override
     protected void onResume() {
         super.onResume();
-
+        if (pref.getStringVal(SessionPref.LoginUserrelationship).equals("Single")) {
+            txt_match.setVisibility(View.VISIBLE);
+        } else {
+            txt_match.setVisibility(View.GONE);
+        }
         try {
             boolean permissionGranted = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
-
             if (permissionGranted) {
 //                Toast.makeText(this, "Location permission granted", Toast.LENGTH_SHORT).show();
                 startService(new Intent(getApplicationContext(), LocationService.class));

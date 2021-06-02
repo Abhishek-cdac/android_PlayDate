@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,14 +40,15 @@ import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 
 public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View.OnClickListener {
     private ImageView iv_send_request;
-    private ImageView iv_chat;
+    private ImageView iv_chat, connection_img;
     private ImageView profile_image;
-    private TextView txt_bio;
+    private TextView txt_bio, header_text;
     private TextView txt_login_user;
+    private RelativeLayout couple_rl,single_person;
     private CommonClass clsCommon;
     private TextView txtTotalFriend, txtTotalPost;
     private ArrayList<GetProileDetailData> lst_getPostDetail;
-
+    SessionPref pref;
     public FragInstaLikeProfile() {
     }
 
@@ -62,7 +64,11 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
         View view = inflater.inflate(R.layout.frag_insta_profile, container, false);
 
         clsCommon = CommonClass.getInstance();
+        pref = SessionPref.getInstance(getActivity());
 
+        connection_img = view.findViewById(R.id.connection_img);
+        single_person = view.findViewById(R.id.single_person);
+        couple_rl = view.findViewById(R.id.couple_rl);
         txtTotalFriend = view.findViewById(R.id.friend_count);
         txtTotalPost = view.findViewById(R.id.post_count);
         iv_send_request = view.findViewById(R.id.iv_send_request);
@@ -70,6 +76,23 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
         iv_chat = view.findViewById(R.id.iv_chat);
         txt_bio = view.findViewById(R.id.txt_bio);
         txt_login_user = view.findViewById(R.id.txt_login_user);
+        header_text = view.findViewById(R.id.header_text);
+
+        if (pref.getStringVal(SessionPref.LoginUserrelationship).equals("Single")) {
+            connection_img.setVisibility(View.GONE);
+            header_text.setText("About Me");
+            single_person.setVisibility(View.VISIBLE);
+            iv_send_request.setVisibility(View.VISIBLE);
+            iv_chat.setVisibility(View.VISIBLE);
+            couple_rl.setVisibility(View.GONE);
+        } else {
+            connection_img.setVisibility(View.VISIBLE);
+            header_text.setText("How we met");
+            single_person.setVisibility(View.GONE);
+            couple_rl.setVisibility(View.VISIBLE);
+            iv_send_request.setVisibility(View.GONE);
+            iv_chat.setVisibility(View.GONE);
+        }
         callAPI();
         if (itsMe) {
             iv_send_request.setVisibility(View.GONE);
@@ -133,6 +156,21 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
                         txtTotalFriend.setText(String.valueOf(lst_getPostDetail.get(0).getTotalFriends()));
                         txtTotalPost.setText(String.valueOf(lst_getPostDetail.get(0).getTotalPosts()));
 //                        onTypeChange(0);
+
+
+                     /*   if (lst_getPostDetail.get(0).getRelationship().equals("Single")){
+                            header_text.setText("About Me");
+                            single_person.setVisibility(View.VISIBLE);
+                            iv_send_request.setVisibility(View.VISIBLE);
+                            iv_chat.setVisibility(View.VISIBLE);
+                            couple_rl.setVisibility(View.GONE);
+                        } else {
+                            header_text.setText("How we met");
+                            single_person.setVisibility(View.GONE);
+                            couple_rl.setVisibility(View.VISIBLE);
+                            iv_send_request.setVisibility(View.GONE);
+                            iv_chat.setVisibility(View.GONE);
+                        }*/
 
                     } else {
                         clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");

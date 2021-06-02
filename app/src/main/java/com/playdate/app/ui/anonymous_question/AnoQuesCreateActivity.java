@@ -162,7 +162,6 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
         } else if (id == R.id.txt_post_comments) {
             // postQues();
             callAPIFeedPost();
-
         }
     }
 
