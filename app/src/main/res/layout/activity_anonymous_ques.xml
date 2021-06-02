@@ -74,12 +74,12 @@
         android:hint="Type your question here..."
         android:maxLength="200"
         android:maxLines="4"
-        android:visibility="gone"
         android:paddingHorizontal="@dimen/_14sdp"
-
         android:textColor="@color/black"
+
         android:textColorHint="@color/color_grey"
-        android:textSize="@dimen/_12sdp" />
+        android:textSize="@dimen/_12sdp"
+        android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/comments_list"
@@ -102,6 +102,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/txt_post_comment"
             android:backgroundTint="@android:color/transparent"
             android:hint="@string/add_comment"
             android:textColor="@color/white"
@@ -115,11 +116,14 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerInParent="true"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:foregroundGravity="center"
+            android:gravity="center"
             android:text="@string/post"
-            android:textStyle="bold"
-            android:layout_marginEnd="@dimen/_10sdp"
             android:textColor="@color/white"
-            android:textSize="@dimen/_14sdp" />
+            android:textSize="@dimen/_14sdp"
+            android:textStyle="bold" />
 
 
     </RelativeLayout>

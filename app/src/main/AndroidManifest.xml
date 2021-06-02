@@ -96,6 +96,15 @@
             android:name=".ui.register.RegisterActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".couple.ui.register.coupleusername.CoupleUserNameActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".couple.ui.register.couplebio.CoupleBioActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".couple.ui.register.coupleprofile.CoupleUploadProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.register.otp.OTPActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -171,6 +180,11 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
+
+
+        <service
+            android:name=".ui.social.videoplay.AAH_DownloadService"
+            android:exported="false" />
     </application>
 
 </manifest>

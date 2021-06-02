@@ -9,10 +9,10 @@
     android:paddingVertical="@dimen/_15sdp">
 
     <RelativeLayout
+        android:id="@+id/rl_comment_on_off"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:id="@+id/rl_comment_on_off"
         android:paddingVertical="@dimen/_2sdp">
 
         <TextView
@@ -24,9 +24,9 @@
             android:textSize="@dimen/_12sdp" />
 
         <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switch_comment_onoff"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/switch_comment_onoff"
             android:layout_alignParentEnd="true"
             android:layout_gravity="center"
             app:track="@drawable/track" />

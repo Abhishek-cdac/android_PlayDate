@@ -53,9 +53,8 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
     String postId;
     String UserID;
     private Onclick itemClick;
-    //    String commentIdAq , userIDAq ;
-    Bundle bundle = new Bundle();
-
+//    String commentIdAq , userIDAq ;
+    Bundle bundle= new Bundle();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,16 +79,13 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
             @Override
             public void onItemClicks(View v, int absoluteAdapterPosition, int i, String commentId, String postId, String userId) {
                 if (i == 11) {
-
-
-                    bundle.putString("postIdAQ", postId);
-                    bundle.putString("userIdAQ", userId);
-                    bundle.putString("commentIdAQ", commentId);
-
-
-                }
+                        bundle.putString("postIdAQ", postId);
+                        bundle.putString("userIdAQ", userId);
+                        bundle.putString("commentIdAQ", commentId);
+                     }
             }
         };
+
 
 
         text_count = findViewById(R.id.comment_number);
@@ -114,19 +110,18 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
         text.setTypeface(Typeface.DEFAULT_BOLD);
         recyclerView = findViewById(R.id.comments_list);
 
-        callGetCommentApi();
         txt_post_comment.setTextColor(getResources().getColor(R.color.color_grey));
 
 
         if (mIntent.getBooleanExtra("new", false)) {
             isForNew = true;
             text.setText(R.string.anonymous);
-            text_count.setText("Add an anonymous question and receive responces");
+            text_count.setText("Add an anonymous question and receive responses");
             recyclerView.setVisibility(View.GONE);
-//            ext_question.setVisibility(View.VISIBLE);
-            add_comment.setEnabled(false);
+            add_comment.setEnabled(true);
             add_comment.setHint("Add a question...!");
         } else {
+            callGetCommentApi();
             text.setText(R.string.comments);
         }
 
@@ -257,7 +252,7 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
 
             if (isForNew) {
                 Intent mIntent = new Intent(this, AnoQuesCreateActivity.class);
-                mIntent.putExtra("question", ext_question.getText().toString());
+                mIntent.putExtra("question", add_comment.getText().toString());
                 startActivityForResult(mIntent, 101);
             } else {
                 callAddCommentApi();
@@ -318,9 +313,13 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
     }
 
     private void showModel() {
-        AnonymousBottomSheet bottomSheet = new AnonymousBottomSheet();
-        bottomSheet.setArguments(bundle);
-        bottomSheet.show(getSupportFragmentManager(), "ModalBottomSheet");
+        try {
+            AnonymousBottomSheet bottomSheet = new AnonymousBottomSheet();
+            bottomSheet.setArguments(bundle);
+            bottomSheet.show(getSupportFragmentManager(), "ModalBottomSheet");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 

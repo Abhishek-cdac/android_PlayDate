@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,7 +37,7 @@ public class SmileyAdapter extends RecyclerView.Adapter<SmileyAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull SmileyAdapter.ViewHolder holder, int position) {
-        holder.ll_color.setBackground(mContext.getDrawable(lst.get(position)));
+        holder.txt_emo.setText(new String(Character.toChars(lst.get(position))));
     }
 
     @Override
@@ -46,10 +47,12 @@ public class SmileyAdapter extends RecyclerView.Adapter<SmileyAdapter.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         LinearLayout ll_color;
+        TextView txt_emo;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ll_color = itemView.findViewById(R.id.ll_color);
+            txt_emo = itemView.findViewById(R.id.txt_emo);
             itemView.setOnClickListener(view -> ref.onSmileySelect(getAdapterPosition()));
         }
     }

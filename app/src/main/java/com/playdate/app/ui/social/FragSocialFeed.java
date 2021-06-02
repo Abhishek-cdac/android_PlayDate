@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.allattentionhere.autoplayvideos.AAH_CustomRecyclerView;
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
@@ -23,6 +22,7 @@ import com.playdate.app.ui.social.adapter.PaginationListener;
 import com.playdate.app.ui.social.adapter.SocialFeedAdapter;
 import com.playdate.app.ui.social.model.PostDetails;
 import com.playdate.app.ui.social.model.PostHistory;
+import com.playdate.app.ui.social.videoplay.AAH_CustomRecyclerView;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
 
@@ -59,7 +59,7 @@ public class FragSocialFeed extends Fragment {
         recycler_view_feed = view.findViewById(R.id.recycler_view_feed);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         recycler_view_feed.setLayoutManager(manager);
-        recycler_view_feed.setHasFixedSize(true);
+//        recycler_view_feed.setHasFixedSize(true);
 
 //        recycler_view_feed.addOnScrollListener(new EndlessRecyclerViewScrollListener(manager) {
 //            @Override
@@ -91,6 +91,7 @@ public class FragSocialFeed extends Fragment {
         }
 
     }
+
 
     @Override
     public void onStop() {
@@ -157,7 +158,7 @@ public class FragSocialFeed extends Fragment {
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
-                            Toast.makeText(getActivity(), "" + e.toString(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getActivity(), "" + e.toString(), Toast.LENGTH_SHORT).show();
                         }
                         recycler_view_feed.preDownload(urls);
                         recycler_view_feed.setVisiblePercent(70);

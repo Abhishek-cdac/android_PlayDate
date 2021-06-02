@@ -27,13 +27,13 @@ public class SuggestionAdapter extends PagerAdapter {
     ArrayList<GetUserSuggestionData> suggestions_list = new ArrayList<>();
     ArrayList<FriendRequest> friendRequests_list = new ArrayList<>();
     Onclick itemClick;
-
+Picasso picasso;
 
     public SuggestionAdapter(Context mContext, ArrayList<GetUserSuggestionData> lst_getUserSuggestions, Onclick itemClick) {
         this.suggestions_list = lst_getUserSuggestions;
         this.context = mContext;
         this.itemClick = itemClick;
-
+picasso=Picasso.get();
     }
 
 
@@ -71,7 +71,7 @@ public class SuggestionAdapter extends PagerAdapter {
             profile_image.setBackgroundColor(context.getResources().getColor(R.color.color_grey_light));
         }
 
-        Picasso.get().load(suggestions_list.get(position).getProfilePicPath()).placeholder(R.drawable.ic_baseline_person_24)
+        picasso.load(suggestions_list.get(position).getProfilePicPath()).placeholder(R.drawable.ic_baseline_person_24)
                 .fit()
                 .centerCrop()
                 .into(profile_image);

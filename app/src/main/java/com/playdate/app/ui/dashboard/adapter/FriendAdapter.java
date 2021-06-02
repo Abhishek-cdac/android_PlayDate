@@ -29,12 +29,13 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
     }
 
     private Context mContext;
-
+Picasso picasso;
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_friends, parent, false);
         mContext = parent.getContext();
+        picasso=Picasso.get();
         return new ViewHolder(view);
     }
 
@@ -42,7 +43,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
 
-        Picasso.get().load(lst.get(position).getProfilePicPath())
+        picasso.load(lst.get(position).getProfilePicPath())
                 .placeholder(R.drawable.profile)
                 .into(holder.profile_image);
 

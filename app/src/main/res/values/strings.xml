@@ -61,11 +61,16 @@
     <string name="please_select_interest">Please select your interests</string>
     <string name="please_upload">Please upload a profile picture</string>
     <string name="create_username">Create username</string>
+    <string name="create_couplename">Create couple name</string>
     <string name="search_for_a_username_to_display_on_your_profile">Search for a username to display on your profile</string>
+    <string name="search_for_a_couplename_to_display_on_your_profile">Search for a couple name to display on your profile</string>
     <string name="personal_bio">Personal Bio</string>
+    <string name="couple_bio">Couple Bio</string>
     <string name="forgot_string">Enter registered mobile number</string>
     <string name="write_a_short_bio_that_will_be_displayed_on_your_profile">Write a short bio that will be displayed on your profile</string>
+  <string name="couple_short_note">Tell your friends how you and your partner met</string>
     <string name="profile_picture">Profile Picture</string>
+    <string name="couple_profile_picture">Couple Profile Picture</string>
     <string name="upload">Upload</string>
     <string name="take_photo">TAKE PHOTO</string>
     <string name="change_image">Change Image</string>
