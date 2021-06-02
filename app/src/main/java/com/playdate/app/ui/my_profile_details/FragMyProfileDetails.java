@@ -31,6 +31,7 @@ import com.playdate.app.model.GetProfileDetails;
 import com.playdate.app.model.GetProileDetailData;
 import com.playdate.app.model.Interest;
 import com.playdate.app.model.InterestsMain;
+import com.playdate.app.ui.blockuser.BlockUserActivity;
 import com.playdate.app.ui.dashboard.OnProfilePhotoChageListerner;
 import com.playdate.app.ui.date.games.FragTimesUp1;
 import com.playdate.app.ui.forgot_password.ForgotPasswordActivity;
@@ -82,7 +83,6 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
     private ArrayList<GetProileDetailData> lst_getPostDetail;
     String inviteCode;
     String inviteLink;
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -126,6 +126,7 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
         txt_interetsed = view.findViewById(R.id.txt_interetsed);
         ImageView iv_edit_username = view.findViewById(R.id.iv_edit_username);
         ImageView iv_interest = view.findViewById(R.id.iv_interest);
+        TextView txt_blocked = view.findViewById(R.id.txt_blocked);
         iv_dark_mode = view.findViewById(R.id.iv_dark_mode);
         txt_user_name = view.findViewById(R.id.txt_user_name);
         txt_username = view.findViewById(R.id.txt_username);
@@ -147,6 +148,11 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
         txt_invite.setOnClickListener(this);
         txt_upgrade.setOnClickListener(this);
         iv_edit_bio.setOnClickListener(this);
+        txt_blocked.setOnClickListener(this);
+
+
+        setValues();
+
         iv_edit_couple_bio.setOnClickListener(this);
 
         if (pref.getStringVal(SessionPref.LoginUserrelationship).equals("Single")) {
@@ -269,7 +275,11 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        if (id == R.id.profile_image || id == R.id.txt_change_photo) {
+        if (id == R.id.txt_blocked ) {
+            Intent mIntent = new Intent(getActivity(), BlockUserActivity.class);
+            mIntent.putExtra("fromProfile", true);
+            startActivityForResult(mIntent, 407);
+        }else if (id == R.id.profile_image || id == R.id.txt_change_photo) {
             Intent mIntent = new Intent(getActivity(), UploadProfileActivity.class);
             mIntent.putExtra("fromProfile", true);
             startActivityForResult(mIntent, 407);

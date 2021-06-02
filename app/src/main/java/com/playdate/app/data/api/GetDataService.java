@@ -201,7 +201,7 @@ public interface GetDataService {
 
     @FormUrlEncoded
     @POST("user/get-user-blocked")
-    Call<LoginResponse> getUserBlocked(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+    Call<CommonModel> getUserBlocked(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
 }
 
