@@ -35,6 +35,26 @@ public class SessionPref {
         editor.commit();
     }
 
+    public void saveLOngKeyLattitude(String key, double val) {
+        editor.putLong(key, Double.doubleToRawLongBits(val));
+        editor.commit();
+    }
+
+    public double getLattitude(String key) {
+//        long latti = pref.getLong(key,0);
+//        return latti.doub;
+        return Double.longBitsToDouble(pref.getLong(key, 0));
+    }
+
+    public void saveLongKeyLongitude(String key, double val) {
+        editor.putLong(key, Double.doubleToRawLongBits(val));
+        editor.commit();
+    }
+
+    public double getLongitude(String key) {
+        return Double.longBitsToDouble(pref.getLong(key, 0));
+    }
+
     public void saveBoolKeyVal(String key, boolean val) {
         editor.putBoolean(key, val);
         editor.commit();

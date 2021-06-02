@@ -92,6 +92,7 @@ public class FragLocationTracing extends Fragment {
                 iv_check_mine.setVisibility(View.VISIBLE);
                 spin_kit_dots1.setVisibility(View.GONE);
                 spin_kit_dots2.setVisibility(View.VISIBLE);
+
                 tv_location.setText("Use a nice cologne...");
                 spin_kit_location_trace.getLayoutParams().height = 450;
                 spin_kit_location_trace.getLayoutParams().width = 450;

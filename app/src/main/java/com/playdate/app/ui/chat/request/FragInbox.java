@@ -114,7 +114,6 @@ public class FragInbox extends Fragment implements onClickEventListener {
                     recyclerView.setAdapter(chattingAdapter);
 
                 }
-
             }
 
             @Override
@@ -134,20 +133,6 @@ public class FragInbox extends Fragment implements onClickEventListener {
         String sender_profile_image = chatExampleList.get(position).getProfilePhoto();
 
         OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
-//
-//        for (int i = 0; i < chatMessageList.size(); i++) {
-//            if (chatMessageList.get(i).getType().equals("text")) {
-//                Log.d("GET TEXT CHAT", chatMessageList.get(i).getText());
-//            } else {
-//                Log.d("GET TEXT CHAT_no", chatMessageList.get(i).getType());
-//            }
-//        }
-//        Fragment fragment=new FragPartnerSelected();
-//        Bundle bundle=new Bundle();
-//        bundle.putString("sender_profile_image", chatExampleList.get(position).getProfilePhoto());
-//        bundle.putString("sender_name", chatExampleList.get(position).getSenderName());
-//        fragment.setArguments(bundle);
-
         frag.ReplaceFrag(new FragChatMain(chatMessageList, sender_name, sender_profile_image));
 
 

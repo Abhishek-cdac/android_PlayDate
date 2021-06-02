@@ -53,8 +53,9 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
     String postId;
     String UserID;
     private Onclick itemClick;
-//    String commentIdAq , userIDAq ;
-    Bundle bundle= new Bundle();
+    //    String commentIdAq , userIDAq ;
+    Bundle bundle = new Bundle();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,15 +82,14 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
                 if (i == 11) {
 
 
-                        bundle.putString("postIdAQ", postId);
-                        bundle.putString("userIdAQ", userId);
-                        bundle.putString("commentIdAQ", commentId);
+                    bundle.putString("postIdAQ", postId);
+                    bundle.putString("userIdAQ", userId);
+                    bundle.putString("commentIdAQ", commentId);
 
 
-                     }
+                }
             }
         };
-
 
 
         text_count = findViewById(R.id.comment_number);
@@ -123,6 +123,7 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
             text.setText(R.string.anonymous);
             text_count.setText("Add an anonymous question and receive responces");
             recyclerView.setVisibility(View.GONE);
+//            ext_question.setVisibility(View.VISIBLE);
             add_comment.setEnabled(false);
             add_comment.setHint("Add a question...!");
         } else {

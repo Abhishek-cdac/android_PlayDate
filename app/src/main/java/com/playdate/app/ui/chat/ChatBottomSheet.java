@@ -28,6 +28,16 @@ public class ChatBottomSheet extends BottomSheetDialogFragment {
 
         if (text.equals("Extra")) {
             view = inflater.inflate(R.layout.frag_chat_bottom_sheet, container, false);
+            LinearLayout ll_location;
+
+            ll_location = view.findViewById(R.id.ll_location);
+            ll_location.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ref.onLocationSelect();
+                }
+            });
+
 
         } else {
             view = inflater.inflate(R.layout.frag_image_select_bottom_sheet, container, false);

@@ -40,6 +40,7 @@ import com.playdate.app.model.MatchListUser;
 import com.playdate.app.service.LocationService;
 import com.playdate.app.ui.anonymous_question.AnonymousQuestionActivity;
 import com.playdate.app.ui.card_swipe.FragCardSwipe;
+import com.playdate.app.ui.chat.request.FragInbox;
 import com.playdate.app.ui.chat.request.RequestChatFragment;
 import com.playdate.app.ui.coupons.FragCouponStore;
 import com.playdate.app.ui.dashboard.adapter.FriendAdapter;
@@ -114,6 +115,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     LinearLayout ll_take_photo;
     LinearLayout ll_upload_photo;
     LinearLayout ll_Record_video;
+
     LinearLayout ll_upload_video;
     LinearLayout bottomNavigationView;
     LinearLayout ll_camera_option;
@@ -124,21 +126,21 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     RecyclerView rv_friends;
     SessionPref pref;
     TextView txt_serachfriend;
-NestedScrollView nsv;
+    NestedScrollView nsv;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         txt_serachfriend = findViewById(R.id.txt_serachfriend);
-        nsv=findViewById(R.id.nsv);
+        nsv = findViewById(R.id.nsv);
         search = findViewById(R.id.iv_search);
         pref = SessionPref.getInstance(this);
         ll_profile_insta = findViewById(R.id.ll_profile_insta);
         profile_image = findViewById(R.id.profile_image);
         txt_chat = findViewById(R.id.txt_chat);
         rl_main = findViewById(R.id.rl_main);
-        flFragment=findViewById(R.id.flFragment);
+        flFragment = findViewById(R.id.flFragment);
 //        flFeed=findViewById(R.id.flFeed);
 
         ll_her = findViewById(R.id.ll_her);
@@ -199,6 +201,8 @@ NestedScrollView nsv;
             pref.saveBoolKeyVal(SessionPref.LoginUserSuggestionShown, true);
         } else {
             fragOne = new FragSocialFeed();
+//            fragOne = new FragInbox();
+
         }
         ReplaceFrag(fragOne);
         txt_match.setOnClickListener(this);
@@ -216,33 +220,33 @@ NestedScrollView nsv;
         callAPIFriends();
 
 
-            nsv.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-                @Override
-                public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+        nsv.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
 
-                    if (scrollY > oldScrollY) {
-                        Log.i(TAG, "Scroll DOWN");
-                    }
-                    if (scrollY < oldScrollY) {
-                        Log.i(TAG, "Scroll UP");
-                    }
+                if (scrollY > oldScrollY) {
+                    Log.i(TAG, "Scroll DOWN");
+                }
+                if (scrollY < oldScrollY) {
+                    Log.i(TAG, "Scroll UP");
+                }
 
-                    if (scrollY == 0) {
-                        Log.i(TAG, "TOP SCROLL");
-                    }
+                if (scrollY == 0) {
+                    Log.i(TAG, "TOP SCROLL");
+                }
 
-                    if (scrollY == ( v.getMeasuredHeight() - v.getChildAt(0).getMeasuredHeight() )*-1) {
-                        Log.i(TAG, "BOTTOM SCROLL");
+                if (scrollY == (v.getMeasuredHeight() - v.getChildAt(0).getMeasuredHeight()) * -1) {
+                    Log.i(TAG, "BOTTOM SCROLL");
 //                        Toast.makeText(DashboardActivity.this, "At the bottom", Toast.LENGTH_SHORT).show();
-                        if(null!=CurrentFrag){
-                            if(CurrentFrag.getClass().getSimpleName().equals("FragSocialFeed")){
-                                FragSocialFeed frag= (FragSocialFeed) CurrentFrag;
-                                frag.addMoreData();
-                            }
+                    if (null != CurrentFrag) {
+                        if (CurrentFrag.getClass().getSimpleName().equals("FragSocialFeed")) {
+                            FragSocialFeed frag = (FragSocialFeed) CurrentFrag;
+                            frag.addMoreData();
                         }
                     }
                 }
-            });
+            }
+        });
     }
 
     private boolean checkFirstFrag() {
@@ -353,11 +357,12 @@ NestedScrollView nsv;
     }
 
     Fragment CurrentFrag;
+
     @Override
     public void ReplaceFrag(Fragment fragment) {
         try {
 
-            CurrentFrag=fragment;
+            CurrentFrag = fragment;
 //            flFragment.removeAllViews();
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction ft = fragmentManager.beginTransaction();
@@ -419,14 +424,17 @@ NestedScrollView nsv;
         } else if (id == R.id.txt_social) {
             txt_match.setBackground(null);
             txt_chat.setBackground(null);
+
+
             txt_social.setTextColor(getResources().getColor(R.color.white));
             txt_social.setBackground(getResources().getDrawable(R.drawable.menu_button));
-
             iv_dashboard_notification.setBackground(null);
             iv_dashboard_notification.setImageResource(R.drawable.ic_bell);
 
             txt_chat.setTextColor(getResources().getColor(android.R.color.darker_gray));
             txt_match.setTextColor(getResources().getColor(android.R.color.darker_gray));
+
+
             ReplaceFrag(new FragSocialFeed());
             ll_friends.setVisibility(View.VISIBLE);
             ll_mainMenu.setVisibility(View.VISIBLE);
@@ -519,6 +527,16 @@ NestedScrollView nsv;
             ll_friends.setVisibility(View.VISIBLE);
             ll_profile_menu.setVisibility(View.GONE);
 
+            txt_match.setBackground(null);
+            txt_chat.setBackground(null);
+            txt_chat.setTextColor(getResources().getColor(android.R.color.darker_gray));
+            txt_match.setTextColor(getResources().getColor(android.R.color.darker_gray));
+
+            ll_friends.setVisibility(View.VISIBLE);
+            ll_mainMenu.setVisibility(View.VISIBLE);
+            ll_her.setVisibility(View.VISIBLE);
+
+
             iv_love.setBackground(getDrawable(R.drawable.rectangle_back));
             iv_love.setImageResource(R.drawable.love_high);
             iv_coupons.setBackground(null);
@@ -601,6 +619,11 @@ NestedScrollView nsv;
             iv_love.setImageResource(R.drawable.love);
             iv_profile_sett.setBackground(null);
             iv_profile_sett.setImageResource(R.drawable.tech_support);
+
+            txt_chat.setTextColor(getResources().getColor(android.R.color.darker_gray));
+            txt_match.setTextColor(getResources().getColor(android.R.color.darker_gray));
+            txt_match.setBackground(null);
+            txt_chat.setBackground(null);
 
 
             ReplaceFrag(profile);
@@ -866,6 +889,7 @@ NestedScrollView nsv;
         ReplaceFragWithStack(new FragInstaLikeProfileFriends(isFriend, id));
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -885,6 +909,9 @@ NestedScrollView nsv;
         }
 
 
+
     }
 }
+
+
 

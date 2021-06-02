@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -56,6 +58,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     ArrayList<ChatExample> chatExampleList;
     ArrayList<ChatMessage> chatmsgList;
     String urls_image;
+    MediaPlayer mediaPlayer;
 
     String from;
     String to;
@@ -143,6 +146,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
             if (chatmsgList.get(position).getType().equals("text")) {
                 viewHolderMe.tv_msg.setText(chatmsgList.get(position).getText());
+
             } else if (chatmsgList.get(position).getType().equals("image")) {
                 viewHolderMe.tv_msg.setVisibility(View.GONE);
                 viewHolderMe.chat_image.setVisibility(View.VISIBLE);
@@ -170,10 +174,10 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 viewHolderMe.img_playback.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(viewHolderMe.chat_video.isPlaying()){
+                        if (viewHolderMe.chat_video.isPlaying()) {
                             viewHolderMe.chat_video.pause();
                             viewHolderMe.img_playback.setImageResource(R.drawable.ic_play_button);
-                        }else{
+                        } else {
 //                            viewHolderMe.iv_post_image.setVisibility(View.GONE);
                             viewHolderMe.chat_video.start();
                             viewHolderMe.img_playback.setImageResource(R.drawable.ic_pause);
@@ -183,8 +187,45 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 });
 
 
-            }
+            } else if (chatmsgList.get(position).getType().equals("audio")) {
+                viewHolderMe.tv_msg.setVisibility(View.GONE);
+                viewHolderMe.chat_image.setVisibility(View.GONE);
+                viewHolderMe.chat_video.setVisibility(View.GONE);
+                viewHolderMe.rl_audio.setVisibility(View.VISIBLE);
 
+                viewHolderMe.play_audio.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mediaPlayer = new MediaPlayer();
+
+                        if (mediaPlayer.isPlaying()) {
+                            viewHolderMe.play_audio.setImageResource(R.drawable.play);
+                            mediaPlayer.pause();
+
+                        } else {
+                            viewHolderMe.play_audio.setImageResource(R.drawable.exo_icon_pause);
+                            try {
+                                mediaPlayer.setDataSource(chatmsgList.get(position).getText());
+                                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                                    @Override
+                                    public void onCompletion(MediaPlayer mediaPlayer) {
+                                        stopPlaying();
+                                        viewHolderMe.play_audio.setImageResource(R.drawable.play);
+
+
+                                    }
+                                });
+                                mediaPlayer.prepare();
+                                mediaPlayer.start();
+                            } catch (IOException e) {
+                                Log.d(":playRecording()", e.toString());
+                            }
+                        }
+
+                    }
+                });
+
+            } //audio
 
         } ///
         else if (holder.getItemViewType() == OPPONENT) {
@@ -232,6 +273,13 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             ViewHolderOther viewHolderOther = (ViewHolderOther) holder;
             viewHolderOther.tv_msg.setText(chat_list.get(position).getMessage());
 
+        }
+    }
+
+    private void stopPlaying() {
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.release();
         }
     }
 
@@ -308,6 +356,11 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         notifyDataSetChanged();
     }
 
+    public void addToListAudio(String mFileName) {
+        chatmsgList.add(new ChatMessage("audio", myId, "jid_1109", mFileName));
+        notifyDataSetChanged();
+    }
+
     public class ViewHolderOther extends RecyclerView.ViewHolder {
         TextView tv_msg;
         TextView answer1;
@@ -332,7 +385,9 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         ImageView chat_image;
         TextView tv_msg;
         VideoView chat_video;
-//        ImageView iv_post_image;
+        RelativeLayout rl_audio;
+        ImageView play_audio;
+        //        ImageView iv_post_image;
         ImageView img_playback;
         ImageView iv_mute_unmute;
         CardView card_image;
@@ -347,6 +402,8 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             img_playback = view.findViewById(R.id.img_playback);
             iv_mute_unmute = view.findViewById(R.id.iv_mute_unmute);
             card_image = view.findViewById(R.id.card_image);
+            rl_audio = view.findViewById(R.id.rl_audio);
+            play_audio = view.findViewById(R.id.play_audio);
         }
     }
 
@@ -366,3 +423,10 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 }
+
+
+
+
+
+
+

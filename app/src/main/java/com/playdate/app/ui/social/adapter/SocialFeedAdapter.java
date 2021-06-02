@@ -67,7 +67,6 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
 
     private Context mContext;
 
-
     @Override
     public int getItemCount() {
         return lst.size();
@@ -96,14 +95,12 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
         animation.setFillAfter(true);
 
         view.startAnimation(animation);
-
         new Handler().postDelayed(() -> {
-            view.clearAnimation();
+
 
             iv.setVisibility(View.GONE);
             notifyDataSetChanged();
         }, 900);
-
 
     }
 
@@ -221,8 +218,6 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
 
                 } else {
                     Picasso.get().load(lst.get(position).getPostMedia().get(0).getMediaFullPath())
-
-
                             .into(userViewHolder.iv_post_image, new ImageLoadedCallback(userViewHolder.animationView) {
                                 @Override
                                 public void onSuccess() {
@@ -781,6 +776,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
         }
     }
 
+
     public class ViewHolderRestaurant extends RecyclerView.ViewHolder {
         ImageView iv_heart_red;
         ImageView iv_post_image;
@@ -849,6 +845,4 @@ class ImageLoadedCallback implements Callback {
     public void onError(Exception e) {
 
     }
-
-
-}
+}   
