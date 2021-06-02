@@ -8,7 +8,11 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    android:layout_width="match_parent"
+    android:id="@+id/swipeContainer"
 
+    android:layout_height="match_parent">
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:id="@+id/nsv"
@@ -251,6 +255,9 @@
         </RelativeLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <LinearLayout
 

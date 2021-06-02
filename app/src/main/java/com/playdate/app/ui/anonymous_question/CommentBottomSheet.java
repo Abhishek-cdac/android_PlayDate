@@ -1,6 +1,7 @@
 package com.playdate.app.ui.anonymous_question;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,20 +13,28 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.LoginResponse;
+import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
+import com.playdate.app.ui.social.FragSocialFeed;
 import com.playdate.app.ui.social.adapter.SocialFeedAdapter;
 import com.playdate.app.ui.social.model.PostDetails;
+import com.playdate.app.ui.social.model.PostHistory;
 import com.playdate.app.util.session.SessionPref;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 public class CommentBottomSheet extends BottomSheetDialogFragment {
@@ -150,6 +159,7 @@ public class CommentBottomSheet extends BottomSheetDialogFragment {
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
 //                        socialFeedAdapter.notifyDataSetChanged();
+
                         dismiss();
 
                     } else {
@@ -172,43 +182,6 @@ public class CommentBottomSheet extends BottomSheetDialogFragment {
     }
 
 
-    private void callUnBlockUser(String toUserId) {
-        SessionPref pref = SessionPref.getInstance(getActivity());
-
-        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-        Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
-        hashMap.put("action", "Block");//Block or Report
-        hashMap.put("toUserId", toUserId);
-
-        Call<LoginResponse> call = service.removeUserReportBlock("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
-        call.enqueue(new retrofit2.Callback<LoginResponse>() {
-            @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-//                pd.cancel();
-                if (response.code() == 200) {
-                    if (response.body().getStatus() == 1) {
-//                        socialFeedAdapter.notifyDataSetChanged();
-                        dismiss();
-
-                    } else {
-                    }
-                } else {
-
-                }
-
-
-            }
-
-            @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
-                t.printStackTrace();
-//                pd.cancel();
-//                Toast.makeText(BioActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
 
     private void callAPI(String postId, String Status) {
         SessionPref pref = SessionPref.getInstance(getActivity());
