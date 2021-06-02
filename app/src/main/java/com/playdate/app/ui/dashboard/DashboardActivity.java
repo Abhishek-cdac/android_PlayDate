@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -127,24 +128,24 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     TextView txt_serachfriend;
     NestedScrollView nsv;
     private SwipeRefreshLayout mSwipeRefreshLayout;
-
+    FriendAdapter adapterfriend;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         mSwipeRefreshLayout = findViewById(R.id.swipeContainer);
+        mSwipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.color_pink));
+
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Log.e("mSwipeRefreshLayout", "mSwipeRefreshLayout");
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        // Stop animation (This will be after 3 seconds)
-                        mSwipeRefreshLayout.setRefreshing(false);
+                if (null != CurrentFrag) {
+                    if (CurrentFrag.getClass().getSimpleName().equals("FragSocialFeed")) {
+                        FragSocialFeed frag = (FragSocialFeed) CurrentFrag;
+                        frag.LoadPageAgain();
                     }
-                }, 3000);
+                }
+                callAPIFriends();
             }
         });
 //        pri_hMap_FragmentsStack = new HashMap<>();
@@ -213,7 +214,10 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
 
         rv_friends = findViewById(R.id.rv_friends);
-
+        RecyclerView.LayoutManager manager = new LinearLayoutManager(DashboardActivity.this, RecyclerView.HORIZONTAL, false);
+        adapterfriend = new FriendAdapter(new ArrayList<>(), DashboardActivity.this);
+        rv_friends.setAdapter(adapterfriend);
+        rv_friends.setLayoutManager(manager);
         if (pref.getStringVal(SessionPref.LoginUserrelationship).equals("Single")) {
             txt_match.setVisibility(View.VISIBLE);
         } else {
@@ -305,10 +309,8 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
                         if (lst.size() > 0) {
                             txt_serachfriend.setVisibility(View.GONE);
                             rv_friends.setVisibility(View.VISIBLE);
-                            RecyclerView.LayoutManager manager = new LinearLayoutManager(DashboardActivity.this, RecyclerView.HORIZONTAL, false);
-                            FriendAdapter adapterfriend = new FriendAdapter(lst, DashboardActivity.this);
-                            rv_friends.setAdapter(adapterfriend);
-                            rv_friends.setLayoutManager(manager);
+                            adapterfriend.updateList(lst);
+
                         } else {
                             txt_serachfriend.setVisibility(View.VISIBLE);
                             rv_friends.setVisibility(View.GONE);
@@ -323,7 +325,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
                     }
 
                 }
-
+                mSwipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
@@ -365,7 +367,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             FullScreenDialog dialog = new FullScreenDialog(DashboardActivity.this);
 
             dialog.show();
-        }, 30000);
+        }, 4*30000);
 
 
     }
@@ -791,6 +793,19 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         try {
+
+            if(resultCode==104){
+                //refresh
+                if (null != CurrentFrag) {
+                    if (CurrentFrag.getClass().getSimpleName().equals("FragSocialFeed")) {
+                        FragSocialFeed frag = (FragSocialFeed) CurrentFrag;
+                        frag.LoadPageAgain();
+                    }
+                }
+                return;
+            }
+
+
             if (resultCode != RESULT_OK) {
                 iv_plus.setVisibility(View.VISIBLE);
                 return;
@@ -856,6 +871,8 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
                 Intent mIntent = new Intent(DashboardActivity.this, PostMediaActivity.class);
                 mIntent.putExtra("videoPath", recordedVideoPath);
                 startActivity(mIntent);
+            }else{
+
             }
 
         } catch (Exception e) {

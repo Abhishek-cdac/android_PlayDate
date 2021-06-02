@@ -1,11 +1,12 @@
 package com.playdate.app.ui.social;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -18,6 +19,7 @@ import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
+import com.playdate.app.ui.social.adapter.OnRefreshPage;
 import com.playdate.app.ui.social.adapter.SocialFeedAdapter;
 import com.playdate.app.ui.social.model.PostDetails;
 import com.playdate.app.ui.social.model.PostHistory;
@@ -34,7 +36,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FragSocialFeed extends Fragment  {
+public class FragSocialFeed extends Fragment  implements OnRefreshPage {
     //    implements SwipeRefreshLayout.OnRefreshListener {
 
     public FragSocialFeed() {
@@ -159,7 +161,7 @@ public class FragSocialFeed extends Fragment  {
                     } else {
                         lst = lstData;
                         adapter = new SocialFeedAdapter(getActivity(), lst);
-
+                        adapter.setRef(FragSocialFeed.this);
                         recycler_view_feed.setItemAnimator(new DefaultItemAnimator());
                         recycler_view_feed.setActivity(getActivity());
                         recycler_view_feed.setCheckForMp4(false);
@@ -237,9 +239,16 @@ public class FragSocialFeed extends Fragment  {
             e.printStackTrace();
         }
     }
-/*
+
     @Override
-    public void onRefresh() {
+    public void LoadPageAgain() {
+        PageNo=1;
+        boolApiCalling=false;
+        NoMorePages=false;
+        lst.clear();
+        adapter.notifyDataSetChanged();
         callAPI();
-    }*/
+    }
+
+
 }

@@ -30,6 +30,7 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 import com.facebook.login.Login;
+import com.facebook.login.LoginBehavior;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.android.gms.auth.api.Auth;
@@ -383,6 +384,9 @@ private RelativeLayout rl_couple;
                         "email",
                         "public_profile",
                         "user_birthday"));
+
+
+
     }
 
     @Override
@@ -477,6 +481,7 @@ private RelativeLayout rl_couple;
 
     public void facebookLogin() {
         loginManager = LoginManager.getInstance();
+        loginManager.setLoginBehavior(LoginBehavior.NATIVE_WITH_FALLBACK);
         callbackManager = CallbackManager.Factory.create();
 
         loginManager.registerCallback(

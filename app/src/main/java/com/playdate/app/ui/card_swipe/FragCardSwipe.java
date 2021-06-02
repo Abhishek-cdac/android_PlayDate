@@ -34,6 +34,7 @@ import com.yuyakaido.android.cardstackview.CardStackView;
 import com.yuyakaido.android.cardstackview.Direction;
 import com.yuyakaido.android.cardstackview.StackFrom;
 import com.yuyakaido.android.cardstackview.SwipeableMethod;
+import com.yuyakaido.android.cardstackview.internal.CardStackState;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -68,12 +69,19 @@ public class FragCardSwipe extends Fragment {
 
             @Override
             public void onItemClicks(View view, int position, int value, String s) {
-                if (value == 13) {
-                    callAddUserMatchRequestAPI(s, "Like");
+                try {
+                    if (value == 13) {
+                        callAddUserMatchRequestAPI(s, "Like");
 
-                } else if (value == 14) {
-                    callAddUserMatchRequestAPI(s, "Unlike");
+                    } else if (value == 14) {
+                        callAddUserMatchRequestAPI(s, "Unlike");
 
+                    }
+//                cardStackView.smoothScrollToPosition(manager.getTopPosition()+1);
+                    lstUsers.remove(0);
+                    adapter.notifyDataSetChanged();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
 
@@ -237,8 +245,9 @@ public class FragCardSwipe extends Fragment {
         });
     }
 
-
+    ArrayList<MatchListUser> lstUsers=new ArrayList<>();
     private void setPages(ArrayList<MatchListUser> lstUsers) {
+        this.lstUsers=lstUsers;
         manager = new CardStackLayoutManager(getActivity(), new CardStackListener() {
             @Override
             public void onCardDragging(Direction direction, float ratio) {

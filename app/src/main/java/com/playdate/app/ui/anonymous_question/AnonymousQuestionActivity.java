@@ -179,6 +179,14 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        setResult(104,null);
+        super.onBackPressed();
+
+
+    }
+
     private void callGetCommentApi() {
 
         SessionPref pref = SessionPref.getInstance(getApplicationContext());
@@ -247,6 +255,7 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.back_anonymous) {
+            setResult(104,null);
             finish();
         } else if (id == R.id.txt_post_comment) {
 
