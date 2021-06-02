@@ -27,8 +27,6 @@ public class ExoPlayerActivity extends AppCompatActivity {
     PlayerView pvMain;
     ImageView iv_play_pause;
     boolean playing = true;
-//    LinearLayout ll_loader;
-//    String CONTENT_URL = "http://139.59.0.106:3000/uploads/userProfileVideo/playdate-user-video-1620637983633.mp4";
 
     @Override
     protected void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
