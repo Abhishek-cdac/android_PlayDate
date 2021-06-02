@@ -199,6 +199,10 @@ public interface GetDataService {
     @POST("user/delete-post")
     Call<LoginResponse> deletePost(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
+    @FormUrlEncoded
+    @POST("user/get-user-blocked")
+    Call<LoginResponse> getUserBlocked(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
 }
 
 
