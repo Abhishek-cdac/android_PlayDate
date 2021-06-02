@@ -8,9 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,7 +20,6 @@ import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.LoginResponse;
-import com.playdate.app.model.MatchListUser;
 import com.playdate.app.ui.anonymous_question.adapter.ColorAdapter;
 import com.playdate.app.ui.anonymous_question.adapter.SmileyAdapter;
 import com.playdate.app.ui.dashboard.DashboardActivity;
@@ -39,19 +36,19 @@ import retrofit2.Response;
 
 public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorCodeSelect, View.OnClickListener {
     LinearLayout ll_ques;
-    LinearLayout ll_smily;
+    LinearLayout ll_smiley;
     Intent mIntent;
     EditText add_comment;
     RecyclerView rec_view_colors;
     TextView txt_ques;
-    TextView emojitxt;
+//    TextView emojitxt;
     TextView txt_smiley;
     TextView txt_post_comment;
     ImageView back_anonymous;
     ImageView more_option;
     ArrayList<String> lst = new ArrayList<>();
     ArrayList<Integer> lstSmiley = new ArrayList<>();
-    private ArrayList<MatchListUser> lstUserSuggestions = new ArrayList<>();
+//    private ArrayList<MatchListUser> lstUserSuggestions = new ArrayList<>();
 
 
     Integer[] intEmoji = {
@@ -73,7 +70,7 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
         back_anonymous = findViewById(R.id.back_anonymous);
         more_option = findViewById(R.id.more_option);
         ll_ques = findViewById(R.id.ll_ques);
-        ll_smily = findViewById(R.id.ll_smily);
+        ll_smiley = findViewById(R.id.ll_smily);
         txt_smiley = findViewById(R.id.txt_smiley);
         mIntent = getIntent();
         ques = mIntent.getStringExtra("question");
