@@ -1,7 +1,9 @@
 package com.playdate.app.ui.social;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,15 +37,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FragSocialFeed extends Fragment  {
-    //    implements SwipeRefreshLayout.OnRefreshListener {
+public class FragSocialFeed extends Fragment {
+       //implements SwipeRefreshLayout.OnRefreshListener {
 
     public FragSocialFeed() {
     }
 
     int PageNo = 1;
     boolean NoMorePages = false;
-
+    boolean allowRefresh =true;
     private AAH_CustomRecyclerView recycler_view_feed;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     boolean boolApiCalling = false;
@@ -52,9 +55,9 @@ public class FragSocialFeed extends Fragment  {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.row_social_feed, container, false);
         recycler_view_feed = view.findViewById(R.id.recycler_view_feed);
-     //   mSwipeRefreshLayout = view.findViewById(R.id.swipeContainer);
+//        mSwipeRefreshLayout = view.findViewById(R.id.swipeContainer);
+//        mSwipeRefreshLayout.setOnRefreshListener(this);
 
-//        mSwipeRefreshLayout.setOnRefreshListener((SwipeRefreshLayout.OnRefreshListener) getActivity());
         LinearLayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         recycler_view_feed.setLayoutManager(manager);
 
@@ -68,13 +71,7 @@ public class FragSocialFeed extends Fragment  {
 //            }
 //        });
         callAPI();
-    /*    mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                Log.e("mSwipeRefreshLayout","mSwipeRefreshLayout");
-                callAPI();
-            }
-        });*/
+
         return view;
     }
 
@@ -185,6 +182,8 @@ public class FragSocialFeed extends Fragment  {
                         recycler_view_feed.smoothScrollBy(0, 1);
                         recycler_view_feed.smoothScrollBy(0, -1);
 
+
+
                     }
 
 
@@ -232,14 +231,23 @@ public class FragSocialFeed extends Fragment  {
         super.onResume();
         try {
 
+
             recycler_view_feed.playAvailableVideos(0);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
     }
-/*
-    @Override
+ /*   @Override
     public void onRefresh() {
         callAPI();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // Stop animation (This will be after 3 seconds)
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        }, 3000);
     }*/
 }

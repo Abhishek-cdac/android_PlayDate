@@ -97,6 +97,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     ImageView iv_coupons;
     ImageView iv_date;
     FrameLayout flFragment;
+    boolean allowRefresh = true;
 //    FrameLayout flFeed;
 
 //    protected static final String strProStaFin_CONTENT_TAG_1 = "contenFragments_1";
@@ -132,21 +133,8 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-        mSwipeRefreshLayout = findViewById(R.id.swipeContainer);
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                Log.e("mSwipeRefreshLayout", "mSwipeRefreshLayout");
+     //   mSwipeRefreshLayout = findViewById(R.id.swipeContainer);
 
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        // Stop animation (This will be after 3 seconds)
-                        mSwipeRefreshLayout.setRefreshing(false);
-                    }
-                }, 3000);
-            }
-        });
 //        pri_hMap_FragmentsStack = new HashMap<>();
 //        pri_hMap_FragmentsStack.put(strProStaFin_CONTENT_TAG_1, new Stack<>());
 
@@ -243,7 +231,21 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         setValue();
         callAPIFriends();
 
-
+//        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                Log.e("mSwipeRefreshLayout", "mSwipeRefreshLayout");
+//
+//
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        // Stop animation (This will be after 3 seconds)
+//                        mSwipeRefreshLayout.setRefreshing(false);
+//                    }
+//                }, 3000);
+//            }
+//        });
         nsv.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
@@ -428,6 +430,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         ll_mainMenu.setVisibility(View.VISIBLE);
         ll_her.setVisibility(View.VISIBLE);
         ReplaceFrag(new FragSocialFeed());
+
     }
 
     public void ReplaceFragWithStack(Fragment fragment) {
@@ -951,6 +954,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     @Override
     protected void onResume() {
         super.onResume();
+
         if (pref.getStringVal(SessionPref.LoginUserrelationship).equals("Single")) {
             txt_match.setVisibility(View.VISIBLE);
         } else {

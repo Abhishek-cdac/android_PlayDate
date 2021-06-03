@@ -378,9 +378,11 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                 }
             });
 
-        } else if (holder.getItemViewType() == 100) {
+        }
+        else if (holder.getItemViewType() == 100) {
 
-        } else if (holder.getItemViewType() == 1) {
+        }
+        else if (holder.getItemViewType() == 1) {
             ViewHolderUserVideo videoHolder;
             holder.setVideoUrl(lst.get(position).getPostMedia().get(0).getMediaFullPath());
 
@@ -524,7 +526,8 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
             });
 
 
-        } else if (holder.getItemViewType() == 2) {
+        }
+        else if (holder.getItemViewType() == 2) {
             try {
                 ViewHolderAnonymQuestion viewHolderAnonymQuestion;
                 viewHolderAnonymQuestion = (ViewHolderAnonymQuestion) holder;
@@ -562,18 +565,18 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                                     temp = temp + "<br>" + s;
                                 }
                             }
-                            if(temp.isEmpty()){
+                            if (temp.isEmpty()) {
                                 viewHolderAnonymQuestion.txt_chat.setText(Html.fromHtml("<b> No Answer </b>"));
-                            }else{
+                            } else {
                                 viewHolderAnonymQuestion.txt_chat.setText(Html.fromHtml(temp));
                                 viewHolderAnonymQuestion.edt_comment.setHint("Add a comment...");
                             }
 
 
-                        } else if (lst.get(position).getComments_list()==null)  {
+                        } else if (lst.get(position).getComments_list() == null) {
 
                             viewHolderAnonymQuestion.txt_chat.setText(Html.fromHtml("<b> No Answer </b>"));
-                        } else if (lst.get(position).getComments_list().isEmpty())  {
+                        } else if (lst.get(position).getComments_list().isEmpty()) {
 
                             viewHolderAnonymQuestion.txt_chat.setText((Html.fromHtml("<b> No Answer </b>")));
                         }
@@ -606,7 +609,6 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
         } else {
 
         }
-
 
 //        else if (holder.getItemViewType() == FragSocialFeed.RESTAURANT) {
 //            ViewHolderRestaurant restViewHolder = (ViewHolderRestaurant) holder;
@@ -930,7 +932,8 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                     mIntent.putExtra("user_id", lst.get(getAdapterPosition()).getUserId());
                     origin.startActivityForResult(mIntent, 410);
                 }
-            }); edt_comment.setOnClickListener(new View.OnClickListener() {
+            });
+            edt_comment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Activity origin = (Activity) mContext;
