@@ -147,9 +147,7 @@ public class RelationActivity extends AppCompatActivity {
                             }else{
                                 startActivity(new Intent(RelationActivity.this, InterestActivity.class));
                             }
-
                         }
-
                     } else {
                         clsCommon.showDialogMsg(RelationActivity.this, "PlayDate", response.body().getMessage(), "Ok");
                     }

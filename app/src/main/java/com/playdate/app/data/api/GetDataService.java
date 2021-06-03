@@ -1,6 +1,7 @@
 package com.playdate.app.data.api;
 
 import com.playdate.app.model.CommonModel;
+import com.playdate.app.model.CreateDateGetPartnerModel;
 import com.playdate.app.model.FriendsListModel;
 import com.playdate.app.model.GetCommentModel;
 import com.playdate.app.model.GetProfileDetails;
@@ -202,6 +203,14 @@ public interface GetDataService {
     @FormUrlEncoded
     @POST("user/get-user-blocked")
     Call<CommonModel> getUserBlocked(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
+    @FormUrlEncoded
+    @POST("user/join-couple-code")
+    Call<CommonModel> joinCoupleCode(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
+    @FormUrlEncoded
+    @POST("user/create-date-get-partner-list")
+    Call<CreateDateGetPartnerModel> createDateGetPartnerList(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
 }
 

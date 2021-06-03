@@ -94,6 +94,18 @@
             android:name=".couple.ui.register.coupleprofile.CoupleUploadProfileActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".couple.ui.register.connect.ConnectYourPartner"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".couple.ui.register.invitecode.InviteCodeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".couple.ui.register.invitepartner.InvitePartnerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".couple.ui.register.invitesent.InviteSentActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.register.otp.OTPActivity"
             android:screenOrientation="portrait" />
         <activity

@@ -145,7 +145,7 @@ private RelativeLayout rl_couple;
         rl_couple.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, CoupleUserNameActivity.class));
+                startActivity(new Intent(LoginActivity.this, ConnectYourPartner.class));
 
             }
         });

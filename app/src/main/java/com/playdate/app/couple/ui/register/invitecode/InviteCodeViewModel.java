@@ -7,13 +7,23 @@ import androidx.lifecycle.ViewModel;
 
 public class InviteCodeViewModel extends ViewModel {
 
+    public MutableLiveData<Boolean> RegisterClick = new MutableLiveData<>();
 
     private MutableLiveData<Boolean> BackClick = new MutableLiveData<>();
     private MutableLiveData<Boolean> SubmitClick = new MutableLiveData<>();
     private MutableLiveData<Boolean> ResendClick = new MutableLiveData<>();
-    public MutableLiveData<String> txtOTP = new MutableLiveData<>();
+    public MutableLiveData<String> txtInviteCode = new MutableLiveData<>();
     public MutableLiveData<String> resendIn = new MutableLiveData<>();
 
+
+    public MutableLiveData<Boolean> onRegisterUser() {
+
+        if (RegisterClick == null) {
+            RegisterClick = new MutableLiveData<>();
+        }
+        return RegisterClick;
+
+    }
     public MutableLiveData<Boolean> OnSubmitClick() {
 
         return SubmitClick;

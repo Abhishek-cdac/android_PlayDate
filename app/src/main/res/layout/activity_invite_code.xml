@@ -98,10 +98,10 @@
                 android:gravity="center"
                 android:inputType="number"
                 android:letterSpacing="0.5"
-                android:maxLength="5"
+                android:maxLength="8"
                 android:padding="@dimen/_10sdp"
                 android:singleLine="true"
-                android:text="@={InviteCodeViewModel.txtOTP}"
+                android:text="@={InviteCodeViewModel.txtInviteCode}"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_22sdp"
                 android:textStyle="bold" />

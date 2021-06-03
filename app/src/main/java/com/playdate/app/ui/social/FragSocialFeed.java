@@ -37,7 +37,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FragSocialFeed extends Fragment  implements OnRefreshPage {
-    //    implements SwipeRefreshLayout.OnRefreshListener {
 
     public FragSocialFeed() {
     }
@@ -54,10 +53,7 @@ public class FragSocialFeed extends Fragment  implements OnRefreshPage {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.row_social_feed, container, false);
         recycler_view_feed = view.findViewById(R.id.recycler_view_feed);
-     //   mSwipeRefreshLayout = view.findViewById(R.id.swipeContainer);
-
-//        mSwipeRefreshLayout.setOnRefreshListener((SwipeRefreshLayout.OnRefreshListener) getActivity());
-        LinearLayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
+    LinearLayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         recycler_view_feed.setLayoutManager(manager);
 
 
@@ -70,13 +66,7 @@ public class FragSocialFeed extends Fragment  implements OnRefreshPage {
 //            }
 //        });
         callAPI();
-    /*    mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                Log.e("mSwipeRefreshLayout","mSwipeRefreshLayout");
-                callAPI();
-            }
-        });*/
+
         return view;
     }
 
