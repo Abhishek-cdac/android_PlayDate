@@ -39,9 +39,6 @@ import retrofit2.Response;
 import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 
 public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View.OnClickListener {
-    //    RecyclerView recycler_photos;
-
-    public static final int USER = 0;
     private ImageView iv_send_request;
     private ImageView iv_chat, connection_img;
     private ImageView profile_image;
@@ -77,7 +74,6 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
         iv_send_request = view.findViewById(R.id.iv_send_request);
         profile_image = view.findViewById(R.id.profile_image);
         iv_chat = view.findViewById(R.id.iv_chat);
-//      recycler_photos = view.findViewById(R.id.recycler_photos);
         txt_bio = view.findViewById(R.id.txt_bio);
         txt_login_user = view.findViewById(R.id.txt_login_user);
         header_text = view.findViewById(R.id.header_text);
@@ -106,8 +102,6 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
             iv_send_request.setVisibility(View.VISIBLE);
             iv_chat.setVisibility(View.VISIBLE);
         }
-
-//        onTypeChange(0);
 
         setValue();
 

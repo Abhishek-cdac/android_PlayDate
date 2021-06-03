@@ -1,6 +1,5 @@
 package com.playdate.app.ui.social.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -14,7 +13,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.ScaleAnimation;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,7 +21,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.playdate.app.R;
@@ -34,6 +31,7 @@ import com.playdate.app.model.LoginResponse;
 import com.playdate.app.ui.anonymous_question.AnonymousQuestionActivity;
 import com.playdate.app.ui.anonymous_question.CommentBottomSheet;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
+import com.playdate.app.ui.social.FragSocialFeed;
 import com.playdate.app.ui.social.model.CommentList;
 import com.playdate.app.ui.social.model.PostDetails;
 import com.playdate.app.ui.social.videoplay.AAH_CustomViewHolder;
@@ -66,6 +64,16 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
         }
     }
 
+    public void refreshPage() {
+        try {
+
+            OnRefreshPage ref = fragSocialFeed;
+            ref.LoadPageAgain();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private Context mContext;
 
 
@@ -80,12 +88,13 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
     ArrayList<PostDetails> lst;
     Picasso picasso;
     SessionPref pref;
+    FragmentActivity activity;
 
     public SocialFeedAdapter(FragmentActivity activity, ArrayList<PostDetails> lst) {
-        this.mContext = activity;
+        this.activity = activity;
         this.lst = lst;
         picasso = Picasso.get();
-        pref = SessionPref.getInstance(mContext);
+        pref = SessionPref.getInstance(activity);
 
     }
 
@@ -309,9 +318,19 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                                 temp = temp + "<br>" + s;
                             }
                         }
-                        userViewHolder.txt_chat.setText(Html.fromHtml("<b>" + owner + "</b>" + "<br>" + temp));
+                        if (temp.isEmpty()) {
+                            userViewHolder.txt_chat.setVisibility(View.GONE);
+                        } else {
+                            userViewHolder.txt_chat.setText(Html.fromHtml("<b>" + owner + "</b>" + "<br>" + temp));
+                        }
 
 
+                    } else if (lst.get(position).getComments_list() == null) {
+
+                        userViewHolder.txt_chat.setVisibility(View.GONE);
+                    } else if (lst.get(position).getComments_list().isEmpty()) {
+
+                        userViewHolder.txt_chat.setVisibility(View.GONE);
                     }
                 } else {
                     userViewHolder.et_comment.setVisibility(View.GONE);
@@ -350,10 +369,10 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
             userViewHolder.iv_msg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(v.getContext(), AnonymousQuestionActivity.class);
+                    Intent i = new Intent(activity, AnonymousQuestionActivity.class);
                     i.putExtra("post_id", lst.get(position).getPostId());
                     i.putExtra("user_id", lst.get(position).getUserId());
-                    v.getContext().startActivity(i);
+                    activity.startActivityForResult(i, 100);
                 }
             });
             userViewHolder.iv_post_image.setOnClickListener(view -> {
@@ -398,10 +417,10 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
             videoHolder.iv_msg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(v.getContext(), AnonymousQuestionActivity.class);
+                    Intent i = new Intent(activity, AnonymousQuestionActivity.class);
                     i.putExtra("post_id", lst.get(position).getPostId());
                     i.putExtra("user_id", lst.get(position).getUserId());
-                    v.getContext().startActivity(i);
+                    activity.startActivityForResult(i, 100);
                 }
             });
 
@@ -465,9 +484,19 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                                 temp = temp + "<br>" + s;
                             }
                         }
-                        videoHolder.txt_chat.setText(Html.fromHtml("<b>" + owner + "</b>" + "<br>" + temp));
 
+                        if (temp.isEmpty()) {
+                            videoHolder.txt_chat.setVisibility(View.GONE);
+                        } else {
+                            videoHolder.txt_chat.setText(Html.fromHtml("<b>" + owner + "</b>" + "<br>" + temp));
+                        }
 
+                    } else if (lst.get(position).getComments_list() == null) {
+
+                        videoHolder.txt_chat.setVisibility(View.GONE);
+                    } else if (lst.get(position).getComments_list().isEmpty()) {
+
+                        videoHolder.txt_chat.setVisibility(View.GONE);
                     }
                 } else {
                     videoHolder.et_comment.setVisibility(View.GONE);
@@ -547,6 +576,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                     viewHolderAnonymQuestion.delete_btn.setVisibility(View.VISIBLE);
                 } else {
                     viewHolderAnonymQuestion.delete_btn.setVisibility(View.INVISIBLE);
+                    viewHolderAnonymQuestion.respond.getLayoutParams().width= ViewGroup.LayoutParams.MATCH_PARENT;
                 }
 
                 try {
@@ -681,6 +711,12 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
 
     }
 
+    FragSocialFeed fragSocialFeed;
+
+    public void setRef(FragSocialFeed fragSocialFeed) {
+        this.fragSocialFeed = fragSocialFeed;
+    }
+
     public class ViewHolderUserVideo extends AAH_CustomViewHolder {
         ImageView iv_heart_red;
         ImageView iv_profile;
@@ -726,12 +762,14 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                 }
             });
 
-            iv_msg.setOnClickListener(v -> v.getContext().startActivity(new Intent(v.getContext(), AnonymousQuestionActivity.class)));
+            iv_msg.setOnClickListener(v -> {
+                activity.startActivityForResult(new Intent(v.getContext(), AnonymousQuestionActivity.class), 100);
+            });
             et_comment.setOnClickListener(v -> {
                 Intent mIntent = new Intent(v.getContext(), AnonymousQuestionActivity.class);
                 mIntent.putExtra("post_id", lst.get(getAdapterPosition()).getPostId());
                 mIntent.putExtra("user_id", lst.get(getAdapterPosition()).getUserId());
-                v.getContext().startActivity(mIntent);
+                activity.startActivityForResult(mIntent, 100);
             });
             iv_mute_unmute.setOnClickListener(new View.OnClickListener() {
 
@@ -832,14 +870,12 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
             });
 
 
-//            iv_msg.setOnClickListener(v ->
-//                    v.getContext().startActivity(new Intent(v.getContext(), AnonymousQuestionActivity.class)));
             et_comment.setOnClickListener(v -> {
-                Intent mIntent = new Intent(v.getContext(), AnonymousQuestionActivity.class);
+                Intent mIntent = new Intent(activity, AnonymousQuestionActivity.class);
                 mIntent.putExtra("post_id", lst.get(getAdapterPosition()).getPostId());
                 mIntent.putExtra("user_id", lst.get(getAdapterPosition()).getUserId());
 
-                v.getContext().startActivity(mIntent);
+                activity.startActivityForResult(mIntent, 100);
             });
 
         }
@@ -858,43 +894,43 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
         notifyDataSetChanged();
     }
 
-    public class ViewHolderAdds extends RecyclerView.ViewHolder {
-        ImageView iv_heart_red;
-        ImageView iv_profile;
-        ImageView iv_heart;
-        ImageView iv_post_image;
-        CardView card_image;
-        TextView name_friend;
+//    public class ViewHolderAdds extends RecyclerView.ViewHolder {
+//        ImageView iv_heart_red;
+//        ImageView iv_profile;
+//        ImageView iv_heart;
+//        ImageView iv_post_image;
+//        CardView card_image;
+//        TextView name_friend;
+//
+//        public ViewHolderAdds(@NonNull View itemView) {
+//            super(itemView);
+//            iv_heart_red = itemView.findViewById(R.id.iv_heart_red);
+//            iv_profile = itemView.findViewById(R.id.iv_profile);
+//            iv_heart = itemView.findViewById(R.id.iv_heart);
+//            iv_post_image = itemView.findViewById(R.id.iv_post_image);
+//            card_image = itemView.findViewById(R.id.card_image);
+//            name_friend = itemView.findViewById(R.id.name_friend);
+//        }
+//    }
 
-        public ViewHolderAdds(@NonNull View itemView) {
-            super(itemView);
-            iv_heart_red = itemView.findViewById(R.id.iv_heart_red);
-            iv_profile = itemView.findViewById(R.id.iv_profile);
-            iv_heart = itemView.findViewById(R.id.iv_heart);
-            iv_post_image = itemView.findViewById(R.id.iv_post_image);
-            card_image = itemView.findViewById(R.id.card_image);
-            name_friend = itemView.findViewById(R.id.name_friend);
-        }
-    }
-
-    public class ViewHolderRestaurant extends RecyclerView.ViewHolder {
-        ImageView iv_heart_red;
-        ImageView iv_post_image;
-        ImageView iv_heart;
-        CardView card_image;
-        TextView name_friend;
-        ImageView iv_profile;
-
-        public ViewHolderRestaurant(@NonNull View itemView) {
-            super(itemView);
-            iv_post_image = itemView.findViewById(R.id.iv_post_image);
-            iv_heart_red = itemView.findViewById(R.id.iv_heart_red);
-            iv_profile = itemView.findViewById(R.id.iv_profile);
-            iv_heart = itemView.findViewById(R.id.iv_heart);
-            card_image = itemView.findViewById(R.id.card_image);
-            name_friend = itemView.findViewById(R.id.name_friend);
-        }
-    }
+//    public class ViewHolderRestaurant extends RecyclerView.ViewHolder {
+//        ImageView iv_heart_red;
+//        ImageView iv_post_image;
+//        ImageView iv_heart;
+//        CardView card_image;
+//        TextView name_friend;
+//        ImageView iv_profile;
+//
+//        public ViewHolderRestaurant(@NonNull View itemView) {
+//            super(itemView);
+//            iv_post_image = itemView.findViewById(R.id.iv_post_image);
+//            iv_heart_red = itemView.findViewById(R.id.iv_heart_red);
+//            iv_profile = itemView.findViewById(R.id.iv_profile);
+//            iv_heart = itemView.findViewById(R.id.iv_heart);
+//            card_image = itemView.findViewById(R.id.card_image);
+//            name_friend = itemView.findViewById(R.id.name_friend);
+//        }
+//    }
 
     public class ViewHolderAnonymQuestion extends AAH_CustomViewHolder {
         ImageView iv_more;
@@ -925,23 +961,23 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
             respond.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Activity origin = (Activity) mContext;
-                    Intent mIntent = new Intent(origin, AnonymousQuestionActivity.class);
+//                    Activity origin = (Activity) mContext;
+                    Intent mIntent = new Intent(activity, AnonymousQuestionActivity.class);
                     mIntent.putExtra("Anonymous", true);
                     mIntent.putExtra("post_id", lst.get(getAdapterPosition()).getPostId());
                     mIntent.putExtra("user_id", lst.get(getAdapterPosition()).getUserId());
-                    origin.startActivityForResult(mIntent, 410);
+                    activity.startActivityForResult(mIntent, 410);
                 }
             });
             edt_comment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Activity origin = (Activity) mContext;
-                    Intent mIntent = new Intent(origin, AnonymousQuestionActivity.class);
+//                    Activity origin = (Activity) mContext;
+                    Intent mIntent = new Intent(activity, AnonymousQuestionActivity.class);
                     mIntent.putExtra("Anonymous", true);
                     mIntent.putExtra("post_id", lst.get(getAdapterPosition()).getPostId());
                     mIntent.putExtra("user_id", lst.get(getAdapterPosition()).getUserId());
-                    origin.startActivityForResult(mIntent, 410);
+                    activity.startActivityForResult(mIntent, 410);
                 }
 
             });
@@ -951,7 +987,6 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                     callAPIDeletePost(lst.get(getAdapterPosition()).getPostId(), getAdapterPosition());
                 }
             });
-//            respomd.setOnClickListener(v -> v.getContext().startActivity(new Intent(v.getContext(), AnonymousQuestionActivity.class)));
         }
     }
 

@@ -19,12 +19,17 @@ import java.util.ArrayList;
 
 public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder> {
 
-    private final ArrayList<MatchListUser> lst;
+    private  ArrayList<MatchListUser> lst;
     private final DashboardActivity dashboardActivity;
 
     public FriendAdapter(ArrayList<MatchListUser> lst, DashboardActivity dashboardActivity) {
         this.lst = lst;
         this.dashboardActivity = dashboardActivity;
+    }
+
+    public void updateList(ArrayList<MatchListUser> lst){
+        this.lst = lst;
+        notifyDataSetChanged();
     }
 
     //    private Context mContext;

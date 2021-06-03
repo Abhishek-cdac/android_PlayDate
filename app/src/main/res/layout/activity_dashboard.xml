@@ -75,7 +75,8 @@
                     android:id="@+id/ll_option_love"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="left"
+                    android:gravity="center"
+                    android:layout_gravity="center"
                     android:paddingLeft="@dimen/_10sdp"
                     android:orientation="horizontal">
 
@@ -128,7 +129,7 @@
 
                     <ImageView
                         android:id="@+id/iv_dashboard_notification"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end|center"
                         android:paddingLeft="@dimen/_10sdp"

@@ -62,7 +62,6 @@
             android:layout_marginRight="@dimen/_10sdp"
             android:background="@color/white"
 
-            app:cardBackgroundColor="@color/color_pink"
             app:cardCornerRadius="@dimen/_10sdp"
             app:cardElevation="0dp">
 
@@ -189,7 +188,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txt_chat"
-        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginLeft="@dimen/_4sdp"
         android:layout_marginRight="@dimen/_10sdp"
         android:background="@null"
         android:enabled="true"

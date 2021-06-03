@@ -35,12 +35,9 @@ public class GetStarted extends AppCompatActivity {
         GetStartedAdapter adapter = new GetStartedAdapter(getSupportFragmentManager(), lst);
         pager.setAdapter(adapter);
 
-        started.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(GetStarted.this, LoginActivity.class);
-                startActivity(intent);
-            }
+        started.setOnClickListener(v -> {
+            Intent intent = new Intent(GetStarted.this, LoginActivity.class);
+            startActivity(intent);
         });
 
     }

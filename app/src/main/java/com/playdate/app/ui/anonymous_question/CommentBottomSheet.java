@@ -58,6 +58,7 @@ public class CommentBottomSheet extends BottomSheetDialogFragment {
         TextView text_on_off = view.findViewById(R.id.text_on_off);
         ImageView iv_block = view.findViewById(R.id.iv_block);
         RelativeLayout rl_delete = view.findViewById(R.id.rl_delete);
+        RelativeLayout rl_block = view.findViewById(R.id.rl_block);
         ImageView iv_delete_post = view.findViewById(R.id.iv_delete_post);
 
         if (notification) {
@@ -70,20 +71,13 @@ public class CommentBottomSheet extends BottomSheetDialogFragment {
         SessionPref pref = SessionPref.getInstance(getActivity());
         if (postDetails.getUserId().equals(pref.getStringVal(SessionPref.LoginUserID))) {
             rl_delete.setVisibility(View.VISIBLE);
+            rl_block.setVisibility(View.GONE);
+        }else{
+            rl_block.setVisibility(View.VISIBLE);
         }
-        iv_delete_post.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                callAPIDeletePost();
-            }
-        });
-        iv_block.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                callBlockUser(postDetails.getLstpostby().get(0).getUserId());
-            }
-        });
+        iv_delete_post.setOnClickListener(v -> callAPIDeletePost());
+        iv_block.setOnClickListener(v -> callBlockUser(postDetails.getLstpostby().get(0).getUserId()));
         switch_on_off.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -158,8 +152,7 @@ public class CommentBottomSheet extends BottomSheetDialogFragment {
 //                pd.cancel();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
-//                        socialFeedAdapter.notifyDataSetChanged();
-
+                        socialFeedAdapter.refreshPage();
                         dismiss();
 
                     } else {
