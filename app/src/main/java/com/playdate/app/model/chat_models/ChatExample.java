@@ -9,6 +9,20 @@ import com.google.gson.annotations.SerializedName;
 public class ChatExample {
 
 
+    boolean isSelected;
+
+    public ChatExample(boolean isSelected) {
+        this.isSelected = isSelected;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
     @SerializedName("name")
     @Expose
     private String name;
@@ -43,4 +57,8 @@ public class ChatExample {
         this.profilePhoto = profilePhoto;
     }
 
+    public ChatExample(String name, String profilePhoto) {
+        this.name = name;
+        this.profilePhoto = profilePhoto;
+    }
 }

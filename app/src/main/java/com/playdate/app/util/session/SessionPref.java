@@ -41,8 +41,6 @@ public class SessionPref {
     }
 
     public double getLattitude(String key) {
-//        long latti = pref.getLong(key,0);
-//        return latti.doub;
         return Double.longBitsToDouble(pref.getLong(key, 0));
     }
 

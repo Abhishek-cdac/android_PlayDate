@@ -1,5 +1,5 @@
 package com.playdate.app.ui.chat;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
@@ -8,6 +8,8 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
@@ -42,6 +44,8 @@ import com.playdate.app.model.chat_models.ChatMessage;
 import com.playdate.app.service.LocationService;
 import com.playdate.app.ui.anonymous_question.adapter.SmileyAdapter;
 import com.playdate.app.ui.dashboard.DashboardActivity;
+import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
+import com.playdate.app.ui.my_profile_details.FragInstaLikeProfile;
 import com.playdate.app.ui.social.upload_media.PostMediaActivity;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
@@ -51,6 +55,8 @@ import com.squareup.picasso.Picasso;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 import java.util.UUID;
 
@@ -107,6 +113,7 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_chat_screen, container, false);
 
+
         mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
         mFileName += "/AudioRecording.3gp";
         random = new Random();
@@ -155,9 +162,24 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
 
         CreateSmilyList();
 
+        chat_name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OnInnerFragmentClicks ref = (OnInnerFragmentClicks) getActivity();
+//                ref.loadProfile(lst.get(position).getUserId());
+                ref.ReplaceFragWithStack(new FragInstaLikeProfile());
+            }
+        });
+
+
+
+
+
+                                                                                                              
 
         iv_send.setOnClickListener(new View.OnClickListener() {
             @Override
+
             public void onClick(View v) {
                 adapter.addToListText(et_msg);
             }
@@ -165,6 +187,11 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
         iv_video.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+
+
+
 
                 Intent intent;
                 if (android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
@@ -192,42 +219,7 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
             @Override
             public void onClick(View v) {
                 ActivityCompat.requestPermissions(getActivity(), permissions, REQUEST_AUDIO_PERMISSION_CODE);
-
                 startRecording();
-//
-//                String[] PERMISSIONS = {
-//                        RECORD_AUDIO, WRITE_EXTERNAL_STORAGE
-//                };
-//                ActivityCompat.requestPermissions(getActivity(),
-//                        PERMISSIONS,
-//                        ALL_PERMISSIONS_RESULT);
-//                openRecorder();
-
-//                if (checkPermission()) {
-//
-//                    AudioSavePathInDevice =
-//                            Environment.getExternalStorageDirectory().getAbsolutePath() + "/" +
-//                                    CreateRandomAudioFileName(5) + "AudioRecording.3gp";
-//
-//                    MediaRecorderReady();
-//
-//                    try {
-//                        mRecorder.prepare();
-//                        mRecorder.start();
-//                    } catch (IllegalStateException e) {
-//                        // TODO Auto-generated catch block
-//                        e.printStackTrace();
-//                    } catch (IOException e) {
-//                        // TODO Auto-generated catch block
-//                        e.printStackTrace();
-//                    }
-//
-//
-//                } else {
-//                    requestPermission();
-//                }
-
-
             }
         });
         iv_circle.setOnClickListener(new View.OnClickListener() {
@@ -252,7 +244,7 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
         profile_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+/////// user profile page
             }
         });
 
@@ -281,7 +273,6 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
             Log.d("ERROR WHILE RECORDING ", e.toString());
         }
         mRecorder.start();
-
         stopRecordingAfter();
     }
 
@@ -295,57 +286,9 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
 
                 adapter.addToListAudio(mFileName);
 
-//                mediaPlayer = new MediaPlayer();
-//                try {
-//                    mediaPlayer.setDataSource(mFileName);
-//                    mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-//                        @Override
-//                        public void onCompletion(MediaPlayer mediaPlayer) {
-//                            stopPlaying();
-//                        }
-//                    });
-//                    mediaPlayer.prepare();
-//                    mediaPlayer.start();
-//                } catch (IOException e) {
-//                    Log.d(":playRecording()", e.toString());
-//                }
-
             }
         }, 3000);
     }
-
-    private void stopPlaying() {
-        if (mediaPlayer != null) {
-            mediaPlayer.stop();
-            mediaPlayer.release();
-        }
-    }
-
-    private String CreateRandomAudioFileName(int string) {
-        StringBuilder stringBuilder = new StringBuilder(string);
-        int i = 0;
-        while (i < string) {
-            stringBuilder.append(RandomAudioFileName.
-                    charAt(random.nextInt(RandomAudioFileName.length())));
-
-            i++;
-        }
-        return stringBuilder.toString();
-    }
-
-    private void MediaRecorderReady() {
-        mRecorder = new MediaRecorder();
-        mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        mRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
-        mRecorder.setOutputFile(AudioSavePathInDevice);
-    }
-
-    private void requestPermission() {
-        ActivityCompat.requestPermissions(getActivity(), new String[]{RECORD_AUDIO, WRITE_EXTERNAL_STORAGE}, REQUEST_AUDIO_PERMISSION_CODE);
-
-    }
-
 
     Bitmap bitmap = null;
 
@@ -387,6 +330,15 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
                         Log.d("FAILED", "FAIELD TO GET DATA");
                         Toast.makeText(getActivity(), "FAIELD TO GET DATA", Toast.LENGTH_SHORT).show();
                     }
+
+                } else if (requestCode == TAKE_PHOTO_CODE) {
+                    bitmap = (Bitmap) data.getExtras().get("data");
+                    if (null != bitmap) {
+                        Log.d("BITMAP VALUE", bitmap.toString());
+                        Drawable d = new BitmapDrawable(getResources(), bitmap);
+                        adapter.addImage(d);
+
+                    }
                 }
 
             } else {
@@ -400,42 +352,6 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
 
 
     }
-
-    private String getPath(Uri contentURI) {
-        String[] projection = {MediaStore.Video.Media.DATA};
-        Cursor cursor = getActivity().getContentResolver().query(contentURI, projection, null, null, null);
-        if (cursor != null) {
-            // HERE YOU WILL GET A NULLPOINTER IF CURSOR IS NULL
-            // THIS CAN BE, IF YOU USED OI FILE MANAGER FOR PICKING THE MEDIA
-            int column_index = cursor
-                    .getColumnIndexOrThrow(MediaStore.Video.Media.DATA);
-            cursor.moveToFirst();
-            Log.d("CURSOR STRING", cursor.getString(column_index));
-            return cursor.getString(column_index);
-        } else {
-            Log.d("CURSOR Error", String.valueOf(cursor));
-
-        }
-
-        return cursor.toString();
-    }
-
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        switch (requestCode) {
-//            case REQUEST_AUDIO_PERMISSION_CODE:
-//                if (grantResults.length > 0) {
-//                    boolean permissionToRecord = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-//                    boolean permissionToStore = grantResults[1] == PackageManager.PERMISSION_GRANTED;
-//                    if (permissionToRecord && permissionToStore) {
-//                        Toast.makeText(getActivity(), "Permission Granted", Toast.LENGTH_LONG).show();
-//                    } else {
-//                        Toast.makeText(getActivity(), "Permission Denied", Toast.LENGTH_LONG).show();
-//                    }
-//                }
-//                break;
-//        }
-//    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -458,34 +374,6 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
         }
     }
 
-
-//    private void openRecorder() {
-//        if (CheckPermissions()) {
-//
-//            mRecorder = new MediaRecorder();
-//            mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-//            mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-//            mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-//            mRecorder.setOutputFile(mFileName);
-//            try {
-//                mRecorder.prepare();
-//            } catch (IOException e) {
-//                Log.e("Audio recorder", "prepare() failed");
-//            }
-//            mRecorder.start();
-//            Toast.makeText(getActivity(), "Recording Started", Toast.LENGTH_LONG).show();
-//        } else {
-//            RequestPermissions();
-//        }
-//
-//    }
-
-
-    //    private boolean CheckPermissions() {
-//        int result = ContextCompat.checkSelfPermission(getActivity(), WRITE_EXTERNAL_STORAGE);
-//        int result1 = ContextCompat.checkSelfPermission(getActivity(), RECORD_AUDIO);
-//        return result == PackageManager.PERMISSION_GRANTED && result1 == PackageManager.PERMISSION_GRANTED;
-//    }
     public boolean checkPermission() {
         int result = ContextCompat.checkSelfPermission(getApplicationContext(),
                 WRITE_EXTERNAL_STORAGE);
@@ -561,6 +449,8 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
         longitude = pref.getLongitude("longitude");
         Log.d("Lattitude of ", String.valueOf(latttitude));
         Log.d("LOngitude of ", String.valueOf(longitude));
+
+//        adapter.sendLcation(latttitude, longitude);
 
 
     }

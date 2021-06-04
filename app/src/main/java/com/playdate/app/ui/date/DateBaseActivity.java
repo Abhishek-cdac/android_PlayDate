@@ -41,6 +41,11 @@ public class DateBaseActivity extends AppCompatActivity implements OnInnerFragme
     }
 
     @Override
+    public void ReplaceFragWithStack(Fragment fragment) {
+
+    }
+
+    @Override
     public void loadProfile(String id) {
 
     }

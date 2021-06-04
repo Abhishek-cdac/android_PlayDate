@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.media.Image;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -22,12 +24,17 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.playdate.app.R;
 import com.playdate.app.model.Chat;
 import com.playdate.app.model.chat_models.ChatAttachment;
 import com.playdate.app.model.chat_models.ChatExample;
 import com.playdate.app.model.chat_models.ChatMessage;
 import com.playdate.app.ui.dialogs.DialogWinner;
+import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
@@ -36,6 +43,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -135,6 +144,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return viewHolder;
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder.getItemViewType() == ME) {
@@ -225,7 +235,22 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     }
                 });
 
-            } //audio
+                //audio
+            } else if (chatmsgList.get(position).getType().equals("location")) {
+                viewHolderMe.tv_msg.setVisibility(View.GONE);
+                viewHolderMe.chat_image.setVisibility(View.GONE);
+                viewHolderMe.chat_video.setVisibility(View.GONE);
+                viewHolderMe.rl_audio.setVisibility(View.GONE);
+                viewHolderMe.mv_location.setVisibility(View.VISIBLE);
+//                GoogleMap googleMap = viewHolderMe.mv_location.getMap();
+
+//                googleMap.addMarker(new MarkerOptions()
+//                        .position(new LatLng(chatmsgList.get(position).getLattitude(), -chatmsgList.get(position).getLongitude()))
+//                        .title("Marker"));
+
+
+            }
+
 
         } ///
         else if (holder.getItemViewType() == OPPONENT) {
@@ -289,7 +314,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         et_msg.setText("");
     }
 
-    //// code for  saving file as image
+    //// code for  saving image as file
     public void addToListImage(Bitmap bitmap) {
 
         File f = new File(getCacheDir(), "profile");
@@ -361,6 +386,13 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         notifyDataSetChanged();
     }
 
+    public void sendLcation(double latttitude, double longitude) {
+        chatmsgList.add(new ChatMessage("location", myId, "jid_1109", latttitude, longitude));
+
+
+        notifyDataSetChanged();
+    }
+
     public class ViewHolderOther extends RecyclerView.ViewHolder {
         TextView tv_msg;
         TextView answer1;
@@ -391,6 +423,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         ImageView img_playback;
         ImageView iv_mute_unmute;
         CardView card_image;
+        MapView mv_location;
 
         public ViewHolderMe(View view) {
             super(view);
@@ -404,6 +437,8 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             card_image = view.findViewById(R.id.card_image);
             rl_audio = view.findViewById(R.id.rl_audio);
             play_audio = view.findViewById(R.id.play_audio);
+            mv_location = view.findViewById(R.id.mv_location);
+
         }
     }
 

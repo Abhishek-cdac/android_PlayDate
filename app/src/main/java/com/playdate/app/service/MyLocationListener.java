@@ -26,6 +26,8 @@ import static android.content.ContentValues.TAG;
 
 class MyLocationListener implements LocationListener {
     Context mContext;
+    String longitude;
+    String latitude;
 //    LottieAnimationView loader;
 
     public MyLocationListener(Context ctx) {
@@ -34,20 +36,26 @@ class MyLocationListener implements LocationListener {
 
     @Override
     public void onLocationChanged(Location loc) {
+        Toast.makeText(mContext, "LocationListener called", Toast.LENGTH_SHORT).show();
 
-        String longitude = "Longitude: " + loc.getLongitude();
+        longitude = "Longitude: " + loc.getLongitude();
         Log.v(TAG, longitude);
-        String latitude = "Latitude: " + loc.getLatitude();
+        latitude = "Latitude: " + loc.getLatitude();
         Log.v(TAG, latitude);
+
+        Log.d("Lattitude.............", latitude);
+        Log.d("Longitude.............", longitude);
 
         /*------- To get city name from coordinates -------- */
         String cityName = null;
+        String marker = null;
         Geocoder gcd = new Geocoder(mContext, Locale.getDefault());
         List<Address> addresses;
         try {
             addresses = gcd.getFromLocation(loc.getLatitude(),
                     loc.getLongitude(), 1);
             if (addresses.size() > 0) {
+                Log.d("LOCALITY..............", addresses.get(0).getLocality());
                 System.out.println(addresses.get(0).getLocality());
                 cityName = addresses.get(0).getLocality();
             }
@@ -56,8 +64,10 @@ class MyLocationListener implements LocationListener {
         }
         String s = longitude + "\n" + latitude + "\n\nMy Current City is: "
                 + cityName;
-        SessionPref pref=SessionPref.getInstance(mContext);
-        pref.saveStringKeyVal("LastCity",cityName);
+        SessionPref pref = SessionPref.getInstance(mContext);
+        pref.saveStringKeyVal("LastCity", cityName);
+        pref.saveStringKeyVal("Address_Complete", marker);
+        Log.d("Address_Complete", marker);
 //        Toast.makeText(mContext, "City Saved", Toast.LENGTH_SHORT).show();
 //        loader.setVisibility(View.GONE);
 

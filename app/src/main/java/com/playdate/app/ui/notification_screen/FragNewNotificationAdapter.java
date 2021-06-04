@@ -112,17 +112,18 @@ public class FragNewNotificationAdapter extends RecyclerView.Adapter<FragNewNoti
             }
         }
 
-          if (notification_list.get(position).getFriendRequest() != null) {
-                if (notification_list.get(position).getFriendRequest().size() == 0) {
-                    List<FriendRequest> lst = new ArrayList<>();
-                    FriendRequest fr = new FriendRequest();
-                    fr.setStatus("Pending");
-                    lst.add(fr);
-                    notification_list.get(position).setFriendRequest(lst);
-//                    itemClick.onItemClicks(v, position, 10, userId);
-                    notifyDataSetChanged();
-                }
-            }
+//          if (notification_list.get(position).getFriendRequest() != null) {
+//                if (notification_list.get(position).getFriendRequest().size() == 0) {
+//                    List<FriendRequest> lst = new ArrayList<>();
+//                    FriendRequest fr = new FriendRequest();
+//                    fr.setStatus("Pending");
+//                    lst.add(fr);
+//                    notification_list.get(position).setFriendRequest(lst);
+////                    itemClick.onItemClicks(v, position, 10, userId);
+//                    notifyDataSetChanged();
+//                }
+//            }
+
 
       /*  if (notification_list.get(position).getFriendRequest().size() > 0)
         {

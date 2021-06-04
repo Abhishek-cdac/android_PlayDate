@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -195,6 +196,7 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
 
     private void setData() {
         SessionPref pref = SessionPref.getInstance(this);
+        Toast.makeText(this,"CITY location"+ pref.getStringVal("LastCity"), Toast.LENGTH_SHORT).show();
         edt_location.setText(pref.getStringVal("LastCity"));
         String img = pref.getStringVal(SessionPref.LoginUserprofilePic);
         if (img.contains("http")) {

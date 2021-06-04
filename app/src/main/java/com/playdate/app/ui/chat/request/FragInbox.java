@@ -49,7 +49,7 @@ public class FragInbox extends Fragment implements onClickEventListener {
     RecyclerView recyclerView;
     Onclick itemClick;
     RelativeLayout rl_c;
-
+    RequestAdapter requestAdapter;
 
     @Nullable
     @Override
@@ -57,27 +57,6 @@ public class FragInbox extends Fragment implements onClickEventListener {
         View view = inflater.inflate(R.layout.frag_inbox_list, container, false);
         recyclerView = view.findViewById(R.id.friend_list);
         rl_c = view.findViewById(R.id.rl_c);
-
-//        itemClick = new Onclick() {
-//            @Override
-//            public void onItemClick(View view, int position, int value) {
-//                if (value == 12) {
-//                    Intent intent = new Intent(getContext(), ChatActivity.class);
-//
-//                    startActivity(intent);
-//                }
-//            }
-//
-//            @Override
-//            public void onItemClicks(View view, int position, int value, String s) {
-//
-//            }
-//
-//            @Override
-//            public void onItemClicks(View v, int adapterPosition, int i, String notifiationId, String userId) {
-//
-//            }
-//        };
 
         callApiForChats();
 //            setAdapter();
@@ -111,10 +90,14 @@ public class FragInbox extends Fragment implements onClickEventListener {
                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
                     recyclerView.setLayoutManager(mLayoutManager);
                     recyclerView.setItemAnimator(new DefaultItemAnimator());
+//                    chattingAdapter.getFilter().filter(sequence);
+
                     recyclerView.setAdapter(chattingAdapter);
 
                 }
+//                requestAdapter = new RequestAdapter(FragInbox.this);
             }
+
 
             @Override
             public void onFailure(Call<ChatUserList> call, Throwable t) {
@@ -133,10 +116,23 @@ public class FragInbox extends Fragment implements onClickEventListener {
         String sender_profile_image = chatExampleList.get(position).getProfilePhoto();
 
         OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
-        frag.ReplaceFrag(new FragChatMain(chatMessageList, sender_name, sender_profile_image));
+        if (frag != null) {
+            frag.ReplaceFragWithStack(new FragChatMain(chatMessageList, sender_name, sender_profile_image));
+        }
+    }
 
+    public void onAcceptChatRequest(String name, String image) {
+        Log.d("Accepted", "onAcceptChatRequest: ");
+        chattingAdapter = new ChattingAdapter(name, image);
 
     }
+
+    public void setFilters(CharSequence s) {
+        chattingAdapter.getFilter().filter(s);
+        chattingAdapter.notifyDataSetChanged();
+
+    }
+
 
 //    private void prepareInboxData() {
 //

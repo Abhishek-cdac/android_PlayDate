@@ -17,6 +17,23 @@ public class ChatMessage {
     Bitmap bitmap;
     Drawable drawable;
     Uri uri;
+    double lattitude, longitude;
+
+    public double getLattitude() {
+        return lattitude;
+    }
+
+    public void setLattitude(double lattitude) {
+        this.lattitude = lattitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
 
     public Uri getUri() {
         return uri;
@@ -127,7 +144,7 @@ public class ChatMessage {
         this.attachment = attachment;
     }
 
-    public ChatMessage(String type, String from, String to,Uri uri) {
+    public ChatMessage(String type, String from, String to, Uri uri) {
         this.uri = uri;
         this.type = type;
         this.from = from;
@@ -148,4 +165,11 @@ public class ChatMessage {
         this.drawable = drawable;
     }
 
+    public ChatMessage(String type, String from, String to, double lattitude, double longitude) {
+        this.lattitude = lattitude;
+        this.longitude = longitude;
+        this.type = type;
+        this.from = from;
+        this.to = to;
+    }
 }
