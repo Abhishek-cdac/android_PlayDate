@@ -135,13 +135,13 @@
             android:orientation="horizontal"
             android:padding="@dimen/_5sdp"
             android:weightSum="1">
-
             <ImageView
-                android:id="@+id/item_cross"
+                android:id="@+id/item_check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"
-                android:src="@drawable/cross_tinder" />
+                android:src="@drawable/check_tinder" />
+
 
             <ImageView
                 android:id="@+id/item_message"
@@ -150,13 +150,13 @@
                 android:layout_weight="0.2"
                 android:src="@drawable/chat"
                 android:visibility="gone" />
-
             <ImageView
-                android:id="@+id/item_check"
+                android:id="@+id/item_cross"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"
-                android:src="@drawable/check_tinder" />
+                android:src="@drawable/cross_tinder" />
+
 
 
         </LinearLayout>

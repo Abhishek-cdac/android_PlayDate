@@ -26,13 +26,13 @@ public class LocationService extends Service implements LocationListener{
     double longitude;
 
     public LocationService() {
-
     }
-
 
     @SuppressLint("MissingPermission")
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
+        LocationListener locationListener = new MyLocationListener(this);
 
         Toast.makeText(this, "Location Service class", Toast.LENGTH_SHORT).show();
         LocationManager locationManager = (LocationManager)
@@ -63,7 +63,6 @@ public class LocationService extends Service implements LocationListener{
     }
 
     @Override
-
     public IBinder onBind(Intent intent) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
@@ -89,7 +88,6 @@ public class LocationService extends Service implements LocationListener{
         String s = longitude + "\n" + latitude + "\n\nMy Current City is: "
                 + cityName;
 
-    }
 }
 
 

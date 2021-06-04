@@ -125,10 +125,9 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/_30sdp"
             android:background="@drawable/arrow_back_circle"
-
+            android:onClick="@{(v) -> InvitepartnerViewModel.onNext(v)}"
             android:padding="@dimen/_12sdp"
             android:src="@drawable/arrow_right" />
-        <!--    android:onClick="@{(v) -> InvitepartnerViewModel.onNext(v)}"-->
     </RelativeLayout>
 
 </layout>

@@ -27,6 +27,7 @@ public class InviteSentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        viewModel = new InviteSentViewModel();
         mIntent = getIntent();
         clsCommon = CommonClass.getInstance();
         binding = DataBindingUtil.setContentView(InviteSentActivity.this, R.layout.activity_invite_sent);
@@ -34,19 +35,19 @@ public class InviteSentActivity extends AppCompatActivity {
         binding.setInviteSentViewModel(viewModel);
 
 
-//        viewModel.OnNextClick().observe(this, new Observer<Boolean>() {
-//            @Override
-//            public void onChanged(Boolean click) {
-//                startActivity(new Intent(InviteSentActivity.this, InterestActivity.class));
-//            }
-//        });
-//
-//        viewModel.onBackClick().observe(this, new Observer<Boolean>() {
-//            @Override
-//            public void onChanged(Boolean click) {
-//                finish();
-//            }
-//        });
+        viewModel.OnNextClick().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean click) {
+                startActivity(new Intent(InviteSentActivity.this, InterestActivity.class));
+            }
+        });
+
+        viewModel.onBackClick().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean click) {
+                finish();
+            }
+        });
 
 
     }

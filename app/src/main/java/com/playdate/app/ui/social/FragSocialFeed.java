@@ -1,5 +1,6 @@
 package com.playdate.app.ui.social;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.LayoutInflater;
@@ -7,49 +8,44 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
-import com.playdate.app.ui.social.adapter.PaginationListener;
+import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
+import com.playdate.app.ui.social.adapter.OnRefreshPage;
 import com.playdate.app.ui.social.adapter.SocialFeedAdapter;
 import com.playdate.app.ui.social.model.PostDetails;
 import com.playdate.app.ui.social.model.PostHistory;
 import com.playdate.app.ui.social.videoplay.AAH_CustomRecyclerView;
-import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FragSocialFeed extends Fragment {
+public class FragSocialFeed extends Fragment  implements OnRefreshPage {
 
     public FragSocialFeed() {
     }
-    int PageNo=1;
-    boolean NoMorePages=false;
 
-    public static final String NORMAL = "Normal";
-    //    public static final String RESTAURANT = 1;
-//    public static final String ANONYMUSQUESTION = 2;
-//    public static final String ADDS = 3;
+    int PageNo = 1;
+    boolean NoMorePages = false;
+
     private AAH_CustomRecyclerView recycler_view_feed;
-
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     boolean boolApiCalling = false;
 
     @Nullable
@@ -57,8 +53,10 @@ public class FragSocialFeed extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.row_social_feed, container, false);
         recycler_view_feed = view.findViewById(R.id.recycler_view_feed);
-        LinearLayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
+    LinearLayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         recycler_view_feed.setLayoutManager(manager);
+
+
 //        recycler_view_feed.setHasFixedSize(true);
 
 //        recycler_view_feed.addOnScrollListener(new EndlessRecyclerViewScrollListener(manager) {
@@ -75,16 +73,16 @@ public class FragSocialFeed extends Fragment {
     public void addMoreData() {
         if (null != adapter) {
             if (!boolApiCalling) {
-                if(!NoMorePages){
+                if (!NoMorePages) {
 
 
-                PostDetails pd = new PostDetails();
-                pd.setPostType("Load");
-                lst.add(pd);
-                adapter.notifyDataSetChanged();
-                recycler_view_feed.scrollToPosition(lst.size()-1);
-                PageNo=PageNo+1;
-                callAPI();
+                    PostDetails pd = new PostDetails();
+                    pd.setPostType("Load");
+                    lst.add(pd);
+                    adapter.notifyDataSetChanged();
+                    recycler_view_feed.scrollToPosition(lst.size() - 1);
+                    PageNo = PageNo + 1;
+                    callAPI();
                 }
             }
 
@@ -105,15 +103,15 @@ public class FragSocialFeed extends Fragment {
 
     }
 
-    ArrayList<PostDetails> lst=new ArrayList<>();
+    ArrayList<PostDetails> lst = new ArrayList<>();
     SocialFeedAdapter adapter;
 
     private void callAPI() {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("limit", "10");// Hardcode
-        hashMap.put("pageNo", ""+PageNo);// Hardcode
-        boolApiCalling=true;
+        hashMap.put("pageNo", "" + PageNo);// Hardcode
+        boolApiCalling = true;
 //        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
 //        pd.show();
         SessionPref pref = SessionPref.getInstance(getActivity());
@@ -129,19 +127,31 @@ public class FragSocialFeed extends Fragment {
                     ArrayList<PostDetails> lstData = response.body().getPostDetails();
                     if (lstData == null) {
                         lstData = new ArrayList<>();
+                        if (PageNo == 1) {
+                            OnInnerFragmentClicks ref = (OnInnerFragmentClicks) getActivity();
+                            ref.NoFriends();
+                            return;
+                        }
+                    } else if (PageNo == 1) {
+                        if (lstData.isEmpty()) {
+                            OnInnerFragmentClicks ref = (OnInnerFragmentClicks) getActivity();
+                            ref.NoFriends();
+                            return;
+                        }
+
                     }
 
 
-                    if(lst.size()>0){
-                        lst.remove(lst.size()-1);
+                    if (lst.size() > 0) {
+                        lst.remove(lst.size() - 1);
 //                        adapter.notifyDataSetChanged();
                         lst.addAll(lstData);
                         adapter.notifyDataSetChanged();
 //                        recycler_view_feed.scrollToPosition(lst.size()-1);
-                    }else{
-                        lst=lstData;
+                    } else {
+                        lst = lstData;
                         adapter = new SocialFeedAdapter(getActivity(), lst);
-
+                        adapter.setRef(FragSocialFeed.this);
                         recycler_view_feed.setItemAnimator(new DefaultItemAnimator());
                         recycler_view_feed.setActivity(getActivity());
                         recycler_view_feed.setCheckForMp4(false);
@@ -166,23 +176,32 @@ public class FragSocialFeed extends Fragment {
                         recycler_view_feed.setAdapter(adapter);
                         recycler_view_feed.smoothScrollBy(0, 1);
                         recycler_view_feed.smoothScrollBy(0, -1);
+
                     }
 
 
-                    boolApiCalling=false;
+                    boolApiCalling = false;
 
 
                 } else {
-                    NoMorePages=true;
+                    NoMorePages = true;
                     try {
-                        if(null!=lst){
-                            if(lst.get(lst.size()-1).getPostType().equals("Load")){
-                                lst.remove(lst.size()-1);
+                        if (null != lst) {
+                            if (lst.get(lst.size() - 1).getPostType().equals("Load")) {
+                                lst.remove(lst.size() - 1);
                                 adapter.notifyDataSetChanged();
                             }
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
+                    }
+
+                    if (PageNo == 1) {
+
+                        OnInnerFragmentClicks ref = (OnInnerFragmentClicks) getActivity();
+                        Objects.requireNonNull(ref).NoFriends();
+
+
                     }
 
                 }
@@ -204,10 +223,22 @@ public class FragSocialFeed extends Fragment {
     public void onResume() {
         super.onResume();
         try {
+
             recycler_view_feed.playAvailableVideos(0);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void LoadPageAgain() {
+        PageNo=1;
+        boolApiCalling=false;
+        NoMorePages=false;
+        lst.clear();
+        adapter.notifyDataSetChanged();
+        callAPI();
+    }
+
 
 }

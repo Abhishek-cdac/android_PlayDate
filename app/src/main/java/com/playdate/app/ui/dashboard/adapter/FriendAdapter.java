@@ -1,6 +1,5 @@
 package com.playdate.app.ui.dashboard.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,22 +19,28 @@ import java.util.ArrayList;
 
 public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder> {
 
-    private ArrayList<MatchListUser> lst;
-    private DashboardActivity dashboardActivity;
+    private  ArrayList<MatchListUser> lst;
+    private final DashboardActivity dashboardActivity;
 
     public FriendAdapter(ArrayList<MatchListUser> lst, DashboardActivity dashboardActivity) {
         this.lst = lst;
         this.dashboardActivity = dashboardActivity;
     }
 
-    private Context mContext;
-Picasso picasso;
+    public void updateList(ArrayList<MatchListUser> lst){
+        this.lst = lst;
+        notifyDataSetChanged();
+    }
+
+    //    private Context mContext;
+    private Picasso picasso;
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_friends, parent, false);
-        mContext = parent.getContext();
-        picasso=Picasso.get();
+//        mContext = parent.getContext();
+        picasso = Picasso.get();
         return new ViewHolder(view);
     }
 
@@ -63,14 +68,7 @@ Picasso picasso;
             super(itemView);
             profile_image = itemView.findViewById(R.id.profile_image);
             txt_friend_name = itemView.findViewById(R.id.txt_friend_name);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    OnFriendSelected inf= dashboardActivity;
-                    inf.OnSingleFriendSelected(lst.get(getAdapterPosition()).getUserId(),lst.get(getAbsoluteAdapterPosition()).getFriendId());
-                }
-            });
+            itemView.setOnClickListener(v -> ((OnFriendSelected) dashboardActivity).OnSingleFriendSelected(lst.get(getAdapterPosition()).getUserId(), lst.get(getAbsoluteAdapterPosition()).getFriendId()));
         }
     }
 }

@@ -3,7 +3,6 @@ package com.playdate.app.ui.card_swipe;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +27,7 @@ import com.playdate.app.R;
 import com.playdate.app.model.Interest;
 import com.playdate.app.model.MatchListUser;
 import com.playdate.app.ui.chat.request.Onclick;
+import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.ui.playvideo.ExoPlayerActivity;
 import com.squareup.picasso.Picasso;
 
@@ -43,11 +43,13 @@ public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.
     Context mContext;
     String userId;
     Onclick itemClick;
+    Picasso picasso;
+
     public TinderSwipeAdapter(List<MatchListUser> tinder_list, ArrayList<Interest> lst_interest, Onclick itemClick) {
         this.tinder_list = tinder_list;
         this.lst_interest = lst_interest;
         this.itemClick = itemClick;
-
+        picasso = Picasso.get();
     }
 
 
@@ -67,6 +69,9 @@ public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.
 
     @Override
     public int getItemCount() {
+        if (tinder_list == null)
+            return 0;
+
         return tinder_list.size();
     }
 
@@ -94,38 +99,23 @@ public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.
             iv_video_play = itemView.findViewById(R.id.iv_video_play);
             item_premium = itemView.findViewById(R.id.item_premium);
             iv_maximise = itemView.findViewById(R.id.item_fullScreen);
-            item_check.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    itemClick.onItemClicks(v, getAdapterPosition(), 13, userId);
+            item_check.setOnClickListener(v -> itemClick.onItemClicks(v, getAdapterPosition(), 13, userId));
 
-                }
-            });
-
-            item_cross.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    itemClick.onItemClicks(v, getAdapterPosition(), 14, userId);
-
-                }
-            });
+            item_cross.setOnClickListener(v -> itemClick.onItemClicks(v, getAdapterPosition(), 14, userId));
 
 
         }
 
         void setData(MatchListUser user) {
-             userId= user.get_id();
-            Log.e("userIdTinder",""+userId);
-            Log.e("userNameTinder",""+user.getFullName());
-            if (user.getProfileVideoPath() == null) {
-                iv_video_play.setVisibility(View.INVISIBLE);
-            } else {
-                iv_video_play.setVisibility(View.VISIBLE);
-            }
-            iv_video_play.setImageResource(R.drawable.play_circle);
-            iv_video_play.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            try {
+                userId = user.get_id();
+                if (user.getProfileVideoPath() == null) {
+                    iv_video_play.setVisibility(View.INVISIBLE);
+                } else {
+                    iv_video_play.setVisibility(View.VISIBLE);
+                }
+                iv_video_play.setImageResource(R.drawable.play_circle);
+                iv_video_play.setOnClickListener(v -> {
                     image.setVisibility(View.GONE);
                     pvMain.setVisibility(View.VISIBLE);
                     iv_maximise.setVisibility(View.VISIBLE);
@@ -149,53 +139,54 @@ public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.
                     }
 
 
-                }
-            });
-            Picasso.get()
-                    .load(user.getProfilePicPath())
-                    .fit()
-                    .centerCrop()
-                    .into(image);
-            name.setText(user.getUsername());
-            age.setText("" +user.getAge());
+                });
 
-            String ints = "";
-            if (null != lst_interest) {
-                for (int i = 0; i < lst_interest.size(); i++) {
-                    for (int j = 0; j < user.getInterested().size(); j++) {
-                        if (lst_interest.get(i).get_id().equals(user.getInterested().get(j))) {
-                            if (ints.isEmpty()) {
-                                ints = lst_interest.get(i).getName();
-                            } else {
-                                ints = ints + "," + lst_interest.get(i).getName();
+                picasso.load(user.getProfilePicPath())
+                        .fit()
+                        .centerCrop()
+                        .into(image);
+                name.setText(user.getUsername());
+
+                age.setText("" + user.getAge());
+
+                StringBuilder ints = new StringBuilder();
+                if (null != lst_interest) {
+                    for (int i = 0; i < lst_interest.size(); i++) {
+                        for (int j = 0; j < user.getInterested().size(); j++) {
+                            if (lst_interest.get(i).get_id().equals(user.getInterested().get(j))) {
+                                String str = lst_interest.get(i).getName();
+                                String output = str.substring(0, 1).toUpperCase() + str.substring(1);
+                                if (ints.length() == 0) {
+
+                                    ints = new StringBuilder(output);
+                                } else {
+                                    ints.append(" , ").append(output);
+                                }
+
+                                break;
                             }
-
-                            break;
                         }
                     }
                 }
-            }
+
+                name.setOnClickListener(v -> {
+                    OnInnerFragmentClicks ref = (OnInnerFragmentClicks) mContext;
+                    ref.loadMatchProfile(user.get_id());
+                });
+                hobby.setText(ints.toString());
+
+                if (user.getPaymentMode().equals("1")) {
+                    item_premium.setVisibility(View.VISIBLE);
+                } else {
+                    item_premium.setVisibility(View.INVISIBLE);
+                }
 
 
-            hobby.setText(ints);
-
-            if (user.getPaymentMode().equals("1")) {
-                item_premium.setVisibility(View.VISIBLE);
-            } else {
-                item_premium.setVisibility(View.INVISIBLE);
-            }
-
-
-            iv_maximise.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+                iv_maximise.setOnClickListener(v -> {
                     Intent mIntent = new Intent(mContext, ExoPlayerActivity.class);
                     String videopath = user.getProfileVideoPath();
 
-                    if (videopath.contains("http")) {
-
-                    }
-                    else {
+                    if (!videopath.contains("http")) {
                         videopath = BASE_URL_IMAGE + videopath;
                     }
 
@@ -210,11 +201,12 @@ public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.
                     image.setVisibility(View.VISIBLE);
                     pvMain.setVisibility(View.GONE);
                     iv_maximise.setVisibility(View.INVISIBLE);
-                }
-            });
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
         }
-
 
 
         private void pausePlayer(SimpleExoPlayer player) {
@@ -241,7 +233,7 @@ public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.
                 absPlayerInternal.prepare(mediaSource);
                 absPlayerInternal.setPlayWhenReady(true); // start loading video and play it at the moment a chunk of it is available offline
 
-                pvMain.setPlayer(absPlayerInternal); //
+                pvMain.setPlayer(absPlayerInternal);
                 pvMain.hideController();
                 pvMain.setControllerAutoShow(false);
                 pvMain.setControllerHideOnTouch(true);
@@ -261,8 +253,7 @@ public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.
                                 pvMain.setVisibility(View.GONE);
                                 iv_maximise.setVisibility(View.INVISIBLE);
                                 break;
-                            default:
-                                break;
+
                         }
                     }
 

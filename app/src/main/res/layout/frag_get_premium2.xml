@@ -8,8 +8,8 @@
     <ImageView
         android:id="@+id/iv_two_girls"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_50sdp"
+        android:layout_height="@dimen/_90sdp"
+        android:layout_marginTop="@dimen/_20sdp"
         android:src="@drawable/asset2"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -19,7 +19,7 @@
         android:id="@+id/iv_close"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_40sdp"
+        android:layout_marginTop="@dimen/_20sdp"
         android:src="@drawable/ic_clear"
         app:layout_constraintLeft_toRightOf="@+id/iv_two_girls"
         app:layout_constraintRight_toRightOf="parent"
@@ -192,7 +192,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
+                    android:gravity="center"
                     android:elevation="@dimen/_15sdp"
                     android:fontFamily="@font/lato_bold"
                     android:text="Exclusive Discounts to Events and Location"

@@ -162,25 +162,33 @@ public class FragInstaLikeProfileFriends extends Fragment implements onPhotoClic
                 pd.cancel();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
-                        lst_getPostDetail = (ArrayList<GetProileDetailData>) response.body().getData();
-                        if (lst_getPostDetail == null) {
-                            lst_getPostDetail = new ArrayList<>();
-                        }
-                        txtTotalFriend.setText(String.valueOf(lst_getPostDetail.get(0).getTotalFriends()));
-                        txtTotalPost.setText(String.valueOf(lst_getPostDetail.get(0).getTotalPosts()));
+                        try {
+                            lst_getPostDetail = (ArrayList<GetProileDetailData>) response.body().getData();
+                            if (lst_getPostDetail == null) {
+                                lst_getPostDetail = new ArrayList<>();
+                            }
+                            txtTotalFriend.setText(String.valueOf(lst_getPostDetail.get(0).getTotalFriends()));
+                            txtTotalPost.setText(String.valueOf(lst_getPostDetail.get(0).getTotalPosts()));
 
-                        if (lst_getPostDetail.get(0).getProfilePicPath().contains("http")) {
-                            Picasso.get().load(lst_getPostDetail.get(0).getProfilePicPath())
-                                    .placeholder(R.drawable.cupertino_activity_indicator)
-                                    .into(profile_image);
-                        } else {
-                            Picasso.get().load(BASE_URL_IMAGE + lst_getPostDetail.get(0).getProfilePicPath())
-                                    .placeholder(R.drawable.cupertino_activity_indicator)
-                                    .into(profile_image);
+                            try {
+                                if (lst_getPostDetail.get(0).getProfilePicPath().contains("http")) {
+                                    Picasso.get().load(lst_getPostDetail.get(0).getProfilePicPath())
+                                            .placeholder(R.drawable.cupertino_activity_indicator)
+                                            .into(profile_image);
+                                } else {
+                                    Picasso.get().load(BASE_URL_IMAGE + lst_getPostDetail.get(0).getProfilePicPath())
+                                            .placeholder(R.drawable.cupertino_activity_indicator)
+                                            .into(profile_image);
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            txt_login_user.setText(lst_getPostDetail.get(0).getUsername());
+                            txt_bio.setText(lst_getPostDetail.get(0).getPersonalBio());
+                            videopath = lst_getPostDetail.get(0).getProfileVideoPath();
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-                        txt_login_user.setText(lst_getPostDetail.get(0).getUsername());
-                        txt_bio.setText(lst_getPostDetail.get(0).getPersonalBio());
-                        videopath = lst_getPostDetail.get(0).getProfileVideoPath();
 
 
                     } else {

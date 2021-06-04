@@ -2,6 +2,9 @@
 package com.playdate.app.model;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
 
 public class CommonModel {
 
@@ -26,4 +29,14 @@ public class CommonModel {
         this.status = status;
     }
 
+    @SerializedName("data")
+    public ArrayList<BlockedUser> blockedUsers;
+
+    public ArrayList<BlockedUser> getBlockedUsers() {
+        return blockedUsers;
+    }
+
+    public void setBlockedUsers(ArrayList<BlockedUser> blockedUsers) {
+        this.blockedUsers = blockedUsers;
+    }
 }

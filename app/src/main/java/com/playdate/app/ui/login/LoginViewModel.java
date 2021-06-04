@@ -13,8 +13,6 @@ import com.playdate.app.model.LoginUser;
 public class LoginViewModel extends ViewModel {
 
     public LoginViewModel() {
-//        EmailAddress.setValue("ajit.jadhav36@gmail.com");
-//        Password.setValue("80868086");
     }
 
     public MutableLiveData<String> EmailAddress = new MutableLiveData<>();

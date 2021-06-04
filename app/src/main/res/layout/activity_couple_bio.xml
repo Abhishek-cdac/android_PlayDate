@@ -57,7 +57,7 @@
                 android:textSize="@dimen/_10sdp" />
 
             <EditText
-                android:id="@+id/edt_fullname"
+                android:id="@+id/edt_couplebio"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_gravity="start|top"
@@ -66,7 +66,7 @@
                 android:layout_marginRight="@dimen/_10sdp"
                 android:background="@drawable/rect_normal"
                 android:gravity="start"
-                android:hint="Type Couple bio"
+                android:hint="Type how you met with your partner"
                 android:maxLength="2000"
                 android:maxLines="5"
                 android:minLines="4"

@@ -72,10 +72,8 @@
 
         <activity
             android:name=".ui.dashboard.DashboardActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
-        <activity android:name=".ui.date.DateBaseActivity"></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.date.DateBaseActivity" />
         <activity
             android:name=".ui.anonymous_question.AnonymousQuestionActivity"
             android:screenOrientation="portrait" />
@@ -83,11 +81,6 @@
             android:name=".ui.login.LoginActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".util.customcamera.otalia.GameCamera" />
-        <!--  <activity android:name=".ui.date.fragments.FragSelectPartner"></activity>
-          <activity android:name=".ui.date.fragments.FragLocationTracing" />
-          <activity android:name=".ui.date.fragments.FragPartnerSelected" />
-          <activity android:name=".ui.date.fragments.FragSelectDate"></activity>
-          <activity android:name=".ui.date.fragments.FragLocationConfirmation" />-->
         <activity
             android:name=".ui.register.RegisterActivity"
             android:screenOrientation="portrait" />
@@ -99,6 +92,18 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".couple.ui.register.coupleprofile.CoupleUploadProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".couple.ui.register.connect.ConnectYourPartner"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".couple.ui.register.invitecode.InviteCodeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".couple.ui.register.invitepartner.InvitePartnerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".couple.ui.register.invitesent.InviteSentActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.register.otp.OTPActivity"
@@ -144,12 +149,12 @@
             </intent-filter>
 
         </activity>
-        <activity android:name=".ui.coupons.ActivityCoupons" />
-
-        <activity android:name=".ui.SampleActivity">
-
-        </activity>
-        <activity android:name=".ui.chat.FragChatMain" />
+        <activity
+            android:name=".ui.coupons.ActivityCoupons"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.chat.ChatActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".util.customcamera.otalia.VideoPreviewActivity"
             android:screenOrientation="portrait" />
@@ -172,7 +177,12 @@
         <activity
             android:name=".ui.register.gender.GenderSelActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.invite.InviteFriendActivity" />
+        <activity
+            android:name=".ui.invite.InviteFriendActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.blockuser.BlockUserActivity"
+            android:screenOrientation="portrait" />
 
         <service android:name=".service.LocationService" />
         <receiver android:name=".broadcast.ConnectionBroadcastReceiver">

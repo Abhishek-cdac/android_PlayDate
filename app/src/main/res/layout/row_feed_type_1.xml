@@ -178,6 +178,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/txt_heart_count"
         android:layout_gravity="center"
+
         android:layout_marginLeft="@dimen/_10sdp"
         android:layout_marginRight="@dimen/_10sdp"
         android:fontFamily="@font/helvetica_neue"
@@ -191,7 +192,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txt_chat"
-        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginLeft="@dimen/_4sdp"
         android:layout_marginTop="@dimen/_2sdp"
         android:layout_marginRight="@dimen/_10sdp"
         android:background="@null"
@@ -210,7 +211,7 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_10sdp"
+        android:layout_height="@dimen/_5sdp"
         android:layout_below="@+id/edt_comment" />
 
 </RelativeLayout>
