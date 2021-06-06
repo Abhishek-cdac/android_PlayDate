@@ -155,29 +155,32 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 //                    .into(viewHolderMe.iv_profile);
 
             if (chatmsgList.get(position).getType().equals("text")) {
+//                viewHolderMe.tv_msg.setVisibility(View.VISIBLE);
+//                viewHolderMe.chat_image.setVisibility(View.GONE);
+//                viewHolderMe.chat_video.setVisibility(View.GONE);
+//                viewHolderMe.rl_audio.setVisibility(View.GONE);
+//                viewHolderMe.mv_location.setVisibility(View.GONE);
+
                 viewHolderMe.tv_msg.setText(chatmsgList.get(position).getText());
+                //text
 
             } else if (chatmsgList.get(position).getType().equals("image")) {
                 viewHolderMe.tv_msg.setVisibility(View.GONE);
                 viewHolderMe.chat_image.setVisibility(View.VISIBLE);
+//                viewHolderMe.chat_video.setVisibility(View.GONE);
+                viewHolderMe.rl_audio.setVisibility(View.GONE);
+//                viewHolderMe.mv_location.setVisibility(View.GONE);
 
                 viewHolderMe.chat_image.setImageDrawable(chatmsgList.get(position).getDrawable());
-
-//                chatAttachmentList = new ArrayList<>(chatmsgList.get(position).getAttachment());
-//
-//                for (int i = 0; i < chatAttachmentList.size(); i++) {
-//                    urls_image = chatAttachmentList.get(i).getUrl();
-//                    Log.d("URL OF IMAGE ", urls_image);
-//                    Picasso.get().load(urls_image)
-//                            .placeholder(R.drawable.cupertino_activity_indicator)
-//                            .into(viewHolderMe.chat_image);
-//                }
+                //image
             } else if (chatmsgList.get(position).getType().equals("video")) {
                 viewHolderMe.tv_msg.setVisibility(View.GONE);
                 viewHolderMe.chat_image.setVisibility(View.GONE);
-                viewHolderMe.card_image.setVisibility(View.VISIBLE);
-
+//                viewHolderMe.card_image.setVisibility(View.VISIBLE);
                 viewHolderMe.chat_video.setVisibility(View.VISIBLE);
+
+                viewHolderMe.rl_audio.setVisibility(View.GONE);
+//                viewHolderMe.mv_location.setVisibility(View.GONE);
 
                 viewHolderMe.chat_video.setVideoURI(chatmsgList.get(position).getUri());
 
@@ -196,12 +199,14 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     }
                 });
 
-
+                //video
             } else if (chatmsgList.get(position).getType().equals("audio")) {
                 viewHolderMe.tv_msg.setVisibility(View.GONE);
                 viewHolderMe.chat_image.setVisibility(View.GONE);
                 viewHolderMe.chat_video.setVisibility(View.GONE);
                 viewHolderMe.rl_audio.setVisibility(View.VISIBLE);
+//                viewHolderMe.mv_location.setVisibility(View.GONE);
+
 
                 viewHolderMe.play_audio.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -209,8 +214,9 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         mediaPlayer = new MediaPlayer();
 
                         if (mediaPlayer.isPlaying()) {
-                            viewHolderMe.play_audio.setImageResource(R.drawable.play);
                             mediaPlayer.pause();
+                            viewHolderMe.play_audio.setImageResource(R.drawable.play);
+
 
                         } else {
                             viewHolderMe.play_audio.setImageResource(R.drawable.exo_icon_pause);
@@ -248,7 +254,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 //                        .position(new LatLng(chatmsgList.get(position).getLattitude(), -chatmsgList.get(position).getLongitude()))
 //                        .title("Marker"));
 
-
+                //location
             }
 
 
@@ -289,8 +295,6 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 //                        viewHolderMe.chat_video.start();
 //                    }
 //                });
-
-
             }
 
         } ///

@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class LocationService extends Service implements LocationListener{
+public class LocationService extends Service implements LocationListener {
     double latitude;
     double longitude;
 
@@ -37,7 +37,7 @@ public class LocationService extends Service implements LocationListener{
         Toast.makeText(this, "Location Service class", Toast.LENGTH_SHORT).show();
         LocationManager locationManager = (LocationManager)
                 getSystemService(Context.LOCATION_SERVICE);
-        LocationListener locationListener = new MyLocationListener(this);
+//        LocationListener locationListener = new MyLocationListener(this);
         Log.d("LOCATIONManager_____", String.valueOf(locationManager));
 
         locationManager.requestLocationUpdates(
@@ -58,11 +58,12 @@ public class LocationService extends Service implements LocationListener{
             pref.saveLongKeyLongitude("longitude", longitude);
         }
 
-
         return START_STICKY;
     }
 
+
     @Override
+
     public IBinder onBind(Intent intent) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
@@ -88,6 +89,7 @@ public class LocationService extends Service implements LocationListener{
         String s = longitude + "\n" + latitude + "\n\nMy Current City is: "
                 + cityName;
 
+    }
 }
 
 

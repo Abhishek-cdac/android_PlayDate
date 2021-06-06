@@ -171,12 +171,6 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
             }
         });
 
-
-
-
-
-                                                                                                              
-
         iv_send.setOnClickListener(new View.OnClickListener() {
             @Override
 
@@ -184,15 +178,10 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
                 adapter.addToListText(et_msg);
             }
         });
+
         iv_video.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-
-
-
-
                 Intent intent;
                 if (android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
                     intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
@@ -218,7 +207,13 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
         iv_mic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityCompat.requestPermissions(getActivity(), permissions, REQUEST_AUDIO_PERMISSION_CODE);
+//                ActivityCompat.requestPermissions(getActivity(), permissions, REQUEST_AUDIO_PERMISSION_CODE);
+                String[] PERMISSIONS = {Manifest.permission.RECORD_AUDIO};
+
+                ActivityCompat.requestPermissions(getActivity(),
+                        PERMISSIONS,
+                        ALL_PERMISSIONS_RESULT);
+
                 startRecording();
             }
         });

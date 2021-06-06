@@ -14,6 +14,7 @@ import com.playdate.app.ui.date.fragments.FragLocationConfirmation;
 import com.playdate.app.ui.date.games.FragGameMenu;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 
+
 public class DateBaseActivity extends AppCompatActivity implements OnInnerFragmentClicks {
     FragmentManager fm;
     FragmentTransaction ft;
@@ -37,6 +38,11 @@ public class DateBaseActivity extends AppCompatActivity implements OnInnerFragme
         ft.replace(R.id.fl_fragment, fragment, fragment.getClass().getSimpleName());
 //        ft.addToBackStack("tags");
         ft.commitAllowingStateLoss();
+
+    }
+
+    @Override
+    public void ReplaceFragWithStack(Fragment fragment) {
 
     }
 

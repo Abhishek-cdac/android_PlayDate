@@ -29,10 +29,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyViewHolder> implements Filterable {
+public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyViewHolder> {
 
     ArrayList<ChatExample> inboxList;
-    ArrayList<ChatExample> search_list;
+    //    ArrayList<ChatExample> search_list;
     //    private ArrayList<ChatExample> newList = new ArrayList<>();
     Context mcontext;
     Onclick itemClick;
@@ -44,7 +44,7 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
 
     public ChattingAdapter(ArrayList<ChatExample> inboxList, Onclick itemClick, FragInbox frag) {
         this.inboxList = inboxList;
-        this.search_list = inboxList;
+//        this.search_list = inboxList;
         this.itemClick = itemClick;
         this.frag = frag;
     }
@@ -59,37 +59,37 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
 
     }
 
-    @Override
-    public Filter getFilter() {
-        return new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
-                String charsequence = constraint.toString();
-                if (charsequence.isEmpty()) {
-                    search_list = inboxList;
-                } else {
-                    ArrayList<ChatExample> filteredList = new ArrayList<>();
-                    for (ChatExample row : inboxList) {
-                        Log.d("ROW of sendername", row.getSenderName());
-                        if (row.getSenderName().toLowerCase().contains(charsequence.toLowerCase())) {
-                            filteredList.add(row);
-                        }
-                    }
-                    search_list = filteredList;
-                }
-                FilterResults results = new FilterResults();
-                results.values = search_list;
-                return results;
-            }
-
-            @Override
-            protected void publishResults(CharSequence constraint, FilterResults results) {
-                search_list = (ArrayList<ChatExample>) results.values;
-                notifyDataSetChanged();
-
-            }
-        };
-    }
+//    @Override
+//    public Filter getFilter() {
+//        return new Filter() {
+//            @Override
+//            protected FilterResults performFiltering(CharSequence constraint) {
+//                String charsequence = constraint.toString();
+//                if (charsequence.isEmpty()) {
+//                    search_list = inboxList;
+//                } else {
+//                    ArrayList<ChatExample> filteredList = new ArrayList<>();
+//                    for (ChatExample row : inboxList) {
+//                        Log.d("ROW of sendername", row.getSenderName());
+//                        if (row.getSenderName().toLowerCase().contains(charsequence.toLowerCase())) {
+//                            filteredList.add(row);
+//                        }
+//                    }
+//                    search_list = filteredList;
+//                }
+//                FilterResults results = new FilterResults();
+//                results.values = search_list;
+//                return results;
+//            }
+//
+//            @Override
+//            protected void publishResults(CharSequence constraint, FilterResults results) {
+//                search_list = (ArrayList<ChatExample>) results.values;
+//                notifyDataSetChanged();
+//
+//            }
+//        };
+//    }
 
 
     @NonNull
@@ -144,6 +144,12 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
     @Override
     public int getItemCount() {
         return inboxList.size();
+    }
+
+    public void filterList(ArrayList<ChatExample> filteredList) {
+        inboxList = filteredList;
+        notifyDataSetChanged();
+
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

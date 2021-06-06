@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.Editable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -98,14 +99,12 @@ public class FragInbox extends Fragment implements onClickEventListener {
 //                requestAdapter = new RequestAdapter(FragInbox.this);
             }
 
-
             @Override
             public void onFailure(Call<ChatUserList> call, Throwable t) {
                 Log.d("Error code", t + "Failed to get data");
                 Toast.makeText(getActivity(), t + "Failed to get data", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
 
@@ -128,8 +127,22 @@ public class FragInbox extends Fragment implements onClickEventListener {
     }
 
     public void setFilters(CharSequence s) {
-        chattingAdapter.getFilter().filter(s);
+//        chattingAdapter.getFilter().filter(s);
         chattingAdapter.notifyDataSetChanged();
+
+    }
+
+    public void filter(String s) {
+        ArrayList<ChatExample> filteredList = new ArrayList<>();
+
+        for (ChatExample item : chatExampleList) {
+            if (item.getSenderName().toLowerCase().contains(s.toLowerCase())) {
+                filteredList.add(item);
+            }
+        }
+
+        chattingAdapter.filterList(filteredList);
+    }
 
     }
 
@@ -153,11 +166,9 @@ public class FragInbox extends Fragment implements onClickEventListener {
 //
 //        inbox = new Inbox("Ramsphy k", "https://s29588.pcdn.co/wp-content/uploads/sites/2/2018/08/Claire-Abbott-1.jpg.optimal.jpg", "lets see", "2", "3d");
 //        inboxList.add(inbox);
-//
-//
-//    }
 
-    //    private void setAdapter() {
+//    }
+//    private void setAdapter() {
 //
 //        inboxAdapter = new InboxAdapter(inboxList, itemClick);
 //        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
@@ -167,8 +178,12 @@ public class FragInbox extends Fragment implements onClickEventListener {
 //        prepareInboxData();
 //    }
 
-}
+//}
 
 interface onClickEventListener {
     void onClickEvent(int position);
 }
+
+
+
+                                  
