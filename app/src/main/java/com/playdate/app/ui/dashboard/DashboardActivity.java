@@ -556,19 +556,19 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             ll_her.setVisibility(View.VISIBLE);
             ReplaceFrag(new FragCardSwipe());
         } else if (id == R.id.txt_chat) {
-            txt_match.setBackground(null);
-            txt_social.setBackground(null);
-            iv_dashboard_notification.setBackground(null);
-            iv_dashboard_notification.setImageResource(R.drawable.notificationnew);
-
-            txt_match.setTextColor(getResources().getColor(android.R.color.darker_gray));
-            txt_social.setTextColor(getResources().getColor(android.R.color.darker_gray));
-            txt_chat.setBackground(getResources().getDrawable(R.drawable.menu_button));
-            txt_chat.setTextColor(getResources().getColor(R.color.white));
-
-            ll_friends.setVisibility(View.GONE);
-            ll_mainMenu.setVisibility(View.GONE);
-            ll_her.setVisibility(View.GONE);
+//            txt_match.setBackground(null);
+//            txt_social.setBackground(null);
+//            iv_dashboard_notification.setBackground(null);
+//            iv_dashboard_notification.setImageResource(R.drawable.notificationnew);
+//
+//            txt_match.setTextColor(getResources().getColor(android.R.color.darker_gray));
+//            txt_social.setTextColor(getResources().getColor(android.R.color.darker_gray));
+//            txt_chat.setBackground(getResources().getDrawable(R.drawable.menu_button));
+//            txt_chat.setTextColor(getResources().getColor(R.color.white));
+//
+//            ll_friends.setVisibility(View.GONE);
+//            ll_mainMenu.setVisibility(View.GONE);
+//            ll_her.setVisibility(View.GONE);
 //            ReplaceFrag(new RequestChatFragment());
             startActivity(new Intent(DashboardActivity.this, ChatBaseActivity.class));
         } else if (id == R.id.txt_personal) {
