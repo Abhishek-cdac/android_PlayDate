@@ -5,10 +5,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import com.playdate.app.ui.chat.request.FragInbox;
-import com.playdate.app.ui.dashboard.more_suggestion.FragInvite;
-import com.playdate.app.ui.dashboard.more_suggestion.FragSuggested;
-
 public class RequestChatAdapter  extends FragmentStatePagerAdapter {
     int totalTabs;
 

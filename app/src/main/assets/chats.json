@@ -1,0 +1,48 @@
+{
+  "chats": [
+    {
+      "id": 1,
+      "name": "John Doe",
+      "messages": [
+        "hiii",
+        "hello",
+        {
+          "multimedia": ""
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Kalye Jenner",
+      "messages": [
+        "hiii",
+        "hello",
+        {
+          "multimedia": ""
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Jenelia West",
+      "messages": [
+        "hiii",
+        "hello",
+        {
+          "multimedia": ""
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Myron Ivams",
+      "messages": [
+        "hiii",
+        "hello",
+        {
+          "multimedia": ""
+        }
+      ]
+    }
+  ]
+}
