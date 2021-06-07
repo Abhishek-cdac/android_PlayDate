@@ -138,6 +138,12 @@
         <activity
             android:name=".ui.onboarding.GetStarted"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".util.image_crop.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Base.Theme.AppCompat"
+            />
         <activity
             android:name=".ui.onboarding.OnBoardingActivity"
             android:screenOrientation="portrait"
@@ -182,6 +188,11 @@
         <activity
             android:name=".ui.blockuser.BlockUserActivity"
             android:screenOrientation="portrait" />
+
+
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat"/>
+
 
         <service android:name=".service.LocationService" />
         <receiver android:name=".broadcast.ConnectionBroadcastReceiver">

@@ -57,6 +57,7 @@ import com.playdate.app.ui.my_profile_details.FragSavedPost;
 import com.playdate.app.ui.notification_screen.FragNotification;
 import com.playdate.app.ui.social.FragSocialFeed;
 import com.playdate.app.ui.social.upload_media.PostMediaActivity;
+import com.playdate.app.util.image_crop.MainActivity;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
 
@@ -825,7 +826,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
                 if (null != bitmap) {
                     iv_plus.setVisibility(View.VISIBLE);
-                    Intent mIntent = new Intent(DashboardActivity.this, PostMediaActivity.class);
+                    Intent mIntent = new Intent(DashboardActivity.this, MainActivity.class);
                     startActivity(mIntent);
                 }
 

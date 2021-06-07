@@ -39,6 +39,7 @@ import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -74,6 +75,7 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_photo);
         edt_desc = findViewById(R.id.edt_desc);
+        CropImageView cropImageView = findViewById(R.id.cropImageView);
         iv_profile = findViewById(R.id.iv_profile);
         iv_add = findViewById(R.id.iv_add);
         pvMain = findViewById(R.id.ep_video_view);
@@ -118,6 +120,7 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
                 img_upload.setImageBitmap(DashboardActivity.bitmap);
             pvMain.setVisibility(View.GONE);
             img_upload.setVisibility(View.VISIBLE);
+            cropImageView.setImageBitmap(DashboardActivity.bitmap);
         }
 
 
