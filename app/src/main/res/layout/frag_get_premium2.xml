@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/backgroundColour">
 
     <ImageView
         android:id="@+id/iv_two_girls"
@@ -64,7 +64,7 @@
                 android:fontFamily="@font/lato_bold"
                 android:text="GET PREMIUM"
                 android:textAllCaps="true"
-                android:textColor="@android:color/black"
+                android:textColor="@color/textColour"
                 android:textSize="@dimen/_17sdp" />
 
 
@@ -96,7 +96,7 @@
                     android:elevation="@dimen/_15sdp"
                     android:fontFamily="@font/lato_bold"
                     android:text="5 Play Coins Every Month"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/textColour"
                     android:textSize="@dimen/_10sdp" />
             </LinearLayout>
 
@@ -129,7 +129,7 @@
                     android:elevation="@dimen/_15sdp"
                     android:fontFamily="@font/lato_bold"
                     android:text="5 DM Power Ups Every Month"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/textColour"
                     android:textSize="@dimen/_10sdp" />
             </LinearLayout>
 
@@ -164,7 +164,7 @@
                     android:elevation="@dimen/_15sdp"
                     android:fontFamily="@font/lato_bold"
                     android:text="1 Point Multiplier Unlocked"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/textColour"
                     android:textSize="@dimen/_10sdp" />
             </LinearLayout>
 
@@ -196,7 +196,7 @@
                     android:elevation="@dimen/_15sdp"
                     android:fontFamily="@font/lato_bold"
                     android:text="Exclusive Discounts to Events and Location"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/textColour"
                     android:textSize="@dimen/_10sdp" />
             </LinearLayout>
 
@@ -230,7 +230,7 @@
                     android:elevation="@dimen/_15sdp"
                     android:fontFamily="@font/lato_bold"
                     android:text="Access To All The Games"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/textColour"
                     android:textSize="@dimen/_10sdp" />
             </LinearLayout>
 
@@ -246,7 +246,7 @@
                 android:fontFamily="@font/lato_bold"
                 android:text="Get Now"
                 android:textAllCaps="false"
-                android:textColor="@android:color/black"
+                android:textColor="@color/textColour"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
 

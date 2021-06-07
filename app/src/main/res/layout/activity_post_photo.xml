@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
     android:layout_width="match_parent"
-    android:background="@color/white"
+    android:background="@color/backgroundColour"
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -41,7 +41,7 @@
                 android:fontFamily="@font/lato_bold"
                 android:gravity="start"
                 android:text="Upload Photo"
-                android:textColor="@color/black"
+                android:textColor="@color/textColour"
                 android:textSize="@dimen/_15sdp"
                 android:textStyle="bold" />
 
@@ -85,7 +85,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/lato_bold"
                 android:paddingHorizontal="@dimen/_6sdp"
-                android:textColor="@color/black"
+                android:textColor="@color/textColour"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
 
@@ -128,7 +128,7 @@
             android:fontFamily="@font/helvetica_neue"
             android:gravity="start|center"
             android:text="Description"
-            android:textColor="@android:color/black"
+            android:textColor="@color/textColour"
             android:textSize="@dimen/_11sdp" />
 
         <RelativeLayout
@@ -149,7 +149,7 @@
                 android:fontFamily="@font/lato_bold"
                 android:gravity="start|center"
                 android:hint="Enter description here..."
-                android:textColor="@color/black"
+                android:textColor="@color/textColour"
                 android:textColorHint="@color/color_grey"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
@@ -177,7 +177,7 @@
             android:fontFamily="@font/helvetica_neue"
             android:gravity="start|center"
             android:text="Location"
-            android:textColor="@android:color/black"
+            android:textColor="@color/textColour"
             android:textSize="@dimen/_11sdp" />
 
         <RelativeLayout
@@ -199,7 +199,7 @@
                 android:fontFamily="@font/lato_bold"
                 android:gravity="start|center"
                 android:hint="Location"
-                android:textColor="@color/black"
+                android:textColor="@color/textColour"
                 android:textColorHint="@color/color_grey"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
@@ -249,7 +249,7 @@
                 android:fontFamily="@font/lato_bold"
                 android:gravity="start|center"
                 android:text="Tag a friend"
-                android:textColor="@color/black"
+                android:textColor="@color/textColour"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
 

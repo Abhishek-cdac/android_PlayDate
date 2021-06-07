@@ -5,7 +5,7 @@
     android:clickable="true"
     android:focusableInTouchMode="true"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/backgroundColour">
 
 
     <TextView
@@ -21,7 +21,7 @@
         android:paddingRight="@dimen/_10sdp"
         android:paddingBottom="@dimen/_5sdp"
         android:text="@string/moresugesstion_foru"
-        android:textColor="@android:color/black"
+        android:textColor="@color/textColour"
         android:textSize="@dimen/_16sdp"
         android:textStyle="bold" />
 

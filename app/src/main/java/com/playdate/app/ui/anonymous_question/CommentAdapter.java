@@ -67,8 +67,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         this.commentList = lst_getComment;
         this.mContext = applicationContext;
         this.itemClick = itemClick;
-
-
     }
 
 
@@ -91,18 +89,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         postId = commentList.get(position).getComments().getPostId();
         timeFormat = commentList.get(position).getComments().getEntryDate();
 
-       /* Date date=null;
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        String temp = timeFormat;
-        try {
-            date = formatter.parse(temp);
-            Log.e("formated date ", date + "");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        String formateDate = new SimpleDateFormat("MM-dd-yyyy HH:mm aa").format(date);
-        Log.v("output date ",formateDate);*/
-//        TimeAgo2 timeAgo2 = new TimeAgo2();
+
         timeFormat = timeFormat.replace("T", " ");
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
         df.setTimeZone(TimeZone.getTimeZone("GTC"));
@@ -124,9 +111,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         }
         long millis = ddd.getTime();
         String text = TimeAgo.using(millis);
-
-
-//        String MyFinalValue = timeAgo2.covertTimeToText(formattedDate);
         holder.time.setText(text.toLowerCase());
         Log.e("MyFinalValue", "" + text);
 
@@ -154,9 +138,32 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             holder.like.setTextColor(mContext.getResources().getColor(R.color.black));
             holder.reply.setTextColor(mContext.getResources().getColor(R.color.black));
             holder.delete.setVisibility(View.GONE);
-
-
         }
+
+      /*  if (commentList.get(position).isSelected) {
+          //  holder.relativeLayout.setBackgroundColor(Color.parseColor("#88000000"));
+            holder.relativeLayout.setBackgroundColor(mContext.getResources().getColor(R.color.backgroundColour));
+            holder.name.setTextColor(mContext.getResources().getColor(R.color.textColour));
+            holder.desc.setTextColor(mContext.getResources().getColor(R.color.textColour));
+            holder.time.setTextColor(mContext.getResources().getColor(R.color.textColour));
+            holder.like.setTextColor(mContext.getResources().getColor(R.color.textColour));
+            holder.reply.setTextColor(mContext.getResources().getColor(R.color.textColour));
+            if (commentList.get(position).getUserId().equals(pref.getStringVal(SessionPref.LoginUserID))) {
+                holder.delete.setVisibility(View.VISIBLE);
+            } else {
+                holder.delete.setVisibility(View.GONE);
+            }
+        } else {
+            holder.relativeLayout.setBackgroundColor(mContext.getResources().getColor(R.color.backgroundColour));
+            holder.name.setTextColor(mContext.getResources().getColor(R.color.textColour));
+            holder.desc.setTextColor(mContext.getResources().getColor(R.color.textColour));
+            holder.time.setTextColor(mContext.getResources().getColor(R.color.textColour));
+            holder.like.setTextColor(mContext.getResources().getColor(R.color.textColour));
+            holder.reply.setTextColor(mContext.getResources().getColor(R.color.textColour));
+            holder.delete.setVisibility(View.GONE);
+
+
+        }*/
 
         holder.relativeLayout.setOnLongClickListener(v -> {
             int selected_index = position;

@@ -43,7 +43,7 @@
             android:layout_weight="1"
             android:fontFamily="@font/lato_bold"
             android:paddingHorizontal="@dimen/_6sdp"
-            android:textColor="@color/black"
+            android:textColor="@color/textColour"
             android:textSize="@dimen/_12sdp"
             android:textStyle="bold" />
 
@@ -113,7 +113,7 @@
             android:layout_alignParentStart="true"
             android:layout_centerHorizontal="true"
             android:layout_margin="@dimen/_5sdp"
-            android:background="@color/white"
+            android:background="@color/backgroundColour"
             android:src="@drawable/heart" />
 
 
@@ -124,7 +124,7 @@
             android:layout_centerHorizontal="true"
             android:layout_margin="@dimen/_5sdp"
             android:layout_toRightOf="@+id/iv_heart"
-            android:background="@color/white"
+            android:background="@color/backgroundColour"
             android:src="@drawable/group" />
 
         <ImageView
@@ -133,7 +133,7 @@
             android:layout_centerHorizontal="true"
             android:layout_margin="@dimen/_5sdp"
             android:layout_toRightOf="@+id/iv_msg"
-            android:background="@color/white"
+            android:background="@color/backgroundColour"
             android:src="@drawable/group"
             android:visibility="gone" />
 
@@ -144,7 +144,7 @@
             android:layout_centerHorizontal="true"
 
             android:layout_margin="@dimen/_5sdp"
-            android:background="@color/white"
+            android:background="@color/backgroundColour"
             android:src="@drawable/bookmark" />
 
 
@@ -160,7 +160,7 @@
         android:layout_marginRight="@dimen/_10sdp"
         android:fontFamily="@font/lato_bold"
         android:text="1,829 Hearts"
-        android:textColor="@color/black"
+        android:textColor="@color/textColour"
         android:textSize="@dimen/_10sdp"
         android:textStyle="bold" />
 
@@ -174,7 +174,7 @@
         android:layout_marginRight="@dimen/_10sdp"
         android:fontFamily="@font/helvetica_neue"
         android:text="@string/str_temp"
-        android:textColor="@color/black"
+        android:textColor="@color/textColour"
         android:textSize="@dimen/_10sdp"
         android:textStyle="bold" />
 
@@ -193,7 +193,7 @@
         android:paddingLeft="-10dp"
         android:paddingRight="0dp"
         android:singleLine="true"
-        android:textColor="@android:color/black"
+        android:textColor="@color/textColour"
         android:textColorHint="@android:color/darker_gray"
         android:textSize="@dimen/_11sdp">
 

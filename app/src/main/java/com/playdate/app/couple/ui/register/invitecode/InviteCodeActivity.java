@@ -14,11 +14,7 @@ import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.databinding.ActivityInviteCodeBinding;
 import com.playdate.app.model.CommonModel;
-import com.playdate.app.model.LoginResponse;
-
 import com.playdate.app.ui.register.interestin.InterestActivity;
-
-import com.playdate.app.ui.register.relationship.RelatiponShipViewModel;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
@@ -32,7 +28,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.playdate.app.util.session.SessionPref.LoginUserpersonalBio;
 
 
 public class InviteCodeActivity extends AppCompatActivity {
@@ -87,8 +82,8 @@ public class InviteCodeActivity extends AppCompatActivity {
 //        });
 
 
-
     }
+
     private void callAPI() {
         SessionPref pref = SessionPref.getInstance(this);
         /*Create handle for the RetrofitInstance interface*/
@@ -135,6 +130,7 @@ public class InviteCodeActivity extends AppCompatActivity {
             }
         });
     }
+
     private void nextPage() {
 
         InviteCodeActivity.this.startActivity(new Intent(InviteCodeActivity.this, InterestActivity.class));

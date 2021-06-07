@@ -3,14 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/backgroundColour">
 
 
     <LinearLayout
         android:id="@+id/main_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         android:orientation="horizontal"
         android:paddingHorizontal="@dimen/_14sdp">
 
@@ -48,7 +47,7 @@
         android:fontFamily="@font/lato_bold"
         android:paddingHorizontal="@dimen/_14sdp"
         android:text="@string/anonymous"
-        android:textColor="@android:color/black"
+        android:textColor="@color/textColour"
         android:textSize="@dimen/_18sdp"
         android:textStyle="bold" />
 
@@ -61,7 +60,7 @@
         android:fontFamily="@font/lato_bold"
         android:paddingHorizontal="@dimen/_14sdp"
         android:text="Choose a background color"
-        android:textColor="@color/black"
+        android:textColor="@color/textColour"
         android:textSize="@dimen/_13sdp"
         android:textStyle="bold" />
 

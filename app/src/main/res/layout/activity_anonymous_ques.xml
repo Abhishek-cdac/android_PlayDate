@@ -2,13 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/backgroundColour">
 
     <LinearLayout
         android:id="@+id/main_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         android:orientation="horizontal"
         android:paddingHorizontal="@dimen/_14sdp">
 
@@ -46,7 +45,7 @@
         android:fontFamily="@font/lato_bold"
         android:paddingHorizontal="@dimen/_14sdp"
         android:text="@string/anonymous"
-        android:textColor="@android:color/black"
+        android:textColor="@color/textColour"
         android:textSize="@dimen/_18sdp"
         android:textStyle="bold" />
 
@@ -59,7 +58,7 @@
         android:fontFamily="@font/lato_bold"
         android:paddingHorizontal="@dimen/_14sdp"
         android:text="No comments"
-        android:textColor="@color/black"
+        android:textColor="@color/textColour"
         android:textSize="@dimen/_11sdp"
         android:textStyle="bold" />
 
@@ -75,7 +74,7 @@
         android:maxLength="200"
         android:maxLines="4"
         android:paddingHorizontal="@dimen/_14sdp"
-        android:textColor="@color/black"
+        android:textColor="@color/textColour"
 
         android:textColorHint="@color/color_grey"
         android:textSize="@dimen/_12sdp"
@@ -86,6 +85,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/rl_bottom"
+        android:background="@color/backgroundColour"
         android:layout_below="@id/comment_number" />
 
     <RelativeLayout
