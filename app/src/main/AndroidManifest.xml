@@ -152,7 +152,11 @@
             android:name=".ui.onboarding.OnBoardingActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
         <activity
@@ -162,11 +166,7 @@
             android:name=".ui.chat.ChatActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".ui.SampleActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".util.customcamera.otalia.VideoPreviewActivity"

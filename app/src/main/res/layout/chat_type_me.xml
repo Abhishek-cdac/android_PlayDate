@@ -150,7 +150,7 @@
         android:layout_marginRight="@dimen/_5sdp"
         android:layout_toLeftOf="@+id/profile_image_me"
 
-        android:visibility="visible" />
+        android:visibility="gone" />
 
 
 <!--    <fragment-->

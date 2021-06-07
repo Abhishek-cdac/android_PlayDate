@@ -28,7 +28,7 @@ public class ChatSmileyAdapter extends RecyclerView.Adapter<ChatSmileyAdapter.Vi
     @NonNull
     @Override
     public ChatSmileyAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_smiley_sel, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_chat_smiley, parent, false);
         mContext = parent.getContext();
         return new ViewHolder(view);
     }
@@ -54,8 +54,8 @@ public class ChatSmileyAdapter extends RecyclerView.Adapter<ChatSmileyAdapter.Vi
             card_smiley.getLayoutParams().height = 100;
             card_smiley.getLayoutParams().width = 100;
             card_smiley.setPadding(0, 0, 0, 0);
-            ll_color.getLayoutParams().height = 100;
-            ll_color.getLayoutParams().width = 100;
+//            ll_color.getLayoutParams().height = 100;
+//            ll_color.getLayoutParams().width = 100;
             itemView.setOnClickListener(view -> ref.onSmileyChange(getAdapterPosition()));
         }
     }
