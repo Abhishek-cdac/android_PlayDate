@@ -67,8 +67,8 @@ class MyLocationListener implements LocationListener {
         SessionPref pref = SessionPref.getInstance(mContext);
         pref.saveStringKeyVal("LastCity", cityName);
         pref.saveStringKeyVal("Address_Complete", marker);
-        Log.d("Address_Complete", marker);
-//        Toast.makeText(mContext, "City Saved", Toast.LENGTH_SHORT).show();
+//        Log.d("Address_Complete", marker);
+        Toast.makeText(mContext, cityName, Toast.LENGTH_SHORT).show();
 //        loader.setVisibility(View.GONE);
 
 

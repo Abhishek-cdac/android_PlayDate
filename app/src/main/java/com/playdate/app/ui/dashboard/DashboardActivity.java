@@ -846,8 +846,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
                 if (null != bitmap) {
                     iv_plus.setVisibility(View.VISIBLE);
-                    Intent mIntent = new Intent(DashboardActivity.this, PostMediaActivity.class);
-
+                    Intent mIntent = new Intent(DashboardActivity.this, MainActivity.class);
                     startActivity(mIntent);
                 }
 

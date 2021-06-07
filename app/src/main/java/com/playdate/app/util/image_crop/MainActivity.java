@@ -38,9 +38,9 @@ public class MainActivity extends AppCompatActivity {
 
   // region: Fields and Consts
 
-  DrawerLayout mDrawerLayout;
+//  DrawerLayout mDrawerLayout;
 
-  private ActionBarDrawerToggle mDrawerToggle;
+//  private ActionBarDrawerToggle mDrawerToggle;
 
   private MainFragment mCurrentFragment;
 
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
   public void setCurrentOptions(CropImageViewOptions options) {
     mCropImageViewOptions = options;
-    updateDrawerTogglesByOptions(options);
+//    updateDrawerTogglesByOptions(options);
   }
 
   @Override
@@ -66,23 +66,23 @@ public class MainActivity extends AppCompatActivity {
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
 
-    mDrawerLayout = findViewById(R.id.drawer_layout);
+//    mDrawerLayout = findViewById(R.id.drawer_layout);
 
-    mDrawerToggle =
-        new ActionBarDrawerToggle(
-            this, mDrawerLayout, R.string.main_drawer_open, R.string.main_drawer_close);
-    mDrawerToggle.setDrawerIndicatorEnabled(true);
-    mDrawerLayout.setDrawerListener(mDrawerToggle);
+//    mDrawerToggle =
+//        new ActionBarDrawerToggle(
+//            this, mDrawerLayout, R.string.main_drawer_open, R.string.main_drawer_close);
+//    mDrawerToggle.setDrawerIndicatorEnabled(true);
+//    mDrawerLayout.setDrawerListener(mDrawerToggle);
 
     if (savedInstanceState == null) {
-      setMainFragmentByPreset(CropDemoPreset.RECT);
+      setMainFragmentByPreset(CropDemoPreset.MIN_MAX_OVERRIDE);
     }
   }
 
   @Override
   protected void onPostCreate(Bundle savedInstanceState) {
     super.onPostCreate(savedInstanceState);
-    mDrawerToggle.syncState();
+//    mDrawerToggle.syncState();
     mCurrentFragment.updateCurrentCropViewOptions();
   }
 
@@ -95,9 +95,9 @@ public class MainActivity extends AppCompatActivity {
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
-    if (mDrawerToggle.onOptionsItemSelected(item)) {
-      return true;
-    }
+//    if (mDrawerToggle.onOptionsItemSelected(item)) {
+//      return true;
+//    }
     if (mCurrentFragment != null && mCurrentFragment.onOptionsItemSelected(item)) {
       return true;
     }
@@ -136,150 +136,151 @@ public class MainActivity extends AppCompatActivity {
   @Override
   public void onRequestPermissionsResult(
           int requestCode, String[] permissions, int[] grantResults) {
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     if (requestCode == CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE) {
       if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
         CropImage.startPickImageActivity(this);
       } else {
         Toast.makeText(this, "Cancelling, required permissions are not granted", Toast.LENGTH_LONG)
-            .show();
+                .show();
       }
     }
     if (requestCode == CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE) {
       if (mCropImageUri != null
-          && grantResults.length > 0
-          && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+              && grantResults.length > 0
+              && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
         mCurrentFragment.setImageUri(mCropImageUri);
       } else {
         Toast.makeText(this, "Cancelling, required permissions are not granted", Toast.LENGTH_LONG)
-            .show();
+                .show();
       }
     }
   }
 
   @SuppressLint("NewApi")
-  public void onDrawerOptionClicked(View view) {
-    switch (view.getId()) {
-      case R.id.drawer_option_load:
-        if (CropImage.isExplicitCameraPermissionRequired(this)) {
-          requestPermissions(
-              new String[] {Manifest.permission.CAMERA},
-              CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE);
-        } else {
-          CropImage.startPickImageActivity(this);
-        }
-        mDrawerLayout.closeDrawers();
-        break;
-      case R.id.drawer_option_oval:
-        setMainFragmentByPreset(CropDemoPreset.CIRCULAR);
-        mDrawerLayout.closeDrawers();
-        break;
-      case R.id.drawer_option_rect:
-        setMainFragmentByPreset(CropDemoPreset.RECT);
-        mDrawerLayout.closeDrawers();
-        break;
-      case R.id.drawer_option_customized_overlay:
-        setMainFragmentByPreset(CropDemoPreset.CUSTOMIZED_OVERLAY);
-        mDrawerLayout.closeDrawers();
-        break;
-      case R.id.drawer_option_min_max_override:
-        setMainFragmentByPreset(CropDemoPreset.MIN_MAX_OVERRIDE);
-        mDrawerLayout.closeDrawers();
-        break;
-      case R.id.drawer_option_scale_center:
-        setMainFragmentByPreset(CropDemoPreset.SCALE_CENTER_INSIDE);
-        mDrawerLayout.closeDrawers();
-        break;
-      case R.id.drawer_option_toggle_scale:
-        mCropImageViewOptions.scaleType =
-            mCropImageViewOptions.scaleType == CropImageView.ScaleType.FIT_CENTER
-                ? CropImageView.ScaleType.CENTER_INSIDE
-                : mCropImageViewOptions.scaleType == CropImageView.ScaleType.CENTER_INSIDE
-                    ? CropImageView.ScaleType.CENTER
-                    : mCropImageViewOptions.scaleType == CropImageView.ScaleType.CENTER
-                        ? CropImageView.ScaleType.CENTER_CROP
-                        : CropImageView.ScaleType.FIT_CENTER;
-        mCurrentFragment.setCropImageViewOptions(mCropImageViewOptions);
-        updateDrawerTogglesByOptions(mCropImageViewOptions);
-        break;
-      case R.id.drawer_option_toggle_shape:
-        mCropImageViewOptions.cropShape =
-            mCropImageViewOptions.cropShape == CropImageView.CropShape.RECTANGLE
-                ? CropImageView.CropShape.OVAL
-                : CropImageView.CropShape.RECTANGLE;
-        mCurrentFragment.setCropImageViewOptions(mCropImageViewOptions);
-        updateDrawerTogglesByOptions(mCropImageViewOptions);
-        break;
-      case R.id.drawer_option_toggle_guidelines:
-        mCropImageViewOptions.guidelines =
-            mCropImageViewOptions.guidelines == CropImageView.Guidelines.OFF
-                ? CropImageView.Guidelines.ON
-                : mCropImageViewOptions.guidelines == CropImageView.Guidelines.ON
-                    ? CropImageView.Guidelines.ON_TOUCH
-                    : CropImageView.Guidelines.OFF;
-        mCurrentFragment.setCropImageViewOptions(mCropImageViewOptions);
-        updateDrawerTogglesByOptions(mCropImageViewOptions);
-        break;
-      case R.id.drawer_option_toggle_aspect_ratio:
-        if (!mCropImageViewOptions.fixAspectRatio) {
-          mCropImageViewOptions.fixAspectRatio = true;
-          mCropImageViewOptions.aspectRatio = new Pair<>(1, 1);
-        } else {
-          if (mCropImageViewOptions.aspectRatio.first == 1
-              && mCropImageViewOptions.aspectRatio.second == 1) {
-            mCropImageViewOptions.aspectRatio = new Pair<>(4, 3);
-          } else if (mCropImageViewOptions.aspectRatio.first == 4
-              && mCropImageViewOptions.aspectRatio.second == 3) {
-            mCropImageViewOptions.aspectRatio = new Pair<>(16, 9);
-          } else if (mCropImageViewOptions.aspectRatio.first == 16
-              && mCropImageViewOptions.aspectRatio.second == 9) {
-            mCropImageViewOptions.aspectRatio = new Pair<>(9, 16);
-          } else {
-            mCropImageViewOptions.fixAspectRatio = false;
-          }
-        }
-        mCurrentFragment.setCropImageViewOptions(mCropImageViewOptions);
-        updateDrawerTogglesByOptions(mCropImageViewOptions);
-        break;
-      case R.id.drawer_option_toggle_auto_zoom:
-        mCropImageViewOptions.autoZoomEnabled = !mCropImageViewOptions.autoZoomEnabled;
-        mCurrentFragment.setCropImageViewOptions(mCropImageViewOptions);
-        updateDrawerTogglesByOptions(mCropImageViewOptions);
-        break;
-      case R.id.drawer_option_toggle_max_zoom:
-        mCropImageViewOptions.maxZoomLevel =
-            mCropImageViewOptions.maxZoomLevel == 4
-                ? 8
-                : mCropImageViewOptions.maxZoomLevel == 8 ? 2 : 4;
-        mCurrentFragment.setCropImageViewOptions(mCropImageViewOptions);
-        updateDrawerTogglesByOptions(mCropImageViewOptions);
-        break;
-      case R.id.drawer_option_set_initial_crop_rect:
-        mCurrentFragment.setInitialCropRect();
-        mDrawerLayout.closeDrawers();
-        break;
-      case R.id.drawer_option_reset_crop_rect:
-        mCurrentFragment.resetCropRect();
-        mDrawerLayout.closeDrawers();
-        break;
-      case R.id.drawer_option_toggle_multitouch:
-        mCropImageViewOptions.multitouch = !mCropImageViewOptions.multitouch;
-        mCurrentFragment.setCropImageViewOptions(mCropImageViewOptions);
-        updateDrawerTogglesByOptions(mCropImageViewOptions);
-        break;
-      case R.id.drawer_option_toggle_show_overlay:
-        mCropImageViewOptions.showCropOverlay = !mCropImageViewOptions.showCropOverlay;
-        mCurrentFragment.setCropImageViewOptions(mCropImageViewOptions);
-        updateDrawerTogglesByOptions(mCropImageViewOptions);
-        break;
-      case R.id.drawer_option_toggle_show_progress_bar:
-        mCropImageViewOptions.showProgressBar = !mCropImageViewOptions.showProgressBar;
-        mCurrentFragment.setCropImageViewOptions(mCropImageViewOptions);
-        updateDrawerTogglesByOptions(mCropImageViewOptions);
-        break;
-      default:
-        Toast.makeText(this, "Unknown drawer option clicked", Toast.LENGTH_LONG).show();
-    }
-  }
+//  public void onDrawerOptionClicked(View view) {
+//    switch (view.getId()) {
+//      case R.id.drawer_option_load:
+//        if (CropImage.isExplicitCameraPermissionRequired(this)) {
+//          requestPermissions(
+//              new String[] {Manifest.permission.CAMERA},
+//              CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE);
+//        } else {
+//          CropImage.startPickImageActivity(this);
+//        }
+//        mDrawerLayout.closeDrawers();
+//        break;
+//      case R.id.drawer_option_oval:
+//        setMainFragmentByPreset(CropDemoPreset.CIRCULAR);
+//        mDrawerLayout.closeDrawers();
+//        break;
+//      case R.id.drawer_option_rect:
+//        setMainFragmentByPreset(CropDemoPreset.RECT);
+//        mDrawerLayout.closeDrawers();
+//        break;
+//      case R.id.drawer_option_customized_overlay:
+//        setMainFragmentByPreset(CropDemoPreset.CUSTOMIZED_OVERLAY);
+//        mDrawerLayout.closeDrawers();
+//        break;
+//      case R.id.drawer_option_min_max_override:
+//        setMainFragmentByPreset(CropDemoPreset.MIN_MAX_OVERRIDE);
+//        mDrawerLayout.closeDrawers();
+//        break;
+//      case R.id.drawer_option_scale_center:
+//        setMainFragmentByPreset(CropDemoPreset.SCALE_CENTER_INSIDE);
+//        mDrawerLayout.closeDrawers();
+//        break;
+//      case R.id.drawer_option_toggle_scale:
+//        mCropImageViewOptions.scaleType =
+//            mCropImageViewOptions.scaleType == CropImageView.ScaleType.FIT_CENTER
+//                ? CropImageView.ScaleType.CENTER_INSIDE
+//                : mCropImageViewOptions.scaleType == CropImageView.ScaleType.CENTER_INSIDE
+//                    ? CropImageView.ScaleType.CENTER
+//                    : mCropImageViewOptions.scaleType == CropImageView.ScaleType.CENTER
+//                        ? CropImageView.ScaleType.CENTER_CROP
+//                        : CropImageView.ScaleType.FIT_CENTER;
+//        mCurrentFragment.setCropImageViewOptions(mCropImageViewOptions);
+//        updateDrawerTogglesByOptions(mCropImageViewOptions);
+//        break;
+//      case R.id.drawer_option_toggle_shape:
+//        mCropImageViewOptions.cropShape =
+//            mCropImageViewOptions.cropShape == CropImageView.CropShape.RECTANGLE
+//                ? CropImageView.CropShape.OVAL
+//                : CropImageView.CropShape.RECTANGLE;
+//        mCurrentFragment.setCropImageViewOptions(mCropImageViewOptions);
+//        updateDrawerTogglesByOptions(mCropImageViewOptions);
+//        break;
+//      case R.id.drawer_option_toggle_guidelines:
+//        mCropImageViewOptions.guidelines =
+//            mCropImageViewOptions.guidelines == CropImageView.Guidelines.OFF
+//                ? CropImageView.Guidelines.ON
+//                : mCropImageViewOptions.guidelines == CropImageView.Guidelines.ON
+//                    ? CropImageView.Guidelines.ON_TOUCH
+//                    : CropImageView.Guidelines.OFF;
+//        mCurrentFragment.setCropImageViewOptions(mCropImageViewOptions);
+//        updateDrawerTogglesByOptions(mCropImageViewOptions);
+//        break;
+//      case R.id.drawer_option_toggle_aspect_ratio:
+//        if (!mCropImageViewOptions.fixAspectRatio) {
+//          mCropImageViewOptions.fixAspectRatio = true;
+//          mCropImageViewOptions.aspectRatio = new Pair<>(1, 1);
+//        } else {
+//          if (mCropImageViewOptions.aspectRatio.first == 1
+//              && mCropImageViewOptions.aspectRatio.second == 1) {
+//            mCropImageViewOptions.aspectRatio = new Pair<>(4, 3);
+//          } else if (mCropImageViewOptions.aspectRatio.first == 4
+//              && mCropImageViewOptions.aspectRatio.second == 3) {
+//            mCropImageViewOptions.aspectRatio = new Pair<>(16, 9);
+//          } else if (mCropImageViewOptions.aspectRatio.first == 16
+//              && mCropImageViewOptions.aspectRatio.second == 9) {
+//            mCropImageViewOptions.aspectRatio = new Pair<>(9, 16);
+//          } else {
+//            mCropImageViewOptions.fixAspectRatio = false;
+//          }
+//        }
+//        mCurrentFragment.setCropImageViewOptions(mCropImageViewOptions);
+//        updateDrawerTogglesByOptions(mCropImageViewOptions);
+//        break;
+//      case R.id.drawer_option_toggle_auto_zoom:
+//        mCropImageViewOptions.autoZoomEnabled = !mCropImageViewOptions.autoZoomEnabled;
+//        mCurrentFragment.setCropImageViewOptions(mCropImageViewOptions);
+//        updateDrawerTogglesByOptions(mCropImageViewOptions);
+//        break;
+//      case R.id.drawer_option_toggle_max_zoom:
+//        mCropImageViewOptions.maxZoomLevel =
+//            mCropImageViewOptions.maxZoomLevel == 4
+//                ? 8
+//                : mCropImageViewOptions.maxZoomLevel == 8 ? 2 : 4;
+//        mCurrentFragment.setCropImageViewOptions(mCropImageViewOptions);
+//        updateDrawerTogglesByOptions(mCropImageViewOptions);
+//        break;
+//      case R.id.drawer_option_set_initial_crop_rect:
+//        mCurrentFragment.setInitialCropRect();
+//        mDrawerLayout.closeDrawers();
+//        break;
+//      case R.id.drawer_option_reset_crop_rect:
+//        mCurrentFragment.resetCropRect();
+//        mDrawerLayout.closeDrawers();
+//        break;
+//      case R.id.drawer_option_toggle_multitouch:
+//        mCropImageViewOptions.multitouch = !mCropImageViewOptions.multitouch;
+//        mCurrentFragment.setCropImageViewOptions(mCropImageViewOptions);
+//        updateDrawerTogglesByOptions(mCropImageViewOptions);
+//        break;
+//      case R.id.drawer_option_toggle_show_overlay:
+//        mCropImageViewOptions.showCropOverlay = !mCropImageViewOptions.showCropOverlay;
+//        mCurrentFragment.setCropImageViewOptions(mCropImageViewOptions);
+//        updateDrawerTogglesByOptions(mCropImageViewOptions);
+//        break;
+//      case R.id.drawer_option_toggle_show_progress_bar:
+//        mCropImageViewOptions.showProgressBar = !mCropImageViewOptions.showProgressBar;
+//        mCurrentFragment.setCropImageViewOptions(mCropImageViewOptions);
+//        updateDrawerTogglesByOptions(mCropImageViewOptions);
+//        break;
+//      default:
+//        Toast.makeText(this, "Unknown drawer option clicked", Toast.LENGTH_LONG).show();
+//    }
+//  }
 
   private void setMainFragmentByPreset(CropDemoPreset demoPreset) {
     FragmentManager fragmentManager = getSupportFragmentManager();
@@ -289,53 +290,53 @@ public class MainActivity extends AppCompatActivity {
         .commit();
   }
 
-  private void updateDrawerTogglesByOptions(CropImageViewOptions options) {
-    ((TextView) findViewById(R.id.drawer_option_toggle_scale))
-        .setText(
-            getResources()
-                .getString(R.string.drawer_option_toggle_scale, options.scaleType.name()));
-    ((TextView) findViewById(R.id.drawer_option_toggle_shape))
-        .setText(
-            getResources()
-                .getString(R.string.drawer_option_toggle_shape, options.cropShape.name()));
-    ((TextView) findViewById(R.id.drawer_option_toggle_guidelines))
-        .setText(
-            getResources()
-                .getString(R.string.drawer_option_toggle_guidelines, options.guidelines.name()));
-    ((TextView) findViewById(R.id.drawer_option_toggle_multitouch))
-        .setText(
-            getResources()
-                .getString(
-                    R.string.drawer_option_toggle_multitouch,
-                    Boolean.toString(options.multitouch)));
-    ((TextView) findViewById(R.id.drawer_option_toggle_show_overlay))
-        .setText(
-            getResources()
-                .getString(
-                    R.string.drawer_option_toggle_show_overlay,
-                    Boolean.toString(options.showCropOverlay)));
-    ((TextView) findViewById(R.id.drawer_option_toggle_show_progress_bar))
-        .setText(
-            getResources()
-                .getString(
-                    R.string.drawer_option_toggle_show_progress_bar,
-                    Boolean.toString(options.showProgressBar)));
-
-    String aspectRatio = "FREE";
-    if (options.fixAspectRatio) {
-      aspectRatio = options.aspectRatio.first + ":" + options.aspectRatio.second;
-    }
-    ((TextView) findViewById(R.id.drawer_option_toggle_aspect_ratio))
-        .setText(getResources().getString(R.string.drawer_option_toggle_aspect_ratio, aspectRatio));
-
-    ((TextView) findViewById(R.id.drawer_option_toggle_auto_zoom))
-        .setText(
-            getResources()
-                .getString(
-                    R.string.drawer_option_toggle_auto_zoom,
-                    options.autoZoomEnabled ? "Enabled" : "Disabled"));
-    ((TextView) findViewById(R.id.drawer_option_toggle_max_zoom))
-        .setText(
-            getResources().getString(R.string.drawer_option_toggle_max_zoom, options.maxZoomLevel));
-  }
+//  private void updateDrawerTogglesByOptions(CropImageViewOptions options) {
+//    ((TextView) findViewById(R.id.drawer_option_toggle_scale))
+//        .setText(
+//            getResources()
+//                .getString(R.string.drawer_option_toggle_scale, options.scaleType.name()));
+//    ((TextView) findViewById(R.id.drawer_option_toggle_shape))
+//        .setText(
+//            getResources()
+//                .getString(R.string.drawer_option_toggle_shape, options.cropShape.name()));
+//    ((TextView) findViewById(R.id.drawer_option_toggle_guidelines))
+//        .setText(
+//            getResources()
+//                .getString(R.string.drawer_option_toggle_guidelines, options.guidelines.name()));
+//    ((TextView) findViewById(R.id.drawer_option_toggle_multitouch))
+//        .setText(
+//            getResources()
+//                .getString(
+//                    R.string.drawer_option_toggle_multitouch,
+//                    Boolean.toString(options.multitouch)));
+//    ((TextView) findViewById(R.id.drawer_option_toggle_show_overlay))
+//        .setText(
+//            getResources()
+//                .getString(
+//                    R.string.drawer_option_toggle_show_overlay,
+//                    Boolean.toString(options.showCropOverlay)));
+//    ((TextView) findViewById(R.id.drawer_option_toggle_show_progress_bar))
+//        .setText(
+//            getResources()
+//                .getString(
+//                    R.string.drawer_option_toggle_show_progress_bar,
+//                    Boolean.toString(options.showProgressBar)));
+//
+//    String aspectRatio = "FREE";
+//    if (options.fixAspectRatio) {
+//      aspectRatio = options.aspectRatio.first + ":" + options.aspectRatio.second;
+//    }
+//    ((TextView) findViewById(R.id.drawer_option_toggle_aspect_ratio))
+//        .setText(getResources().getString(R.string.drawer_option_toggle_aspect_ratio, aspectRatio));
+//
+//    ((TextView) findViewById(R.id.drawer_option_toggle_auto_zoom))
+//        .setText(
+//            getResources()
+//                .getString(
+//                    R.string.drawer_option_toggle_auto_zoom,
+//                    options.autoZoomEnabled ? "Enabled" : "Disabled"));
+//    ((TextView) findViewById(R.id.drawer_option_toggle_max_zoom))
+//        .setText(
+//            getResources().getString(R.string.drawer_option_toggle_max_zoom, options.maxZoomLevel));
+//  }
 }
