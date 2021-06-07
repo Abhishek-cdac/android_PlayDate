@@ -1,8 +1,4 @@
-  package com.playdate.app.service;
-
-
-
-
+package com.playdate.app.service;
 
 
 import android.annotation.SuppressLint;
@@ -43,13 +39,14 @@ public class LocationService extends Service implements LocationListener {
         LocationManager locationManager = (LocationManager)
                 getSystemService(Context.LOCATION_SERVICE);
 //        LocationListener locationListener = new MyLocationListener(this);
-        Log.d("LOCATIONManager_____", String.valueOf(locationManager));
+//        Toast.makeText(this, "LOCATIONManager_____" + locationManager, Toast.LENGTH_SHORT).show();
 
         locationManager.requestLocationUpdates(
                 LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
 
 
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        Toast.makeText(this, "Location" + location, Toast.LENGTH_SHORT).show();
 
         Log.d("Location..", String.valueOf(location));
         if (location != null) {

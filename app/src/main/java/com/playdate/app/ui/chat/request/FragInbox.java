@@ -102,6 +102,7 @@ public class FragInbox extends Fragment implements onClickEventListener {
             @Override
             public void onFailure(Call<ChatUserList> call, Throwable t) {
                 Log.d("Error code", t + "Failed to get data");
+                pd.cancel();
                 Toast.makeText(getActivity(), t + "Failed to get data", Toast.LENGTH_SHORT).show();
             }
         });
@@ -114,9 +115,10 @@ public class FragInbox extends Fragment implements onClickEventListener {
         String sender_name = chatExampleList.get(position).getSenderName();
         String sender_profile_image = chatExampleList.get(position).getProfilePhoto();
 
+
         OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
         if (frag != null) {
-            frag.ReplaceFragWithStack(new FragChatMain(chatMessageList, sender_name, sender_profile_image));
+            frag.ReplaceFrag(new FragChatMain(chatMessageList, sender_name, sender_profile_image));
         }
     }
 
@@ -134,6 +136,7 @@ public class FragInbox extends Fragment implements onClickEventListener {
 
     public void filter(String s) {
         ArrayList<ChatExample> filteredList = new ArrayList<>();
+        chatExampleList = new ArrayList<>();
 
         for (ChatExample item : chatExampleList) {
             if (item.getSenderName().toLowerCase().contains(s.toLowerCase())) {
@@ -146,39 +149,6 @@ public class FragInbox extends Fragment implements onClickEventListener {
 
     }
 
-
-//    private void prepareInboxData() {
-//
-//        Inbox inbox = new Inbox("jonn den", "https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", "I am good", "5", "8:00");
-//        inboxList.add(inbox);
-//
-//        inbox = new Inbox("gomes helen", "https://images.saymedia-content.com/.image/t_share/MTc0MDkwNjUxNDc2OTYwODM0/5-instagram-models-you-should-be-following.png", "How are you", "3", "1d");
-//        inboxList.add(inbox);
-//
-//        inbox = new Inbox("adreena helen", "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg", "Hiiiiiii", "5", "1d");
-//        inboxList.add(inbox);
-//
-//        inbox = new Inbox("Ramsphy k", "https://s29588.pcdn.co/wp-content/uploads/sites/2/2018/08/Claire-Abbott-1.jpg.optimal.jpg", "coming", "6", "2d");
-//        inboxList.add(inbox);
-//
-//        inbox = new Inbox("adreena helen", "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg", "yupp...", "5", "2d");
-//        inboxList.add(inbox);
-//
-//        inbox = new Inbox("Ramsphy k", "https://s29588.pcdn.co/wp-content/uploads/sites/2/2018/08/Claire-Abbott-1.jpg.optimal.jpg", "lets see", "2", "3d");
-//        inboxList.add(inbox);
-
-//    }
-//    private void setAdapter() {
-//
-//        inboxAdapter = new InboxAdapter(inboxList, itemClick);
-//        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-//        recyclerView.setLayoutManager(mLayoutManager);
-//        recyclerView.setItemAnimator(new DefaultItemAnimator());
-//        recyclerView.setAdapter(inboxAdapter);
-//        prepareInboxData();
-//    }
-
-//}
 
 interface onClickEventListener {
     void onClickEvent(int position);

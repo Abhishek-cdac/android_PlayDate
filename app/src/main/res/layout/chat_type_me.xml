@@ -50,16 +50,6 @@
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="@dimen/_10sdp">
 
-        <!--        <ImageView-->
-        <!--            android:id="@+id/iv_post_image"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="match_parent"-->
-        <!--            android:layout_gravity="center"-->
-        <!--            android:background="@color/color_grey_too_light"-->
-        <!--            android:foregroundGravity="center"-->
-        <!--            android:src="@drawable/profile"-->
-        <!--            android:visibility="gone" />-->
-
         <VideoView
             android:id="@+id/chat_video"
             android:layout_width="fill_parent"
