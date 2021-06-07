@@ -181,9 +181,10 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 viewHolderMe.tv_msg.setVisibility(View.GONE);
                 viewHolderMe.chat_image.setVisibility(View.GONE);
 //                viewHolderMe.card_image.setVisibility(View.VISIBLE);
-                viewHolderMe.chat_video.setVisibility(View.VISIBLE);
+//                viewHolderMe.chat_video.setVisibility(View.VISIBLE);
+                viewHolderMe.card_video.setVisibility(View.VISIBLE);
 
-                viewHolderMe.rl_audio.setVisibility(View.GONE);
+//                viewHolderMe.rl_audio.setVisibility(View.GONE);
 //                viewHolderMe.mv_location.setVisibility(View.GONE);
 
                 viewHolderMe.chat_video.setVideoURI(chatmsgList.get(position).getUri());
@@ -425,6 +426,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         ImageView chat_image;
         TextView tv_msg;
         VideoView chat_video;
+        CardView card_video;
         RelativeLayout rl_audio;
         ImageView play_audio;
         //        ImageView iv_post_image;
@@ -442,6 +444,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             chat_image = view.findViewById(R.id.chat_image);
             tv_msg = view.findViewById(R.id.tv_chat);
             chat_video = view.findViewById(R.id.chat_video);
+            card_video = view.findViewById(R.id.card_video);
 //            iv_post_image = view.findViewById(R.id.iv_post_image);
             img_playback = view.findViewById(R.id.img_playback);
             iv_mute_unmute = view.findViewById(R.id.iv_mute_unmute);
