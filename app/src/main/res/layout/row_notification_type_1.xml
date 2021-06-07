@@ -5,10 +5,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundColour"
     android:padding="@dimen/_8sdp">
     <LinearLayout
-        android:visibility="visible"
+        android:visibility="gone"
         android:gravity="center"
+        android:background="@color/backgroundColour"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/ll_no_notify">
@@ -21,20 +23,21 @@
             android:gravity="center"
             android:textStyle="bold"
             android:text="No New Notifications"
-            android:textColor="@color/black"
+            android:textColor="@color/textColour"
             android:textSize="@dimen/_15sdp" />
 
     </LinearLayout>
 
 
     <RelativeLayout
-        android:visibility="gone"
+        android:visibility="visible"
+        android:background="@color/backgroundColour"
         android:id="@+id/rl_notification"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <RelativeLayout
-
+            android:background="@color/backgroundColour"
             android:id="@+id/main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -43,7 +46,6 @@
                 android:id="@+id/profile_image_1"
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="@dimen/_30sdp"
-                android:layout_toRightOf="@+id/back_anonymous"
                 android:src="@drawable/model1"
                 app:civ_border_color="@android:color/transparent" />
 
@@ -55,7 +57,7 @@
                 android:layout_marginHorizontal="@dimen/_5sdp"
                 android:layout_toRightOf="@+id/profile_image_1"
                 android:text="NatalliSmith"
-                android:textColor="@color/black"
+                android:textColor="@color/textColour"
                 android:textStyle="bold" />
 
             <TextView
@@ -66,7 +68,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/tv_name_noti"
                 android:text="messaged you"
-                android:textColor="@color/black" />
+                android:textColor="@color/textColour" />
 
             <ImageView
                 android:id="@+id/iv_icon_1"
@@ -81,13 +83,16 @@
 
         <RelativeLayout
             android:id="@+id/rl_request"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/main"
+            android:gravity="end"
+            android:background="@color/backgroundColour"
             android:layout_alignParentEnd="true"
             android:paddingHorizontal="@dimen/_10sdp">
 
             <ImageView
+
                 android:id="@+id/iv_right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -98,6 +103,7 @@
                 android:src="@drawable/icon_check" />
 
             <ImageView
+
                 android:id="@+id/iv_cross"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

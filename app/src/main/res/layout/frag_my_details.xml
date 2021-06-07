@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/backgroundColour"
     android:clickable="true"
     android:focusableInTouchMode="true"
     android:orientation="vertical">
@@ -11,7 +11,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
         android:orientation="vertical"
         android:paddingLeft="@dimen/_20sdp"
         android:paddingRight="@dimen/_20sdp">
@@ -37,7 +36,7 @@
             android:fontFamily="@font/lato_bold"
             android:gravity="center"
             android:text="Change profile photo"
-            android:textColor="@color/black"
+            android:textColor="@color/textColour"
             android:textSize="@dimen/_12sdp" />
 
 
@@ -59,7 +58,7 @@
                 android:fontFamily="@font/lato_bold"
                 android:gravity="start|center"
                 android:text="Username"
-                android:textColor="@color/black"
+                android:textColor="@color/textColour"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
 
@@ -86,7 +85,7 @@
             android:layout_marginRight="@dimen/_10sdp"
             android:fontFamily="@font/helvetica_neue"
             android:gravity="start|center"
-            android:textColor="@color/black"
+            android:textColor="@color/textColour"
             android:textSize="@dimen/_11sdp"
             android:textStyle="bold" />
 
@@ -109,7 +108,7 @@
                 android:fontFamily="@font/lato_bold"
                 android:gravity="start|center"
                 android:text="Reset Password"
-                android:textColor="@color/black"
+                android:textColor="@color/textColour"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
 
@@ -137,7 +136,7 @@
             android:gravity="start|center"
             android:inputType="textPassword"
             android:text="Emyron96"
-            android:textColor="@color/black"
+            android:textColor="@color/textColour"
             android:textSize="@dimen/_11sdp" />
 
 
@@ -160,7 +159,7 @@
                 android:fontFamily="@font/lato_bold"
                 android:gravity="start|center"
                 android:text="Create Relationship"
-                android:textColor="@color/black"
+                android:textColor="@color/textColour"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
 
@@ -187,7 +186,7 @@
             android:fontFamily="@font/helvetica_neue"
             android:gravity="start|center"
             android:text="invite your partner"
-            android:textColor="@color/black"
+            android:textColor="@color/textColour"
             android:textSize="@dimen/_11sdp" />
 
         <RelativeLayout
@@ -208,7 +207,7 @@
                 android:fontFamily="@font/lato_bold"
                 android:gravity="start|center"
                 android:text="Leave Relationship"
-                android:textColor="@color/black"
+                android:textColor="@color/textColour"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
 
@@ -236,7 +235,7 @@
             android:fontFamily="@font/helvetica_neue"
             android:gravity="start|center"
             android:text="Become Single"
-            android:textColor="@color/black"
+            android:textColor="@color/textColour"
             android:textSize="@dimen/_11sdp"
             android:visibility="gone" />
 
@@ -257,7 +256,7 @@
                 android:fontFamily="@font/lato_bold"
                 android:gravity="start|center"
                 android:text="Change bio"
-                android:textColor="@color/black"
+                android:textColor="@color/textColour"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
 
@@ -286,7 +285,7 @@
             android:gravity="start|center"
             android:singleLine="true"
             android:text=""
-            android:textColor="@color/black"
+            android:textColor="@color/textColour"
             android:textSize="@dimen/_11sdp" />
 
         <RelativeLayout
@@ -307,7 +306,7 @@
                 android:fontFamily="@font/lato_bold"
                 android:gravity="start|center"
                 android:text="Change How We Met"
-                android:textColor="@color/black"
+                android:textColor="@color/textColour"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
 
@@ -336,7 +335,7 @@
             android:gravity="start|center"
             android:singleLine="true"
             android:text=""
-            android:textColor="@color/black"
+            android:textColor="@color/textColour"
             android:textSize="@dimen/_11sdp"
             android:visibility="gone" />
 
@@ -356,7 +355,7 @@
                 android:fontFamily="@font/lato_bold"
                 android:gravity="start|center"
                 android:text="Change Bio Video"
-                android:textColor="@color/black"
+                android:textColor="@color/textColour"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
 
@@ -384,7 +383,7 @@
             android:fontFamily="@font/helvetica_neue"
             android:gravity="start|center"
             android:text="Edit your bio video"
-            android:textColor="@color/black"
+            android:textColor="@color/textColour"
             android:textSize="@dimen/_11sdp" />
 
         <RelativeLayout
@@ -405,7 +404,7 @@
                 android:fontFamily="@font/lato_bold"
                 android:gravity="start|center"
                 android:text="Interests"
-                android:textColor="@color/black"
+                android:textColor="@color/textColour"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
 
@@ -433,7 +432,7 @@
             android:fontFamily="@font/helvetica_neue"
             android:gravity="start|center"
             android:text="Select interests"
-            android:textColor="@color/black"
+            android:textColor="@color/textColour"
             android:textSize="@dimen/_11sdp" />
 
         <RelativeLayout
@@ -454,7 +453,7 @@
                 android:fontFamily="@font/lato_bold"
                 android:gravity="start|center"
                 android:text="Dark Mode"
-                android:textColor="@color/black"
+                android:textColor="@color/textColour"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
 
@@ -462,7 +461,6 @@
                 android:id="@+id/iv_dark_mode"
                 android:layout_width="@dimen/_20sdp"
                 android:layout_height="@dimen/_20sdp"
-
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:src="@drawable/dark_mode">
@@ -482,7 +480,7 @@
             android:fontFamily="@font/helvetica_neue"
             android:gravity="start|center"
             android:text="Enable/Disable dark mode"
-            android:textColor="@color/black"
+            android:textColor="@color/textColour"
             android:textSize="@dimen/_11sdp"
             android:textStyle="bold" />
 
@@ -505,7 +503,7 @@
                 android:fontFamily="@font/lato_bold"
                 android:gravity="start|center"
                 android:text="Saved Post"
-                android:textColor="@color/black"
+                android:textColor="@color/textColour"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
 
@@ -532,7 +530,7 @@
             android:fontFamily="@font/lato_bold"
             android:gravity="start|center"
             android:text="Update Account to Premium"
-            android:textColor="@color/black"
+            android:textColor="@color/textColour"
             android:textSize="@dimen/_12sdp"
             android:textStyle="bold" />
 
@@ -547,7 +545,7 @@
             android:fontFamily="@font/lato_bold"
             android:gravity="start|center"
             android:text="Invite Friends"
-            android:textColor="@color/black"
+            android:textColor="@color/textColour"
             android:textSize="@dimen/_12sdp"
             android:textStyle="bold" />
 
@@ -562,7 +560,7 @@
             android:fontFamily="@font/lato_bold"
             android:gravity="start|center"
             android:text="Blocked Users"
-            android:textColor="@color/black"
+            android:textColor="@color/textColour"
             android:textSize="@dimen/_12sdp"
             android:textStyle="bold" />
 
@@ -578,7 +576,7 @@
             android:fontFamily="@font/lato_bold"
             android:gravity="start|center"
             android:text="Logout"
-            android:textColor="@color/black"
+            android:textColor="@color/textColour"
             android:textSize="@dimen/_12sdp"
             android:textStyle="bold" />
 

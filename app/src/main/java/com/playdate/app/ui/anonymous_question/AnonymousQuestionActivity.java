@@ -50,11 +50,12 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
     EditText add_comment;
     EditText ext_question;
     boolean isForNew = false;
-    String postId;
+    String postId, anonymous;
     String UserID;
     private Onclick itemClick;
-//    String commentIdAq , userIDAq ;
-    Bundle bundle= new Bundle();
+    //    String commentIdAq , userIDAq ;
+    Bundle bundle = new Bundle();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,13 +80,12 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
             @Override
             public void onItemClicks(View v, int absoluteAdapterPosition, int i, String commentId, String postId, String userId) {
                 if (i == 11) {
-                        bundle.putString("postIdAQ", postId);
-                        bundle.putString("userIdAQ", userId);
-                        bundle.putString("commentIdAQ", commentId);
-                     }
+                    bundle.putString("postIdAQ", postId);
+                    bundle.putString("userIdAQ", userId);
+                    bundle.putString("commentIdAQ", commentId);
+                }
             }
         };
-
 
 
         text_count = findViewById(R.id.comment_number);
@@ -97,19 +97,15 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
         txt_post_comment = findViewById(R.id.txt_post_comment);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
+            anonymous = extras.getString("Anonymous");
             postId = extras.getString("post_id");
             UserID = extras.getString("user_id");
-
             bundle.putString("post_id", postId);
             bundle.putString("user_id", UserID);
-
-            Log.e("postiddddddd", "" + postId);
-            //The key argument here must match that used in the other activity
         }
         TextView text = findViewById(R.id.anun);
         text.setTypeface(Typeface.DEFAULT_BOLD);
         recyclerView = findViewById(R.id.comments_list);
-
         txt_post_comment.setTextColor(getResources().getColor(R.color.color_grey));
 
 
@@ -181,7 +177,7 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
 
     @Override
     public void onBackPressed() {
-        setResult(104,null);
+        setResult(104, null);
         super.onBackPressed();
 
 
@@ -255,7 +251,7 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.back_anonymous) {
-            setResult(104,null);
+            setResult(104, null);
             finish();
         } else if (id == R.id.txt_post_comment) {
 

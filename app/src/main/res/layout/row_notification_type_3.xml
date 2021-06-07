@@ -22,7 +22,7 @@
         android:layout_marginHorizontal="@dimen/_5sdp"
         android:layout_toRightOf="@+id/profile_image_3"
         android:text="You matched with"
-        android:textColor="@color/black" />
+        android:textColor="@color/textColour" />
 
     <TextView
         android:id="@+id/tv_name_noti"
@@ -31,7 +31,7 @@
         android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/tv_desc_noti"
         android:text="NatalliSmith"
-        android:textColor="@color/black"
+        android:textColor="@color/textColour"
         android:textStyle="bold" />
 
     <ImageView

@@ -144,7 +144,7 @@
             android:layout_alignParentStart="true"
             android:layout_centerHorizontal="true"
             android:layout_margin="@dimen/_5sdp"
-            android:background="@color/white"
+            android:background="@color/backgroundColour"
             android:src="@drawable/heart" />
 
 
@@ -155,7 +155,7 @@
             android:layout_centerHorizontal="true"
             android:layout_margin="@dimen/_5sdp"
             android:layout_toRightOf="@+id/iv_heart"
-            android:background="@color/white"
+            android:background="@color/backgroundColour"
             android:src="@drawable/group" />
 
         <ImageView
@@ -175,7 +175,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerHorizontal="true"
             android:layout_margin="@dimen/_5sdp"
-            android:background="@color/white"
+            android:background="@color/backgroundColour"
             android:src="@drawable/bookmark" />
 
 

@@ -41,14 +41,14 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
     EditText add_comment;
     RecyclerView rec_view_colors;
     TextView txt_ques;
-//    TextView emojitxt;
+    //    TextView emojitxt;
     TextView txt_smiley;
     TextView txt_post_comment;
     ImageView back_anonymous;
     ImageView more_option;
     ArrayList<String> lst = new ArrayList<>();
     ArrayList<Integer> lstSmiley = new ArrayList<>();
-//    private ArrayList<MatchListUser> lstUserSuggestions = new ArrayList<>();
+//  private ArrayList<MatchListUser> lstUserSuggestions = new ArrayList<>();
 
 
     Integer[] intEmoji = {
@@ -82,7 +82,7 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
         Log.e("", "" + getEmoticon(originalUnicode));
         CreateList();
 
-//        CreateSmilyList();
+//      CreateSmilyList();
         getEmoticon();
         OnColorChange(0);
         ColorAdapter adapter = new ColorAdapter(lst, this);
@@ -117,6 +117,7 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
 
     public void CreateList() {
 
+        lst.add("#D13A6F");
         lst.add("#1D1375");
         lst.add("#C50AF2");
         lst.add("#65FF00");
@@ -180,14 +181,14 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
     }
 
     private void callAPIFeedPost() {
-    SessionPref pref = SessionPref.getInstance(this);
-        String Location = pref.getStringVal("LastCity");
+        SessionPref pref = SessionPref.getInstance(this);
+     /*   String Location = pref.getStringVal("LastCity");
         if (Location.isEmpty()) {
             Location = "India";
-        }
+        }*/
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("location", Location);
+        hashMap.put("location", "India");
         hashMap.put("postType", "Question");
         hashMap.put("tag", ques);
         hashMap.put("colorCode", HexColor);
@@ -203,10 +204,14 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
                 pd.cancel();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
+                        try {
+                            Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
+                            startActivity(intent);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
-                        Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
-                        startActivity(intent);
-                      // postQues();
+                        // postQues();
                     } else {
 //                        clsCommon.showDialogMsg(BioActivity.this, "PlayDate", response.body().getMessage(), "Ok");
                     }

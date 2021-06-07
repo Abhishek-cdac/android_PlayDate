@@ -34,7 +34,7 @@
             android:layout_weight="1"
             android:fontFamily="@font/lato_bold"
             android:paddingHorizontal="@dimen/_6sdp"
-            android:textColor="@color/black"
+            android:textColor="@color/textColour"
             android:textSize="@dimen/_12sdp"
             android:textStyle="bold" />
 
@@ -93,7 +93,7 @@
         android:layout_marginRight="@dimen/_10sdp"
         android:fontFamily="@font/lato_bold"
         android:text="Get 30% off on first Order"
-        android:textColor="@color/black"
+        android:textColor="@color/textColour"
         android:textSize="@dimen/_10sdp"
         android:textStyle="bold" />
 

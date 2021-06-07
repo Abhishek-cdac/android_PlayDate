@@ -33,7 +33,7 @@
             android:layout_weight="1"
             android:fontFamily="@font/lato_bold"
             android:paddingHorizontal="@dimen/_6sdp"
-            android:textColor="@color/black"
+            android:textColor="@color/textColour"
             android:textSize="@dimen/_12sdp"
             android:textStyle="bold" />
 
@@ -145,7 +145,7 @@
             android:fontFamily="@font/lato_bold"
             android:text="Delete"
             android:textAllCaps="false"
-            android:textColor="@android:color/black"
+            android:textColor="@color/textColour"
             android:textSize="@dimen/_12sdp"
             android:textStyle="bold" />
 
@@ -164,7 +164,7 @@
         android:visibility="gone"
         android:fontFamily="@font/lato_bold"
         android:text="No Answers"
-        android:textColor="@color/black"
+        android:textColor="@color/textColour"
         android:textSize="@dimen/_10sdp"
         android:textStyle="bold" />
 
@@ -198,7 +198,7 @@
         android:paddingLeft="-10dp"
         android:paddingRight="0dp"
         android:singleLine="true"
-        android:textColor="@android:color/black"
+        android:textColor="@color/textColour"
         android:textColorHint="@android:color/darker_gray"
         android:textSize="@dimen/_11sdp">
 

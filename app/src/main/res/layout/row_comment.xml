@@ -4,11 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:background="@color/backgroundColour"
     android:paddingVertical="@dimen/_5sdp">
 
 
     <LinearLayout
         android:id="@+id/primary"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingHorizontal="@dimen/_15sdp">
@@ -20,7 +22,7 @@
             android:layout_marginRight="@dimen/_4sdp"
             android:fontFamily="@font/lato_bold"
             android:text="Name"
-            android:textColor="@color/black"
+            android:textColor="@color/textColour"
             android:textStyle="bold" />
 
         <TextView
@@ -28,10 +30,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Comments"
-            android:textColor="@color/black" />
+            android:textColor="@color/textColour" />
     </LinearLayout>
 
     <LinearLayout
+     
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/primary"
@@ -43,6 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/_6sdp"
             android:text="2h"
+            android:textSize="@dimen/_10sdp"
             android:visibility="visible"
             android:textColor="@color/color_grey" />
 
@@ -58,7 +62,6 @@
         <TextView
             android:id="@+id/comment_reply"
             android:visibility="gone"
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/_8sdp"

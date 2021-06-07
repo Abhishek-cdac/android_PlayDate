@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/backgroundColour"
     tools:context=".ui.chat.request.RequestChatFragment">
 
     <RelativeLayout
@@ -26,7 +27,6 @@
             android:id="@+id/ll_her"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:gravity="center"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
@@ -83,7 +83,7 @@
             android:textAlignment="center"
             app:tabIndicatorColor="@color/color_pink"
             app:tabIndicatorGravity="bottom"
-            app:tabSelectedTextColor="@color/black"
+            app:tabSelectedTextColor="@color/textColour"
             app:tabTextColor="@color/blue_grey" />
 
         <androidx.viewpager.widget.ViewPager

@@ -207,6 +207,7 @@
         android:layout_below="@+id/main_c"
         android:layout_marginTop="@dimen/_15sdp"
         android:scrollbarStyle="insideOverlay"
+        android:background="@color/backgroundColour"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <LinearLayout
@@ -220,7 +221,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/frequently_asked"
-                android:textColor="@color/black"
+                android:textColor="@color/textColour"
                 android:textSize="@dimen/_12sdp" />
 
             <androidx.recyclerview.widget.RecyclerView

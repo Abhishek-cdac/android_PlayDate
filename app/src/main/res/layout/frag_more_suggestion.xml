@@ -14,7 +14,7 @@
         android:textAlignment="center"
         app:tabIndicatorColor="@color/color_pink"
         app:tabIndicatorGravity="bottom"
-        app:tabSelectedTextColor="@color/black"
+        app:tabSelectedTextColor="@color/textColour"
         app:tabTextColor="@color/blue_grey" />
 
     <androidx.viewpager.widget.ViewPager

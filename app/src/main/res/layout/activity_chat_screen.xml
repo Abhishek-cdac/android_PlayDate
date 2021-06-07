@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/backgroundColour">
 
     <RelativeLayout
         android:id="@+id/main_menu"
@@ -42,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="KaylaJenner11"
-                android:textColor="@color/black"
+                android:textColor="@color/textColour"
                 android:textSize="@dimen/_12sdp" />
 
             <TextView
@@ -78,6 +78,7 @@
         android:id="@+id/bottom_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/backgroundColour"
         android:layout_alignParentBottom="true"
         android:padding="@dimen/_10sdp">
 
@@ -133,7 +134,7 @@
                 android:layout_alignParentStart="true"
                 android:backgroundTint="@android:color/transparent"
                 android:hint="@string/text_here"
-                android:textColor="@color/black"
+                android:textColor="@color/textColour"
                 android:textColorHint="@color/color_grey"
                 android:textSize="@dimen/_12sdp" />
 
