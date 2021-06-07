@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.playdate.app.R;
@@ -68,6 +69,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     ArrayList<ChatMessage> chatmsgList;
     String urls_image;
     MediaPlayer mediaPlayer;
+    GoogleMap googleMap;
 
     String from;
     String to;
@@ -83,6 +85,8 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         chat_list.add(new Chat("Hey Kayle! yeah it looks like we can have a nice conversation", "https://images.saymedia-content.com/.image/t_share/MTc0MDkwNjUxNDc2OTYwODM0/5-instagram-models-you-should-be-following.png", OPPONENT));
         chat_list.add(new Chat("Nice Smile btw!1", "https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", ME));
         chat_list.add(new Chat("Not better than you.", "https://s29588.pcdn.co/wp-content/uploads/sites/2/2018/08/Claire-Abbott-1.jpg.optimal.jpg", OPPONENT));
+
+
     }
 
     @Override
@@ -428,6 +432,9 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         ImageView iv_mute_unmute;
         CardView card_image;
         MapView mv_location;
+        GoogleMap googleMap;
+
+//        SupportMapFragment frag_location;
 
         public ViewHolderMe(View view) {
             super(view);
@@ -443,6 +450,10 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             play_audio = view.findViewById(R.id.play_audio);
             mv_location = view.findViewById(R.id.mv_location);
 
+//            mv_location.onCreate(savedInstanceState);
+
+//            SupportMapFragment fm = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+//            googleMap = mv_location.getMap();
         }
     }
 

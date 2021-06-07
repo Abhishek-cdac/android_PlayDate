@@ -2,6 +2,7 @@ package com.playdate.app.ui.chat;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -10,6 +11,9 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
@@ -69,7 +73,7 @@ import static com.playdate.app.ui.register.profile.UploadProfileActivity.PICK_PH
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.REQUEST_TAKE_GALLERY_VIDEO;
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.TAKE_PHOTO_CODE;
 
-public class FragChatMain extends Fragment implements onSmileyChangeListener, onImageSelectListener {
+public class FragChatMain extends Fragment implements onSmileyChangeListener, onImageSelectListener, LocationListener {
 
 
     RecyclerView rv_chat;
@@ -86,6 +90,9 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
     RelativeLayout rl_chat;
     ArrayList<ChatMessage> chatMsgList;
     ArrayList<Integer> lstSmiley;
+
+    LocationManager locationManager;
+    LocationListener locationListener;
 
 
     MediaRecorder mRecorder;
@@ -113,6 +120,8 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_chat_screen, container, false);
 
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,this);
 
         mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
         mFileName += "/AudioRecording.3gp";
@@ -437,13 +446,16 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
 
     double latttitude, longitude;
 
+
     @Override
     public void onLocationSelect() {
+
         SessionPref pref = SessionPref.getInstance(getActivity());
         latttitude = pref.getLattitude("lattitude");
         longitude = pref.getLongitude("longitude");
         Log.d("Lattitude of ", String.valueOf(latttitude));
         Log.d("LOngitude of ", String.valueOf(longitude));
+
 
 //        adapter.sendLcation(latttitude, longitude);
 
@@ -474,6 +486,10 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
         pickImage();
     }
 
+    @Override
+    public void onLocationChanged(@NonNull Location location) {
+
+    }
 }
 
 

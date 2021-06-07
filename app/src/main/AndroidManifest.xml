@@ -18,6 +18,11 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.STORAGE" />
 
+    <permission
+        android:name="com.example.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="com.example.permission.MAPS_RECEIVE" />
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
@@ -42,6 +47,10 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAuWNhFzT3hH1gqZ-0lJTjPDjQffSACjvw" />
         <!--
         <activity android:name="com.facebook.FacebookActivity"
             android:configChanges=
@@ -143,11 +152,7 @@
             android:name=".ui.onboarding.OnBoardingActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
         <activity
@@ -156,6 +161,13 @@
         <activity
             android:name=".ui.chat.ChatActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".ui.SampleActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".util.customcamera.otalia.VideoPreviewActivity"
             android:screenOrientation="portrait" />

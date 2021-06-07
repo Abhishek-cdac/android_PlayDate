@@ -87,16 +87,16 @@
     </androidx.cardview.widget.CardView>
 
     <RelativeLayout
+        android:id="@+id/rl_audio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/_5sdp"
-        android:id="@+id/rl_audio"
-        android:visibility="gone"
         android:layout_toLeftOf="@+id/profile_image_me"
         android:background="@drawable/btn_black_filled"
         android:paddingHorizontal="@dimen/_12sdp"
-        android:paddingVertical="@dimen/_8sdp">
+        android:paddingVertical="@dimen/_8sdp"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/play_audio"
@@ -123,10 +123,10 @@
             android:src="@drawable/horizontal_more" />
 
         <ImageView
+            android:id="@+id/audio_more3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:id="@+id/audio_more3"
             android:layout_marginStart="@dimen/_2sdp"
             android:layout_toRightOf="@+id/audio_more2"
             android:src="@drawable/horizontal_more" />
@@ -143,14 +143,25 @@
     </RelativeLayout>
 
     <com.google.android.gms.maps.MapView
+        android:id="@+id/mv_location"
         android:layout_width="@dimen/_150sdp"
+        android:layout_height="@dimen/_150sdp"
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/_5sdp"
         android:layout_toLeftOf="@+id/profile_image_me"
-        android:id="@+id/mv_location"
-        android:visibility="gone"
-        android:background="@drawable/location_bg"
-        android:layout_height="@dimen/_150sdp"/>
+
+        android:visibility="visible" />
+
+
+<!--    <fragment-->
+<!--        android:id="@+id/frag_location"-->
+<!--        android:layout_width="@dimen/_150sdp"-->
+<!--        android:layout_height="@dimen/_150sdp"-->
+<!--        android:layout_centerVertical="true"-->
+<!--        android:layout_marginRight="@dimen/_5sdp"-->
+<!--        android:layout_toLeftOf="@+id/profile_image_me"-->
+<!--        -->
+<!--        android:name="com.google.android.gms.maps.SupportMapFragment"/>-->
 
 
 </RelativeLayout>
