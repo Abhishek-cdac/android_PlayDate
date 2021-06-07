@@ -97,13 +97,14 @@ public class RequestChatFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 //                inbox = new FragInbox();
-//                inbox.setFilters(s);
-//                chattingAdapter.getFilter().filter(s);
+////                inbox.setFilters(s);
+////                chattingAdapter.getFilter().filter(s);
+//                inbox.filter(s.toString());
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                inbox.filter(s.toString());
+//                inbox.filter(s.toString());
             }
         });
 

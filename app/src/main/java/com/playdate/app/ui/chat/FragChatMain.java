@@ -121,7 +121,7 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
         View view = inflater.inflate(R.layout.activity_chat_screen, container, false);
 
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,this);
+//        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,this);
 
         mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
         mFileName += "/AudioRecording.3gp";
@@ -141,17 +141,6 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
         iv_smiley = view.findViewById(R.id.iv_smiley);
 
         lstSmiley = new ArrayList<>();
-
-        int height = new CommonClass().getScreenHeight(getActivity());
-
-        int m1 = (int) getResources().getDimension(R.dimen._15sdp);
-        int m2 = (int) getResources().getDimension(R.dimen._15sdp);
-        int m3 = (int) getResources().getDimension(R.dimen._10sdp);
-        int m4 = (int) getResources().getDimension(R.dimen._1sdp);
-        int m5 = (int) getResources().getDimension(R.dimen._1sdp);
-        int m6 = (int) getResources().getDimension(R.dimen._1sdp);
-
-        rl_chat.getLayoutParams().height = height - (m1 + m2 + m3 + m4 + m5 + m6);
 
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         rv_chat.setLayoutManager(manager);
@@ -217,13 +206,18 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
             @Override
             public void onClick(View v) {
 //                ActivityCompat.requestPermissions(getActivity(), permissions, REQUEST_AUDIO_PERMISSION_CODE);
-                String[] PERMISSIONS = {Manifest.permission.RECORD_AUDIO};
+//                String[] PERMISSIONS = {Manifest.permission.RECORD_AUDIO};
+//
+//                ActivityCompat.requestPermissions(getActivity(),
+//                        PERMISSIONS,
+//                        ALL_PERMISSIONS_RESULT);
+                if (checkPermission()) {
+                    startRecording();
 
-                ActivityCompat.requestPermissions(getActivity(),
-                        PERMISSIONS,
-                        ALL_PERMISSIONS_RESULT);
+                } else {
+                    Toast.makeText(getActivity(), "Permission Denied", Toast.LENGTH_SHORT).show();
+                }
 
-                startRecording();
             }
         });
         iv_circle.setOnClickListener(new View.OnClickListener() {
@@ -370,6 +364,7 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
                     if (StoragePermission && RecordPermission) {
                         Toast.makeText(getActivity(), "Permission Granted",
                                 Toast.LENGTH_LONG).show();
+                        startRecording();
                     } else {
                         Toast.makeText(getActivity(), "Permission Denied", Toast.LENGTH_LONG).show();
                     }

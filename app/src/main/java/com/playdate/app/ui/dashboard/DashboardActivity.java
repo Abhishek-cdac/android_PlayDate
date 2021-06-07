@@ -40,6 +40,7 @@ import com.playdate.app.model.MatchListUser;
 import com.playdate.app.service.LocationService;
 import com.playdate.app.ui.anonymous_question.AnonymousQuestionActivity;
 import com.playdate.app.ui.card_swipe.FragCardSwipe;
+import com.playdate.app.ui.chat.request.ChatBaseActivity;
 import com.playdate.app.ui.chat.request.RequestChatFragment;
 import com.playdate.app.ui.coupons.FragCouponStore;
 import com.playdate.app.ui.dashboard.adapter.FriendAdapter;
@@ -568,7 +569,8 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             ll_friends.setVisibility(View.GONE);
             ll_mainMenu.setVisibility(View.GONE);
             ll_her.setVisibility(View.GONE);
-            ReplaceFrag(new RequestChatFragment());
+//            ReplaceFrag(new RequestChatFragment());
+            startActivity(new Intent(DashboardActivity.this, ChatBaseActivity.class));
         } else if (id == R.id.txt_personal) {
 
             txt_personal.setTextColor(getResources().getColor(R.color.white));
