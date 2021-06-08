@@ -20,7 +20,7 @@
 
         <ImageView
             android:id="@+id/iv_c"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/_240sdp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/head"
             android:layout_centerHorizontal="true"
@@ -94,7 +94,7 @@
                 android:fontFamily="@font/lato_bold"
                 android:text="5 DM Power Ups Every Month"
                 android:textColor="@color/textColour"
-                android:textSize="@dimen/_14sdp" />
+                android:textSize="@dimen/_12sdp" />
         </LinearLayout>
 
 
@@ -131,7 +131,7 @@
                 android:fontFamily="@font/lato_bold"
                 android:text="1 Point Multiplier Unlocked"
                 android:textColor="@color/textColour"
-                android:textSize="@dimen/_14sdp" />
+                android:textSize="@dimen/_12sdp" />
         </LinearLayout>
 
         <LinearLayout
@@ -167,7 +167,7 @@
                 android:fontFamily="@font/lato_bold"
                 android:text="Exclusive Discounts to Events and Location"
                 android:textColor="@color/textColour"
-                android:textSize="@dimen/_14sdp" />
+                android:textSize="@dimen/_12sdp" />
         </LinearLayout>
 
 
@@ -204,13 +204,14 @@
                 android:fontFamily="@font/lato_bold"
                 android:text="Access To All The Games"
                 android:textColor="@color/textColour"
-                android:textSize="@dimen/_14sdp" />
+                android:textSize="@dimen/_12sdp" />
         </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ll5"
+            android:layout_marginTop="@dimen/_15sdp"
             android:paddingHorizontal="@dimen/_16sdp">
 
             <LinearLayout
@@ -227,7 +228,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center|top"
-                    android:text="Monthly Plan"
+                    android:text="Monthly\n Plan"
                     android:textAlignment="center"
                     android:paddingHorizontal="@dimen/_2sdp"
                     android:textColor="@color/textColour"

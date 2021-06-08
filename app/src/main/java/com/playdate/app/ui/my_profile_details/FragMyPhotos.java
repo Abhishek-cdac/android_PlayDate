@@ -18,19 +18,15 @@ import com.playdate.app.util.session.SessionPref;
 
 import org.jetbrains.annotations.NotNull;
 
-import bolts.Bolts;
-
 public class FragMyPhotos extends Fragment implements View.OnClickListener {
     public FragMyPhotos() {
     }
 
-    View view_1;
-    View view_2;
+    private View view_1;
+    private View view_2;
 
-    TextView txt_header1;
-    TextView txt_header2;
-    FragmentManager fm;
-    FragmentTransaction ft;
+    private TextView txt_header1;
+    private TextView txt_header2;
 
     @Nullable
     @org.jetbrains.annotations.Nullable
@@ -44,36 +40,12 @@ public class FragMyPhotos extends Fragment implements View.OnClickListener {
         txt_header2 = view.findViewById(R.id.txt_header2);
         txt_header1.setOnClickListener(this);
         txt_header2.setOnClickListener(this);
-        fm = getChildFragmentManager();
-        ft = fm.beginTransaction();
+        FragmentManager fm = getChildFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
         SessionPref pref = SessionPref.getInstance(getActivity());
         ft.add(R.id.fl_myPhotos, new FragMyUploadMedia(pref.getStringVal(SessionPref.LoginUserID)));
         ft.commit();
 
-
-//
-//        PhotoAdapter pagerAdapter = new PhotoAdapter(getChildFragmentManager(), tabLayout.getTabCount(),pref.getStringVal(SessionPref.LoginUserID));
-//        viewPager.setAdapter(pagerAdapter);
-//        viewPager.setCurrentItem(0);
-//        tabLayout.setTabIndicatorFullWidth(false);
-//        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-//        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-//            @Override
-//            public void onTabSelected(TabLayout.Tab tab) {
-//                viewPager.setCurrentItem(tab.getPosition());
-//            }
-//
-//            @Override
-//            public void onTabUnselected(TabLayout.Tab tab) {
-//
-//            }
-//
-//            @Override
-//            public void onTabReselected(TabLayout.Tab tab) {
-//
-//            }
-//        });
-//
 
         return view;
 
@@ -98,7 +70,7 @@ public class FragMyPhotos extends Fragment implements View.OnClickListener {
             view_1.setBackgroundColor(getResources().getColor(R.color.color_grey));
             view_2.setBackgroundColor(getResources().getColor(R.color.color_pink));
             final FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-            ft.replace(R.id.fl_myPhotos,new FragSavedPost());
+            ft.replace(R.id.fl_myPhotos, new FragSavedPost());
             ft.commit();
         }
     }

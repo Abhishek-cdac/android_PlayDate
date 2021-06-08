@@ -36,8 +36,7 @@ import retrofit2.Response;
 public class AgeVerifiationActivity extends AppCompatActivity {
     private AgeVerificationViewModel age_verify_viewmodel;
 
-    private ActivityAgeVerificationBinding binding;
-    CommonClass clsCommon;
+    private CommonClass clsCommon;
     private Intent mIntent;
 
     @Override
@@ -46,7 +45,7 @@ public class AgeVerifiationActivity extends AppCompatActivity {
         age_verify_viewmodel = new AgeVerificationViewModel();
         clsCommon = CommonClass.getInstance();
         mIntent = getIntent();
-        binding = DataBindingUtil.setContentView(AgeVerifiationActivity.this, R.layout.activity_age_verification);
+        com.playdate.app.databinding.ActivityAgeVerificationBinding binding = DataBindingUtil.setContentView(AgeVerifiationActivity.this, R.layout.activity_age_verification);
         binding.setLifecycleOwner(this);
         binding.setAgeVerificationViewModel(age_verify_viewmodel);
 

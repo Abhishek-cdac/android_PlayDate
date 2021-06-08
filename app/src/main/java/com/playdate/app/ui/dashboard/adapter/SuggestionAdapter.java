@@ -1,7 +1,6 @@
 package com.playdate.app.ui.dashboard.adapter;
 
 import android.content.Context;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,29 +10,28 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
+
 import com.playdate.app.R;
 import com.playdate.app.model.FriendRequest;
 import com.playdate.app.model.GetUserSuggestionData;
 import com.playdate.app.ui.chat.request.Onclick;
 import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class SuggestionAdapter extends PagerAdapter {
 
-    private Context context;
-
-
-    ArrayList<GetUserSuggestionData> suggestions_list = new ArrayList<>();
-    ArrayList<FriendRequest> friendRequests_list = new ArrayList<>();
-    Onclick itemClick;
-Picasso picasso;
+    private final Context context;
+    private final ArrayList<GetUserSuggestionData> suggestions_list;
+    private final Onclick itemClick;
+    private final Picasso picasso;
 
     public SuggestionAdapter(Context mContext, ArrayList<GetUserSuggestionData> lst_getUserSuggestions, Onclick itemClick) {
         this.suggestions_list = lst_getUserSuggestions;
         this.context = mContext;
         this.itemClick = itemClick;
-picasso=Picasso.get();
+        picasso = Picasso.get();
     }
 
 
@@ -51,16 +49,15 @@ picasso=Picasso.get();
         return view.equals(object);
     }
 
-    private LayoutInflater layoutInflater;
 
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, final int position) {
-        layoutInflater = LayoutInflater.from(context);
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.frag_suggestions, container, false);
 
         ImageView iv_send_request, profile_image, iv_chat_icon;
-        TextView title, desc, txt_header_Suggestions;
+        TextView txt_header_Suggestions;
         profile_image = view.findViewById(R.id.profile_image);
         iv_send_request = view.findViewById(R.id.iv_send_request);
         iv_chat_icon = view.findViewById(R.id.iv_chat_icon);

@@ -90,8 +90,6 @@ public class FragSuggested extends Fragment {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("toUserID", toUserID);
-//        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
-//        pd.show();
         SessionPref pref = SessionPref.getInstance(getActivity());
         Log.e("CommonModel", "" + pref.getStringVal(SessionPref.LoginUsertoken));
 
@@ -100,30 +98,11 @@ public class FragSuggested extends Fragment {
         call.enqueue(new Callback<CommonModel>() {
             @Override
             public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
-//                pd.cancel();
-                if (response.code() == 200) {
-//                    assert response.body() != null;
-//                    if (response.body().getStatus() == 1) {
-//                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", ""+response.body().getMessage(), "Ok");
-//                        Toast.makeText(getActivity(), "Request Sent! " + s, Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", ""+response.body().getMessage(), "Ok");
-//                    }
-                } else {
-//                    try {
-//                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-//                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message").toString(), "Ok");
-//                    } catch (Exception e) {
-//                        Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-//                    }
-                }
             }
 
             @Override
             public void onFailure(Call<CommonModel> call, Throwable t) {
                 t.printStackTrace();
-//                pd.cancel();
-//                Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
     }

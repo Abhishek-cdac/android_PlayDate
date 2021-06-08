@@ -33,7 +33,7 @@ public class FragNewNotificationAdapter extends RecyclerView.Adapter<FragNewNoti
     private String requestId;
     private final Context mcontext;
     private String patternID;
-    private Picasso picasso;
+    private final Picasso picasso;
 
     public FragNewNotificationAdapter(FragmentActivity activity, ArrayList<NotificationData> lst_notifications, Onclick itemClick) {
         this.mcontext = activity;

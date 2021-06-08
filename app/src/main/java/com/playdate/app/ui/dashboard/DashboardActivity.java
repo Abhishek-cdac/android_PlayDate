@@ -54,6 +54,7 @@ import com.playdate.app.ui.my_profile_details.FragMyProfileDetails;
 import com.playdate.app.ui.my_profile_details.FragMyProfilePayments;
 import com.playdate.app.ui.my_profile_details.FragMyProfilePersonal;
 import com.playdate.app.ui.my_profile_details.FragSavedPost;
+import com.playdate.app.ui.my_profile_details.NewPaymentMethod;
 import com.playdate.app.ui.notification_screen.FragNotification;
 import com.playdate.app.ui.social.FragSocialFeed;
 import com.playdate.app.ui.social.upload_media.PostMediaActivity;
@@ -67,6 +68,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.card.payment.CardIOActivity;
+import io.card.payment.CreditCard;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -86,13 +89,16 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     private TextView txt_payment;
     private TextView txt_account;
     private TextView txt_personal;
+    private TextView txt_count;
+
     private ImageView iv_love;
     private ImageView iv_profile_sett;
     private ImageView iv_plus;
     private ImageView iv_play_date_logo;
     private ImageView iv_dashboard_notification;
     private ImageView iv_coupons;
-    private TextView txt_count;
+    private ImageView profile_image;
+    private TextView txt_serachfriend;
 
     private LinearLayout ll_mainMenu, ll_her;
     private LinearLayout ll_friends;
@@ -103,16 +109,21 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     private LinearLayout bottomNavigationView;
     private LinearLayout ll_camera_option;
 
-
-    private ImageView profile_image;
     private RecyclerView rv_friends;
     private SessionPref pref;
-    private TextView txt_serachfriend;
+
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private FriendAdapter adapterfriend;
     private Fragment CurrentFrag;
+    private NestedScrollView nsv;
+    private FragInstaLikeProfile profile;
 
+    private int count = 0;
+    private int OPTION_CLICK = 0;
     private final int CAMERA = 2;
+
+    public static Bitmap bitmap = null;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -134,7 +145,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
         txt_serachfriend = findViewById(R.id.txt_serachfriend);
         txt_count = findViewById(R.id.txt_count);
-        NestedScrollView nsv = findViewById(R.id.nsv);
+        nsv = findViewById(R.id.nsv);
         ImageView search = findViewById(R.id.iv_search);
         pref = SessionPref.getInstance(this);
         ll_profile_insta = findViewById(R.id.ll_profile_insta);
@@ -145,6 +156,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         ll_mainMenu = findViewById(R.id.ll_mainMenu);
         ll_friends = findViewById(R.id.ll_friends);
         LinearLayout ll_love_bottom = findViewById(R.id.ll_love_bottom);
+        LinearLayout ll_coupon = findViewById(R.id.ll_coupon);
         LinearLayout ll_profile_support = findViewById(R.id.ll_profile_support);
         ll_profile_menu = findViewById(R.id.ll_profile_menu);
         ll_option_love = findViewById(R.id.ll_option_love);
@@ -211,7 +223,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         txt_match.setOnClickListener(this);
         txt_chat.setOnClickListener(this);
         iv_date.setOnClickListener(this);
-        iv_coupons.setOnClickListener(this);
+        ll_coupon.setOnClickListener(this);
         iv_dashboard_notification.setOnClickListener(this);
         txt_social.setOnClickListener(this);
         try {
@@ -434,14 +446,11 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     }
 
 
-    int OPTION_CLICK = 0;
-
     @Override
     public void onClick(View view) {
 
         int id = view.getId();
         if (id == R.id.iv_date) {
-            OPTION_CLICK = 2;
             startActivity(new Intent(DashboardActivity.this, DateBaseActivity.class));
 
         } else if (id == R.id.txt_social) {
@@ -528,7 +537,11 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
             ReplaceFrag(new FragMyProfileDetails());
         } else if (id == R.id.ll_love_bottom) {
-            OPTION_CLICK = 1;
+            if (OPTION_CLICK == 0) {
+                return;
+            }
+            nsv.scrollTo(0, 0);
+            OPTION_CLICK = 0;
             iv_play_date_logo.setVisibility(View.VISIBLE);
             ll_profile_drop_menu.setVisibility(View.GONE);
             iv_plus.setVisibility(View.GONE);
@@ -564,7 +577,11 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             txt_social.setBackground(getResources().getDrawable(R.drawable.menu_button));
             ReplaceFrag(frag);
             callAPIFriends();
-        } else if (id == R.id.iv_coupons) {
+        } else if (id == R.id.ll_coupon) {
+            if (OPTION_CLICK == 1) {
+                return;
+            }
+            nsv.scrollTo(0, 0);
             OPTION_CLICK = 1;
             iv_love.setImageResource(R.drawable.love);
             iv_love.setBackground(null);
@@ -579,7 +596,11 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             ll_her.setVisibility(View.VISIBLE);
             ReplaceFrag(new FragCouponStore());
         } else if (id == R.id.ll_profile_support) {
-            OPTION_CLICK = 3;
+            if (OPTION_CLICK == 2) {
+                return;
+            }
+            nsv.scrollTo(0, 0);
+            OPTION_CLICK = 2;
             iv_play_date_logo.setVisibility(View.VISIBLE);
             ll_profile_drop_menu.setVisibility(View.GONE);
             iv_plus.setVisibility(View.GONE);
@@ -596,7 +617,11 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             ReplaceFrag(new FragMyProfileDetails());
 
         } else if (id == R.id.ll_profile_insta) {
-            OPTION_CLICK = 4;
+            if (OPTION_CLICK == 3) {
+                return;
+            }
+            nsv.scrollTo(0, 0);
+            OPTION_CLICK = 3;
             iv_play_date_logo.setVisibility(View.VISIBLE);
             ll_profile_drop_menu.setVisibility(View.GONE);
             iv_plus.setVisibility(View.VISIBLE);
@@ -719,16 +744,41 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
     }
 
-    FragInstaLikeProfile profile;
-    int count = 0;
 
-    public static Bitmap bitmap = null;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         try {
 
+            if (requestCode == 857) {
+
+                if (data != null && data.hasExtra(CardIOActivity.EXTRA_SCAN_RESULT)) {
+                    CreditCard scanResult = data.getParcelableExtra(CardIOActivity.EXTRA_SCAN_RESULT);
+
+                    if (scanResult.isExpiryValid()) {
+//                        scanResult.expiryMonth;
+//                        scanResult.expiryYear;
+
+                    }
+                    if (scanResult.cvv != null) {
+
+
+                    }
+                    //scanResult.getCardType();
+
+
+                    if (CurrentFrag.getClass().getSimpleName().equals("NewPaymentMethod")) {
+                        NewPaymentMethod cls = (NewPaymentMethod) CurrentFrag;
+                        cls.setData(scanResult.cardholderName, scanResult.getFormattedCardNumber(), scanResult.cvv, scanResult.expiryMonth, scanResult.expiryYear);
+                    }
+
+
+                } else {
+                    Toast.makeText(this, "Scan was cancelled", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
             if (resultCode == 104) {
                 //refresh
                 if (null != CurrentFrag) {

@@ -85,10 +85,10 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
         return lst.size();
     }
 
-    ArrayList<PostDetails> lst;
-    Picasso picasso;
-    SessionPref pref;
-    FragmentActivity activity;
+    private ArrayList<PostDetails> lst;
+    private final Picasso picasso;
+    private final SessionPref pref;
+    private final FragmentActivity activity;
 
     public SocialFeedAdapter(FragmentActivity activity, ArrayList<PostDetails> lst) {
         this.activity = activity;
@@ -141,16 +141,6 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
         call.enqueue(new retrofit2.Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-//                pd.cancel();
-                if (response.code() == 200) {
-                    if (response.body().getStatus() == 1) {
-
-                    } else {
-
-                    }
-                } else {
-
-                }
 
 
             }
@@ -183,9 +173,6 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
             if (lst.get(position).getPostMedia().get(0).getMediaType().equals("Video")) {
                 return 1;
             }
-//            else if (lst.get(position).getPostType().equals("Question")) {
-//
-//            }
         } else if (lst.get(position).getPostType().equals("Question")) {
             return 2;
         }
@@ -241,11 +228,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
 
 
             if (null != lst.get(position).getPostMedia().get(0).getMediaFullPath()) {
-                if (lst.get(position).getPostMedia().get(0).getMediaType().equals("Video")) {
-
-                    // video
-
-                } else {
+                if (!lst.get(position).getPostMedia().get(0).getMediaType().equals("Video")) {
                     picasso.load(lst.get(position).getPostMedia().get(0).getMediaFullPath())
 
 
@@ -257,6 +240,10 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                                     }
                                 }
                             });
+                } else {
+
+                    // video
+
                 }
             }
 
@@ -283,13 +270,10 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                 } else if (lst.get(position).getIsLike() == 0) {
                     userViewHolder.iv_heart.setImageResource(R.drawable.red_heart);
                     lst.get(position).setIsLike(1);
+                    lst.get(position).setLikes(lst.get(position).getLikes() + 1);
                     lst.get(position).setTapCount(0);
-//                    lst.get(position).setHeartSelected(true);
                     notifyDataSetChanged();
                     callAPI(lst.get(position).getPostId(), lst.get(position).getIsLike());
-                } else {
-//                    callAPI(lst.get(position).getPostId(), lst.get(position).getLikes());
-//                    userViewHolder.iv_heart.setImageResource(R.drawable.red_heart);
                 }
             });
             try {
@@ -453,6 +437,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                     videoHolder.iv_heart.setImageResource(R.drawable.red_heart);
                     lst.get(position).setIsLike(1);
                     lst.get(position).setTapCount(0);
+                    lst.get(position).setLikes(lst.get(position).getLikes() + 1);
 //                    lst.get(position).setHeartSelected(true);
                     notifyDataSetChanged();
                     callAPI(lst.get(position).getPostId(), lst.get(position).getIsLike());

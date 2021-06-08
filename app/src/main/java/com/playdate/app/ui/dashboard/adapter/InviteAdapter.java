@@ -24,12 +24,10 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class InviteAdapter extends RecyclerView.Adapter<InviteAdapter.ViewHolder> {
 
-    ArrayList<Invite> invite_list = new ArrayList<>();
-
-    FragmentManager fm;
-    FragmentTransaction ft;
-    String inviteCode;
-    String inviteLink;
+    private final ArrayList<Invite> invite_list = new ArrayList<>();
+    private FragmentManager fm;
+    private String inviteCode;
+    private final String inviteLink;
 
     public InviteAdapter(String inviteCode, String inviteLink) {
         this.inviteCode = inviteCode;
@@ -53,7 +51,7 @@ public class InviteAdapter extends RecyclerView.Adapter<InviteAdapter.ViewHolder
     }
 
     public void ReplaceFrag(Fragment fragment) {
-        ft = fm.beginTransaction();
+        FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.invite_listView, fragment, fragment.getClass().getSimpleName());
 //        ft.addToBackStack("tags");
         ft.commitAllowingStateLoss();

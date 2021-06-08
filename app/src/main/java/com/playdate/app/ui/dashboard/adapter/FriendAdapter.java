@@ -25,6 +25,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
     public FriendAdapter(ArrayList<MatchListUser> lst, DashboardActivity dashboardActivity) {
         this.lst = lst;
         this.dashboardActivity = dashboardActivity;
+        picasso = Picasso.get();
     }
 
     public void updateList(ArrayList<MatchListUser> lst){
@@ -32,15 +33,13 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         notifyDataSetChanged();
     }
 
-    //    private Context mContext;
-    private Picasso picasso;
+    private final Picasso picasso;
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_friends, parent, false);
-//        mContext = parent.getContext();
-        picasso = Picasso.get();
+
         return new ViewHolder(view);
     }
 

@@ -19,6 +19,7 @@
         <ImageView
             android:layout_width="132dp"
             android:layout_height="69dp"
+            android:id="@+id/iv_card"
             android:background="@color/backgroundColour"
             android:layout_alignParentStart="true"
             android:src="@drawable/visa" />
@@ -62,8 +63,8 @@
 
     <EditText
         android:id="@+id/et_cad_no"
-        android:maxLength="12"
         android:phoneNumber="true"
+        android:singleLine="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/or"
@@ -81,6 +82,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/et_cad_no"
         android:maxLength="20"
+        android:singleLine="true"
         android:layout_marginTop="@dimen/_15sdp"
         android:background="@drawable/outline_pink_box"
         android:hint="@string/card_hlder"
@@ -94,39 +96,57 @@
         android:id="@+id/date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:layout_below="@+id/et_card_name"
         android:layout_marginTop="@dimen/_15sdp"
         android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/spinner_month"
-            android:layout_width="@dimen/_60sdp"
+        <EditText
+            android:id="@+id/edt_month"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:maxLength="2"
+            android:singleLine="true"
+            android:gravity="center"
             android:layout_height="wrap_content"
+            android:phoneNumber="true"
             android:layout_gravity="center"
             android:background="@drawable/outline_pink_box"
+            android:hint="Month"
             android:paddingVertical="@dimen/_10sdp"
-            android:paddingLeft="@dimen/_3sdp"
-            android:paddingRight="@dimen/_8sdp"
-            android:popupBackground="@color/color_pink" />
+            android:paddingStart="@dimen/_8sdp"
+            android:paddingEnd="@dimen/_14sdp"
+            android:textColor="@color/textColour"
+            android:textColorHint="@color/color_grey"
+            android:textSize="@dimen/_12sdp" />
 
-
-        <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/spinner_year"
-            android:layout_width="@dimen/_80sdp"
+        <EditText
+            android:id="@+id/edt_year"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:maxLength="4"
+            android:gravity="center"
             android:layout_height="wrap_content"
+            android:phoneNumber="true"
+            android:singleLine="true"
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/_8sdp"
             android:background="@drawable/outline_pink_box"
+            android:hint="Year"
             android:paddingVertical="@dimen/_10sdp"
-            android:paddingLeft="@dimen/_3sdp"
-            android:paddingRight="@dimen/_8sdp"
-            android:popupBackground="@color/color_pink" />
-
+            android:paddingStart="@dimen/_8sdp"
+            android:paddingEnd="@dimen/_14sdp"
+            android:textColor="@color/textColour"
+            android:textColorHint="@color/color_grey"
+            android:textSize="@dimen/_12sdp" />
 
         <EditText
             android:id="@+id/et_card_cvv"
-            android:layout_width="@dimen/_80sdp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:maxLength="3"
+            android:gravity="center"
+            android:singleLine="true"
             android:layout_height="wrap_content"
             android:phoneNumber="true"
             android:layout_gravity="center"

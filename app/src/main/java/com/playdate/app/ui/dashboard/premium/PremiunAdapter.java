@@ -10,7 +10,7 @@ import com.playdate.app.ui.dashboard.more_suggestion.FragInvite;
 import org.jetbrains.annotations.NotNull;
 
 public class PremiunAdapter extends FragmentPagerAdapter {
-    FragInvite fragInvite;
+    private final FragInvite fragInvite;
     public PremiunAdapter(@NonNull @NotNull FragmentManager fm, FragInvite fragInvite) {
         super(fm);
         this.fragInvite=fragInvite;
