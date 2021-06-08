@@ -337,6 +337,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                 } else {
                     userViewHolder.et_comment.setVisibility(View.GONE);
                     if (owner.isEmpty()) {
+                        if(userViewHolder.txt_chat.getText().toString().isEmpty())
                         userViewHolder.txt_chat.setVisibility(View.GONE);
                     } else {
                         userViewHolder.txt_chat.setText(Html.fromHtml("<b>" + owner + "</b>"));

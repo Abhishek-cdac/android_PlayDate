@@ -6,5 +6,6 @@
     android:layout_height="match_parent"
     app:cropMaxCropResultHeightPX="2400"
     app:cropMaxCropResultWidthPX="2400"
-    app:cropMinCropResultHeightPX="2400"
-    app:cropMinCropResultWidthPX="2400"/>
+    app:cropFixAspectRatio="true"
+    app:cropMinCropResultHeightPX="500"
+    app:cropMinCropResultWidthPX="500"/>

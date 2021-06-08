@@ -14,6 +14,8 @@ package com.playdate.app.util.image_crop;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
@@ -32,6 +34,9 @@ import com.playdate.app.ui.dashboard.DashboardActivity;
 import com.playdate.app.ui.social.upload_media.PostMediaActivity;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 
 /**
  * The fragment that will show the Image Cropping UI by requested preset.
@@ -234,6 +239,12 @@ public final class MainFragment extends Fragment
 //                                ? CropImage.toOvalBitmap(result.getBitmap())
 //                                : result.getBitmap();
 //            }
+
+//            ByteArrayOutputStream out = new ByteArrayOutputStream();
+//            result.getBitmap().compress(Bitmap.CompressFormat.PNG, 100, out);
+//            Bitmap decoded = BitmapFactory.decodeStream(new ByteArrayInputStream(out.toByteArray()));
+
+
             DashboardActivity.bitmap = result.getBitmap();
             Intent mIntent = new Intent(getActivity(), PostMediaActivity.class);
             startActivity(mIntent);
