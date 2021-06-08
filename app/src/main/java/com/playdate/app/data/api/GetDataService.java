@@ -5,6 +5,7 @@ import com.playdate.app.model.CommonModel;
 import com.playdate.app.model.CreateDateGetPartnerModel;
 import com.playdate.app.model.FriendsListModel;
 import com.playdate.app.model.GetCommentModel;
+import com.playdate.app.model.GetCoupleProfileModel;
 import com.playdate.app.model.GetProfileDetails;
 import com.playdate.app.model.GetUserSuggestion;
 import com.playdate.app.model.InterestsMain;
@@ -13,6 +14,7 @@ import com.playdate.app.model.MatchListModel;
 import com.playdate.app.model.NotificationModel;
 import com.playdate.app.model.RegisterResult;
 import com.playdate.app.model.RestMain;
+import com.playdate.app.model.RestaurentModel;
 import com.playdate.app.model.SavedPostModel;
 import com.playdate.app.model.chat_models.ChatExample;
 import com.playdate.app.model.chat_models.ChatUserList;
@@ -217,6 +219,18 @@ public interface GetDataService {
     @FormUrlEncoded
     @POST("user/create-date-get-partner-list")
     Call<CreateDateGetPartnerModel> createDateGetPartnerList(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
+    @FormUrlEncoded
+    @POST("user/get-couple-profile")
+    Call<GetCoupleProfileModel> getCoupleProfile(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
+    @FormUrlEncoded
+    @POST("user/create-date-request-partner")
+    Call<CommonModel> createDateRequestPartner(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
+    @FormUrlEncoded
+    @POST("user/get-restaurant-details")
+    Call<RestaurentModel> getRestaurantDetails(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
 }
 

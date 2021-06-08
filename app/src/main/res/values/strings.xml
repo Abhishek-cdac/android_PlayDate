@@ -68,7 +68,7 @@
     <string name="couple_bio">Couple Bio</string>
     <string name="forgot_string">Enter registered mobile number</string>
     <string name="write_a_short_bio_that_will_be_displayed_on_your_profile">Write a short bio that will be displayed on your profile</string>
-  <string name="couple_short_note">Tell your friends how you and your partner met</string>
+    <string name="couple_short_note">Tell your friends how you and your partner met</string>
     <string name="profile_picture">Profile Picture</string>
     <string name="couple_profile_picture">Couple Profile Picture</string>
     <string name="upload">Upload</string>
@@ -158,7 +158,8 @@
 
 
     <!--couple-->
-    <string name="join">Join</string>  <string name="delete_notification">Delete Notification</string>
+    <string name="join">Join</string>
+    <string name="delete_notification">Delete Notification</string>
     <string name="please_type">Please type it below</string>
     <string name="invite_code">Your Invite Code</string>
     <string name="invite_sent">Invite Sent</string>
@@ -168,4 +169,62 @@
     <string name="connect_desc">Please select an action for your partner</string>
     <string name="invite_desc">Start a couple with your partner on playdate</string>
 
+
+
+
+    <string name="result_image_desc">crop result</string>
+
+    <string name="main_drawer_load">Load Image for cropping</string>
+
+    <string name="main_drawer_open">Open navigation drawer</string>
+
+    <string name="main_drawer_close">Close navigation drawer</string>
+
+    <string name="main_action_crop">CROP</string>
+
+    <string name="main_action_rotate">Rotate 90 degrees clockwise</string>
+
+    <string name="main_action_flip">Flip</string>
+
+    <string name="main_action_flip_horizontally">Flip horizontally</string>
+
+    <string name="main_action_flip_vertically">Flip vertically</string>
+
+    <string name="drawer_option_title">Crop View Presets</string>
+
+    <string name="drawer_option_oval">Circular</string>
+
+    <string name="drawer_option_rect">Rectangular</string>
+
+    <string name="drawer_option_min_max">Min/Max limits override</string>
+
+    <string name="drawer_option_customized_overlay">Customized Overlay</string>
+
+    <string name="drawer_option_scale_center">Scale Center Inside</string>
+
+    <string name="drawer_option_title2">Customization Toggles</string>
+
+    <string name="drawer_option_toggle_scale">Image Scale: %1s</string>
+
+    <string name="drawer_option_toggle_shape">Crop Shape: %1s</string>
+
+    <string name="drawer_option_toggle_guidelines">Guidelines: %1s</string>
+
+    <string name="drawer_option_toggle_aspect_ratio">Aspect Ratio: %1s</string>
+
+    <string name="drawer_option_toggle_auto_zoom">Auto zoom: %1s</string>
+
+    <string name="drawer_option_toggle_max_zoom">Max zoom level: %1s</string>
+
+    <string name="drawer_option_set_initial_crop_rect">Set initial crop rectangle</string>
+
+    <string name="drawer_option_reset_crop_rect">Reset crop rectangle to initial</string>
+
+    <string name="drawer_option_toggle_multitouch">Multitouch: %1s</string>
+
+    <string name="drawer_option_toggle_show_overlay">Show Overlay: %1s</string>
+
+    <string name="drawer_option_toggle_show_progress_bar">Show Progress Bar: %1s</string>
+
+    <string name="date_suggestion">Date suggestions for you</string>
 </resources>

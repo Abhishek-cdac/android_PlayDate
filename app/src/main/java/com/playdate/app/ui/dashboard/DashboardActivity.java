@@ -58,6 +58,7 @@ import com.playdate.app.ui.my_profile_details.FragSavedPost;
 import com.playdate.app.ui.notification_screen.FragNotification;
 import com.playdate.app.ui.social.FragSocialFeed;
 import com.playdate.app.ui.social.upload_media.PostMediaActivity;
+import com.playdate.app.util.image_crop.MainActivity;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
 
@@ -555,19 +556,19 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             ll_her.setVisibility(View.VISIBLE);
             ReplaceFrag(new FragCardSwipe());
         } else if (id == R.id.txt_chat) {
-            txt_match.setBackground(null);
-            txt_social.setBackground(null);
-            iv_dashboard_notification.setBackground(null);
-            iv_dashboard_notification.setImageResource(R.drawable.notificationnew);
-
-            txt_match.setTextColor(getResources().getColor(android.R.color.darker_gray));
-            txt_social.setTextColor(getResources().getColor(android.R.color.darker_gray));
-            txt_chat.setBackground(getResources().getDrawable(R.drawable.menu_button));
-            txt_chat.setTextColor(getResources().getColor(R.color.white));
-
-            ll_friends.setVisibility(View.GONE);
-            ll_mainMenu.setVisibility(View.GONE);
-            ll_her.setVisibility(View.GONE);
+//            txt_match.setBackground(null);
+//            txt_social.setBackground(null);
+//            iv_dashboard_notification.setBackground(null);
+//            iv_dashboard_notification.setImageResource(R.drawable.notificationnew);
+//
+//            txt_match.setTextColor(getResources().getColor(android.R.color.darker_gray));
+//            txt_social.setTextColor(getResources().getColor(android.R.color.darker_gray));
+//            txt_chat.setBackground(getResources().getDrawable(R.drawable.menu_button));
+//            txt_chat.setTextColor(getResources().getColor(R.color.white));
+//
+//            ll_friends.setVisibility(View.GONE);
+//            ll_mainMenu.setVisibility(View.GONE);
+//            ll_her.setVisibility(View.GONE);
 //            ReplaceFrag(new RequestChatFragment());
             startActivity(new Intent(DashboardActivity.this, ChatBaseActivity.class));
         } else if (id == R.id.txt_personal) {
@@ -827,7 +828,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
                 if (null != bitmap) {
                     iv_plus.setVisibility(View.VISIBLE);
-                    Intent mIntent = new Intent(DashboardActivity.this, PostMediaActivity.class);
+                    Intent mIntent = new Intent(DashboardActivity.this, MainActivity.class);
                     startActivity(mIntent);
                 }
 
@@ -847,8 +848,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
                 if (null != bitmap) {
                     iv_plus.setVisibility(View.VISIBLE);
-                    Intent mIntent = new Intent(DashboardActivity.this, PostMediaActivity.class);
-
+                    Intent mIntent = new Intent(DashboardActivity.this, MainActivity.class);
                     startActivity(mIntent);
                 }
 

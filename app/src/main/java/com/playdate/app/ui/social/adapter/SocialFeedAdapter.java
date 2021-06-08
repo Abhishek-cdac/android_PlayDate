@@ -302,6 +302,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                         owner = "";
                     } else {
                         owner = "<b>" + lst.get(position).getLstpostby().get(0).getUsername() + "</b> " + lst.get(position).getTag();
+                        userViewHolder.txt_chat.setText(Html.fromHtml("<b>" + owner + "</b>"));
                     }
 
                 }
@@ -319,6 +320,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                             }
                         }
                         if (temp.isEmpty()) {
+                            if(userViewHolder.txt_chat.getText().toString().isEmpty())
                             userViewHolder.txt_chat.setVisibility(View.GONE);
                         } else {
                             userViewHolder.txt_chat.setText(Html.fromHtml("<b>" + owner + "</b>" + "<br>" + temp));
@@ -326,15 +328,16 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
 
 
                     } else if (lst.get(position).getComments_list() == null) {
-
+                        if(userViewHolder.txt_chat.getText().toString().isEmpty())
                         userViewHolder.txt_chat.setVisibility(View.GONE);
                     } else if (lst.get(position).getComments_list().isEmpty()) {
-
+                        if(userViewHolder.txt_chat.getText().toString().isEmpty())
                         userViewHolder.txt_chat.setVisibility(View.GONE);
                     }
                 } else {
                     userViewHolder.et_comment.setVisibility(View.GONE);
                     if (owner.isEmpty()) {
+                        if(userViewHolder.txt_chat.getText().toString().isEmpty())
                         userViewHolder.txt_chat.setVisibility(View.GONE);
                     } else {
                         userViewHolder.txt_chat.setText(Html.fromHtml("<b>" + owner + "</b>"));
@@ -466,6 +469,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                         owner = "";
                     } else {
                         owner = "<b>" + lst.get(position).getLstpostby().get(0).getUsername() + "</b> " + lst.get(position).getTag();
+                        videoHolder.txt_chat.setText(Html.fromHtml("<b>" + owner + "</b>"));
                     }
 
                 }
@@ -484,21 +488,24 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                         }
 
                         if (temp.isEmpty()) {
+                            if(videoHolder.txt_chat.getText().toString().isEmpty())
                             videoHolder.txt_chat.setVisibility(View.GONE);
                         } else {
                             videoHolder.txt_chat.setText(Html.fromHtml("<b>" + owner + "</b>" + "<br>" + temp));
                         }
 
                     } else if (lst.get(position).getComments_list() == null) {
-
+                        if(videoHolder.txt_chat.getText().toString().isEmpty())
                         videoHolder.txt_chat.setVisibility(View.GONE);
                     } else if (lst.get(position).getComments_list().isEmpty()) {
-
+                        if(videoHolder.txt_chat.getText().toString().isEmpty())
                         videoHolder.txt_chat.setVisibility(View.GONE);
                     }
                 } else {
+                    if(videoHolder.txt_chat.getText().toString().isEmpty())
                     videoHolder.et_comment.setVisibility(View.GONE);
                     if (owner.isEmpty()) {
+                        if(videoHolder.txt_chat.getText().toString().isEmpty())
                         videoHolder.txt_chat.setVisibility(View.GONE);
                     } else {
                         videoHolder.txt_chat.setText(Html.fromHtml("<b>" + owner + "</b>"));

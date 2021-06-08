@@ -88,7 +88,7 @@ public class PartnerViewPagerAdapter extends PagerAdapter {
             public void onClick(View v) {
                 //  frag.OnPortnerSelect(position);
 //                Log.d("Url ProfileImage", list.get(position).getImage());
-                itemClick.onItemClicks(v, position, 20, list.get(position).getUsername(),list.get(position).getTotalPoints(), list.get(position).getProfilePicPath() );
+                itemClick.onItemClicks(v, position, 20, list.get(position).getUsername(),list.get(position).getTotalPoints(),list.get(position).getId(), list.get(position).getProfilePicPath() );
 
             }
         });
