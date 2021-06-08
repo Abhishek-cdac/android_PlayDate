@@ -104,7 +104,7 @@
             android:layout_centerHorizontal="true"
             android:layout_margin="@dimen/_5sdp"
             android:background="@color/white"
-            android:src="@drawable/heart" />
+            android:src="@drawable/ic_heart" />
 
 
         <ImageView
@@ -115,7 +115,7 @@
             android:layout_margin="@dimen/_5sdp"
             android:layout_toRightOf="@+id/iv_heart"
             android:background="@color/white"
-            android:src="@drawable/group" />
+            android:src="@drawable/ic_group" />
 
         <ImageView
             android:layout_width="@dimen/_18sdp"
@@ -124,7 +124,7 @@
             android:layout_margin="@dimen/_5sdp"
             android:layout_toRightOf="@+id/iv_msg"
             android:background="@color/white"
-            android:src="@drawable/group"
+            android:src="@drawable/ic_badge"
             android:visibility="gone" />
 
         <ImageView
@@ -135,7 +135,7 @@
 
             android:layout_margin="@dimen/_5sdp"
             android:background="@color/white"
-            android:src="@drawable/bookmark" />
+            android:src="@drawable/icon_bookmark" />
 
 
     </RelativeLayout>

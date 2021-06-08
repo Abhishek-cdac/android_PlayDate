@@ -68,7 +68,7 @@
                 android:layout_height="@dimen/_12sdp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/edit_pencil">
+                android:src="@drawable/ic_icon_edit">
 
             </ImageView>
 
@@ -118,7 +118,7 @@
                 android:layout_height="@dimen/_12sdp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/edit_pencil">
+                android:src="@drawable/ic_icon_edit">
 
             </ImageView>
 
@@ -168,7 +168,7 @@
                 android:layout_height="@dimen/_12sdp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/black_add">
+                android:src="@drawable/ic_icon_add_circle">
 
             </ImageView>
 
@@ -266,7 +266,7 @@
                 android:layout_height="@dimen/_12sdp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/edit_pencil">
+                android:src="@drawable/ic_icon_edit">
 
             </ImageView>
 
@@ -316,7 +316,7 @@
                 android:layout_height="@dimen/_12sdp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/edit_pencil">
+                android:src="@drawable/ic_icon_edit">
 
             </ImageView>
 
@@ -365,7 +365,7 @@
                 android:layout_height="@dimen/_12sdp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/black_camera">
+                android:src="@drawable/ic_icon_awesome_video">
 
             </ImageView>
 
@@ -414,7 +414,7 @@
                 android:layout_height="@dimen/_12sdp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/edit_pencil">
+                android:src="@drawable/ic_icon_edit">
 
             </ImageView>
 
@@ -463,7 +463,7 @@
                 android:layout_height="@dimen/_20sdp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/dark_mode">
+                android:src="@drawable/ic_group_switch">
 
             </ImageView>
 

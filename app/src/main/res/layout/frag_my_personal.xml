@@ -65,7 +65,7 @@
             android:layout_alignParentEnd="true"
 
             android:layout_centerVertical="true"
-            android:src="@drawable/edit_pencil">
+            android:src="@drawable/ic_icon_edit">
 
         </ImageView>
 
@@ -115,7 +115,7 @@
             android:layout_alignParentEnd="true"
             android:visibility="gone"
             android:layout_centerVertical="true"
-            android:src="@drawable/edit_pencil">
+            android:src="@drawable/ic_icon_edit">
 
         </ImageView>
 
@@ -163,7 +163,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:id="@+id/iv_gender"
-            android:src="@drawable/edit_pencil">
+            android:src="@drawable/ic_icon_edit">
 
         </ImageView>
 
@@ -212,7 +212,7 @@
             android:layout_alignParentEnd="true"
             android:id="@+id/iv_dob"
             android:layout_centerVertical="true"
-            android:src="@drawable/edit_pencil">
+            android:src="@drawable/ic_icon_edit">
 
         </ImageView>
 
@@ -261,7 +261,7 @@
             android:layout_alignParentEnd="true"
             android:id="@+id/iv_sex_orientation"
             android:layout_centerVertical="true"
-            android:src="@drawable/edit_pencil">
+            android:src="@drawable/ic_icon_edit">
 
         </ImageView>
 
@@ -309,7 +309,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:id="@+id/iv_relationship"
-            android:src="@drawable/edit_pencil">
+            android:src="@drawable/ic_icon_edit">
 
         </ImageView>
 

@@ -48,7 +48,7 @@ public class FragRestaurantSelection extends Fragment implements restaurantSelec
     RecyclerView rv_restaurant;
     private CommonClass clsCommon;
     private GpsTracker gpsTracker;
-    private ArrayList<RestaurentData> lst_getRestaurentsDetail;
+    private ArrayList<RestaurentData> lst_getRestaurantsDetail;
     public FragRestaurantSelection() {
     }
 
@@ -102,14 +102,14 @@ public class FragRestaurantSelection extends Fragment implements restaurantSelec
                 pd.cancel();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
-                        lst_getRestaurentsDetail = (ArrayList<RestaurentData>) response.body().getData();
-                        if (lst_getRestaurentsDetail == null) {
-                            lst_getRestaurentsDetail = new ArrayList<>();
+                        lst_getRestaurantsDetail = (ArrayList<RestaurentData>) response.body().getData();
+                        if (lst_getRestaurantsDetail == null) {
+                            lst_getRestaurantsDetail = new ArrayList<>();
                         }
                         RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
                         rv_restaurant.setLayoutManager(manager);
 
-                        RestaurantSelectionAdapter adapter = new RestaurantSelectionAdapter(getActivity(), lst_getRestaurentsDetail);
+                        RestaurantSelectionAdapter adapter = new RestaurantSelectionAdapter(getActivity(), lst_getRestaurantsDetail);
                         rv_restaurant.setAdapter(adapter);
 
 

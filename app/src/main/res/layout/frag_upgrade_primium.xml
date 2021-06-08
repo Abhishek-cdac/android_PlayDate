@@ -38,9 +38,10 @@
             android:orientation="horizontal">
 
             <ImageView
+
                 android:layout_width="@dimen/_10sdp"
                 android:layout_height="@dimen/_10sdp"
-                android:src="@drawable/pre_check">
+                android:src="@drawable/ic_checkbox">
 
             </ImageView>
 
@@ -74,7 +75,7 @@
             <ImageView
                 android:layout_width="@dimen/_10sdp"
                 android:layout_height="@dimen/_10sdp"
-                android:src="@drawable/pre_check">
+                android:src="@drawable/ic_checkbox">
 
             </ImageView>
 
@@ -111,7 +112,7 @@
                 android:layout_width="@dimen/_10sdp"
                 android:layout_height="@dimen/_10sdp"
 
-                android:src="@drawable/pre_check">
+                android:src="@drawable/ic_checkbox">
 
             </ImageView>
 
@@ -147,7 +148,7 @@
                 android:layout_width="@dimen/_10sdp"
                 android:layout_height="@dimen/_10sdp"
 
-                android:src="@drawable/pre_check">
+                android:src="@drawable/ic_checkbox">
 
             </ImageView>
 
@@ -184,7 +185,7 @@
                 android:layout_width="@dimen/_10sdp"
                 android:layout_height="@dimen/_10sdp"
 
-                android:src="@drawable/pre_check">
+                android:src="@drawable/ic_checkbox">
 
             </ImageView>
 

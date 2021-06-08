@@ -268,14 +268,14 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
             if (lst.get(position).getIsLike() == 1) {
                 userViewHolder.iv_heart.setImageResource(R.drawable.red_heart);
             } else {
-                userViewHolder.iv_heart.setImageResource(R.drawable.heart);
+                userViewHolder.iv_heart.setImageResource(R.drawable.ic_heart);
             }
 
             userViewHolder.iv_heart.setOnClickListener(view -> {
                 if (lst.get(position).getIsLike() == 1) {
                     lst.get(position).setIsLike(0);
                     lst.get(position).setLikes(lst.get(position).getLikes() - 1);
-                    userViewHolder.iv_heart.setImageResource(R.drawable.heart);
+                    userViewHolder.iv_heart.setImageResource(R.drawable.ic_heart);
                     lst.get(position).setTapCount(0);
 //                    lst.get(position).setHeartSelected(false);
                     notifyDataSetChanged();
@@ -352,13 +352,13 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
             if (lst.get(position).getIsGallerySave() == 1) {
                 userViewHolder.savePost.setImageResource(R.drawable.ic_icons8_bookmark);
             } else {
-                userViewHolder.savePost.setImageResource(R.drawable.ic_icons8_bookmark_border);
+                userViewHolder.savePost.setImageResource(R.drawable.icon_bookmark);
             }
 
             userViewHolder.savePost.setOnClickListener(view -> {
                 if (lst.get(position).getIsGallerySave() == 1) {
                     lst.get(position).setIsGallerySave(0);
-                    userViewHolder.savePost.setImageResource(R.drawable.ic_icons8_bookmark_border);
+                    userViewHolder.savePost.setImageResource(R.drawable.icon_bookmark);
                     notifyDataSetChanged();
                     callSavePostAPI(lst.get(position).getPostId(), lst.get(position).getIsGallerySave());
                 } else if (lst.get(position).getIsGallerySave() == 0) {
@@ -437,14 +437,14 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
             if (lst.get(position).getIsLike() == 1) {
                 videoHolder.iv_heart.setImageResource(R.drawable.red_heart);
             } else {
-                videoHolder.iv_heart.setImageResource(R.drawable.heart);
+                videoHolder.iv_heart.setImageResource(R.drawable.ic_heart);
             }
 
             videoHolder.iv_heart.setOnClickListener(view -> {
                 if (lst.get(position).getIsLike() == 1) {
                     lst.get(position).setIsLike(0);
                     lst.get(position).setLikes(lst.get(position).getLikes() - 1);
-                    videoHolder.iv_heart.setImageResource(R.drawable.heart);
+                    videoHolder.iv_heart.setImageResource(R.drawable.ic_heart);
                     lst.get(position).setTapCount(0);
 //                    lst.get(position).setHeartSelected(false);
                     notifyDataSetChanged();
@@ -522,13 +522,13 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
             if (lst.get(position).getIsGallerySave() == 1) {
                 videoHolder.savePost.setImageResource(R.drawable.ic_icons8_bookmark);
             } else {
-                videoHolder.savePost.setImageResource(R.drawable.ic_icons8_bookmark_border);
+                videoHolder.savePost.setImageResource(R.drawable.icon_bookmark);
             }
 
             videoHolder.savePost.setOnClickListener(view -> {
                 if (lst.get(position).getIsGallerySave() == 1) {
                     lst.get(position).setIsGallerySave(0);
-                    videoHolder.savePost.setImageResource(R.drawable.ic_icons8_bookmark_border);
+                    videoHolder.savePost.setImageResource(R.drawable.icon_bookmark);
                     notifyDataSetChanged();
                     callSavePostAPI(lst.get(position).getPostId(), lst.get(position).getIsGallerySave());
                 } else if (lst.get(position).getIsGallerySave() == 0) {

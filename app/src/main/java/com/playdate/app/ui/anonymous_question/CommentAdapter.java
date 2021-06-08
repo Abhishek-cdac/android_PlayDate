@@ -119,7 +119,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 //            Log.e("selected_index..",""+selected_index);
 
         if (commentList.get(position).isSelected) {
-            holder.relativeLayout.setBackgroundColor(Color.parseColor("#88000000"));
+            holder.relativeLayout.setBackgroundColor(mContext.getResources().getColor(R.color.color_grey));
             holder.name.setTextColor(mContext.getResources().getColor(R.color.white));
             holder.desc.setTextColor(mContext.getResources().getColor(R.color.white));
             holder.time.setTextColor(mContext.getResources().getColor(R.color.white));
@@ -131,12 +131,12 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                 holder.delete.setVisibility(View.GONE);
             }
         } else {
-            holder.relativeLayout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
-            holder.name.setTextColor(mContext.getResources().getColor(R.color.black));
-            holder.desc.setTextColor(mContext.getResources().getColor(R.color.black));
-            holder.time.setTextColor(mContext.getResources().getColor(R.color.black));
-            holder.like.setTextColor(mContext.getResources().getColor(R.color.black));
-            holder.reply.setTextColor(mContext.getResources().getColor(R.color.black));
+            holder.relativeLayout.setBackgroundColor(mContext.getResources().getColor(R.color.backgroundColour));
+            holder.name.setTextColor(mContext.getResources().getColor(R.color.textColour));
+            holder.desc.setTextColor(mContext.getResources().getColor(R.color.textColour));
+            holder.time.setTextColor(mContext.getResources().getColor(R.color.textColour));
+            holder.like.setTextColor(mContext.getResources().getColor(R.color.textColour));
+            holder.reply.setTextColor(mContext.getResources().getColor(R.color.textColour));
             holder.delete.setVisibility(View.GONE);
         }
 
