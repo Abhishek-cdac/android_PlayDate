@@ -29,35 +29,27 @@ public class LocationService extends Service implements LocationListener {
     public LocationService() {
     }
 
+    Context mContext;
     @SuppressLint("MissingPermission")
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        LocationListener locationListener = new MyLocationListener(this);
-
-        Toast.makeText(this, "Location Service class", Toast.LENGTH_SHORT).show();
-        LocationManager locationManager = (LocationManager)
-                getSystemService(Context.LOCATION_SERVICE);
-//        LocationListener locationListener = new MyLocationListener(this);
-//        Toast.makeText(this, "LOCATIONManager_____" + locationManager, Toast.LENGTH_SHORT).show();
-
-        locationManager.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
-
-
-        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        Toast.makeText(this, "Location" + location, Toast.LENGTH_SHORT).show();
-
-        Log.d("Location..", String.valueOf(location));
-        if (location != null) {
-            latitude = location.getLatitude();
-            longitude = location.getLongitude();
-
-            Log.d("Lattitude.............", String.valueOf(latitude));
-            Log.d("Longitude.............", String.valueOf(longitude));
-            SessionPref pref = SessionPref.getInstance(this);
-            pref.saveLOngKeyLattitude("lattitude", latitude);
-            pref.saveLongKeyLongitude("longitude", longitude);
+        try {
+            LocationListener locationListener = new MyLocationListener(this);
+            LocationManager locationManager = (LocationManager)
+                    getSystemService(Context.LOCATION_SERVICE);
+            mContext=this;
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
+            Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            if (location != null) {
+                latitude = location.getLatitude();
+                longitude = location.getLongitude();
+                SessionPref pref = SessionPref.getInstance(this);
+                pref.saveLOngKeyLattitude("lattitude", latitude);
+                pref.saveLongKeyLongitude("longitude", longitude);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return START_STICKY;
@@ -72,51 +64,27 @@ public class LocationService extends Service implements LocationListener {
 
     @Override
     public void onLocationChanged(@NonNull Location location) {
-        Toast.makeText(this, "LocationListener called", Toast.LENGTH_SHORT).show();
-        String cityName = null;
-        String marker = null;
-        Geocoder gcd = new Geocoder(this, Locale.getDefault());
-        List<Address> addresses;
         try {
-            addresses = gcd.getFromLocation(location.getLatitude(),
-                    location.getLongitude(), 1);
-            if (addresses.size() > 0) {
-                Log.d("LOCALITY..............", addresses.get(0).getLocality());
-                System.out.println(addresses.get(0).getLocality());
-                cityName = addresses.get(0).getLocality();
+            String cityName = null;
+            Geocoder gcd = new Geocoder(this, Locale.getDefault());
+            List<Address> addresses;
+            try {
+                addresses = gcd.getFromLocation(location.getLatitude(),
+                        location.getLongitude(), 1);
+                if (addresses.size() > 0) {
+                    Log.d("LOCALITY..............", addresses.get(0).getLocality());
+                    System.out.println(addresses.get(0).getLocality());
+                    cityName = addresses.get(0).getLocality();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
+            SessionPref pref = SessionPref.getInstance(mContext);
+            pref.saveStringKeyVal("LastCity", cityName);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        String s = longitude + "\n" + latitude + "\n\nMy Current City is: "
-                + cityName;
-
+//        pref.saveStringKeyVal("Address_Complete", marker);
     }
 }
-
-
-//    @Override
-//    public void onLocationChanged(@NonNull Location loc) {
-//        String marker ;
-//        Geocoder gcd = new Geocoder(this, Locale.getDefault());
-//        List<Address> addresses;
-//        try {
-//            addresses = gcd.getFromLocation(loc.getLatitude(),
-//                    loc.getLongitude(), 1);
-//            if (addresses.size() > 0) {
-//                System.out.println(addresses.get(0).getLocality());
-////                cityName = addresses.get(0).getLocality();
-//                marker = addresses.get(0).getLocality();
-//                Log.d("Address_Complete", marker);
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-////        String s = longitude + "\n" + latitude + "\n\nMy Current City is: "
-//////                + cityName;
-////        SessionPref pref = SessionPref.getInstance(this);
-////        pref.saveStringKeyVal("Address_Complete", marker);
-////        Log.d("Address_Complete", marker);
-//    }
-//}
 
