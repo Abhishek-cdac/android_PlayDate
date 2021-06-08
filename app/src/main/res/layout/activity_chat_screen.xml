@@ -3,15 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rl_chat"
     android:layout_width="match_parent"
+    android:paddingHorizontal="@dimen/_15sdp"
+    android:paddingVertical="@dimen/_8sdp"
     android:layout_height="match_parent"
     android:background="@color/backgroundColour">
 
     <RelativeLayout
         android:id="@+id/main_menu"
+        android:paddingVertical="@dimen/_4sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="@dimen/_9sdp">
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/back_anonymous"
@@ -19,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerInParent="true"
-            android:padding="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
             android:src="@drawable/arrow_black" />
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -67,36 +69,42 @@
             android:src="@drawable/video_call" />
     </RelativeLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_chat"
+    <ScrollView
+        android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/rv_smileys"
-        android:layout_below="@+id/main_menu"
-        android:layout_margin="@dimen/_8sdp" />
+        android:layout_below="@+id/main_menu">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_chat"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </ScrollView>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_smileys"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:layout_above="@+id/bottom_menu" />
+        android:layout_above="@+id/bottom_menu"
+        android:visibility="gone" />
 
     <RelativeLayout
         android:id="@+id/bottom_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/backgroundColour"
+        android:paddingHorizontal="@dimen/_5sdp"
         android:layout_alignParentBottom="true"
-        android:paddingHorizontal="@dimen/_10sdp"
-        android:paddingBottom="@dimen/_10sdp">
+        android:background="@color/backgroundColour"   >
 
         <ImageView
             android:id="@+id/iv_circle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:paddingHorizontal="@dimen/_5sdp"
+            android:paddingHorizontal="@dimen/_4sdp"
             android:src="@drawable/add_circle" />
 
         <ImageView
@@ -105,7 +113,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/iv_circle"
-            android:paddingHorizontal="@dimen/_5sdp"
+            android:paddingHorizontal="@dimen/_4sdp"
             android:src="@drawable/camera" />
 
         <ImageView
@@ -114,7 +122,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/iv_camera"
-            android:paddingHorizontal="@dimen/_5sdp"
+            android:paddingHorizontal="@dimen/_4sdp"
             android:src="@drawable/photo_video" />
 
         <ImageView
@@ -124,21 +132,22 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="-1dp"
             android:layout_toRightOf="@+id/iv_video"
-            android:paddingHorizontal="@dimen/_5sdp"
+            android:paddingHorizontal="@dimen/_4sdp"
             android:src="@drawable/voice" />
 
         <RelativeLayout
             android:id="@+id/msg_dialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/_5sdp"
-            android:layout_toRightOf="@+id/iv_mic"
+            android:layout_marginStart="@dimen/_4sdp"
+            android:layout_toStartOf="@+id/iv_send"
+            android:layout_toEndOf="@+id/iv_mic"
             android:background="@drawable/login_button"
             android:paddingHorizontal="@dimen/_8sdp">
 
             <EditText
                 android:id="@+id/et_chat"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/_110sdp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:backgroundTint="@android:color/transparent"
@@ -152,20 +161,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/iv_send"
+                android:layout_alignParentEnd="true"
                 android:paddingHorizontal="@dimen/_5sdp"
                 android:src="@drawable/smile" />
 
-            <ImageView
-                android:id="@+id/iv_send"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:paddingHorizontal="@dimen/_5sdp"
-                android:src="@drawable/ic_send" />
 
         </RelativeLayout>
+        <ImageView
+            android:id="@+id/iv_send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:paddingHorizontal="@dimen/_5sdp"
+            android:src="@drawable/ic_send" />
 
 
     </RelativeLayout>

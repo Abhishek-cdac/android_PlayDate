@@ -28,6 +28,7 @@ import com.playdate.app.model.chat_models.ChatMessage;
 import com.playdate.app.model.chat_models.ChatUserList;
 import com.playdate.app.ui.chat.FragChatMain;
 import com.playdate.app.ui.chat.ChattingAdapter;
+import com.playdate.app.ui.chat.LandingBottomSheet;
 import com.playdate.app.ui.date.fragments.FragIntroScreen;
 import com.playdate.app.ui.date.fragments.FragPartnerSelected;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
@@ -118,9 +119,10 @@ public class FragInbox extends Fragment implements onClickEventListener {
 
         OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
         if (frag != null) {
-            frag.ReplaceFrag(new FragChatMain(chatMessageList, sender_name, sender_profile_image));
+            frag.ReplaceFragWithStack(new FragChatMain(chatMessageList, sender_name, sender_profile_image));
         }
     }
+
 
     public void onAcceptChatRequest(String name, String image) {
         Log.d("Accepted", "onAcceptChatRequest: ");
@@ -147,7 +149,7 @@ public class FragInbox extends Fragment implements onClickEventListener {
         chattingAdapter.filterList(filteredList);
     }
 
-    }
+}
 
 
 interface onClickEventListener {
