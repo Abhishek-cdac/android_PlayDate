@@ -48,6 +48,8 @@ public class FragMyUploadMedia extends Fragment {
     AAH_CustomRecyclerView recycler_view_feed;
     private ArrayList<PostDetails> lst;
 
+    public FragMyUploadMedia() {
+    }
 
     @Nullable
     @Override

@@ -36,9 +36,15 @@ public class DateBaseActivity extends AppCompatActivity implements OnInnerFragme
     public void ReplaceFrag(Fragment fragment) {
         ft = fm.beginTransaction();
         ft.replace(R.id.fl_fragment, fragment, fragment.getClass().getSimpleName());
-//        ft.addToBackStack("tags");
+        ft.addToBackStack("tags");
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         ft.commitAllowingStateLoss();
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     @Override

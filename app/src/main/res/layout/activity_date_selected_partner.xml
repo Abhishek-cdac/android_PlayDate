@@ -63,12 +63,12 @@
         android:id="@+id/points_rl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/partner_image"
         android:layout_below="@+id/partner_image"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/_10sdp">
+        android:layout_marginTop="@dimen/_10sdp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/partner_image">
 
         <TextView
             android:id="@+id/tv_points"
@@ -94,19 +94,19 @@
     </RelativeLayout>
 
 
-<!--    <TextView-->
-<!--        android:id="@+id/tv_points"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="center_horizontal"-->
-<!--        android:layout_marginTop="@dimen/_15sdp"-->
-<!--        android:fontFamily="@font/lato_bold"-->
-<!--        android:text="1200 points"-->
-<!--        android:textColor="@color/white"-->
-<!--        android:textSize="@dimen/_16sdp"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/partner_image" />-->
+    <!--    <TextView-->
+    <!--        android:id="@+id/tv_points"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_gravity="center_horizontal"-->
+    <!--        android:layout_marginTop="@dimen/_15sdp"-->
+    <!--        android:fontFamily="@font/lato_bold"-->
+    <!--        android:text="1200 points"-->
+    <!--        android:textColor="@color/white"-->
+    <!--        android:textSize="@dimen/_16sdp"-->
+    <!--        app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--        app:layout_constraintRight_toRightOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/partner_image" />-->
 
     <TextView
         android:id="@+id/tv_username"
@@ -132,12 +132,28 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_username" />
 
+    <com.github.ybq.android.spinkit.SpinKitView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/spin_kit"
+        style="@style/SpinKitView.FadingCircle"
+        android:layout_width="@dimen/_70sdp"
+        android:layout_height="@dimen/_70sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_50sdp"
+        android:visibility="visible"
+        app:SpinKit_Color="@color/color_pink"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_username"
+        tools:ignore="MissingConstraints" />
+
     <ImageView
         android:id="@+id/iv_loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
         android:src="@drawable/loading"
+        android:visibility="gone"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_username" />
