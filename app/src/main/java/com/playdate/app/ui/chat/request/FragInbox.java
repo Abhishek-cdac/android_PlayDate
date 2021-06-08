@@ -78,7 +78,7 @@ public class FragInbox extends Fragment implements onClickEventListener {
 
         Call<ChatUserList> callChats = getServiceApi.getChats();
 
-        callChats.enqueue(new Callback<ChatUserList>() {
+      /*  callChats.enqueue(new Callback<ChatUserList>() {
             @Override
             public void onItemClicks(View v, int absoluteAdapterPosition, int i, String commentId, String postId, String userId) {
 
@@ -117,7 +117,8 @@ public class FragInbox extends Fragment implements onClickEventListener {
             }
         });
     }
-
+*/
+    }
 
     @Override
     public void onClickEvent(int position) {
