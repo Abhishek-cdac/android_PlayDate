@@ -11,7 +11,7 @@
         android:id="@+id/rl_headr"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@color/backgroundColour"
         android:padding="@dimen/_15sdp"
         app:layout_constraintTop_toTopOf="parent">
 
