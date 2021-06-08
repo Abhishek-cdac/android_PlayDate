@@ -3,7 +3,6 @@ package com.playdate.app.ui.playvideo;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
@@ -23,17 +22,16 @@ import com.google.android.exoplayer2.util.Util;
 import com.playdate.app.R;
 
 public class ExoPlayerActivity extends AppCompatActivity {
-    SimpleExoPlayer absPlayerInternal;
-    PlayerView pvMain;
-    ImageView iv_play_pause;
-    boolean playing = true;
+    private SimpleExoPlayer absPlayerInternal;
+    private PlayerView pvMain;
+    private ImageView iv_play_pause;
+    private boolean playing = true;
 
     @Override
     protected void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.exo_player);
         pvMain = findViewById(R.id.ep_video_view);
-//        ll_loader = findViewById(R.id.ll_loader);
         iv_play_pause = findViewById(R.id.iv_play_pause);
         TrackSelector trackSelectorDef = new DefaultTrackSelector();
         absPlayerInternal = ExoPlayerFactory.newSimpleInstance(this, trackSelectorDef); //creating a player instance
@@ -50,18 +48,15 @@ public class ExoPlayerActivity extends AppCompatActivity {
         pvMain.setControllerAutoShow(false);
         pvMain.setControllerHideOnTouch(true);
         pvMain.setUseController(false);
-        iv_play_pause.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (playing) {
-                    playing = false;
-                    pausePlayer(absPlayerInternal);
-                    iv_play_pause.setImageResource(R.drawable.play_circle);
-                } else {
-                    playing = true;
-                    playPlayer(absPlayerInternal);
-                    iv_play_pause.setImageResource(R.drawable.ic_pause);
-                }
+        iv_play_pause.setOnClickListener(v -> {
+            if (playing) {
+                playing = false;
+                pausePlayer(absPlayerInternal);
+                iv_play_pause.setImageResource(R.drawable.play_circle);
+            } else {
+                playing = true;
+                playPlayer(absPlayerInternal);
+                iv_play_pause.setImageResource(R.drawable.ic_pause);
             }
         });
         absPlayerInternal.addListener(new Player.EventListener() {

@@ -37,15 +37,15 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FragSearchUser extends Fragment implements SuggestedFriendAdapter.SuggestionsAdapterListner {
-    EditText edt_search;
-    TextView txt_cancel;
-    RecyclerView recyclerView;
+    private EditText edt_search;
+    private RecyclerView recyclerView;
     private ArrayList<GetUserSuggestionData> lst_getUserSuggestions;
     private CommonClass clsCommon;
     private Onclick itemClick;
@@ -56,7 +56,7 @@ public class FragSearchUser extends Fragment implements SuggestedFriendAdapter.S
 
     public void OnUserProfileSelected(boolean isFriend,String id){
         OnFriendSelected inf = (OnFriendSelected) getActivity();
-        inf.OnSuggestionClosed(isFriend,id);
+        Objects.requireNonNull(inf).OnSuggestionClosed(isFriend,id);
 
     }
 
@@ -66,7 +66,7 @@ public class FragSearchUser extends Fragment implements SuggestedFriendAdapter.S
         View view = inflater.inflate(R.layout.frag_search_user, container, false);
         clsCommon = CommonClass.getInstance();
         edt_search = view.findViewById(R.id.edt_search);
-        txt_cancel = view.findViewById(R.id.txt_cancel);
+        TextView txt_cancel = view.findViewById(R.id.txt_cancel);
         recyclerView = view.findViewById(R.id.recycler_view);
         itemClick = new Onclick() {
             @Override
@@ -97,33 +97,14 @@ public class FragSearchUser extends Fragment implements SuggestedFriendAdapter.S
             }
         };
 
-        txt_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                edt_search.setText("");
-                OnFriendSelected inf = (OnFriendSelected) getActivity();
-                inf.OnSuggestionClosed();
+        txt_cancel.setOnClickListener(v -> {
+            edt_search.setText("");
+            OnFriendSelected inf = (OnFriendSelected) getActivity();
+            inf.OnSuggestionClosed();
 
 
-            }
         });
 
-
-
-
-    /*    edt_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                adapter.getFilter().filter(query);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                adapter.getFilter().filter(newText);
-                return false;
-            }
-        });*/
 
         edt_search.addTextChangedListener(new TextWatcher() {
             @Override
@@ -147,16 +128,13 @@ public class FragSearchUser extends Fragment implements SuggestedFriendAdapter.S
 
         view.setFocusableInTouchMode(true);
         view.requestFocus();
-        view.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    OnFriendSelected inf = (OnFriendSelected) getActivity();
-                    inf.OnSuggestionClosed();
-                    return true;
-                }
-                return false;
+        view.setOnKeyListener((v, keyCode, event) -> {
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                OnFriendSelected inf = (OnFriendSelected) getActivity();
+                Objects.requireNonNull(inf).OnSuggestionClosed();
+                return true;
             }
+            return false;
         });
         return view;
     }
@@ -232,11 +210,6 @@ public class FragSearchUser extends Fragment implements SuggestedFriendAdapter.S
 //                pd.cancel();
                 if (response.code() == 200) {
                     assert response.body() != null;
-                    if (response.body().getStatus() == 1) {
-//                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", "" + response.body().getMessage(), "Ok");
-                    } else {
-//                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", "" + response.body().getMessage(), "Ok");
-                    }
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
@@ -250,7 +223,6 @@ public class FragSearchUser extends Fragment implements SuggestedFriendAdapter.S
             @Override
             public void onFailure(Call<CommonModel> call, Throwable t) {
                 t.printStackTrace();
-//                pd.cancel();
                 Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });

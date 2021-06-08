@@ -20,9 +20,6 @@ import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.playdate.app.R;
 import com.playdate.app.couple.ui.register.couplebio.CoupleBioActivity;
 import com.playdate.app.data.api.GetDataService;
@@ -30,10 +27,8 @@ import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.GetProfileDetails;
 import com.playdate.app.model.GetProileDetailData;
 import com.playdate.app.model.Interest;
-import com.playdate.app.model.InterestsMain;
 import com.playdate.app.ui.blockuser.BlockUserActivity;
 import com.playdate.app.ui.dashboard.OnProfilePhotoChageListerner;
-import com.playdate.app.ui.date.games.FragTimesUp1;
 import com.playdate.app.ui.forgot_password.ForgotPasswordActivity;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.ui.invite.InviteFriendActivity;
@@ -46,8 +41,6 @@ import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.customcamera.otalia.CameraActivity;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,13 +63,12 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
     private TextView txt_user_name;
     private TextView txt_interetsed;
     private SessionPref pref;
-//    private RelativeLayout saved_rl;
-//    private GoogleApiClient googleApiClient;
-    GoogleSignInClient mGoogleSignInClient;
+    private GoogleSignInClient mGoogleSignInClient;
 
     private ArrayList<GetProileDetailData> lst_getPostDetail;
-    String inviteCode;
-    String inviteLink;
+    private String inviteCode;
+    private String inviteLink;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -207,11 +199,11 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        if (id == R.id.txt_blocked ) {
+        if (id == R.id.txt_blocked) {
             Intent mIntent = new Intent(getActivity(), BlockUserActivity.class);
             mIntent.putExtra("fromProfile", true);
             startActivityForResult(mIntent, 407);
-        }else if (id == R.id.profile_image || id == R.id.txt_change_photo) {
+        } else if (id == R.id.profile_image || id == R.id.txt_change_photo) {
             Intent mIntent = new Intent(getActivity(), UploadProfileActivity.class);
             mIntent.putExtra("fromProfile", true);
             startActivityForResult(mIntent, 407);

@@ -48,13 +48,13 @@ public class FragNotification extends Fragment {
     private List<NotificationData> lst_notifications;
     private Onclick itemClick;
     private Bundle bundle;
-    private ImageView back_anonymous;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag_notification, container, false);
         rv_notification = view.findViewById(R.id.rv_notification);
-        back_anonymous=view.findViewById(R.id.back_anonymous);
+        ImageView back_anonymous = view.findViewById(R.id.back_anonymous);
         clsCommon = CommonClass.getInstance();
         itemClick = new Onclick() {
             @Override

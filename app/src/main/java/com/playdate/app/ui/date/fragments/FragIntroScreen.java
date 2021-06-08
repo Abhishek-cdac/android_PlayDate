@@ -25,7 +25,7 @@ public class FragIntroScreen extends Fragment {
         View view = inflater.inflate(R.layout.activity_date_intro, container, false);
         TextView tv_create_date = view.findViewById(R.id.tv_create_date);
         ImageView cancel = view.findViewById(R.id.cancel);
-        TextView tv_accept_date = view.findViewById(R.id.tv_accept_date);
+//        TextView tv_accept_date = view.findViewById(R.id.tv_accept_date);
 
         tv_create_date.setOnClickListener(v -> {
             OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();

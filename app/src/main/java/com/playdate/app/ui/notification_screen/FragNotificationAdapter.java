@@ -1,6 +1,5 @@
 package com.playdate.app.ui.notification_screen;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +18,10 @@ import java.util.ArrayList;
 
 public class FragNotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private Context mContext;
     public static final int LIKED = 0;
     public static final int FRNDREQUEST = 1;
     public static final int MATCHED = 2;
-    ArrayList<Notification> list = new ArrayList<>();
+    private final ArrayList<Notification> list = new ArrayList<>();
 
 
     public FragNotificationAdapter() {
@@ -56,18 +54,15 @@ public class FragNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = null;
-        RecyclerView.ViewHolder viewHolder = null;
-        mContext = parent.getContext();
+        View view;
+        RecyclerView.ViewHolder viewHolder;
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
 
         if (viewType == LIKED) {
             view = inflater.inflate(R.layout.row_notification_type_1, parent, false);
             viewHolder = new ViewHolderLiked(view);
-        }
-
-        else {
+        } else {
             view = inflater.inflate(R.layout.row_notification_type_3, parent, false);
             viewHolder = new ViewHolderMatched(view);
         }
@@ -91,12 +86,12 @@ public class FragNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                     .into(viewHolderLiked.profile_image);
             viewHolderLiked.tv_name.setText(list.get(position).getName());
 
-            if (list.get(position).getInnerType() == "M") {
+            if (list.get(position).getInnerType().equals("M")) {
                 viewHolderLiked.tv_desc.setText("messaged you");
                 viewHolderLiked.icons.setImageResource(R.drawable.message_icon);
                 viewHolderLiked.rl_request.setVisibility(View.GONE);
 
-            } else if (list.get(position).getInnerType() == "L") {
+            } else if (list.get(position).getInnerType().equals("L")) {
                 viewHolderLiked.tv_desc.setText("liked your photo");
                 Picasso.get().load(list.get(position).getLikedPhoto())
                         .placeholder(R.drawable.cupertino_activity_indicator)
@@ -106,7 +101,7 @@ public class FragNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                 viewHolderLiked.rl_request.setVisibility(View.GONE);
 
-            } else if (list.get(position).getInnerType() == "A") {
+            } else if (list.get(position).getInnerType().equals("A")) {
                 viewHolderLiked.tv_desc.setText("asked your out");
                 viewHolderLiked.icons.setImageResource(R.drawable.playdate_pink);
                 viewHolderLiked.rl_request.setVisibility(View.GONE);
@@ -124,9 +119,12 @@ public class FragNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     public class ViewHolderLiked extends RecyclerView.ViewHolder {
-        ImageView profile_image, icons, iv_right, iv_cross;
-        TextView tv_name, tv_desc;
-        RelativeLayout rl_request;
+
+        private final ImageView profile_image;
+        private final ImageView icons;
+        private final TextView tv_name;
+        private final TextView tv_desc;
+        private final RelativeLayout rl_request;
 
         public ViewHolderLiked(View view) {
             super(view);
@@ -135,21 +133,21 @@ public class FragNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             tv_name = view.findViewById(R.id.tv_name_noti);
             tv_desc = view.findViewById(R.id.tv_desc_noti);
             rl_request = view.findViewById(R.id.rl_request);
-            iv_right = view.findViewById(R.id.iv_right);
-            iv_cross = view.findViewById(R.id.iv_cross);
+//            ImageView iv_right = view.findViewById(R.id.iv_right);
+//            ImageView iv_cross = view.findViewById(R.id.iv_cross);
         }
     }
 
     public class ViewHolderMatched extends RecyclerView.ViewHolder {
-        ImageView profile_image, icons;
-        TextView tv_name, tv_desc;
+        private final ImageView profile_image;
+        private final TextView tv_name;
 
         public ViewHolderMatched(View view) {
             super(view);
             profile_image = view.findViewById(R.id.profile_image_3);
-            icons = view.findViewById(R.id.iv_icon_3);
+//            ImageView icons = view.findViewById(R.id.iv_icon_3);
             tv_name = view.findViewById(R.id.tv_name_noti);
-            tv_desc = view.findViewById(R.id.tv_desc_noti);
+//            TextView tv_desc = view.findViewById(R.id.tv_desc_noti);
 
         }
     }

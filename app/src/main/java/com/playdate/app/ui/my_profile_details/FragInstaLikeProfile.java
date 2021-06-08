@@ -34,6 +34,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,21 +44,19 @@ import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 
 public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View.OnClickListener {
     private ImageView iv_send_request;
-    private ImageView iv_chat, connection_img;
+    private ImageView iv_chat;
     private ImageView profile_image, boy_profile_image, girl_profile_image;
-    private TextView txt_bio, header_text;
+    private TextView txt_bio;
     private TextView txt_login_user;
-    private RelativeLayout couple_rl, single_person;
     private CommonClass clsCommon;
     private TextView txtTotalFriend, txtTotalPost;
     private ArrayList<GetProileDetailData> lst_getPostDetail;
     private ArrayList<GetCoupleProfileData> lst_getCoupleDetail;
-    SessionPref pref;
 
     public FragInstaLikeProfile() {
     }
 
-    boolean itsMe = true;
+    private boolean itsMe = true;
 
     public FragInstaLikeProfile(boolean itsMe) {
         this.itsMe = itsMe;
@@ -69,13 +68,13 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
         View view = inflater.inflate(R.layout.frag_insta_profile, container, false);
 
         clsCommon = CommonClass.getInstance();
-        pref = SessionPref.getInstance(getActivity());
+        SessionPref pref = SessionPref.getInstance(getActivity());
 
         girl_profile_image = view.findViewById(R.id.girl_profile_image);
         boy_profile_image = view.findViewById(R.id.boy_profile_image);
-        connection_img = view.findViewById(R.id.connection_img);
-        single_person = view.findViewById(R.id.single_person);
-        couple_rl = view.findViewById(R.id.couple_rl);
+        ImageView connection_img = view.findViewById(R.id.connection_img);
+        RelativeLayout single_person = view.findViewById(R.id.single_person);
+        RelativeLayout couple_rl = view.findViewById(R.id.couple_rl);
         txtTotalFriend = view.findViewById(R.id.friend_count);
         txtTotalPost = view.findViewById(R.id.post_count);
         iv_send_request = view.findViewById(R.id.iv_send_request);
@@ -83,7 +82,7 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
         iv_chat = view.findViewById(R.id.iv_chat);
         txt_bio = view.findViewById(R.id.txt_bio);
         txt_login_user = view.findViewById(R.id.txt_login_user);
-        header_text = view.findViewById(R.id.header_text);
+        TextView header_text = view.findViewById(R.id.header_text);
 
         if (pref.getStringVal(SessionPref.LoginUserrelationship).equals("Single")) {
             connection_img.setVisibility(View.GONE);
@@ -144,8 +143,8 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
                                 .placeholder(R.drawable.cupertino_activity_indicator)
                                 .into(boy_profile_image);
 
-                        Log.e("getCoupleBoy",""+lst_getCoupleDetail.get(0).getProfile1().get(0).getProfilePicPath());
-                        Log.e("getCoupleGirl",""+lst_getCoupleDetail.get(0).getProfile2().get(0).getProfilePicPath());
+                        Log.e("getCoupleBoy", "" + lst_getCoupleDetail.get(0).getProfile1().get(0).getProfilePicPath());
+                        Log.e("getCoupleGirl", "" + lst_getCoupleDetail.get(0).getProfile2().get(0).getProfilePicPath());
 
                         Picasso.get().load(BASE_URL_IMAGE + lst_getCoupleDetail.get(0).getProfile2().get(0).getProfilePicPath())
                                 .placeholder(R.drawable.cupertino_activity_indicator)
@@ -208,36 +207,20 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
             public void onResponse(Call<GetProfileDetails> call, Response<GetProfileDetails> response) {
                 pd.cancel();
                 if (response.code() == 200) {
-                    if (response.body().getStatus() == 1) {
+                    if (Objects.requireNonNull(response.body()).getStatus() == 1) {
                         lst_getPostDetail = (ArrayList<GetProileDetailData>) response.body().getData();
                         if (lst_getPostDetail == null) {
                             lst_getPostDetail = new ArrayList<>();
                         }
                         txtTotalFriend.setText(String.valueOf(lst_getPostDetail.get(0).getTotalFriends()));
                         txtTotalPost.setText(String.valueOf(lst_getPostDetail.get(0).getTotalPosts()));
-//                        onTypeChange(0);
-
-
-                     /*   if (lst_getPostDetail.get(0).getRelationship().equals("Single")){
-                            header_text.setText("About Me");
-                            single_person.setVisibility(View.VISIBLE);
-                            iv_send_request.setVisibility(View.VISIBLE);
-                            iv_chat.setVisibility(View.VISIBLE);
-                            couple_rl.setVisibility(View.GONE);
-                        } else {
-                            header_text.setText("How we met");
-                            single_person.setVisibility(View.GONE);
-                            couple_rl.setVisibility(View.VISIBLE);
-                            iv_send_request.setVisibility(View.GONE);
-                            iv_chat.setVisibility(View.GONE);
-                        }*/
 
                     } else {
                         clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
                     }
                 } else {
                     try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        JSONObject jObjError = new JSONObject(Objects.requireNonNull(response.errorBody()).string());
                         clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message").toString(), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
@@ -261,31 +244,6 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
     @Override
     public void onTypeChange(int type) {
 
-        if (type == 1) {
-            if (InstaPhotosAdapter.isLocked) {
-                return;
-            }
-//            recycler_photos.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
-//            ArrayList<SocialFeed> lst = new ArrayList<>();
-//            lst.add(new SocialFeed("Olivia251", 1548, false, 0, USER, "https://images.saymedia-content.com/.image/t_share/MTc0MDkwNjUxNDc2OTYwODM0/5-instagram-models-you-should-be-following.png", "https://i.pinimg.com/originals/09/31/b5/0931b5399d9f1a3afe4417ee83eff961.jpg"));
-//            lst.add(new SocialFeed("AvaSophia", 1542, false, 0, USER, "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg", "https://i.pinimg.com/originals/09/31/b5/0931b5399d9f1a3afe4417ee83eff961.jpg"));
-//            lst.add(new SocialFeed("Isabella", 4854, false, 0, USER, "https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", "https://i.pinimg.com/originals/09/31/b5/0931b5399d9f1a3afe4417ee83eff961.jpg"));
-//
-//            lst.add(new SocialFeed("Olivia251", 1548, false, 0, USER, "https://images.saymedia-content.com/.image/t_share/MTc0MDkwNjUxNDc2OTYwODM0/5-instagram-models-you-should-be-following.png", "https://i.pinimg.com/originals/09/31/b5/0931b5399d9f1a3afe4417ee83eff961.jpg"));
-//            lst.add(new SocialFeed("AvaSophia", 1542, false, 0, USER, "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg", "https://i.pinimg.com/originals/09/31/b5/0931b5399d9f1a3afe4417ee83eff961.jpg"));
-//            lst.add(new SocialFeed("Isabella", 4854, false, 0, USER, "https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", "https://i.pinimg.com/originals/09/31/b5/0931b5399d9f1a3afe4417ee83eff961.jpg"));
-//            lst.add(new SocialFeed("Isabella", 4854, false, 0, USER, "https://blog.ainfluencer.com/wp-content/uploads/2021/01/Cinta-Laura-868x1024.jpg", "https://i.pinimg.com/originals/09/31/b5/0931b5399d9f1a3afe4417ee83eff961.jpg"));
-//
-//
-//            SocialFeedNormal adapter = new SocialFeedNormal(lst);
-//            recycler_photos.setAdapter(adapter);
-        } else {
-//            recycler_photos.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-//            InstaPhotosAdapter adapter = new InstaPhotosAdapter(this);
-//            recycler_photos.setAdapter(adapter);
-        }
-
-
     }
 
 
@@ -305,9 +263,7 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
                 String videopath = pref.getStringVal(SessionPref.LoginUserprofileVideo);
 
 
-                if (videopath.contains("http")) {
-
-                } else {
+                if (!videopath.contains("http")) {
                     videopath = BASE_URL_IMAGE + videopath;
                 }
                 mIntent.putExtra("video", videopath);

@@ -89,13 +89,16 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     private TextView txt_payment;
     private TextView txt_account;
     private TextView txt_personal;
+    private TextView txt_count;
+
     private ImageView iv_love;
     private ImageView iv_profile_sett;
     private ImageView iv_plus;
     private ImageView iv_play_date_logo;
     private ImageView iv_dashboard_notification;
     private ImageView iv_coupons;
-    private TextView txt_count;
+    private ImageView profile_image;
+    private TextView txt_serachfriend;
 
     private LinearLayout ll_mainMenu, ll_her;
     private LinearLayout ll_friends;
@@ -106,19 +109,21 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     private LinearLayout bottomNavigationView;
     private LinearLayout ll_camera_option;
 
-
-    private ImageView profile_image;
     private RecyclerView rv_friends;
     private SessionPref pref;
-    private TextView txt_serachfriend;
+
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private FriendAdapter adapterfriend;
     private Fragment CurrentFrag;
-    int OPTION_CLICK = 0;
     private NestedScrollView nsv;
+    private FragInstaLikeProfile profile;
 
-
+    private int count = 0;
+    private int OPTION_CLICK = 0;
     private final int CAMERA = 2;
+
+    public static Bitmap bitmap = null;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -739,10 +744,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
     }
 
-    FragInstaLikeProfile profile;
-    int count = 0;
 
-    public static Bitmap bitmap = null;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

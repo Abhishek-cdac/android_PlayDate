@@ -2,7 +2,6 @@ package com.playdate.app.ui.notification_screen;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,9 +29,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class NotificationBottomSheet  extends BottomSheetDialogFragment {
+public class NotificationBottomSheet extends BottomSheetDialogFragment {
 
-    LinearLayout ll_notification_delete;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -43,17 +41,18 @@ public class NotificationBottomSheet  extends BottomSheetDialogFragment {
         String userId = bundle.getString("userId");
 
 
-        ll_notification_delete = view.findViewById(R.id.ll_notification_delete);
+        LinearLayout ll_notification_delete = view.findViewById(R.id.ll_notification_delete);
         ll_notification_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            callUpdateNotificationStatusAPI(notifiationId, userId, "delete");
+                callUpdateNotificationStatusAPI(notifiationId, userId, "delete");
 
             }
         });
 
         return view;
     }
+
     private void callUpdateNotificationStatusAPI(String notifiationId, String userId, String action) {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
@@ -75,14 +74,14 @@ public class NotificationBottomSheet  extends BottomSheetDialogFragment {
                     if (response.body().getStatus() == 1) {
 
                         Toast.makeText(getActivity(), "Successfully Deleted!", Toast.LENGTH_SHORT).show();
-                        Intent intent= new Intent(getActivity(), DashboardActivity.class);
+                        Intent intent = new Intent(getActivity(), DashboardActivity.class);
                         startActivity(intent);
 
                     }
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                     } catch (Exception e) {
+                    } catch (Exception e) {
                         Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                     }
                 }

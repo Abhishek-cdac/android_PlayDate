@@ -28,14 +28,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 
 public class FragMyProfilePersonal extends Fragment implements View.OnClickListener {
-    TextView email;
-    TextView txt_phone;
-    TextView txt_gender;
-    TextView DOB;
-    TextView txt_relationship;
-    TextView interestin;
-    CircleImageView profile_image;
-    SessionPref pref;
+    private TextView email;
+    private TextView txt_phone;
+    private TextView txt_gender;
+    private TextView DOB;
+    private TextView txt_relationship;
+    private TextView interestin;
+    private CircleImageView profile_image;
+
     public FragMyProfilePersonal() {
     }
 
@@ -43,7 +43,7 @@ public class FragMyProfilePersonal extends Fragment implements View.OnClickListe
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag_my_personal, container, false);
-        pref = SessionPref.getInstance(getActivity());
+        SessionPref pref = SessionPref.getInstance(getActivity());
         email = view.findViewById(R.id.email);
         txt_phone = view.findViewById(R.id.txt_phone);
         txt_gender = view.findViewById(R.id.txt_gender);
@@ -121,7 +121,7 @@ public class FragMyProfilePersonal extends Fragment implements View.OnClickListe
             startActivityForResult(mIntent, 408);
         } else if (id == R.id.iv_dob) {
             Intent mIntent = new Intent(getActivity(), AgeVerifiationActivity.class);
-            mIntent.putExtra("CurrentDOB",DOB.getText().toString());
+            mIntent.putExtra("CurrentDOB", DOB.getText().toString());
             mIntent.putExtra("fromProfile", true);
             startActivityForResult(mIntent, 408);
         } else if (id == R.id.iv_sex_orientation) {
@@ -146,7 +146,7 @@ public class FragMyProfilePersonal extends Fragment implements View.OnClickListe
     public void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         setValues();
-        OnProfilePhotoChageListerner inf= (OnProfilePhotoChageListerner) getActivity();
+        OnProfilePhotoChageListerner inf = (OnProfilePhotoChageListerner) getActivity();
         inf.updateImage();
     }
 }

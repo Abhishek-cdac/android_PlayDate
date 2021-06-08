@@ -32,17 +32,14 @@ import retrofit2.Response;
 
 public class GenderSelActivity extends AppCompatActivity {
 
-    GenderViewModel viewModel;
-    ActivityGenderBinding binding;
-
-    boolean once = false;
-    int selectedGender = -1;
-    CommonClass clsCommon;
+    private ActivityGenderBinding binding;
+    private int selectedGender = -1;
+    private CommonClass clsCommon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new GenderViewModel();
+        GenderViewModel viewModel = new GenderViewModel();
         clsCommon = CommonClass.getInstance();
         binding = DataBindingUtil.setContentView(GenderSelActivity.this, R.layout.activity_gender);
         binding.setLifecycleOwner(this);

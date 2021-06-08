@@ -1,7 +1,6 @@
 package com.playdate.app.ui.dashboard.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.playdate.app.R;
 import com.playdate.app.model.FriendRequest;
 import com.playdate.app.model.GetUserSuggestionData;
-import com.playdate.app.ui.chat.request.FragRequest;
 import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.ui.dashboard.fragments.FragSearchUser;
 import com.squareup.picasso.Picasso;
@@ -27,20 +25,18 @@ import java.util.List;
 
 public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriendAdapter.ViewHolder> implements Filterable {
 
-    //    ArrayList<GetUserSuggestionData> suggestions_list = new ArrayList<>();
-//    ArrayList<GetUserSuggestionData> suggestionsListFiltered = new ArrayList<>();
-    List<GetUserSuggestionData> suggestions_list;
-    List<GetUserSuggestionData> suggestionsListFiltered;
+    private final List<GetUserSuggestionData> suggestions_list;
+    private List<GetUserSuggestionData> suggestionsListFiltered;
+    private final Onclick itemClick;
+    private final FragSearchUser userFrag;
+    private final Picasso picasso;
 
-    Onclick itemClick;
-
-    FragSearchUser userFrag;
     public SuggestedFriendAdapter(ArrayList<GetUserSuggestionData> lst_getUserSuggestions, Onclick itemClick, FragSearchUser userFrag) {
         this.suggestions_list = lst_getUserSuggestions;
         this.suggestionsListFiltered = lst_getUserSuggestions;
         this.itemClick = itemClick;
         this.userFrag = userFrag;
-
+        picasso = Picasso.get();
     }
 
     Context mcontext;
@@ -59,20 +55,10 @@ public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriend
         if (suggestionsListFiltered.get(position).getProfilePicPath() == null) {
             holder.image.setBackgroundColor(mcontext.getResources().getColor(R.color.color_grey_light));
         }
-        holder.name.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                OnUserClick(position);
-            }
-        });
-        holder.image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                OnUserClick(position);
-            }
-        });
+        holder.name.setOnClickListener(v -> OnUserClick(position));
+        holder.image.setOnClickListener(v -> OnUserClick(position));
 
-        Picasso.get().load(suggestionsListFiltered.get(position).getProfilePicPath()).placeholder(R.drawable.ic_baseline_person_24)
+        picasso.load(suggestionsListFiltered.get(position).getProfilePicPath()).placeholder(R.drawable.ic_baseline_person_24)
                 .fit()
                 .placeholder(R.drawable.profile)
                 .centerCrop()
@@ -91,29 +77,16 @@ public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriend
             }
         }
 
-//        if (suggestions_list.get(position).isPremium()) {
-//            holder.diamond.setVisibility(View.VISIBLE);
-//        } else {
-//            holder.diamond.setVisibility(View.GONE);
-//        }
-
 
     }
 
     private void OnUserClick(int pos) {
-//       boolean isFriend=false;
-//        if(suggestionsListFiltered.get(pos).getFriendRequest().get(0).getStatus().toLowerCase().trim().equals("pending")){
-//
-//        }else{
-//
-//        }
-    userFrag.OnUserProfileSelected(false,suggestions_list.get(pos).getId());
-
+        userFrag.OnUserProfileSelected(false, suggestions_list.get(pos).getId());
     }
 
     @Override
     public int getItemCount() {
-       return suggestionsListFiltered.size();
+        return suggestionsListFiltered.size();
     }
 
     @Override
@@ -162,17 +135,17 @@ public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriend
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView name;
-        ImageView image, request, diamond;
-        CardView card;
+        private final TextView name;
+        private final ImageView image;
+        private final ImageView request;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.name_friend);
             image = itemView.findViewById(R.id.image_friend);
             request = itemView.findViewById(R.id.friend_request);
-            diamond = itemView.findViewById(R.id.diamond);
-            card = itemView.findViewById(R.id.card);
+//            ImageView diamond = itemView.findViewById(R.id.diamond);
+//            CardView card = itemView.findViewById(R.id.card);
 
             request.setOnClickListener(v -> {
                 int position = getAdapterPosition();

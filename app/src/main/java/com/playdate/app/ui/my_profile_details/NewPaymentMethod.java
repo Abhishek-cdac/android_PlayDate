@@ -36,13 +36,13 @@ public class NewPaymentMethod extends Fragment implements AdapterView.OnItemSele
     public NewPaymentMethod() {
     }
 
-    EditText et_cad_no;
-    EditText et_card_name;
-    EditText et_card_cvv;
-    EditText edt_year;
-    EditText edt_month;
-    ImageView iv_card;
-    int CardSelected = 0;
+   private EditText et_cad_no;
+   private EditText et_card_name;
+   private EditText et_card_cvv;
+   private EditText edt_year;
+   private EditText edt_month;
+   private ImageView iv_card;
+   private int CardSelected = 0;
 
     @Nullable
     @Override
