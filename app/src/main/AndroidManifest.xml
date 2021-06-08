@@ -210,12 +210,12 @@
 
 
         <service android:name=".service.LocationService" />
+
         <receiver android:name=".broadcast.ConnectionBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
-
 
         <service
             android:name=".ui.social.videoplay.AAH_DownloadService"

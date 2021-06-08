@@ -68,7 +68,7 @@
     <string name="couple_bio">Couple Bio</string>
     <string name="forgot_string">Enter registered mobile number</string>
     <string name="write_a_short_bio_that_will_be_displayed_on_your_profile">Write a short bio that will be displayed on your profile</string>
-  <string name="couple_short_note">Tell your friends how you and your partner met</string>
+    <string name="couple_short_note">Tell your friends how you and your partner met</string>
     <string name="profile_picture">Profile Picture</string>
     <string name="couple_profile_picture">Couple Profile Picture</string>
     <string name="upload">Upload</string>
@@ -156,7 +156,8 @@
 
 
     <!--couple-->
-    <string name="join">Join</string>  <string name="delete_notification">Delete Notification</string>
+    <string name="join">Join</string>
+    <string name="delete_notification">Delete Notification</string>
     <string name="please_type">Please type it below</string>
     <string name="invite_code">Your Invite Code</string>
     <string name="invite_sent">Invite Sent</string>
@@ -223,4 +224,5 @@
 
     <string name="drawer_option_toggle_show_progress_bar">Show Progress Bar: %1s</string>
 
+    <string name="date_suggestion">Date suggestions for you</string>
 </resources>

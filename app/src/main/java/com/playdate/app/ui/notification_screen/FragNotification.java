@@ -104,6 +104,11 @@ public class FragNotification extends Fragment {
             public void onItemClicks(View v, int absoluteAdapterPosition, int i, String commentId, String postId, String userId) {
 
             }
+
+            @Override
+            public void onItemClicks(View v, int position, int i, String username, String totalPoints, String id, String profilePicPath) {
+
+            }
         };
         back_anonymous.setOnClickListener(new View.OnClickListener() {
             @Override

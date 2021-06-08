@@ -85,6 +85,11 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
                     bundle.putString("commentIdAQ", commentId);
                 }
             }
+
+            @Override
+            public void onItemClicks(View v, int position, int i, String username, String totalPoints, String id, String profilePicPath) {
+
+            }
         };
 
 

@@ -2,6 +2,7 @@ package com.playdate.app.ui.my_profile_details;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,8 @@ import androidx.fragment.app.Fragment;
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
+import com.playdate.app.model.GetCoupleProfileData;
+import com.playdate.app.model.GetCoupleProfileModel;
 import com.playdate.app.model.GetProfileDetails;
 import com.playdate.app.model.GetProileDetailData;
 import com.playdate.app.ui.my_profile_details.adapters.InstaPhotosAdapter;
@@ -41,14 +44,16 @@ import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View.OnClickListener {
     private ImageView iv_send_request;
     private ImageView iv_chat, connection_img;
-    private ImageView profile_image;
+    private ImageView profile_image, boy_profile_image, girl_profile_image;
     private TextView txt_bio, header_text;
     private TextView txt_login_user;
-    private RelativeLayout couple_rl,single_person;
+    private RelativeLayout couple_rl, single_person;
     private CommonClass clsCommon;
     private TextView txtTotalFriend, txtTotalPost;
     private ArrayList<GetProileDetailData> lst_getPostDetail;
+    private ArrayList<GetCoupleProfileData> lst_getCoupleDetail;
     SessionPref pref;
+
     public FragInstaLikeProfile() {
     }
 
@@ -66,6 +71,8 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
         clsCommon = CommonClass.getInstance();
         pref = SessionPref.getInstance(getActivity());
 
+        girl_profile_image = view.findViewById(R.id.girl_profile_image);
+        boy_profile_image = view.findViewById(R.id.boy_profile_image);
         connection_img = view.findViewById(R.id.connection_img);
         single_person = view.findViewById(R.id.single_person);
         couple_rl = view.findViewById(R.id.couple_rl);
@@ -86,6 +93,7 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
             iv_chat.setVisibility(View.VISIBLE);
             couple_rl.setVisibility(View.GONE);
         } else {
+            callCoupleAPI();
             connection_img.setVisibility(View.VISIBLE);
             header_text.setText("How we met");
             single_person.setVisibility(View.GONE);
@@ -97,7 +105,7 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
         if (itsMe) {
             iv_send_request.setVisibility(View.GONE);
             iv_chat.setVisibility(View.GONE);
-            InstaPhotosAdapter.isLocked=false;
+            InstaPhotosAdapter.isLocked = false;
         } else {
             iv_send_request.setVisibility(View.VISIBLE);
             iv_chat.setVisibility(View.VISIBLE);
@@ -109,6 +117,62 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
         profile_image.setOnClickListener(this);
 
         return view;
+    }
+
+    private void callCoupleAPI() {
+
+        SessionPref pref = SessionPref.getInstance(getActivity());
+
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
+        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
+        pd.show();
+        Call<GetCoupleProfileModel> call = service.getCoupleProfile("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new Callback<GetCoupleProfileModel>() {
+            @Override
+            public void onResponse(Call<GetCoupleProfileModel> call, Response<GetCoupleProfileModel> response) {
+                pd.cancel();
+                if (response.code() == 200) {
+                    if (response.body().getStatus() == 1) {
+                        lst_getCoupleDetail = (ArrayList<GetCoupleProfileData>) response.body().getData();
+                        if (lst_getCoupleDetail == null) {
+                            lst_getCoupleDetail = new ArrayList<>();
+                        }
+
+                        Picasso.get().load(BASE_URL_IMAGE + lst_getCoupleDetail.get(0).getProfile1().get(0).getProfilePicPath())
+                                .placeholder(R.drawable.cupertino_activity_indicator)
+                                .into(boy_profile_image);
+
+                        Log.e("getCoupleBoy",""+lst_getCoupleDetail.get(0).getProfile1().get(0).getProfilePicPath());
+                        Log.e("getCoupleGirl",""+lst_getCoupleDetail.get(0).getProfile2().get(0).getProfilePicPath());
+
+                        Picasso.get().load(BASE_URL_IMAGE + lst_getCoupleDetail.get(0).getProfile2().get(0).getProfilePicPath())
+                                .placeholder(R.drawable.cupertino_activity_indicator)
+                                .into(girl_profile_image);
+                    } else {
+                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
+                    }
+                } else {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message").toString(), "Ok");
+                    } catch (Exception e) {
+                        Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<GetCoupleProfileModel> call, Throwable t) {
+                t.printStackTrace();
+                pd.cancel();
+                Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void setValue() {
@@ -134,14 +198,10 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
 
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
-
         hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
-
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
         pd.show();
 //        Toast.makeText(this, ""+pref.getStringVal(SessionPref.LoginUsertoken), Toast.LENGTH_SHORT).show();
-
-
         Call<GetProfileDetails> call = service.getProfileDetails("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<GetProfileDetails>() {
             @Override
