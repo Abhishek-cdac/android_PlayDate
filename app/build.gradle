@@ -39,7 +39,10 @@ apply plugin: 'com.google.gms.google-services'
 
 
 dependencies {
+
+//    implementation 'com.google.android.gms:play-services-location:17.0.1'
     implementation 'com.google.android.gms:play-services-maps:17.0.1'
+
     def lifecycle_version = "2.3.1"
     def arch_version = "2.1.0"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -89,6 +92,7 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:28.0.1')
     implementation 'com.google.firebase:firebase-messaging'
     implementation 'com.google.firebase:firebase-analytics'
+//    implementation 'com.google.android.gms:play-services:11.4.2'
 
     implementation 'jp.wasabeef:picasso-transformations:2.2.1'
     implementation 'com.google.android.exoplayer:exoplayer:2.10.5'

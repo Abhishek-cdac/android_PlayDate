@@ -256,6 +256,7 @@ private RelativeLayout rl_couple;
                     assert response.body() != null;
                     if (response.body().getStatus() == 1) {
 
+
                         checkForTheLastActivity(response.body());
 
                     } else {

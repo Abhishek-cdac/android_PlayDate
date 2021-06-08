@@ -276,7 +276,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             deleted.show(fragmentManager, "comment deleted");
             commentList.remove(selected_index);
             notifyDataSetChanged();
-            //  ref.ChangeCount(commentList.size());
+//              ref.ChangeCount(commentList.size());
         } else {
             //code for undo
         }

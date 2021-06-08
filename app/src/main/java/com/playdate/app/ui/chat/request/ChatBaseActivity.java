@@ -1,4 +1,4 @@
-package com.playdate.app.ui.date;
+package com.playdate.app.ui.chat.request;
 
 import android.os.Bundle;
 
@@ -10,12 +10,9 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.playdate.app.R;
 import com.playdate.app.ui.date.fragments.FragIntroScreen;
-import com.playdate.app.ui.date.fragments.FragLocationConfirmation;
-import com.playdate.app.ui.date.games.FragGameMenu;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 
-
-public class DateBaseActivity extends AppCompatActivity implements OnInnerFragmentClicks {
+public class ChatBaseActivity extends AppCompatActivity implements OnInnerFragmentClicks {
     FragmentManager fm;
     FragmentTransaction ft;
 
@@ -23,10 +20,11 @@ public class DateBaseActivity extends AppCompatActivity implements OnInnerFragme
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_date_base);
+
         fm = getSupportFragmentManager();
         ft = fm.beginTransaction();
 
-        Fragment fragIntro = new FragIntroScreen();
+        Fragment fragIntro = new RequestChatFragment();
 
         ft.add(R.id.fl_fragment, fragIntro);
         ft.commit();
@@ -38,12 +36,14 @@ public class DateBaseActivity extends AppCompatActivity implements OnInnerFragme
         ft.replace(R.id.fl_fragment, fragment, fragment.getClass().getSimpleName());
 //        ft.addToBackStack("tags");
         ft.commitAllowingStateLoss();
-
     }
 
     @Override
     public void ReplaceFragWithStack(Fragment fragment) {
-
+        ft = fm.beginTransaction();
+        ft.replace(R.id.fl_fragment, fragment, fragment.getClass().getSimpleName());
+        ft.addToBackStack("tags");
+        ft.commitAllowingStateLoss();
     }
 
     @Override
@@ -57,7 +57,7 @@ public class DateBaseActivity extends AppCompatActivity implements OnInnerFragme
     }
 
     @Override
-    public void loadProfile(String id) {
+    public void loadProfile(String UserID) {
 
     }
 
