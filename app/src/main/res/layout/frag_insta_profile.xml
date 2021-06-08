@@ -261,14 +261,14 @@
 
 
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/frag_gallery"
         android:name="com.playdate.app.ui.my_profile_details.FragMyPhotos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_5sdp">
 
-    </fragment>
+    </androidx.fragment.app.FragmentContainerView>
 
 
 </LinearLayout>
