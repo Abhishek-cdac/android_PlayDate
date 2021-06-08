@@ -103,7 +103,7 @@ dependencies {
     implementation 'com.github.marlonlom:timeago:4.0.3'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
-
+    implementation 'io.card:android-sdk:5.5.0'
 
 //    implementation 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.1.0'
 
