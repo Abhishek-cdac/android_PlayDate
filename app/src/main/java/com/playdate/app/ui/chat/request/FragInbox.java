@@ -1,10 +1,6 @@
 package com.playdate.app.ui.chat.request;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.text.Editable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +11,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,11 +20,8 @@ import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.model.chat_models.ChatExample;
 import com.playdate.app.model.chat_models.ChatMessage;
 import com.playdate.app.model.chat_models.ChatUserList;
-import com.playdate.app.ui.chat.FragChatMain;
 import com.playdate.app.ui.chat.ChattingAdapter;
-import com.playdate.app.ui.chat.LandingBottomSheet;
-import com.playdate.app.ui.date.fragments.FragIntroScreen;
-import com.playdate.app.ui.date.fragments.FragPartnerSelected;
+import com.playdate.app.ui.chat.FragChatMain;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.util.common.TransparentProgressDialog;
 
@@ -43,15 +34,13 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FragInbox extends Fragment implements onClickEventListener {
-    //    InboxAdapter inboxAdapter;
-//    private List<Inbox> inboxList = new ArrayList<>();
-    ArrayList<ChatExample> chatExampleList;
-    ArrayList<ChatMessage> chatMessageList;
-    ChattingAdapter chattingAdapter;
-    RecyclerView recyclerView;
-    Onclick itemClick;
-    RelativeLayout rl_c;
-    RequestAdapter requestAdapter;
+    private ArrayList<ChatExample> chatExampleList;
+    private ArrayList<ChatMessage> chatMessageList;
+    private ChattingAdapter chattingAdapter;
+    private RecyclerView recyclerView;
+    private Onclick itemClick;
+    private RelativeLayout rl_c;
+    private RequestAdapter requestAdapter;
 
     @Nullable
     @Override
@@ -164,6 +153,7 @@ public class FragInbox extends Fragment implements onClickEventListener {
     }
 
     public void filter(String s) {
+        Toast.makeText(getActivity(), "In Filter method", Toast.LENGTH_SHORT).show();
         ArrayList<ChatExample> filteredList = new ArrayList<>();
         chatExampleList = new ArrayList<>();
 
