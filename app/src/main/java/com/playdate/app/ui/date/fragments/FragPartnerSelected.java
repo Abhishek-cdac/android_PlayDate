@@ -17,8 +17,7 @@ import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.CommonModel;
-import com.playdate.app.model.GetCoupleProfileData;
-import com.playdate.app.model.GetCoupleProfileModel;
+import com.playdate.app.ui.date.OnBackPressed;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
@@ -27,30 +26,22 @@ import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
-
 public class FragPartnerSelected extends Fragment {
     public FragPartnerSelected() {
     }
 
-    ImageView iv_partner_image;
-    ImageView iv_accepted;
-    ImageView iv_loading;
-    ImageView iv_back;
-    TextView tv_waiting;
-    TextView tv_points;
-    TextView tv_username;
-    String image_url, profile_userId;
-    String image_name;
-    String image_points;
+    private ImageView iv_accepted;
+    private ImageView iv_loading;
+    private TextView tv_waiting;
+    private String profile_userId;
     boolean accepted = false;
     private CommonClass clsCommon;
 
@@ -60,24 +51,25 @@ public class FragPartnerSelected extends Fragment {
         View view = inflater.inflate(R.layout.activity_date_selected_partner, container, false);
         clsCommon = CommonClass.getInstance();
 
-        iv_back = view.findViewById(R.id.iv_back);
-        iv_partner_image = view.findViewById(R.id.partner_image);
+        ImageView iv_back = view.findViewById(R.id.iv_back);
+        ImageView cancel = view.findViewById(R.id.cancel);
+        ImageView iv_partner_image = view.findViewById(R.id.partner_image);
         iv_accepted = view.findViewById(R.id.iv_accepted);
         iv_loading = view.findViewById(R.id.iv_loading);
         tv_waiting = view.findViewById(R.id.tv_waiting);
-        tv_points = view.findViewById(R.id.tv_points);
-        tv_username = view.findViewById(R.id.tv_username);
-        iv_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
+        TextView tv_points = view.findViewById(R.id.tv_points);
+        TextView tv_username = view.findViewById(R.id.tv_username);
+        iv_back.setOnClickListener(v -> {
+            goBack();
+        });
+        cancel.setOnClickListener(v -> {
+            goBack();
         });
 
         Bundle bundle = getArguments();
-        image_url = bundle.getString("profile_image", "");
-        image_name = bundle.getString("profile_name", "");
-        image_points = bundle.getString("profile_points", "");
+        String image_url = Objects.requireNonNull(bundle).getString("profile_image", "");
+        String image_name = bundle.getString("profile_name", "");
+        String image_points = bundle.getString("profile_points", "");
         profile_userId = bundle.getString("profile_userId", "");
         Log.e("profile_toUserID", "" + profile_userId);
 
@@ -85,27 +77,35 @@ public class FragPartnerSelected extends Fragment {
 
         tv_username.setText(image_name);
         tv_points.setText(image_points);
-        Picasso.get().load(image_url).placeholder(R.drawable.cupertino_activity_indicator).into(iv_partner_image);
-        tv_waiting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!accepted) {
-                    iv_loading.setVisibility(View.GONE);
-                    tv_waiting.setText(R.string.accepted_patner);
-                    iv_accepted.setVisibility(View.VISIBLE);
-                    accepted = true;
-                } else {
-//                    startActivity(new Intent(getActivity(), SelectDateActivity.class));
-                    OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
-                    frag.ReplaceFrag(new FragSelectDate());
-                }
+        if (null != image_url) {
+            if (!image_url.isEmpty())
+                Picasso.get().load(image_url).placeholder(R.drawable.cupertino_activity_indicator).into(iv_partner_image);
+        }
 
-
+        tv_waiting.setOnClickListener(v -> {
+            if (!accepted) {
+                iv_loading.setVisibility(View.GONE);
+                tv_waiting.setText(R.string.accepted_patner);
+                iv_accepted.setVisibility(View.VISIBLE);
+                accepted = true;
+            } else {
+                OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
+                Objects.requireNonNull(frag).ReplaceFrag(new FragSelectDate());
             }
+
+
         });
 
         return view;
 
+    }
+    void goBack(){
+        try {
+            OnBackPressed ref = (OnBackPressed) getActivity();
+            ref.onBack();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void callCreateDateRequestPartnerApI() {
@@ -122,7 +122,7 @@ public class FragPartnerSelected extends Fragment {
             public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
                 pd.cancel();
                 if (response.code() == 200) {
-                    if (response.body().getStatus() == 1) {
+                    if (Objects.requireNonNull(response.body()).getStatus() == 1) {
 
                         Toast.makeText(getActivity(), "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
 
