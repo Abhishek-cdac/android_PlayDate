@@ -92,7 +92,7 @@ public class RequestChatFragment extends Fragment implements View.OnClickListene
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                inbox = new FragInbox();
+                inbox = new FragInbox();
 ////                inbox.setFilters(s);
 ////                chattingAdapter.getFilter().filter(s);
 //                inbox.filter(s.toString());

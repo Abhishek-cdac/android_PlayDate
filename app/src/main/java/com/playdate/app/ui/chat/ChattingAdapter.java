@@ -106,6 +106,12 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
         }
     }
 
+
+    public void dismissSheet() {
+        bottomSheet.dismiss();
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public ChattingAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -119,34 +125,6 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
         holder.user_name.setText(inboxList.get(position).getSenderName());
         Picasso.get().load(inboxList.get(position).getProfilePhoto())
                 .placeholder(R.drawable.cupertino_activity_indicator).into(holder.profile_image);
-//        if (selectedToDelete == position) {
-//            holder.main_ll.setBackgroundColor(mcontext.getResources().getColor(R.color.color_pink_dull));
-//            holder.ll_chat_details.setVisibility(View.GONE);
-//            holder.iv_delete_chat.setVisibility(View.VISIBLE);
-//        }
-
-//        holder.main_menu.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-//                selectedToDelete = position;
-//
-//                if (!inboxList.get(selectedToDelete).isSelected()) {
-//
-//                    for (int i = 0; i < inboxList.size(); i++) {
-//                        if (selectedToDelete != i) {
-//                            inboxList.get(i).setSelected(false);
-//                        } else {
-//                            inboxList.get(selectedToDelete).setSelected(true);
-//                        }
-//                    }
-//                    notifyDataSetChanged();
-//                } else {
-//                    inboxList.get(selectedToDelete).setSelected(false);
-//                    notifyDataSetChanged();
-//                }
-//                return true;
-//            }
-//        });
     }
 
     public void addtoList(String name, String imageUrl) {
@@ -196,16 +174,6 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
                 }
             });
 
-//            iv_delete_chat.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    int selectIIII = getAdapterPosition();
-//                    inboxList.remove(selectIIII);
-//                    //deleteAPi
-//                    notifyDataSetChanged();
-//                }
-//
-//            });
 
             main_ll.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override

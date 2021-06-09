@@ -111,7 +111,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             ME = 1;
         } else if (from.equals(polling)) {
             ME = 3;
-        } else {
+        } else if (to.equals(myId)) {
             ME = 2;
         }
 
@@ -127,6 +127,8 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 return OPPONENT;
 
         }
+        Toast.makeText(mContext, getItemViewType(position), Toast.LENGTH_SHORT).show();
+
         return OTHER;
     }
 
@@ -139,15 +141,20 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         mContext = parent.getContext();
 
         if (viewType == ME) {
+            Toast.makeText(mContext, "ViewTypeMe " + viewType, Toast.LENGTH_SHORT).show();
+
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_type_me, parent, false);
             viewHolder = new ViewHolderMe(view);
 
         } else if (viewType == OPPONENT) {
+            Toast.makeText(mContext, "ViewTypeOpponent " + viewType, Toast.LENGTH_SHORT).show();
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_type_oponent, parent, false);
             viewHolder = new ViewHolderOponent(view);
 
 
         } else if (viewType == OTHER) {
+            Toast.makeText(mContext, "ViewTypeOther " + viewType, Toast.LENGTH_SHORT).show();
+
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_type_other, parent, false);
             viewHolder = new ViewHolderOther(view);
 
@@ -391,7 +398,9 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
         } ///
-        else {
+        else if (holder.getItemViewType() == OTHER) {
+
+            Toast.makeText(mContext, "ViewType " + getItemViewType(position), Toast.LENGTH_SHORT).show();
             ViewHolderOther viewHolderOther = (ViewHolderOther) holder;
             viewHolderOther.tv_msg.setText(chatmsgList.get(position).getText());
 
@@ -409,9 +418,10 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public void addToListText(EditText et_msg) {
         chatmsgList.add(new ChatMessage("text", myId, "jid_1109", et_msg.getText().toString()));
-        notifyDataSetChanged();
         Toast.makeText(mContext, to + " to " + from, Toast.LENGTH_SHORT).show();
         Toast.makeText(mContext, "ME Type " + ME, Toast.LENGTH_SHORT).show();
+        notifyDataSetChanged();
+
         et_msg.setText("");
     }
 
