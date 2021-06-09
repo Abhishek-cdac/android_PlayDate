@@ -184,22 +184,24 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
         arrow_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-//                OnInnerFragmentClicks ref = (OnInnerFragmentClicks) getActivity();
-//                ref.ReplaceFrag(new RequestChatFragment());
-
                 getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-//                fm.popBackStack ("fragB", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-//                finish();
             }
         });
 
         iv_send.setOnClickListener(new View.OnClickListener() {
             @Override
-
             public void onClick(View v) {
-                adapter.addToListText(et_msg);
-
+                if (et_msg.getText().toString().equals("")) {
+                    Toast.makeText(getActivity(), "Please enter text", Toast.LENGTH_SHORT).show();
+                } else {
+                    adapter.addToListText(et_msg);
+                    rv_chat.post(new Runnable() {       //////scroll down
+                        @Override
+                        public void run() {
+                            rv_chat.scrollToPosition(adapter.getItemCount() - 1);
+                        }
+                    });
+                }
             }
         });
 
@@ -315,6 +317,13 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
                 Toast.makeText(getApplicationContext(), "Recording Stop", Toast.LENGTH_SHORT).show();
 
                 adapter.addToListAudio(mFileName);
+                rv_chat.post(new Runnable() {       //////scroll down
+                    @Override
+                    public void run() {
+                        rv_chat.scrollToPosition(adapter.getItemCount() - 1);
+                    }
+                });
+
 
             }
         }, 3000);
@@ -344,6 +353,12 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
                         sheet.dismiss();
                         Drawable d = new BitmapDrawable(getResources(), bitmap);
                         adapter.addImage(d);
+                        rv_chat.post(new Runnable() {       //////scroll down
+                            @Override
+                            public void run() {
+                                rv_chat.scrollToPosition(adapter.getItemCount() - 1);
+                            }
+                        });
 
 
                     }
@@ -356,6 +371,12 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
 //                        String selectedVideoPath = getPath(contentURI);
                         Log.d("path", selectedVideoPath);
                         adapter.addVIdeo(contentURI);
+                        rv_chat.post(new Runnable() {       //////scroll down
+                            @Override
+                            public void run() {
+                                rv_chat.scrollToPosition(adapter.getItemCount() - 1);
+                            }
+                        });
 
 
                     } else {
@@ -370,6 +391,12 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
                         sheet.dismiss();
                         Drawable d = new BitmapDrawable(getResources(), bitmap);
                         adapter.addImage(d);
+                        rv_chat.post(new Runnable() {       //////scroll down
+                            @Override
+                            public void run() {
+                                rv_chat.scrollToPosition(adapter.getItemCount() - 1);
+                            }
+                        });
 
 
                     }
@@ -474,6 +501,13 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
         Drawable drawable = getResources().getDrawable(smiley);
 
         adapter.addSmiley(drawable);
+        rv_chat.post(new Runnable() {       //////scroll down
+            @Override
+            public void run() {
+                rv_chat.scrollToPosition(adapter.getItemCount() - 1);
+            }
+        });
+
 
     }
 

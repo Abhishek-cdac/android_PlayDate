@@ -79,18 +79,8 @@ public class FragInbox extends Fragment implements onClickEventListener {
 
         Call<ChatUserList> callChats = getServiceApi.getChats();
 
-      /*  callChats.enqueue(new Callback<ChatUserList>() {
+        callChats.enqueue(new Callback<ChatUserList>() {
             @Override
-            public void onItemClicks(View v, int absoluteAdapterPosition, int i, String commentId, String postId, String userId) {
-
-            }
-
-            @Override
-            public void onItemClicks(View v, int position, int i, String username, String totalPoints, String id, String profilePicPath) {
-
-            }
-        };
-        setAdapter();
             public void onResponse(Call<ChatUserList> call, Response<ChatUserList> response) {
                 Log.d("Response ", response.toString());
                 pd.cancel();
@@ -118,8 +108,34 @@ public class FragInbox extends Fragment implements onClickEventListener {
             }
         });
     }
-*/
-    }
+
+
+//    public void onResponse(Call<ChatUserList> call, Response<ChatUserList> response) {
+//        Log.d("Response ", response.toString());
+//        pd.cancel();
+//        chatExampleList = new ArrayList<>(response.body().getChats());
+//        Log.d("ChatmessageLIst", chatExampleList.toString());
+//
+//        for (int i = 0; i < chatExampleList.size(); i++) {
+//            chattingAdapter = new ChattingAdapter(chatExampleList, itemClick, FragInbox.this);
+//            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+//            recyclerView.setLayoutManager(mLayoutManager);
+//            recyclerView.setItemAnimator(new DefaultItemAnimator());
+////                    chattingAdapter.getFilter().filter(sequence);
+//
+//            recyclerView.setAdapter(chattingAdapter);
+//
+//        }
+////                requestAdapter = new RequestAdapter(FragInbox.this);
+//    }
+//
+//    @Override
+//    public void onFailure(Call<ChatUserList> call, Throwable t) {
+//        Log.d("Error code", t + "Failed to get data");
+//        pd.cancel();
+//        Toast.makeText(getActivity(), t + "Failed to get data", Toast.LENGTH_SHORT).show();
+//    }
+
 
     @Override
     public void onClickEvent(int position) {

@@ -3,6 +3,7 @@ package com.playdate.app.ui.chat.request;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
 import android.text.Editable;
@@ -20,11 +21,13 @@ import com.playdate.app.model.chat_models.ChatExample;
 import com.playdate.app.ui.chat.ChattingAdapter;
 import com.playdate.app.ui.dashboard.fragments.FragSearchUser;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
+import com.playdate.app.ui.notification_screen.FragNotification;
+import com.playdate.app.ui.social.FragSocialFeed;
 import com.playdate.app.util.common.CommonClass;
 
 import java.util.ArrayList;
 
-public class RequestChatFragment extends Fragment {
+public class RequestChatFragment extends Fragment implements View.OnClickListener {
     ChattingAdapter chattingAdapter;
     FragInbox inbox;
 
@@ -48,19 +51,6 @@ public class RequestChatFragment extends Fragment {
 
         tabLayout.addTab(tabLayout.newTab().setText("Inbox"));
         tabLayout.addTab(tabLayout.newTab().setText("   Requests   "));
-//        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
-//        int height = new CommonClass().getScreenHeight(getActivity());
-//
-//
-//        int m1 = (int) getResources().getDimension(R.dimen._15sdp);
-//        int m2 = (int) getResources().getDimension(R.dimen._10sdp);
-//        int m3 = (int) getResources().getDimension(R.dimen._20sdp);
-//        int m4 = (int) getResources().getDimension(R.dimen._20sdp);
-//        int m5 = (int) getResources().getDimension(R.dimen._60sdp);
-//        int m6 = (int) getResources().getDimension(R.dimen._75sdp);
-//
-//        rl_page.getLayoutParams().height = height - (m1 + m2 + m3 + m4 + m5 + m6);
 
         RequestChatAdapter pagerAdapter = new RequestChatAdapter(getChildFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(pagerAdapter);
@@ -83,25 +73,8 @@ public class RequestChatFragment extends Fragment {
 
             }
         });
-
-        back_anonymous.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-///////////////////back option
-//                getActivity().finish();
-                OnInnerFragmentClicks ref = (OnInnerFragmentClicks) getActivity();
-                ref.Reset();
-            }
-        });
-
-
-        iv_chat_notification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                OnInnerFragmentClicks ref = (OnInnerFragmentClicks) getActivity();
-                ref.ReplaceFrag(new FragRequest());
-            }
-        });
+        back_anonymous.setOnClickListener(this);
+        iv_chat_notification.setOnClickListener(this);
 
         edt_search_chat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,4 +109,15 @@ public class RequestChatFragment extends Fragment {
     }
 
 
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        if (id == R.id.back_anonymous) {
+            getActivity().finish();
+        } else if (id == R.id.iv_chat_notification) {
+            OnInnerFragmentClicks ref = (OnInnerFragmentClicks) getActivity();
+            ref.ReplaceFrag(new FragNotification("chat"));
+        }
+
+    }
 }
