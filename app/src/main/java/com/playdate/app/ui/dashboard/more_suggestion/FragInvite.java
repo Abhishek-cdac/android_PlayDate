@@ -39,8 +39,8 @@ public class FragInvite extends Fragment implements OnClosePremium {
     public FragInvite() {
     }
 
-    RecyclerView recyclerView;
-    ViewPager vp_premium;
+    private RecyclerView recyclerView;
+    private ViewPager vp_premium;
 
     @Nullable
     @Override
@@ -64,18 +64,14 @@ public class FragInvite extends Fragment implements OnClosePremium {
     int page = 0;
 
     private void setFun() {
-        vp_premium.postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                if (page > 2) {
-                    page = 0;
-                }
-                vp_premium.setCurrentItem(page);
-                page++;
-                setFun();
-
+        vp_premium.postDelayed(() -> {
+            if (page > 2) {
+                page = 0;
             }
+            vp_premium.setCurrentItem(page);
+            page++;
+            setFun();
+
         }, 3000);
     }
 
@@ -112,17 +108,7 @@ public class FragInvite extends Fragment implements OnClosePremium {
                         InviteAdapter adapter = new InviteAdapter(inviteCode,
                                 inviteLink);
                         recyclerView.setAdapter(adapter);
-                    } else {
-                        // clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
                     }
-                } else {
-                    try {
-//                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        //   clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message").toString(), "Ok");
-                    } catch (Exception e) {
-//                        Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-                    }
-
                 }
 
 

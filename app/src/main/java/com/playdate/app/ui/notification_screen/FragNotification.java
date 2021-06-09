@@ -174,7 +174,7 @@ public class FragNotification extends Fragment {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("requestID", s);
-        hashMap.put("status", status);
+        hashMap.put("status",status);
 
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
         pd.show();

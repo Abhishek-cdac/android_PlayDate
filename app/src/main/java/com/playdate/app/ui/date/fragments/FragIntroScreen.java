@@ -25,22 +25,20 @@ public class FragIntroScreen extends Fragment {
         View view = inflater.inflate(R.layout.activity_date_intro, container, false);
         TextView tv_create_date = view.findViewById(R.id.tv_create_date);
         ImageView cancel = view.findViewById(R.id.cancel);
-        TextView tv_accept_date = view.findViewById(R.id.tv_accept_date);
+//        TextView tv_accept_date = view.findViewById(R.id.tv_accept_date);
 
-        tv_create_date.setOnClickListener(new View.OnClickListener() {
+        tv_create_date.setOnClickListener(v -> {
+            OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
+            assert frag != null;
+            frag.ReplaceFrag(new FragSelectPartner());
+//                startActivity(new Intent(IntroScreen.this, SelectPartner.class));
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
-                frag.ReplaceFrag(new FragSelectPartner());
-//                startActivity(new Intent(IntroScreen.this, SelectPartner.class));
+
             }
         });
-//        cancel.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-
-//            }
-//        });
 
         return view;
     }

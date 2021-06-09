@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/backgroundColour"
+    android:orientation="vertical"
     android:padding="@dimen/_8sdp">
+
     <LinearLayout
-        android:visibility="gone"
-        android:gravity="center"
-        android:background="@color/backgroundColour"
+        android:id="@+id/ll_no_notify"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/ll_no_notify">
+        android:background="@color/backgroundColour"
+        android:gravity="center"
+        android:visibility="gone">
 
         <TextView
 
@@ -21,26 +21,26 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:textStyle="bold"
             android:text="No New Notifications"
             android:textColor="@color/textColour"
-            android:textSize="@dimen/_15sdp" />
+            android:textSize="@dimen/_15sdp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
 
     <RelativeLayout
-        android:visibility="visible"
-        android:background="@color/backgroundColour"
         android:id="@+id/rl_notification"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/backgroundColour"
+        android:visibility="visible">
 
         <RelativeLayout
-            android:background="@color/backgroundColour"
             android:id="@+id/main"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/backgroundColour">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile_image_1"
@@ -64,9 +64,9 @@
                 android:id="@+id/tv_desc_noti"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/tv_name_noti"
+                android:maxLines="2"
                 android:text="messaged you"
                 android:textColor="@color/textColour" />
 
@@ -86,9 +86,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/main"
-            android:gravity="end"
-            android:background="@color/backgroundColour"
             android:layout_alignParentEnd="true"
+            android:background="@color/backgroundColour"
+            android:gravity="end"
             android:paddingHorizontal="@dimen/_10sdp">
 
             <ImageView
@@ -119,8 +119,6 @@
         </RelativeLayout>
 
     </RelativeLayout>
-
-
 
 
 </LinearLayout>

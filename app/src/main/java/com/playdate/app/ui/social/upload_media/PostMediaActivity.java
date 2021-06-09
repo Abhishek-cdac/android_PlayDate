@@ -68,8 +68,7 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
     private PlayerView pvMain;
     private SimpleExoPlayer absPlayerInternal;
     private boolean isVideo = false;
-    private ImageView iv_add;
-    RecyclerView recycler_tag_friend;
+    private RecyclerView recycler_tag_friend;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,13 +76,13 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_post_photo);
         edt_desc = findViewById(R.id.edt_desc);
         iv_profile = findViewById(R.id.iv_profile);
-        iv_add = findViewById(R.id.iv_add);
+        ImageView iv_add = findViewById(R.id.iv_add);
         pvMain = findViewById(R.id.ep_video_view);
         recycler_tag_friend = findViewById(R.id.recycler_tag_friend);
 
         ImageView iv_back = findViewById(R.id.iv_back);
-        LottieAnimationView animationView = findViewById(R.id.animationView);
-        ImageView iv_location = findViewById(R.id.iv_location);
+//        LottieAnimationView animationView = findViewById(R.id.animationView);
+//        ImageView iv_location = findViewById(R.id.iv_location);
         ImageView iv_done = findViewById(R.id.iv_done);
         txt_myname = findViewById(R.id.txt_myname);
 
@@ -258,7 +257,7 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
 
             try {
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                DashboardActivity.bitmap.compress(Bitmap.CompressFormat.PNG, 50, stream);
+                DashboardActivity.bitmap.compress(Bitmap.CompressFormat.JPEG, 40, stream);
                 byte[] byteArray = stream.toByteArray();
                 fos.write(byteArray);
             } catch (Exception e) {

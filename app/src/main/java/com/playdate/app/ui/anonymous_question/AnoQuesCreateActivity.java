@@ -203,25 +203,17 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 pd.cancel();
                 if (response.code() == 200) {
+                    assert response.body() != null;
                     if (response.body().getStatus() == 1) {
                         try {
                             Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-
-                        // postQues();
-                    } else {
-//                        clsCommon.showDialogMsg(BioActivity.this, "PlayDate", response.body().getMessage(), "Ok");
                     }
-                } else {
-//                    try {
-//                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-//                        clsCommon.showDialogMsg(BioActivity.this, "PlayDate", jObjError.getString("message").toString(), "Ok");
-//                    } catch (Exception e) {
-//                        Toast.makeText(BioActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-//                    }
                 }
             }
 
@@ -229,7 +221,6 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 t.printStackTrace();
                 pd.cancel();
-//                Toast.makeText(BioActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
     }

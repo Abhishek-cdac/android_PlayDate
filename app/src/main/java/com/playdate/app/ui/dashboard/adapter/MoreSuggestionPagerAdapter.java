@@ -10,7 +10,7 @@ import com.playdate.app.ui.dashboard.more_suggestion.FragSuggested;
 import com.playdate.app.ui.login.LoginActivity;
 
 public class MoreSuggestionPagerAdapter extends FragmentStatePagerAdapter {
-    int totalTabs;
+    private final int totalTabs;
 
     public MoreSuggestionPagerAdapter(@NonNull FragmentManager fm, int totalTabs) {
         super(fm);

@@ -20,9 +20,6 @@ import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.playdate.app.R;
 import com.playdate.app.couple.ui.register.couplebio.CoupleBioActivity;
 import com.playdate.app.data.api.GetDataService;
@@ -30,10 +27,8 @@ import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.GetProfileDetails;
 import com.playdate.app.model.GetProileDetailData;
 import com.playdate.app.model.Interest;
-import com.playdate.app.model.InterestsMain;
 import com.playdate.app.ui.blockuser.BlockUserActivity;
 import com.playdate.app.ui.dashboard.OnProfilePhotoChageListerner;
-import com.playdate.app.ui.date.games.FragTimesUp1;
 import com.playdate.app.ui.forgot_password.ForgotPasswordActivity;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.ui.invite.InviteFriendActivity;
@@ -46,8 +41,6 @@ import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.customcamera.otalia.CameraActivity;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -63,26 +56,19 @@ import static com.playdate.app.util.session.SessionPref.LoginVerified;
 public class FragMyProfileDetails extends Fragment implements View.OnClickListener {
     public FragMyProfileDetails() {
     }
-    TextView txt_change_photo;
-    ImageView iv_dark_mode;
-    ImageView profile_image;
-    ImageView iv_reset_pass;
-    ImageView iv_edit_bio, iv_edit_couple_bio;
-    TextView txt_bio;
-    ImageView iv_change_bio_video;
-    TextView txt_user_name, logout, txt_username;
-    TextView txt_interetsed;
-    TextView txt_invite, invite_partner, leave_partner, txt_HowWeMet_detail, txt_change_bio_video;
-    TextView txt_upgrade;
-    SessionPref pref;
-    RelativeLayout saved_rl, create_relation_rl, leave_relation_rl, change_bio_rl, change_howwemet_rl, change_bio_video_rl;
 
-    private GoogleApiClient googleApiClient;
-    GoogleSignInClient mGoogleSignInClient;
+    private ImageView iv_dark_mode;
+    private ImageView profile_image;
+    private TextView txt_bio;
+    private TextView txt_user_name;
+    private TextView txt_interetsed;
+    private SessionPref pref;
+    private GoogleSignInClient mGoogleSignInClient;
 
     private ArrayList<GetProileDetailData> lst_getPostDetail;
-    String inviteCode;
-    String inviteLink;
+    private String inviteCode;
+    private String inviteLink;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -107,21 +93,21 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
 
     private void setInIt(View view) {
 
-        iv_edit_couple_bio = view.findViewById(R.id.iv_edit_couple_bio);
-        leave_relation_rl = view.findViewById(R.id.leave_relation_rl);
-        change_bio_video_rl = view.findViewById(R.id.change_bio_video_rl);
-        txt_change_bio_video = view.findViewById(R.id.txt_change_bio_video);
-        txt_HowWeMet_detail = view.findViewById(R.id.txt_howwemet_detail);
-        change_howwemet_rl = view.findViewById(R.id.change_howwemet_rl);
-        change_bio_rl = view.findViewById(R.id.change_bio_rl);
-        leave_partner = view.findViewById(R.id.leave_partner);
-        invite_partner = view.findViewById(R.id.invite_partner);
-        create_relation_rl = view.findViewById(R.id.create_relation_rl);
-        iv_edit_bio = view.findViewById(R.id.iv_edit_bio);
+        ImageView iv_edit_couple_bio = view.findViewById(R.id.iv_edit_couple_bio);
+        RelativeLayout leave_relation_rl = view.findViewById(R.id.leave_relation_rl);
+        RelativeLayout change_bio_video_rl = view.findViewById(R.id.change_bio_video_rl);
+        TextView txt_change_bio_video = view.findViewById(R.id.txt_change_bio_video);
+        TextView txt_HowWeMet_detail = view.findViewById(R.id.txt_howwemet_detail);
+        RelativeLayout change_howwemet_rl = view.findViewById(R.id.change_howwemet_rl);
+        RelativeLayout change_bio_rl = view.findViewById(R.id.change_bio_rl);
+        TextView leave_partner = view.findViewById(R.id.leave_partner);
+        TextView invite_partner = view.findViewById(R.id.invite_partner);
+        RelativeLayout create_relation_rl = view.findViewById(R.id.create_relation_rl);
+        ImageView iv_edit_bio = view.findViewById(R.id.iv_edit_bio);
         txt_bio = view.findViewById(R.id.txt_bio_detail);
 
-        iv_reset_pass = view.findViewById(R.id.iv_reset_pass);
-        iv_change_bio_video = view.findViewById(R.id.iv_change_bio_video);
+        ImageView iv_reset_pass = view.findViewById(R.id.iv_reset_pass);
+        ImageView iv_change_bio_video = view.findViewById(R.id.iv_change_bio_video);
         profile_image = view.findViewById(R.id.profile_image);
         txt_interetsed = view.findViewById(R.id.txt_interetsed);
         ImageView iv_edit_username = view.findViewById(R.id.iv_edit_username);
@@ -129,11 +115,11 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
         TextView txt_blocked = view.findViewById(R.id.txt_blocked);
         iv_dark_mode = view.findViewById(R.id.iv_dark_mode);
         txt_user_name = view.findViewById(R.id.txt_user_name);
-        txt_username = view.findViewById(R.id.txt_username);
-        txt_invite = view.findViewById(R.id.txt_invite);
-        txt_upgrade = view.findViewById(R.id.txt_upgrade);
-        logout = view.findViewById(R.id.logout);
-         txt_change_photo = view.findViewById(R.id.txt_change_photo);
+        TextView txt_username = view.findViewById(R.id.txt_username);
+        TextView txt_invite = view.findViewById(R.id.txt_invite);
+        TextView txt_upgrade = view.findViewById(R.id.txt_upgrade);
+        TextView logout = view.findViewById(R.id.logout);
+        TextView txt_change_photo = view.findViewById(R.id.txt_change_photo);
 
 
         profile_image.setOnClickListener(this);
@@ -186,68 +172,6 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
 
     ArrayList<Interest> lst_interest;
 
-//    private void getInterest() {
-//
-//
-//        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-//        Map<String, String> hashMap = new HashMap<>();
-//        hashMap.put("limit", "50");// format 1990-08-12
-//        hashMap.put("pageNo", "1");// format 1990-08-12
-////        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
-////        pd.show();
-//        SessionPref pref = SessionPref.getInstance(getActivity());
-////        Toast.makeText(this, ""+pref.getStringVal(SessionPref.LoginUsertoken), Toast.LENGTH_SHORT).show();
-//
-//
-//        Call<InterestsMain> call = service.interested("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
-//        call.enqueue(new Callback<InterestsMain>() {
-//            @Override
-//            public void onResponse(Call<InterestsMain> call, Response<InterestsMain> response) {
-////                pd.cancel();
-//                if (response.code() == 200) {
-//                    assert response.body() != null;
-//                    if (response.body().getStatus() == 1) {
-//                        String finalInterest = "";
-//                        lst_interest = response.body().getLst();
-//                        if (lst_interest == null) {
-//                            lst_interest = new ArrayList<>();
-//                        }
-
-//
-//                        for (int i = 0; i < lst_interest.size(); i++) {
-//                            for (String s : interestList) {
-//                                if (s.trim().equals(lst_interest.get(i).get_id())) {
-//                                    if (finalInterest.isEmpty()) {
-//                                        finalInterest = lst_interest.get(i).getName();
-//                                    } else {
-//                                        finalInterest = finalInterest + "," + lst_interest.get(i).getName();
-//                                    }
-//                                }
-//                            }
-//                        }
-//
-//
-//
-//
-//                    } else {
-//
-//                    }
-//                } else {
-//
-//
-//                }
-//
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<InterestsMain> call, Throwable t) {
-//                t.printStackTrace();
-//            }
-//        });
-//
-//
-//    }
 
     private void setValues() {
         try {
@@ -275,11 +199,11 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        if (id == R.id.txt_blocked ) {
+        if (id == R.id.txt_blocked) {
             Intent mIntent = new Intent(getActivity(), BlockUserActivity.class);
             mIntent.putExtra("fromProfile", true);
             startActivityForResult(mIntent, 407);
-        }else if (id == R.id.profile_image || id == R.id.txt_change_photo) {
+        } else if (id == R.id.profile_image || id == R.id.txt_change_photo) {
             Intent mIntent = new Intent(getActivity(), UploadProfileActivity.class);
             mIntent.putExtra("fromProfile", true);
             startActivityForResult(mIntent, 407);
@@ -322,6 +246,7 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
             showYesNoDialog();
         } else if (id == R.id.txt_upgrade) {
             OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
+            assert frag != null;
             frag.ReplaceFrag(new FragUpgradePremiun());
         } else if (id == R.id.iv_edit_bio) {
             Intent mIntent = new Intent(getActivity(), BioActivity.class);
@@ -371,16 +296,13 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
 
     private void signOut() {
         mGoogleSignInClient.signOut()
-                .addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(getActivity(), "LogOut", Toast.LENGTH_LONG).show();
-                        SessionPref.getInstance(getActivity()).saveBoolKeyVal(LoginVerified, false);
-                        SessionPref.logout(getActivity());
-                        Intent intent = new Intent(getActivity(), LoginActivity.class);
-                        startActivity(intent);
-                        getActivity().finish();
-                    }
+                .addOnCompleteListener(getActivity(), task -> {
+                    Toast.makeText(getActivity(), "LogOut", Toast.LENGTH_LONG).show();
+                    SessionPref.getInstance(getActivity()).saveBoolKeyVal(LoginVerified, false);
+                    SessionPref.logout(getActivity());
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                    getActivity().finish();
                 });
     }
 
@@ -389,6 +311,7 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
         super.onActivityResult(requestCode, resultCode, data);
         setValues();
         OnProfilePhotoChageListerner inf = (OnProfilePhotoChageListerner) getActivity();
+        assert inf != null;
         inf.updateImage();
     }
 
@@ -402,7 +325,6 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
 
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
         pd.show();
-//        Toast.makeText(this, ""+pref.getStringVal(SessionPref.LoginUsertoken), Toast.LENGTH_SHORT).show();
 
 
         Call<GetProfileDetails> call = service.getProfileDetails("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
@@ -420,17 +342,7 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
                         inviteLink = String.valueOf(lst_getPostDetail.get(0).getInviteLink());
                         Log.e("inviteCode", "" + inviteCode);
                         Log.e("inviteLink", "" + inviteLink);
-                    } else {
-                        // clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
                     }
-                } else {
-                    try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        //   clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message").toString(), "Ok");
-                    } catch (Exception e) {
-                        Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-                    }
-
                 }
 
 
@@ -440,7 +352,6 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
             public void onFailure(Call<GetProfileDetails> call, Throwable t) {
                 t.printStackTrace();
                 pd.cancel();
-                Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
     }

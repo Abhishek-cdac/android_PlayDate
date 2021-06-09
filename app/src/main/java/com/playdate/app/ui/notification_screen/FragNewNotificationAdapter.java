@@ -33,7 +33,7 @@ public class FragNewNotificationAdapter extends RecyclerView.Adapter<FragNewNoti
     private String requestId;
     private final Context mcontext;
     private String patternID;
-    private Picasso picasso;
+    private final Picasso picasso;
 
     public FragNewNotificationAdapter(FragmentActivity activity, ArrayList<NotificationData> lst_notifications, Onclick itemClick) {
         this.mcontext = activity;
@@ -76,9 +76,7 @@ public class FragNewNotificationAdapter extends RecyclerView.Adapter<FragNewNoti
                             .into(holder.profile_image);
 
                     if (notification_list.get(position).isSelected) {
-                        holder.rl_notification.setBackgroundColor(Color.parseColor("#DA8EA9"));
-
-
+                        holder.rl_notification.setBackgroundColor(mcontext.getResources().getColor(R.color.color_pink_dull));
                     } else {
                         holder.rl_notification.setBackgroundColor(mcontext.getResources().getColor(R.color.white));
 
@@ -126,11 +124,36 @@ public class FragNewNotificationAdapter extends RecyclerView.Adapter<FragNewNoti
             }
         }
 
+        holder.iv_right.setOnClickListener(v -> {
+
+            if (patternID.equals("Friend")) {
+                itemClick.onItemClicks(v, position, 20, requestId);
+            } else if (patternID.equals("Match")) {
+                itemClick.onItemClicks(v, position ,24, requestId);
+
+            }
+
+
+        });
+        holder.iv_cross.setOnClickListener(v -> {
+            Log.e("requestId", "" + requestId);
+
+            if (patternID.equals("Friend")) {
+                itemClick.onItemClicks(v, position, 21, requestId);
+            } else if (patternID.equals("Match")) {
+                itemClick.onItemClicks(v, position, 25, requestId);
+            }
+
+
+            //  removeAt(getAdapterPosition());
+        });
+
 
     }
 
     @Override
     public int getItemCount() {
+
         return notification_list.size();
     }
 
@@ -154,29 +177,7 @@ public class FragNewNotificationAdapter extends RecyclerView.Adapter<FragNewNoti
             icons.setVisibility(View.GONE);
 
 
-            iv_right.setOnClickListener(v -> {
 
-                if (patternID.equals("Friend")) {
-                    itemClick.onItemClicks(v, getAdapterPosition(), 20, requestId);
-                } else if (patternID.equals("Match")) {
-                    itemClick.onItemClicks(v, getAdapterPosition(), 24, requestId);
-
-                }
-
-
-            });
-            iv_cross.setOnClickListener(v -> {
-                Log.e("requestId", "" + requestId);
-
-                if (patternID.equals("Friend")) {
-                    itemClick.onItemClicks(v, getAdapterPosition(), 21, requestId);
-                } else if (patternID.equals("Match")) {
-                    itemClick.onItemClicks(v, getAdapterPosition(), 25, requestId);
-                }
-
-
-                //  removeAt(getAdapterPosition());
-            });
 
         }
     }

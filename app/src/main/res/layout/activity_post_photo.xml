@@ -29,7 +29,7 @@
                 android:layout_centerVertical="true"
                 android:padding="@dimen/_2sdp"
 
-                android:src="@drawable/ic_arrowhead_thin_outline_to_the_left" />
+                android:src="@drawable/ic_arrow_back_black" />
 
             <TextView
                 android:id="@+id/txt_relation"
@@ -161,7 +161,7 @@
                 android:layout_height="@dimen/_12sdp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/edit_pencil">
+                android:src="@drawable/ic_icon_edit">
 
             </ImageView>
 

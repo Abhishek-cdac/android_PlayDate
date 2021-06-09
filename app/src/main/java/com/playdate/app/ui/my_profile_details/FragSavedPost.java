@@ -28,7 +28,7 @@ import retrofit2.Response;
 
 public class FragSavedPost extends Fragment {
 
-    RecyclerView recyclerView;
+    private RecyclerView recyclerView;
     private List<SavedPostData> savedPostDataList ;
 
     @Nullable

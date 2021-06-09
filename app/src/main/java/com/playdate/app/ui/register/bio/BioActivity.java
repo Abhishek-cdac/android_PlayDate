@@ -34,17 +34,16 @@ import static com.playdate.app.util.session.SessionPref.LoginUserpersonalBio;
 
 
 public class BioActivity extends AppCompatActivity {
-    BioViewModel viewModel;
-    ActivityBioBinding bioBinding;
-    CommonClass clsCommon;
-    Intent mIntent;
+    private BioViewModel viewModel;
+    private CommonClass clsCommon;
+    private Intent mIntent;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new BioViewModel();
         clsCommon = CommonClass.getInstance();
-        bioBinding = DataBindingUtil.setContentView(BioActivity.this, R.layout.activity_bio);
+        com.playdate.app.databinding.ActivityBioBinding bioBinding = DataBindingUtil.setContentView(BioActivity.this, R.layout.activity_bio);
         bioBinding.setLifecycleOwner(this);
         mIntent = getIntent();
         bioBinding.setBioViewModel(viewModel);

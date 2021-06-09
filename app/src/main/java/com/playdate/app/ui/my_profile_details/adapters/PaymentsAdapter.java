@@ -22,8 +22,9 @@ public class PaymentsAdapter extends RecyclerView.Adapter<PaymentsAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Picasso.get().load("https://sm.pcmag.com/pcmag_in/review/p/paypal/paypal_mb8k.png")
-                .into(holder.iv_payment);
+
+//        Picasso.get().load("https://sm.pcmag.com/pcmag_in/review/p/paypal/paypal_mb8k.png")
+//                .into(holder.iv_payment);
     }
 
     @Override

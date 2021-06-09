@@ -34,6 +34,7 @@ public class InstaPhotosAdapter extends RecyclerView.Adapter<InstaPhotosAdapter.
         this.frag = frag;
     }
 
+
     Picasso picasso;
 
     @NonNull

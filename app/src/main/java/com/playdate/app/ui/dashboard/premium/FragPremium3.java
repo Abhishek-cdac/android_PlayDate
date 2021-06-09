@@ -15,7 +15,7 @@ import com.playdate.app.ui.dashboard.more_suggestion.FragInvite;
 
 public class FragPremium3 extends Fragment {
 
-    FragInvite fragInvite;
+    private FragInvite fragInvite;
 
     public FragPremium3(FragInvite fragInvite) {
         this.fragInvite = fragInvite;
@@ -29,12 +29,7 @@ public class FragPremium3 extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag_get_premium3, container, false);
         ImageView iv_close=view.findViewById(R.id.iv_close);
-        iv_close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fragInvite.closePremium();
-            }
-        });
+        iv_close.setOnClickListener(v -> fragInvite.closePremium());
         return view;
     }
 }

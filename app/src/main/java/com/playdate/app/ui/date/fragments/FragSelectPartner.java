@@ -21,7 +21,6 @@ import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.CreateDateGetPartnerData;
 import com.playdate.app.model.CreateDateGetPartnerModel;
-import com.playdate.app.model.PartnerImage;
 import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.ui.date.adapter.PartnerViewPagerAdapter;
 import com.playdate.app.ui.date.adapter.SuggestedDateAdapter;
@@ -34,7 +33,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import java.util.Map;
 
 import retrofit2.Call;
@@ -44,15 +42,14 @@ import retrofit2.Response;
 public class FragSelectPartner extends Fragment implements SuggestedDateAdapter.SuggestionsAdapterListner {
 
 
-    ArrayList<PartnerImage> list = new ArrayList<>();
-    ArrayList<CreateDateGetPartnerData> lst_CreateDateGetPartner;
-    Button btn_search_partner;
-    Onclick itemClick;
-    ViewPager vp_partners;
-    TextView tv_waiting;
-    TextView tv_or;
-    SpinKitView spin_kit;
-    CommonClass clsCommon;
+    //    private ArrayList<PartnerImage> list = new ArrayList<>();
+    private ArrayList<CreateDateGetPartnerData> lst_CreateDateGetPartner;
+    private Onclick itemClick;
+    private ViewPager vp_partners;
+    private TextView tv_waiting;
+    private TextView tv_or;
+    private SpinKitView spin_kit;
+    private CommonClass clsCommon;
 
     @Nullable
     @Override
@@ -62,7 +59,7 @@ public class FragSelectPartner extends Fragment implements SuggestedDateAdapter.
 
         clsCommon = CommonClass.getInstance();
         vp_partners = view.findViewById(R.id.vp_partners);
-        btn_search_partner = view.findViewById(R.id.btn_search_partner);
+        Button btn_search_partner = view.findViewById(R.id.btn_search_partner);
         btn_search_partner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,7 +93,7 @@ public class FragSelectPartner extends Fragment implements SuggestedDateAdapter.
             public void onItemClicks(View v, int position, int i, String username, String totalPoints, String id, String profilePicPath) {
                 if (i == 20) {
 
-                    try{
+                    try {
                         OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
                         Fragment fragment = new FragPartnerSelected();
                         Bundle bundle = new Bundle();
@@ -150,6 +147,7 @@ public class FragSelectPartner extends Fragment implements SuggestedDateAdapter.
                         vp_partners.setAdapter(adapter);
                         vp_partners.setClipToPadding(false);
                         vp_partners.setPageMargin(-450);
+//                        vp_partners.setPageTransformer(true, new RotateUpTransformer());
 
                     }
                 } else {

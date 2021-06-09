@@ -1,5 +1,6 @@
 package com.playdate.app.ui.date.fragments;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +10,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +23,7 @@ import com.playdate.app.model.GetCoupleProfileData;
 import com.playdate.app.model.GetCoupleProfileModel;
 import com.playdate.app.model.RestaurentData;
 import com.playdate.app.model.RestaurentModel;
+import com.playdate.app.service.GpsTracker;
 import com.playdate.app.ui.date.adapter.RestaurantSelectionAdapter;
 import com.playdate.app.ui.date.games.FragTimesUp2;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
@@ -43,8 +47,8 @@ import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 public class FragRestaurantSelection extends Fragment implements restaurantSelecteListener {
     RecyclerView rv_restaurant;
     private CommonClass clsCommon;
-
-    private ArrayList<RestaurentData> lst_getRestaurentsDetail;
+    private GpsTracker gpsTracker;
+    private ArrayList<RestaurentData> lst_getRestaurantsDetail;
     public FragRestaurantSelection() {
     }
 
@@ -54,9 +58,32 @@ public class FragRestaurantSelection extends Fragment implements restaurantSelec
         View view = inflater.inflate(R.layout.activity_select_restaurant, container, false);
         clsCommon = CommonClass.getInstance();
         rv_restaurant = view.findViewById(R.id.rv_restaurant);
+
+        try {
+            if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
+                ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 101);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        getLocation(view);
         callgetRestaurantDetails();
 
         return view;
+    }
+    public void getLocation(View view){
+        gpsTracker = new GpsTracker(getActivity());
+        if(gpsTracker.canGetLocation()){
+            double latitude = gpsTracker.getLatitude();
+            double longitude = gpsTracker.getLongitude();
+
+            Log.e("latlong",""+latitude +"  "+ longitude);
+//            tvLatitude.setText(String.valueOf(latitude));
+//            tvLongitude.setText(String.valueOf(longitude));
+        }else{
+            gpsTracker.showSettingsAlert();
+        }
     }
 
     private void callgetRestaurantDetails() {
@@ -75,14 +102,14 @@ public class FragRestaurantSelection extends Fragment implements restaurantSelec
                 pd.cancel();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
-                        lst_getRestaurentsDetail = (ArrayList<RestaurentData>) response.body().getData();
-                        if (lst_getRestaurentsDetail == null) {
-                            lst_getRestaurentsDetail = new ArrayList<>();
+                        lst_getRestaurantsDetail = (ArrayList<RestaurentData>) response.body().getData();
+                        if (lst_getRestaurantsDetail == null) {
+                            lst_getRestaurantsDetail = new ArrayList<>();
                         }
                         RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
                         rv_restaurant.setLayoutManager(manager);
 
-                        RestaurantSelectionAdapter adapter = new RestaurantSelectionAdapter(getActivity(), lst_getRestaurentsDetail);
+                        RestaurantSelectionAdapter adapter = new RestaurantSelectionAdapter(getActivity(), lst_getRestaurantsDetail);
                         rv_restaurant.setAdapter(adapter);
 
 

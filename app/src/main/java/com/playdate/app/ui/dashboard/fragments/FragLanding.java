@@ -34,6 +34,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,18 +44,17 @@ public class FragLanding extends Fragment {
     public FragLanding() {
     }
 
-    CommonClass clsCommon;
-    ViewPager vp_suggestion;
-    RelativeLayout Rl_page;
-    ArrayList<GetUserSuggestionData> lst_getUserSuggestions;
-    Onclick itemClick;
+    private CommonClass clsCommon;
+    private ViewPager vp_suggestion;
+    private ArrayList<GetUserSuggestionData> lst_getUserSuggestions;
+    private Onclick itemClick;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag_landing, container, false);
         vp_suggestion = view.findViewById(R.id.vp_suggestion);
-        Rl_page = view.findViewById(R.id.Rl_page);
+        RelativeLayout rl_page = view.findViewById(R.id.Rl_page);
         clsCommon = CommonClass.getInstance();
         itemClick = new Onclick() {
             @Override
@@ -87,14 +87,6 @@ public class FragLanding extends Fragment {
 
         callGetUserSuggestionAPI();
 
-        // SuggestionAdapter adapter = new SuggestionAdapter(getActivity(), getActivity().getSupportFragmentManager());
-
-//        SuggestionAdapter adapter = new SuggestionAdapter(getActivity());
-//
-//        vp_suggestion.setAdapter(adapter);
-//        vp_suggestion.setCurrentItem(8);
-//        vp_suggestion.setPadding(130, 0, 130, 0);
-
 
         int height = new CommonClass().getScreenHeight(getActivity());
 
@@ -105,16 +97,13 @@ public class FragLanding extends Fragment {
         int m5 = (int) getResources().getDimension(R.dimen._60sdp);
         int m6 = (int) getResources().getDimension(R.dimen._65sdp);
 
-        Rl_page.getLayoutParams().height = height - (m1 + m2 + m3 + m4 + m5 + m6);
+        rl_page.getLayoutParams().height = height - (m1 + m2 + m3 + m4 + m5 + m6);
 
         TextView txt_footer_see_more = view.findViewById(R.id.txt_footer_see_more);
-        txt_footer_see_more.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        txt_footer_see_more.setOnClickListener(v -> {
 
-                OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
-                frag.ReplaceFrag(new FragMoreSuggestion());
-            }
+            OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
+            Objects.requireNonNull(frag).ReplaceFrag(new FragMoreSuggestion());
         });
 
         callGetUserSuggestionAPI();
@@ -145,7 +134,7 @@ public class FragLanding extends Fragment {
 
 
                         // SuggestionAdapter adapter = new SuggestionAdapter(getActivity());
-                        SuggestionAdapter adapter = new SuggestionAdapter( getActivity(), lst_getUserSuggestions, itemClick);
+                        SuggestionAdapter adapter = new SuggestionAdapter(getActivity(), lst_getUserSuggestions, itemClick);
                         vp_suggestion.setAdapter(adapter);
                         vp_suggestion.setCurrentItem(8);
                         vp_suggestion.setPadding(130, 0, 130, 0);
@@ -185,32 +174,11 @@ public class FragLanding extends Fragment {
         call.enqueue(new Callback<CommonModel>() {
             @Override
             public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
-//                pd.cancel();
-                if (response.code() == 200) {
-                    assert response.body() != null;
-//                    if (response.body().getStatus() == 1) {
-////                        FriendRequest friendRequest = new FriendRequest();
-////                        Log.e("FriendRequestStatus", "" + friendRequest.getStatus());
-//
-//                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", "" + response.body().getMessage(), "Ok");
-//                    } else {
-//                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", "" + response.body().getMessage(), "Ok");
-//                    }
-                } else {
-//                    try {
-//                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-//                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message").toString(), "Ok");
-//                    } catch (Exception e) {
-//                        Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-//                    }
-                }
             }
 
             @Override
             public void onFailure(Call<CommonModel> call, Throwable t) {
                 t.printStackTrace();
-//                pd.cancel();
-//                Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
     }

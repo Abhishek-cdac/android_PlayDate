@@ -1,12 +1,10 @@
 package com.playdate.app.ui.my_profile_details;
 
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,7 +27,6 @@ import com.playdate.app.util.session.SessionPref;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -37,17 +34,19 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FragMyUploadMedia extends Fragment {
-    String loginId;
+    private String loginId;
 
     public FragMyUploadMedia(String loginId) {
         this.loginId = loginId;
     }
 
-    TextView txt_no_media;
-    RecyclerView recyclerView;
-    AAH_CustomRecyclerView recycler_view_feed;
+    private TextView txt_no_media;
+    private RecyclerView recyclerView;
+    private AAH_CustomRecyclerView recycler_view_feed;
     private ArrayList<PostDetails> lst;
 
+    public FragMyUploadMedia() {
+    }
 
     @Nullable
     @Override
@@ -138,8 +137,6 @@ public class FragMyUploadMedia extends Fragment {
             recycler_view_feed.setVisiblePercent(70);
             recycler_view_feed.setPlayOnlyFirstVideo(true);
             recycler_view_feed.setAdapter(adapter);
-
-
 
 
         }

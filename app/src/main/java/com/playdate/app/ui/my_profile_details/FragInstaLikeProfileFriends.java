@@ -46,9 +46,7 @@ import retrofit2.Response;
 import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 
 public class FragInstaLikeProfileFriends extends Fragment implements onPhotoClick, View.OnClickListener {
-    //    RecyclerView recycler_photos;
 
-    public static final int USER = 0;
     private ImageView iv_send_request;
     private ImageView iv_chat;
     private ImageView profile_image;
@@ -62,9 +60,9 @@ public class FragInstaLikeProfileFriends extends Fragment implements onPhotoClic
     }
 
 
-    boolean isFriend = true;
-    String LoginId;
-    String friendID;
+    private boolean isFriend = true;
+    private String LoginId;
+    private String friendID;
 
     public FragInstaLikeProfileFriends(boolean isFriend, String LoginId) {
         this.isFriend = isFriend;
@@ -78,7 +76,7 @@ public class FragInstaLikeProfileFriends extends Fragment implements onPhotoClic
         this.friendID = friendID;
     }
 
-    FragMyUploadMedia mediaFrag;
+    private FragMyUploadMedia mediaFrag;
 
     @Nullable
     @Override
@@ -87,17 +85,13 @@ public class FragInstaLikeProfileFriends extends Fragment implements onPhotoClic
 
         clsCommon = CommonClass.getInstance();
 
-        if (isFriend) {
-            InstaPhotosAdapter.isLocked = false;
-        } else {
-            InstaPhotosAdapter.isLocked = true;
-        }
+        InstaPhotosAdapter.isLocked = !isFriend;
+
         txtTotalFriend = view.findViewById(R.id.friend_count);
         txtTotalPost = view.findViewById(R.id.post_count);
         iv_send_request = view.findViewById(R.id.iv_send_request);
         profile_image = view.findViewById(R.id.profile_image);
         iv_chat = view.findViewById(R.id.iv_chat);
-//        recycler_photos = view.findViewById(R.id.recycler_photos);
         txt_bio = view.findViewById(R.id.txt_bio);
         txt_login_user = view.findViewById(R.id.txt_login_user);
 
@@ -127,16 +121,13 @@ public class FragInstaLikeProfileFriends extends Fragment implements onPhotoClic
 
         view.setFocusableInTouchMode(true);
         view.requestFocus();
-        view.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    OnFriendSelected inf = (OnFriendSelected) getActivity();
-                    inf.OnFrinedDataClosed();
-                    return true;
-                }
-                return false;
+        view.setOnKeyListener((v, keyCode, event) -> {
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                OnFriendSelected inf = (OnFriendSelected) getActivity();
+                inf.OnFrinedDataClosed();
+                return true;
             }
+            return false;
         });
         return view;
     }
@@ -152,7 +143,6 @@ public class FragInstaLikeProfileFriends extends Fragment implements onPhotoClic
 
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
         pd.show();
-//        Toast.makeText(this, ""+pref.getStringVal(SessionPref.LoginUsertoken), Toast.LENGTH_SHORT).show();
 
 
         Call<GetProfileDetails> call = service.getProfileDetails("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
@@ -161,7 +151,7 @@ public class FragInstaLikeProfileFriends extends Fragment implements onPhotoClic
             public void onResponse(Call<GetProfileDetails> call, Response<GetProfileDetails> response) {
                 pd.cancel();
                 if (response.code() == 200) {
-                    if (response.body().getStatus() == 1) {
+                    if (Objects.requireNonNull(response.body()).getStatus() == 1) {
                         try {
                             lst_getPostDetail = (ArrayList<GetProileDetailData>) response.body().getData();
                             if (lst_getPostDetail == null) {
@@ -220,12 +210,7 @@ public class FragInstaLikeProfileFriends extends Fragment implements onPhotoClic
     @Override
     public void onTypeChange(int type) {
 
-        if (type == 1) {
-            if (InstaPhotosAdapter.isLocked) {
-                return;
-            }
-        } else {
-        }
+
 
 
     }
