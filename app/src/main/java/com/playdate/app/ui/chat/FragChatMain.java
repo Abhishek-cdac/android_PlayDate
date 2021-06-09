@@ -75,7 +75,7 @@ import static com.playdate.app.ui.register.profile.UploadProfileActivity.PICK_PH
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.REQUEST_TAKE_GALLERY_VIDEO;
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.TAKE_PHOTO_CODE;
 
-public class FragChatMain extends Fragment implements onSmileyChangeListener, onImageSelectListener, LocationListener {
+public class FragChatMain extends Fragment implements onSmileyChangeListener, onImageSelectListener {
 
 
     RecyclerView rv_chat;
@@ -84,6 +84,8 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
     ImageView iv_send, iv_circle, iv_camera, iv_video, iv_mic, iv_smiley;
     EditText et_msg;
     ImageView profile_image;
+    ImageView iv_delete_msg;
+    ImageView video_cal;
     ImageView arrow_back;
     TextView chat_name;
     Intent mIntent;
@@ -144,12 +146,14 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
         profile_image = view.findViewById(R.id.profile_image);
         chat_name = view.findViewById(R.id.chat_name);
         iv_smiley = view.findViewById(R.id.iv_smiley);
+        iv_delete_msg = view.findViewById(R.id.iv_delete_msg);
+        video_cal = view.findViewById(R.id.video_cal);
 
         lstSmiley = new ArrayList<>();
 
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         rv_chat.setLayoutManager(manager);
-        adapter = new ChatAdapter(chatMsgList);
+        adapter = new ChatAdapter(chatMsgList, this);
         rv_chat.setAdapter(adapter);
         rv_chat.addOnScrollListener(new RecyclerView.OnScrollListener() {
         });
@@ -157,7 +161,6 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
             @Override
             public void run() {
                 rv_chat.scrollToPosition(adapter.getItemCount() - 1);
-                // Here adapter.getItemCount()== child count
             }
         });
 
@@ -171,6 +174,7 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
         chat_name.setText(sender_name);
 
         CreateSmilyList();
+        addQuestions();
 
         chat_name.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -233,18 +237,22 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
         iv_mic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                ActivityCompat.requestPermissions(getActivity(), permissions, REQUEST_AUDIO_PERMISSION_CODE);
+                ActivityCompat.requestPermissions(getActivity(), permissions, REQUEST_AUDIO_PERMISSION_CODE);
 //                String[] PERMISSIONS = {Manifest.permission.RECORD_AUDIO};
 //
 //                ActivityCompat.requestPermissions(getActivity(),
 //                        PERMISSIONS,
 //                        ALL_PERMISSIONS_RESULT);
-                if (checkPermission()) {
-                    startRecording();
-
-                } else {
-                    Toast.makeText(getActivity(), "Permission Denied", Toast.LENGTH_SHORT).show();
-                }
+//                if (checkPermission()) {
+//                    startRecording();
+//
+//                } else {
+//                    Toast.makeText(getActivity(), "Permission Denied", Toast.LENGTH_SHORT).show();
+//                }
+                ActivityCompat.requestPermissions(getActivity(),
+                        permissions,
+                        ALL_PERMISSIONS_RESULT);
+                startRecording();
 
             }
         });
@@ -276,11 +284,33 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
         profile_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-/////// user profile page
+                OnInnerFragmentClicks ref = (OnInnerFragmentClicks) getActivity();
+//                ref.loadProfile(lst.get(position).getUserId());
+                ref.ReplaceFragWithStack(new FragInstaLikeProfile());
             }
         });
 
+
         return view;
+    }
+
+    String question = "According to Forbes,which entreprenour became first person in history to have net worth of $400 billion?";
+
+    private void addQuestions() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                adapter.addQuestion(question);
+                rv_chat.post(new Runnable() {       //////scroll down
+                    @Override
+                    public void run() {
+                        rv_chat.scrollToPosition(adapter.getItemCount() - 1);
+                    }
+                });
+
+
+            }
+        }, 5000);
     }
 
     private void startRecording() {
@@ -511,6 +541,8 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
 
     }
 
+
+
     double latttitude, longitude;
 
 
@@ -523,9 +555,7 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
         Log.d("Lattitude of ", String.valueOf(latttitude));
         Log.d("LOngitude of ", String.valueOf(longitude));
 
-
 //        adapter.sendLcation(latttitude, longitude);
-
 
     }
 
@@ -552,17 +582,11 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
                 ALL_PERMISSIONS_RESULT);
         pickImage();
     }
-
-    @Override
-    public void onLocationChanged(@NonNull Location location) {
-
-    }
 }
 
 
 interface onSmileyChangeListener {
     void onSmileyChange(int position);
-
     void onLocationSelect();
 }
 

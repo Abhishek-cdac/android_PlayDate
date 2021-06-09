@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,8 +37,6 @@ import java.util.Locale;
 public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyViewHolder> {
 
     ArrayList<ChatExample> inboxList;
-    //    ArrayList<ChatExample> search_list;
-    //    private ArrayList<ChatExample> newList = new ArrayList<>();
     Context mcontext;
     Onclick itemClick;
     private FragInbox frag;
@@ -51,7 +50,6 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
 
     public ChattingAdapter(ArrayList<ChatExample> inboxList, Onclick itemClick, FragInbox frag) {
         this.inboxList = inboxList;
-//        this.search_list = inboxList;
         this.itemClick = itemClick;
         this.frag = frag;
     }
@@ -140,6 +138,7 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
 
     public void filterList(ArrayList<ChatExample> filteredList) {
         inboxList = filteredList;
+        Log.d("CHAttingAdapterClass", "CHAttingAdapterClass");
         notifyDataSetChanged();
 
     }
@@ -179,15 +178,7 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
                 @Override
                 public boolean onLongClick(View v) {
                     selectedToDelete = getAdapterPosition();
-//                    bundle.putInt("adapterPosition",selectedToDelete);
-//                    frag.showBottomSheet(selectedToDelete);
-
                     showBottomSheet(selectedToDelete);
-
-
-//                    main_ll.setBackgroundColor(mcontext.getResources().getColor(R.color.color_pink_dull));
-//                    ll_chat_details.setVisibility(View.GONE);
-//                    iv_delete_chat.setVisibility(View.VISIBLE);
                     notifyDataSetChanged();
                     return true;
                 }
@@ -199,7 +190,7 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
 
     private void showBottomSheet(int selectedToDelete) {
         FragmentManager fragmentManager = ((AppCompatActivity) mcontext).getSupportFragmentManager();
-        bottomSheet = new LandingBottomSheet(this, selectedToDelete);
+        bottomSheet = new LandingBottomSheet(this, selectedToDelete, "landing");
         bottomSheet.show(fragmentManager, "ModalBottomSheet");
     }
 

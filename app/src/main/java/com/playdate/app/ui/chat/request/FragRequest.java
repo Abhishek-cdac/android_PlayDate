@@ -90,25 +90,27 @@ public class FragRequest extends Fragment {
         });
 
     }
+
+    public void filter(String s) {
+        Log.d("Filter Method", "In Filter Request method");
+        ArrayList<ChatExample> filteredList = new ArrayList<>();
+//        chatExampleList = new ArrayList<>(); ////for search purpose comment it
+
+        for (ChatExample item : chatExampleList) {
+            if (item.getSenderName().toLowerCase().contains(s.toLowerCase())) {
+                filteredList.add(item);
+                Log.d("SIZE", String.valueOf(filteredList.size()));
+            }
+        }
+
+        for (int i = 0; i < filteredList.size(); i++) {
+            Log.d("SENDERNAME", filteredList.get(i).getSenderName());
+
+        }
+//        requestAdapter = new RequestAdapter(); ////for search purpose, comment
+        requestAdapter.filterList(filteredList);
+
+    }
 }
 
-//    private void setAdapter() {
-//        requestAdapter = new RequestAdapter(inboxList, itemClick);
-//        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-//        recyclerView.setLayoutManager(mLayoutManager);
-//        recyclerView.setItemAnimator(new DefaultItemAnimator());
-//        recyclerView.setAdapter(requestAdapter);
-//        prepareInboxData();
-//    }
-
-//    private void prepareInboxData() {
-//        Inbox inbox = new Inbox("jonn den", "https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", "Wants to send you request", "5", "8:00");
-//        inboxList.add(inbox);
-//
-//        inbox = new Inbox("gomes helen", "https://images.saymedia-content.com/.image/t_share/MTc0MDkwNjUxNDc2OTYwODM0/5-instagram-models-you-should-be-following.png", "Wants to send you request", "3", "1d");
-//        inboxList.add(inbox);
-//
-//        inbox = new Inbox("adreena helen", "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg", "Wants to send you msg", "5", "1d");
-//        inboxList.add(inbox);
-//    }
 

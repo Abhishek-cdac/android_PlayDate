@@ -81,12 +81,8 @@ public class FragInbox extends Fragment implements onClickEventListener {
                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
                     recyclerView.setLayoutManager(mLayoutManager);
                     recyclerView.setItemAnimator(new DefaultItemAnimator());
-//                    chattingAdapter.getFilter().filter(sequence);
-
                     recyclerView.setAdapter(chattingAdapter);
-
                 }
-//                requestAdapter = new RequestAdapter(FragInbox.this);
             }
 
             @Override
@@ -97,33 +93,6 @@ public class FragInbox extends Fragment implements onClickEventListener {
             }
         });
     }
-
-
-//    public void onResponse(Call<ChatUserList> call, Response<ChatUserList> response) {
-//        Log.d("Response ", response.toString());
-//        pd.cancel();
-//        chatExampleList = new ArrayList<>(response.body().getChats());
-//        Log.d("ChatmessageLIst", chatExampleList.toString());
-//
-//        for (int i = 0; i < chatExampleList.size(); i++) {
-//            chattingAdapter = new ChattingAdapter(chatExampleList, itemClick, FragInbox.this);
-//            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-//            recyclerView.setLayoutManager(mLayoutManager);
-//            recyclerView.setItemAnimator(new DefaultItemAnimator());
-////                    chattingAdapter.getFilter().filter(sequence);
-//
-//            recyclerView.setAdapter(chattingAdapter);
-//
-//        }
-////                requestAdapter = new RequestAdapter(FragInbox.this);
-//    }
-//
-//    @Override
-//    public void onFailure(Call<ChatUserList> call, Throwable t) {
-//        Log.d("Error code", t + "Failed to get data");
-//        pd.cancel();
-//        Toast.makeText(getActivity(), t + "Failed to get data", Toast.LENGTH_SHORT).show();
-//    }
 
 
     @Override
@@ -153,16 +122,22 @@ public class FragInbox extends Fragment implements onClickEventListener {
     }
 
     public void filter(String s) {
-        Toast.makeText(getActivity(), "In Filter method", Toast.LENGTH_SHORT).show();
+        Log.d("Filter Method", "In Filter method");
         ArrayList<ChatExample> filteredList = new ArrayList<>();
-        chatExampleList = new ArrayList<>();
+//        chatExampleList = new ArrayList<>(); ////for search purpose comment it
 
         for (ChatExample item : chatExampleList) {
             if (item.getSenderName().toLowerCase().contains(s.toLowerCase())) {
                 filteredList.add(item);
+                Log.d("SIZE", String.valueOf(filteredList.size()));
             }
         }
 
+        for (int i = 0; i < filteredList.size(); i++) {
+            Log.d("SENDERNAME", filteredList.get(i).getSenderName());
+
+        }
+//        chattingAdapter = new ChattingAdapter();  ////for search purpose comment it
         chattingAdapter.filterList(filteredList);
     }
 

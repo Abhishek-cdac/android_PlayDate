@@ -79,14 +79,6 @@ public class RequestChatFragment extends Fragment implements View.OnClickListene
         back_anonymous.setOnClickListener(this);
         iv_chat_notification.setOnClickListener(this);
 
-//        edt_search_chat.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                OnInnerFragmentClicks ref = (OnInnerFragmentClicks) getActivity();
-//                ref.ReplaceFrag(new FragSearchUser());
-//
-//            }
-//        });
         edt_search_chat.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -95,12 +87,10 @@ public class RequestChatFragment extends Fragment implements View.OnClickListene
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (null != inboxFrag)
+                if (null != inboxFrag || null != requestFrag) {
                     inboxFrag.filter(s.toString());
-//                inbox = new FragInbox();
-////                inbox.setFilters(s);
-////                chattingAdapter.getFilter().filter(s);
-//                inbox.filter(s.toString());
+                    requestFrag.filter(s.toString());
+                }
             }
 
             @Override

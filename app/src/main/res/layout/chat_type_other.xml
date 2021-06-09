@@ -1,67 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingHorizontal="@dimen/_8sdp">
+    android:background="@color/white"
+    android:padding="@dimen/_8sdp">
 
     <ImageView
         android:id="@+id/diamond"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/diamond_normal"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:src="@drawable/diamond_normal" />
 
-    <TextView
-        android:id="@+id/tv_chat_other"
-        android:layout_width="319dp"
-        android:layout_height="104dp"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/_5sdp"
-        android:layout_toRightOf="@+id/diamond"
-        android:background="@drawable/btn_blue_filled"
-        android:lines="5"
-        android:paddingHorizontal="@dimen/_12sdp"
-        android:paddingVertical="@dimen/_8sdp"
-        android:text="Hey myron! how are you Hey myron!how are youHey myron! how are youHey myron!how are youHey myron! how are you "
-        android:textColor="@color/white"
-        android:textSize="@dimen/_10sdp"
-        app:layout_constraintLeft_toRightOf="@+id/diamond"
-        app:layout_constraintTop_toTopOf="parent" />
+    <!--    <RelativeLayout-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        app:layout_constraintLeft_toRightOf="@+id/diamond"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        android:layout_height="wrap_content">-->
 
-    <TextView
-        android:id="@+id/answer1"
+    <!--        <TextView-->
+    <!--            android:id="@+id/tv_chat_other"-->
+    <!--            android:layout_width="@dimen/_240sdp"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_centerVertical="true"-->
+    <!--            android:layout_marginLeft="@dimen/_5sdp"-->
+    <!--            android:background="@drawable/btn_blue_filled"-->
+    <!--            android:maxLines="5"-->
+    <!--            android:paddingHorizontal="@dimen/_12sdp"-->
+    <!--            android:paddingVertical="@dimen/_8sdp"-->
+    <!--            android:text="Hey myron! how are you Hey myron!how are youHey myron! how are youHey myron!how are youHey myron! how are you "-->
+    <!--            android:textColor="@color/white"-->
+    <!--            android:textSize="@dimen/_10sdp"-->
+    <!--            />-->
+    <!--    </RelativeLayout>-->
+
+    <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="80dp"
-        android:layout_marginRight="188dp"
-        android:background="@drawable/btn_pink_filled"
-        android:paddingHorizontal="@dimen/_18sdp"
-        android:paddingVertical="@dimen/_8sdp"
-        android:text="Elon Musk"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_10sdp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_toEndOf="@+id/diamond">
 
-    <TextView
-        android:id="@+id/answer2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="80dp"
-        android:layout_marginRight="52dp"
-        android:background="@drawable/btn_pink_filled"
-        android:paddingHorizontal="@dimen/_18sdp"
-        android:paddingVertical="@dimen/_8sdp"
-        android:text="Jeff Beroz"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_10sdp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/tv_chat_other"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="@dimen/_18sdp"
+            android:background="@drawable/btn_blue_filled"
+            android:paddingHorizontal="@dimen/_12sdp"
+            android:paddingTop="@dimen/_8sdp"
+            android:paddingBottom="@dimen/_25sdp"
+            android:text="Hey myron! how are you,Hey myron! how are you ,Hey myron! how are you  how are you ,Hey myron! how are you ,Hey myron! how are you  Hey myron!how are youHey myron! how are youHey myron!how are youHey myron! how are you "
+            android:textColor="@color/white"
+            android:textSize="@dimen/_10sdp" />
+
+        <TextView
+            android:id="@+id/answer1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="bottom|left"
+            android:layout_marginStart="@dimen/_25sdp"
+            android:background="@drawable/btn_pink_filled"
+            android:paddingHorizontal="@dimen/_18sdp"
+            android:paddingVertical="@dimen/_8sdp"
+            android:text="Elon Musk"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_10sdp" />
+
+        <TextView
+            android:id="@+id/answer2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginEnd="@dimen/_25sdp"
+            android:background="@drawable/btn_pink_filled"
+            android:paddingHorizontal="@dimen/_18sdp"
+            android:paddingVertical="@dimen/_8sdp"
+            android:text="Jeff Beroz"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_10sdp" />
+
+    </androidx.cardview.widget.CardView>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!--    <TextView-->
+    <!--        android:id="@+id/answer1"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_centerVertical="true"-->
+    <!--        android:layout_marginTop="80dp"-->
+    <!--        android:layout_marginRight="188dp"-->
+    <!--        android:background="@drawable/btn_pink_filled"-->
+    <!--        android:paddingHorizontal="@dimen/_18sdp"-->
+    <!--        android:paddingVertical="@dimen/_8sdp"-->
+    <!--        android:text="Elon Musk"-->
+    <!--        android:textColor="@color/white"-->
+    <!--        android:textSize="@dimen/_10sdp"-->
+    <!--        app:layout_constraintRight_toRightOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/answer2"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_centerVertical="true"-->
+    <!--        android:layout_marginTop="80dp"-->
+    <!--        android:layout_marginRight="52dp"-->
+    <!--        android:background="@drawable/btn_pink_filled"-->
+    <!--        android:paddingHorizontal="@dimen/_18sdp"-->
+    <!--        android:paddingVertical="@dimen/_8sdp"-->
+    <!--        android:text="Jeff Beroz"-->
+    <!--        android:textColor="@color/white"-->
+    <!--        android:textSize="@dimen/_10sdp"-->
+    <!--        app:layout_constraintRight_toRightOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+
+</RelativeLayout>

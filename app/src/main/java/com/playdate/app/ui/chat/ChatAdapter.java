@@ -2,6 +2,7 @@ package com.playdate.app.ui.chat;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
@@ -18,7 +19,9 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -29,6 +32,7 @@ import com.playdate.app.model.chat_models.ChatAttachment;
 import com.playdate.app.model.chat_models.ChatMessage;
 import com.playdate.app.ui.dialogs.DialogWinner;
 import com.playdate.app.util.common.EnlargeMediaChat;
+import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
@@ -51,9 +55,9 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
     private boolean isImageFitToScreen = false;
-    public static int OTHER;
-    public static int ME;
-    public static int OPPONENT;
+    public static int OTHER = 0;
+    public static int ME = 2;
+    public static int OPPONENT = 0;
     //    private ArrayList<ChatExample> chatExampleList;
     private ArrayList<ChatMessage> chatmsgList;
     private String urls_image;
@@ -64,9 +68,11 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private String to;
     private final static String myId = "jid_1111";
     private final static String polling = "polling";
+    FragChatMain ref;
 
-    public ChatAdapter(ArrayList<ChatMessage> chatmsgList) {
+    public ChatAdapter(ArrayList<ChatMessage> chatmsgList, FragChatMain ref) {
         this.chatmsgList = chatmsgList;
+        this.ref = ref;
         ArrayList<Chat> chat_list = new ArrayList<>();
         chat_list.add(new Chat("Hey Myron! looks like we matched", "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg", ME));
         chat_list.add(new Chat("Hey Kayle! yeah it looks like we can have a nice conversation", "https://images.saymedia-content.com/.image/t_share/MTc0MDkwNjUxNDc2OTYwODM0/5-instagram-models-you-should-be-following.png", OPPONENT));
@@ -89,27 +95,22 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         from = chatmsgList.get(position).getFrom();
         to = chatmsgList.get(position).getTo();
 
-        if (from.equals(myId)) {
+        if (myId.equals(from)) {
+            ME = 0;
+        } else if (myId.equals(to)) {
             ME = 1;
         } else if (from.equals(polling)) {
-            ME = 3;
-        } else if (to.equals(myId)) {
             ME = 2;
         }
 
         switch (ME) {
-            case 3:
-                return OTHER;
-
+            case 0:
+                return 0;
             case 1:
-                return ME;
-
+                return 1;
             case 2:
-                return OPPONENT;
-
+                return 2;
         }
-        Toast.makeText(mContext, getItemViewType(position), Toast.LENGTH_SHORT).show();
-
         return OTHER;
     }
 
@@ -120,22 +121,16 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         View view = null;
         RecyclerView.ViewHolder viewHolder = null;
         mContext = parent.getContext();
-
-        if (viewType == ME) {
-            Toast.makeText(mContext, "ViewTypeMe " + viewType, Toast.LENGTH_SHORT).show();
-
+        if (viewType == 0) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_type_me, parent, false);
             viewHolder = new ViewHolderMe(view);
 
-        } else if (viewType == OPPONENT) {
-            Toast.makeText(mContext, "ViewTypeOpponent " + viewType, Toast.LENGTH_SHORT).show();
+        } else if (viewType == 1) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_type_oponent, parent, false);
             viewHolder = new ViewHolderOponent(view);
 
 
-        } else if (viewType == OTHER) {
-            Toast.makeText(mContext, "ViewTypeOther " + viewType, Toast.LENGTH_SHORT).show();
-
+        } else if (viewType == 2) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_type_other, parent, false);
             viewHolder = new ViewHolderOther(view);
 
@@ -147,7 +142,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if (holder.getItemViewType() == ME) {
+        if (holder.getItemViewType() == 0) {
             /// ME
             ViewHolderMe viewHolderMe = (ViewHolderMe) holder;
 //            Picasso.get().load(chatmsgList.get(position).getProfilePhoto())
@@ -268,42 +263,24 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     break;
             }
 
-//            viewHolderMe.chat_image.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    if (isImageFitToScreen) {
-//                        isImageFitToScreen = false;
-//                        viewHolderMe.chat_image.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-//                        viewHolderMe.chat_image.setAdjustViewBounds(true);
-//                    } else {
-//                        isImageFitToScreen = true;
-//                        viewHolderMe.chat_image.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
-//                        viewHolderMe.chat_image.setScaleType(ImageView.ScaleType.FIT_XY);
-//                    }
-//                }
-//            });
-
             viewHolderMe.chat_image.setOnClickListener(v -> {
-
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-//                    builder.setView(viewHolderMe.chat_image).show();
-
-
                 enlarge = new EnlargeMediaChat(mContext, chatmsgList.get(position).getDrawable(), ChatAdapter.this);
                 enlarge.show();
-
 
             });
 
         } ///
-        else if (holder.getItemViewType() == OPPONENT) {
+        else if (holder.getItemViewType() == 1) {
             /// OPPONENT
             ViewHolderOponent viewHolderOponent = (ViewHolderOponent) holder;
+
             Picasso.get().load(chatmsgList.get(position).getProfilePhoto())
                     .placeholder(R.drawable.cupertino_activity_indicator)
                     .into(viewHolderOponent.iv_profile);
 
             if (chatmsgList.get(position).getType().equals("text")) {
+                viewHolderOponent.tv_msg.setVisibility(View.VISIBLE);
+                viewHolderOponent.chat_image.setVisibility(View.GONE);
                 viewHolderOponent.tv_msg.setText(chatmsgList.get(position).getText());
 
             } else if (chatmsgList.get(position).getType().equals("image")) {
@@ -338,7 +315,6 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     }
                 });
 
-
             } else if (chatmsgList.get(position).getType().equals("video")) {
                 viewHolderOponent.tv_msg.setVisibility(View.GONE);
                 viewHolderOponent.chat_image.setVisibility(View.GONE);
@@ -355,38 +331,31 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 //                });
             }
 
-//            viewHolderOponent.chat_image.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//
-//                    Uri uriImage = Uri.parse(chatmsgList.get(position).get)
-//                    try {
-//                        InputStream inputStream = getContentResolver().openInputStream(yourUri);
-//                        yourDrawable = Drawable.createFromStream(inputStream, yourUri.toString() );
-//                        imageView.setImageDrawable(yourDrawable);
-//                    } catch (FileNotFoundException e) {
-//                        yourDrawable = getResources().getDrawable(R.drawable.default_image);
-//                    }
-//
-//
-//
-//
-//                    enlarge = new EnlargeMediaChat(mContext, chatmsgList.get(position).getDrawable(), ChatAdapter.this);
-//                    enlarge.show();
-//
-//                }
-//            });
-
-
         } ///
-        else if (holder.getItemViewType() == OTHER) {
-
-            Toast.makeText(mContext, "ViewType " + getItemViewType(position), Toast.LENGTH_SHORT).show();
+        else if (holder.getItemViewType() == 2) {
             ViewHolderOther viewHolderOther = (ViewHolderOther) holder;
             viewHolderOther.tv_msg.setText(chatmsgList.get(position).getText());
-
+            viewHolderOther.answer1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(mContext, viewHolderOther.answer1.getText().toString(), Toast.LENGTH_SHORT).show();
+                    SessionPref pref = SessionPref.getInstance(mContext);
+                    pref.saveStringKeyVal("Answer", viewHolderOther.answer1.getText().toString());
+                    notifyDataSetChanged();
+                }
+            });
+            viewHolderOther.answer2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(mContext, viewHolderOther.answer2.getText().toString(), Toast.LENGTH_SHORT).show();
+                    SessionPref pref = SessionPref.getInstance(mContext);
+                    pref.saveStringKeyVal("Answer", viewHolderOther.answer2.getText().toString());
+                    notifyDataSetChanged();
+                }
+            });
         }
     }
+
 
     private void stopPlaying() {
         if (mediaPlayer != null) {
@@ -399,11 +368,13 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public void addToListText(EditText et_msg) {
         chatmsgList.add(new ChatMessage("text", myId, "jid_1109", et_msg.getText().toString()));
-        Toast.makeText(mContext, to + " to " + from, Toast.LENGTH_SHORT).show();
-        Toast.makeText(mContext, "ME Type " + ME, Toast.LENGTH_SHORT).show();
         notifyDataSetChanged();
-
         et_msg.setText("");
+    }
+
+    public void addQuestion(String question) {
+        chatmsgList.add(new ChatMessage("text", polling, "jid_1109", question));
+        notifyDataSetChanged();
     }
 
     //// code for  saving image as file
@@ -489,24 +460,33 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         enlarge.cancel();
     }
 
+    public void removeFromList(int position) {
+        chatmsgList.remove(position);
+        notifyDataSetChanged();
+        bottomSheet.dismiss();
+    }
+
+    public void dismissSheet() {
+        bottomSheet.dismiss();
+        notifyDataSetChanged();
+    }
+
+
     public class ViewHolderOther extends RecyclerView.ViewHolder {
         TextView tv_msg;
         TextView answer1;
+        TextView answer2;
 
         public ViewHolderOther(@NonNull View itemView) {
             super(itemView);
             tv_msg = itemView.findViewById(R.id.tv_chat_other);
             answer1 = itemView.findViewById(R.id.answer1);
+            answer2 = itemView.findViewById(R.id.answer2);
 
-            answer1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(itemView.getContext(), DialogWinner.class);
-                    itemView.getContext().startActivity(intent);
-                }
-            });
         }
     }
+
+    int selectedPosition = -1;
 
     public class ViewHolderMe extends RecyclerView.ViewHolder {
         ImageView iv_profile;
@@ -515,8 +495,8 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         VideoView chat_video;
         CardView card_video;
         RelativeLayout rl_audio;
+        RelativeLayout rl_body;
         ImageView play_audio;
-        //        ImageView iv_post_image;
         ImageView img_playback;
         ImageView iv_mute_unmute;
         CardView card_image;
@@ -539,12 +519,64 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             rl_audio = view.findViewById(R.id.rl_audio);
             play_audio = view.findViewById(R.id.play_audio);
             mv_location = view.findViewById(R.id.mv_location);
+            rl_body = view.findViewById(R.id.rl_body);
 
 //            mv_location.onCreate(savedInstanceState);
 
 //            SupportMapFragment fm = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 //            googleMap = mv_location.getMap();
+            tv_msg.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    selectedPosition = getAdapterPosition();
+//                    ref.onMessageSelectToDelete(getAdapterPosition());
+                    showBottomSheet(selectedPosition);
+                    notifyDataSetChanged();
+                    return true;
+                }
+            });
+            chat_image.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    selectedPosition = getAdapterPosition();
+//                    ref.onMessageSelectToDelete(getAdapterPosition());
+                    showBottomSheet(selectedPosition);
+                    notifyDataSetChanged();
+                    return true;
+                }
+            });
+            card_video.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    selectedPosition = getAdapterPosition();
+
+//                    ref.onMessageSelectToDelete(getAdapterPosition());
+                    showBottomSheet(selectedPosition);
+                    notifyDataSetChanged();
+                    return true;
+                }
+            });
+            rl_audio.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    selectedPosition = getAdapterPosition();
+//                    ref.onMessageSelectToDelete(getAdapterPosition());
+                    showBottomSheet(selectedPosition);
+                    notifyDataSetChanged();
+                    return true;
+                }
+            });
+
+
         }
+    }
+
+    LandingBottomSheet bottomSheet;
+
+    private void showBottomSheet(int selectedPosition) {
+        FragmentManager fragmentManager = ((AppCompatActivity) mContext).getSupportFragmentManager();
+        bottomSheet = new LandingBottomSheet(this, selectedPosition, "chat");
+        bottomSheet.show(fragmentManager, "ModalBottomSheet");
     }
 
     public class ViewHolderOponent extends RecyclerView.ViewHolder {
@@ -552,6 +584,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         ImageView chat_image;
         VideoView chat_video;
         TextView tv_msg;
+        RelativeLayout rl_body;
 
         public ViewHolderOponent(View view) {
             super(view);
@@ -559,6 +592,48 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             chat_image = view.findViewById(R.id.chat_image);
             tv_msg = view.findViewById(R.id.tv_chat_oponent);
             chat_video = view.findViewById(R.id.chat_video);
+            rl_body = view.findViewById(R.id.rl_body);
+
+            tv_msg.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    selectedPosition = getAdapterPosition();
+
+//                    ref.onMessageSelectToDelete(getAdapterPosition());
+                    showBottomSheet(selectedPosition);
+                    notifyDataSetChanged();
+                    return true;
+                }
+            });
+            chat_image.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    selectedPosition = getAdapterPosition();
+
+//                    ref.onMessageSelectToDelete(getAdapterPosition());
+                    showBottomSheet(selectedPosition);
+                    notifyDataSetChanged();
+                    return true;
+                }
+            });
+
+//            card_video.setOnLongClickListener(new View.OnLongClickListener() {
+//                @Override
+//                public boolean onLongClick(View v) {
+//                    ref.onMessageSelectToDelete(getAdapterPosition());
+//                    notifyDataSetChanged();
+//                    return true;
+//                }
+//            });
+//            rl_audio.setOnLongClickListener(new View.OnLongClickListener() {
+//                @Override
+//                public boolean onLongClick(View v) {
+//                    ref.onMessageSelectToDelete(getAdapterPosition());
+//                    notifyDataSetChanged();
+//                    return true;
+//                }
+//            });
+
 
         }
     }

@@ -1,5 +1,6 @@
 package com.playdate.app.ui.chat.request;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,15 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.MyViewHo
     public RequestAdapter(ArrayList<ChatExample> inboxList, Onclick itemClick) {
         this.inboxList = inboxList;
         this.itemClick = itemClick;
+    }
+
+    public RequestAdapter() {
+    }
+
+    public void filterList(ArrayList<ChatExample> filteredList) {
+        inboxList = filteredList;
+        Log.d("RequestAdapter", "RequestAdapterClass");
+        notifyDataSetChanged();
     }
 
 
