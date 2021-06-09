@@ -206,6 +206,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         adapterfriend = new FriendAdapter(new ArrayList<>(), DashboardActivity.this);
         rv_friends.setAdapter(adapterfriend);
         rv_friends.setLayoutManager(manager);
+
         if (pref.getStringVal(SessionPref.LoginUserrelationship).equals("Single")) {
             txt_match.setVisibility(View.VISIBLE);
         } else {
@@ -484,7 +485,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             ll_friends.setVisibility(View.GONE);
             ll_mainMenu.setVisibility(View.GONE);
             ll_her.setVisibility(View.GONE);
-            ReplaceFrag(new FragNotification());
+            ReplaceFrag(new FragNotification("dashboard"));
         } else if (id == R.id.txt_payment) {
 
 

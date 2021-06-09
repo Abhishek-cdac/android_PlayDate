@@ -158,6 +158,8 @@ public class ChatMessage {
         this.to = to;
     }
 
+
+
     public ChatMessage(String type, String from, String to, Drawable drawable) {
         this.type = type;
         this.from = from;

@@ -25,7 +25,6 @@ public class ChatBaseActivity extends AppCompatActivity implements OnInnerFragme
         ft = fm.beginTransaction();
 
         Fragment fragIntro = new RequestChatFragment();
-
         ft.add(R.id.fl_fragment, fragIntro);
         ft.commit();
     }

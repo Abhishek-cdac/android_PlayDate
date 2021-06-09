@@ -2,6 +2,7 @@ package com.playdate.app.ui.chat;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
@@ -21,6 +24,7 @@ import com.playdate.app.model.ChattingGetChats;
 import com.playdate.app.model.Interest;
 import com.playdate.app.model.chat_models.ChatExample;
 import com.playdate.app.model.chat_models.ChatMessage;
+import com.playdate.app.ui.anonymous_question.AnonymousBottomSheet;
 import com.playdate.app.ui.chat.request.FragInbox;
 import com.playdate.app.ui.chat.request.Onclick;
 import com.squareup.picasso.Picasso;
@@ -40,7 +44,10 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
     int selectedIndex = -1;
     int selectedToDelete = -1;
 
+    Bundle bundle = new Bundle();
     String name, image = null;
+
+    LandingBottomSheet bottomSheet;
 
     public ChattingAdapter(ArrayList<ChatExample> inboxList, Onclick itemClick, FragInbox frag) {
         this.inboxList = inboxList;
@@ -91,6 +98,13 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
 //        };
 //    }
 
+    public void deleteChat(int index) {
+        if (null != inboxList) {
+            inboxList.remove(index);
+            notifyDataSetChanged();
+            bottomSheet.dismiss();
+        }
+    }
 
     @NonNull
     @Override
@@ -152,6 +166,7 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
 
     }
 
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView user_name, msg, txt_notify, txt_time;
         public ImageView profile_image, img_more, iv_delete_chat;
@@ -169,7 +184,7 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
             img_more = view.findViewById(R.id.img_more);
             profile_image = view.findViewById(R.id.profile_image);
             ll_chat_details = view.findViewById(R.id.ll_chat_details);
-            iv_delete_chat = view.findViewById(R.id.iv_delete_chat);
+//            iv_delete_chat = view.findViewById(R.id.iv_delete_chat);
             main_ll = view.findViewById(R.id.main_ll);
 
             main_ll.setOnClickListener(new View.OnClickListener() {
@@ -181,30 +196,43 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
                 }
             });
 
-            iv_delete_chat.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int selectIIII = getAdapterPosition();
-                    inboxList.remove(selectIIII);
-                    //deleteAPi
-                    notifyDataSetChanged();
-                }
-
-            });
+//            iv_delete_chat.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    int selectIIII = getAdapterPosition();
+//                    inboxList.remove(selectIIII);
+//                    //deleteAPi
+//                    notifyDataSetChanged();
+//                }
+//
+//            });
 
             main_ll.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
                     selectedToDelete = getAdapterPosition();
-                    main_ll.setBackgroundColor(mcontext.getResources().getColor(R.color.color_pink_dull));
-                    ll_chat_details.setVisibility(View.GONE);
-                    iv_delete_chat.setVisibility(View.VISIBLE);
+//                    bundle.putInt("adapterPosition",selectedToDelete);
+//                    frag.showBottomSheet(selectedToDelete);
+
+                    showBottomSheet(selectedToDelete);
+
+
+//                    main_ll.setBackgroundColor(mcontext.getResources().getColor(R.color.color_pink_dull));
+//                    ll_chat_details.setVisibility(View.GONE);
+//                    iv_delete_chat.setVisibility(View.VISIBLE);
                     notifyDataSetChanged();
                     return true;
                 }
             });
 
         }
+    }
+
+
+    private void showBottomSheet(int selectedToDelete) {
+        FragmentManager fragmentManager = ((AppCompatActivity) mcontext).getSupportFragmentManager();
+        bottomSheet = new LandingBottomSheet(this, selectedToDelete);
+        bottomSheet.show(fragmentManager, "ModalBottomSheet");
     }
 
 }

@@ -28,6 +28,7 @@ import com.playdate.app.model.chat_models.ChatMessage;
 import com.playdate.app.model.chat_models.ChatUserList;
 import com.playdate.app.ui.chat.FragChatMain;
 import com.playdate.app.ui.chat.ChattingAdapter;
+import com.playdate.app.ui.chat.LandingBottomSheet;
 import com.playdate.app.ui.date.fragments.FragIntroScreen;
 import com.playdate.app.ui.date.fragments.FragPartnerSelected;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
@@ -78,18 +79,8 @@ public class FragInbox extends Fragment implements onClickEventListener {
 
         Call<ChatUserList> callChats = getServiceApi.getChats();
 
-      /*  callChats.enqueue(new Callback<ChatUserList>() {
+        callChats.enqueue(new Callback<ChatUserList>() {
             @Override
-            public void onItemClicks(View v, int absoluteAdapterPosition, int i, String commentId, String postId, String userId) {
-
-            }
-
-            @Override
-            public void onItemClicks(View v, int position, int i, String username, String totalPoints, String id, String profilePicPath) {
-
-            }
-        };
-        setAdapter();
             public void onResponse(Call<ChatUserList> call, Response<ChatUserList> response) {
                 Log.d("Response ", response.toString());
                 pd.cancel();
@@ -117,8 +108,34 @@ public class FragInbox extends Fragment implements onClickEventListener {
             }
         });
     }
-*/
-    }
+
+
+//    public void onResponse(Call<ChatUserList> call, Response<ChatUserList> response) {
+//        Log.d("Response ", response.toString());
+//        pd.cancel();
+//        chatExampleList = new ArrayList<>(response.body().getChats());
+//        Log.d("ChatmessageLIst", chatExampleList.toString());
+//
+//        for (int i = 0; i < chatExampleList.size(); i++) {
+//            chattingAdapter = new ChattingAdapter(chatExampleList, itemClick, FragInbox.this);
+//            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+//            recyclerView.setLayoutManager(mLayoutManager);
+//            recyclerView.setItemAnimator(new DefaultItemAnimator());
+////                    chattingAdapter.getFilter().filter(sequence);
+//
+//            recyclerView.setAdapter(chattingAdapter);
+//
+//        }
+////                requestAdapter = new RequestAdapter(FragInbox.this);
+//    }
+//
+//    @Override
+//    public void onFailure(Call<ChatUserList> call, Throwable t) {
+//        Log.d("Error code", t + "Failed to get data");
+//        pd.cancel();
+//        Toast.makeText(getActivity(), t + "Failed to get data", Toast.LENGTH_SHORT).show();
+//    }
+
 
     @Override
     public void onClickEvent(int position) {
@@ -129,9 +146,10 @@ public class FragInbox extends Fragment implements onClickEventListener {
 
         OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
         if (frag != null) {
-            frag.ReplaceFrag(new FragChatMain(chatMessageList, sender_name, sender_profile_image));
+            frag.ReplaceFragWithStack(new FragChatMain(chatMessageList, sender_name, sender_profile_image));
         }
     }
+
 
     public void onAcceptChatRequest(String name, String image) {
         Log.d("Accepted", "onAcceptChatRequest: ");
@@ -158,7 +176,7 @@ public class FragInbox extends Fragment implements onClickEventListener {
         chattingAdapter.filterList(filteredList);
     }
 
-    }
+}
 
 
 interface onClickEventListener {

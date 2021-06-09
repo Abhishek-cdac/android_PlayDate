@@ -1,5 +1,6 @@
 package com.playdate.app.ui.chat;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -10,14 +11,18 @@ import android.location.Geocoder;
 import android.media.Image;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
@@ -35,6 +40,7 @@ import com.playdate.app.model.chat_models.ChatAttachment;
 import com.playdate.app.model.chat_models.ChatExample;
 import com.playdate.app.model.chat_models.ChatMessage;
 import com.playdate.app.ui.dialogs.DialogWinner;
+import com.playdate.app.util.common.EnlargeMediaChat;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
 
@@ -43,6 +49,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -59,6 +66,7 @@ import static com.facebook.FacebookSdk.getCacheDir;
 public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
+    boolean isImageFitToScreen = false;
 
     public static int OTHER;
     public static int ME;
@@ -73,7 +81,8 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     String from;
     String to;
-    String myId = "jid_1111";
+    final static String myId = "jid_1111";
+    final static String polling = "polling";
 
     public ChatAdapter(ArrayList<ChatMessage> chatmsgList) {
         this.chatmsgList = chatmsgList;
@@ -85,7 +94,6 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         chat_list.add(new Chat("Hey Kayle! yeah it looks like we can have a nice conversation", "https://images.saymedia-content.com/.image/t_share/MTc0MDkwNjUxNDc2OTYwODM0/5-instagram-models-you-should-be-following.png", OPPONENT));
         chat_list.add(new Chat("Nice Smile btw!1", "https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", ME));
         chat_list.add(new Chat("Not better than you.", "https://s29588.pcdn.co/wp-content/uploads/sites/2/2018/08/Claire-Abbott-1.jpg.optimal.jpg", OPPONENT));
-
 
     }
 
@@ -101,10 +109,10 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         if (from.equals(myId)) {
             ME = 1;
-        } else if (to.equals(myId)) {
-            ME = 2;
-        } else {
+        } else if (from.equals(polling)) {
             ME = 3;
+        } else {
+            ME = 2;
         }
 
 //        int type = chat_list.get(position).getChat_type();
@@ -119,7 +127,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 return OPPONENT;
 
         }
-        return ME;
+        return OTHER;
     }
 
     @NonNull
@@ -139,7 +147,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             viewHolder = new ViewHolderOponent(view);
 
 
-        } else {
+        } else if (viewType == OTHER) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_type_other, parent, false);
             viewHolder = new ViewHolderOther(view);
 
@@ -164,6 +172,8 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 viewHolderMe.chat_video.setVisibility(View.GONE);
                 viewHolderMe.rl_audio.setVisibility(View.GONE);
                 viewHolderMe.mv_location.setVisibility(View.GONE);
+                viewHolderMe.img_playback.setVisibility(View.GONE);
+                viewHolderMe.chat_video.setVisibility(View.GONE);
 
                 viewHolderMe.tv_msg.setText(chatmsgList.get(position).getText());
                 //text
@@ -173,6 +183,8 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 viewHolderMe.chat_image.setVisibility(View.VISIBLE);
                 viewHolderMe.chat_video.setVisibility(View.GONE);
                 viewHolderMe.rl_audio.setVisibility(View.GONE);
+                viewHolderMe.img_playback.setVisibility(View.GONE);
+                viewHolderMe.chat_video.setVisibility(View.GONE);
 //                viewHolderMe.mv_location.setVisibility(View.GONE);
 
                 viewHolderMe.chat_image.setImageDrawable(chatmsgList.get(position).getDrawable());
@@ -181,7 +193,8 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 viewHolderMe.tv_msg.setVisibility(View.GONE);
                 viewHolderMe.chat_image.setVisibility(View.GONE);
                 viewHolderMe.card_video.setVisibility(View.VISIBLE);
-
+                viewHolderMe.img_playback.setVisibility(View.VISIBLE);
+                viewHolderMe.chat_video.setVisibility(View.VISIBLE);
                 viewHolderMe.rl_audio.setVisibility(View.GONE);
                 viewHolderMe.mv_location.setVisibility(View.GONE);
 
@@ -208,6 +221,8 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 viewHolderMe.chat_image.setVisibility(View.GONE);
                 viewHolderMe.chat_video.setVisibility(View.GONE);
                 viewHolderMe.rl_audio.setVisibility(View.VISIBLE);
+                viewHolderMe.img_playback.setVisibility(View.GONE);
+                viewHolderMe.chat_video.setVisibility(View.GONE);
 //                viewHolderMe.mv_location.setVisibility(View.GONE);
 
 
@@ -249,6 +264,8 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 viewHolderMe.tv_msg.setVisibility(View.GONE);
                 viewHolderMe.chat_image.setVisibility(View.GONE);
                 viewHolderMe.chat_video.setVisibility(View.GONE);
+                viewHolderMe.img_playback.setVisibility(View.GONE);
+                viewHolderMe.chat_video.setVisibility(View.GONE);
                 viewHolderMe.rl_audio.setVisibility(View.GONE);
                 viewHolderMe.mv_location.setVisibility(View.VISIBLE);
 //                GoogleMap googleMap = viewHolderMe.mv_location.getMap();
@@ -260,6 +277,35 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 //location
             }
 
+//            viewHolderMe.chat_image.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    if (isImageFitToScreen) {
+//                        isImageFitToScreen = false;
+//                        viewHolderMe.chat_image.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+//                        viewHolderMe.chat_image.setAdjustViewBounds(true);
+//                    } else {
+//                        isImageFitToScreen = true;
+//                        viewHolderMe.chat_image.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
+//                        viewHolderMe.chat_image.setScaleType(ImageView.ScaleType.FIT_XY);
+//                    }
+//                }
+//            });
+
+            viewHolderMe.chat_image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+//                    builder.setView(viewHolderMe.chat_image).show();
+
+
+                    enlarge = new EnlargeMediaChat(mContext, chatmsgList.get(position).getDrawable(), ChatAdapter.this);
+                    enlarge.show();
+
+
+                }
+            });
 
         } ///
         else if (holder.getItemViewType() == OPPONENT) {
@@ -284,6 +330,27 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             .placeholder(R.drawable.cupertino_activity_indicator)
                             .into(viewHolderOponent.chat_image);
                 }
+                viewHolderOponent.chat_image.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Drawable drawableImage;
+                        Uri uriImage = Uri.parse(urls_image);
+                        Toast.makeText(mContext, uriImage.toString(), Toast.LENGTH_SHORT).show();
+                        try {
+                            InputStream inputStream = mContext.getContentResolver().openInputStream(uriImage);
+                            drawableImage = Drawable.createFromStream(inputStream, uriImage.toString());
+
+                        } catch (FileNotFoundException e) {
+                            drawableImage = mContext.getResources().getDrawable(R.drawable.cupertino_activity_indicator);
+                        }
+
+                        enlarge = new EnlargeMediaChat(mContext, drawableImage, ChatAdapter.this);
+                        enlarge.show();
+
+                    }
+                });
+
+
             } else if (chatmsgList.get(position).getType().equals("video")) {
                 viewHolderOponent.tv_msg.setVisibility(View.GONE);
                 viewHolderOponent.chat_image.setVisibility(View.GONE);
@@ -300,10 +367,33 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 //                });
             }
 
+//            viewHolderOponent.chat_image.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//
+//                    Uri uriImage = Uri.parse(chatmsgList.get(position).get)
+//                    try {
+//                        InputStream inputStream = getContentResolver().openInputStream(yourUri);
+//                        yourDrawable = Drawable.createFromStream(inputStream, yourUri.toString() );
+//                        imageView.setImageDrawable(yourDrawable);
+//                    } catch (FileNotFoundException e) {
+//                        yourDrawable = getResources().getDrawable(R.drawable.default_image);
+//                    }
+//
+//
+//
+//
+//                    enlarge = new EnlargeMediaChat(mContext, chatmsgList.get(position).getDrawable(), ChatAdapter.this);
+//                    enlarge.show();
+//
+//                }
+//            });
+
+
         } ///
         else {
             ViewHolderOther viewHolderOther = (ViewHolderOther) holder;
-            viewHolderOther.tv_msg.setText(chat_list.get(position).getMessage());
+            viewHolderOther.tv_msg.setText(chatmsgList.get(position).getText());
 
         }
     }
@@ -315,9 +405,13 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
+    EnlargeMediaChat enlarge;
+
     public void addToListText(EditText et_msg) {
         chatmsgList.add(new ChatMessage("text", myId, "jid_1109", et_msg.getText().toString()));
         notifyDataSetChanged();
+        Toast.makeText(mContext, to + " to " + from, Toast.LENGTH_SHORT).show();
+        Toast.makeText(mContext, "ME Type " + ME, Toast.LENGTH_SHORT).show();
         et_msg.setText("");
     }
 
@@ -398,6 +492,10 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
         notifyDataSetChanged();
+    }
+
+    public void resizeToNrmal() {
+        enlarge.cancel();
     }
 
     public class ViewHolderOther extends RecyclerView.ViewHolder {

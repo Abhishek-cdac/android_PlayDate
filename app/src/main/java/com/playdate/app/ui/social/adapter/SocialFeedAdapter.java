@@ -384,11 +384,9 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                 }
             });
 
-        }
-        else if (holder.getItemViewType() == 100) {
+        } else if (holder.getItemViewType() == 100) {
 
-        }
-        else if (holder.getItemViewType() == 1) {
+        } else if (holder.getItemViewType() == 1) {
             ViewHolderUserVideo videoHolder;
             holder.setVideoUrl(lst.get(position).getPostMedia().get(0).getMediaFullPath());
 
@@ -547,8 +545,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
             });
 
 
-        }
-        else if (holder.getItemViewType() == 2) {
+        } else if (holder.getItemViewType() == 2) {
             try {
                 ViewHolderAnonymQuestion viewHolderAnonymQuestion;
                 viewHolderAnonymQuestion = (ViewHolderAnonymQuestion) holder;
@@ -568,7 +565,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                     viewHolderAnonymQuestion.delete_btn.setVisibility(View.VISIBLE);
                 } else {
                     viewHolderAnonymQuestion.delete_btn.setVisibility(View.INVISIBLE);
-                    viewHolderAnonymQuestion.respond.getLayoutParams().width= ViewGroup.LayoutParams.MATCH_PARENT;
+                    viewHolderAnonymQuestion.respond.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
                 }
 
                 try {

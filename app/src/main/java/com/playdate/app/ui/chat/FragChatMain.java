@@ -47,6 +47,8 @@ import com.playdate.app.model.chat_models.ChatExample;
 import com.playdate.app.model.chat_models.ChatMessage;
 import com.playdate.app.service.LocationService;
 import com.playdate.app.ui.anonymous_question.adapter.SmileyAdapter;
+import com.playdate.app.ui.chat.request.FragInbox;
+import com.playdate.app.ui.chat.request.RequestChatFragment;
 import com.playdate.app.ui.dashboard.DashboardActivity;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.ui.my_profile_details.FragInstaLikeProfile;
@@ -81,8 +83,8 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
     ChatAdapter adapter;
     ImageView iv_send, iv_circle, iv_camera, iv_video, iv_mic, iv_smiley;
     EditText et_msg;
-
     ImageView profile_image;
+    ImageView arrow_back;
     TextView chat_name;
     Intent mIntent;
     String sender_photo;
@@ -94,6 +96,8 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
     LocationManager locationManager;
     LocationListener locationListener;
 
+    ChatBottomSheet sheet;
+    boolean isVisible = false;
 
     MediaRecorder mRecorder;
     MediaPlayer mediaPlayer;
@@ -131,6 +135,7 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
         rv_smileys = view.findViewById(R.id.rv_smileys);
         iv_mic = view.findViewById(R.id.iv_mic);
         iv_circle = view.findViewById(R.id.iv_circle);
+        arrow_back = view.findViewById(R.id.back_anonymous);
         et_msg = view.findViewById(R.id.et_chat);
         iv_send = view.findViewById(R.id.iv_send);
         iv_camera = view.findViewById(R.id.iv_camera);
@@ -147,6 +152,13 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
         adapter = new ChatAdapter(chatMsgList);
         rv_chat.setAdapter(adapter);
         rv_chat.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        });
+        rv_chat.post(new Runnable() {       //////scroll down
+            @Override
+            public void run() {
+                rv_chat.scrollToPosition(adapter.getItemCount() - 1);
+                // Here adapter.getItemCount()== child count
+            }
         });
 
         RecyclerView.LayoutManager manager1 = new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false);
@@ -169,11 +181,27 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
             }
         });
 
+        arrow_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            }
+        });
+
         iv_send.setOnClickListener(new View.OnClickListener() {
             @Override
-
             public void onClick(View v) {
-                adapter.addToListText(et_msg);
+                if (et_msg.getText().toString().equals("")) {
+                    Toast.makeText(getActivity(), "Please enter text", Toast.LENGTH_SHORT).show();
+                } else {
+                    adapter.addToListText(et_msg);
+                    rv_chat.post(new Runnable() {       //////scroll down
+                        @Override
+                        public void run() {
+                            rv_chat.scrollToPosition(adapter.getItemCount() - 1);
+                        }
+                    });
+                }
             }
         });
 
@@ -197,7 +225,7 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
             public void onClick(View v) {
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                ChatBottomSheet sheet = new ChatBottomSheet("Image", FragChatMain.this);
+                sheet = new ChatBottomSheet("Image", FragChatMain.this);
                 sheet.show(fragmentManager, "chat bottom sheet");
 
             }
@@ -225,7 +253,7 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
             public void onClick(View v) {
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                ChatBottomSheet sheet = new ChatBottomSheet("Extra", FragChatMain.this);
+                sheet = new ChatBottomSheet("Extra", FragChatMain.this);
                 sheet.show(fragmentManager, "chat bootom sheet");
 
 
@@ -234,7 +262,13 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
         iv_smiley.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rv_smileys.setVisibility(View.VISIBLE);
+                if (isVisible) {
+                    rv_smileys.setVisibility(View.GONE);
+                    isVisible = false;
+                } else {
+                    rv_smileys.setVisibility(View.VISIBLE);
+                    isVisible = true;
+                }
             }
         });
 
@@ -283,6 +317,13 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
                 Toast.makeText(getApplicationContext(), "Recording Stop", Toast.LENGTH_SHORT).show();
 
                 adapter.addToListAudio(mFileName);
+                rv_chat.post(new Runnable() {       //////scroll down
+                    @Override
+                    public void run() {
+                        rv_chat.scrollToPosition(adapter.getItemCount() - 1);
+                    }
+                });
+
 
             }
         }, 3000);
@@ -309,8 +350,16 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
 
                     if (null != bitmap) {
                         Log.d("BITMAP VALUE", bitmap.toString());
+                        sheet.dismiss();
                         Drawable d = new BitmapDrawable(getResources(), bitmap);
                         adapter.addImage(d);
+                        rv_chat.post(new Runnable() {       //////scroll down
+                            @Override
+                            public void run() {
+                                rv_chat.scrollToPosition(adapter.getItemCount() - 1);
+                            }
+                        });
+
 
                     }
                 } else if (requestCode == REQUEST_TAKE_GALLERY_VIDEO) {
@@ -322,6 +371,12 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
 //                        String selectedVideoPath = getPath(contentURI);
                         Log.d("path", selectedVideoPath);
                         adapter.addVIdeo(contentURI);
+                        rv_chat.post(new Runnable() {       //////scroll down
+                            @Override
+                            public void run() {
+                                rv_chat.scrollToPosition(adapter.getItemCount() - 1);
+                            }
+                        });
 
 
                     } else {
@@ -333,8 +388,16 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
                     bitmap = (Bitmap) data.getExtras().get("data");
                     if (null != bitmap) {
                         Log.d("BITMAP VALUE", bitmap.toString());
+                        sheet.dismiss();
                         Drawable d = new BitmapDrawable(getResources(), bitmap);
                         adapter.addImage(d);
+                        rv_chat.post(new Runnable() {       //////scroll down
+                            @Override
+                            public void run() {
+                                rv_chat.scrollToPosition(adapter.getItemCount() - 1);
+                            }
+                        });
+
 
                     }
                 }
@@ -436,7 +499,16 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
     public void onSmileyChange(int position) {
         int smiley = lstSmiley.get(position);
         Drawable drawable = getResources().getDrawable(smiley);
+
         adapter.addSmiley(drawable);
+        rv_chat.post(new Runnable() {       //////scroll down
+            @Override
+            public void run() {
+                rv_chat.scrollToPosition(adapter.getItemCount() - 1);
+            }
+        });
+
+
     }
 
     double latttitude, longitude;

@@ -122,6 +122,8 @@
     <string name="block_user">Block User</string>
     <string name="unblock_user">Unblock User</string>
     <string name="report">Report Comment</string>
+    <string name="delete_message">Delete message</string>
+    <string name="view_profile">View Profile</string>
     <string name="pin">Pin Comment</string>
     <string name="undo">Undo</string>
     <string name="post_notification">Turn Post Notification ON</string>
