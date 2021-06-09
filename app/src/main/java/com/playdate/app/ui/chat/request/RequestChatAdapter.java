@@ -5,24 +5,22 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-public class RequestChatAdapter  extends FragmentStatePagerAdapter {
-    int totalTabs;
+import java.util.ArrayList;
 
-    public RequestChatAdapter(@NonNull FragmentManager fm, int totalTabs) {
+public class RequestChatAdapter extends FragmentStatePagerAdapter {
+    private final int totalTabs;
+    private final ArrayList<Fragment> lstPages;
+
+    public RequestChatAdapter(@NonNull FragmentManager fm, int totalTabs, ArrayList<Fragment> lstPages) {
         super(fm);
         this.totalTabs = totalTabs;
+        this.lstPages = lstPages;
     }
 
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        switch (position) {
-            case 0:
-                return new FragInbox();
-            case 1:
-                return new FragRequest();
-        }
-        return null;
+        return lstPages.get(position);
     }
 
     @Override

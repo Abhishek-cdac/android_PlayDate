@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.CreateDateGetPartnerData;
 import com.playdate.app.model.CreateDateGetPartnerModel;
 import com.playdate.app.ui.chat.request.Onclick;
+import com.playdate.app.ui.date.OnBackPressed;
 import com.playdate.app.ui.date.adapter.PartnerViewPagerAdapter;
 import com.playdate.app.ui.date.adapter.SuggestedDateAdapter;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
@@ -42,13 +44,12 @@ import retrofit2.Response;
 public class FragSelectPartner extends Fragment implements SuggestedDateAdapter.SuggestionsAdapterListner {
 
 
-    //    private ArrayList<PartnerImage> list = new ArrayList<>();
     private ArrayList<CreateDateGetPartnerData> lst_CreateDateGetPartner;
     private Onclick itemClick;
     private ViewPager vp_partners;
-    private TextView tv_waiting;
-    private TextView tv_or;
-    private SpinKitView spin_kit;
+//    private TextView tv_waiting;
+//    private TextView tv_or;
+//    private SpinKitView spin_kit;
     private CommonClass clsCommon;
 
     @Nullable
@@ -59,14 +60,19 @@ public class FragSelectPartner extends Fragment implements SuggestedDateAdapter.
 
         clsCommon = CommonClass.getInstance();
         vp_partners = view.findViewById(R.id.vp_partners);
+        ImageView iv_back = view.findViewById(R.id.iv_back);
+        ImageView iv_cancel = view.findViewById(R.id.iv_cancel);
         Button btn_search_partner = view.findViewById(R.id.btn_search_partner);
-        btn_search_partner.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
-                Fragment fragment = new FragSearchDate();
-                frag.ReplaceFrag(fragment);
-            }
+        btn_search_partner.setOnClickListener(v -> {
+            OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
+            Fragment fragment = new FragSearchDate();
+            frag.ReplaceFrag(fragment);
+        });
+        iv_back.setOnClickListener(v -> {
+            goBack();
+        });
+        iv_cancel.setOnClickListener(v -> {
+            goBack();
         });
         itemClick = new Onclick() {
             @Override
@@ -118,7 +124,14 @@ public class FragSelectPartner extends Fragment implements SuggestedDateAdapter.
         return view;
     }
 
-
+    void goBack(){
+        try {
+            OnBackPressed ref = (OnBackPressed) getActivity();
+            ref.onBack();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     private void callCreateDateGetPartnerListAPI() {
 
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
