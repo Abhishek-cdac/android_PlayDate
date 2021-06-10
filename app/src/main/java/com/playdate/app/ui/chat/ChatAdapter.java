@@ -256,6 +256,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     viewHolderMe.rl_audio.setVisibility(View.GONE);
                     viewHolderMe.rl_maps.setVisibility(View.VISIBLE);
                     viewHolderMe.mv_location.setVisibility(View.VISIBLE);
+
 //                GoogleMap googleMap = viewHolderMe.mv_location.getMap();
 
 //                googleMap.addMarker(new MarkerOptions()
@@ -269,7 +270,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 @Override
                 public void onClick(View v) {
                     /////
-                    ref.onMapClick(chatmsgList.get(position).getLattitude(),chatmsgList.get(position).getLongitude());
+                    ref.onMapClick(chatmsgList.get(position).getLattitude(), chatmsgList.get(position).getLongitude());
                     Toast.makeText(mContext, chatmsgList.get(position).getLattitude() + " , " + chatmsgList.get(position).getLongitude(), Toast.LENGTH_SHORT).show();
                 }
             });

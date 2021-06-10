@@ -127,6 +127,8 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_chat_screen, container, false);
 
+        ActivityCompat.requestPermissions(getActivity(), permissions, REQUEST_AUDIO_PERMISSION_CODE);
+
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 //        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,this);
 
@@ -239,7 +241,7 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
         iv_mic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityCompat.requestPermissions(getActivity(), permissions, REQUEST_AUDIO_PERMISSION_CODE);
+//                ActivityCompat.requestPermissions(getActivity(), permissions, REQUEST_AUDIO_PERMISSION_CODE);
 //                String[] PERMISSIONS = {Manifest.permission.RECORD_AUDIO};
 //
 //                ActivityCompat.requestPermissions(getActivity(),
@@ -254,6 +256,11 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
 //                ActivityCompat.requestPermissions(getActivity(),
 //                        permissions,
 //                        ALL_PERMISSIONS_RESULT);
+                startRecording();
+
+//                if (audioRecordingPermissionGranted) {
+//                    startRecording();
+//                }
             }
         });
         iv_circle.setOnClickListener(new View.OnClickListener() {
@@ -456,8 +463,6 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
 
         if (!audioRecordingPermissionGranted) {
             Toast.makeText(getActivity(), "Permission Denied", Toast.LENGTH_SHORT).show();
-        }else{
-            startRecording();
         }
     }
 
@@ -550,12 +555,18 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
             lattitude = gpsTracker.getLatitude();
             longitude = gpsTracker.getLongitude();
             Log.e("latlong", "" + lattitude + "  " + longitude);
+            if (String.valueOf(lattitude).equals("0.0") && String.valueOf(longitude).equals("0.0")) {
+                Toast.makeText(getActivity(), "Wait a moment", Toast.LENGTH_SHORT).show();
+            } else {
+                adapter.sendLcation(lattitude, longitude);
+            }
 //            Toast.makeText(getActivity(),""+lattitude +" , "+ longitude,Toast.LENGTH_SHORT).show();
 
         } else {
             gpsTracker.showSettingsAlert();
         }
-        adapter.sendLcation(lattitude, longitude);
+
+
         rv_chat.post(new Runnable() {       //////scroll down
             @Override
             public void run() {
