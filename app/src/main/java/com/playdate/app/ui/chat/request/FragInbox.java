@@ -123,22 +123,28 @@ public class FragInbox extends Fragment implements onClickEventListener {
 
     public void filter(String s) {
         Log.d("Filter Method", "In Filter method");
-        ArrayList<ChatExample> filteredList = new ArrayList<>();
+        try {
+            ArrayList<ChatExample> filteredList = new ArrayList<>();
 //        chatExampleList = new ArrayList<>(); ////for search purpose comment it
 
-        for (ChatExample item : chatExampleList) {
-            if (item.getSenderName().toLowerCase().contains(s.toLowerCase())) {
-                filteredList.add(item);
-                Log.d("SIZE", String.valueOf(filteredList.size()));
+            for (ChatExample item : chatExampleList) {
+                if (item.getSenderName().toLowerCase().contains(s.toLowerCase())) {
+                    filteredList.add(item);
+                    Log.d("SIZE", String.valueOf(filteredList.size()));
+                }
             }
-        }
 
-        for (int i = 0; i < filteredList.size(); i++) {
-            Log.d("SENDERNAME", filteredList.get(i).getSenderName());
+            for (int i = 0; i < filteredList.size(); i++) {
+                Log.d("SENDERNAME", filteredList.get(i).getSenderName());
 
-        }
+            }
 //        chattingAdapter = new ChattingAdapter();  ////for search purpose comment it
-        chattingAdapter.filterList(filteredList);
+            chattingAdapter.filterList(filteredList);
+        } catch (Exception e) {
+            Log.d("Exception during search", e.toString());
+
+            e.printStackTrace();
+        }
     }
 
 }

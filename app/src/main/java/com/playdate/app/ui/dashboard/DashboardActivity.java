@@ -68,6 +68,8 @@ import java.util.Map;
 /*
 import io.card.payment.CardIOActivity;
 import io.card.payment.CreditCard;*/
+import io.card.payment.CardIOActivity;
+import io.card.payment.CreditCard;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -786,7 +788,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         super.onActivityResult(requestCode, resultCode, data);
         try {
 
-          /*  if (requestCode == 857) {
+            if (requestCode == 857) {
 
                 if (data != null && data.hasExtra(CardIOActivity.EXTRA_SCAN_RESULT)) {
                     CreditCard scanResult = data.getParcelableExtra(CardIOActivity.EXTRA_SCAN_RESULT);
@@ -814,7 +816,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
                 }
                 return;
             }
-          */
+
 
             if (resultCode == 104) {
                 //refresh
