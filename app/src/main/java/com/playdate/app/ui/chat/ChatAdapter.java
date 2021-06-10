@@ -30,7 +30,9 @@ import com.playdate.app.R;
 import com.playdate.app.model.Chat;
 import com.playdate.app.model.chat_models.ChatAttachment;
 import com.playdate.app.model.chat_models.ChatMessage;
+import com.playdate.app.ui.dashboard.DashboardActivity;
 import com.playdate.app.ui.dialogs.DialogWinner;
+import com.playdate.app.ui.dialogs.FullScreenDialog;
 import com.playdate.app.util.common.EnlargeMediaChat;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
@@ -338,18 +340,21 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             viewHolderOther.answer1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(mContext, viewHolderOther.answer1.getText().toString(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, viewHolderOther.answer1.getText().toString(), Toast.LENGTH_SHORT).show();
                     SessionPref pref = SessionPref.getInstance(mContext);
                     pref.saveStringKeyVal("Answer", viewHolderOther.answer1.getText().toString());
+                    new WinnerActivity(mContext, "1").show();
                     notifyDataSetChanged();
                 }
             });
             viewHolderOther.answer2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(mContext, viewHolderOther.answer2.getText().toString(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, viewHolderOther.answer2.getText().toString(), Toast.LENGTH_SHORT).show();
                     SessionPref pref = SessionPref.getInstance(mContext);
                     pref.saveStringKeyVal("Answer", viewHolderOther.answer2.getText().toString());
+                    new WinnerActivity(mContext, "0").show();
+
                     notifyDataSetChanged();
                 }
             });

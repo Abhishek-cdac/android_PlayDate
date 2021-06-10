@@ -45,6 +45,7 @@ import com.playdate.app.R;
 import com.playdate.app.model.chat_models.ChatAttachment;
 import com.playdate.app.model.chat_models.ChatExample;
 import com.playdate.app.model.chat_models.ChatMessage;
+import com.playdate.app.service.GpsTracker;
 import com.playdate.app.service.LocationService;
 import com.playdate.app.ui.anonymous_question.adapter.SmileyAdapter;
 import com.playdate.app.ui.chat.request.FragInbox;
@@ -542,18 +543,32 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
     }
 
 
+    double lattitude, longitude;
+    private GpsTracker gpsTracker;
 
-    double latttitude, longitude;
+
 
 
     @Override
     public void onLocationSelect() {
 
-        SessionPref pref = SessionPref.getInstance(getActivity());
-        latttitude = pref.getLattitude("lattitude");
-        longitude = pref.getLongitude("longitude");
-        Log.d("Lattitude of ", String.valueOf(latttitude));
-        Log.d("LOngitude of ", String.valueOf(longitude));
+        gpsTracker = new GpsTracker(getActivity());
+        if(gpsTracker.canGetLocation()){
+            lattitude = gpsTracker.getLatitude();
+            longitude = gpsTracker.getLongitude();
+
+            Log.e("latlong",""+lattitude +"  "+ longitude);
+            Toast.makeText(getActivity(),""+lattitude +" , "+ longitude,Toast.LENGTH_SHORT).show();
+//            tvLatitude.setText(String.valueOf(latitude));
+//            tvLongitude.setText(String.valueOf(longitude));
+        }else{
+            gpsTracker.showSettingsAlert();
+        }
+//        SessionPref pref = SessionPref.getInstance(getActivity());
+//        latttitude = pref.getLattitude("lattitude");
+//        longitude = pref.getLongitude("longitude");
+//        Log.d("Lattitude of ", String.valueOf(latttitude));
+//        Log.d("LOngitude of ", String.valueOf(longitude));
 
 //        adapter.sendLcation(latttitude, longitude);
 
@@ -587,6 +602,7 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
 
 interface onSmileyChangeListener {
     void onSmileyChange(int position);
+
     void onLocationSelect();
 }
 

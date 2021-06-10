@@ -30,6 +30,7 @@ public class LocationService extends Service implements LocationListener {
     }
 
     Context mContext;
+
     @SuppressLint("MissingPermission")
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -38,7 +39,7 @@ public class LocationService extends Service implements LocationListener {
             LocationListener locationListener = new MyLocationListener(this);
             LocationManager locationManager = (LocationManager)
                     getSystemService(Context.LOCATION_SERVICE);
-            mContext=this;
+            mContext = this;
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
             Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             if (location != null) {

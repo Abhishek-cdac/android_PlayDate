@@ -22,7 +22,7 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/_5sdp"
         android:layout_toRightOf="@+id/profile_image_oponent"
-        android:background="@drawable/btn_pink_filled"
+        android:background="@drawable/pink_filled"
         android:paddingHorizontal="@dimen/_12sdp"
         android:paddingVertical="@dimen/_8sdp"
         android:text="Hey myron! how are you"
