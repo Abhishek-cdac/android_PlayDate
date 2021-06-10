@@ -35,9 +35,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FragInbox extends Fragment implements onClickEventListener {
     private ArrayList<ChatExample> chatExampleList;
+    private ArrayList<ChatMessage> chatMessageList;
     private ChattingAdapter chattingAdapter;
     private RecyclerView recyclerView;
     private Onclick itemClick;
+    private RelativeLayout rl_c;
     private RequestAdapter requestAdapter;
 
     @Nullable
@@ -45,7 +47,7 @@ public class FragInbox extends Fragment implements onClickEventListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag_inbox_list, container, false);
         recyclerView = view.findViewById(R.id.friend_list);
-//        RelativeLayout rl_c = view.findViewById(R.id.rl_c);
+        rl_c = view.findViewById(R.id.rl_c);
 
         callApiForChats();
 //            setAdapter();
@@ -95,7 +97,7 @@ public class FragInbox extends Fragment implements onClickEventListener {
 
     @Override
     public void onClickEvent(int position) {
-        ArrayList<ChatMessage> chatMessageList = new ArrayList<>(chatExampleList.get(position).getMessages());
+        chatMessageList = new ArrayList<>(chatExampleList.get(position).getMessages());
         String sender_name = chatExampleList.get(position).getSenderName();
         String sender_profile_image = chatExampleList.get(position).getProfilePhoto();
 
@@ -120,9 +122,10 @@ public class FragInbox extends Fragment implements onClickEventListener {
     }
 
     public void filter(String s) {
+        Log.d("Filter Method", "In Filter method");
         try {
-            Log.d("Filter Method", "In Filter method");
             ArrayList<ChatExample> filteredList = new ArrayList<>();
+//        chatExampleList = new ArrayList<>(); ////for search purpose comment it
 
             for (ChatExample item : chatExampleList) {
                 if (item.getSenderName().toLowerCase().contains(s.toLowerCase())) {
@@ -133,10 +136,13 @@ public class FragInbox extends Fragment implements onClickEventListener {
 
             for (int i = 0; i < filteredList.size(); i++) {
                 Log.d("SENDERNAME", filteredList.get(i).getSenderName());
-    
+
             }
+//        chattingAdapter = new ChattingAdapter();  ////for search purpose comment it
             chattingAdapter.filterList(filteredList);
         } catch (Exception e) {
+            Log.d("Exception during search", e.toString());
+
             e.printStackTrace();
         }
     }
