@@ -128,8 +128,6 @@
             android:layout_marginStart="@dimen/_2sdp"
             android:layout_toRightOf="@+id/audio_more3"
             android:src="@drawable/horizontal_more" />
-
-
     </RelativeLayout>
 
     <RelativeLayout

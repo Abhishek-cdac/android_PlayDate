@@ -157,7 +157,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     viewHolderMe.chat_image.setVisibility(View.GONE);
                     viewHolderMe.chat_video.setVisibility(View.GONE);
                     viewHolderMe.img_playback.setVisibility(View.GONE);
-                    viewHolderMe.chat_video.setVisibility(View.GONE);
+                    viewHolderMe.card_video.setVisibility(View.GONE);
                     viewHolderMe.rl_audio.setVisibility(View.GONE);
                     viewHolderMe.rl_maps.setVisibility(View.GONE);
                     viewHolderMe.mv_location.setVisibility(View.GONE);
@@ -172,7 +172,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     viewHolderMe.chat_video.setVisibility(View.GONE);
                     viewHolderMe.rl_audio.setVisibility(View.GONE);
                     viewHolderMe.img_playback.setVisibility(View.GONE);
-                    viewHolderMe.chat_video.setVisibility(View.GONE);
+                    viewHolderMe.card_video.setVisibility(View.GONE);
                     viewHolderMe.rl_maps.setVisibility(View.GONE);
                     viewHolderMe.mv_location.setVisibility(View.GONE);
 //                viewHolderMe.mv_location.setVisibility(View.GONE);
@@ -216,7 +216,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     viewHolderMe.chat_video.setVisibility(View.GONE);
                     viewHolderMe.rl_audio.setVisibility(View.VISIBLE);
                     viewHolderMe.img_playback.setVisibility(View.GONE);
-                    viewHolderMe.chat_video.setVisibility(View.GONE);
+                    viewHolderMe.card_video.setVisibility(View.GONE);
                     viewHolderMe.rl_maps.setVisibility(View.GONE);
                     viewHolderMe.mv_location.setVisibility(View.GONE);
 
@@ -258,7 +258,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     viewHolderMe.chat_image.setVisibility(View.GONE);
                     viewHolderMe.chat_video.setVisibility(View.GONE);
                     viewHolderMe.img_playback.setVisibility(View.GONE);
-                    viewHolderMe.chat_video.setVisibility(View.GONE);
+                    viewHolderMe.card_video.setVisibility(View.GONE);
                     viewHolderMe.rl_audio.setVisibility(View.GONE);
                     viewHolderMe.rl_maps.setVisibility(View.VISIBLE);
                     viewHolderMe.mv_location.setVisibility(View.VISIBLE);
