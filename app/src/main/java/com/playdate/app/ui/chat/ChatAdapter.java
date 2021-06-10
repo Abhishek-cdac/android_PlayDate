@@ -156,10 +156,11 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     viewHolderMe.tv_msg.setVisibility(View.VISIBLE);
                     viewHolderMe.chat_image.setVisibility(View.GONE);
                     viewHolderMe.chat_video.setVisibility(View.GONE);
-                    viewHolderMe.rl_audio.setVisibility(View.GONE);
-                    viewHolderMe.mv_location.setVisibility(View.GONE);
                     viewHolderMe.img_playback.setVisibility(View.GONE);
-                    viewHolderMe.chat_video.setVisibility(View.GONE);
+                    viewHolderMe.card_video.setVisibility(View.GONE);
+                    viewHolderMe.rl_audio.setVisibility(View.GONE);
+                    viewHolderMe.rl_maps.setVisibility(View.GONE);
+                    viewHolderMe.mv_location.setVisibility(View.GONE);
 
                     viewHolderMe.tv_msg.setText(chatmsgList.get(position).getText());
                     //text
@@ -171,7 +172,9 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     viewHolderMe.chat_video.setVisibility(View.GONE);
                     viewHolderMe.rl_audio.setVisibility(View.GONE);
                     viewHolderMe.img_playback.setVisibility(View.GONE);
-                    viewHolderMe.chat_video.setVisibility(View.GONE);
+                    viewHolderMe.card_video.setVisibility(View.GONE);
+                    viewHolderMe.rl_maps.setVisibility(View.GONE);
+                    viewHolderMe.mv_location.setVisibility(View.GONE);
 //                viewHolderMe.mv_location.setVisibility(View.GONE);
 
                     viewHolderMe.chat_image.setImageDrawable(chatmsgList.get(position).getDrawable());
@@ -185,6 +188,8 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     viewHolderMe.chat_video.setVisibility(View.VISIBLE);
                     viewHolderMe.rl_audio.setVisibility(View.GONE);
                     viewHolderMe.mv_location.setVisibility(View.GONE);
+                    viewHolderMe.rl_maps.setVisibility(View.GONE);
+
 
                     viewHolderMe.chat_video.setVideoURI(chatmsgList.get(position).getUri());
 
@@ -211,8 +216,9 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     viewHolderMe.chat_video.setVisibility(View.GONE);
                     viewHolderMe.rl_audio.setVisibility(View.VISIBLE);
                     viewHolderMe.img_playback.setVisibility(View.GONE);
-                    viewHolderMe.chat_video.setVisibility(View.GONE);
-//                viewHolderMe.mv_location.setVisibility(View.GONE);
+                    viewHolderMe.card_video.setVisibility(View.GONE);
+                    viewHolderMe.rl_maps.setVisibility(View.GONE);
+                    viewHolderMe.mv_location.setVisibility(View.GONE);
 
 
                     viewHolderMe.play_audio.setOnClickListener(v -> {
@@ -252,7 +258,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     viewHolderMe.chat_image.setVisibility(View.GONE);
                     viewHolderMe.chat_video.setVisibility(View.GONE);
                     viewHolderMe.img_playback.setVisibility(View.GONE);
-                    viewHolderMe.chat_video.setVisibility(View.GONE);
+                    viewHolderMe.card_video.setVisibility(View.GONE);
                     viewHolderMe.rl_audio.setVisibility(View.GONE);
                     viewHolderMe.rl_maps.setVisibility(View.VISIBLE);
                     viewHolderMe.mv_location.setVisibility(View.VISIBLE);
