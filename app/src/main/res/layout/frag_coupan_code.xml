@@ -22,7 +22,7 @@
             android:src="@drawable/arrow_back" />
 
         <TextView
-            android:id="@+id/refer"
+            android:id="@+id/txt_refer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -38,13 +38,13 @@
             android:id="@+id/surprise"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/refer"
+            android:layout_below="@+id/txt_refer"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_5sdp"
             android:src="@drawable/surprise" />
 
         <TextView
-            android:id="@+id/points"
+            android:id="@+id/txt_points"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/surprise"
@@ -59,7 +59,7 @@
             android:id="@+id/every_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/points"
+            android:layout_below="@+id/txt_points"
             android:layout_centerHorizontal="true"
             android:layout_marginHorizontal="@dimen/_35sdp"
             android:layout_marginTop="@dimen/_8sdp"
@@ -100,7 +100,6 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_ur_code"
                     android:layout_centerHorizontal="true"
-                    android:text="AU8163FT"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_14sdp"
                     android:textStyle="bold" />
@@ -121,8 +120,9 @@
                 android:id="@+id/copy_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/view_divider"
-                android:paddingVertical="@dimen/_3sdp">
+                android:padding="@dimen/_3sdp">
 
                 <TextView
                     android:id="@+id/copy"
@@ -130,6 +130,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:text="@string/copy"
+                    android:layout_centerVertical="true"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_10sdp" />
 
@@ -139,6 +140,7 @@
                     android:layout_below="@+id/copy"
                     android:layout_centerHorizontal="true"
                     android:text="@string/code"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_10sdp" />
 
@@ -178,10 +180,24 @@
             android:id="@+id/share_coupans"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/rl_getcode"
+            android:layout_centerHorizontal="true"
+            android:layout_marginHorizontal="@dimen/_35sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:gravity="center"
+            android:visibility="visible"
+            android:text="@string/share_code"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_10sdp" />
+        <TextView
+            android:id="@+id/share_coupans1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_below="@+id/rl_code"
             android:layout_centerHorizontal="true"
             android:layout_marginHorizontal="@dimen/_35sdp"
-            android:layout_marginTop="@dimen/_70sdp"
+            android:layout_marginTop="@dimen/_20sdp"
             android:gravity="center"
             android:text="@string/share_code"
             android:textColor="@color/white"

@@ -23,7 +23,6 @@
             android:id="@+id/rest_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tiki Village"
             android:textColor="@color/textColour"
             android:textSize="@dimen/_13sdp"
             android:textStyle="bold" />
@@ -34,7 +33,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/rest_name"
             android:paddingVertical="@dimen/_4sdp"
-            android:text="Enjoy 15% OFF on our specials meals and drinks"
             android:textColor="@color/textColour"
             android:textSize="@dimen/_12sdp" />
 
@@ -44,6 +42,7 @@
             android:layout_below="@+id/discount_desc"
             android:background="@drawable/pink_rect_filled"
             android:orientation="horizontal"
+            android:padding="@dimen/_3sdp"
             android:paddingHorizontal="@dimen/_5sdp"
             android:paddingVertical="@dimen/_1sdp">
 
@@ -51,7 +50,7 @@
                 android:id="@+id/points"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="100"
+                android:text="0"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_11sdp" />
 

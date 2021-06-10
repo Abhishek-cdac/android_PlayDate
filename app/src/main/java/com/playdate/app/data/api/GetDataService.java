@@ -250,6 +250,14 @@ public interface GetDataService {
     @POST("user/get-coupons")
     Call<GetCouponsModel> getCoupons(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
+    @FormUrlEncoded
+    @POST("user/purchase-coupons")
+    Call<GetCouponsModel> purchaseCoupons(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
+    @FormUrlEncoded
+    @POST("user/get-my-coupons")
+    Call<GetCouponsModel> getMyCoupons(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
 }
 
 

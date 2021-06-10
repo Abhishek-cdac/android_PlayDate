@@ -14,7 +14,7 @@
         android:layout_centerVertical="true"
         android:scaleType="fitXY"
         android:layout_marginLeft="@dimen/_8sdp"
-        android:src="@drawable/profile" />
+        />
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -28,7 +28,6 @@
             android:id="@+id/rest_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tiki Village"
             android:textColor="@color/black"
             android:textSize="@dimen/_13sdp"
             android:textStyle="bold" />
@@ -39,7 +38,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/rest_name"
             android:paddingVertical="@dimen/_4sdp"
-            android:text="15% OFF meals and drinks"
             android:textColor="@color/black"
             android:textSize="@dimen/_10sdp" />
 
@@ -62,7 +60,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_3sdp"
-                android:text="27/02/2021"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_8sdp" />
 
@@ -100,7 +97,6 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_ur_code"
                     android:layout_centerHorizontal="true"
-                    android:text="AU8163FT"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />
