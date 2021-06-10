@@ -9,6 +9,8 @@ public class Restaurant {
     @Expose
     private String id;
     @Expose
+    private String image;
+    @Expose
     private String name;
 
     public String getId() {
@@ -17,6 +19,14 @@ public class Restaurant {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getName() {

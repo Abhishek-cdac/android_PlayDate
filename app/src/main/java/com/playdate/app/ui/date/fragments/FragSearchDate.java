@@ -52,7 +52,6 @@ public class FragSearchDate  extends Fragment implements SuggestedDateAdapter.Su
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag_date_user, container, false);
 
-
         clsCommon = CommonClass.getInstance();
         edt_search = view.findViewById(R.id.edt_search);
         TextView txt_cancel = view.findViewById(R.id.txt_cancel);
@@ -115,19 +114,6 @@ public class FragSearchDate  extends Fragment implements SuggestedDateAdapter.Su
 
 
 
-    /*    edt_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                adapter.getFilter().filter(query);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                adapter.getFilter().filter(newText);
-                return false;
-            }
-        });*/
 
         edt_search.addTextChangedListener(new TextWatcher() {
             @Override
@@ -171,7 +157,7 @@ public class FragSearchDate  extends Fragment implements SuggestedDateAdapter.Su
 
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("limit", "50");
+        hashMap.put("limit", "100");
         hashMap.put("pageNo", "1");//Hardcode
 //        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getApplicationContext());
 //        pd.show();

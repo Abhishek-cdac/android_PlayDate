@@ -6,14 +6,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 
 import com.facebook.login.LoginManager;
@@ -57,6 +60,7 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
     public FragMyProfileDetails() {
     }
 
+    // private Switch iv_dark_mode;
     private ImageView iv_dark_mode;
     private ImageView profile_image;
     private TextView txt_bio;
@@ -68,6 +72,7 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
     private ArrayList<GetProileDetailData> lst_getPostDetail;
     private String inviteCode;
     private String inviteLink;
+    boolean state = false;
 
     @Nullable
     @Override
@@ -80,13 +85,11 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
-
+      
         callAPI();
         setInIt(view);
 
         setValues();
-
-
         return view;
 
     }
@@ -138,7 +141,21 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
 
 
         setValues();
+  /*      iv_dark_mode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    Log.e("dark_mode","enabled");
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    // The toggle is enabled
+                } else {
+                    Log.e("dark_mode","disabled");
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
+                    // The toggle is disabled
+                }
+            }
+        });
+  */
         iv_edit_couple_bio.setOnClickListener(this);
 
         if (pref.getStringVal(SessionPref.LoginUserrelationship).equals("Single")) {
@@ -228,12 +245,15 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
             mIntent.putExtra("fromProfile", true);
             startActivityForResult(mIntent, 410);
         } else if (id == R.id.iv_dark_mode) {
+
+
             if (iv_dark_mode.getRotation() == 180) {
-                iv_dark_mode.setImageResource(R.drawable.dark_mode);
-                iv_dark_mode.setRotation(0);
+                state = false;
+                imageChange(state);
+
             } else {
-                iv_dark_mode.setImageResource(R.drawable.dark_mode_sel);
-                iv_dark_mode.setRotation(180);
+                state = true;
+                imageChange(state);
             }
 
         } else if (id == R.id.txt_invite) {
@@ -255,6 +275,22 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
         }
 
 
+    }
+
+    private void imageChange(boolean state) {
+        if(state){
+
+            iv_dark_mode.setImageResource(R.drawable.dark_mode_sel);
+            iv_dark_mode.setRotation(180);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
+        }else
+        {
+            iv_dark_mode.setImageResource(R.drawable.dark_mode);
+            iv_dark_mode.setRotation(0);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+        }
     }
 
     private void showYesNoDialog() {

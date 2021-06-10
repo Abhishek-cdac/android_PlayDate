@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -52,6 +54,7 @@ public class FragNotification extends Fragment {
     private List<NotificationData> lst_notifications;
     private Onclick itemClick;
     private Bundle bundle;
+    TextView ll_no_notify;
     private ImageView back_anonymous;
 
     @Nullable
@@ -59,6 +62,8 @@ public class FragNotification extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag_notification, container, false);
         rv_notification = view.findViewById(R.id.rv_notification);
+        ll_no_notify = view.findViewById(R.id.txt_no_notification);
+        ImageView back_anonymous = view.findViewById(R.id.back_anonymous);
         back_anonymous = view.findViewById(R.id.back_anonymous);
         clsCommon = CommonClass.getInstance();
         itemClick = new Onclick() {
@@ -283,6 +288,22 @@ public class FragNotification extends Fragment {
                         if (lst_notifications == null) {
                             lst_notifications = new ArrayList<>();
                         }
+
+                        if (lst_notifications.size()==0){
+                            ll_no_notify.setVisibility(View.VISIBLE);
+                            rv_notification.setVisibility(View.GONE);
+                        }
+                        else {
+                            ll_no_notify.setVisibility(View.GONE);
+                            rv_notification.setVisibility(View.VISIBLE);
+
+                            Log.e("lst_notifications",""+lst_notifications.size());
+                            RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
+                            rv_notification.setLayoutManager(manager);
+                            FragNewNotificationAdapter adapter = new FragNewNotificationAdapter(getActivity(), (ArrayList<NotificationData>) lst_notifications, itemClick);
+                            rv_notification.setAdapter(adapter);
+                        }
+
 
                         Log.e("lst_notifications", "" + lst_notifications.size());
                         RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);

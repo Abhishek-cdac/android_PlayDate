@@ -456,7 +456,6 @@
                 android:textColor="@color/textColour"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
-
             <ImageView
                 android:id="@+id/iv_dark_mode"
                 android:layout_width="@dimen/_20sdp"
@@ -466,7 +465,14 @@
                 android:src="@drawable/ic_group_switch">
 
             </ImageView>
-
+            <!--<Switch
+                android:id="@+id/iv_dark_mode"
+                android:layout_width="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_height="20dp"
+                android:layout_alignParentEnd="true"
+                android:switchMinWidth="@dimen/_30sdp"
+               />-->
         </RelativeLayout>
 
 
