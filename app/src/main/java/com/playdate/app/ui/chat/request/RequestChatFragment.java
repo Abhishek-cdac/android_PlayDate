@@ -87,9 +87,13 @@ public class RequestChatFragment extends Fragment implements View.OnClickListene
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (null != inboxFrag || null != requestFrag) {
-                    inboxFrag.filter(s.toString());
-                    requestFrag.filter(s.toString());
+                try {
+                    if (null != inboxFrag || null != requestFrag) {
+                        inboxFrag.filter(s.toString());
+                        requestFrag.filter(s.toString());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
 
