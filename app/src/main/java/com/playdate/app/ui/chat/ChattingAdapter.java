@@ -43,7 +43,7 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
     int selectedIndex = -1;
     int selectedToDelete = -1;
 
-    Bundle bundle = new Bundle();
+//    Bundle bundle = new Bundle();
     String name, image = null;
 
     LandingBottomSheet bottomSheet;
