@@ -50,8 +50,6 @@ public class FragIntroScreen extends Fragment {
                 e.printStackTrace();
             }
         });
-
-
         return view;
     }
 }
