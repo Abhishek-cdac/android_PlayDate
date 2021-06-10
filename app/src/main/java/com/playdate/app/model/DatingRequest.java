@@ -26,25 +26,15 @@ public class DatingRequest {
     }
 
     @SerializedName("data")
-    public Data data;
+    public DateRequestData data;
 
-    public Data getData() {
+    public DateRequestData getData() {
         return data;
     }
 
-    public void setData(Data data) {
+    public void setData(DateRequestData data) {
         this.data = data;
     }
 
-    class Data {
-        String requestId;
 
-        public String getRequestId() {
-            return requestId;
-        }
-
-        public void setRequestId(String requestId) {
-            this.requestId = requestId;
-        }
-    }
 }

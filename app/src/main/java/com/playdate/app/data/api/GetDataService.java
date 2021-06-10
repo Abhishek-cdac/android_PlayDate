@@ -1,6 +1,5 @@
 package com.playdate.app.data.api;
 
-import com.playdate.app.model.ChattingGetChats;
 import com.playdate.app.model.CommonModel;
 import com.playdate.app.model.CreateDateGetMyPartnerReqModel;
 import com.playdate.app.model.CreateDateGetPartnerModel;
@@ -19,11 +18,9 @@ import com.playdate.app.model.RegisterResult;
 import com.playdate.app.model.RestMain;
 import com.playdate.app.model.RestaurentModel;
 import com.playdate.app.model.SavedPostModel;
-import com.playdate.app.model.chat_models.ChatExample;
 import com.playdate.app.model.chat_models.ChatUserList;
 import com.playdate.app.ui.social.model.PostHistory;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 import okhttp3.MultipartBody;
@@ -175,6 +172,7 @@ public interface GetDataService {
     @FormUrlEncoded
     @POST("user/get-post-comments")
     Call<GetCommentModel> getPostComment(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
     @FormUrlEncoded
     @POST("user/delete-post-comment")
     Call<GetCommentModel> deletePostComment(@Header("Authorization") String token, @FieldMap Map<String, String> param);
@@ -195,6 +193,7 @@ public interface GetDataService {
     @FormUrlEncoded
     @POST("user/change-password")
     Call<LoginResponse> changePassword(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
     @GET("09fdedc6-7c7e-42bd-94fa-07be912504ef")
     Call<ChatUserList> getChats();
 
@@ -242,6 +241,10 @@ public interface GetDataService {
     @FormUrlEncoded
     @POST("user/create-date-status-update-request-partner")
     Call<CommonModel> createDateStatusUpdateRequestPartner(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
+    @FormUrlEncoded
+    @POST("user/delete-date-request")
+    Call<DatingRequest> deleteDateRequest(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
     @FormUrlEncoded
     @POST("user/get-coupons")
