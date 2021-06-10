@@ -17,6 +17,8 @@
 
 
     <string name="get_started">Get Started</string>
+    <string name="reject_date">Reject Date</string>
+    <string name="no_notification">No New Notifications</string>
 
     <string name="login">Login</string>
     <string name="submit">Submit</string>

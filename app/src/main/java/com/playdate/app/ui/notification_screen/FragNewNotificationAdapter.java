@@ -61,7 +61,7 @@ public class FragNewNotificationAdapter extends RecyclerView.Adapter<FragNewNoti
                     patternID = notification_list.get(position).getPatternID();
                     Log.e("patternID", "" + patternID);
                     holder.rl_notification.setVisibility(View.VISIBLE);
-                    holder.ll_no_notify.setVisibility(View.GONE);
+
 //                    String notifiationId = notification_list.get(position).getNotificationId();
 //                    String userId = notification_list.get(position).getUserID();
                     holder.tv_desc.setText(notification_list.get(position).getNotificationMessage());
@@ -161,11 +161,9 @@ public class FragNewNotificationAdapter extends RecyclerView.Adapter<FragNewNoti
         ImageView profile_image, icons, iv_right, iv_cross;
         TextView tv_name, tv_desc;
         RelativeLayout rl_request, rl_notification;
-        LinearLayout ll_no_notify;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            ll_no_notify = itemView.findViewById(R.id.ll_no_notify);
             profile_image = itemView.findViewById(R.id.profile_image_1);
             rl_notification = itemView.findViewById(R.id.rl_notification);
             icons = itemView.findViewById(R.id.iv_icon_1);

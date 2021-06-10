@@ -58,13 +58,13 @@ public class SuggestedDateAdapter extends RecyclerView.Adapter<SuggestedDateAdap
         holder.name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OnUserClick(position);
+               // OnUserClick(position);
             }
         });
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OnUserClick(position);
+               // OnUserClick(position);
             }
         });
 

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColour">
+
+    <LinearLayout
+        android:id="@+id/ll_her"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_play_date_logo"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_2sdp"
+            android:layout_weight="1"
+            android:padding="@dimen/_4sdp"
+            android:src="@drawable/playdate_logo" />
+
+
+    </LinearLayout>
+
+    <ImageView
+
+        android:id="@+id/iv_plus"
+        android:layout_width="@dimen/_15sdp"
+        android:layout_height="@dimen/_15sdp"
+        android:layout_marginLeft="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:src="@drawable/ic_arrow_back_black"
+        android:visibility="visible">
+
+
+    </ImageView>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_her"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:layout_marginTop="5dp"
+
+        android:layout_marginRight="@dimen/_5sdp" />
+
+    <TextView
+        android:id="@+id/tv_placeholder"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ll_her"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:gravity="center"
+        android:text="NO DATA "
+        android:textAllCaps="true"
+        android:textColor="@color/textColour"
+        android:textSize="@dimen/_16sdp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+
+    <!--   <de.hdodenhof.circleimageview.CircleImageView
+           android:id="@+id/partner_image"
+           android:layout_width="@dimen/_140sdp"
+           android:layout_height="@dimen/_140sdp"
+           android:layout_centerInParent="true"
+           android:src="@drawable/profile"
+           app:civ_border_color="@color/color_pink"
+           app:civ_border_width="2dp"
+           app:layout_constraintBottom_toBottomOf="parent"
+           app:layout_constraintHorizontal_bias="0.497"
+           app:layout_constraintLeft_toLeftOf="parent"
+           app:layout_constraintRight_toRightOf="parent"
+           app:layout_constraintTop_toTopOf="parent"
+           app:layout_constraintVertical_bias="0.453" />
+       <TextView
+           android:layout_below="@+id/partner_image"
+           android:id="@+id/tv_username"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_gravity="center"
+           android:gravity="center"
+           android:layout_marginTop="@dimen/_5sdp"
+           android:text="kaylejenner91"
+           android:textColor="@color/white"
+           android:textSize="@dimen/_10sdp"
+           app:layout_constraintLeft_toLeftOf="parent"
+           app:layout_constraintRight_toRightOf="parent"
+            />
+
+       <Button
+           android:id="@+id/tv_accept_date"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:background="@drawable/btn_pink_filled"
+           android:gravity="center"
+           android:layout_gravity="bottom"
+           android:textAllCaps="false"
+           android:layout_above="@+id/tv_reject_date"
+           android:layout_marginHorizontal="@dimen/_10sdp"
+           android:textSize="@dimen/_10sdp"
+           android:paddingVertical="@dimen/_10sdp"
+           android:text="@string/accept_date"
+           android:textColor="@color/white" />
+
+       <Button
+           android:id="@+id/tv_reject_date"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:background="@drawable/login_button"
+           android:text="@string/reject_date"
+           android:paddingVertical="@dimen/_10sdp"
+           android:textAllCaps="false"
+           android:gravity="center"
+           android:layout_marginTop="@dimen/_12sdp"
+           android:layout_marginHorizontal="@dimen/_10sdp"
+           android:layout_marginBottom="@dimen/_18sdp"
+           android:layout_alignParentBottom="true"
+           android:textColor="@android:color/white"
+           android:textSize="@dimen/_10sdp" />
+
+   -->
+
+
+</RelativeLayout>

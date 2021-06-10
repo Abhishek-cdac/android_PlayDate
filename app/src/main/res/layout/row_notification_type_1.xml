@@ -7,27 +7,6 @@
     android:orientation="vertical"
     android:padding="@dimen/_8sdp">
 
-    <LinearLayout
-        android:id="@+id/ll_no_notify"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/backgroundColour"
-        android:gravity="center"
-        android:visibility="gone">
-
-        <TextView
-
-            android:id="@+id/txt_no_notification"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="No New Notifications"
-            android:textColor="@color/textColour"
-            android:textSize="@dimen/_15sdp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
 
     <RelativeLayout
         android:id="@+id/rl_notification"

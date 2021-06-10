@@ -49,6 +49,7 @@ public class FragRestaurantSelection extends Fragment implements restaurantSelec
     private CommonClass clsCommon;
     private GpsTracker gpsTracker;
     private ArrayList<RestaurentData> lst_getRestaurantsDetail;
+    double latitude, longitude;
     public FragRestaurantSelection() {
     }
 
@@ -75,8 +76,8 @@ public class FragRestaurantSelection extends Fragment implements restaurantSelec
     public void getLocation(View view){
         gpsTracker = new GpsTracker(getActivity());
         if(gpsTracker.canGetLocation()){
-            double latitude = gpsTracker.getLatitude();
-            double longitude = gpsTracker.getLongitude();
+             latitude = gpsTracker.getLatitude();
+             longitude = gpsTracker.getLongitude();
 
             Log.e("latlong",""+latitude +"  "+ longitude);
 //            tvLatitude.setText(String.valueOf(latitude));
@@ -92,7 +93,12 @@ public class FragRestaurantSelection extends Fragment implements restaurantSelec
 
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
+       // hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
+        hashMap.put("lat", String.valueOf(latitude));
+        hashMap.put("long", String.valueOf(longitude));
+        Log.e("lat",""+String.valueOf(latitude));
+        Log.e("long",""+String.valueOf(longitude));
+
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
         pd.show();
         Call<RestaurentModel> call = service.getRestaurantDetails("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);

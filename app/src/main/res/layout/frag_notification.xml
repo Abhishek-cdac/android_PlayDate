@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundColour"
-    android:clickable="true"
     android:focusableInTouchMode="true"
     android:paddingHorizontal="@dimen/_12sdp"
     android:paddingVertical="@dimen/_8sdp">
@@ -26,14 +26,31 @@
             android:id="@+id/anun"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginLeft="@dimen/_3sdp"
             android:fontFamily="@font/lato_bold"
             android:text="@string/notification"
-            android:layout_gravity="center"
             android:textColor="@color/textColour"
             android:textSize="@dimen/_18sdp"
             android:textStyle="bold" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/txt_no_notification"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/main_menu"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:gravity="center"
+        android:text="@string/no_notification"
+        android:textAllCaps="true"
+        android:textColor="@color/textColour"
+        android:textSize="@dimen/_14sdp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
         android:id="@+id/tv_date"
@@ -41,18 +58,20 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/main_menu"
         android:layout_marginTop="@dimen/_8sdp"
-        android:text="Today"
-        android:visibility="gone"
+        android:text=""
         android:textColor="@color/textColour"
         android:textSize="@dimen/_14sdp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:visibility="gone" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_notification"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_date"
-        android:layout_marginTop="@dimen/_5sdp" />
+        android:layout_marginTop="@dimen/_5sdp"
+        android:visibility="gone" />
 
 
 </RelativeLayout>
