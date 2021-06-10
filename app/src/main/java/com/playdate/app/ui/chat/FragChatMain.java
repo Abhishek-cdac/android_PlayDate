@@ -45,6 +45,7 @@ import com.playdate.app.R;
 import com.playdate.app.model.chat_models.ChatAttachment;
 import com.playdate.app.model.chat_models.ChatExample;
 import com.playdate.app.model.chat_models.ChatMessage;
+import com.playdate.app.service.GpsTracker;
 import com.playdate.app.service.LocationService;
 import com.playdate.app.ui.anonymous_question.adapter.SmileyAdapter;
 import com.playdate.app.ui.chat.request.FragInbox;
@@ -125,6 +126,8 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_chat_screen, container, false);
+
+        ActivityCompat.requestPermissions(getActivity(), permissions, REQUEST_AUDIO_PERMISSION_CODE);
 
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 //        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,this);
@@ -234,10 +237,11 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
 
             }
         });
+
         iv_mic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityCompat.requestPermissions(getActivity(), permissions, REQUEST_AUDIO_PERMISSION_CODE);
+//                ActivityCompat.requestPermissions(getActivity(), permissions, REQUEST_AUDIO_PERMISSION_CODE);
 //                String[] PERMISSIONS = {Manifest.permission.RECORD_AUDIO};
 //
 //                ActivityCompat.requestPermissions(getActivity(),
@@ -249,11 +253,14 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
 //                } else {
 //                    Toast.makeText(getActivity(), "Permission Denied", Toast.LENGTH_SHORT).show();
 //                }
-                ActivityCompat.requestPermissions(getActivity(),
-                        permissions,
-                        ALL_PERMISSIONS_RESULT);
+//                ActivityCompat.requestPermissions(getActivity(),
+//                        permissions,
+//                        ALL_PERMISSIONS_RESULT);
                 startRecording();
 
+//                if (audioRecordingPermissionGranted) {
+//                    startRecording();
+//                }
             }
         });
         iv_circle.setOnClickListener(new View.OnClickListener() {
@@ -444,25 +451,18 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
 
     }
 
+    boolean audioRecordingPermissionGranted = false;
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case REQUEST_AUDIO_PERMISSION_CODE:
-                if (grantResults.length > 0) {
-                    boolean StoragePermission = grantResults[0] ==
-                            PackageManager.PERMISSION_GRANTED;
-                    boolean RecordPermission = grantResults[1] ==
-                            PackageManager.PERMISSION_GRANTED;
-
-                    if (StoragePermission && RecordPermission) {
-                        Toast.makeText(getActivity(), "Permission Granted",
-                                Toast.LENGTH_LONG).show();
-                        startRecording();
-                    } else {
-                        Toast.makeText(getActivity(), "Permission Denied", Toast.LENGTH_LONG).show();
-                    }
-                }
+                audioRecordingPermissionGranted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
                 break;
+        }
+
+        if (!audioRecordingPermissionGranted) {
+            Toast.makeText(getActivity(), "Permission Denied", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -542,20 +542,37 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
     }
 
 
-
-    double latttitude, longitude;
+    double lattitude, longitude;
+    private GpsTracker gpsTracker;
 
 
     @Override
     public void onLocationSelect() {
 
-        SessionPref pref = SessionPref.getInstance(getActivity());
-        latttitude = pref.getLattitude("lattitude");
-        longitude = pref.getLongitude("longitude");
-        Log.d("Lattitude of ", String.valueOf(latttitude));
-        Log.d("LOngitude of ", String.valueOf(longitude));
+        sheet.dismiss();
+        gpsTracker = new GpsTracker(getActivity());
+        if (gpsTracker.canGetLocation()) {
+            lattitude = gpsTracker.getLatitude();
+            longitude = gpsTracker.getLongitude();
+            Log.e("latlong", "" + lattitude + "  " + longitude);
+            if (String.valueOf(lattitude).equals("0.0") && String.valueOf(longitude).equals("0.0")) {
+                Toast.makeText(getActivity(), "Wait a moment", Toast.LENGTH_SHORT).show();
+            } else {
+                adapter.sendLcation(lattitude, longitude);
+            }
+//            Toast.makeText(getActivity(),""+lattitude +" , "+ longitude,Toast.LENGTH_SHORT).show();
 
-//        adapter.sendLcation(latttitude, longitude);
+        } else {
+            gpsTracker.showSettingsAlert();
+        }
+
+
+        rv_chat.post(new Runnable() {       //////scroll down
+            @Override
+            public void run() {
+                rv_chat.scrollToPosition(adapter.getItemCount() - 1);
+            }
+        });
 
     }
 
@@ -582,11 +599,24 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
                 ALL_PERMISSIONS_RESULT);
         pickImage();
     }
+
+    public void onMapClick(double lattitude, double longitude) {
+
+        Uri gmmIntentUri = Uri.parse("geo:" + lattitude + "," + longitude + "?z=17");
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        if (mapIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivity(mapIntent);
+        } else {
+            Toast.makeText(getActivity(), "Can't load Maps", Toast.LENGTH_SHORT).show();
+        }
+    }
 }
 
 
 interface onSmileyChangeListener {
     void onSmileyChange(int position);
+
     void onLocationSelect();
 }
 

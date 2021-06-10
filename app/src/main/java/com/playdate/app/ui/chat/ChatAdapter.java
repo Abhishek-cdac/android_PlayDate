@@ -30,7 +30,9 @@ import com.playdate.app.R;
 import com.playdate.app.model.Chat;
 import com.playdate.app.model.chat_models.ChatAttachment;
 import com.playdate.app.model.chat_models.ChatMessage;
+import com.playdate.app.ui.dashboard.DashboardActivity;
 import com.playdate.app.ui.dialogs.DialogWinner;
+import com.playdate.app.ui.dialogs.FullScreenDialog;
 import com.playdate.app.util.common.EnlargeMediaChat;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
@@ -252,7 +254,9 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     viewHolderMe.img_playback.setVisibility(View.GONE);
                     viewHolderMe.chat_video.setVisibility(View.GONE);
                     viewHolderMe.rl_audio.setVisibility(View.GONE);
+                    viewHolderMe.rl_maps.setVisibility(View.VISIBLE);
                     viewHolderMe.mv_location.setVisibility(View.VISIBLE);
+
 //                GoogleMap googleMap = viewHolderMe.mv_location.getMap();
 
 //                googleMap.addMarker(new MarkerOptions()
@@ -262,7 +266,14 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     //location
                     break;
             }
-
+            viewHolderMe.mv_location.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    /////
+                    ref.onMapClick(chatmsgList.get(position).getLattitude(), chatmsgList.get(position).getLongitude());
+                    Toast.makeText(mContext, chatmsgList.get(position).getLattitude() + " , " + chatmsgList.get(position).getLongitude(), Toast.LENGTH_SHORT).show();
+                }
+            });
             viewHolderMe.chat_image.setOnClickListener(v -> {
                 enlarge = new EnlargeMediaChat(mContext, chatmsgList.get(position).getDrawable(), ChatAdapter.this);
                 enlarge.show();
@@ -338,18 +349,21 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             viewHolderOther.answer1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(mContext, viewHolderOther.answer1.getText().toString(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, viewHolderOther.answer1.getText().toString(), Toast.LENGTH_SHORT).show();
                     SessionPref pref = SessionPref.getInstance(mContext);
                     pref.saveStringKeyVal("Answer", viewHolderOther.answer1.getText().toString());
+                    new WinnerActivity(mContext, "1").show();
                     notifyDataSetChanged();
                 }
             });
             viewHolderOther.answer2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(mContext, viewHolderOther.answer2.getText().toString(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, viewHolderOther.answer2.getText().toString(), Toast.LENGTH_SHORT).show();
                     SessionPref pref = SessionPref.getInstance(mContext);
                     pref.saveStringKeyVal("Answer", viewHolderOther.answer2.getText().toString());
+                    new WinnerActivity(mContext, "0").show();
+
                     notifyDataSetChanged();
                 }
             });
@@ -451,8 +465,6 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public void sendLcation(double latttitude, double longitude) {
         chatmsgList.add(new ChatMessage("location", myId, "jid_1109", latttitude, longitude));
-
-
         notifyDataSetChanged();
     }
 
@@ -496,6 +508,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         CardView card_video;
         RelativeLayout rl_audio;
         RelativeLayout rl_body;
+        RelativeLayout rl_maps;
         ImageView play_audio;
         ImageView img_playback;
         ImageView iv_mute_unmute;
@@ -520,6 +533,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             play_audio = view.findViewById(R.id.play_audio);
             mv_location = view.findViewById(R.id.mv_location);
             rl_body = view.findViewById(R.id.rl_body);
+            rl_maps = view.findViewById(R.id.rl_maps);
 
 //            mv_location.onCreate(savedInstanceState);
 
