@@ -40,14 +40,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FragSearchDate  extends Fragment implements SuggestedDateAdapter.SuggestionsAdapterListner  {
-    EditText edt_search;
-    TextView txt_cancel;
-    RecyclerView recyclerView;
-    private ArrayList<GetUserSuggestionData> lst_getUserSuggestions;
+    private EditText edt_search;
+    private RecyclerView recyclerView;
+//    private ArrayList<GetUserSuggestionData> lst_getUserSuggestions;
     private CommonClass clsCommon;
     private Onclick itemClick;
     private SuggestedDateAdapter adapter;
-    ArrayList<CreateDateGetPartnerData> lst_CreateDateGetPartner;
+    private ArrayList<CreateDateGetPartnerData> lst_CreateDateGetPartner;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -55,7 +54,7 @@ public class FragSearchDate  extends Fragment implements SuggestedDateAdapter.Su
 
         clsCommon = CommonClass.getInstance();
         edt_search = view.findViewById(R.id.edt_search);
-        txt_cancel = view.findViewById(R.id.txt_cancel);
+        TextView txt_cancel = view.findViewById(R.id.txt_cancel);
         recyclerView = view.findViewById(R.id.recycler_view);
         itemClick = new Onclick() {
             @Override

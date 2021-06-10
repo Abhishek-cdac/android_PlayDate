@@ -10,14 +10,12 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.playdate.app.R;
 import com.playdate.app.ui.date.fragments.FragIntroScreen;
-import com.playdate.app.ui.date.fragments.FragLocationConfirmation;
-import com.playdate.app.ui.date.games.FragGameMenu;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 
 
-public class DateBaseActivity extends AppCompatActivity implements OnInnerFragmentClicks {
-    FragmentManager fm;
-    FragmentTransaction ft;
+public class DateBaseActivity extends AppCompatActivity implements OnInnerFragmentClicks,OnBackPressed {
+    private FragmentManager fm;
+    private FragmentTransaction ft;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -25,9 +23,11 @@ public class DateBaseActivity extends AppCompatActivity implements OnInnerFragme
         setContentView(R.layout.activity_date_base);
         fm = getSupportFragmentManager();
         ft = fm.beginTransaction();
+        firstFrag();
+    }
 
+    private void firstFrag() {
         Fragment fragIntro = new FragIntroScreen();
-
         ft.add(R.id.fl_fragment, fragIntro);
         ft.commit();
     }
@@ -41,6 +41,8 @@ public class DateBaseActivity extends AppCompatActivity implements OnInnerFragme
         ft.commitAllowingStateLoss();
 
     }
+
+
 
     @Override
     public void onBackPressed() {
@@ -70,5 +72,10 @@ public class DateBaseActivity extends AppCompatActivity implements OnInnerFragme
     @Override
     public void loadMatchProfile(String UserID) {
 
+    }
+
+    @Override
+    public void onBack() {
+        onBackPressed();
     }
 }

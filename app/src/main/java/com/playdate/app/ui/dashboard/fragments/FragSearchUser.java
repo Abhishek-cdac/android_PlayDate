@@ -55,8 +55,12 @@ public class FragSearchUser extends Fragment implements SuggestedFriendAdapter.S
     }
 
     public void OnUserProfileSelected(boolean isFriend,String id){
-        OnFriendSelected inf = (OnFriendSelected) getActivity();
-        Objects.requireNonNull(inf).OnSuggestionClosed(isFriend,id);
+        try {
+            OnFriendSelected inf = (OnFriendSelected) getActivity();
+            Objects.requireNonNull(inf).OnSuggestionClosed(isFriend,id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 

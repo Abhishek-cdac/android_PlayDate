@@ -47,6 +47,8 @@ import com.playdate.app.model.chat_models.ChatExample;
 import com.playdate.app.model.chat_models.ChatMessage;
 import com.playdate.app.service.LocationService;
 import com.playdate.app.ui.anonymous_question.adapter.SmileyAdapter;
+import com.playdate.app.ui.chat.request.FragInbox;
+import com.playdate.app.ui.chat.request.RequestChatFragment;
 import com.playdate.app.ui.dashboard.DashboardActivity;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.ui.my_profile_details.FragInstaLikeProfile;
@@ -73,7 +75,7 @@ import static com.playdate.app.ui.register.profile.UploadProfileActivity.PICK_PH
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.REQUEST_TAKE_GALLERY_VIDEO;
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.TAKE_PHOTO_CODE;
 
-public class FragChatMain extends Fragment implements onSmileyChangeListener, onImageSelectListener, LocationListener {
+public class FragChatMain extends Fragment implements onSmileyChangeListener, onImageSelectListener {
 
 
     RecyclerView rv_chat;
@@ -81,8 +83,10 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
     ChatAdapter adapter;
     ImageView iv_send, iv_circle, iv_camera, iv_video, iv_mic, iv_smiley;
     EditText et_msg;
-
     ImageView profile_image;
+    ImageView iv_delete_msg;
+    ImageView video_cal;
+    ImageView arrow_back;
     TextView chat_name;
     Intent mIntent;
     String sender_photo;
@@ -94,6 +98,8 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
     LocationManager locationManager;
     LocationListener locationListener;
 
+    ChatBottomSheet sheet;
+    boolean isVisible = false;
 
     MediaRecorder mRecorder;
     MediaPlayer mediaPlayer;
@@ -131,6 +137,7 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
         rv_smileys = view.findViewById(R.id.rv_smileys);
         iv_mic = view.findViewById(R.id.iv_mic);
         iv_circle = view.findViewById(R.id.iv_circle);
+        arrow_back = view.findViewById(R.id.back_anonymous);
         et_msg = view.findViewById(R.id.et_chat);
         iv_send = view.findViewById(R.id.iv_send);
         iv_camera = view.findViewById(R.id.iv_camera);
@@ -139,14 +146,22 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
         profile_image = view.findViewById(R.id.profile_image);
         chat_name = view.findViewById(R.id.chat_name);
         iv_smiley = view.findViewById(R.id.iv_smiley);
+        iv_delete_msg = view.findViewById(R.id.iv_delete_msg);
+        video_cal = view.findViewById(R.id.video_cal);
 
         lstSmiley = new ArrayList<>();
 
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         rv_chat.setLayoutManager(manager);
-        adapter = new ChatAdapter(chatMsgList);
+        adapter = new ChatAdapter(chatMsgList, this);
         rv_chat.setAdapter(adapter);
         rv_chat.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        });
+        rv_chat.post(new Runnable() {       //////scroll down
+            @Override
+            public void run() {
+                rv_chat.scrollToPosition(adapter.getItemCount() - 1);
+            }
         });
 
         RecyclerView.LayoutManager manager1 = new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false);
@@ -159,6 +174,7 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
         chat_name.setText(sender_name);
 
         CreateSmilyList();
+        addQuestions();
 
         chat_name.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -169,11 +185,27 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
             }
         });
 
+        arrow_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            }
+        });
+
         iv_send.setOnClickListener(new View.OnClickListener() {
             @Override
-
             public void onClick(View v) {
-                adapter.addToListText(et_msg);
+                if (et_msg.getText().toString().equals("")) {
+                    Toast.makeText(getActivity(), "Please enter text", Toast.LENGTH_SHORT).show();
+                } else {
+                    adapter.addToListText(et_msg);
+                    rv_chat.post(new Runnable() {       //////scroll down
+                        @Override
+                        public void run() {
+                            rv_chat.scrollToPosition(adapter.getItemCount() - 1);
+                        }
+                    });
+                }
             }
         });
 
@@ -197,7 +229,7 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
             public void onClick(View v) {
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                ChatBottomSheet sheet = new ChatBottomSheet("Image", FragChatMain.this);
+                sheet = new ChatBottomSheet("Image", FragChatMain.this);
                 sheet.show(fragmentManager, "chat bottom sheet");
 
             }
@@ -205,18 +237,22 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
         iv_mic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                ActivityCompat.requestPermissions(getActivity(), permissions, REQUEST_AUDIO_PERMISSION_CODE);
+                ActivityCompat.requestPermissions(getActivity(), permissions, REQUEST_AUDIO_PERMISSION_CODE);
 //                String[] PERMISSIONS = {Manifest.permission.RECORD_AUDIO};
 //
 //                ActivityCompat.requestPermissions(getActivity(),
 //                        PERMISSIONS,
 //                        ALL_PERMISSIONS_RESULT);
-                if (checkPermission()) {
-                    startRecording();
-
-                } else {
-                    Toast.makeText(getActivity(), "Permission Denied", Toast.LENGTH_SHORT).show();
-                }
+//                if (checkPermission()) {
+//                    startRecording();
+//
+//                } else {
+//                    Toast.makeText(getActivity(), "Permission Denied", Toast.LENGTH_SHORT).show();
+//                }
+                ActivityCompat.requestPermissions(getActivity(),
+                        permissions,
+                        ALL_PERMISSIONS_RESULT);
+                startRecording();
 
             }
         });
@@ -225,7 +261,7 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
             public void onClick(View v) {
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                ChatBottomSheet sheet = new ChatBottomSheet("Extra", FragChatMain.this);
+                sheet = new ChatBottomSheet("Extra", FragChatMain.this);
                 sheet.show(fragmentManager, "chat bootom sheet");
 
 
@@ -234,7 +270,13 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
         iv_smiley.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rv_smileys.setVisibility(View.VISIBLE);
+                if (isVisible) {
+                    rv_smileys.setVisibility(View.GONE);
+                    isVisible = false;
+                } else {
+                    rv_smileys.setVisibility(View.VISIBLE);
+                    isVisible = true;
+                }
             }
         });
 
@@ -242,11 +284,33 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
         profile_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-/////// user profile page
+                OnInnerFragmentClicks ref = (OnInnerFragmentClicks) getActivity();
+//                ref.loadProfile(lst.get(position).getUserId());
+                ref.ReplaceFragWithStack(new FragInstaLikeProfile());
             }
         });
 
+
         return view;
+    }
+
+    String question = "According to Forbes,which entreprenour became first person in history to have net worth of $400 billion?";
+
+    private void addQuestions() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                adapter.addQuestion(question);
+                rv_chat.post(new Runnable() {       //////scroll down
+                    @Override
+                    public void run() {
+                        rv_chat.scrollToPosition(adapter.getItemCount() - 1);
+                    }
+                });
+
+
+            }
+        }, 5000);
     }
 
     private void startRecording() {
@@ -283,6 +347,13 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
                 Toast.makeText(getApplicationContext(), "Recording Stop", Toast.LENGTH_SHORT).show();
 
                 adapter.addToListAudio(mFileName);
+                rv_chat.post(new Runnable() {       //////scroll down
+                    @Override
+                    public void run() {
+                        rv_chat.scrollToPosition(adapter.getItemCount() - 1);
+                    }
+                });
+
 
             }
         }, 3000);
@@ -309,8 +380,16 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
 
                     if (null != bitmap) {
                         Log.d("BITMAP VALUE", bitmap.toString());
+                        sheet.dismiss();
                         Drawable d = new BitmapDrawable(getResources(), bitmap);
                         adapter.addImage(d);
+                        rv_chat.post(new Runnable() {       //////scroll down
+                            @Override
+                            public void run() {
+                                rv_chat.scrollToPosition(adapter.getItemCount() - 1);
+                            }
+                        });
+
 
                     }
                 } else if (requestCode == REQUEST_TAKE_GALLERY_VIDEO) {
@@ -322,6 +401,12 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
 //                        String selectedVideoPath = getPath(contentURI);
                         Log.d("path", selectedVideoPath);
                         adapter.addVIdeo(contentURI);
+                        rv_chat.post(new Runnable() {       //////scroll down
+                            @Override
+                            public void run() {
+                                rv_chat.scrollToPosition(adapter.getItemCount() - 1);
+                            }
+                        });
 
 
                     } else {
@@ -333,8 +418,16 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
                     bitmap = (Bitmap) data.getExtras().get("data");
                     if (null != bitmap) {
                         Log.d("BITMAP VALUE", bitmap.toString());
+                        sheet.dismiss();
                         Drawable d = new BitmapDrawable(getResources(), bitmap);
                         adapter.addImage(d);
+                        rv_chat.post(new Runnable() {       //////scroll down
+                            @Override
+                            public void run() {
+                                rv_chat.scrollToPosition(adapter.getItemCount() - 1);
+                            }
+                        });
+
 
                     }
                 }
@@ -436,8 +529,19 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
     public void onSmileyChange(int position) {
         int smiley = lstSmiley.get(position);
         Drawable drawable = getResources().getDrawable(smiley);
+
         adapter.addSmiley(drawable);
+        rv_chat.post(new Runnable() {       //////scroll down
+            @Override
+            public void run() {
+                rv_chat.scrollToPosition(adapter.getItemCount() - 1);
+            }
+        });
+
+
     }
+
+
 
     double latttitude, longitude;
 
@@ -451,9 +555,7 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
         Log.d("Lattitude of ", String.valueOf(latttitude));
         Log.d("LOngitude of ", String.valueOf(longitude));
 
-
 //        adapter.sendLcation(latttitude, longitude);
-
 
     }
 
@@ -480,17 +582,11 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
                 ALL_PERMISSIONS_RESULT);
         pickImage();
     }
-
-    @Override
-    public void onLocationChanged(@NonNull Location location) {
-
-    }
 }
 
 
 interface onSmileyChangeListener {
     void onSmileyChange(int position);
-
     void onLocationSelect();
 }
 

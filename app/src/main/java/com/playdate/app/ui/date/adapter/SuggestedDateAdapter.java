@@ -27,17 +27,19 @@ import java.util.List;
 
 public class SuggestedDateAdapter extends RecyclerView.Adapter<SuggestedDateAdapter.ViewHolder> implements Filterable {
 
-    List<CreateDateGetPartnerData> suggestions_list;
-    List<CreateDateGetPartnerData> suggestionsListFiltered;
-    Onclick itemClick;
-    FragSearchUser userFrag;
-    Context mcontext;
+    private final List<CreateDateGetPartnerData> suggestions_list;
+    private List<CreateDateGetPartnerData> suggestionsListFiltered;
+    private Onclick itemClick;
+    private FragSearchUser userFrag;
+    private Context mcontext;
+    private final Picasso picasso;
 
     public SuggestedDateAdapter(Context applicationContext, ArrayList<CreateDateGetPartnerData> lst_createDateGetPartner, Onclick itemClick) {
         this.mcontext = applicationContext;
         this.suggestions_list = lst_createDateGetPartner;
         this.suggestionsListFiltered = lst_createDateGetPartner;
         this.itemClick = itemClick;
+        picasso = Picasso.get();
     }
 
     @NonNull
@@ -55,46 +57,30 @@ public class SuggestedDateAdapter extends RecyclerView.Adapter<SuggestedDateAdap
         if (suggestionsListFiltered.get(position).getProfilePicPath() == null) {
             holder.image.setBackgroundColor(mcontext.getResources().getColor(R.color.color_grey_light));
         }
-        holder.name.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               // OnUserClick(position);
-            }
-        });
-        holder.image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               // OnUserClick(position);
-            }
-        });
+        holder.name.setOnClickListener(v -> OnUserClick(position));
+        holder.image.setOnClickListener(v -> OnUserClick(position));
 
-        Picasso.get().load(suggestionsListFiltered.get(position).getProfilePicPath()).placeholder(R.drawable.ic_baseline_person_24)
+        picasso.load(suggestionsListFiltered.get(position).getProfilePicPath()).placeholder(R.drawable.ic_baseline_person_24)
                 .fit()
                 .placeholder(R.drawable.profile)
                 .centerCrop()
                 .into(holder.image);
 
 
-        holder.ll_searchDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-              //  itemClick.onItemClicks(v, position, 22, suggestionsListFiltered.get(position).getUsername(), suggestionsListFiltered.get(position).getTotalPoints(), suggestionsListFiltered.get(position).getId(), suggestionsListFiltered.get(position).getProfilePicPath());
+        holder.ll_searchDate.setOnClickListener(v -> {
 
-            }
+
         });
 
 
     }
 
     private void OnUserClick(int pos) {
-//       boolean isFriend=false;
-//        if(suggestionsListFiltered.get(pos).getFriendRequest().get(0).getStatus().toLowerCase().trim().equals("pending")){
-//
-//        }else{
-//
-//        }
-        userFrag.OnUserProfileSelected(false, suggestions_list.get(pos).getId());
-
+        try {
+            userFrag.OnUserProfileSelected(false, suggestions_list.get(pos).getId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -148,18 +134,18 @@ public class SuggestedDateAdapter extends RecyclerView.Adapter<SuggestedDateAdap
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView name, point;
-        ImageView image, diamond;
-        CardView card;
-        LinearLayout ll_searchDate;
+        private final TextView name;
+        private final TextView point;
+        private final ImageView image;
+        private final LinearLayout ll_searchDate;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.name_friend);
             image = itemView.findViewById(R.id.image_friend);
             point = itemView.findViewById(R.id.point);
-            diamond = itemView.findViewById(R.id.diamond);
-            card = itemView.findViewById(R.id.card);
+//            ImageView diamond = itemView.findViewById(R.id.diamond);
+//            CardView card = itemView.findViewById(R.id.card);
             ll_searchDate = itemView.findViewById(R.id.ll_searchDate);
 
 
