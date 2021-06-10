@@ -37,7 +37,8 @@ public class DateBaseActivity extends AppCompatActivity implements OnInnerFragme
         ft = fm.beginTransaction();
         ft.replace(R.id.fl_fragment, fragment, fragment.getClass().getSimpleName());
         ft.addToBackStack("tags");
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        ft.setTransition(FragmentTransaction.TRANSIT_NONE);
+        ft.setCustomAnimations(R.anim.slide_in_left,R.anim.slide_out_right);
         ft.commitAllowingStateLoss();
 
     }

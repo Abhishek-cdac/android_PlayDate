@@ -17,6 +17,7 @@ import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.CommonModel;
+import com.playdate.app.model.DatingRequest;
 import com.playdate.app.ui.date.OnBackPressed;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.util.common.CommonClass;
@@ -82,19 +83,19 @@ public class FragPartnerSelected extends Fragment {
                 Picasso.get().load(image_url).placeholder(R.drawable.cupertino_activity_indicator).into(iv_partner_image);
         }
 
-        tv_waiting.setOnClickListener(v -> {
-            if (!accepted) {
-                iv_loading.setVisibility(View.GONE);
-                tv_waiting.setText(R.string.accepted_patner);
-                iv_accepted.setVisibility(View.VISIBLE);
-                accepted = true;
-            } else {
-                OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
-                Objects.requireNonNull(frag).ReplaceFrag(new FragSelectDate());
-            }
-
-
-        });
+//        tv_waiting.setOnClickListener(v -> {
+//            if (!accepted) {
+//                iv_loading.setVisibility(View.GONE);
+//                tv_waiting.setText(R.string.accepted_patner);
+//                iv_accepted.setVisibility(View.VISIBLE);
+//                accepted = true;
+//            } else {
+//                OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
+//                Objects.requireNonNull(frag).ReplaceFrag(new FragSelectDate());
+//            }
+//
+//
+//        });
 
         return view;
 
@@ -116,15 +117,13 @@ public class FragPartnerSelected extends Fragment {
         hashMap.put("toUserId", profile_userId);
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
         pd.show();
-        Call<CommonModel> call = service.createDateRequestPartner("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
-        call.enqueue(new Callback<CommonModel>() {
+        Call<DatingRequest> call = service.createDateRequestPartner("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new Callback<DatingRequest>() {
             @Override
-            public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
+            public void onResponse(Call<DatingRequest> call, Response<DatingRequest> response) {
                 pd.cancel();
                 if (response.code() == 200) {
                     if (Objects.requireNonNull(response.body()).getStatus() == 1) {
-
-                        Toast.makeText(getActivity(), "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
 
                     } else {
                         clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
@@ -143,7 +142,7 @@ public class FragPartnerSelected extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<CommonModel> call, Throwable t) {
+            public void onFailure(Call<DatingRequest> call, Throwable t) {
                 t.printStackTrace();
                 pd.cancel();
                 Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();

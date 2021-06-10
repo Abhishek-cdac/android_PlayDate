@@ -1,19 +1,14 @@
 package com.playdate.app.ui.chat;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,18 +16,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
-import com.playdate.app.model.ChattingGetChats;
-import com.playdate.app.model.Interest;
 import com.playdate.app.model.chat_models.ChatExample;
-import com.playdate.app.model.chat_models.ChatMessage;
-import com.playdate.app.ui.anonymous_question.AnonymousBottomSheet;
 import com.playdate.app.ui.chat.request.FragInbox;
 import com.playdate.app.ui.chat.request.Onclick;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyViewHolder> {
 
@@ -43,15 +32,17 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
     int selectedIndex = -1;
     int selectedToDelete = -1;
 
-//    Bundle bundle = new Bundle();
+    //    Bundle bundle = new Bundle();
     String name, image = null;
 
     LandingBottomSheet bottomSheet;
+    Picasso picasso;
 
     public ChattingAdapter(ArrayList<ChatExample> inboxList, Onclick itemClick, FragInbox frag) {
         this.inboxList = inboxList;
         this.itemClick = itemClick;
         this.frag = frag;
+        picasso = Picasso.get();
     }
 
     public ChattingAdapter(String name, String image) {
@@ -121,13 +112,11 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.user_name.setText(inboxList.get(position).getSenderName());
-        Picasso.get().load(inboxList.get(position).getProfilePhoto())
-                .placeholder(R.drawable.cupertino_activity_indicator).into(holder.profile_image);
+        picasso.load(inboxList.get(position).getProfilePhoto())
+                .placeholder(R.drawable.profile).into(holder.profile_image);
     }
 
     public void addtoList(String name, String imageUrl) {
-        Log.d("AcceptedChattingAdapter", "name " + name + " image " + imageUrl);
-//        inboxList.add(new ChatExample(name,imageUrl));
         notifyDataSetChanged();
     }
 
@@ -174,14 +163,11 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
             });
 
 
-            main_ll.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    selectedToDelete = getAdapterPosition();
-                    showBottomSheet(selectedToDelete);
-                    notifyDataSetChanged();
-                    return true;
-                }
+            main_ll.setOnLongClickListener(v -> {
+                selectedToDelete = getAdapterPosition();
+                showBottomSheet(selectedToDelete);
+                notifyDataSetChanged();
+                return true;
             });
 
         }

@@ -46,7 +46,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:fontFamily="@font/lato_bold"
-            android:text="Perfect Answer!"
+            android:gravity="center"
+            android:text="Thank you for your answer!"
             android:textColor="@color/white"
             android:textSize="@dimen/_26sdp" />
 

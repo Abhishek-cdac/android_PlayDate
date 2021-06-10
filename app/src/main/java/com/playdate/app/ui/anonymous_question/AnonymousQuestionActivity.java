@@ -9,9 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,14 +19,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
-import com.playdate.app.model.Comments;
 import com.playdate.app.model.CommonModel;
 import com.playdate.app.model.GetCommentData;
 import com.playdate.app.model.GetCommentModel;
-import com.playdate.app.model.GetUserSuggestionData;
-import com.playdate.app.model.LoginResponse;
 import com.playdate.app.ui.chat.request.Onclick;
-import com.playdate.app.ui.dashboard.adapter.SuggestedFriendAdapter;
+import com.playdate.app.ui.dialogs.AnonymousMedalDialog;
 import com.playdate.app.util.session.SessionPref;
 
 import java.util.ArrayList;
@@ -39,28 +34,22 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 public class AnonymousQuestionActivity extends AppCompatActivity implements onCommentDelete, View.OnClickListener {
-    ArrayList<GetCommentData> lst_getComment;
-
-    CommentAdapter adapter;
-    TextView text_count, txt_post_comment;
-    ImageView back_anonymous;
-    ImageView more_option;
-    Intent mIntent;
-    RecyclerView recyclerView;
-    EditText add_comment;
-    EditText ext_question;
-    boolean isForNew = false;
-    String postId, anonymous;
-    String UserID;
+    private ArrayList<GetCommentData> lst_getComment;
+    private CommentAdapter adapter;
+    private TextView text_count, txt_post_comment;
+    private RecyclerView recyclerView;
+    private EditText add_comment;
+    private boolean isForNew = false;
+    private String postId;
     private Onclick itemClick;
-    //    String commentIdAq , userIDAq ;
-    Bundle bundle = new Bundle();
+    private final Bundle bundle = new Bundle();
+    boolean anonymous;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anonymous_ques);
-        mIntent = getIntent();
+        Intent mIntent = getIntent();
         itemClick = new Onclick() {
             @Override
             public void onItemClick(View view, int position, int value) {
@@ -95,18 +84,23 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
 
         text_count = findViewById(R.id.comment_number);
         add_comment = findViewById(R.id.add_comment);
-        ext_question = findViewById(R.id.ext_question);
-        more_option = findViewById(R.id.more_option);
+        EditText ext_question = findViewById(R.id.ext_question);
+        ImageView more_option = findViewById(R.id.more_option);
         text_count.setTypeface(Typeface.DEFAULT_BOLD);
-        back_anonymous = findViewById(R.id.back_anonymous);
+        ImageView back_anonymous = findViewById(R.id.back_anonymous);
         txt_post_comment = findViewById(R.id.txt_post_comment);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            anonymous = extras.getString("Anonymous");
+
             postId = extras.getString("post_id");
-            UserID = extras.getString("user_id");
+            String userID = extras.getString("user_id");
             bundle.putString("post_id", postId);
-            bundle.putString("user_id", UserID);
+            bundle.putString("user_id", userID);
+            try {
+                anonymous = extras.getBoolean("Anonymous");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         TextView text = findViewById(R.id.anun);
         text.setTypeface(Typeface.DEFAULT_BOLD);
@@ -292,7 +286,21 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
                         add_comment.setText("");
+
+                        if (anonymous) {
+                            boolean alreadyPresent = false;
+                            for (int i = 0; i < lst_getComment.size(); i++) {
+                                if (lst_getComment.get(i).getUserId().equals(pref.getStringVal(SessionPref.LoginUserID))) {
+                                    alreadyPresent = true;
+                                    break;
+                                }
+                            }
+                            if (!alreadyPresent) {
+                                new AnonymousMedalDialog(AnonymousQuestionActivity.this).show();
+                            }
+                        }
                         callGetCommentApi();
+
                     } else {
 
                     }
