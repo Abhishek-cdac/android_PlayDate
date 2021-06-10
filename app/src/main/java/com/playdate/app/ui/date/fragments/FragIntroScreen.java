@@ -42,10 +42,6 @@ public class FragIntroScreen extends Fragment {
             frag.ReplaceFrag(new FragAcceptDatePartner());
 //                startActivity(new Intent(IntroScreen.this, SelectPartner.class));
         });
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
         cancel.setOnClickListener(v -> {
             try {
                 OnBackPressed inf = (OnBackPressed) getActivity();
@@ -55,6 +51,9 @@ public class FragIntroScreen extends Fragment {
             }
         });
 
+
         return view;
     }
 }
+
+
