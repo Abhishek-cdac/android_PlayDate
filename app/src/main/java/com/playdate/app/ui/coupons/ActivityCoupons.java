@@ -1,5 +1,8 @@
 package com.playdate.app.ui.coupons;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,10 +20,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.playdate.app.R;
 import com.playdate.app.ui.coupons.adapters.FrequentlyQuestionAdapter;
 
-public class ActivityCoupons extends AppCompatActivity implements View.OnClickListener{
+public class ActivityCoupons extends AppCompatActivity implements View.OnClickListener {
     String CouponId, CouponCode, CouponPoints;
     TextView tv_code, txt_points, refer, every_time;
-    RelativeLayout rl_getcode,rl_code;
+    RelativeLayout rl_getcode, rl_code, copy_code;
     ImageView facebook_coupan, instagram_coupan, message_coupan, whatsup_coupan;
     String inviteCode, inviteLink;
 
@@ -33,6 +36,7 @@ public class ActivityCoupons extends AppCompatActivity implements View.OnClickLi
         Log.e("inviteCode...", "" + inviteCode);
         Log.e("inviteLink...", "" + inviteLink);
 
+        copy_code = findViewById(R.id.copy_code);
         whatsup_coupan = findViewById(R.id.whatsup_coupan);
         message_coupan = findViewById(R.id.message_coupan);
         instagram_coupan = findViewById(R.id.instagram_coupan);
@@ -49,7 +53,7 @@ public class ActivityCoupons extends AppCompatActivity implements View.OnClickLi
         CouponCode = getIntent().getStringExtra("Coupon_code");
         CouponPoints = getIntent().getStringExtra("Coupon_points");
         tv_code.setText(CouponCode);
-      //  txt_points.setText(CouponPoints + " Points");
+        //  txt_points.setText(CouponPoints + " Points");
         rl_getcode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,6 +67,7 @@ public class ActivityCoupons extends AppCompatActivity implements View.OnClickLi
 //        instagram_coupan.setOnClickListener(this);
 //        whatsup_coupan.setOnClickListener(this);
 //        message_coupan.setOnClickListener(this);
+        copy_code.setOnClickListener(this);
         RecyclerView rv_frequently = findViewById(R.id.rv_frequently);
         RecyclerView.LayoutManager manager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         rv_frequently.setLayoutManager(manager);
@@ -124,9 +129,22 @@ public class ActivityCoupons extends AppCompatActivity implements View.OnClickLi
 
             }
 
+        } else if (id == R.id.copy_code) {
+
+            copyToClipBoard();
+
         }
 
     }
+
+    private void copyToClipBoard() {
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText("CouponCode", CouponCode);
+        clipboard.setPrimaryClip(clip);
+        Toast.makeText(getApplicationContext(), "CouponCode Copied", Toast.LENGTH_SHORT).show();
+
+    }
+
     // Method to share either text or URL.
     private void shareTextUrl() {
         Intent share = new Intent(android.content.Intent.ACTION_SEND);
