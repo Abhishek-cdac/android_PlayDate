@@ -98,6 +98,13 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
         }
         isBoosterOn = pref.getBoolVal("isBoosterOn");
 
+
+
+
+
+                                                                                                                                                                                                                                                                                                                                              
+
+
         iv_booster.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
