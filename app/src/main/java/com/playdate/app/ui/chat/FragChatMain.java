@@ -80,6 +80,7 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
 
 
     RecyclerView rv_chat;
+    
     RecyclerView rv_smileys;
     ChatAdapter adapter;
     ImageView iv_send, iv_circle, iv_camera, iv_video, iv_mic, iv_smiley;

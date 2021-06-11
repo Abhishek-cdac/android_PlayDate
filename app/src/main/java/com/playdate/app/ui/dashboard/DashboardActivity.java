@@ -45,6 +45,7 @@ import com.playdate.app.ui.dashboard.data.CallAPI;
 import com.playdate.app.ui.dashboard.fragments.FragLanding;
 import com.playdate.app.ui.dashboard.fragments.FragSearchUser;
 import com.playdate.app.ui.date.DateBaseActivity;
+import com.playdate.app.ui.date.games.FragStore;
 import com.playdate.app.ui.dialogs.FullScreenDialog;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.ui.my_profile_details.FragInstaLikeProfile;
@@ -97,6 +98,8 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     private ImageView iv_play_date_logo;
     private ImageView iv_dashboard_notification;
     private ImageView iv_coupons;
+    private ImageView iv_cart;
+//    private ImageView iv_booster;
     private ImageView profile_image;
     private TextView txt_serachfriend;
     private TextView txt_store;
@@ -126,8 +129,6 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     private final int CAMERA = 2;
 
     public static Bitmap bitmap = null;
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -176,6 +177,8 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         iv_love = findViewById(R.id.iv_love);
         iv_profile_sett = findViewById(R.id.iv_profile_sett);
         ll_profile_drop_menu = findViewById(R.id.ll_profile_drop_menu);
+        iv_cart = findViewById(R.id.iv_cart);
+//        iv_booster = findViewById(R.id.iv_booster);
         ImageView iv_cancel = findViewById(R.id.iv_cancel);
         ImageView iv_gallery = findViewById(R.id.iv_gallery);
         ImageView iv_create_ano_ques = findViewById(R.id.iv_create_ano_ques);
@@ -202,6 +205,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         ll_profile_support.setOnClickListener(this);
         ll_love_bottom.setOnClickListener(this);
         iv_create_ano_ques.setOnClickListener(this);
+        iv_cart.setOnClickListener(this);
         ll_take_photo.setOnClickListener(this);
         ll_upload_photo.setOnClickListener(this);
         ll_Record_video.setOnClickListener(this);
@@ -532,9 +536,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             txt_payment.setTextColor(getResources().getColor(android.R.color.darker_gray));
 
             ReplaceFrag(new FragMyProfilePersonal());
-        }
-
-        else if(id == R.id.txt_my_coupon){
+        } else if (id == R.id.txt_my_coupon) {
 
             txt_my_coupon.setTextColor(getResources().getColor(R.color.white));
             txt_my_coupon.setBackground(getResources().getDrawable(R.drawable.menu_button));
@@ -542,7 +544,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             txt_store.setTextColor(getResources().getColor(android.R.color.darker_gray));
             ReplaceFrag(new FragMyCoupons());
 
-        } else if(id == R.id.txt_store){
+        } else if (id == R.id.txt_store) {
 
             txt_store.setTextColor(getResources().getColor(R.color.white));
             txt_store.setBackground(getResources().getDrawable(R.drawable.menu_button));
@@ -551,9 +553,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             ReplaceFrag(new FragCouponStore());
 
 
-        }
-
-        else if (id == R.id.txt_account) {
+        } else if (id == R.id.txt_account) {
 
             txt_account.setTextColor(getResources().getColor(R.color.white));
             txt_account.setBackground(getResources().getDrawable(R.drawable.menu_button));
@@ -564,10 +564,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             txt_payment.setTextColor(getResources().getColor(android.R.color.darker_gray));
 
             ReplaceFrag(new FragMyProfileDetails());
-        }
-
-
-        else if (id == R.id.ll_love_bottom) {
+        } else if (id == R.id.ll_love_bottom) {
 //            if (OPTION_CLICK == 0) {
 //                return;
 //            }
@@ -576,6 +573,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             iv_play_date_logo.setVisibility(View.VISIBLE);
             ll_profile_drop_menu.setVisibility(View.GONE);
             iv_plus.setVisibility(View.GONE);
+//            iv_booster.setVisibility(View.GONE);
             ll_option_love.setVisibility(View.VISIBLE);
             ll_friends.setVisibility(View.VISIBLE);
             ll_profile_menu.setVisibility(View.GONE);
@@ -638,6 +636,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             iv_play_date_logo.setVisibility(View.VISIBLE);
             ll_profile_drop_menu.setVisibility(View.GONE);
             iv_plus.setVisibility(View.GONE);
+//            iv_booster.setVisibility(View.GONE);
             ll_option_love.setVisibility(View.GONE);
             ll_friends.setVisibility(View.GONE);
             ll_profile_menu.setVisibility(View.VISIBLE);
@@ -661,6 +660,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             iv_play_date_logo.setVisibility(View.VISIBLE);
             ll_profile_drop_menu.setVisibility(View.GONE);
             iv_plus.setVisibility(View.VISIBLE);
+//            iv_booster.setVisibility(View.VISIBLE);
             ll_option_love.setVisibility(View.GONE);
             ll_friends.setVisibility(View.GONE);
             ll_profile_menu.setVisibility(View.GONE);
@@ -675,18 +675,29 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         } else if (id == R.id.iv_plus) {
             ll_profile_drop_menu.setVisibility(View.VISIBLE);
             iv_plus.setVisibility(View.GONE);
+//            iv_booster.setVisibility(View.GONE);
             iv_play_date_logo.setVisibility(View.INVISIBLE);
         } else if (id == R.id.iv_cancel) {
             ll_profile_drop_menu.setVisibility(View.GONE);
             iv_plus.setVisibility(View.VISIBLE);
+//            iv_booster.setVisibility(View.VISIBLE);
             iv_play_date_logo.setVisibility(View.VISIBLE);
         } else if (id == R.id.iv_create_ano_ques) {
             ll_profile_drop_menu.setVisibility(View.GONE);
             iv_plus.setVisibility(View.VISIBLE);
+//            iv_booster.setVisibility(View.VISIBLE);
             iv_play_date_logo.setVisibility(View.VISIBLE);
             Intent mIntent = new Intent(DashboardActivity.this, AnonymousQuestionActivity.class);
             mIntent.putExtra("new", true);
             startActivity(mIntent);
+        } else if (id == R.id.iv_cart) {
+            ll_profile_drop_menu.setVisibility(View.GONE);
+            iv_plus.setVisibility(View.GONE);
+//            iv_booster.setVisibility(View.GONE);
+            iv_play_date_logo.setVisibility(View.GONE);
+            bottomNavigationView.setVisibility(View.GONE);
+            ReplaceFragWithStack(new FragStore());
+
         } else if (id == R.id.ll_take_photo) {
 
             String[] PERMISSIONS = {
@@ -782,7 +793,6 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     }
 
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -832,6 +842,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
             if (resultCode != RESULT_OK) {
                 iv_plus.setVisibility(View.VISIBLE);
+//                iv_booster.setVisibility(View.VISIBLE);
                 return;
             }
             if (requestCode == PICK_PHOTO_FOR_AVATAR) {
@@ -849,6 +860,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
                 if (null != bitmap) {
                     iv_plus.setVisibility(View.VISIBLE);
+//                    iv_booster.setVisibility(View.VISIBLE);
                     Intent mIntent = new Intent(DashboardActivity.this, MainActivity.class);
                     startActivity(mIntent);
                 }
@@ -869,6 +881,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
                 if (null != bitmap) {
                     iv_plus.setVisibility(View.VISIBLE);
+//                    iv_booster.setVisibility(View.VISIBLE);
                     Intent mIntent = new Intent(DashboardActivity.this, MainActivity.class);
                     startActivity(mIntent);
                 }
@@ -881,6 +894,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
                     String selectedVideoPath = getPath(contentURI);
                     Log.d("path", selectedVideoPath);
                     iv_plus.setVisibility(View.VISIBLE);
+//                    iv_booster.setVisibility(View.VISIBLE);
                     Intent mIntent = new Intent(DashboardActivity.this, PostMediaActivity.class);
                     mIntent.putExtra("videoPath", selectedVideoPath);
                     startActivity(mIntent);
@@ -888,6 +902,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
                 }
             } else if (requestCode == CAMERA) {
                 iv_plus.setVisibility(View.VISIBLE);
+//                iv_booster.setVisibility(View.VISIBLE);
                 Uri contentURI = data.getData();
                 String recordedVideoPath = getPath(contentURI);
                 Log.d("frrr", recordedVideoPath);
