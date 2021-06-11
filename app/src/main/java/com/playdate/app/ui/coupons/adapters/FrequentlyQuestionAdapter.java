@@ -18,14 +18,11 @@ public class FrequentlyQuestionAdapter extends RecyclerView.Adapter<FrequentlyQu
     ArrayList<Questions> list = new ArrayList<>();
 
     public FrequentlyQuestionAdapter() {
-        list.add(new Questions("How do i earn more points?"));
-        list.add(new Questions("Can i share my Coupon Codes?"));
+        list.add(new Questions("How do I earn more points?"));
+        list.add(new Questions("Can I share my Coupon Codes?"));
         list.add(new Questions("What if the Coupon Code doesn't work?"));
         list.add(new Questions("Can my Coupon Code be used multiple times?"));
-        list.add(new Questions("What if the Coupon Code doesn't work?"));
-        list.add(new Questions("Can my Coupon Code be used multiple times?"));
-        list.add(new Questions("What if the Coupon Code doesn't work?"));
-        list.add(new Questions("Can my Coupon Code be used multiple times?"));
+
     }
 
     @NonNull

@@ -17,9 +17,10 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_70sdp"
+            android:id="@+id/txt_points"
             android:background="@drawable/white_btn_filled"
             android:paddingHorizontal="@dimen/_20sdp"
-            android:text="100"
+            android:text="0"
             android:textColor="@color/color_pink"
             android:textSize="@dimen/_18sdp"
             android:textStyle="bold" />

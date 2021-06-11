@@ -12,6 +12,26 @@ public class GetCouponsData {
     @Expose
     private String couponId;
     @Expose
+    private String couponDescription;
+    private String couponPurchasePoint;
+
+    public String getCouponPurchasePoint() {
+        return couponPurchasePoint;
+    }
+
+    public void setCouponPurchasePoint(String couponPurchasePoint) {
+        this.couponPurchasePoint = couponPurchasePoint;
+    }
+
+    public String getCouponDescription() {
+        return couponDescription;
+    }
+
+    public void setCouponDescription(String couponDescription) {
+        this.couponDescription = couponDescription;
+    }
+
+    @Expose
     private String couponTitle;
     @Expose
     private String couponType;

@@ -115,10 +115,12 @@
     <string name="add_comment">Add a comment...</string>
     <string name="refer_your_friend">Refer your Friends and Earn Points</string>
     <string name="earn_point">and Earn Points</string>
+    <string name="play_and_earn">Play and Earn \n</string>
     <string name="ur_discount">Your Discount Coupon</string>
     <string name="points">100 Points</string>
     <string name="share_code">Share Coupon Code via</string>
     <string name="every_time">Every time one of your friends signs up, you will both receive 25 Points !</string>
+    <string name="every_points">Earn more points by playing Dating Games or by answering Small Talk and Deep Talk !</string>
     <string name="notification">Notification</string>
     <string name="commenting">Turn Commenting Off</string>
     <string name="block_user">Block User</string>

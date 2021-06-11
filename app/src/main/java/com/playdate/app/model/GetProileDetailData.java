@@ -4,6 +4,7 @@ package com.playdate.app.model;
 import java.util.List;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class GetProileDetailData {
 
@@ -51,6 +52,17 @@ public class GetProileDetailData {
     private String userId;
     @Expose
     private String username;
+
+    @SerializedName("account")
+    private List<Account> account;
+
+    public List<Account> getAccount() {
+        return account;
+    }
+
+    public void setAccount(List<Account> account) {
+        this.account = account;
+    }
 
     public String getRelationship() {
         return relationship;

@@ -40,23 +40,17 @@ public class CouponStoreAdapter extends RecyclerView.Adapter<CouponStoreAdapter.
     @Override
     public void onBindViewHolder(@NonNull CouponStoreAdapter.ViewHolder holder, int position) {
 
-        holder.discount_desc.setText(coupon_list.get(position).getCouponValue() + "% Off");
-        //holder.points.setText(coupon_list.get(position).getPoints());
+        holder.discount_desc.setText(coupon_list.get(position).getCouponDescription());
+        holder.points.setText(coupon_list.get(position).getCouponPurchasePoint());
         try {
             holder.rest_name.setText(coupon_list.get(position).getCouponTitle());
             picasso.load(coupon_list.get(position).getRestaurants().get(0).getImage())
-                    .placeholder(R.drawable.cupertino_activity_indicator).into(holder.iv_image);
+                    .into(holder.iv_image);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        holder.rl_coupons.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                itemClick.onItemClicks(v, position, 11, coupon_list.get(position).getCouponId(), coupon_list.get(position).getCouponCode(), coupon_list.get(position).getPoints());
-
-            }
-        });
+        holder.rl_coupons.setOnClickListener(v -> itemClick.onItemClicks(v, position, 11, coupon_list.get(position).getCouponId(), coupon_list.get(position).getCouponCode(), ""+coupon_list.get(position).getCouponPurchasePoint()));
 
     }
 

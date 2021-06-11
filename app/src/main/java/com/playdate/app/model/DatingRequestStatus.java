@@ -3,7 +3,9 @@ package com.playdate.app.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class DatingRequest {
+import java.util.List;
+
+public class DatingRequestStatus {
     @Expose
     private String message;
     @Expose
@@ -26,15 +28,13 @@ public class DatingRequest {
     }
 
     @SerializedName("data")
-    public DateRequestData data;
+    public List<DateRequestData> data;
 
-    public DateRequestData getData() {
+    public List<DateRequestData> getData() {
         return data;
     }
 
-    public void setData(DateRequestData data) {
+    public void setData(List<DateRequestData> data) {
         this.data = data;
     }
-
-
 }
