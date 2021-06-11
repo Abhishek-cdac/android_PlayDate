@@ -45,9 +45,8 @@ import retrofit2.Response;
 import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 
 public class FragRestaurantSelection extends Fragment implements restaurantSelecteListener {
-    RecyclerView rv_restaurant;
+    private RecyclerView rv_restaurant;
     private CommonClass clsCommon;
-    private GpsTracker gpsTracker;
     private ArrayList<RestaurentData> lst_getRestaurantsDetail;
     double latitude, longitude;
     public FragRestaurantSelection() {
@@ -69,25 +68,23 @@ public class FragRestaurantSelection extends Fragment implements restaurantSelec
         }
 
         getLocation(view);
-        callgetRestaurantDetails();
+        callGetRestaurantDetails();
 
         return view;
     }
     public void getLocation(View view){
-        gpsTracker = new GpsTracker(getActivity());
+        GpsTracker gpsTracker = new GpsTracker(getActivity());
         if(gpsTracker.canGetLocation()){
              latitude = gpsTracker.getLatitude();
              longitude = gpsTracker.getLongitude();
 
             Log.e("latlong",""+latitude +"  "+ longitude);
-//            tvLatitude.setText(String.valueOf(latitude));
-//            tvLongitude.setText(String.valueOf(longitude));
         }else{
             gpsTracker.showSettingsAlert();
         }
     }
 
-    private void callgetRestaurantDetails() {
+    private void callGetRestaurantDetails() {
 
         SessionPref pref = SessionPref.getInstance(getActivity());
 
@@ -115,7 +112,7 @@ public class FragRestaurantSelection extends Fragment implements restaurantSelec
                         RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
                         rv_restaurant.setLayoutManager(manager);
 
-                        RestaurantSelectionAdapter adapter = new RestaurantSelectionAdapter(getActivity(), lst_getRestaurantsDetail);
+                        RestaurantSelectionAdapter adapter = new RestaurantSelectionAdapter(getActivity(), lst_getRestaurantsDetail,FragRestaurantSelection.this);
                         rv_restaurant.setAdapter(adapter);
 
 
@@ -146,8 +143,12 @@ public class FragRestaurantSelection extends Fragment implements restaurantSelec
 
     @Override
     public void restSelected() {
-        OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
-        frag.ReplaceFrag(new FragLocationConfirmation());
+        try {
+            OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
+            frag.ReplaceFrag(new FragLocationConfirmation());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 

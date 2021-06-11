@@ -65,9 +65,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-/*
-import io.card.payment.CardIOActivity;
-import io.card.payment.CreditCard;*/
+
 import io.card.payment.CardIOActivity;
 import io.card.payment.CreditCard;
 import retrofit2.Call;
@@ -532,9 +530,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             txt_payment.setTextColor(getResources().getColor(android.R.color.darker_gray));
 
             ReplaceFrag(new FragMyProfilePersonal());
-        }
-
-        else if(id == R.id.txt_my_coupon){
+        } else if (id == R.id.txt_my_coupon) {
 
             txt_my_coupon.setTextColor(getResources().getColor(R.color.white));
             txt_my_coupon.setBackground(getResources().getDrawable(R.drawable.menu_button));
@@ -542,7 +538,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             txt_store.setTextColor(getResources().getColor(android.R.color.darker_gray));
             ReplaceFrag(new FragMyCoupons());
 
-        } else if(id == R.id.txt_store){
+        } else if (id == R.id.txt_store) {
 
             txt_store.setTextColor(getResources().getColor(R.color.white));
             txt_store.setBackground(getResources().getDrawable(R.drawable.menu_button));
@@ -551,9 +547,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             ReplaceFrag(new FragCouponStore());
 
 
-        }
-
-        else if (id == R.id.txt_account) {
+        } else if (id == R.id.txt_account) {
 
             txt_account.setTextColor(getResources().getColor(R.color.white));
             txt_account.setBackground(getResources().getDrawable(R.drawable.menu_button));
@@ -564,10 +558,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             txt_payment.setTextColor(getResources().getColor(android.R.color.darker_gray));
 
             ReplaceFrag(new FragMyProfileDetails());
-        }
-
-
-        else if (id == R.id.ll_love_bottom) {
+        } else if (id == R.id.ll_love_bottom) {
 //            if (OPTION_CLICK == 0) {
 //                return;
 //            }
@@ -628,7 +619,9 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             ll_friends.setVisibility(View.VISIBLE);
             ll_mainMenu.setVisibility(View.VISIBLE);
             ll_her.setVisibility(View.VISIBLE);
+
             ReplaceFrag(new FragCouponStore());
+
         } else if (id == R.id.ll_profile_support) {
             if (OPTION_CLICK == 2) {
                 return;
@@ -644,7 +637,6 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
             iv_coupons.setImageResource(R.drawable.badge);
             iv_coupons.setBackground(null);
-
             ll_coupon_menu.setVisibility(View.GONE);
             iv_love.setBackground(null);
             iv_love.setImageResource(R.drawable.love);
@@ -664,13 +656,14 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             ll_option_love.setVisibility(View.GONE);
             ll_friends.setVisibility(View.GONE);
             ll_profile_menu.setVisibility(View.GONE);
-            profile = new FragInstaLikeProfile(true);
             iv_coupons.setBackground(null);
+            iv_coupons.setImageResource(R.drawable.badge);
             iv_love.setBackground(null);
-            ll_coupon_menu.setVisibility(View.GONE);
             iv_love.setImageResource(R.drawable.love);
+            ll_coupon_menu.setVisibility(View.GONE);
             iv_profile_sett.setBackground(null);
             iv_profile_sett.setImageResource(R.drawable.tech_support);
+            profile = new FragInstaLikeProfile(true);
             ReplaceFrag(profile);
         } else if (id == R.id.iv_plus) {
             ll_profile_drop_menu.setVisibility(View.VISIBLE);
@@ -780,7 +773,6 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         startActivityForResult(Intent.createChooser(galleryIntent, "Select Video"), REQUEST_TAKE_GALLERY_VIDEO);
 
     }
-
 
 
     @Override
@@ -1027,6 +1019,9 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         if (count > 0) {
             txt_count.setVisibility(View.VISIBLE);
             txt_count.setText("" + count);
+        } else {
+            txt_count.setVisibility(View.GONE);
+            txt_count.setText("");
         }
 
     }

@@ -44,7 +44,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:src="@drawable/profile"
-                app:civ_border_color="@color/white"
+                app:civ_border_color="@color/black"
                 app:civ_border_width="1dp"
                 tools:ignore="MissingConstraints" />
 
@@ -79,7 +79,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:src="@drawable/profile"
-                app:civ_border_color="@color/white"
+                app:civ_border_color="@color/black"
                 app:civ_border_width="1dp"
                 tools:ignore="MissingConstraints" />
 

@@ -22,6 +22,7 @@ import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.DateRequestData;
 import com.playdate.app.model.DatingRequest;
+import com.playdate.app.model.DatingRequestStatus;
 import com.playdate.app.ui.date.OnBackPressed;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.util.common.CommonClass;
@@ -31,6 +32,7 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -177,19 +179,19 @@ public class FragPartnerSelected extends Fragment {
         }
         //temp code
 
-        if (count == 3) {
-            accepted = true;
-            tv_waiting.setText(R.string.accepted_patner);
-            iv_accepted.setVisibility(View.VISIBLE);
-            spin_kit.setVisibility(View.GONE);
-
-            mHandler.postDelayed(() -> {
-                OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
-                Objects.requireNonNull(frag).ReplaceFrag(new FragSelectDate());
-            }, 1500);
-
-            return;
-        }
+//        if (count == 3) {
+//            accepted = true;
+//            tv_waiting.setText(R.string.accepted_patner);
+//            iv_accepted.setVisibility(View.VISIBLE);
+//            spin_kit.setVisibility(View.GONE);
+//
+//            mHandler.postDelayed(() -> {
+//                OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
+//                Objects.requireNonNull(frag).ReplaceFrag(new FragSelectDate());
+//            }, 1500);
+//
+//            return;
+//        }
 
         //temp code
 
@@ -204,8 +206,58 @@ public class FragPartnerSelected extends Fragment {
         }, 5000);
     }
 
+    private void NextPage() {
+        accepted = true;
+        tv_waiting.setText(R.string.accepted_patner);
+        iv_accepted.setVisibility(View.VISIBLE);
+        spin_kit.setVisibility(View.GONE);
+
+        mHandler.postDelayed(() -> {
+            OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
+            Objects.requireNonNull(frag).ReplaceFrag(new FragSelectDate());
+        }, 1500);
+
+    }
+
     private void callAPI() {
 
+        SessionPref pref = SessionPref.getInstance(getActivity());
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("requestId", DateRequestID);
+        Call<DatingRequestStatus> call = service.getMyCreateDateRequestStatus("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new Callback<DatingRequestStatus>() {
+            @Override
+            public void onResponse(Call<DatingRequestStatus> call, Response<DatingRequestStatus> response) {
+//                pd.cancel();
+                if (response.code() == 200) {
+                    if (Objects.requireNonNull(response.body()).getStatus() == 1) {
+                        List<DateRequestData> data = response.body().getData();
+                        if (data.get(0).getStatus().toLowerCase().equals("accepted")) {
+                            NextPage();
+                        } else if (data.get(0).getStatus().toLowerCase().equals("rejected")) {
+                            clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", "Partner not responding", "Ok");
+                            goBack();
+                        }
+
+                    } else {
+//                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
+                    }
+                } else {
+
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<DatingRequestStatus> call, Throwable t) {
+                t.printStackTrace();
+//                pd.cancel();
+                Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 

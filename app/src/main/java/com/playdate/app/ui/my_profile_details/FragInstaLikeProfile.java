@@ -140,14 +140,14 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
                         }
 
                         Picasso.get().load(BASE_URL_IMAGE + lst_getCoupleDetail.get(0).getProfile1().get(0).getProfilePicPath())
-                                .placeholder(R.drawable.cupertino_activity_indicator)
+                                .placeholder(R.drawable.profile)
                                 .into(boy_profile_image);
 
                         Log.e("getCoupleBoy", "" + lst_getCoupleDetail.get(0).getProfile1().get(0).getProfilePicPath());
                         Log.e("getCoupleGirl", "" + lst_getCoupleDetail.get(0).getProfile2().get(0).getProfilePicPath());
 
                         Picasso.get().load(BASE_URL_IMAGE + lst_getCoupleDetail.get(0).getProfile2().get(0).getProfilePicPath())
-                                .placeholder(R.drawable.cupertino_activity_indicator)
+                                .placeholder(R.drawable.profile)
                                 .into(girl_profile_image);
                     } else {
                         clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");

@@ -40,21 +40,23 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FragCouponStore extends Fragment {
-    RecyclerView rv_coupons_list;
+    private RecyclerView rv_coupons_list;
     private ArrayList<GetCouponsData> lst_getCoupons;
     private CommonClass clsCommon;
-    Onclick itemClick;
+    private Onclick itemClick;
 
     public FragCouponStore() {
     }
-    TextView txt_points;
+
+    private TextView txt_points;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag_coupons_list, container, false);
         clsCommon = CommonClass.getInstance();
         rv_coupons_list = view.findViewById(R.id.rv_coupons_list);
-         txt_points=view.findViewById(R.id.txt_points);
+        txt_points = view.findViewById(R.id.txt_points);
 
         itemClick = new Onclick() {
             @Override
@@ -102,10 +104,15 @@ public class FragCouponStore extends Fragment {
             }
         };
         callGetCouponsApi();
-        callAPIProfiileDetails();
 
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        callAPIProfiileDetails();
+        super.onResume();
     }
 
     private void callAPIProfiileDetails() {
@@ -134,7 +141,7 @@ public class FragCouponStore extends Fragment {
                                 lst_getPostDetail = new ArrayList<>();
                             }
                             account = lst_getPostDetail.get(0).getAccount().get(0);
-                            txt_points.setText(""+account.getCurrentPoints());
+                            txt_points.setText("" + account.getCurrentPoints());
                         }
                     } catch (Exception e) {
                         e.printStackTrace();

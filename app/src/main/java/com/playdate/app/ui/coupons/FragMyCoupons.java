@@ -53,9 +53,15 @@ public class FragMyCoupons extends Fragment {
         rv_coupons_list.setLayoutManager(manager);
 
         callAPIGetMyCoupons();
-        callAPIProfiileDetails();
+
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        callAPIProfiileDetails();
+        super.onResume();
     }
 
     private void callAPIProfiileDetails() {
