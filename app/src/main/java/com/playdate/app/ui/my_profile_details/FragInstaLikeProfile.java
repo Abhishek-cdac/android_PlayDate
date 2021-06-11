@@ -90,32 +90,29 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
         iv_booster = view.findViewById(R.id.iv_booster);
         TextView header_text = view.findViewById(R.id.header_text);
 
+
         if (pref.getBoolVal("isBoosterOn")) {
             iv_booster.setImageResource(R.drawable.booster_select);
-            iv_booster.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        } else {
+            iv_booster.setImageResource(R.drawable.booster);
+        }
+        isBoosterOn = pref.getBoolVal("isBoosterOn");
+
+        iv_booster.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isBoosterOn) {
                     iv_booster.setImageResource(R.drawable.booster);
                     isBoosterOn = false;
                     pref.saveBoolKeyVal("isBoosterOn", isBoosterOn);
-                }
-            });
-
-        } else {
-            iv_booster.setImageResource(R.drawable.booster);
-            iv_booster.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+                } else {
                     new BoosterDialogDM(getActivity()).show();
                     iv_booster.setImageResource(R.drawable.booster_select);
                     isBoosterOn = true;
                     pref.saveBoolKeyVal("isBoosterOn", isBoosterOn);
                 }
-            });
-
-        }
-
-
+            }
+        });
         if (pref.getStringVal(SessionPref.LoginUserrelationship).equals("Single")) {
             connection_img.setVisibility(View.GONE);
             header_text.setText("About Me");
