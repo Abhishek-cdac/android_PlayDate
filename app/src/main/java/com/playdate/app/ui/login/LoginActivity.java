@@ -101,10 +101,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private LoginManager loginManager;
     String ServerAuthCode = null;
     private GoogleApiClient googleApiClient;
-    private RelativeLayout rl_couple;
     private ImageView iv_show_password;
     private EditText login_Password;
-    private LoginViewModel loginViewModel;
 
     private ActivityLoginBinding binding;
     private static final int RC_SIGN_IN = 1;
@@ -142,12 +140,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
-        loginViewModel = new LoginViewModel();
+        LoginViewModel loginViewModel = new LoginViewModel();
         binding = DataBindingUtil.setContentView(LoginActivity.this, R.layout.activity_login);
         binding.setLifecycleOwner(this);
         binding.setLoginViewModel(loginViewModel);
         Button logout = binding.logout;
-        rl_couple = findViewById(R.id.rl_couple);
+        RelativeLayout rl_couple = findViewById(R.id.rl_couple);
         iv_show_password = findViewById(R.id.iv_show_password);
         login_Password = findViewById(R.id.login_Password);
         rl_couple.setOnClickListener(new View.OnClickListener() {

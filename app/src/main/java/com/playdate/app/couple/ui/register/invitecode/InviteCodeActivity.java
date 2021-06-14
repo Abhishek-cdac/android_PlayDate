@@ -113,7 +113,7 @@ public class InviteCodeActivity extends AppCompatActivity {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
 
-                        clsCommon.showDialogMsg(InviteCodeActivity.this, "PlayDate", jObjError.getString("message"), "Ok");
+                        clsCommon.showDialogMsg(InviteCodeActivity.this, "PlayDate", jObjError.getJSONArray("data").getJSONObject(0).getString("msg"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(InviteCodeActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                     }

@@ -60,7 +60,7 @@
                 android:gravity="center"
                 android:text="@string/invite_code"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_25sdp"
+                android:textSize="@dimen/_22sdp"
                 android:textStyle="bold" />
 
             <TextView
@@ -72,7 +72,7 @@
                 android:padding="@dimen/_4sdp"
                 android:text="@string/invite_code_desc"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_16sdp" />
+                android:textSize="@dimen/_12sdp" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -82,10 +82,10 @@
                 android:gravity="center"
                 android:text="@string/please_type"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_16sdp" />
+                android:textSize="@dimen/_14sdp" />
             <EditText
                 android:id="@+id/edt_otp"
-                android:layout_width="@dimen/_150sdp"
+                android:layout_width="@dimen/_160sdp"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_gravity="center"
@@ -112,7 +112,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/_25sdp"
-                android:background="@drawable/normal_btn_gray"
+                android:background="@drawable/invite_back"
                 android:elevation="@dimen/_15sdp"
                 android:onClick="@{(v) -> InviteCodeViewModel.onSubmit(v)}"
                 android:text="@string/submit"
@@ -133,12 +133,14 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:padding="@dimen/_12sdp"
+    android:visibility="gone"
     android:layout_alignParentBottom="true"
     android:layout_height="match_parent">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_above="@+id/txt_resend"
         android:layout_gravity="center"
         android:layout_marginBottom="@dimen/_10sdp"
@@ -157,6 +159,7 @@
         android:layout_gravity="center"
         android:layout_marginBottom="@dimen/_30sdp"
         android:fontFamily="@font/lato_bold"
+        android:visibility="gone"
         android:gravity="center"
         android:onClick="@{(v) -> InviteCodeViewModel.onResend(v)}"
         android:text="@string/resend"

@@ -185,7 +185,7 @@
             android:layout_marginRight="@dimen/_10sdp"
             android:fontFamily="@font/helvetica_neue"
             android:gravity="start|center"
-            android:text="invite your partner"
+            android:text="@string/invite_your_partner"
             android:textColor="@color/textColour"
             android:textSize="@dimen/_11sdp" />
 

@@ -45,7 +45,7 @@ public class OnBoardingActivity extends AppCompatActivity {
                 binding.btnLogin,
                 PropertyValuesHolder.ofFloat("scaleX", 1.2f),
                 PropertyValuesHolder.ofFloat("scaleY", 1.2f));
-        scaleDown.setDuration(310);
+        scaleDown.setDuration(600);
         scaleDown.setRepeatCount(ObjectAnimator.INFINITE);
         scaleDown.setRepeatMode(ObjectAnimator.REVERSE);
 

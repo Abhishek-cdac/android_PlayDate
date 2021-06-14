@@ -32,7 +32,7 @@ public class FragNewNotificationAdapter extends RecyclerView.Adapter<FragNewNoti
     private final Onclick itemClick;
     private String requestId;
     private final Context mcontext;
-    private String patternID;
+
     private final Picasso picasso;
 
     public FragNewNotificationAdapter(FragmentActivity activity, ArrayList<NotificationData> lst_notifications, Onclick itemClick) {
@@ -53,13 +53,11 @@ public class FragNewNotificationAdapter extends RecyclerView.Adapter<FragNewNoti
 
     @Override
     public void onBindViewHolder(@NonNull FragNewNotificationAdapter.ViewHolder holder, int position) {
-
         if (notification_list.get(position).getFriendRequest() != null) {
 
             if (notification_list.get(position).getFriendRequest().size() > 0) {
                 if (notification_list.get(position).getFriendRequest().get(0).getStatus().toLowerCase().equals("pending")) {
-                    patternID = notification_list.get(position).getPatternID();
-                    Log.e("patternID", "" + patternID);
+
                     holder.rl_notification.setVisibility(View.VISIBLE);
 
 //                    String notifiationId = notification_list.get(position).getNotificationId();
@@ -112,36 +110,48 @@ public class FragNewNotificationAdapter extends RecyclerView.Adapter<FragNewNoti
             }
         }
 
-        if (notification_list.get(position).getFriendRequest() != null) {
-            if (notification_list.get(position).getFriendRequest().size() == 0) {
-                List<FriendRequest> lst = new ArrayList<>();
-                FriendRequest fr = new FriendRequest();
-                fr.setStatus("Pending");
-                lst.add(fr);
-                notification_list.get(position).setFriendRequest(lst);
-//                    itemClick.onItemClicks(v, position, 10, userId);
-                notifyDataSetChanged();
+        try {
+            if (notification_list.get(position).getFriendRequest() != null) {
+                if (notification_list.get(position).getFriendRequest().size() == 0) {
+                    List<FriendRequest> lst = new ArrayList<>();
+                    FriendRequest fr = new FriendRequest();
+                    fr.setStatus("Pending");
+                    lst.add(fr);
+                    notification_list.get(position).setFriendRequest(lst);
+    //                    itemClick.onItemClicks(v, position, 10, userId);
+                    notifyDataSetChanged();
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         holder.iv_right.setOnClickListener(v -> {
 
-            if (patternID.equals("Friend")) {
-                itemClick.onItemClicks(v, position, 20, requestId);
-            } else if (patternID.equals("Match")) {
-                itemClick.onItemClicks(v, position ,24, requestId);
+            try {
+                if (notification_list.get(position).getPatternID().equals("Friend")) {
+                    itemClick.onItemClicks(v, position, 20, requestId);
+                } else if (notification_list.get(position).getPatternID().equals("Match")) {
+                    itemClick.onItemClicks(v, position ,24, requestId);
 
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
 
         });
         holder.iv_cross.setOnClickListener(v -> {
-            Log.e("requestId", "" + requestId);
+            try {
+                Log.e("requestId", "" + requestId);
 
-            if (patternID.equals("Friend")) {
-                itemClick.onItemClicks(v, position, 21, requestId);
-            } else if (patternID.equals("Match")) {
-                itemClick.onItemClicks(v, position, 25, requestId);
+                if (notification_list.get(position).getPatternID().equals("Friend")) {
+                    itemClick.onItemClicks(v, position, 21, requestId);
+                } else if (notification_list.get(position).getPatternID().equals("Match")) {
+                    itemClick.onItemClicks(v, position, 25, requestId);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
 
