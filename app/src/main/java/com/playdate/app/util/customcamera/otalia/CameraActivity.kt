@@ -211,6 +211,7 @@ class CameraActivity : AppCompatActivity(), View.OnClickListener, OptionView.Cal
                 showRecordingTime()
             }
 
+
             override fun onFinish() {
                 ivCapture.setImageResource(R.drawable.img1)
             }
@@ -453,6 +454,7 @@ class CameraActivity : AppCompatActivity(), View.OnClickListener, OptionView.Cal
         }
 //        message("Recording snapshot for 12 seconds...", true)
         setupCountDown()
+        showRecordingTime()
         camera.takeVideoSnapshot(File(filesDir, "video.mp4"), 12000)
 
     }

@@ -455,6 +455,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
 
         } catch (ApiException e) {
+            Log.e("EXCEPTION", e.toString());
             Log.e("EXCEPTION", "signInResult:failed code=" + e.getStatusCode());
         }
     }
