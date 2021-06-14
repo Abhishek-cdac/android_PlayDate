@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -20,6 +22,7 @@ import com.playdate.app.databinding.ActivityRestaurantBinding;
 import com.playdate.app.model.LoginResponse;
 import com.playdate.app.model.RestMain;
 import com.playdate.app.ui.dashboard.DashboardActivity;
+import com.playdate.app.ui.register.bio.BioActivity;
 import com.playdate.app.ui.restaurant.adapter.Restaurant;
 import com.playdate.app.ui.restaurant.adapter.RestaurantAdapter;
 import com.playdate.app.util.common.CommonClass;
@@ -44,6 +47,7 @@ public class RestaurantActivity extends AppCompatActivity {
     ArrayList<Restaurant> rest_list;
     RestaurantAdapter adapter;
     CommonClass clsCommon;
+    RelativeLayout rl_rest_bg;
     RecyclerView recyclerView;
 
     @Override
@@ -54,6 +58,7 @@ public class RestaurantActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(RestaurantActivity.this, R.layout.activity_restaurant);
         binding.setLifecycleOwner(this);
         binding.setRestaurantViewModel(viewModel);
+        rl_rest_bg= findViewById(R.id.rl_rest_bg);
 
         getRest();
 
@@ -90,6 +95,13 @@ public class RestaurantActivity extends AppCompatActivity {
         });
         viewModel.onBackClick().observe(RestaurantActivity.this, aBoolean -> finish());
 
+        rl_rest_bg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("linear", "onClick:");
+                clsCommon.hideKeyboard(v, RestaurantActivity.this);
+            }
+        });
     }
 
     private void callAPI() {
