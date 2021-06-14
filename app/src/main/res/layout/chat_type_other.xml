@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
     android:padding="@dimen/_8sdp">
 
     <ImageView
@@ -38,6 +37,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@color/transparent"
         android:layout_marginStart="@dimen/_5sdp"
         android:layout_toEndOf="@+id/diamond">
 

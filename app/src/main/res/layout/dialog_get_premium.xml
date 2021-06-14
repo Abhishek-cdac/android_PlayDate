@@ -6,7 +6,6 @@
     android:alpha="0.95"
     android:background="@color/black">
 
-
     <ImageView
         android:id="@+id/iv_two_girls"
         android:layout_width="@dimen/_140sdp"

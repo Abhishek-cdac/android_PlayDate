@@ -1,6 +1,7 @@
 package com.playdate.app.ui.my_profile_details;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import com.playdate.app.model.GetCoupleProfileData;
 import com.playdate.app.model.GetCoupleProfileModel;
 import com.playdate.app.model.GetProfileDetails;
 import com.playdate.app.model.GetProileDetailData;
+import com.playdate.app.ui.dialogs.BoosterDialogDM;
 import com.playdate.app.ui.my_profile_details.adapters.InstaPhotosAdapter;
 import com.playdate.app.ui.playvideo.ExoPlayerActivity;
 import com.playdate.app.util.common.CommonClass;
@@ -45,6 +47,7 @@ import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View.OnClickListener {
     private ImageView iv_send_request;
     private ImageView iv_chat;
+    private ImageView iv_booster;
     private ImageView profile_image, boy_profile_image, girl_profile_image;
     private TextView txt_bio;
     private TextView txt_login_user;
@@ -52,6 +55,8 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
     private TextView txtTotalFriend, txtTotalPost;
     private ArrayList<GetProileDetailData> lst_getPostDetail;
     private ArrayList<GetCoupleProfileData> lst_getCoupleDetail;
+
+    boolean isBoosterOn = false;
 
     public FragInstaLikeProfile() {
     }
@@ -82,8 +87,39 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
         iv_chat = view.findViewById(R.id.iv_chat);
         txt_bio = view.findViewById(R.id.txt_bio);
         txt_login_user = view.findViewById(R.id.txt_login_user);
+        iv_booster = view.findViewById(R.id.iv_booster);
         TextView header_text = view.findViewById(R.id.header_text);
 
+
+        if (pref.getBoolVal("isBoosterOn")) {
+            iv_booster.setImageResource(R.drawable.booster_select);
+        } else {
+            iv_booster.setImageResource(R.drawable.booster);
+        }
+        isBoosterOn = pref.getBoolVal("isBoosterOn");
+
+
+
+
+
+                                                                                                                                                                                                                                                                                                                                              
+
+
+        iv_booster.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isBoosterOn) {
+                    iv_booster.setImageResource(R.drawable.booster);
+                    isBoosterOn = false;
+                    pref.saveBoolKeyVal("isBoosterOn", isBoosterOn);
+                } else {
+                    new BoosterDialogDM(getActivity()).show();
+                    iv_booster.setImageResource(R.drawable.booster_select);
+                    isBoosterOn = true;
+                    pref.saveBoolKeyVal("isBoosterOn", isBoosterOn);
+                }
+            }
+        });
         if (pref.getStringVal(SessionPref.LoginUserrelationship).equals("Single")) {
             connection_img.setVisibility(View.GONE);
             header_text.setText("About Me");
@@ -115,6 +151,7 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
         iv_send_request.setOnClickListener(this);
         profile_image.setOnClickListener(this);
 
+
         return view;
     }
 
@@ -140,14 +177,14 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
                         }
 
                         Picasso.get().load(BASE_URL_IMAGE + lst_getCoupleDetail.get(0).getProfile1().get(0).getProfilePicPath())
-                                .placeholder(R.drawable.cupertino_activity_indicator)
+                                .placeholder(R.drawable.profile)
                                 .into(boy_profile_image);
 
                         Log.e("getCoupleBoy", "" + lst_getCoupleDetail.get(0).getProfile1().get(0).getProfilePicPath());
                         Log.e("getCoupleGirl", "" + lst_getCoupleDetail.get(0).getProfile2().get(0).getProfilePicPath());
 
                         Picasso.get().load(BASE_URL_IMAGE + lst_getCoupleDetail.get(0).getProfile2().get(0).getProfilePicPath())
-                                .placeholder(R.drawable.cupertino_activity_indicator)
+                                .placeholder(R.drawable.profile)
                                 .into(girl_profile_image);
                     } else {
                         clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");

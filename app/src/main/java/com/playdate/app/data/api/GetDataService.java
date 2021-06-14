@@ -4,6 +4,7 @@ import com.playdate.app.model.CommonModel;
 import com.playdate.app.model.CreateDateGetMyPartnerReqModel;
 import com.playdate.app.model.CreateDateGetPartnerModel;
 import com.playdate.app.model.DatingRequest;
+import com.playdate.app.model.DatingRequestStatus;
 import com.playdate.app.model.FriendsListModel;
 import com.playdate.app.model.GetCommentModel;
 import com.playdate.app.model.GetCoupleProfileModel;
@@ -257,6 +258,10 @@ public interface GetDataService {
     @FormUrlEncoded
     @POST("user/get-my-coupons")
     Call<GetCouponsModel> getMyCoupons(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
+    @FormUrlEncoded
+    @POST("user/get-my-create-date-request-status")
+    Call<DatingRequestStatus> getMyCreateDateRequestStatus(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
 }
 

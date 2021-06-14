@@ -651,17 +651,13 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 //                    ref.onMessageSelectToDelete(getAdapterPosition());
 //                    notifyDataSetChanged();
 //                    return true;
-//                }
-//            });
 
+//                }
+//            })
 
         }
     }
 }
-
-
-
-
 
 
 

@@ -66,7 +66,8 @@ public class FragCoinScreen extends Fragment {
             @Override
             public void onClick(View v) {
                 OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
-                frag.ReplaceFrag(new FragStore());
+                new FragStore(getActivity()).show();
+//                frag.ReplaceFrag(new FragStore());
             }
         });
 

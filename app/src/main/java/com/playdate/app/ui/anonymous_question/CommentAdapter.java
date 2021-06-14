@@ -271,12 +271,17 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
 
         if (commentList.get(selected_index).isDeleted) {
-            FragmentManager fragmentManager = ((AppCompatActivity) mContext).getSupportFragmentManager();
-            FragCommentDeleted deleted = new FragCommentDeleted();
-            deleted.show(fragmentManager, "comment deleted");
-            commentList.remove(selected_index);
-            notifyDataSetChanged();
-//              ref.ChangeCount(commentList.size());
+            try {
+                FragmentManager fragmentManager = ((AppCompatActivity) mContext).getSupportFragmentManager();
+                FragCommentDeleted deleted = new FragCommentDeleted();
+                deleted.show(fragmentManager, "comment deleted");
+                commentList.remove(selected_index);
+                notifyDataSetChanged();
+                ref.ChangeCount(commentList.size());
+            } catch (Exception e) {
+                e.printStackTrace();
+                ref.ChangeCount(0);
+            }
         } else {
             //code for undo
         }

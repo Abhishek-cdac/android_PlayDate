@@ -239,11 +239,20 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
     }
 
     public void ChangeCount(int number) {
-        if (number == 0) {
-            text_count.setText("No Answer");
-        } else {
-            text_count.setText(number + " Answer");
+        if(anonymous){
+            if (number == 0) {
+                text_count.setText("No Answer");
+            } else {
+                text_count.setText(number + " Answer");
+            }
+        }else{
+            if (number == 0) {
+                text_count.setText("No Comments");
+            } else {
+                text_count.setText(number + " Comments");
+            }
         }
+
     }
 
     @Override
@@ -276,8 +285,8 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
         hashMap.put("postId", postId);
         hashMap.put("comment", add_comment.getText().toString());
 
-        Log.e("userId", "" + pref.getStringVal(SessionPref.LoginUserID));
-        Log.e("postId", "" + this.postId);
+//        Log.e("userId", "" + pref.getStringVal(SessionPref.LoginUserID));
+//        Log.e("postId", "" + this.postId);
         Call<CommonModel> call = service.addPostComment("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new retrofit2.Callback<CommonModel>() {
             @Override
@@ -287,17 +296,26 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
                     if (response.body().getStatus() == 1) {
                         add_comment.setText("");
 
-                        if (anonymous) {
-                            boolean alreadyPresent = false;
-                            for (int i = 0; i < lst_getComment.size(); i++) {
-                                if (lst_getComment.get(i).getUserId().equals(pref.getStringVal(SessionPref.LoginUserID))) {
-                                    alreadyPresent = true;
-                                    break;
+                        try {
+                            if (anonymous) {
+                                boolean alreadyPresent = false;
+                                if(null!=lst_getComment){
+                                    for (int i = 0; i < lst_getComment.size(); i++) {
+                                        if (lst_getComment.get(i).getUserId().equals(pref.getStringVal(SessionPref.LoginUserID))) {
+                                            alreadyPresent = true;
+                                            break;
+                                        }
+                                    }
+                                    if (!alreadyPresent) {
+                                        new AnonymousMedalDialog(AnonymousQuestionActivity.this).show();
+                                    }
+                                }else{
+                                    new AnonymousMedalDialog(AnonymousQuestionActivity.this).show();
                                 }
+
                             }
-                            if (!alreadyPresent) {
-                                new AnonymousMedalDialog(AnonymousQuestionActivity.this).show();
-                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
                         callGetCommentApi();
 

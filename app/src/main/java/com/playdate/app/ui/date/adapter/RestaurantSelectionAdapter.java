@@ -13,45 +13,28 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
-import com.playdate.app.model.Restaurants;
 import com.playdate.app.model.RestaurentData;
-import com.playdate.app.model.RestaurentModel;
 import com.playdate.app.ui.date.fragments.FragRestaurantSelection;
-import com.playdate.app.ui.date.games.FragTimesUp2;
-import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-import retrofit2.Callback;
-
 public class RestaurantSelectionAdapter extends RecyclerView.Adapter<RestaurantSelectionAdapter.ViewHolder> {
     private ArrayList<RestaurentData> list = new ArrayList<>();
     private FragRestaurantSelection frag;
+
     int selectedposition = -1;
     Context mcontext;
+    Picasso picasso;
 
 
-    public RestaurantSelectionAdapter(FragmentActivity activity, ArrayList<RestaurentData> lst_getRestaurentsDetail) {
+    public RestaurantSelectionAdapter(FragmentActivity activity, ArrayList<RestaurentData> lst_getRestaurentsDetail, FragRestaurantSelection frag) {
 
-  this.mcontext = activity;
-  this.list = lst_getRestaurentsDetail;
-    }
-
-/*    public RestaurantSelectionAdapter(FragRestaurantSelection frag) {
+        this.mcontext = activity;
+        this.list = lst_getRestaurentsDetail;
+        picasso = Picasso.get();
         this.frag = frag;
-
-        list.add(new Restaurants("", R.drawable.rest1));
-        list.add(new Restaurants("", R.drawable.rest2));
-        list.add(new Restaurants("", R.drawable.rest4));
-        list.add(new Restaurants("", R.drawable.rest5));
-        list.add(new Restaurants("", R.drawable.rest5));
-        list.add(new Restaurants("", R.drawable.rest5));
-        list.add(new Restaurants("", R.drawable.rest5));
-        list.add(new Restaurants("", R.drawable.rest5));
-        list.add(new Restaurants("", R.drawable.rest5));
-       list.add(new Restaurants("", R.drawable.rest6));
-    } */
+    }
 
 
     @NonNull
@@ -63,29 +46,29 @@ public class RestaurantSelectionAdapter extends RecyclerView.Adapter<RestaurantS
 
     @Override
     public void onBindViewHolder(@NonNull RestaurantSelectionAdapter.ViewHolder holder, int position) {
-      //  holder.iv_rest.setImageResource(list.get(position).getImage());
-        Log.e("restaurants_image",""+list.get(position).getImage());
 
-        Picasso.get().load(list.get(position).getImage())
-           .placeholder(R.drawable.cupertino_activity_indicator)
+        picasso.load(list.get(position).getImage())
                 .fit()
-              //  .placeholder(R.drawable.profile)
                 .centerCrop()
                 .into(holder.iv_rest);
 
 
-        if (selectedposition == position) {
-            holder.cl_rest.setBackgroundResource(R.drawable.btn_pink_filled);
-            frag.restSelected();
+        try {
+            if (selectedposition == position) {
+                holder.cl_rest.setBackgroundResource(R.drawable.btn_pink_filled);
+                frag.restSelected();
 
-        } else {
-            holder.cl_rest.setBackgroundResource(R.drawable.login_button);
+            } else {
+                holder.cl_rest.setBackgroundResource(R.drawable.login_button);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     @Override
     public int getItemCount() {
-        Log.e("restaurants",""+list.size());
+        Log.e("restaurants", "" + list.size());
         return list.size();
 
     }
