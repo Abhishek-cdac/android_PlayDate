@@ -86,12 +86,7 @@ public class ConnectYourPartner extends AppCompatActivity {
         }
     });
 
-        viewModel.onBackClick(). observe(this,new Observer<Boolean>() {
-        @Override
-        public void onChanged (Boolean click){
-            finish();
-        }
-    });
+        viewModel.onBackClick(). observe(this, click -> finish());
 
 
 //        if (mIntent.getBooleanExtra("fromProfile", false)) {
