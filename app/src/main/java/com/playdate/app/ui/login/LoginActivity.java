@@ -8,10 +8,14 @@ import android.content.pm.Signature;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -97,7 +101,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private LoginManager loginManager;
     String ServerAuthCode = null;
     private GoogleApiClient googleApiClient;
-private RelativeLayout rl_couple;
+    private RelativeLayout rl_couple;
+    private ImageView iv_show_password;
+    private EditText login_Password;
     private LoginViewModel loginViewModel;
 
     private ActivityLoginBinding binding;
@@ -141,7 +147,9 @@ private RelativeLayout rl_couple;
         binding.setLifecycleOwner(this);
         binding.setLoginViewModel(loginViewModel);
         Button logout = binding.logout;
-        rl_couple =findViewById(R.id.rl_couple);
+        rl_couple = findViewById(R.id.rl_couple);
+        iv_show_password = findViewById(R.id.iv_show_password);
+        login_Password = findViewById(R.id.login_Password);
         rl_couple.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -234,6 +242,24 @@ private RelativeLayout rl_couple;
             }
         });
 
+        iv_show_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (login_Password.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())) {
+                    (iv_show_password).setImageResource(R.drawable.ic_visibility);
+
+                    //Show Password
+                    login_Password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                } else {
+                    (iv_show_password).setImageResource(R.drawable.ic_visibility_off);
+
+                    //Hide Password
+                    login_Password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
+                }
+            }
+        });
     }
 
 
@@ -387,7 +413,6 @@ private RelativeLayout rl_couple;
                         "user_birthday"));
 
 
-
     }
 
     @Override
@@ -414,7 +439,7 @@ private RelativeLayout rl_couple;
             if (acct != null) {
                 String personName = acct.getDisplayName();
                 String personGivenName = acct.getGivenName();
-             //  String ServerAuthCode = acct.getIdToken();
+                //  String ServerAuthCode = acct.getIdToken();
 
                 String personEmail = acct.getEmail();
                 String personId = acct.getId();
