@@ -34,6 +34,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -179,7 +180,7 @@ public class FragCouponStore extends Fragment {
             public void onResponse(Call<GetCouponsModel> call, Response<GetCouponsModel> response) {
                 pd.cancel();
                 if (response.code() == 200) {
-                    if (response.body().getStatus() == 1) {
+                    if (Objects.requireNonNull(response.body()).getStatus() == 1) {
                         lst_getCoupons = (ArrayList<GetCouponsData>) response.body().getData();
                         if (lst_getCoupons == null) {
                             lst_getCoupons = new ArrayList<>();
