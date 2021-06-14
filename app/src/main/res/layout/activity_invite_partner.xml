@@ -68,9 +68,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_8sdp"
                 android:gravity="center"
-                android:text="Start a couple with your partner on playdate"
+                android:text="Start a couple with\n your partner on playdate"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_13sdp" />
+                android:textSize="@dimen/_15sdp" />
 
         </LinearLayout>
 
@@ -85,8 +85,6 @@
             android:orientation="horizontal"
             android:weightSum="2">
 
-
-
             <ImageView
                 android:layout_width="@dimen/_60sdp"
                 android:layout_height="@dimen/_60sdp"
@@ -96,27 +94,23 @@
 
             <ImageView
 
-                android:layout_width="@dimen/_50sdp"
-                android:layout_height="@dimen/_50sdp"
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_70sdp"
                 android:layout_margin="@dimen/_5sdp"
-                android:background="@drawable/circle_pink"
+                android:id="@+id/iv_share_code"
+                android:background="@drawable/circle_playdate_pink"
                 android:padding="@dimen/_8sdp"
                 android:src="@drawable/white_heart" />
 
 
-            <LinearLayout
-                android:layout_width="@dimen/_60sdp"
-                android:layout_height="@dimen/_60sdp"
-                android:layout_gravity="center"
-                android:gravity="center">
+            <ImageView
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_margin="@dimen/_8sdp"
+                android:background="@drawable/invite_bg"
+                android:padding="@dimen/_12sdp"
 
-                <ImageView
-                    android:layout_width="@dimen/_40sdp"
-                    android:layout_height="@dimen/_40sdp"
-                    android:background="@drawable/circle_redish"
-                    android:padding="@dimen/_8sdp"
-                    android:src="@drawable/speech_bubble" />
-            </LinearLayout>
+                android:src="@drawable/speech_bubble" />
 
 
         </LinearLayout>
