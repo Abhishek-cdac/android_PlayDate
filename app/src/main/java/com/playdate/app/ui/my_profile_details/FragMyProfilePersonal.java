@@ -95,15 +95,13 @@ public class FragMyProfilePersonal extends Fragment implements View.OnClickListe
         DOB.setText(s[0]);
         txt_relationship.setText(pref.getStringVal(SessionPref.LoginUserrelationship));
         interestin.setText(pref.getStringVal(SessionPref.LoginUserinterestedIn));
-
+        Picasso picasso = Picasso.get();
         String img = pref.getStringVal(SessionPref.LoginUserprofilePic);
         if (img.contains("http")) {
-            Picasso.get().load(img)
-                    .placeholder(R.drawable.cupertino_activity_indicator)
+            picasso.load(img)
                     .into(profile_image);
         } else {
-            Picasso.get().load(BASE_URL_IMAGE + img)
-                    .placeholder(R.drawable.cupertino_activity_indicator)
+            picasso.load(BASE_URL_IMAGE + img)
                     .into(profile_image);
         }
     }

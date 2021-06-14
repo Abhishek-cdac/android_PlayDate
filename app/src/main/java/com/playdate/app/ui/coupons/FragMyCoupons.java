@@ -16,13 +16,12 @@ import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.Account;
-import com.playdate.app.model.GetCouponsData;
-import com.playdate.app.model.GetCouponsModel;
 import com.playdate.app.model.GetProfileDetails;
 import com.playdate.app.model.GetProileDetailData;
+import com.playdate.app.model.MyCoupons;
+import com.playdate.app.model.MyCouponsModel;
 import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.ui.coupons.adapters.MyCouponAdapter;
-import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
 
@@ -117,14 +116,14 @@ public class FragMyCoupons extends Fragment {
         hashMap.put("userId", "100");
         SessionPref pref = SessionPref.getInstance(getActivity());
 
-        Call<GetCouponsModel> call = service.getMyCoupons("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
-        call.enqueue(new Callback<GetCouponsModel>() {
+        Call<MyCouponsModel> call = service.getMyCoupons("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new Callback<MyCouponsModel>() {
             @Override
-            public void onResponse(Call<GetCouponsModel> call, Response<GetCouponsModel> response) {
+            public void onResponse(Call<MyCouponsModel> call, Response<MyCouponsModel> response) {
                 if (response.code() == 200) {
                     assert response.body() != null;
                     if (response.body().getStatus() == 1) {
-                        List<GetCouponsData> lst = response.body().getData();
+                        List<MyCoupons> lst = response.body().getData();
                         if (lst == null) {
                             lst = new ArrayList<>();
                         }
@@ -136,7 +135,7 @@ public class FragMyCoupons extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<GetCouponsModel> call, Throwable t) {
+            public void onFailure(Call<MyCouponsModel> call, Throwable t) {
                 t.printStackTrace();
             }
         });

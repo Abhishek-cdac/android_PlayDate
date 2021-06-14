@@ -6,10 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +27,6 @@ import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.GetProfileDetails;
 import com.playdate.app.model.GetProileDetailData;
-import com.playdate.app.model.Interest;
 import com.playdate.app.ui.blockuser.BlockUserActivity;
 import com.playdate.app.ui.dashboard.OnProfilePhotoChageListerner;
 import com.playdate.app.ui.forgot_password.ForgotPasswordActivity;
@@ -85,7 +82,7 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
-      
+
         callAPI();
         setInIt(view);
 
@@ -94,8 +91,10 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
 
     }
 
-    private void setInIt(View view) {
+    Picasso picasso;
 
+    private void setInIt(View view) {
+        picasso = Picasso.get();
         ImageView iv_edit_couple_bio = view.findViewById(R.id.iv_edit_couple_bio);
         RelativeLayout leave_relation_rl = view.findViewById(R.id.leave_relation_rl);
         RelativeLayout change_bio_video_rl = view.findViewById(R.id.change_bio_video_rl);
@@ -187,8 +186,6 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
         }
     }
 
-    ArrayList<Interest> lst_interest;
-
 
     private void setValues() {
         try {
@@ -198,12 +195,10 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
 
             String img = pref.getStringVal(SessionPref.LoginUserprofilePic);
             if (img.contains("http")) {
-                Picasso.get().load(img)
-                        .placeholder(R.drawable.cupertino_activity_indicator)
+                picasso.load(img)
                         .into(profile_image);
             } else {
-                Picasso.get().load(BASE_URL_IMAGE + img)
-                        .placeholder(R.drawable.cupertino_activity_indicator)
+                picasso.load(BASE_URL_IMAGE + img)
                         .into(profile_image);
             }
             txt_interetsed.setText(pref.getStringVal(SessionPref.LoginUserinterested));
@@ -278,14 +273,13 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
     }
 
     private void imageChange(boolean state) {
-        if(state){
+        if (state) {
 
             iv_dark_mode.setImageResource(R.drawable.dark_mode_sel);
             iv_dark_mode.setRotation(180);
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 
-        }else
-        {
+        } else {
             iv_dark_mode.setImageResource(R.drawable.dark_mode);
             iv_dark_mode.setRotation(0);
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);

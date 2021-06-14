@@ -1,58 +1,122 @@
 package com.playdate.app.model;
 
+import com.google.gson.annotations.Expose;
+
+import java.util.List;
+
 public class MyCoupons {
-    String rest_name;
-    String discount_desc;
-    String valid;
-    String coupon_code;
-    String image;
 
-    public String getRest_name() {
-        return rest_name;
+
+    @Expose
+    private String couponCode;
+    @Expose
+    private String couponId;
+    @Expose
+    private String couponDescription;
+    private int couponPurchasePoint;
+
+    public int getCouponPurchasePoint() {
+        return couponPurchasePoint;
     }
 
-    public void setRest_name(String rest_name) {
-        this.rest_name = rest_name;
+    public void setCouponPurchasePoint(int couponPurchasePoint) {
+        this.couponPurchasePoint = couponPurchasePoint;
     }
 
-    public String getDiscount_desc() {
-        return discount_desc;
+    public String getCouponDescription() {
+        return couponDescription;
     }
 
-    public void setDiscount_desc(String discount_desc) {
-        this.discount_desc = discount_desc;
+    public void setCouponDescription(String couponDescription) {
+        this.couponDescription = couponDescription;
     }
 
-    public String getValid() {
-        return valid;
+    @Expose
+    private String couponTitle;
+    @Expose
+    private String couponType;
+    @Expose
+    private String couponValidTillDate;
+    @Expose
+    private String couponValue;
+
+    public String getPoints() {
+        return points;
     }
 
-    public void setValid(String valid) {
-        this.valid = valid;
+    public void setPoints(String points) {
+        this.points = points;
     }
 
-    public String getCoupon_code() {
-        return coupon_code;
+    @Expose
+    private String points;
+    @Expose
+    private List<Restaurant> restaurants;
+    @Expose
+    private String status;
+
+    public String getCouponCode() {
+        return couponCode;
     }
 
-    public void setCoupon_code(String coupon_code) {
-        this.coupon_code = coupon_code;
+    public void setCouponCode(String couponCode) {
+        this.couponCode = couponCode;
     }
 
-    public String getImage() {
-        return image;
+    public String getCouponId() {
+        return couponId;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setCouponId(String couponId) {
+        this.couponId = couponId;
     }
 
-    public MyCoupons(String rest_name, String discount_desc, String valid, String coupon_code, String image) {
-        this.rest_name = rest_name;
-        this.discount_desc = discount_desc;
-        this.valid = valid;
-        this.coupon_code = coupon_code;
-        this.image = image;
+    public String getCouponTitle() {
+        return couponTitle;
+    }
+
+    public void setCouponTitle(String couponTitle) {
+        this.couponTitle = couponTitle;
+    }
+
+    public String getCouponType() {
+        return couponType;
+    }
+
+    public void setCouponType(String couponType) {
+        this.couponType = couponType;
+    }
+
+    public String getCouponValidTillDate() {
+        return couponValidTillDate;
+    }
+
+    public void setCouponValidTillDate(String couponValidTillDate) {
+        this.couponValidTillDate = couponValidTillDate;
+    }
+
+    public String getCouponValue() {
+        return couponValue;
+    }
+
+    public void setCouponValue(String couponValue) {
+        this.couponValue = couponValue;
+    }
+
+    public List<Restaurant> getRestaurants() {
+        return restaurants;
+    }
+
+    public void setRestaurants(List<Restaurant> restaurants) {
+        this.restaurants = restaurants;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 

@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/black_back">
 
+
     <ImageView
         android:id="@+id/medal"
         android:layout_width="wrap_content"
@@ -88,18 +89,30 @@
                 android:id="@+id/bar_meter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="+ 100"
-                android:gravity="center"
-                android:textColor="@color/color_pink"
+                android:background="@drawable/bar_meter1"
                 android:fontFamily="@font/lato_bold"
+                android:gravity="center"
                 android:paddingHorizontal="@dimen/_5sdp"
-                android:textSize="@dimen/_16sdp"
-                android:background="@drawable/bar_meter1"/>
+                android:text="+ 100"
+                android:textColor="@color/color_pink"
+                android:textSize="@dimen/_16sdp" />
 
         </RelativeLayout>
 
 
+
+
     </LinearLayout>
 
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animationView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/blast"
+        app:lottie_url="REPLACE_JSON_URL" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

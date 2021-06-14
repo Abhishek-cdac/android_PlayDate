@@ -1,26 +1,34 @@
 package com.playdate.app.ui.coupons.adapters;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
-import com.playdate.app.model.GetCouponsData;
+import com.playdate.app.model.MyCoupons;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import static android.content.Context.CLIPBOARD_SERVICE;
+
 public class MyCouponAdapter extends RecyclerView.Adapter<MyCouponAdapter.ViewHolder> {
     //    ArrayList<MyCoupons> list = new ArrayList<>();
-    List<GetCouponsData> list;
+    List<MyCoupons> list;
     Picasso picasso;
+    Context mContext;
 
-    public MyCouponAdapter(List<GetCouponsData> lst) {
+    public MyCouponAdapter(List<MyCoupons> lst) {
         this.list = lst;
         picasso = Picasso.get();
     }
@@ -28,7 +36,8 @@ public class MyCouponAdapter extends RecyclerView.Adapter<MyCouponAdapter.ViewHo
     @NonNull
     @Override
     public MyCouponAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_my_coupons, parent, false);
+        mContext = parent.getContext();
+        View view = LayoutInflater.from(mContext).inflate(R.layout.row_my_coupons, parent, false);
         return new ViewHolder(view);
     }
 
@@ -37,13 +46,26 @@ public class MyCouponAdapter extends RecyclerView.Adapter<MyCouponAdapter.ViewHo
         try {
             holder.rest_name.setText(list.get(position).getCouponTitle());
             picasso.load(list.get(position).getRestaurants().get(0).getImage()).into(holder.iv_image);
+
+            holder.discount_desc.setText(list.get(position).getCouponDescription());
+            String[] str = list.get(position).getCouponValidTillDate().split("T");
+            holder.valid.setText(str[0]);
+            holder.coupon_code.setText(list.get(position).getCouponCode());
+            holder.rl_code.setOnClickListener(v -> copyToClipBoard(list.get(position).getCouponCode()));
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        holder.discount_desc.setText(list.get(position).getCouponDescription());
-        String str[]=list.get(position).getCouponValidTillDate().split("T");
-        holder.valid.setText(str[0]);
-        holder.coupon_code.setText(list.get(position).getCouponCode());
+    }
+
+    private void copyToClipBoard(String couponCode) {
+        if (null != couponCode) {
+            ClipboardManager clipboard = (ClipboardManager) mContext.getSystemService(CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText("CouponCode", couponCode);
+            clipboard.setPrimaryClip(clip);
+            Toast.makeText(mContext, "Coupon Code Copied", Toast.LENGTH_SHORT).show();
+        }
+
 
     }
 
@@ -54,10 +76,12 @@ public class MyCouponAdapter extends RecyclerView.Adapter<MyCouponAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView iv_image;
+        RelativeLayout rl_code;
         TextView rest_name, discount_desc, valid, coupon_code;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            rl_code = itemView.findViewById(R.id.rl_code);
             iv_image = itemView.findViewById(R.id.iv_image);
             rest_name = itemView.findViewById(R.id.rest_name);
             discount_desc = itemView.findViewById(R.id.discount_desc);

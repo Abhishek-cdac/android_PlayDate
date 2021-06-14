@@ -1,28 +1,20 @@
 package com.playdate.app.ui.anonymous_question;
 
-import android.app.Activity;
-
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.annotation.LongDef;
 import androidx.annotation.NonNull;
-
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.marlonlom.utilities.timeago.TimeAgo;
@@ -34,26 +26,21 @@ import com.playdate.app.model.GetCommentModel;
 import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.util.session.SessionPref;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
-import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Response;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder> {
     ArrayList<Comments> list = new ArrayList<>();
-    ArrayList<GetCommentData> commentList = new ArrayList<>();
+    ArrayList<GetCommentData> commentList;
     boolean selected = false;
     int selected_index = -1;
     Onclick itemClick;
@@ -140,30 +127,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             holder.delete.setVisibility(View.GONE);
         }
 
-      /*  if (commentList.get(position).isSelected) {
-          //  holder.relativeLayout.setBackgroundColor(Color.parseColor("#88000000"));
-            holder.relativeLayout.setBackgroundColor(mContext.getResources().getColor(R.color.backgroundColour));
-            holder.name.setTextColor(mContext.getResources().getColor(R.color.textColour));
-            holder.desc.setTextColor(mContext.getResources().getColor(R.color.textColour));
-            holder.time.setTextColor(mContext.getResources().getColor(R.color.textColour));
-            holder.like.setTextColor(mContext.getResources().getColor(R.color.textColour));
-            holder.reply.setTextColor(mContext.getResources().getColor(R.color.textColour));
-            if (commentList.get(position).getUserId().equals(pref.getStringVal(SessionPref.LoginUserID))) {
-                holder.delete.setVisibility(View.VISIBLE);
-            } else {
-                holder.delete.setVisibility(View.GONE);
-            }
-        } else {
-            holder.relativeLayout.setBackgroundColor(mContext.getResources().getColor(R.color.backgroundColour));
-            holder.name.setTextColor(mContext.getResources().getColor(R.color.textColour));
-            holder.desc.setTextColor(mContext.getResources().getColor(R.color.textColour));
-            holder.time.setTextColor(mContext.getResources().getColor(R.color.textColour));
-            holder.like.setTextColor(mContext.getResources().getColor(R.color.textColour));
-            holder.reply.setTextColor(mContext.getResources().getColor(R.color.textColour));
-            holder.delete.setVisibility(View.GONE);
-
-
-        }*/
 
         holder.relativeLayout.setOnLongClickListener(v -> {
             int selected_index = position;
@@ -215,16 +178,15 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             name.setTypeface(Typeface.DEFAULT_BOLD);
 
 
-            delete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            delete.setOnClickListener(v -> {
+                try {
                     selected_index = getAdapterPosition();
                     commentList.get(selected_index).setDeleted(true);
                     callDeleteCommentApi();
-                    //  commentdeleted(selected_index);
-
-
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+
             });
 
         }

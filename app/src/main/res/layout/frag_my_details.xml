@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     android:background="@color/backgroundColour"
     android:clickable="true"
     android:focusableInTouchMode="true"
@@ -456,6 +457,7 @@
                 android:textColor="@color/textColour"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
+
             <ImageView
                 android:id="@+id/iv_dark_mode"
                 android:layout_width="@dimen/_20sdp"

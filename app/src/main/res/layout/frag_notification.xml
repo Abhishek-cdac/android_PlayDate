@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     android:background="@color/backgroundColour"
     android:focusableInTouchMode="true"
     android:paddingHorizontal="@dimen/_12sdp"
@@ -71,6 +72,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_date"
         android:layout_marginTop="@dimen/_5sdp"
+        android:layoutAnimation="@anim/layout_animation"
         android:visibility="gone" />
 
 

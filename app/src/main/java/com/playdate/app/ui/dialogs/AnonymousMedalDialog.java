@@ -7,9 +7,11 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 
+import com.bumptech.glide.load.engine.Resource;
 import com.playdate.app.R;
 
 public class AnonymousMedalDialog extends Dialog {
@@ -25,12 +27,14 @@ public class AnonymousMedalDialog extends Dialog {
         setOnCancelListener(null);
         View view = LayoutInflater.from(context).inflate(
                 R.layout.dialog_perfect_answer_anonymous, null);
+        View medal=view.findViewById(R.id.medal);
 //        View view = LayoutInflater.from(context).inflate(
 //                R.layout.dialog_winner, null);
 //        View view = LayoutInflater.from(context).inflate(
 //                R.layout.dialog_second, null);
 //        View view = LayoutInflater.from(context).inflate(
 //                R.layout.dialog_wrong_answer, null);
+//        medal.startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.shake));
 
 
 

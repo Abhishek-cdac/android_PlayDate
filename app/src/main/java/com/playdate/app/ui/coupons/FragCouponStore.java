@@ -40,7 +40,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FragCouponStore extends Fragment {
+public class FragCouponStore extends Fragment implements OnCouponSelected {
     private RecyclerView rv_coupons_list;
     private ArrayList<GetCouponsData> lst_getCoupons;
     private CommonClass clsCommon;
@@ -58,7 +58,7 @@ public class FragCouponStore extends Fragment {
         clsCommon = CommonClass.getInstance();
         rv_coupons_list = view.findViewById(R.id.rv_coupons_list);
         txt_points = view.findViewById(R.id.txt_points);
-
+        rv_coupons_list.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
         itemClick = new Onclick() {
             @Override
             public void onItemClick(View view, int position, int value) {
@@ -86,8 +86,12 @@ public class FragCouponStore extends Fragment {
                         intent.putExtra("Coupon_points", Coupon_points);
                         intent.putExtra("isFromCoupon", true);
 
+
+
                         if (null != account)
                             intent.putExtra("CurrentPoints", account.getCurrentPoints());
+
+
 
                         startActivity(intent);
                     } catch (Exception e) {
@@ -104,7 +108,7 @@ public class FragCouponStore extends Fragment {
 
             }
         };
-        callGetCouponsApi();
+
 
 
         return view;
@@ -135,7 +139,7 @@ public class FragCouponStore extends Fragment {
                 pd.cancel();
                 if (response.code() == 200) {
                     try {
-                        if (response.body().getStatus() == 1) {
+                        if (Objects.requireNonNull(response.body()).getStatus() == 1) {
                             ArrayList<GetProileDetailData> lst_getPostDetail;
                             lst_getPostDetail = (ArrayList<GetProileDetailData>) response.body().getData();
                             if (lst_getPostDetail == null) {
@@ -147,6 +151,7 @@ public class FragCouponStore extends Fragment {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                    callGetCouponsApi();
                 }
 
 
@@ -167,7 +172,6 @@ public class FragCouponStore extends Fragment {
 
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
-        // hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
         hashMap.put("limit", "50");
         hashMap.put("pageNo", "1");
 
@@ -181,17 +185,20 @@ public class FragCouponStore extends Fragment {
                 pd.cancel();
                 if (response.code() == 200) {
                     if (Objects.requireNonNull(response.body()).getStatus() == 1) {
-                        lst_getCoupons = (ArrayList<GetCouponsData>) response.body().getData();
-                        if (lst_getCoupons == null) {
-                            lst_getCoupons = new ArrayList<>();
-                        }
-                        RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
-                        rv_coupons_list.setLayoutManager(manager);
+                        try {
+                            lst_getCoupons = (ArrayList<GetCouponsData>) response.body().getData();
+                            if (lst_getCoupons == null) {
+                                lst_getCoupons = new ArrayList<>();
+                            }
 
-                        CouponStoreAdapter adapter = new CouponStoreAdapter(lst_getCoupons, itemClick);
-                        rv_coupons_list.setAdapter(adapter);
-//                        RestaurantSelectionAdapter adapter = new RestaurantSelectionAdapter(getActivity(), lst_getRestaurantsDetail);
-//                        rv_restaurant.setAdapter(adapter);
+
+                            CouponStoreAdapter adapter = new CouponStoreAdapter(lst_getCoupons, itemClick);
+                            rv_coupons_list.setAdapter(adapter);
+                            adapter.setListerner(FragCouponStore.this);
+                            adapter.setCurrentPoints(account.getCurrentPoints());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
 
                     } else {
@@ -217,5 +224,15 @@ public class FragCouponStore extends Fragment {
                 Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void showMsg() {
+        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", "This coupon is already purchased!", "Ok");
+    }
+
+    @Override
+    public void showMsgNoBal() {
+        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", "Insufficient wallet points to purchase!", "Ok");
     }
 }

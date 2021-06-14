@@ -236,7 +236,7 @@ public class ActivityCoupons extends AppCompatActivity implements View.OnClickLi
         ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
         ClipData clip = ClipData.newPlainText("CouponCode", CouponCode);
         clipboard.setPrimaryClip(clip);
-        Toast.makeText(getApplicationContext(), "CouponCode Copied", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Coupon Code Copied", Toast.LENGTH_SHORT).show();
 
     }
 

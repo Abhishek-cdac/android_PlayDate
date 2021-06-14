@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +25,6 @@ import com.playdate.app.model.NotificationModel;
 import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.ui.chat.request.RequestChatFragment;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
-import com.playdate.app.ui.social.FragSocialFeed;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
@@ -43,7 +41,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FragNotification extends Fragment {
-    String extra;
+    private String extra;
 
     public FragNotification(String extra) {
         this.extra = extra;
@@ -54,7 +52,7 @@ public class FragNotification extends Fragment {
     private List<NotificationData> lst_notifications;
     private Onclick itemClick;
     private Bundle bundle;
-    TextView ll_no_notify;
+    private TextView ll_no_notify;
     private ImageView back_anonymous;
 
     @Nullable
@@ -179,7 +177,7 @@ public class FragNotification extends Fragment {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("requestID", s);
-        hashMap.put("status",status);
+        hashMap.put("status", status);
 
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
         pd.show();
@@ -289,15 +287,14 @@ public class FragNotification extends Fragment {
                             lst_notifications = new ArrayList<>();
                         }
 
-                        if (lst_notifications.size()==0){
+                        if (lst_notifications.size() == 0) {
                             ll_no_notify.setVisibility(View.VISIBLE);
                             rv_notification.setVisibility(View.GONE);
-                        }
-                        else {
+                        } else {
                             ll_no_notify.setVisibility(View.GONE);
                             rv_notification.setVisibility(View.VISIBLE);
 
-                            Log.e("lst_notifications",""+lst_notifications.size());
+                            Log.e("lst_notifications", "" + lst_notifications.size());
                             RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
                             rv_notification.setLayoutManager(manager);
                             FragNewNotificationAdapter adapter = new FragNewNotificationAdapter(getActivity(), (ArrayList<NotificationData>) lst_notifications, itemClick);
