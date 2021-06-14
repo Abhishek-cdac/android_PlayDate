@@ -692,11 +692,11 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             startActivity(mIntent);
         } else if (id == R.id.iv_cart) {
             ll_profile_drop_menu.setVisibility(View.GONE);
-            iv_plus.setVisibility(View.GONE);
+            iv_plus.setVisibility(View.VISIBLE);
 //            iv_booster.setVisibility(View.GONE);
-            iv_play_date_logo.setVisibility(View.GONE);
-            bottomNavigationView.setVisibility(View.GONE);
-            ReplaceFragWithStack(new FragStore());
+            iv_play_date_logo.setVisibility(View.VISIBLE);
+
+            new FragStore(this).show();
 
         } else if (id == R.id.ll_take_photo) {
 
