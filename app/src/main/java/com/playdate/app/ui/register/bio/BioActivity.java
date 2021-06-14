@@ -2,6 +2,9 @@ package com.playdate.app.ui.register.bio;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -37,6 +40,7 @@ public class BioActivity extends AppCompatActivity {
     private BioViewModel viewModel;
     private CommonClass clsCommon;
     private Intent mIntent;
+    private LinearLayout ll_bio_bg;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,6 +51,8 @@ public class BioActivity extends AppCompatActivity {
         bioBinding.setLifecycleOwner(this);
         mIntent = getIntent();
         bioBinding.setBioViewModel(viewModel);
+        ll_bio_bg = findViewById(R.id.ll_bio_bg);
+
         if (mIntent.getBooleanExtra("fromProfile", false)) {
             SessionPref pref = SessionPref.getInstance(this);
             viewModel.BioText.setValue(pref.getStringVal(LoginUserpersonalBio));
@@ -75,6 +81,15 @@ public class BioActivity extends AppCompatActivity {
             @Override
             public void onChanged(Boolean click) {
                 finish();
+            }
+        });
+
+
+        ll_bio_bg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("linear", "onClick:");
+                clsCommon.hideKeyboard(v,BioActivity.this);
             }
         });
     }

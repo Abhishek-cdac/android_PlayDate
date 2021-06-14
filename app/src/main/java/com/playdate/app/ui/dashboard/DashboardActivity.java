@@ -84,6 +84,8 @@ import static com.playdate.app.util.session.SessionPref.CompleteProfile;
 public class DashboardActivity extends AppCompatActivity implements OnInnerFragmentClicks, View.OnClickListener, OnProfilePhotoChageListerner, OnFriendSelected, OnAPIResponce {
 
     private TextView txt_match, txt_chat;
+
+                                         
     private TextView txt_social;
     private TextView txt_payment;
     private TextView txt_account;
