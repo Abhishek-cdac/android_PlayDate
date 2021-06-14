@@ -104,6 +104,7 @@ public class RestaurantActivity extends AppCompatActivity {
         });
     }
 
+    
     private void callAPI() {
         if (rest_list == null) {
             return;

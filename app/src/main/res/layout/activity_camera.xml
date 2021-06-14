@@ -15,7 +15,7 @@
         app:cameraAutoFocusMarker="@string/cameraview_default_autofocus_marker"
         app:cameraEngine="camera2"
         app:cameraExperimental="true"
-        app:cameraFacing="back"
+        app:cameraFacing="front"
         app:cameraFlash="auto"
         app:cameraGestureLongTap="none"
         app:cameraGesturePinch="zoom"

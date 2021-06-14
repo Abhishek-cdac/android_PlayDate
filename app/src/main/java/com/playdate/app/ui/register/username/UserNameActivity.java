@@ -3,7 +3,9 @@ package com.playdate.app.ui.register.username;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -37,6 +39,7 @@ public class UserNameActivity extends AppCompatActivity {
     ActivityUsernameBinding binding;
     Intent mIntent;
     CommonClass clsCommon;
+    RelativeLayout rl_username_bg;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,6 +51,7 @@ public class UserNameActivity extends AppCompatActivity {
         binding.setUserNameViewModel(userNameViewModel);
         mIntent = getIntent();
         binding.setUserNameViewModel(userNameViewModel);
+        rl_username_bg = findViewById(R.id.rl_username_bg);
         if (mIntent.getBooleanExtra("fromProfile", false)) {
             SessionPref pref = SessionPref.getInstance(this);
             userNameViewModel.OnUserNameInput().setValue(pref.getStringVal(LoginUserusername));
@@ -90,6 +94,13 @@ public class UserNameActivity extends AppCompatActivity {
                     }
                 });
 
+        rl_username_bg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("linear", "onClick:");
+                clsCommon.hideKeyboard(v, UserNameActivity.this);
+            }
+        });
 
     }
 
@@ -166,7 +177,7 @@ public class UserNameActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         try {
-            if(null!=handler){
+            if (null != handler) {
                 handler.removeCallbacksAndMessages(null);
             }
         } catch (Exception e) {
