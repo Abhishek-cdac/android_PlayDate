@@ -174,8 +174,6 @@
     <string name="invite_desc">Start a couple with your partner on playdate</string>
 
 
-
-
     <string name="result_image_desc">crop result</string>
 
     <string name="main_drawer_load">Load Image for cropping</string>
@@ -231,4 +229,6 @@
     <string name="drawer_option_toggle_show_progress_bar">Show Progress Bar: %1s</string>
 
     <string name="date_suggestion">Date Suggestions For You</string>
+    <string name="header">Take some time out</string>
+    <string name="subHeader">Take your time out and bring awareness into your everyday life</string>
 </resources>

@@ -1,5 +1,7 @@
 package com.playdate.app.ui.onboarding;
 
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -38,6 +40,16 @@ public class OnBoardingActivity extends AppCompatActivity {
             startActivity(new Intent(OnBoardingActivity.this, DashboardActivity.class));
             finish();
         }
+
+        ObjectAnimator scaleDown = ObjectAnimator.ofPropertyValuesHolder(
+                binding.btnLogin,
+                PropertyValuesHolder.ofFloat("scaleX", 1.2f),
+                PropertyValuesHolder.ofFloat("scaleY", 1.2f));
+        scaleDown.setDuration(310);
+        scaleDown.setRepeatCount(ObjectAnimator.INFINITE);
+        scaleDown.setRepeatMode(ObjectAnimator.REVERSE);
+
+        scaleDown.start();
 
 
     }

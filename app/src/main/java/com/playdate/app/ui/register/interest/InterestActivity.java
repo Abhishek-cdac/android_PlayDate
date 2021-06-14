@@ -6,6 +6,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ import com.playdate.app.databinding.ActivityInterestBinding;
 import com.playdate.app.model.Interest;
 import com.playdate.app.model.InterestsMain;
 import com.playdate.app.model.LoginResponse;
+import com.playdate.app.ui.register.bio.BioActivity;
 import com.playdate.app.ui.register.interest.adapter.InterestAdapter;
 import com.playdate.app.ui.restaurant.RestaurantActivity;
 import com.playdate.app.util.common.CommonClass;
@@ -40,7 +42,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class InterestActivity extends AppCompatActivity implements InterestAdapter.InterestAdapterListner{
+public class InterestActivity extends AppCompatActivity implements InterestAdapter.InterestAdapterListner {
 
     InterestViewModel viewModel;
     ActivityInterestBinding binding;
@@ -49,6 +51,7 @@ public class InterestActivity extends AppCompatActivity implements InterestAdapt
     InterestAdapter adapter;
     Intent mIntent;
     RecyclerView recyclerView;
+    RelativeLayout rl_interest_bg;
     CommonClass clsCommon;
 
     @Override
@@ -60,6 +63,7 @@ public class InterestActivity extends AppCompatActivity implements InterestAdapt
         binding.setLifecycleOwner(this);
 
         binding.setInterestViewModel(viewModel);
+        rl_interest_bg = findViewById(R.id.rl_interest_bg);
         recyclerView = binding.recyclerviewInterest;
         recyclerView.setLayoutManager(new GridLayoutManager(InterestActivity.this, 2));
         recyclerView.setHasFixedSize(true);
@@ -81,6 +85,14 @@ public class InterestActivity extends AppCompatActivity implements InterestAdapt
                 return false;
             }
         });*/
+
+        rl_interest_bg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("linear", "onClick:");
+                clsCommon.hideKeyboard(v, InterestActivity.this);
+            }
+        });
         binding.edtSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -291,6 +303,6 @@ public class InterestActivity extends AppCompatActivity implements InterestAdapt
 
     @Override
     public void onInterestSelected(Interest interest) {
-        Log.e("filter interest",""+interest);
+        Log.e("filter interest", "" + interest);
     }
 }

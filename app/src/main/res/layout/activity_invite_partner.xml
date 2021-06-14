@@ -67,7 +67,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_8sdp"
-                android:fontFamily="@font/lato_bold"
                 android:gravity="center"
                 android:text="Start a couple with\n your partner on playdate"
                 android:textColor="@color/white"
