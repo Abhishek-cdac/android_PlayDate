@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
+import com.playdate.app.ui.dashboard.DashboardActivity;
 import com.playdate.app.ui.date.OnBackPressed;
 import com.playdate.app.ui.date.adapter.StoreDMAdapter;
 import com.playdate.app.ui.date.adapter.StoreDateCoinAdpter;
@@ -32,6 +33,7 @@ public class FragStore extends Dialog {
 
     ImageView cancel;
     ImageView iv_leaderboard;
+    DashboardActivity ref;
 
     public FragStore(@NonNull Context context) {
         super(context, R.style.My_Dialog);
@@ -48,6 +50,7 @@ public class FragStore extends Dialog {
         getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         setContentView(view);
 
+        ref = new DashboardActivity();
         RecyclerView rv_game_coin = view.findViewById(R.id.rv_game_coin);
         RecyclerView rv_date_coin = view.findViewById(R.id.rv_date_coin);
         RecyclerView rv_multiplier = view.findViewById(R.id.rv_multiplier);
@@ -77,6 +80,12 @@ public class FragStore extends Dialog {
         iv_leaderboard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                ref.redirectToLeaderBoard();
+//                ref.ReplaceFragWithStack(new FragGameLeaderBoard());
+//                dismiss();
+
+
                 OnInnerFragmentClicks frag = (OnInnerFragmentClicks) context;
                 frag.ReplaceFrag(new FragGameLeaderBoard());
             }
@@ -87,7 +96,6 @@ public class FragStore extends Dialog {
             @Override
             public void onClick(View v) {
                 Log.d("CANCEL", "onClick: ");
-//                getActivity().finish();
                 dismiss();
             }
         });

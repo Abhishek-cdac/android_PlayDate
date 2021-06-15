@@ -107,4 +107,12 @@ dependencies {
 
 //    implementation 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.1.0'
 
+    implementation "com.connectycube:connectycube-android-sdk-chat:1.8.1"
+    implementation "com.connectycube:connectycube-android-sdk-videochat:1.8.1"
+    implementation "com.connectycube:connectycube-android-sdk-storage:1.8.1"
+    implementation "com.connectycube:connectycube-android-sdk-pushnotifications:1.8.1"
+
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+
+
 }

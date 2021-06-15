@@ -34,27 +34,16 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.ALL_PERMISSIONS_RESULT;
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.PICK_PHOTO_FOR_AVATAR;
 
-public class SampleActivity extends AppCompatActivity implements OnMapReadyCallback{
+public class SampleActivity extends AppCompatActivity {
 
-    private GoogleMap mMap;
-
-
+    ImageView iv_videoCal;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sample_location_activity);
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_map);
-        mapFragment.getMapAsync(this);
-    }
 
 
-    @Override
-    public void onMapReady(@NonNull GoogleMap googleMap) {
-        mMap = googleMap;
-        LatLng sydney = new LatLng(85, 75);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-
+        iv_videoCal = findViewById(R.id.iv_videoCal);
     }
 }

@@ -45,6 +45,7 @@ import com.playdate.app.ui.dashboard.data.CallAPI;
 import com.playdate.app.ui.dashboard.fragments.FragLanding;
 import com.playdate.app.ui.dashboard.fragments.FragSearchUser;
 import com.playdate.app.ui.date.DateBaseActivity;
+import com.playdate.app.ui.date.games.FragGameLeaderBoard;
 import com.playdate.app.ui.date.games.FragStore;
 import com.playdate.app.ui.dialogs.FullScreenDialog;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
@@ -1052,5 +1053,9 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     }
 
 
+    public void redirectToLeaderBoard() {
+        Log.d("Redirected", "redirectToLeaderBoard: ");
+        ReplaceFragWithStack(new FragGameLeaderBoard());
+    }
 }
 
