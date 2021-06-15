@@ -156,10 +156,11 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
         });
   */
         iv_edit_couple_bio.setOnClickListener(this);
-
+        txt_change_photo.setText("Change profile photo");
+        txt_username.setText("Username");
         if (pref.getStringVal(SessionPref.LoginUserrelationship).equals("Single")) {
-            txt_username.setText("Username");
-            txt_change_photo.setText("Change profile photo");
+//            txt_username.setText("Username");
+
             create_relation_rl.setVisibility(View.VISIBLE);
             invite_partner.setVisibility(View.VISIBLE);
             leave_partner.setVisibility(View.GONE);
@@ -171,8 +172,8 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
             txt_change_bio_video.setVisibility(View.VISIBLE);
             change_bio_video_rl.setVisibility(View.VISIBLE);
         } else {
-            txt_change_photo.setText("Change couple profile photo");
-            txt_username.setText("Couple Username");
+//            txt_change_photo.setText("Change couple profile photo");
+
             create_relation_rl.setVisibility(View.GONE);
             invite_partner.setVisibility(View.GONE);
             leave_partner.setVisibility(View.VISIBLE);
