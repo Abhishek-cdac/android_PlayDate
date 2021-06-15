@@ -16,6 +16,6 @@
         android:layout_width="@dimen/_150sdp"
         android:layout_height="@dimen/_70sdp"
         android:padding="@dimen/_5sdp"
-        android:src="@drawable/rest1" />
+       />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

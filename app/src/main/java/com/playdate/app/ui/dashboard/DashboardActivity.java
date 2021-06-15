@@ -85,7 +85,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
     private TextView txt_match, txt_chat;
 
-                                         
+
     private TextView txt_social;
     private TextView txt_payment;
     private TextView txt_account;
@@ -99,7 +99,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     private ImageView iv_dashboard_notification;
     private ImageView iv_coupons;
     private ImageView iv_cart;
-//    private ImageView iv_booster;
+    //    private ImageView iv_booster;
     private ImageView profile_image;
     private TextView txt_serachfriend;
     private TextView txt_store;
@@ -129,6 +129,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     private final int CAMERA = 2;
 
     public static Bitmap bitmap = null;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -611,8 +612,10 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             if (OPTION_CLICK == 1) {
                 return;
             }
+
             nsv.scrollTo(0, 0);
             OPTION_CLICK = 1;
+            ll_profile_menu.setVisibility(View.GONE);
             iv_love.setImageResource(R.drawable.love);
             iv_love.setBackground(null);
             iv_coupons.setImageResource(R.drawable.badge_sel);
@@ -627,6 +630,10 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             ll_mainMenu.setVisibility(View.VISIBLE);
             ll_her.setVisibility(View.VISIBLE);
 
+            txt_store.setTextColor(getResources().getColor(R.color.white));
+            txt_store.setBackground(getResources().getDrawable(R.drawable.menu_button));
+            txt_my_coupon.setTextColor(getResources().getColor(android.R.color.darker_gray));
+            txt_my_coupon.setBackground(null);
             ReplaceFrag(new FragCouponStore());
 
         } else if (id == R.id.ll_profile_support) {
@@ -638,7 +645,6 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             iv_play_date_logo.setVisibility(View.VISIBLE);
             ll_profile_drop_menu.setVisibility(View.GONE);
             iv_plus.setVisibility(View.GONE);
-//            iv_booster.setVisibility(View.GONE);
             ll_option_love.setVisibility(View.GONE);
             ll_friends.setVisibility(View.GONE);
             ll_profile_menu.setVisibility(View.VISIBLE);
@@ -650,6 +656,17 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             iv_love.setImageResource(R.drawable.love);
             iv_profile_sett.setBackground(getDrawable(R.drawable.rectangle_back));
             iv_profile_sett.setImageResource(R.drawable.tech_support_red);
+
+
+
+            txt_account.setTextColor(getResources().getColor(R.color.white));
+            txt_account.setBackground(getResources().getDrawable(R.drawable.menu_button));
+            txt_personal.setTextColor(getResources().getColor(android.R.color.darker_gray));
+            txt_personal.setBackground(null);
+            txt_payment.setTextColor(getResources().getColor(android.R.color.darker_gray));
+            txt_payment.setBackground(null);
+
+
             ReplaceFrag(new FragMyProfileDetails());
 
         } else if (id == R.id.ll_profile_insta) {

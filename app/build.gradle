@@ -104,6 +104,7 @@ dependencies {
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
     implementation 'io.card:android-sdk:5.5.0'
+    implementation 'com.gtomato.android.library:carouselview:2.0.0'
 
 //    implementation 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.1.0'
 
