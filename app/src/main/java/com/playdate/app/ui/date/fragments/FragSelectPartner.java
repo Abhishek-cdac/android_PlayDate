@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,7 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
-import com.github.ybq.android.spinkit.SpinKitView;
+import com.gtomato.android.ui.transformer.FlatMerryGoRoundTransformer;
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
@@ -24,7 +23,6 @@ import com.playdate.app.model.CreateDateGetPartnerData;
 import com.playdate.app.model.CreateDateGetPartnerModel;
 import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.ui.date.OnBackPressed;
-import com.playdate.app.ui.date.adapter.PartnerViewPagerAdapter;
 import com.playdate.app.ui.date.adapter.SuggestedDateAdapter;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.util.common.CommonClass;
@@ -47,17 +45,18 @@ public class FragSelectPartner extends Fragment implements SuggestedDateAdapter.
     private ArrayList<CreateDateGetPartnerData> lst_CreateDateGetPartner;
     private Onclick itemClick;
     private ViewPager vp_partners;
-//    private TextView tv_waiting;
+    //    private TextView tv_waiting;
 //    private TextView tv_or;
 //    private SpinKitView spin_kit;
     private CommonClass clsCommon;
+    private com.gtomato.android.ui.widget.CarouselView carousel;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_date_select_partner, container, false);
-
+        carousel = view.findViewById(R.id.carousel);
         clsCommon = CommonClass.getInstance();
         vp_partners = view.findViewById(R.id.vp_partners);
         ImageView iv_back = view.findViewById(R.id.iv_back);
@@ -124,7 +123,7 @@ public class FragSelectPartner extends Fragment implements SuggestedDateAdapter.
         return view;
     }
 
-    void goBack(){
+    void goBack() {
         try {
             OnBackPressed ref = (OnBackPressed) getActivity();
             ref.onBack();
@@ -132,11 +131,12 @@ public class FragSelectPartner extends Fragment implements SuggestedDateAdapter.
             e.printStackTrace();
         }
     }
+
     private void callCreateDateGetPartnerListAPI() {
 
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("limit","100");
+        hashMap.put("limit", "100");
         hashMap.put("pageNo", "1");//Hardcode
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
         pd.show();
@@ -155,11 +155,19 @@ public class FragSelectPartner extends Fragment implements SuggestedDateAdapter.
                             lst_CreateDateGetPartner = new ArrayList<>();
                         }
 
-                        PartnerViewPagerAdapter adapter = new PartnerViewPagerAdapter(getActivity(), lst_CreateDateGetPartner, itemClick);
-                        // adapter = new PartnerViewPagerAdapter(getActivity(), lst_CreateDateGetPartner);
-                        vp_partners.setAdapter(adapter);
-                        vp_partners.setClipToPadding(false);
-                        vp_partners.setPageMargin(-450);
+                        carousel.setTransformer(new FlatMerryGoRoundTransformer());
+                        carousel.setInfinite(true);
+                        carousel.setExtraVisibleChilds(3);
+                        carousel.setEnableFling(true);
+                        carousel.setClickToScroll(true);
+
+                        carousel.setAdapter(new MyDataAdapter(getActivity(), lst_CreateDateGetPartner, itemClick));
+
+//                        PartnerViewPagerAdapter adapter = new PartnerViewPagerAdapter(getActivity(), lst_CreateDateGetPartner, itemClick);
+//                        // adapter = new PartnerViewPagerAdapter(getActivity(), lst_CreateDateGetPartner);
+//                        vp_partners.setAdapter(adapter);
+//                        vp_partners.setClipToPadding(false);
+//                        vp_partners.setPageMargin(-450);
 //                        vp_partners.setPageTransformer(true, new RotateUpTransformer());
 
                     }
