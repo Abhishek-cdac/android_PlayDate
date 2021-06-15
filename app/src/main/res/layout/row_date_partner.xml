@@ -4,12 +4,26 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <ImageView
+        android:id="@+id/crown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="4dp"
+        android:src="@drawable/crown"
+
+        />
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/partner_image"
-        android:layout_width="@dimen/_140sdp"
-        android:layout_height="@dimen/_140sdp"
+        android:layout_width="@dimen/_120sdp"
+        android:layout_height="@dimen/_120sdp"
+        android:layout_below="@+id/crown"
         android:layout_centerInParent="true"
         android:src="@drawable/profile"
+        android:layout_marginBottom="@dimen/_5sdp"
         app:civ_border_color="@color/color_pink"
         app:civ_border_width="2dp" />
 
@@ -17,9 +31,10 @@
         android:id="@+id/points_rl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_2sdp"
         android:layout_below="@+id/partner_image"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/_10sdp">
+        android:layout_marginTop="@dimen/_5sdp">
 
         <TextView
             android:id="@+id/tv_partner_points"
@@ -29,7 +44,6 @@
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
             android:fontFamily="@font/lato_bold"
-            android:text="1200"
             android:textColor="@color/white"
             android:textSize="@dimen/_16sdp" />
 
@@ -39,7 +53,6 @@
             android:layout_gravity="center_horizontal"
             android:layout_toRightOf="@+id/tv_partner_points"
             android:fontFamily="@font/lato_bold"
-            android:text=" points"
             android:textColor="@color/white"
             android:textSize="@dimen/_16sdp" />
     </RelativeLayout>
@@ -51,25 +64,8 @@
         android:layout_below="@+id/points_rl"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/_2sdp"
-        android:text="kaylejenner91"
         android:textColor="@color/white"
         android:textSize="@dimen/_10sdp" />
-
-    <!--    <ImageView-->
-    <!--        android:layout_width="@dimen/_100sdp"-->
-    <!--        android:id="@+id/partner_image"-->
-    <!--        android:layout_height="@dimen/_100sdp"-->
-    <!--        android:src="@drawable/profile"/>-->
-
-    <!--    <de.hdodenhof.circleimageview.CircleImageView-->
-    <!--        android:id="@+id/profile_image_oponent"-->
-    <!--        android:layout_width="@dimen/_30sdp"-->
-    <!--        android:layout_height="@dimen/_30sdp"-->
-    <!--        android:layout_alignParentStart="true"-->
-    <!--        android:layout_centerInParent="true"-->
-    <!--        android:src="@drawable/model1"-->
-    <!--        app:civ_border_color="@android:color/transparent" />-->
 
 
 </RelativeLayout>

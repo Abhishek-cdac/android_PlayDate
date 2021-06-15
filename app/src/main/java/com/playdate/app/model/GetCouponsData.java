@@ -4,6 +4,7 @@ package com.playdate.app.model;
 import java.util.List;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class GetCouponsData {
 
@@ -13,13 +14,13 @@ public class GetCouponsData {
     private String couponId;
     @Expose
     private String couponDescription;
-    private String couponPurchasePoint;
+    private int couponPurchasePoint;
 
-    public String getCouponPurchasePoint() {
+    public int getCouponPurchasePoint() {
         return couponPurchasePoint;
     }
 
-    public void setCouponPurchasePoint(String couponPurchasePoint) {
+    public void setCouponPurchasePoint(int couponPurchasePoint) {
         this.couponPurchasePoint = couponPurchasePoint;
     }
 
@@ -30,7 +31,16 @@ public class GetCouponsData {
     public void setCouponDescription(String couponDescription) {
         this.couponDescription = couponDescription;
     }
+    @SerializedName("purchased")
+    private List<Purchased> purchased;
 
+    public List<Purchased> getPurchased() {
+        return purchased;
+    }
+
+    public void setPurchased(List<Purchased> purchased) {
+        this.purchased = purchased;
+    }
     @Expose
     private String couponTitle;
     @Expose

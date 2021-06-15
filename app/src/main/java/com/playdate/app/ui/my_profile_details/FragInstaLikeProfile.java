@@ -1,7 +1,6 @@
 package com.playdate.app.ui.my_profile_details;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -53,6 +52,7 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
     private TextView txt_login_user;
     private CommonClass clsCommon;
     private TextView txtTotalFriend, txtTotalPost;
+    private TextView txt_points;
     private ArrayList<GetProileDetailData> lst_getPostDetail;
     private ArrayList<GetCoupleProfileData> lst_getCoupleDetail;
 
@@ -67,14 +67,16 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
         this.itsMe = itsMe;
     }
 
+    private Picasso picasso;
+    private SessionPref pref;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag_insta_profile, container, false);
-
         clsCommon = CommonClass.getInstance();
-        SessionPref pref = SessionPref.getInstance(getActivity());
-
+        pref = SessionPref.getInstance(getActivity());
+        picasso = Picasso.get();
         girl_profile_image = view.findViewById(R.id.girl_profile_image);
         boy_profile_image = view.findViewById(R.id.boy_profile_image);
         ImageView connection_img = view.findViewById(R.id.connection_img);
@@ -88,6 +90,7 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
         txt_bio = view.findViewById(R.id.txt_bio);
         txt_login_user = view.findViewById(R.id.txt_login_user);
         iv_booster = view.findViewById(R.id.iv_booster);
+        txt_points = view.findViewById(R.id.txt_points);
         TextView header_text = view.findViewById(R.id.header_text);
 
 
@@ -99,25 +102,16 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
         isBoosterOn = pref.getBoolVal("isBoosterOn");
 
 
-
-
-
-                                                                                                                                                                                                                                                                                                                                              
-
-
-        iv_booster.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isBoosterOn) {
-                    iv_booster.setImageResource(R.drawable.booster);
-                    isBoosterOn = false;
-                    pref.saveBoolKeyVal("isBoosterOn", isBoosterOn);
-                } else {
-                    new BoosterDialogDM(getActivity()).show();
-                    iv_booster.setImageResource(R.drawable.booster_select);
-                    isBoosterOn = true;
-                    pref.saveBoolKeyVal("isBoosterOn", isBoosterOn);
-                }
+        iv_booster.setOnClickListener(v -> {
+            if (isBoosterOn) {
+                iv_booster.setImageResource(R.drawable.booster);
+                isBoosterOn = false;
+                pref.saveBoolKeyVal("isBoosterOn", isBoosterOn);
+            } else {
+                new BoosterDialogDM(getActivity()).show();
+                iv_booster.setImageResource(R.drawable.booster_select);
+                isBoosterOn = true;
+                pref.saveBoolKeyVal("isBoosterOn", isBoosterOn);
             }
         });
         if (pref.getStringVal(SessionPref.LoginUserrelationship).equals("Single")) {
@@ -157,7 +151,6 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
 
     private void callCoupleAPI() {
 
-        SessionPref pref = SessionPref.getInstance(getActivity());
 
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
@@ -176,14 +169,14 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
                             lst_getCoupleDetail = new ArrayList<>();
                         }
 
-                        Picasso.get().load(BASE_URL_IMAGE + lst_getCoupleDetail.get(0).getProfile1().get(0).getProfilePicPath())
+                        picasso.load(BASE_URL_IMAGE + lst_getCoupleDetail.get(0).getProfile1().get(0).getProfilePicPath())
                                 .placeholder(R.drawable.profile)
                                 .into(boy_profile_image);
 
                         Log.e("getCoupleBoy", "" + lst_getCoupleDetail.get(0).getProfile1().get(0).getProfilePicPath());
                         Log.e("getCoupleGirl", "" + lst_getCoupleDetail.get(0).getProfile2().get(0).getProfilePicPath());
 
-                        Picasso.get().load(BASE_URL_IMAGE + lst_getCoupleDetail.get(0).getProfile2().get(0).getProfilePicPath())
+                        picasso.load(BASE_URL_IMAGE + lst_getCoupleDetail.get(0).getProfile2().get(0).getProfilePicPath())
                                 .placeholder(R.drawable.profile)
                                 .into(girl_profile_image);
                     } else {
@@ -192,7 +185,7 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message").toString(), "Ok");
+                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                     }
@@ -212,15 +205,12 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
     }
 
     private void setValue() {
-        SessionPref pref = SessionPref.getInstance(getActivity());
         String img = pref.getStringVal(SessionPref.LoginUserprofilePic);
         if (img.contains("http")) {
-            Picasso.get().load(img)
-                    .placeholder(R.drawable.cupertino_activity_indicator)
+            picasso.load(img)
                     .into(profile_image);
         } else {
-            Picasso.get().load(BASE_URL_IMAGE + img)
-                    .placeholder(R.drawable.cupertino_activity_indicator)
+            picasso.load(BASE_URL_IMAGE + img)
                     .into(profile_image);
         }
         txt_login_user.setText(pref.getStringVal(SessionPref.LoginUserusername));
@@ -230,7 +220,6 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
     }
 
     private void callAPI() {
-        SessionPref pref = SessionPref.getInstance(getActivity());
 
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
@@ -245,12 +234,18 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
                 pd.cancel();
                 if (response.code() == 200) {
                     if (Objects.requireNonNull(response.body()).getStatus() == 1) {
-                        lst_getPostDetail = (ArrayList<GetProileDetailData>) response.body().getData();
-                        if (lst_getPostDetail == null) {
-                            lst_getPostDetail = new ArrayList<>();
+                        try {
+                            lst_getPostDetail = (ArrayList<GetProileDetailData>) response.body().getData();
+                            if (lst_getPostDetail == null) {
+                                lst_getPostDetail = new ArrayList<>();
+                            }
+                            txtTotalFriend.setText(String.valueOf(lst_getPostDetail.get(0).getTotalFriends()));
+                            txtTotalPost.setText(String.valueOf(lst_getPostDetail.get(0).getTotalPosts()));
+
+                            txt_points.setText(lst_getPostDetail.get(0).getAccount().get(0).getCurrentPoints() + " Points");
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-                        txtTotalFriend.setText(String.valueOf(lst_getPostDetail.get(0).getTotalFriends()));
-                        txtTotalPost.setText(String.valueOf(lst_getPostDetail.get(0).getTotalPosts()));
 
                     } else {
                         clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
@@ -258,7 +253,7 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(Objects.requireNonNull(response.errorBody()).string());
-                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message").toString(), "Ok");
+                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                     }
@@ -295,7 +290,6 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
         } else if (id == R.id.profile_image) {
             try {
                 Intent mIntent = new Intent(getActivity(), ExoPlayerActivity.class);
-                SessionPref pref = SessionPref.getInstance(getActivity());
 
                 String videopath = pref.getStringVal(SessionPref.LoginUserprofileVideo);
 

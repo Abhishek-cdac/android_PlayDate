@@ -2,6 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/backgroundColour"
     android:padding="@dimen/_15sdp">
 
@@ -24,12 +26,26 @@
             android:textColor="@color/color_pink"
             android:textSize="@dimen/_18sdp"
             android:textStyle="bold" />
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animationView"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_below="@+id/txt_points"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            app:lottie_autoPlay="true"
+            app:lottie_colorFilter="@color/white"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/coupon"
+            app:lottie_url="REPLACE_JSON_URL" />
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_coupons_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layoutAnimation="@anim/layout_animation"
         android:layout_below="@+id/bg"
         android:layout_marginHorizontal="@dimen/_8sdp"
         android:layout_marginTop="@dimen/_12sdp" />

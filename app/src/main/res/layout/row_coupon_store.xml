@@ -1,72 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/rl_coupons"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginVertical="@dimen/_6sdp"
-    android:background="@drawable/coupon_store_border"
-    android:padding="@dimen/_10sdp">
-
-    <ImageView
-        android:id="@+id/iv_image"
-        android:layout_width="@dimen/_70sdp"
-        android:layout_height="@dimen/_70sdp"
-        android:layout_alignParentStart="true" />
+    android:layout_height="wrap_content">
 
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/rl_coupons"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/iv_image"
-        android:paddingHorizontal="@dimen/_10sdp">
+        android:layout_marginVertical="@dimen/_6sdp"
+        android:background="@drawable/coupon_store_border"
+        android:padding="@dimen/_10sdp">
 
-        <TextView
-            android:id="@+id/rest_name"
+
+        <ImageView
+            android:id="@+id/iv_image"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_70sdp"
+            android:layout_alignParentStart="true" />
+
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/textColour"
-            android:textSize="@dimen/_13sdp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/discount_desc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/rest_name"
-            android:paddingVertical="@dimen/_4sdp"
-            android:textColor="@color/textColour"
-            android:textSize="@dimen/_12sdp" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/discount_desc"
-            android:background="@drawable/pink_rect_filled"
-            android:orientation="horizontal"
-            android:padding="@dimen/_3sdp"
-            android:paddingHorizontal="@dimen/_5sdp"
-            android:paddingVertical="@dimen/_1sdp">
+            android:layout_toRightOf="@+id/iv_image"
+            android:paddingHorizontal="@dimen/_10sdp">
 
             <TextView
-                android:id="@+id/points"
+                android:id="@+id/rest_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_11sdp" />
+                android:textColor="@color/textColour"
+                android:textSize="@dimen/_13sdp"
+                android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/discount_desc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_3sdp"
-                android:text="POINTS"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_11sdp" />
+                android:layout_below="@+id/rest_name"
+                android:paddingVertical="@dimen/_4sdp"
+                android:textColor="@color/textColour"
+                android:textSize="@dimen/_12sdp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/discount_desc"
+                android:background="@drawable/pink_rect_filled"
+                android:orientation="horizontal"
+                android:padding="@dimen/_3sdp"
+                android:paddingHorizontal="@dimen/_5sdp"
+                android:paddingVertical="@dimen/_1sdp">
+
+                <TextView
+                    android:id="@+id/points"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_11sdp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_3sdp"
+                    android:text="POINTS"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_11sdp" />
 
 
-        </LinearLayout>
+            </LinearLayout>
+
+
+        </RelativeLayout>
 
 
     </RelativeLayout>
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animationView"
+        android:layout_width="@dimen/_30sdp"
 
+        android:layout_height="@dimen/_30sdp"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="center"
+        android:padding="@dimen/_5sdp"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/success"
+        app:lottie_url="REPLACE_JSON_URL" />
 </RelativeLayout>

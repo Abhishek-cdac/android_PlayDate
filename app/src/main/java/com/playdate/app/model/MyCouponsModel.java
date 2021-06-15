@@ -1,15 +1,12 @@
-
 package com.playdate.app.model;
 
 import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class GetCouponsModel {
-
+public class MyCouponsModel {
     @Expose
-    private List<GetCouponsData> data;
+    private List<MyCoupons> data;
 
 
 
@@ -18,11 +15,11 @@ public class GetCouponsModel {
     @Expose
     private Long status;
 
-    public List<GetCouponsData> getData() {
+    public List<MyCoupons> getData() {
         return data;
     }
 
-    public void setData(List<GetCouponsData> data) {
+    public void setData(List<MyCoupons> data) {
         this.data = data;
     }
 
@@ -41,5 +38,4 @@ public class GetCouponsModel {
     public void setStatus(Long status) {
         this.status = status;
     }
-
 }
