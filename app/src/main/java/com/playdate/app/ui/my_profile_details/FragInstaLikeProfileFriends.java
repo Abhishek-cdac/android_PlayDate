@@ -163,11 +163,11 @@ public class FragInstaLikeProfileFriends extends Fragment implements onPhotoClic
                             try {
                                 if (lst_getPostDetail.get(0).getProfilePicPath().contains("http")) {
                                     Picasso.get().load(lst_getPostDetail.get(0).getProfilePicPath())
-                                            .placeholder(R.drawable.cupertino_activity_indicator)
+                                            .placeholder(R.drawable.profile)
                                             .into(profile_image);
                                 } else {
                                     Picasso.get().load(BASE_URL_IMAGE + lst_getPostDetail.get(0).getProfilePicPath())
-                                            .placeholder(R.drawable.cupertino_activity_indicator)
+                                            .placeholder(R.drawable.profile)
                                             .into(profile_image);
                                 }
                             } catch (Exception e) {

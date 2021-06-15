@@ -177,7 +177,7 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
         Picasso.get().load(sender_photo).placeholder(R.drawable.cupertino_activity_indicator).into(profile_image);
         chat_name.setText(sender_name);
 
-        CreateSmilyList();
+//        CreateSmilyList();
         addQuestions();
 
         chat_name.setOnClickListener(new View.OnClickListener() {
@@ -493,37 +493,37 @@ public class FragChatMain extends Fragment implements onSmileyChangeListener, on
         startActivityForResult(intent, PICK_PHOTO_FOR_AVATAR);
     }
 
-    public void CreateSmilyList() {
-        lstSmiley.add(R.drawable.face1);
-        lstSmiley.add(R.drawable.face2);
-        lstSmiley.add(R.drawable.face3);
-        lstSmiley.add(R.drawable.face4);
-        lstSmiley.add(R.drawable.face5);
-        lstSmiley.add(R.drawable.face6);
-        lstSmiley.add(R.drawable.face7);
-        lstSmiley.add(R.drawable.face8);
-        lstSmiley.add(R.drawable.face9);
-        lstSmiley.add(R.drawable.face10);
-        lstSmiley.add(R.drawable.face11);
-        lstSmiley.add(R.drawable.face12);
-        lstSmiley.add(R.drawable.face13);
-        lstSmiley.add(R.drawable.face14);
-        lstSmiley.add(R.drawable.face15);
-        lstSmiley.add(R.drawable.face16);
-        lstSmiley.add(R.drawable.face17);
-        lstSmiley.add(R.drawable.face18);
-        lstSmiley.add(R.drawable.face19);
-        lstSmiley.add(R.drawable.face20);
-        lstSmiley.add(R.drawable.face21);
-        lstSmiley.add(R.drawable.face22);
-        lstSmiley.add(R.drawable.face23);
-        lstSmiley.add(R.drawable.face24);
-        lstSmiley.add(R.drawable.face25);
-        lstSmiley.add(R.drawable.face26);
-        lstSmiley.add(R.drawable.face27);
-        lstSmiley.add(R.drawable.face28);
-        lstSmiley.add(R.drawable.face29);
-    }
+//    public void CreateSmilyList() {
+//        lstSmiley.add(R.drawable.face1);
+//        lstSmiley.add(R.drawable.face2);
+//        lstSmiley.add(R.drawable.face3);
+//        lstSmiley.add(R.drawable.face4);
+//        lstSmiley.add(R.drawable.face5);
+//        lstSmiley.add(R.drawable.face6);
+//        lstSmiley.add(R.drawable.face7);
+//        lstSmiley.add(R.drawable.face8);
+//        lstSmiley.add(R.drawable.face9);
+//        lstSmiley.add(R.drawable.face10);
+//        lstSmiley.add(R.drawable.face11);
+//        lstSmiley.add(R.drawable.face12);
+//        lstSmiley.add(R.drawable.face13);
+//        lstSmiley.add(R.drawable.face14);
+//        lstSmiley.add(R.drawable.face15);
+//        lstSmiley.add(R.drawable.face16);
+//        lstSmiley.add(R.drawable.face17);
+//        lstSmiley.add(R.drawable.face18);
+//        lstSmiley.add(R.drawable.face19);
+//        lstSmiley.add(R.drawable.face20);
+//        lstSmiley.add(R.drawable.face21);
+//        lstSmiley.add(R.drawable.face22);
+//        lstSmiley.add(R.drawable.face23);
+//        lstSmiley.add(R.drawable.face24);
+//        lstSmiley.add(R.drawable.face25);
+//        lstSmiley.add(R.drawable.face26);
+//        lstSmiley.add(R.drawable.face27);
+//        lstSmiley.add(R.drawable.face28);
+//        lstSmiley.add(R.drawable.face29);
+//    }
 
 
     @Override

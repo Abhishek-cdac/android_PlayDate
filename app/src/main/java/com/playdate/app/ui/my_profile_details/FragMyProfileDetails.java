@@ -291,7 +291,7 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
         new AlertDialog.Builder(getActivity())
 
                 .setInverseBackgroundForced(true)
-                .setMessage("Are you sure you want to logout from app?")
+                .setMessage("Are you sure you want to logout from PlayDate?")
                 .setCancelable(false)
                 .setPositiveButton("Yes", (dialog, id) -> outFromApp())
                 .setNegativeButton("No", null)
