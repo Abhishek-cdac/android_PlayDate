@@ -6,6 +6,15 @@ import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
 public class NotificationData {
+    public int getNoti_type() {
+        return noti_type;
+    }
+
+    public void setNoti_type(int noti_type) {
+        this.noti_type = noti_type;
+    }
+
+    int noti_type;
     public boolean isSelected() {
         return isSelected;
     }

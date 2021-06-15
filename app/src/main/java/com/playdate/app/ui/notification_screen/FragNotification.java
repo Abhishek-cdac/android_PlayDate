@@ -297,16 +297,16 @@ public class FragNotification extends Fragment {
                             Log.e("lst_notifications", "" + lst_notifications.size());
                             RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
                             rv_notification.setLayoutManager(manager);
-                            FragNewNotificationAdapter adapter = new FragNewNotificationAdapter(getActivity(), (ArrayList<NotificationData>) lst_notifications, itemClick);
+                            FragNotificationTypeAdapter adapter = new FragNotificationTypeAdapter(getActivity(), (ArrayList<NotificationData>) lst_notifications, itemClick);
                             rv_notification.setAdapter(adapter);
                         }
 
 
-                        Log.e("lst_notifications", "" + lst_notifications.size());
-                        RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
-                        rv_notification.setLayoutManager(manager);
-                        FragNewNotificationAdapter adapter = new FragNewNotificationAdapter(getActivity(), (ArrayList<NotificationData>) lst_notifications, itemClick);
-                        rv_notification.setAdapter(adapter);
+//                        Log.e("lst_notifications", "" + lst_notifications.size());
+//                        RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
+//                        rv_notification.setLayoutManager(manager);
+//                        FragNewNotificationAdapter adapter = new FragNewNotificationAdapter(getActivity(), (ArrayList<NotificationData>) lst_notifications, itemClick);
+//                        rv_notification.setAdapter(adapter);
 
                     }
                 } else {
