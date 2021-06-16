@@ -3,6 +3,8 @@ package com.playdate.app.ui.register.username;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -59,6 +61,16 @@ public class UserNameActivity extends AppCompatActivity {
 
 
         }
+
+        InputFilter filter = (source, start, end, dest, dstart, dend) -> {
+            for (int i = start; i < end; i++) {
+                if (Character.isWhitespace(source.charAt(i))) {
+                    return "";
+                }
+            }
+            return null;
+        };
+        binding.edtFullname.setFilters(new InputFilter[] { filter });
 
 
         userNameViewModel.OnNextClick().observe(this, click -> {
