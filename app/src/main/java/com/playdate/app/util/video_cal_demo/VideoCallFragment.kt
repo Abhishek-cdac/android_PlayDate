@@ -1,7 +1,5 @@
 package com.playdate.app.util.video_cal_demo
 
-//package com.connectycube.messenger
-
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
@@ -37,7 +35,7 @@ import timber.log.Timber
 import java.util.*
 
 private const val SPAN_COUNT = 2
-private const val VIDEO_TRACK_INITIALIZE_DELAY = 500L
+private const val VIDEO_TRACK_INITIALIZE_DELAY = 500L    
 
 
 
