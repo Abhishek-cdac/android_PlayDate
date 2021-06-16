@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/rl"
     android:padding="@dimen/_8sdp">
 
     <TextView
@@ -9,6 +10,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/textColour"
+        android:text="question"
         android:textSize="@dimen/_10sdp" />
 
+
+    <LinearLayout
+        android:layout_below="@+id/tv_question"
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical"
+        android:visibility="gone">
+        <TextView
+            android:id="@+id/textViewAnswer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_grey"
+            android:text="Tony Stark"
+            />
+
+    </LinearLayout>
 </RelativeLayout>

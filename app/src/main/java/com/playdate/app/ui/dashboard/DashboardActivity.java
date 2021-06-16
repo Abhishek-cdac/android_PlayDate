@@ -34,6 +34,9 @@ import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.FriendsListModel;
 import com.playdate.app.model.MatchListUser;
+import com.playdate.app.model.RestMain;
+import com.playdate.app.model.RestaurentData;
+import com.playdate.app.model.RestaurentModel;
 import com.playdate.app.service.LocationService;
 import com.playdate.app.ui.anonymous_question.AnonymousQuestionActivity;
 import com.playdate.app.ui.card_swipe.FragCardSwipe;
@@ -41,9 +44,11 @@ import com.playdate.app.ui.chat.request.ChatBaseActivity;
 import com.playdate.app.ui.coupons.FragCouponStore;
 import com.playdate.app.ui.coupons.FragMyCoupons;
 import com.playdate.app.ui.dashboard.adapter.FriendAdapter;
+import com.playdate.app.ui.dashboard.adapter.RestaurentListAdapter;
 import com.playdate.app.ui.dashboard.data.CallAPI;
 import com.playdate.app.ui.dashboard.fragments.FragLanding;
 import com.playdate.app.ui.dashboard.fragments.FragSearchUser;
+import com.playdate.app.ui.dashboard.fragments.FragmentSearchRestaurent;
 import com.playdate.app.ui.date.DateBaseActivity;
 import com.playdate.app.ui.date.games.FragGameLeaderBoard;
 import com.playdate.app.ui.date.games.FragStore;
@@ -57,6 +62,7 @@ import com.playdate.app.ui.my_profile_details.FragMyProfilePersonal;
 import com.playdate.app.ui.my_profile_details.FragSavedPost;
 import com.playdate.app.ui.my_profile_details.NewPaymentMethod;
 import com.playdate.app.ui.notification_screen.FragNotification;
+import com.playdate.app.ui.restaurant.adapter.Restaurant;
 import com.playdate.app.ui.social.FragSocialFeed;
 import com.playdate.app.ui.social.upload_media.PostMediaActivity;
 import com.playdate.app.util.image_crop.MainActivity;
@@ -115,12 +121,17 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     private LinearLayout ll_profile_drop_menu;
     private LinearLayout bottomNavigationView;
     private LinearLayout ll_camera_option;
+    private LinearLayout ll_restaurents;
+    private LinearLayout ll_mainMenu2;
+    private ImageView iv_rest_search;
+    private RecyclerView rv_restaurant;
 
     private RecyclerView rv_friends;
     private SessionPref pref;
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private FriendAdapter adapterfriend;
+    private RestaurentListAdapter adapterRestaurent;
     private Fragment CurrentFrag;
     private NestedScrollView nsv;
     private FragInstaLikeProfile profile;
@@ -146,9 +157,14 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
                 }
             }
             callAPIFriends();
+
             callNotification();
         });
 
+        ll_restaurents = findViewById(R.id.ll_restaurents);
+        ll_mainMenu2 = findViewById(R.id.ll_mainMenu2);
+        rv_restaurant = findViewById(R.id.rv_restaurant);
+        iv_rest_search = findViewById(R.id.iv_rest_search);
         txt_serachfriend = findViewById(R.id.txt_serachfriend);
         txt_count = findViewById(R.id.txt_count);
         nsv = findViewById(R.id.nsv);
@@ -213,6 +229,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         ll_Record_video.setOnClickListener(this);
         ll_upload_video.setOnClickListener(this);
         search.setOnClickListener(this);
+        iv_rest_search.setOnClickListener(this);
 
 
         rv_friends = findViewById(R.id.rv_friends);
@@ -249,6 +266,13 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         setValue();
         callAPIFriends();
 
+
+        callAPIRestaurant();
+
+        RecyclerView.LayoutManager manager1 = new LinearLayoutManager(DashboardActivity.this, RecyclerView.HORIZONTAL, false);
+        adapterRestaurent = new RestaurentListAdapter(new ArrayList<>(), DashboardActivity.this);
+        rv_restaurant.setAdapter(adapterRestaurent);
+        rv_restaurant.setLayoutManager(manager1);
 
         nsv.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
 
@@ -306,13 +330,8 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
                             lst = new ArrayList<>();
                         }
                         if (lst.size() > 0) {
-                            txt_serachfriend.setVisibility(View.GONE);
                             rv_friends.setVisibility(View.VISIBLE);
                             adapterfriend.updateList(lst);
-
-                        } else {
-                            txt_serachfriend.setVisibility(View.VISIBLE);
-                            rv_friends.setVisibility(View.GONE);
                         }
                     }
                 }
@@ -321,6 +340,45 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
             @Override
             public void onFailure(Call<FriendsListModel> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+    }
+  private void callAPIRestaurant() {
+
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("limit", "100");
+        hashMap.put("pageNo", "1");
+
+        Call<RestMain> call = service.restaurants("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new Callback<RestMain>() {
+            @Override
+            public void onResponse(Call<RestMain> call, Response<RestMain> response) {
+                if (response.code() == 200) {
+                    assert response.body() != null;
+                    if (response.body().getStatus() == 1) {
+                        ArrayList<Restaurant> restaurentlst = (ArrayList<Restaurant>) response.body().getLst();
+                        if (restaurentlst == null) {
+                            restaurentlst = new ArrayList<>();
+                        }
+                        if (restaurentlst.size() > 0) {
+                            txt_serachfriend.setVisibility(View.GONE);
+                            rv_restaurant.setVisibility(View.VISIBLE);
+                            adapterRestaurent.updateList(restaurentlst);
+
+                        } else {
+                            txt_serachfriend.setVisibility(View.VISIBLE);
+                            rv_restaurant.setVisibility(View.GONE);
+                        }
+                    }
+                }
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onFailure(Call<RestMain> call, Throwable t) {
                 t.printStackTrace();
             }
         });
@@ -403,7 +461,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         txt_chat.setTextColor(getResources().getColor(android.R.color.darker_gray));
         iv_dashboard_notification.setBackground(null);
         iv_dashboard_notification.setImageResource(R.drawable.ic_bell);
-
+        ll_restaurents.setVisibility(View.GONE);
         ll_friends.setVisibility(View.VISIBLE);
         ll_mainMenu.setVisibility(View.VISIBLE);
         ll_her.setVisibility(View.VISIBLE);
@@ -480,7 +538,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             txt_chat.setTextColor(getResources().getColor(android.R.color.darker_gray));
             txt_match.setTextColor(getResources().getColor(android.R.color.darker_gray));
             txt_match.setBackground(null);
-
+            ll_restaurents.setVisibility(View.GONE);
             ll_friends.setVisibility(View.VISIBLE);
             ll_mainMenu.setVisibility(View.VISIBLE);
             ll_her.setVisibility(View.VISIBLE);
@@ -521,7 +579,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             txt_social.setTextColor(getResources().getColor(android.R.color.darker_gray));
             txt_chat.setTextColor(getResources().getColor(android.R.color.darker_gray));
             txt_match.setBackground(getResources().getDrawable(R.drawable.menu_button));
-
+            ll_restaurents.setVisibility(View.GONE);
             ll_friends.setVisibility(View.VISIBLE);
             ll_mainMenu.setVisibility(View.VISIBLE);
             ll_her.setVisibility(View.VISIBLE);
@@ -578,6 +636,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 //            iv_booster.setVisibility(View.GONE);
             ll_option_love.setVisibility(View.VISIBLE);
             ll_friends.setVisibility(View.VISIBLE);
+            ll_restaurents.setVisibility(View.GONE);
             ll_profile_menu.setVisibility(View.GONE);
             iv_love.setBackground(getDrawable(R.drawable.rectangle_back));
             iv_love.setImageResource(R.drawable.love_high);
@@ -598,9 +657,10 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             } else {
                 frag = new FragSocialFeed();
             }
-
+            ll_restaurents.setVisibility(View.GONE);
             ll_friends.setVisibility(View.VISIBLE);
             ll_mainMenu.setVisibility(View.VISIBLE);
+            ll_mainMenu2.setVisibility(View.VISIBLE);
             ll_her.setVisibility(View.VISIBLE);
 
             iv_dashboard_notification.setBackground(null);
@@ -627,10 +687,11 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             iv_love.setImageResource(R.drawable.love);
             iv_profile_sett.setBackground(null);
             iv_profile_sett.setImageResource(R.drawable.tech_support);
-            ll_friends.setVisibility(View.VISIBLE);
+            ll_friends.setVisibility(View.GONE);
             ll_mainMenu.setVisibility(View.VISIBLE);
+            ll_mainMenu2.setVisibility(View.VISIBLE);
             ll_her.setVisibility(View.VISIBLE);
-
+            ll_restaurents.setVisibility(View.VISIBLE);
             txt_store.setTextColor(getResources().getColor(R.color.white));
             txt_store.setBackground(getResources().getDrawable(R.drawable.menu_button));
             txt_my_coupon.setTextColor(getResources().getColor(android.R.color.darker_gray));
@@ -649,7 +710,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             ll_option_love.setVisibility(View.GONE);
             ll_friends.setVisibility(View.GONE);
             ll_profile_menu.setVisibility(View.VISIBLE);
-
+            ll_mainMenu2.setVisibility(View.GONE);
             iv_coupons.setImageResource(R.drawable.badge);
             iv_coupons.setBackground(null);
             ll_coupon_menu.setVisibility(View.GONE);
@@ -657,7 +718,6 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             iv_love.setImageResource(R.drawable.love);
             iv_profile_sett.setBackground(getDrawable(R.drawable.rectangle_back));
             iv_profile_sett.setImageResource(R.drawable.tech_support_red);
-
 
 
             txt_account.setTextColor(getResources().getColor(R.color.white));
@@ -688,6 +748,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             iv_love.setBackground(null);
             iv_love.setImageResource(R.drawable.love);
             ll_coupon_menu.setVisibility(View.GONE);
+            ll_mainMenu2.setVisibility(View.GONE);
             iv_profile_sett.setBackground(null);
             iv_profile_sett.setImageResource(R.drawable.tech_support);
             profile = new FragInstaLikeProfile(true);
@@ -772,6 +833,13 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             ll_mainMenu.setVisibility(View.GONE);
             ll_her.setVisibility(View.GONE);
             ReplaceFrag(new FragSearchUser());
+        }else if (id == R.id.iv_rest_search) {
+
+            ll_friends.setVisibility(View.GONE);
+            ll_mainMenu.setVisibility(View.GONE);
+            ll_mainMenu2.setVisibility(View.GONE);
+            ll_her.setVisibility(View.GONE);
+            ReplaceFrag(new FragmentSearchRestaurent());
         } else if (id == R.id.iv_saved) {
 
             ll_friends.setVisibility(View.GONE);
@@ -996,6 +1064,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
     @Override
     public void OnFrinedDataClosed() {
+        ll_restaurents.setVisibility(View.GONE);
         ll_friends.setVisibility(View.VISIBLE);
         ll_option_love.setVisibility(View.VISIBLE);
         ReplaceFrag(new FragSocialFeed());
@@ -1003,13 +1072,12 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
     @Override
     public void OnSuggestionClosed() {
+        ll_restaurents.setVisibility(View.GONE);
         ll_friends.setVisibility(View.VISIBLE);
         ll_mainMenu.setVisibility(View.VISIBLE);
         ll_her.setVisibility(View.VISIBLE);
         ReplaceFrag(new FragSocialFeed());
-
-
-    }
+}
 
     @Override
     public void OnSuggestionClosed(boolean isFriend, String id) {

@@ -19,8 +19,11 @@ import com.playdate.app.R;
 import com.playdate.app.couple.ui.register.coupleprofile.CoupleUploadProfileActivity;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
+import com.playdate.app.model.FaqData;
+import com.playdate.app.model.FaqModel;
 import com.playdate.app.model.GetCouponsModel;
 import com.playdate.app.ui.coupons.adapters.FrequentlyQuestionAdapter;
+import com.playdate.app.ui.restaurant.adapter.Restaurant;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
@@ -29,6 +32,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,6 +48,8 @@ public class ActivityCoupons extends AppCompatActivity implements View.OnClickLi
     private String inviteLink;
     private TextView share_coupans;
     private TextView share_coupans1;
+    ArrayList<FaqData> faq_list;
+    RecyclerView rv_frequently;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,13 +77,13 @@ public class ActivityCoupons extends AppCompatActivity implements View.OnClickLi
         TextView every_time = findViewById(R.id.every_time);
         rl_getcode = findViewById(R.id.rl_getcode);
         rl_code = findViewById(R.id.rl_code);
-
+        callFaqApi();
         /*value fetch from FragCouponStore*/
         Intent mIntent = getIntent();
         String couponId = mIntent.getStringExtra("Coupon_id");
         CouponCode = mIntent.getStringExtra("Coupon_code");
         String couponPoints = mIntent.getStringExtra("Coupon_points");
-        int CurrentPoints = mIntent.getIntExtra("CurrentPoints",0);
+        int CurrentPoints = mIntent.getIntExtra("CurrentPoints", 0);
         boolean isFromCoupon = mIntent.getBooleanExtra("isFromCoupon", false);
         txt_points.setText(couponPoints + " Points");
         if (isFromCoupon) {
@@ -91,9 +97,9 @@ public class ActivityCoupons extends AppCompatActivity implements View.OnClickLi
         tv_code.setText(CouponCode);
         rl_getcode.setOnClickListener(v -> {
             if (isFromCoupon) {
-                if(CurrentPoints>Integer.parseInt(couponPoints)){
+                if (CurrentPoints > Integer.parseInt(couponPoints)) {
                     callAPIRedeemCouPon(couponId);
-                }else{
+                } else {
                     new CommonClass().showDialogMsg(ActivityCoupons.this, "PlayDate", "Insufficient wallet points!", "Ok");
                 }
 
@@ -112,11 +118,64 @@ public class ActivityCoupons extends AppCompatActivity implements View.OnClickLi
 //        whatsup_coupan.setOnClickListener(this);
 //        message_coupan.setOnClickListener(this);
         copy_code.setOnClickListener(this);
-        RecyclerView rv_frequently = findViewById(R.id.rv_frequently);
-        RecyclerView.LayoutManager manager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
-        rv_frequently.setLayoutManager(manager);
-        FrequentlyQuestionAdapter adapter = new FrequentlyQuestionAdapter();
-        rv_frequently.setAdapter(adapter);
+
+
+        rv_frequently = findViewById(R.id.rv_frequently);
+
+    }
+
+    private void callFaqApi() {
+        SessionPref pref = SessionPref.getInstance(this);
+
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+
+        hashMap.put("requestId", "");
+
+
+        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
+        pd.show();
+        Call<FaqModel> call = service.getFaq("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new Callback<FaqModel>() {
+            @Override
+            public void onResponse(Call<FaqModel> call, Response<FaqModel> response) {
+                pd.cancel();
+                if (response.code() == 200) {
+                    if (response.body().getStatus() == 1) {
+
+                        faq_list = (ArrayList<FaqData>) response.body().getData();
+                        if (faq_list == null) {
+                            faq_list = new ArrayList<>();
+                        }
+                        RecyclerView.LayoutManager manager = new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false);
+                        rv_frequently.setLayoutManager(manager);
+                        FrequentlyQuestionAdapter adapter = new FrequentlyQuestionAdapter(faq_list, ActivityCoupons.this);
+                        rv_frequently.setAdapter(adapter);
+
+
+                    } else {
+                    }
+                } else {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        new CommonClass().showDialogMsg(ActivityCoupons.this, "PlayDate", jObjError.getString("message"), "Ok");
+                    } catch (JSONException | IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<FaqModel> call, Throwable t) {
+                t.printStackTrace();
+                pd.cancel();
+                Toast.makeText(ActivityCoupons.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
 //    private void callAPIRedeemCouPon() {
