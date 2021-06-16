@@ -29,6 +29,17 @@ public class NotificationData {
     private String mEntryDate;
     @SerializedName("friendRequest")
     private List<FriendRequest> mFriendRequest;
+
+    public List<UserInformation> getmUserInformation() {
+        return mUserInformation;
+    }
+
+    public void setmUserInformation(List<UserInformation> mUserInformation) {
+        this.mUserInformation = mUserInformation;
+    }
+
+    @SerializedName("UserInformation")
+    private List<UserInformation> mUserInformation;
     @SerializedName("notificationId")
     private String mNotificationId;
     @SerializedName("notificationMessage")

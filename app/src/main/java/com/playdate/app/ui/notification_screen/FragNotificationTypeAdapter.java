@@ -182,23 +182,33 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
             });
 
 
-        } else if (holder.getItemViewType() == LIKED) {
+        }
+        else if (holder.getItemViewType() == LIKED) {
 
             ViewHolderLiked viewHolderLiked = (ViewHolderLiked) holder;
+            viewHolderLiked.tv_name.setText(notification_list.get(position).getmUserInformation().get(0).getUsername());
+
+            Picasso.get().load(notification_list.get(position).getmUserInformation().get(0).getProfilePicPath())
+                    .placeholder(R.drawable.cupertino_activity_indicator)
+                    .into(viewHolderLiked.profile_image_3);
           /*  Picasso.get().load.(position).get())
                     .placeholder(R.drawable.cupertino_activity_indicator)
                     .into(viewHolderLiked.profile_image);*/
             viewHolderLiked.tv_desc.setText(notification_list.get(position).getNotificationMessage());
 
 
-        } else if (holder.getItemViewType() == COMMENT) {
+        }
+        else if (holder.getItemViewType() == COMMENT) {
             ViewHolderComment viewHolderComment = (ViewHolderComment) holder;
-//            Picasso.get().load(notification_list.get(position).getProfileImage())
-//                    .placeholder(R.drawable.cupertino_activity_indicator)
-//                    .into(viewHolderMatched.profile_image);
+            viewHolderComment.tv_name.setText(notification_list.get(position).getmUserInformation().get(0).getUsername());
+
+            Picasso.get().load(notification_list.get(position).getmUserInformation().get(0).getProfilePicPath())
+                    .placeholder(R.drawable.cupertino_activity_indicator)
+                    .into(viewHolderComment.profile_image_3);
             viewHolderComment.tv_desc.setText(notification_list.get(position).getNotificationMessage());
 
-        } else if (holder.getItemViewType() == FRIENDREQUEST) {
+        }
+        else if (holder.getItemViewType() == FRIENDREQUEST) {
             ViewHolder viewHolderMatched = (ViewHolder) holder;
             if (notification_list.get(position).getFriendRequest() != null) {
 
