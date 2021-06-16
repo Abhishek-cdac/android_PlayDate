@@ -269,6 +269,10 @@ public interface GetDataService {
     @POST("user/get-faq")
     Call<FaqModel> getFaq(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
+    @FormUrlEncoded
+    @POST("user/create-relationship")
+    Call<CommonModel> createRelationship(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
 }
 
 

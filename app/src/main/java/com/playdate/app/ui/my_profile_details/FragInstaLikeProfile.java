@@ -169,14 +169,14 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
                             lst_getCoupleDetail = new ArrayList<>();
                         }
 
-                        picasso.load(BASE_URL_IMAGE + lst_getCoupleDetail.get(0).getProfile1().get(0).getProfilePicPath())
+                        picasso.load( lst_getCoupleDetail.get(0).getProfile1().get(0).getProfilePicPath())
                                 .placeholder(R.drawable.profile)
                                 .into(boy_profile_image);
 
                         Log.e("getCoupleBoy", "" + lst_getCoupleDetail.get(0).getProfile1().get(0).getProfilePicPath());
                         Log.e("getCoupleGirl", "" + lst_getCoupleDetail.get(0).getProfile2().get(0).getProfilePicPath());
 
-                        picasso.load(BASE_URL_IMAGE + lst_getCoupleDetail.get(0).getProfile2().get(0).getProfilePicPath())
+                        picasso.load( lst_getCoupleDetail.get(0).getProfile2().get(0).getProfilePicPath())
                                 .placeholder(R.drawable.profile)
                                 .into(girl_profile_image);
                     } else {

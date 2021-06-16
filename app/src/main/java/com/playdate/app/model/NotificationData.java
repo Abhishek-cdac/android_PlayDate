@@ -27,6 +27,7 @@ public class NotificationData {
 
     @SerializedName("entryDate")
     private String mEntryDate;
+
     @SerializedName("friendRequest")
     private List<FriendRequest> mFriendRequest;
 
@@ -40,6 +41,7 @@ public class NotificationData {
 
     @SerializedName("UserInformation")
     private List<UserInformation> mUserInformation;
+
     @SerializedName("notificationId")
     private String mNotificationId;
     @SerializedName("notificationMessage")

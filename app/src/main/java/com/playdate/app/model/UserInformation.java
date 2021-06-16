@@ -1,20 +1,11 @@
-
 package com.playdate.app.model;
 
-import com.google.gson.annotations.Expose;
-
 public class UserInformation {
-
-    @Expose
-    private String fullName;
-    @Expose
-    private String id;
-    @Expose
-    private String profilePicPath;
-    @Expose
-    private String profileVideoPath;
-    @Expose
-    private String username;
+    String fullName;
+    String username;
+    String id;
+    String profilePicPath;
+    String profileVideoPath;
 
     public String getFullName() {
         return fullName;
@@ -22,6 +13,14 @@ public class UserInformation {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getId() {
@@ -47,13 +46,4 @@ public class UserInformation {
     public void setProfileVideoPath(String profileVideoPath) {
         this.profileVideoPath = profileVideoPath;
     }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
 }

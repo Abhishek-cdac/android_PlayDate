@@ -25,10 +25,14 @@ import com.playdate.app.R;
 import com.playdate.app.couple.ui.register.couplebio.CoupleBioActivity;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
+import com.playdate.app.model.CommonModel;
+import com.playdate.app.model.FriendsListModel;
 import com.playdate.app.model.GetProfileDetails;
 import com.playdate.app.model.GetProileDetailData;
+import com.playdate.app.model.MatchListUser;
 import com.playdate.app.ui.blockuser.BlockUserActivity;
 import com.playdate.app.ui.dashboard.OnProfilePhotoChageListerner;
+import com.playdate.app.ui.dialogs.FriendDialog;
 import com.playdate.app.ui.forgot_password.ForgotPasswordActivity;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.ui.invite.InviteFriendActivity;
@@ -137,6 +141,7 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
         txt_upgrade.setOnClickListener(this);
         iv_edit_bio.setOnClickListener(this);
         txt_blocked.setOnClickListener(this);
+        create_relation_rl.setOnClickListener(this);
 
 
         setValues();
@@ -156,10 +161,11 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
         });
   */
         iv_edit_couple_bio.setOnClickListener(this);
-
+        txt_change_photo.setText("Change profile photo");
+        txt_username.setText("Username");
         if (pref.getStringVal(SessionPref.LoginUserrelationship).equals("Single")) {
-            txt_username.setText("Username");
-            txt_change_photo.setText("Change profile photo");
+//            txt_username.setText("Username");
+
             create_relation_rl.setVisibility(View.VISIBLE);
             invite_partner.setVisibility(View.VISIBLE);
             leave_partner.setVisibility(View.GONE);
@@ -171,8 +177,8 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
             txt_change_bio_video.setVisibility(View.VISIBLE);
             change_bio_video_rl.setVisibility(View.VISIBLE);
         } else {
-            txt_change_photo.setText("Change couple profile photo");
-            txt_username.setText("Couple Username");
+//            txt_change_photo.setText("Change couple profile photo");
+
             create_relation_rl.setVisibility(View.GONE);
             invite_partner.setVisibility(View.GONE);
             leave_partner.setVisibility(View.VISIBLE);
@@ -189,7 +195,6 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
 
     private void setValues() {
         try {
-            SessionPref pref = SessionPref.getInstance(getActivity());
             txt_user_name.setText(pref.getStringVal(SessionPref.LoginUserusername));
             txt_bio.setText(pref.getStringVal(SessionPref.LoginUserpersonalBio));
 
@@ -267,9 +272,97 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
             Intent mIntent = new Intent(getActivity(), BioActivity.class);
             mIntent.putExtra("fromProfile", true);
             startActivityForResult(mIntent, 409);
+        } else if (id == R.id.create_relation_rl) {
+            callGetUserSuggestionAPI();
         }
 
 
+    }
+
+    private void callGetUserSuggestionAPI() {
+
+
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        // hashMap.put("filter", "");
+        hashMap.put("limit", "100");
+        hashMap.put("pageNo", "1");//Hardcode
+        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
+        pd.show();
+
+        Call<FriendsListModel> call = service.getFriendsList("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new Callback<FriendsListModel>() {
+            @Override
+            public void onResponse(Call<FriendsListModel> call, Response<FriendsListModel> response) {
+                pd.cancel();
+                if (response.code() == 200) {
+                    assert response.body() != null;
+                    if (response.body().getStatus() == 1) {
+                        ArrayList<MatchListUser> lstUserSuggestions = response.body().getUsers();
+                        if (lstUserSuggestions == null) {
+                            lstUserSuggestions = new ArrayList<>();
+                        }
+                        if(lstUserSuggestions.size()>0)
+                        showFriendsDialog(lstUserSuggestions);
+                    }
+                } else {
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<FriendsListModel> call, Throwable t) {
+                t.printStackTrace();
+                pd.cancel();
+            }
+        });
+    }
+
+    void showFriendsDialog(ArrayList<MatchListUser> lstUserSuggestions) {
+        FriendDialog dialog = new FriendDialog(getActivity(), lstUserSuggestions, true,inviteLink);
+        dialog.show();
+        dialog.setOnDismissListener(dialog1 -> {
+
+            for (int i = 0; i < lstUserSuggestions.size(); i++) {
+                if (lstUserSuggestions.get(i).isSelected()) {
+                    callAPICreateRelation(lstUserSuggestions.get(i));
+                    break;
+                }
+            }
+
+
+        });
+    }
+
+    private void callAPICreateRelation(MatchListUser user) {
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
+        hashMap.put("toUserId", user.getUserId());
+        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
+        pd.show();
+
+        Call<CommonModel> call = service.createRelationship("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new Callback<CommonModel>() {
+            @Override
+            public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
+                pd.cancel();
+                if (response.code() == 200) {
+                    assert response.body() != null;
+                    if (response.body().getStatus() == 1) {
+
+                    }
+                } else {
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<CommonModel> call, Throwable t) {
+                t.printStackTrace();
+                pd.cancel();
+            }
+        });
     }
 
     private void imageChange(boolean state) {
@@ -310,7 +403,7 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
             case "Facebook": {
 
                 LoginManager.getInstance().logOut();
-                SessionPref.getInstance(getActivity()).saveBoolKeyVal(LoginVerified, false);
+                pref.saveBoolKeyVal(LoginVerified, false);
                 SessionPref.logout(getActivity());
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
@@ -328,7 +421,7 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
         mGoogleSignInClient.signOut()
                 .addOnCompleteListener(getActivity(), task -> {
                     Toast.makeText(getActivity(), "LogOut", Toast.LENGTH_LONG).show();
-                    SessionPref.getInstance(getActivity()).saveBoolKeyVal(LoginVerified, false);
+                    pref.saveBoolKeyVal(LoginVerified, false);
                     SessionPref.logout(getActivity());
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
                     startActivity(intent);
@@ -346,7 +439,6 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
     }
 
     private void callAPI() {
-        SessionPref pref = SessionPref.getInstance(getActivity());
 
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();

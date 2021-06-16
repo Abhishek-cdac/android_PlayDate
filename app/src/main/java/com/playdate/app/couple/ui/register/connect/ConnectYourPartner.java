@@ -1,15 +1,12 @@
 package com.playdate.app.couple.ui.register.connect;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
 import com.playdate.app.R;
 import com.playdate.app.couple.ui.register.invitecode.InviteCodeActivity;
@@ -38,19 +35,11 @@ public class ConnectYourPartner extends AppCompatActivity {
         binding.setConnectYourPartnerViewModel(viewModel);
 
 
-        viewModel.OnJoinClick().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean click) {
-                selectedconnect = 1;
-                binding.btnJoin.setBackground(getDrawable(R.drawable.selected_btn_back));
-                binding.btnInvite.setBackground(getDrawable(R.drawable.normal_btn_back));
-                binding.ivNext.setVisibility(View.VISIBLE);
-//                if (!once) {
-//                    Animation fadeInAnimation = AnimationUtils.loadAnimation(RelationActivity.this, R.anim.slide_in_left);
-//                    binding.ivNext.startAnimation(fadeInAnimation);
-//                    once=true;
-//                }
-            }
+        viewModel.OnJoinClick().observe(this, click -> {
+            selectedconnect = 1;
+            binding.btnJoin.setBackground(getDrawable(R.drawable.selected_btn_back));
+            binding.btnInvite.setBackground(getDrawable(R.drawable.normal_btn_back));
+            binding.ivNext.setVisibility(View.VISIBLE);
         });
         viewModel.OnInviteClick().observe(this, new Observer<Boolean>() {
             @Override
@@ -59,34 +48,23 @@ public class ConnectYourPartner extends AppCompatActivity {
                 binding.btnJoin.setBackground(getDrawable(R.drawable.normal_btn_back));
                 binding.btnInvite.setBackground(getDrawable(R.drawable.selected_btn_back));
                 binding.ivNext.setVisibility(View.VISIBLE);
-//                if (!once) {
-//                    Animation fadeInAnimation = AnimationUtils.loadAnimation(RelationActivity.this, R.anim.slide_in_left);
-//                    binding.ivNext.startAnimation(fadeInAnimation);
-//                    once=true;
-//                }
             }
         });
 
-        viewModel.OnNextClick().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean click) {
-                Log.e("selectedconnect", "" + selectedconnect);
+        viewModel.OnNextClick().observe(this, click -> {
+            if (selectedconnect == -1) {
+                clsCommon.showDialogMsg(ConnectYourPartner.this, "PlayDate", "Please select ", "Ok");
+            } else if (selectedconnect == 1) {
+                startActivity(new Intent(ConnectYourPartner.this, InviteCodeActivity.class));
+            } else if (selectedconnect == 0) {
 
-                if (selectedconnect==-1) {
-                    clsCommon.showDialogMsg(ConnectYourPartner.this, "PlayDate", "Please select ", "Ok");
-                } else if (selectedconnect==1)
-                {
-                   startActivity(new Intent(ConnectYourPartner.this, InviteCodeActivity.class));
-                } else if (selectedconnect==0) {
+                startActivity(new Intent(ConnectYourPartner.this, InvitePartnerActivity.class));
 
-                   startActivity(new Intent(ConnectYourPartner.this, InvitePartnerActivity.class));
+            }
 
-                }
+        });
 
-        }
-    });
-
-        viewModel.onBackClick(). observe(this, click -> finish());
+        viewModel.onBackClick().observe(this, click -> finish());
 
 
 //        if (mIntent.getBooleanExtra("fromProfile", false)) {
@@ -103,7 +81,7 @@ public class ConnectYourPartner extends AppCompatActivity {
 //
 //
 //        }
-}
+    }
 
 
 }
