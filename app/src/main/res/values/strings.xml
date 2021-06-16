@@ -232,4 +232,9 @@
     <string name="header">Take some time out</string>
     <string name="subHeader">Take your time out and bring awareness into your everyday life</string>
     <string name="invite_your_partner">invite your partner</string>
+
+
+    <string name="error_credentials_empty">The App class should contain ConnectyCube credentials. Register new account and application at https://admin.connectycube.com
+        then put Application credentials from Overview page + Account key from https://admin.connectycube.com/account/settings</string>
+    <string name="error_users_empty">The user_config.json file should contain at least 2 and max 5 users with format [\"login\":{\"password\":userId}]. Please go to https://admin.connectycube.com and create users in \'Users\' module.</string>
 </resources>
