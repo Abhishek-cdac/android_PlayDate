@@ -53,15 +53,12 @@ public class InvitePartnerActivity extends AppCompatActivity {
             }
         });
 
-        iv_share_code.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent share = new Intent(android.content.Intent.ACTION_SEND);
-                share.setType("text/plain");
-                share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-                share.putExtra(Intent.EXTRA_TEXT, inviteLink);
-                startActivity(Intent.createChooser(share, "PlayDate InviteLink!"));
-            }
+        iv_share_code.setOnClickListener(v -> {
+            Intent share = new Intent(Intent.ACTION_SEND);
+            share.setType("text/plain");
+            share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+            share.putExtra(Intent.EXTRA_TEXT, inviteLink);
+            startActivity(Intent.createChooser(share, "PlayDate InviteLink!"));
         });
 
     }

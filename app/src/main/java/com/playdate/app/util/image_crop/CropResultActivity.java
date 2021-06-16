@@ -31,15 +31,13 @@ public final class CropResultActivity extends Activity {
   /** The image to show in the activity. */
   static Bitmap mImage;
 
-  private ImageView imageView;
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     requestWindowFeature(Window.FEATURE_NO_TITLE);
     setContentView(R.layout.activity_crop_result);
 
-    imageView = ((ImageView) findViewById(R.id.resultImageView));
+    ImageView imageView = ((ImageView) findViewById(R.id.resultImageView));
     imageView.setBackgroundResource(R.drawable.backdrop);
 
     Intent intent = getIntent();
@@ -48,9 +46,7 @@ public final class CropResultActivity extends Activity {
       int sampleSize = intent.getIntExtra("SAMPLE_SIZE", 1);
       double ratio = ((int) (10 * mImage.getWidth() / (double) mImage.getHeight())) / 10d;
       int byteCount = 0;
-      if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB_MR1) {
-        byteCount = mImage.getByteCount() / 1024;
-      }
+      byteCount = mImage.getByteCount() / 1024;
       String desc =
           "("
               + mImage.getWidth()

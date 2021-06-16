@@ -157,13 +157,6 @@ public final class MainFragment extends Fragment
 
         updateCurrentCropViewOptions();
 
-//    if (savedInstanceState == null) {
-//      if (mDemoPreset == CropDemoPreset.SCALE_CENTER_INSIDE) {
-//        mCropImageView.setImageResource(R.drawable.cat_small);
-//      } else {
-//        mCropImageView.setImageResource(R.drawable.cat);
-//      }
-//    }
 
         mCropImageView.setImageBitmap(DashboardActivity.bitmap);
     }
@@ -229,29 +222,12 @@ public final class MainFragment extends Fragment
 
     private void handleCropResult(CropImageView.CropResult result) {
         if (result.getError() == null) {
-            Intent intent = new Intent(getActivity(), CropResultActivity.class);
-            intent.putExtra("SAMPLE_SIZE", result.getSampleSize());
-//            if (result.getUri() != null) {
-//                intent.putExtra("URI", result.getUri());
-//            } else {
-//                CropResultActivity.mImage =
-//                        mCropImageView.getCropShape() == CropImageView.CropShape.OVAL
-//                                ? CropImage.toOvalBitmap(result.getBitmap())
-//                                : result.getBitmap();
-//            }
-
-//            ByteArrayOutputStream out = new ByteArrayOutputStream();
-//            result.getBitmap().compress(Bitmap.CompressFormat.PNG, 100, out);
-//            Bitmap decoded = BitmapFactory.decodeStream(new ByteArrayInputStream(out.toByteArray()));
-
 
             DashboardActivity.bitmap = result.getBitmap();
             Intent mIntent = new Intent(getActivity(), PostMediaActivity.class);
             startActivity(mIntent);
             getActivity().finish();
-//      startActivity(intent);
         } else {
-            Log.e("AIC", "Failed to crop image", result.getError());
             Toast.makeText(
                     getActivity(),
                     "Image crop failed: " + result.getError().getMessage(),

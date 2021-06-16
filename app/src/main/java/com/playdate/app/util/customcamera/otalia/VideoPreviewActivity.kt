@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.MediaController
+import android.widget.Toast
 import android.widget.VideoView
 import androidx.appcompat.app.AppCompatActivity
 import com.otaliastudios.cameraview.VideoResult
@@ -46,6 +47,11 @@ class VideoPreviewActivity : AppCompatActivity() {
             findViewById<ImageView>(R.id.iv_next).setOnClickListener(View.OnClickListener {
 //            val intent = Intent(this@VideoPreviewActivity, DashboardActivity::class.java)
 //            startActivity(intent)
+                Toast.makeText(
+                    this@VideoPreviewActivity,
+                    "Uploading video please wait...",
+                    Toast.LENGTH_LONG
+                ).show()
                 uploadVideo()
             })
 //        val isSnapshot = findViewById<MessageView>(R.id.isSnapshot)
@@ -126,14 +132,16 @@ class VideoPreviewActivity : AppCompatActivity() {
                     if (intent.getBooleanExtra("fromProfile", false)) {
                         setResult(100, null)
                     } else {
+                        val mIntent = Intent(
+                            this@VideoPreviewActivity,
+                            DashboardActivity::class.java
+                        )
+                        mIntent.flags =
+                            Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(
-                            Intent(
-                                this@VideoPreviewActivity,
-                                DashboardActivity::class.java
-                            )
+                            mIntent
                         )
                     }
-
                     finish()
                 } else {
                     CommonClass().showDialogMsg(
