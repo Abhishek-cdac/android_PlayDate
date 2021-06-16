@@ -55,10 +55,11 @@ public final class MainFragment extends Fragment
     /**
      * Returns a new instance of this fragment for the given section number.
      */
-    public static MainFragment newInstance(CropDemoPreset demoPreset) {
+    public static MainFragment newInstance(CropDemoPreset demoPreset, boolean isFromProfile) {
         MainFragment fragment = new MainFragment();
         Bundle args = new Bundle();
         args.putString("DEMO_PRESET", demoPreset.name());
+        args.putBoolean("isFromProfile", isFromProfile);
         fragment.setArguments(args);
         return fragment;
     }
@@ -120,6 +121,7 @@ public final class MainFragment extends Fragment
         ((MainActivity) getActivity()).setCurrentOptions(options);
     }
 
+
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -144,8 +146,14 @@ public final class MainFragment extends Fragment
             default:
                 throw new IllegalStateException("Unknown preset: " + mDemoPreset);
         }
+
+        Bundle bundle = getArguments();
+        isFromProfile = bundle.getBoolean("isFromProfile");
+
         return rootView;
     }
+
+    boolean isFromProfile;
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -224,8 +232,11 @@ public final class MainFragment extends Fragment
         if (result.getError() == null) {
 
             DashboardActivity.bitmap = result.getBitmap();
-            Intent mIntent = new Intent(getActivity(), PostMediaActivity.class);
-            startActivity(mIntent);
+            if (!isFromProfile) {
+                Intent mIntent = new Intent(getActivity(), PostMediaActivity.class);
+                startActivity(mIntent);
+            }
+
             getActivity().finish();
         } else {
             Toast.makeText(

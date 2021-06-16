@@ -20,6 +20,7 @@ import com.playdate.app.model.GetProfileDetails;
 import com.playdate.app.model.GetProileDetailData;
 import com.playdate.app.model.MyCoupons;
 import com.playdate.app.model.MyCouponsModel;
+import com.playdate.app.model.MyCouponsWrap;
 import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.ui.coupons.adapters.MyCouponAdapter;
 import com.playdate.app.util.common.TransparentProgressDialog;
@@ -59,55 +60,55 @@ public class FragMyCoupons extends Fragment {
 
     @Override
     public void onResume() {
-        callAPIProfiileDetails();
+//        callAPIProfiileDetails();
         super.onResume();
     }
 
-    private void callAPIProfiileDetails() {
-        SessionPref pref = SessionPref.getInstance(getActivity());
+//    private void callAPIProfiileDetails() {
+//        SessionPref pref = SessionPref.getInstance(getActivity());
+//
+//        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+//        Map<String, String> hashMap = new HashMap<>();
+//
+//        hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
+//
+//        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
+//        pd.show();
+//
+//
+//        Call<GetProfileDetails> call = service.getProfileDetails("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+//        call.enqueue(new Callback<GetProfileDetails>() {
+//            @Override
+//            public void onResponse(Call<GetProfileDetails> call, Response<GetProfileDetails> response) {
+//                pd.cancel();
+//                if (response.code() == 200) {
+//                    try {
+//                        if (response.body().getStatus() == 1) {
+//                            ArrayList<GetProileDetailData> lst_getPostDetail;
+//                            lst_getPostDetail = (ArrayList<GetProileDetailData>) response.body().getData();
+//                            if (lst_getPostDetail == null) {
+//                                lst_getPostDetail = new ArrayList<>();
+//                            }
+//                            account = lst_getPostDetail.get(0).getAccount().get(0);
+//                            txt_points.setText("" + account.getCurrentPoints());
+//                        }
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<GetProfileDetails> call, Throwable t) {
+//                t.printStackTrace();
+//                pd.cancel();
+//            }
+//        });
+//    }
 
-        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-        Map<String, String> hashMap = new HashMap<>();
-
-        hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
-
-        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
-        pd.show();
-
-
-        Call<GetProfileDetails> call = service.getProfileDetails("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
-        call.enqueue(new Callback<GetProfileDetails>() {
-            @Override
-            public void onResponse(Call<GetProfileDetails> call, Response<GetProfileDetails> response) {
-                pd.cancel();
-                if (response.code() == 200) {
-                    try {
-                        if (response.body().getStatus() == 1) {
-                            ArrayList<GetProileDetailData> lst_getPostDetail;
-                            lst_getPostDetail = (ArrayList<GetProileDetailData>) response.body().getData();
-                            if (lst_getPostDetail == null) {
-                                lst_getPostDetail = new ArrayList<>();
-                            }
-                            account = lst_getPostDetail.get(0).getAccount().get(0);
-                            txt_points.setText("" + account.getCurrentPoints());
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-
-            }
-
-            @Override
-            public void onFailure(Call<GetProfileDetails> call, Throwable t) {
-                t.printStackTrace();
-                pd.cancel();
-            }
-        });
-    }
-
-    Account account;
+//    Account account;
 
     private void callAPIGetMyCoupons() {
 
@@ -123,10 +124,12 @@ public class FragMyCoupons extends Fragment {
                 if (response.code() == 200) {
                     assert response.body() != null;
                     if (response.body().getStatus() == 1) {
-                        List<MyCoupons> lst = response.body().getData();
+                        MyCouponsWrap wrap=response.body().getData();
+                        List<MyCoupons> lst = wrap.getLst();
                         if (lst == null) {
                             lst = new ArrayList<>();
                         }
+                        txt_points.setText("" + wrap.getAccount().getCurrentPoints());
                         MyCouponAdapter adapter = new MyCouponAdapter(lst);
                         rv_coupons_list.setAdapter(adapter);
 

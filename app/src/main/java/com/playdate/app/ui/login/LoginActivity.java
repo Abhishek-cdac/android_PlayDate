@@ -1,5 +1,6 @@
 package com.playdate.app.ui.login;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -7,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -99,21 +101,16 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     private CallbackManager callbackManager;
     private LoginManager loginManager;
-    String ServerAuthCode = null;
+    private String ServerAuthCode = null;
     private GoogleApiClient googleApiClient;
     private ImageView iv_show_password;
     private EditText login_Password;
 
     private ActivityLoginBinding binding;
     private static final int RC_SIGN_IN = 1;
-    CommonClass clsCommon;
+    private CommonClass clsCommon;
     private GoogleSignInClient mGoogleSignInClient;
 
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -262,13 +259,21 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
 
     private void callLoginAPI(LoginUser loginUser) {
+
+
+        @SuppressLint("HardwareIds") String android_id = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+        SessionPref pref = SessionPref.getInstance(this);
+        String fcmID = pref.getStringVal(SessionPref.LoginUserFCMID);
+        if (fcmID == null) {
+            fcmID = "99999999";// no fcmid
+        }
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("keyward", loginUser.getStrEmailAddress());
         hashMap.put("password", loginUser.getStrPassword());
-        hashMap.put("deviceID", "12345");//Hardcode
+        hashMap.put("deviceID", android_id);
         hashMap.put("deviceType", DEVICE_TYPE);
-        hashMap.put("deviceToken", "12345");//Hardc
+        hashMap.put("deviceToken",fcmID );
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
         pd.show();
         Call<LoginResponse> call = service.login(hashMap);

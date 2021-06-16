@@ -59,11 +59,14 @@ public class MainActivity extends AppCompatActivity {
         mCropImageViewOptions = options;
 //    updateDrawerTogglesByOptions(options);
     }
+    boolean isForProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Intent mIntent=getIntent();
+        isForProfile=mIntent.getBooleanExtra("isForProfile",false);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -291,7 +294,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager
                 .beginTransaction()
-                .replace(R.id.container, MainFragment.newInstance(demoPreset))
+                .replace(R.id.container, MainFragment.newInstance(demoPreset,isForProfile))
                 .commit();
     }
 

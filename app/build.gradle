@@ -114,5 +114,11 @@ dependencies {
     implementation "com.connectycube:connectycube-android-sdk-pushnotifications:1.8.1"
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
+    // Add the Firebase SDK for Google Analytics
+    implementation 'com.google.firebase:firebase-analytics:17.4.3'
+
+    // Add the SDK for Firebase Cloud Messaging
+    implementation 'com.google.firebase:firebase-messaging:20.2.1'
+
 
 }

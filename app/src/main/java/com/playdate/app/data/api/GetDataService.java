@@ -15,6 +15,7 @@ import com.playdate.app.model.InterestsMain;
 import com.playdate.app.model.LoginResponse;
 import com.playdate.app.model.MatchListModel;
 import com.playdate.app.model.MyCouponsModel;
+import com.playdate.app.model.MyCouponsModelStore;
 import com.playdate.app.model.NotificationModel;
 import com.playdate.app.model.RegisterResult;
 import com.playdate.app.model.RestMain;
@@ -250,7 +251,7 @@ public interface GetDataService {
 
     @FormUrlEncoded
     @POST("user/get-coupons")
-    Call<GetCouponsModel> getCoupons(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+    Call<MyCouponsModelStore> getCoupons(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
     @FormUrlEncoded
     @POST("user/purchase-coupons")
