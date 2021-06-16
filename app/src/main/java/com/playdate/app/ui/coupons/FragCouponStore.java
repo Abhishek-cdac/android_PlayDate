@@ -86,8 +86,6 @@ public class FragCouponStore extends Fragment implements OnCouponSelected {
                         intent.putExtra("Coupon_points", Coupon_points);
                         intent.putExtra("isFromCoupon", true);
 
-
-
                         if (null != account)
                             intent.putExtra("CurrentPoints", account.getCurrentPoints());
 
