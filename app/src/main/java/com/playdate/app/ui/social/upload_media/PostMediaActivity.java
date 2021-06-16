@@ -385,7 +385,7 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
     }
 
     void showFriendsDialog() {
-        FriendDialog dialog = new FriendDialog(this, lstUserSuggestions);
+        FriendDialog dialog = new FriendDialog(this, lstUserSuggestions,false,"");
         dialog.show();
         dialog.setOnDismissListener(dialog1 -> {
             ArrayList<MatchListUser> lst = new ArrayList<>();

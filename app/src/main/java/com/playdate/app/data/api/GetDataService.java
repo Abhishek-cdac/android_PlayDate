@@ -264,6 +264,10 @@ public interface GetDataService {
     @POST("user/get-my-create-date-request-status")
     Call<DatingRequestStatus> getMyCreateDateRequestStatus(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
+    @FormUrlEncoded
+    @POST("user/create-relationship")
+    Call<CommonModel> createRelationship(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
 }
 
 
