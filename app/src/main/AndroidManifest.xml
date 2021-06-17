@@ -24,6 +24,9 @@
     <uses-permission android:name="android.permission.STORAGE" />
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
 
+
+
+
     <permission
         android:name="com.example.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
@@ -216,6 +219,7 @@
         <activity
             android:name=".util.photoview.PhotoViewActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".util.videocall.VideoCallActivity" />
 
 
         <service android:name=".service.LocationService" />
