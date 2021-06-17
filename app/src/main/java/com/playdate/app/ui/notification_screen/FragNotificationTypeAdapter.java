@@ -96,11 +96,11 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
             view = inflater.inflate(R.layout.row_notification_type_4, parent, false);
             viewHolder = new ViewHolderComment(view);
         } else if (viewType == MATCH_RQUEST) {
-            view = inflater.inflate(R.layout.row_notification_type_2, parent, false);
-            viewHolder = new ViewHolderLiked(view);
+            view = inflater.inflate(R.layout.row_notification_type_1, parent, false);
+            viewHolder = new ViewHolderMatchRequest(view);
         } else if (viewType == DATE_PARTNER) {
-            view = inflater.inflate(R.layout.row_notification_type_2, parent, false);
-            viewHolder = new ViewHolderLiked(view);
+            view = inflater.inflate(R.layout.row_notification_type_1, parent, false);
+            viewHolder = new ViewHolderMatchRequest(view);
         }
 
 
@@ -198,7 +198,7 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
                 //  removeAt(getAdapterPosition());
             });
 
-
+///// FriendRequest
         } else if (holder.getItemViewType() == LIKED) {
 
             ViewHolderLiked viewHolderLiked = (ViewHolderLiked) holder;
@@ -247,7 +247,7 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
                 }
                 return true;
             });
-
+//// LIKED
         } else if (holder.getItemViewType() == COMMENT) {
             ViewHolderComment viewHolderComment = (ViewHolderComment) holder;
             picasso.load(notification_list.get(position).getmUserInformation().get(0).getProfilePicPath()).placeholder(R.drawable.profile)
@@ -255,7 +255,7 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
             String name = notification_list.get(position).getmUserInformation().get(0).getUsername();
             String desc = notification_list.get(position).getNotificationMessage();
 
-            String sourceString = "<b>" + name + "</b> " + desc;
+            String sourceString = "<b>" + name+ "</b> " + desc;
             viewHolderComment.tv_name.setText(Html.fromHtml(sourceString));
 
 //            viewHolderComment.tv_name.setText(notification_list.get(position).getmUserInformation().get(0).getUsername());
@@ -291,7 +291,7 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
                 return true;
             });
 
-
+/// COMMENT
         } else if (holder.getItemViewType() == FRIENDREQUEST) {
             ViewHolder viewHolderMatched = (ViewHolder) holder;
             if (notification_list.get(position).getFriendRequest() != null) {
@@ -379,12 +379,60 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
                 //  removeAt(getAdapterPosition());
             });
 
-        } else if (holder.getItemViewType() == DATE_PARTNER || holder.getItemViewType() == MATCH_RQUEST) {
-            ViewHolderLiked viewHolderLiked = (ViewHolderLiked) holder;
+        } else if (holder.getItemViewType() == MATCH_RQUEST) {
+            ViewHolderMatchRequest viewHolderMatchRequest = (ViewHolderMatchRequest) holder;
             picasso.load(notification_list.get(position).getmUserInformation().get(0).getProfilePicPath()).placeholder(R.drawable.profile)
-                    .into(viewHolderLiked.profile_image_3);
-            viewHolderLiked.tv_name.setText(notification_list.get(position).getmUserInformation().get(0).getUsername());
-            viewHolderLiked.tv_desc.setText(notification_list.get(position).getNotificationMessage());
+                    .into(viewHolderMatchRequest.profile_image);
+            viewHolderMatchRequest.tv_name.setText(notification_list.get(position).getmUserInformation().get(0).getUsername());
+            viewHolderMatchRequest.tv_desc.setText(notification_list.get(position).getNotificationMessage());
+
+
+            viewHolderMatchRequest.iv_right.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+
+            viewHolderMatchRequest.iv_cross.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+
+
+        }
+        else if (holder.getItemViewType() == DATE_PARTNER) {
+            ViewHolderMatchRequest viewHolderMatchRequest = (ViewHolderMatchRequest) holder;
+            viewHolderMatchRequest.tv_desc.setVisibility(View.VISIBLE);
+
+            String name = notification_list.get(position).getmUserInformation().get(0).getUsername();
+            String sourceString = "<b>" + name + "</b> ";
+            viewHolderMatchRequest.tv_name.setText(Html.fromHtml(sourceString));
+
+
+//            viewHolderMatchRequest.tv_name.setText(notification_list.get(position).getmUserInformation().get(0).getUsername());
+            viewHolderMatchRequest.tv_desc.setText(notification_list.get(position).getNotificationMessage());
+            picasso.load(notification_list.get(position).getmUserInformation().get(0).getProfilePicPath()).placeholder(R.drawable.profile)
+                    .into(viewHolderMatchRequest.profile_image);
+
+
+            viewHolderMatchRequest.iv_right.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    itemClick.onItemClicks(v, position, 24, requestId);
+                }
+            });
+
+            viewHolderMatchRequest.iv_cross.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.e("requestId", "" + requestId);
+
+                    itemClick.onItemClicks(v, position, 25, requestId);
+                }
+            });
 
         }
     }
@@ -445,5 +493,27 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
 
 
         }
+    }
+
+    public class ViewHolderMatchRequest extends RecyclerView.ViewHolder {
+        ImageView profile_image, icons, iv_right, iv_cross;
+        TextView tv_name, tv_desc;
+        RelativeLayout rl_request, rl_notification;
+
+
+        public ViewHolderMatchRequest(@NonNull View itemView) {
+            super(itemView);
+            profile_image = itemView.findViewById(R.id.profile_image_1);
+            rl_notification = itemView.findViewById(R.id.rl_notification);
+            icons = itemView.findViewById(R.id.iv_icon_1);
+            tv_name = itemView.findViewById(R.id.tv_name_noti);
+            tv_desc = itemView.findViewById(R.id.tv_desc_noti);
+            rl_request = itemView.findViewById(R.id.rl_request);
+            iv_right = itemView.findViewById(R.id.iv_right);
+            iv_cross = itemView.findViewById(R.id.iv_cross);
+            icons.setVisibility(View.GONE);
+
+        }
+
     }
 }

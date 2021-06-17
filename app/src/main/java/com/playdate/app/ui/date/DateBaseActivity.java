@@ -29,8 +29,8 @@ public class DateBaseActivity extends AppCompatActivity implements OnInnerFragme
     }
 
     private void firstFrag() {
-//        Fragment fragIntro = new FragIntroScreen();
-        Fragment fragIntro = new FragGameLeaderBoard();
+        Fragment fragIntro = new FragIntroScreen();
+//        Fragment fragIntro = new FragGameLeaderBoard();
         ft.add(R.id.fl_fragment, fragIntro);
         ft.commit();
     }
