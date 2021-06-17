@@ -1,21 +1,15 @@
 package com.playdate.app.ui.dashboard;
 
 import android.Manifest;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -24,7 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
@@ -52,20 +45,17 @@ import com.playdate.app.ui.date.DateBaseActivity;
 import com.playdate.app.ui.date.games.FragGameLeaderBoard;
 import com.playdate.app.ui.date.games.FragStore;
 import com.playdate.app.ui.dialogs.FullScreenDialog;
-import com.playdate.app.ui.dialogs.NoInternetDialog;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.ui.my_profile_details.FragInstaLikeProfile;
 import com.playdate.app.ui.my_profile_details.FragInstaLikeProfileFriends;
 import com.playdate.app.ui.my_profile_details.FragSavedPost;
 import com.playdate.app.ui.my_profile_details.FragSettingsParent;
-import com.playdate.app.ui.my_profile_details.NewPaymentMethod;
 import com.playdate.app.ui.notification_screen.FragNotification;
 import com.playdate.app.ui.social.FragSocialFeed;
 import com.playdate.app.ui.social.upload_media.PostMediaActivity;
 import com.playdate.app.util.common.BaseActivity;
 import com.playdate.app.util.image_crop.MainActivity;
 import com.playdate.app.util.session.SessionPref;
-import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -78,7 +68,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.content.ContentValues.TAG;
 import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.ALL_PERMISSIONS_RESULT;
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.PICK_PHOTO_FOR_AVATAR;
@@ -88,47 +77,26 @@ import static com.playdate.app.util.session.SessionPref.CompleteProfile;
 
 public class DashboardActivity extends BaseActivity implements OnInnerFragmentClicks, View.OnClickListener, OnProfilePhotoChageListerner, OnFriendSelected, OnAPIResponce {
 
-    private TextView txt_match, txt_chat;
-
-
+    private TextView txt_match;
     private TextView txt_social;
-    //    private TextView txt_payment;
-//    private TextView txt_account;
-//    private TextView txt_personal;
     private TextView txt_count;
-
     private ImageView iv_love;
     private ImageView iv_profile_sett;
     private ImageView iv_plus;
     private ImageView iv_play_date_logo;
-    private ImageView iv_dashboard_notification;
     private ImageView iv_coupons;
-    //    private ImageView iv_booster;
     private ImageView profile_image;
-    private TextView txt_serachfriend;
-//    private TextView txt_store;
-//    private TextView txt_my_coupon;
-
     private LinearLayout ll_mainMenu, ll_her;
     private LinearLayout ll_friends;
-    //    private LinearLayout ll_profile_menu;
-//    private LinearLayout ll_coupon_menu;
     private LinearLayout ll_option_love;
     private LinearLayout ll_profile_insta;
     private LinearLayout ll_profile_drop_menu;
     private LinearLayout bottomNavigationView;
     private LinearLayout ll_camera_option;
-    //    private LinearLayout ll_restaurents;
     private LinearLayout ll_mainMenu2;
-//    private ImageView iv_rest_search;
-//    private RecyclerView rv_restaurant;
-
     private RecyclerView rv_friends;
-    private SessionPref pref;
-
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private FriendAdapter adapterfriend;
-    //    private RestaurentListAdapter adapterRestaurent;
     private Fragment CurrentFrag;
     private NestedScrollView nsv;
     private FragInstaLikeProfile profile;
@@ -162,76 +130,40 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
             callNotification();
         });
 
-//        ll_restaurents = findViewById(R.id.ll_restaurents);
         ll_mainMenu2 = findViewById(R.id.ll_mainMenu2);
-//        rv_restaurant = findViewById(R.id.rv_restaurant);
-//        iv_rest_search = findViewById(R.id.iv_rest_search);
-        txt_serachfriend = findViewById(R.id.txt_serachfriend);
         txt_count = findViewById(R.id.txt_count);
         nsv = findViewById(R.id.nsv);
         ImageView search = findViewById(R.id.iv_search);
-        pref = SessionPref.getInstance(this);
         ll_profile_insta = findViewById(R.id.ll_profile_insta);
         profile_image = findViewById(R.id.profile_image);
-        txt_chat = findViewById(R.id.txt_chat);
-
+        TextView txt_chat = findViewById(R.id.txt_chat);
         ll_her = findViewById(R.id.ll_her);
         ll_mainMenu = findViewById(R.id.ll_mainMenu);
         ll_friends = findViewById(R.id.ll_friends);
         LinearLayout ll_love_bottom = findViewById(R.id.ll_love_bottom);
         LinearLayout ll_coupon = findViewById(R.id.ll_coupon);
         LinearLayout ll_profile_support = findViewById(R.id.ll_profile_support);
-//        ll_profile_menu = findViewById(R.id.ll_profile_menu);
-//        txt_my_coupon = findViewById(R.id.txt_my_coupon);
-//        txt_store = findViewById(R.id.txt_store);
-//        ll_coupon_menu = findViewById(R.id.ll_coupon_menu);
         ll_option_love = findViewById(R.id.ll_option_love);
         txt_social = findViewById(R.id.txt_social);
         txt_match = findViewById(R.id.txt_match);
-//        txt_payment = findViewById(R.id.txt_payment);
-//        txt_account = findViewById(R.id.txt_account);
-//        txt_personal = findViewById(R.id.txt_personal);
         iv_plus = findViewById(R.id.iv_plus);
         iv_play_date_logo = findViewById(R.id.iv_play_date_logo);
         iv_love = findViewById(R.id.iv_love);
         iv_profile_sett = findViewById(R.id.iv_profile_sett);
         ll_profile_drop_menu = findViewById(R.id.ll_profile_drop_menu);
         ImageView iv_cart = findViewById(R.id.iv_cart);
-//        iv_booster = findViewById(R.id.iv_booster);
         ImageView iv_cancel = findViewById(R.id.iv_cancel);
         ImageView iv_gallery = findViewById(R.id.iv_gallery);
         ImageView iv_create_ano_ques = findViewById(R.id.iv_create_ano_ques);
-        iv_dashboard_notification = findViewById(R.id.iv_dashboard_notification);
+        ImageView iv_dashboard_notification = findViewById(R.id.iv_dashboard_notification);
         iv_coupons = findViewById(R.id.iv_coupons);
         ImageView iv_date = findViewById(R.id.iv_date);
-
         LinearLayout ll_take_photo = findViewById(R.id.ll_take_photo);
         LinearLayout ll_upload_photo = findViewById(R.id.ll_upload_photo);
         LinearLayout ll_Record_video = findViewById(R.id.ll_Record_video);
         LinearLayout ll_upload_video = findViewById(R.id.ll_upload_video);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         ll_camera_option = findViewById(R.id.ll_camera_option);
-
-        iv_cancel.setOnClickListener(this);
-        iv_gallery.setOnClickListener(this);
-        ll_profile_insta.setOnClickListener(this);
-        iv_plus.setOnClickListener(this);
-//        txt_payment.setOnClickListener(this);
-//        txt_account.setOnClickListener(this);
-//        txt_personal.setOnClickListener(this);
-//        txt_store.setOnClickListener(this);
-//        txt_my_coupon.setOnClickListener(this);
-        ll_profile_support.setOnClickListener(this);
-        ll_love_bottom.setOnClickListener(this);
-        iv_create_ano_ques.setOnClickListener(this);
-        iv_cart.setOnClickListener(this);
-        ll_take_photo.setOnClickListener(this);
-        ll_upload_photo.setOnClickListener(this);
-        ll_Record_video.setOnClickListener(this);
-        ll_upload_video.setOnClickListener(this);
-        search.setOnClickListener(this);
-//        iv_rest_search.setOnClickListener(this);
-
 
         rv_friends = findViewById(R.id.rv_friends);
         RecyclerView.LayoutManager manager = new LinearLayoutManager(DashboardActivity.this, RecyclerView.HORIZONTAL, false);
@@ -253,32 +185,17 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
             fragOne = new FragSocialFeed();
         }
         ReplaceFrag(fragOne);
-        txt_match.setOnClickListener(this);
-        txt_chat.setOnClickListener(this);
-        iv_date.setOnClickListener(this);
-        ll_coupon.setOnClickListener(this);
-        iv_dashboard_notification.setOnClickListener(this);
-        txt_social.setOnClickListener(this);
+
         try {
             showPremium();
-        } catch (WindowManager.BadTokenException e) {
-            Log.e("BadTokenException", "" + e);
+        } catch (WindowManager.BadTokenException ignored) {
         }
         setValue();
         callAPIFriends();
 
-
-//        callAPIRestaurant();
-
-//        RecyclerView.LayoutManager manager1 = new LinearLayoutManager(DashboardActivity.this, RecyclerView.HORIZONTAL, false);
-//        adapterRestaurent = new RestaurentListAdapter(new ArrayList<>());
-//        rv_restaurant.setAdapter(adapterRestaurent);
-//        rv_restaurant.setLayoutManager(manager1);
-
         nsv.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
 
             if (scrollY > oldScrollY) {
-                Log.i(TAG, "Scroll DOWN");
                 if (CurrentFrag.getClass().getSimpleName().equals("FragInstaLikeProfile")) {
                     if (iv_plus.getVisibility() == View.GONE) {
                         setNormal();
@@ -287,7 +204,6 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
             }
 
             if (scrollY == (v.getMeasuredHeight() - v.getChildAt(0).getMeasuredHeight()) * -1) {
-                Log.i(TAG, "BOTTOM SCROLL");
                 if (null != CurrentFrag) {
                     if (CurrentFrag.getClass().getSimpleName().equals("FragSocialFeed")) {
                         FragSocialFeed frag = (FragSocialFeed) CurrentFrag;
@@ -295,36 +211,31 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
                     }
                 }
             }
+
+
         });
 
 
-//        ConnectionBroadcastReceiver receiver = new ConnectionBroadcastReceiver();
-//        IntentFilter filter = new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE");
-//        this.registerReceiver(receiver, filter);
+        iv_cancel.setOnClickListener(this);
+        iv_gallery.setOnClickListener(this);
+        ll_profile_insta.setOnClickListener(this);
+        iv_plus.setOnClickListener(this);
+        ll_profile_support.setOnClickListener(this);
+        ll_love_bottom.setOnClickListener(this);
+        iv_create_ano_ques.setOnClickListener(this);
+        iv_cart.setOnClickListener(this);
+        ll_take_photo.setOnClickListener(this);
+        ll_upload_photo.setOnClickListener(this);
+        ll_Record_video.setOnClickListener(this);
+        ll_upload_video.setOnClickListener(this);
+        search.setOnClickListener(this);
+        txt_match.setOnClickListener(this);
+        txt_chat.setOnClickListener(this);
+        iv_date.setOnClickListener(this);
+        ll_coupon.setOnClickListener(this);
+        iv_dashboard_notification.setOnClickListener(this);
+        txt_social.setOnClickListener(this);
     }
-
-//    NoInternetDialog dialog;
-//
-//    class ConnectionBroadcastReceiver extends BroadcastReceiver {
-//
-//        @Override
-//        public void onReceive(Context context, Intent intent) {
-//            if (null == dialog) {
-//                dialog = new NoInternetDialog(DashboardActivity.this);
-//            }
-//
-//            if (intent.getAction().equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
-//                NetworkInfo networkInfo = intent.getParcelableExtra(ConnectivityManager.EXTRA_NETWORK_INFO);
-//                if (networkInfo != null && networkInfo.getDetailedState() == NetworkInfo.DetailedState.CONNECTED) {
-//                    if (dialog.isShowing()) {
-//                        dialog.dismiss();
-//                    }
-//                } else if (networkInfo != null && networkInfo.getDetailedState() == NetworkInfo.DetailedState.DISCONNECTED) {
-//                    dialog.show();
-//                }
-//            }
-//        }
-//    }
 
     private boolean checkFirstFrag() {
         return pref.getBoolVal(SessionPref.LoginUserSuggestionShown);
@@ -365,57 +276,18 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
 
     }
 
-//    private void callAPIRestaurant() {
-//
-//        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-//        Map<String, String> hashMap = new HashMap<>();
-//        hashMap.put("limit", "100");
-//        hashMap.put("pageNo", "1");
-//
-//        Call<RestMain> call = service.restaurants("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
-//        call.enqueue(new Callback<RestMain>() {
-//            @Override
-//            public void onResponse(Call<RestMain> call, Response<RestMain> response) {
-//                if (response.code() == 200) {
-//                    assert response.body() != null;
-//                    if (response.body().getStatus() == 1) {
-//                        ArrayList<Restaurant> restaurentlst = (ArrayList<Restaurant>) response.body().getLst();
-//                        if (restaurentlst == null) {
-//                            restaurentlst = new ArrayList<>();
-//                        }
-//                        if (restaurentlst.size() > 0) {
-//                            txt_serachfriend.setVisibility(View.GONE);
-////                            rv_restaurant.setVisibility(View.VISIBLE);
-////                            adapterRestaurent.updateList(restaurentlst);
-//
-//                        } else {
-//                            txt_serachfriend.setVisibility(View.VISIBLE);
-//                            rv_restaurant.setVisibility(View.GONE);
-//                        }
-//                    }
-//                }
-//                mSwipeRefreshLayout.setRefreshing(false);
-//            }
-//
-//            @Override
-//            public void onFailure(Call<RestMain> call, Throwable t) {
-//                t.printStackTrace();
-//            }
-//        });
-//
-//    }
 
     private void setValue() {
         try {
-            SessionPref pref = SessionPref.getInstance(this);
+
             pref.saveBoolKeyVal(CompleteProfile, true);
             String img = pref.getStringVal(SessionPref.LoginUserprofilePic);
             if (img.contains("http")) {
-                Picasso.get().load(img)
+                picasso.load(img)
                         .placeholder(R.drawable.profile)
                         .into(profile_image);
             } else {
-                Picasso.get().load(BASE_URL_IMAGE + img)
+                picasso.load(BASE_URL_IMAGE + img)
                         .placeholder(R.drawable.profile)
                         .into(profile_image);
             }
@@ -429,7 +301,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
 
     private void showPremium() {
         mHandler = new Handler(Looper.getMainLooper());
-        mHandler.postDelayed(() -> new FullScreenDialog(DashboardActivity.this).show(), 4 * 30000);
+        mHandler.postDelayed(() -> new FullScreenDialog(DashboardActivity.this).show(), 5 * 30000);
     }
 
 
@@ -459,11 +331,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
             }
             ft.commitAllowingStateLoss();
 
-            if (CurrentFrag.getClass().getSimpleName().equals("FragSocialFeed")) {
-                mSwipeRefreshLayout.setEnabled(true);
-            } else {
-                mSwipeRefreshLayout.setEnabled(false);
-            }
+            mSwipeRefreshLayout.setEnabled(CurrentFrag.getClass().getSimpleName().equals("FragSocialFeed"));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -477,18 +345,8 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
 
     @Override
     public void Reset() {
-        txt_match.setBackground(null);
-        txt_social.setBackground(getResources().getDrawable(R.drawable.menu_button));
-        txt_match.setTextColor(getResources().getColor(android.R.color.darker_gray));
-        txt_social.setTextColor(getResources().getColor(android.R.color.white));
-        txt_chat.setBackground(null);
-        txt_chat.setTextColor(getResources().getColor(android.R.color.darker_gray));
-        iv_dashboard_notification.setBackground(null);
-        iv_dashboard_notification.setImageResource(R.drawable.ic_bell);
-//        ll_restaurents.setVisibility(View.GONE);
-        ll_friends.setVisibility(View.VISIBLE);
-        ll_mainMenu.setVisibility(View.VISIBLE);
-        ll_her.setVisibility(View.VISIBLE);
+        socialOnMatchOffNotiOff();
+        ShowMainMenuWithFriends();
         ReplaceFrag(new FragSocialFeed());
     }
 
@@ -501,21 +359,15 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
             ft.commitAllowingStateLoss();
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(this, "" + e.toString(), Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public void loadProfile(String UserID) {
-        SessionPref pref = SessionPref.getInstance(this);
         if (pref.getStringVal(SessionPref.LoginUserID).equals(UserID)) {
             ll_profile_insta.performClick();
         } else {
-            txt_social.setTextColor(getResources().getColor(R.color.white));
-            txt_social.setBackground(getResources().getDrawable(R.drawable.menu_button));
-
-            txt_match.setTextColor(getResources().getColor(android.R.color.darker_gray));
-            txt_match.setBackground(null);
+            socialOnMatchOffNotiOff();
             ll_friends.setVisibility(View.GONE);
             ll_option_love.setVisibility(View.GONE);
             ReplaceFragWithStack(new FragInstaLikeProfileFriends(true, UserID));
@@ -524,16 +376,28 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
 
     }
 
+    void socialOnMatchOffNotiOff() {
+        txt_social.setTextColor(getResources().getColor(R.color.white));
+        txt_social.setBackground(getResources().getDrawable(R.drawable.menu_button));
+        txt_match.setTextColor(getResources().getColor(android.R.color.darker_gray));
+        txt_match.setBackground(null);
+    }
+
+    void socialOffMatchOnNotiOff() {
+        txt_social.setTextColor(getResources().getColor(android.R.color.darker_gray));
+        txt_social.setBackground(null);
+        txt_match.setTextColor(getResources().getColor(R.color.white));
+        txt_match.setBackground(getResources().getDrawable(R.drawable.menu_button));
+    }
+
+
     @Override
     public void loadMatchProfile(String UserID) {
         if (pref.getStringVal(SessionPref.LoginUserID).equals(UserID)) {
             ll_profile_insta.performClick();
         } else {
-            txt_social.setTextColor(getResources().getColor(R.color.white));
-            txt_social.setBackground(getResources().getDrawable(R.drawable.menu_button));
+            socialOnMatchOffNotiOff();
 
-            txt_match.setTextColor(getResources().getColor(android.R.color.darker_gray));
-            txt_match.setBackground(null);
             ll_friends.setVisibility(View.GONE);
             ll_option_love.setVisibility(View.GONE);
             ReplaceFragWithStack(new FragInstaLikeProfileFriends(false, UserID));
@@ -541,6 +405,13 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
 
 
     }
+
+    void ShowMainMenuWithFriends() {
+        ll_friends.setVisibility(View.VISIBLE);
+        ll_mainMenu.setVisibility(View.VISIBLE);
+        ll_her.setVisibility(View.VISIBLE);
+    }
+
 
 
     @Override
@@ -551,135 +422,40 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
             startActivity(new Intent(DashboardActivity.this, DateBaseActivity.class));
 
         } else if (id == R.id.txt_social) {
-
-            txt_chat.setBackground(null);
-            txt_social.setTextColor(getResources().getColor(R.color.white));
-            txt_social.setBackground(getResources().getDrawable(R.drawable.menu_button));
-
-            iv_dashboard_notification.setBackground(null);
-            iv_dashboard_notification.setImageResource(R.drawable.ic_bell);
-
-            txt_chat.setTextColor(getResources().getColor(android.R.color.darker_gray));
-            txt_match.setTextColor(getResources().getColor(android.R.color.darker_gray));
-            txt_match.setBackground(null);
-//            ll_restaurents.setVisibility(View.GONE);
-            ll_friends.setVisibility(View.VISIBLE);
-            ll_mainMenu.setVisibility(View.VISIBLE);
-            ll_her.setVisibility(View.VISIBLE);
+            socialOnMatchOffNotiOff();
+            ShowMainMenuWithFriends();
             ReplaceFrag(new FragSocialFeed());
 
         } else if (id == R.id.iv_dashboard_notification) {
-            txt_match.setBackground(null);
-            txt_social.setBackground(null);
-            txt_match.setTextColor(getResources().getColor(android.R.color.darker_gray));
-            txt_social.setTextColor(getResources().getColor(android.R.color.darker_gray));
-            txt_chat.setBackground(null);
-            txt_chat.setTextColor(getResources().getColor(android.R.color.darker_gray));
-            iv_dashboard_notification.setBackground(getResources().getDrawable(R.drawable.menu_button));
-            iv_dashboard_notification.setImageResource(R.drawable.ic_bell);
 
             ll_friends.setVisibility(View.GONE);
             ll_mainMenu.setVisibility(View.GONE);
             ll_her.setVisibility(View.GONE);
             ReplaceFrag(new FragNotification("dashboard"));
-        }
-//        else if (id == R.id.txt_payment) {
-//
-//            txt_payment.setTextColor(getResources().getColor(R.color.white));
-//            txt_payment.setBackground(getResources().getDrawable(R.drawable.menu_button));
-//
-//            txt_personal.setBackground(null);
-//            txt_personal.setTextColor(getResources().getColor(android.R.color.darker_gray));
-//            txt_account.setBackground(null);
-//            txt_account.setTextColor(getResources().getColor(android.R.color.darker_gray));
-//
-//            ReplaceFrag(new FragMyProfilePayments());
-//        }
-        else if (id == R.id.txt_match) {
-            txt_social.setBackground(null);
-            txt_chat.setBackground(null);
-            txt_match.setTextColor(getResources().getColor(R.color.white));
-            iv_dashboard_notification.setBackground(null);
-            iv_dashboard_notification.setImageResource(R.drawable.ic_bell);
-
-            txt_social.setTextColor(getResources().getColor(android.R.color.darker_gray));
-            txt_chat.setTextColor(getResources().getColor(android.R.color.darker_gray));
-            txt_match.setBackground(getResources().getDrawable(R.drawable.menu_button));
-//            ll_restaurents.setVisibility(View.GONE);
-            ll_friends.setVisibility(View.VISIBLE);
-            ll_mainMenu.setVisibility(View.VISIBLE);
-            ll_her.setVisibility(View.VISIBLE);
+        } else if (id == R.id.txt_match) {
+            socialOffMatchOnNotiOff();
+            ShowMainMenuWithFriends();
             ReplaceFrag(new FragCardSwipe());
         } else if (id == R.id.txt_chat) {
             startActivity(new Intent(DashboardActivity.this, ChatBaseActivity.class));
-        }
-//        else if (id == R.id.txt_personal) {
-//
-//            txt_personal.setTextColor(getResources().getColor(R.color.white));
-//            txt_personal.setBackground(getResources().getDrawable(R.drawable.menu_button));
-//            txt_account.setBackground(null);
-//            txt_account.setTextColor(getResources().getColor(android.R.color.darker_gray));
-//            txt_payment.setBackground(null);
-//            txt_payment.setTextColor(getResources().getColor(android.R.color.darker_gray));
-//
-//            ReplaceFrag(new FragMyProfilePersonal());
-//        }
-//        else if (id == R.id.txt_my_coupon) {
-//
-//            txt_my_coupon.setTextColor(getResources().getColor(R.color.white));
-//            txt_my_coupon.setBackground(getResources().getDrawable(R.drawable.menu_button));
-//            txt_store.setBackground(null);
-//            txt_store.setTextColor(getResources().getColor(android.R.color.darker_gray));
-//            ReplaceFrag(new FragMyCoupons());
-//
-//        }
-//        else if (id == R.id.txt_store) {
-
-//            txt_store.setTextColor(getResources().getColor(R.color.white));
-//            txt_store.setBackground(getResources().getDrawable(R.drawable.menu_button));
-//            txt_my_coupon.setBackground(null);
-//            txt_my_coupon.setTextColor(getResources().getColor(android.R.color.darker_gray));
-//            ReplaceFrag(new FragCouponStore());
-//
-//
-//        }
-//        else if (id == R.id.txt_account) {
-//
-//            txt_account.setTextColor(getResources().getColor(R.color.white));
-//            txt_account.setBackground(getResources().getDrawable(R.drawable.menu_button));
-//
-//            txt_personal.setBackground(null);
-//            txt_personal.setTextColor(getResources().getColor(android.R.color.darker_gray));
-//            txt_payment.setBackground(null);
-//            txt_payment.setTextColor(getResources().getColor(android.R.color.darker_gray));
-//
-//            ReplaceFrag(new FragMyProfileDetails());
-//        }
-        else if (id == R.id.ll_love_bottom) {
-//            if (OPTION_CLICK == 0) {
-//                return;
-//            }
+        } else if (id == R.id.ll_love_bottom) {
+            if (OPTION_CLICK == 0) {
+                return;
+            }
             nsv.scrollTo(0, 0);
             OPTION_CLICK = 0;
             iv_play_date_logo.setVisibility(View.VISIBLE);
             ll_profile_drop_menu.setVisibility(View.GONE);
             iv_plus.setVisibility(View.GONE);
-//            iv_booster.setVisibility(View.GONE);
             ll_option_love.setVisibility(View.VISIBLE);
             ll_friends.setVisibility(View.VISIBLE);
-//            ll_restaurents.setVisibility(View.GONE);
-//            ll_profile_menu.setVisibility(View.GONE);
             iv_love.setBackground(getDrawable(R.drawable.rectangle_back));
             iv_love.setImageResource(R.drawable.love_high);
             iv_coupons.setBackground(null);
-//            ll_coupon_menu.setVisibility(View.GONE);
             iv_coupons.setImageResource(R.drawable.badge);
             iv_profile_sett.setBackground(null);
             iv_profile_sett.setImageResource(R.drawable.tech_support);
-            txt_chat.setBackground(null);
-            txt_match.setBackground(null);
-            txt_match.setTextColor(getResources().getColor(android.R.color.darker_gray));
-            txt_chat.setTextColor(getResources().getColor(android.R.color.darker_gray));
+
             checkFirstFrag();
             Fragment frag;
             if (!checkFirstFrag()) {
@@ -688,16 +464,13 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
             } else {
                 frag = new FragSocialFeed();
             }
-//            ll_restaurents.setVisibility(View.GONE);
-            ll_friends.setVisibility(View.VISIBLE);
-            ll_mainMenu.setVisibility(View.VISIBLE);
-            ll_mainMenu2.setVisibility(View.VISIBLE);
-            ll_her.setVisibility(View.VISIBLE);
 
-            iv_dashboard_notification.setBackground(null);
-            iv_dashboard_notification.setImageResource(R.drawable.ic_bell);
-            txt_social.setTextColor(getResources().getColor(R.color.white));
-            txt_social.setBackground(getResources().getDrawable(R.drawable.menu_button));
+            ShowMainMenuWithFriends();
+
+            ll_mainMenu2.setVisibility(View.VISIBLE);
+
+            socialOnMatchOffNotiOff();
+
             ReplaceFrag(frag);
             callAPIFriends();
         } else if (id == R.id.ll_coupon) {
@@ -707,26 +480,16 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
 
             nsv.scrollTo(0, 0);
             OPTION_CLICK = 1;
-//            ll_profile_menu.setVisibility(View.GONE);
             iv_love.setImageResource(R.drawable.love);
             iv_love.setBackground(null);
             iv_coupons.setImageResource(R.drawable.badge_sel);
             iv_coupons.setBackground(getDrawable(R.drawable.rectangle_back));
-//            ll_coupon_menu.setVisibility(View.VISIBLE);
             ll_option_love.setVisibility(View.GONE);
             iv_love.setBackground(null);
             iv_love.setImageResource(R.drawable.love);
             iv_profile_sett.setBackground(null);
             iv_profile_sett.setImageResource(R.drawable.tech_support);
             ll_friends.setVisibility(View.GONE);
-//            ll_mainMenu.setVisibility(View.VISIBLE);
-//            ll_mainMenu2.setVisibility(View.VISIBLE);
-//            ll_her.setVisibility(View.VISIBLE);
-//            ll_restaurents.setVisibility(View.VISIBLE);
-//            txt_store.setTextColor(getResources().getColor(R.color.white));
-//            txt_store.setBackground(getResources().getDrawable(R.drawable.menu_button));
-//            txt_my_coupon.setTextColor(getResources().getColor(android.R.color.darker_gray));
-//            txt_my_coupon.setBackground(null);
             ReplaceFrag(new FragCouponParent());
 
         } else if (id == R.id.ll_profile_support) {
@@ -740,24 +503,13 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
             iv_plus.setVisibility(View.GONE);
             ll_option_love.setVisibility(View.GONE);
             ll_friends.setVisibility(View.GONE);
-//            ll_profile_menu.setVisibility(View.VISIBLE);
             ll_mainMenu2.setVisibility(View.GONE);
             iv_coupons.setImageResource(R.drawable.badge);
             iv_coupons.setBackground(null);
-//            ll_coupon_menu.setVisibility(View.GONE);
             iv_love.setBackground(null);
             iv_love.setImageResource(R.drawable.love);
             iv_profile_sett.setBackground(getDrawable(R.drawable.rectangle_back));
             iv_profile_sett.setImageResource(R.drawable.tech_support_red);
-
-
-//            txt_account.setTextColor(getResources().getColor(R.color.white));
-//            txt_account.setBackground(getResources().getDrawable(R.drawable.menu_button));
-//            txt_personal.setTextColor(getResources().getColor(android.R.color.darker_gray));
-//            txt_personal.setBackground(null);
-//            txt_payment.setTextColor(getResources().getColor(android.R.color.darker_gray));
-//            txt_payment.setBackground(null);
-
 
             ReplaceFrag(new FragSettingsParent());
 
@@ -770,15 +522,12 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
             iv_play_date_logo.setVisibility(View.VISIBLE);
             ll_profile_drop_menu.setVisibility(View.GONE);
             iv_plus.setVisibility(View.VISIBLE);
-//            iv_booster.setVisibility(View.VISIBLE);
             ll_option_love.setVisibility(View.GONE);
             ll_friends.setVisibility(View.GONE);
-//            ll_profile_menu.setVisibility(View.GONE);
             iv_coupons.setBackground(null);
             iv_coupons.setImageResource(R.drawable.badge);
             iv_love.setBackground(null);
             iv_love.setImageResource(R.drawable.love);
-//            ll_coupon_menu.setVisibility(View.GONE);
             ll_mainMenu2.setVisibility(View.GONE);
             iv_profile_sett.setBackground(null);
             iv_profile_sett.setImageResource(R.drawable.tech_support);
@@ -787,17 +536,14 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
         } else if (id == R.id.iv_plus) {
             ll_profile_drop_menu.setVisibility(View.VISIBLE);
             iv_plus.setVisibility(View.GONE);
-//            iv_booster.setVisibility(View.GONE);
             iv_play_date_logo.setVisibility(View.INVISIBLE);
         } else if (id == R.id.iv_cancel) {
             ll_profile_drop_menu.setVisibility(View.GONE);
             iv_plus.setVisibility(View.VISIBLE);
-//            iv_booster.setVisibility(View.VISIBLE);
             iv_play_date_logo.setVisibility(View.VISIBLE);
         } else if (id == R.id.iv_create_ano_ques) {
             ll_profile_drop_menu.setVisibility(View.GONE);
             iv_plus.setVisibility(View.VISIBLE);
-//            iv_booster.setVisibility(View.VISIBLE);
             iv_play_date_logo.setVisibility(View.VISIBLE);
             Intent mIntent = new Intent(DashboardActivity.this, AnonymousQuestionActivity.class);
             mIntent.putExtra("new", true);
@@ -805,7 +551,6 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
         } else if (id == R.id.iv_cart) {
             ll_profile_drop_menu.setVisibility(View.GONE);
             iv_plus.setVisibility(View.VISIBLE);
-//            iv_booster.setVisibility(View.GONE);
             iv_play_date_logo.setVisibility(View.VISIBLE);
 
             new FragStore(this).show();
@@ -864,16 +609,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
             ll_mainMenu.setVisibility(View.GONE);
             ll_her.setVisibility(View.GONE);
             ReplaceFrag(new FragSearchUser());
-        }
-//        else if (id == R.id.iv_rest_search) {
-//
-//            ll_friends.setVisibility(View.GONE);
-//            ll_mainMenu.setVisibility(View.GONE);
-//            ll_mainMenu2.setVisibility(View.GONE);
-//            ll_her.setVisibility(View.GONE);
-//            ReplaceFrag(new FragmentSearchRestaurent());
-//        }
-        else if (id == R.id.iv_saved) {
+        } else if (id == R.id.iv_saved) {
 
             ll_friends.setVisibility(View.GONE);
             ll_mainMenu.setVisibility(View.GONE);
@@ -918,28 +654,30 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         try {
-
+            if (OPTION_CLICK == 3) {
+                iv_plus.setVisibility(View.VISIBLE);
+            }
             if (requestCode == 857) {
 
                 if (data != null && data.hasExtra(CardIOActivity.EXTRA_SCAN_RESULT)) {
                     CreditCard scanResult = data.getParcelableExtra(CardIOActivity.EXTRA_SCAN_RESULT);
 
-                    if (scanResult.isExpiryValid()) {
+//                    if (scanResult.isExpiryValid()) {
 //                        scanResult.expiryMonth;
 //                        scanResult.expiryYear;
 
-                    }
-                    if (scanResult.cvv != null) {
+//                    }
+//                    if (scanResult.cvv != null) {
 
 
-                    }
+//                    }
                     //scanResult.getCardType();
 
 
-                    if (CurrentFrag.getClass().getSimpleName().equals("NewPaymentMethod")) {
-                        NewPaymentMethod cls = (NewPaymentMethod) CurrentFrag;
-                        cls.setData(scanResult.cardholderName, scanResult.getFormattedCardNumber(), scanResult.cvv, scanResult.expiryMonth, scanResult.expiryYear);
-                    }
+//                    if (CurrentFrag.getClass().getSimpleName().equals("NewPaymentMethod")) {
+//                        NewPaymentMethod cls = (NewPaymentMethod) CurrentFrag;
+//                        cls.setData(scanResult.cardholderName, scanResult.getFormattedCardNumber(), scanResult.cvv, scanResult.expiryMonth, scanResult.expiryYear);
+//                    }
 
 
                 } else {
@@ -962,11 +700,9 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
 
 
             if (resultCode != RESULT_OK) {
-//                iv_plus.setVisibility(View.VISIBLE);
-//                iv_booster.setVisibility(View.VISIBLE);
                 return;
             }
-            if (requestCode == PICK_PHOTO_FOR_AVATAR) {
+            if (requestCode == PICK_PHOTO_FOR_AVATAR || requestCode == TAKE_PHOTO_CODE) {
 
                 if (data.getData() == null) {
                     bitmap = (Bitmap) data.getExtras().get("data");
@@ -977,65 +713,19 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
                         e.printStackTrace();
                     }
                 }
-
-
                 if (null != bitmap) {
-//                    iv_plus.setVisibility(View.VISIBLE);
-//                    iv_booster.setVisibility(View.VISIBLE);
                     Intent mIntent = new Intent(DashboardActivity.this, MainActivity.class);
                     startActivity(mIntent);
                 }
-
-            } else if (requestCode == TAKE_PHOTO_CODE) {
-
-
-                if (data.getData() == null) {
-                    bitmap = (Bitmap) data.getExtras().get("data");
-                } else {
-                    try {
-                        bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-
-                if (null != bitmap) {
-//                    iv_plus.setVisibility(View.VISIBLE);
-//                    iv_booster.setVisibility(View.VISIBLE);
-                    Intent mIntent = new Intent(DashboardActivity.this, MainActivity.class);
-                    startActivity(mIntent);
-                }
-
-            } else if (requestCode == REQUEST_TAKE_GALLERY_VIDEO) {
-
+            } else if (requestCode == REQUEST_TAKE_GALLERY_VIDEO || requestCode == CAMERA) {
                 if (data != null) {
                     Uri contentURI = data.getData();
-
                     String selectedVideoPath = getPath(contentURI);
-                    Log.d("path", selectedVideoPath);
-//                    iv_plus.setVisibility(View.VISIBLE);
-//                    iv_booster.setVisibility(View.VISIBLE);
                     Intent mIntent = new Intent(DashboardActivity.this, PostMediaActivity.class);
                     mIntent.putExtra("videoPath", selectedVideoPath);
                     startActivity(mIntent);
-
                 }
-            } else if (requestCode == CAMERA) {
-//                iv_plus.setVisibility(View.VISIBLE);
-//                iv_booster.setVisibility(View.VISIBLE);
-                Uri contentURI = data.getData();
-                String recordedVideoPath = getPath(contentURI);
-                Log.d("frrr", recordedVideoPath);
-                Intent mIntent = new Intent(DashboardActivity.this, PostMediaActivity.class);
-                mIntent.putExtra("videoPath", recordedVideoPath);
-                startActivity(mIntent);
             }
-
-            if (OPTION_CLICK == 3) {
-                iv_plus.setVisibility(View.VISIBLE);
-            }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1045,8 +735,6 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
         String[] projection = {MediaStore.Video.Media.DATA};
         Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
         if (cursor != null) {
-            // HERE YOU WILL GET A NULLPOINTER IF CURSOR IS NULL
-            // THIS CAN BE, IF YOU USED OI FILE MANAGER FOR PICKING THE MEDIA
             int column_index = cursor
                     .getColumnIndexOrThrow(MediaStore.Video.Media.DATA);
             cursor.moveToFirst();
@@ -1101,7 +789,6 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
 
     @Override
     public void OnFrinedDataClosed() {
-//        ll_restaurents.setVisibility(View.GONE);
         ll_friends.setVisibility(View.VISIBLE);
         ll_option_love.setVisibility(View.VISIBLE);
         ReplaceFrag(new FragSocialFeed());
@@ -1109,10 +796,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
 
     @Override
     public void OnSuggestionClosed() {
-//        ll_restaurents.setVisibility(View.GONE);
-        ll_friends.setVisibility(View.VISIBLE);
-        ll_mainMenu.setVisibility(View.VISIBLE);
-        ll_her.setVisibility(View.VISIBLE);
+        ShowMainMenuWithFriends();
         ReplaceFrag(new FragSocialFeed());
     }
 
@@ -1149,17 +833,13 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
         try {
             boolean permissionGranted = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
             if (permissionGranted) {
-//                Toast.makeText(this, "Location permission granted", Toast.LENGTH_SHORT).show();
                 startService(new Intent(getApplicationContext(), LocationService.class));
             } else {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 200);
             }
         } catch (Exception e) {
-//            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
-
-
     }
 
     @Override
@@ -1171,15 +851,10 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
             txt_count.setVisibility(View.GONE);
             txt_count.setText("");
         }
-
     }
-
 
     public void redirectToLeaderBoard() {
-        Log.d("Redirected", "redirectToLeaderBoard: ");
         ReplaceFragWithStack(new FragGameLeaderBoard());
     }
-
-
 }
 

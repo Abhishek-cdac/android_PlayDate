@@ -12,18 +12,27 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.playdate.app.ui.dialogs.NoInternetDialog;
+import com.playdate.app.util.session.SessionPref;
+import com.squareup.picasso.Picasso;
 
 public class BaseActivity extends AppCompatActivity {
+
+
+    public Picasso picasso;
+    public SessionPref pref;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        picasso = Picasso.get();
+        pref = SessionPref.getInstance(this);
         ConnectionBroadcastReceiver receiver = new ConnectionBroadcastReceiver();
         IntentFilter filter = new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE");
+
         this.registerReceiver(receiver, filter);
     }
 
-    NoInternetDialog dialog;
+    private NoInternetDialog dialog;
 
     class ConnectionBroadcastReceiver extends BroadcastReceiver {
 

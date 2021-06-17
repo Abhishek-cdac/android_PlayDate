@@ -9,7 +9,6 @@ import android.media.RingtoneManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -23,18 +22,12 @@ class FcmMessageService : FirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
         Log.d(TAG, "Refreshed token: $token")
-        // If required send token to your app server.
-//        sendRegistrationToServer(token)
-        var pref=SessionPref.getInstance(this)
-        pref.saveStringKeyVal(LoginUserFCMID,token)
-//        Toast.makeText(this,"Token",Toast.LENGTH_LONG).show();
+
+        var pref = SessionPref.getInstance(this)
+        pref.saveStringKeyVal(LoginUserFCMID, token)
     }
 
-    /**
-     * Called when message is received.
-     *
-     * @param remoteMessage Object representing the message received from Firebase Cloud Messaging.
-     */
+
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
         Log.d(TAG, "From: ${remoteMessage.from}")
@@ -53,11 +46,6 @@ class FcmMessageService : FirebaseMessagingService() {
 //        }
     }
 
-    /**
-     * Create and show a simple notification containing the received FCM message.
-     *
-     * @param messageBody FCM message body received.
-     */
     private fun sendNotification(messageBody: String) {
         val intent = Intent(this, DashboardActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
