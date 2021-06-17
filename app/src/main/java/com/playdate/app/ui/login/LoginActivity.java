@@ -1,16 +1,14 @@
 package com.playdate.app.ui.login;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,7 +21,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -33,7 +30,6 @@ import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
-import com.facebook.login.Login;
 import com.facebook.login.LoginBehavior;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
@@ -50,8 +46,6 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.Task;
 import com.playdate.app.R;
 import com.playdate.app.couple.ui.register.connect.ConnectYourPartner;
-import com.playdate.app.couple.ui.register.couplebio.CoupleBioActivity;
-import com.playdate.app.couple.ui.register.coupleusername.CoupleUserNameActivity;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.databinding.ActivityLoginBinding;
@@ -79,8 +73,6 @@ import com.playdate.app.util.session.SessionPref;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -99,26 +91,22 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     private CallbackManager callbackManager;
     private LoginManager loginManager;
-    String ServerAuthCode = null;
+    private final String ServerAuthCode = null;
     private GoogleApiClient googleApiClient;
     private ImageView iv_show_password;
     private EditText login_Password;
 
     private ActivityLoginBinding binding;
     private static final int RC_SIGN_IN = 1;
-    CommonClass clsCommon;
+    private CommonClass clsCommon;
     private GoogleSignInClient mGoogleSignInClient;
 
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-//    }
+    SessionPref pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        pref = SessionPref.getInstance(this);
         clsCommon = CommonClass.getInstance();
         FacebookSdk.sdkInitialize(this);
 
@@ -204,58 +192,44 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
         });
 
-        loginViewModel.fbClick().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean register) {
+        loginViewModel.fbClick().observe(this, register -> {
 
-                calltoFB();// or you can put this in viewmodel or simply complete
+            calltoFB();// or you can put this in viewmodel or simply complete
 
-            }
         });
 
 
-        loginViewModel.GoogleClick().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean register) {
+        loginViewModel.GoogleClick().observe(this, register -> {
 
-                calltoGoogle();// or you can put this in viewmodel or simply complete
+            calltoGoogle();// or you can put this in viewmodel or simply complete
 
-            }
         });
 
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(
-                        new ResultCallback<Status>() {
-                            @Override
-                            public void onResult(Status status) {
-                                if (status.isSuccess()) {
-                                    Toast.makeText(getApplicationContext(), "LogOut", Toast.LENGTH_LONG).show();
-                                } else {
-                                    Toast.makeText(getApplicationContext(), "Session not close", Toast.LENGTH_LONG).show();
-                                }
-                            }
-                        });
-            }
-        });
+        logout.setOnClickListener(v -> Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(
+                new ResultCallback<Status>() {
+                    @Override
+                    public void onResult(Status status) {
+                        if (status.isSuccess()) {
+                            Toast.makeText(getApplicationContext(), "LogOut", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Session not close", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }));
 
-        iv_show_password.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        iv_show_password.setOnClickListener(v -> {
 
-                if (login_Password.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())) {
-                    (iv_show_password).setImageResource(R.drawable.ic_visibility);
+            if (login_Password.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())) {
+                (iv_show_password).setImageResource(R.drawable.ic_visibility);
 
-                    //Show Password
-                    login_Password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                } else {
-                    (iv_show_password).setImageResource(R.drawable.ic_visibility_off);
+                //Show Password
+                login_Password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            } else {
+                (iv_show_password).setImageResource(R.drawable.ic_visibility_off);
 
-                    //Hide Password
-                    login_Password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                //Hide Password
+                login_Password.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
-                }
             }
         });
     }
@@ -266,9 +240,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("keyward", loginUser.getStrEmailAddress());
         hashMap.put("password", loginUser.getStrPassword());
-        hashMap.put("deviceID", "12345");//Hardcode
+        hashMap.put("deviceID", getDeviceID());
         hashMap.put("deviceType", DEVICE_TYPE);
-        hashMap.put("deviceToken", "12345");//Hardc
+        hashMap.put("deviceToken", getFCM());
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
         pd.show();
         Call<LoginResponse> call = service.login(hashMap);
@@ -306,6 +280,20 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
         });
     }
+
+    private String getFCM() {
+        String fcmID = pref.getStringVal(SessionPref.LoginUserFCMID);
+        if (fcmID == null) {
+            fcmID = "99999999";// no fcmid
+        }
+        return fcmID;
+    }
+
+    private String getDeviceID() {
+        @SuppressLint("HardwareIds") String android_id = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+        return android_id;
+    }
+
 
     private void checkForTheLastActivity(LoginResponse body) {
         try {
@@ -461,11 +449,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private void callGmailSocialLoginAPI(String personEmail, String personId, String serverAuthCode) {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
+
         hashMap.put("email", personEmail);
         hashMap.put("sourceSocialId", personId);
-        hashMap.put("deviceToken", "lkjfsidfsdfiuwyierwer12313");
+        hashMap.put("deviceToken", getFCM());
         hashMap.put("sourceType", "Google");
-        hashMap.put("deviceID", "12345");//Hardcode
+        hashMap.put("deviceID", getDeviceID());//Hardcode
         hashMap.put("deviceType", DEVICE_TYPE);
         hashMap.put("inviteCode", "");
         //   hashMap.put("deviceToken", "12345");//Hardc
@@ -570,7 +559,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         hashMap.put("sourceSocialId", fbUserID);
         hashMap.put("deviceToken", token);
         hashMap.put("sourceType", "Facebook");
-        hashMap.put("deviceID", "12345");//Hardcode
+        hashMap.put("deviceID", getDeviceID());//Hardcode
         hashMap.put("deviceType", DEVICE_TYPE);
         hashMap.put("inviteCode", "");
 

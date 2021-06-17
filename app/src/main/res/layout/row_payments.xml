@@ -9,8 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/_20sdp"
-        android:layout_marginRight="@dimen/_20sdp"
         android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginRight="@dimen/_20sdp"
         android:layout_marginBottom="@dimen/_5sdp"
         android:background="@drawable/round_outline_pink"
         android:orientation="vertical">
@@ -26,9 +26,9 @@
                 android:id="@+id/iv_payment"
                 android:layout_width="@dimen/_120sdp"
                 android:layout_height="@dimen/_70sdp"
-                android:src="@drawable/ic_paypal"
                 android:layout_alignParentStart="true"
-                android:padding="@dimen/_10sdp">
+                android:padding="@dimen/_10sdp"
+                android:src="@drawable/ic_paypal">
 
             </ImageView>
 

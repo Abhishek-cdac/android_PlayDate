@@ -22,7 +22,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.STORAGE" />
-    <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+
     <permission
         android:name="com.example.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
@@ -157,8 +158,7 @@
         <activity
             android:name=".util.image_crop.MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Base.Theme.AppCompat"
-            />
+            android:theme="@style/Base.Theme.AppCompat" />
         <activity
             android:name=".ui.onboarding.OnBoardingActivity"
             android:screenOrientation="portrait"
@@ -173,10 +173,10 @@
         <activity
             android:name=".ui.coupons.ActivityCoupons"
             android:screenOrientation="portrait" />
-<activity android:name=".ui.chat.request.ChatBaseActivity"/>
-<!--        <activity-->
-<!--            android:name=".ui.chat.ChatActivity"-->
-<!--            android:screenOrientation="portrait" />-->
+        <activity android:name=".ui.chat.request.ChatBaseActivity" />
+        <!--        <activity-->
+        <!--            android:name=".ui.chat.ChatActivity"-->
+        <!--            android:screenOrientation="portrait" />-->
         <activity android:name=".ui.SampleActivity">
 
         </activity>
@@ -210,9 +210,12 @@
             android:screenOrientation="portrait" />
 
 
-        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat"/>
-
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" />
+        <activity
+            android:name=".util.photoview.PhotoViewActivity"
+            android:screenOrientation="portrait" />
 
 
         <service android:name=".service.LocationService" />
@@ -226,6 +229,28 @@
         <service
             android:name=".ui.social.videoplay.AAH_DownloadService"
             android:exported="false" />
+
+
+        <!--FireBase-->
+        <service
+            android:name=".service.FcmMessageService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/playdate_pink" />
+        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
+
+        <!--FireBase-->
     </application>
 
 </manifest>

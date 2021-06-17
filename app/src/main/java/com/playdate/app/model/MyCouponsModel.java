@@ -1,25 +1,25 @@
 package com.playdate.app.model;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
 public class MyCouponsModel {
-    @Expose
-    private List<MyCoupons> data;
 
-
+    @SerializedName("data")
+    private MyCouponsWrap data;
 
     @Expose
     private String message;
     @Expose
     private Long status;
 
-    public List<MyCoupons> getData() {
+    public MyCouponsWrap getData() {
         return data;
     }
 
-    public void setData(List<MyCoupons> data) {
+    public void setData(MyCouponsWrap data) {
         this.data = data;
     }
 

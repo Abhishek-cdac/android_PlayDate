@@ -174,162 +174,71 @@
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/ll_profile_menu"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_5sdp"
-                        android:layout_marginRight="@dimen/_5sdp"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:visibility="gone">
-
-                        <TextView
-                            android:id="@+id/txt_account"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_margin="@dimen/_5sdp"
-                            android:background="@drawable/menu_button"
-                            android:paddingLeft="@dimen/_10sdp"
-                            android:paddingTop="@dimen/_5sdp"
-                            android:paddingRight="@dimen/_10sdp"
-                            android:paddingBottom="@dimen/_5sdp"
-                            android:text="Account"
-                            android:textColor="@android:color/white"
-                            android:textSize="@dimen/_15sdp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/txt_personal"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_margin="@dimen/_5sdp"
-                            android:paddingLeft="@dimen/_10sdp"
-                            android:paddingTop="@dimen/_5sdp"
-                            android:paddingRight="@dimen/_10sdp"
-                            android:paddingBottom="@dimen/_5sdp"
-                            android:text="Personal"
-                            android:textColor="@android:color/darker_gray"
-                            android:textSize="@dimen/_15sdp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/txt_payment"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_margin="@dimen/_5sdp"
-                            android:paddingLeft="@dimen/_10sdp"
-                            android:paddingTop="@dimen/_5sdp"
-                            android:paddingRight="@dimen/_10sdp"
-                            android:paddingBottom="@dimen/_5sdp"
-                            android:text="Payment"
-                            android:textColor="@android:color/darker_gray"
-                            android:textSize="@dimen/_15sdp"
-                            android:textStyle="bold" />
 
 
-                    </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/ll_coupon_menu"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_5sdp"
-                        android:layout_marginRight="@dimen/_5sdp"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:visibility="gone">
-
-                        <TextView
-                            android:id="@+id/txt_store"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_margin="@dimen/_5sdp"
-                            android:background="@drawable/menu_button"
-                            android:paddingLeft="@dimen/_10sdp"
-                            android:paddingTop="@dimen/_5sdp"
-                            android:paddingRight="@dimen/_10sdp"
-                            android:paddingBottom="@dimen/_5sdp"
-                            android:text="Store"
-                            android:textColor="@android:color/white"
-                            android:textSize="@dimen/_15sdp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/txt_my_coupon"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_margin="@dimen/_5sdp"
-                            android:paddingLeft="@dimen/_10sdp"
-                            android:paddingTop="@dimen/_5sdp"
-                            android:paddingRight="@dimen/_10sdp"
-                            android:paddingBottom="@dimen/_5sdp"
-                            android:text="My Coupons"
-                            android:textColor="@android:color/darker_gray"
-                            android:textSize="@dimen/_15sdp"
-                            android:textStyle="bold" />
-
-
-                    </LinearLayout>
                 </LinearLayout>
-
 
                 <LinearLayout
-                    android:id="@+id/ll_friends"
+                    android:id="@+id/ll_mainMenu2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:layout_below="@+id/ll_mainMenu"
                     android:orientation="horizontal">
-
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:id="@+id/ll_friends"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center|top"
-                        android:layout_weight="2"
-                        android:gravity="center"
                         android:orientation="horizontal">
 
-                        <ImageView
-                            android:id="@+id/iv_search"
-                            android:layout_width="@dimen/_40sdp"
-                            android:layout_height="@dimen/_40sdp"
-                            android:background="@drawable/pink_bg_circular"
-                            android:padding="@dimen/_10sdp"
-                            android:src="@drawable/search" />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center|top"
+                            android:layout_weight="2"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:id="@+id/iv_search"
+                                android:layout_width="@dimen/_40sdp"
+                                android:layout_height="@dimen/_40sdp"
+                                android:background="@drawable/pink_bg_circular"
+                                android:padding="@dimen/_10sdp"
+                                android:src="@drawable/search" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/txt_serachfriend"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="start|center"
+                            android:paddingLeft="@dimen/_10sdp"
+                            android:text="@string/sarchfriendhere"
+                            android:textColor="@color/color_grey"
+                            android:textSize="@dimen/_10sdp"
+                            android:visibility="gone" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_friends"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/_60sdp"
+                            android:layout_weight="7"
+                            android:layoutAnimation="@anim/layout_anim_slide" />
+
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/txt_serachfriend"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:gravity="start|center"
-                        android:paddingLeft="@dimen/_10sdp"
-                        android:text="@string/sarchfriendhere"
-                        android:textColor="@color/color_grey"
-                        android:textSize="@dimen/_10sdp"
-                        android:visibility="gone" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_friends"
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/_60sdp"
-                        android:layout_weight="7"
-                        android:layoutAnimation="@anim/layout_anim_slide" />
-
                 </LinearLayout>
+
 
                 <FrameLayout
                     android:id="@+id/flFragment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@+id/ll_friends"
+                    android:layout_below="@+id/ll_mainMenu2"
                     android:layout_marginBottom="@dimen/_55sdp" />
             </RelativeLayout>
 

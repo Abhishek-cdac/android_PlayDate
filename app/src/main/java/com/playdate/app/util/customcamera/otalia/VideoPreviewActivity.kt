@@ -21,6 +21,7 @@ import com.playdate.app.util.common.CommonClass
 import com.playdate.app.util.common.TransparentProgressDialog
 import com.playdate.app.util.session.SessionPref
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -109,7 +110,7 @@ class VideoPreviewActivity : AppCompatActivity() {
         val filePart = MultipartBody.Part.createFormData(
             "userProfileVideo",
             videoResult!!.file.name,
-            RequestBody.create(MediaType.parse("video/mp4"), videoResult!!.file)
+            RequestBody.create("video/mp4".toMediaTypeOrNull(), videoResult!!.file)
         )
         val service =
             RetrofitClientInstance.getRetrofitInstance().create(GetDataService::class.java)

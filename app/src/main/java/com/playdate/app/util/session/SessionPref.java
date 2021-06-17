@@ -77,6 +77,7 @@ public class SessionPref {
 
 
     public static String LoginUserID = "id";
+    public static String LoginUserFCMID = "id";
     public static String LoginVerified = "LoginVerified";
     public static String CompleteProfile = "CompleteProfile";
     public static String LoginUserfullName = "fullName";
@@ -101,6 +102,7 @@ public class SessionPref {
     public static String LoginUserinviteCode = "inviteCode";
     public static String LoginUserpaymentMode = "paymentMode";
     public static String LoginUserSuggestionShown = "LoginUserSuggestionShown";
+    public static String DARKMODE = "DARKMODE";
 
 
     public void saveLoginUser(String id,

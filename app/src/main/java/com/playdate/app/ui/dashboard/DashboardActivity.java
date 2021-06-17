@@ -34,16 +34,22 @@ import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.FriendsListModel;
 import com.playdate.app.model.MatchListUser;
+import com.playdate.app.model.RestMain;
+import com.playdate.app.model.RestaurentData;
+import com.playdate.app.model.RestaurentModel;
 import com.playdate.app.service.LocationService;
 import com.playdate.app.ui.anonymous_question.AnonymousQuestionActivity;
 import com.playdate.app.ui.card_swipe.FragCardSwipe;
 import com.playdate.app.ui.chat.request.ChatBaseActivity;
+import com.playdate.app.ui.coupons.FragCouponParent;
 import com.playdate.app.ui.coupons.FragCouponStore;
 import com.playdate.app.ui.coupons.FragMyCoupons;
 import com.playdate.app.ui.dashboard.adapter.FriendAdapter;
+import com.playdate.app.ui.dashboard.adapter.RestaurentListAdapter;
 import com.playdate.app.ui.dashboard.data.CallAPI;
 import com.playdate.app.ui.dashboard.fragments.FragLanding;
 import com.playdate.app.ui.dashboard.fragments.FragSearchUser;
+import com.playdate.app.ui.dashboard.fragments.FragmentSearchRestaurent;
 import com.playdate.app.ui.date.DateBaseActivity;
 import com.playdate.app.ui.date.games.FragGameLeaderBoard;
 import com.playdate.app.ui.date.games.FragStore;
@@ -55,8 +61,10 @@ import com.playdate.app.ui.my_profile_details.FragMyProfileDetails;
 import com.playdate.app.ui.my_profile_details.FragMyProfilePayments;
 import com.playdate.app.ui.my_profile_details.FragMyProfilePersonal;
 import com.playdate.app.ui.my_profile_details.FragSavedPost;
+import com.playdate.app.ui.my_profile_details.FragSettingsParent;
 import com.playdate.app.ui.my_profile_details.NewPaymentMethod;
 import com.playdate.app.ui.notification_screen.FragNotification;
+import com.playdate.app.ui.restaurant.adapter.Restaurant;
 import com.playdate.app.ui.social.FragSocialFeed;
 import com.playdate.app.ui.social.upload_media.PostMediaActivity;
 import com.playdate.app.util.image_crop.MainActivity;
@@ -88,9 +96,9 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
 
     private TextView txt_social;
-    private TextView txt_payment;
-    private TextView txt_account;
-    private TextView txt_personal;
+//    private TextView txt_payment;
+//    private TextView txt_account;
+//    private TextView txt_personal;
     private TextView txt_count;
 
     private ImageView iv_love;
@@ -103,24 +111,29 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     //    private ImageView iv_booster;
     private ImageView profile_image;
     private TextView txt_serachfriend;
-    private TextView txt_store;
-    private TextView txt_my_coupon;
+//    private TextView txt_store;
+//    private TextView txt_my_coupon;
 
     private LinearLayout ll_mainMenu, ll_her;
     private LinearLayout ll_friends;
-    private LinearLayout ll_profile_menu;
-    private LinearLayout ll_coupon_menu;
+//    private LinearLayout ll_profile_menu;
+//    private LinearLayout ll_coupon_menu;
     private LinearLayout ll_option_love;
     private LinearLayout ll_profile_insta;
     private LinearLayout ll_profile_drop_menu;
     private LinearLayout bottomNavigationView;
     private LinearLayout ll_camera_option;
+//    private LinearLayout ll_restaurents;
+    private LinearLayout ll_mainMenu2;
+//    private ImageView iv_rest_search;
+//    private RecyclerView rv_restaurant;
 
     private RecyclerView rv_friends;
     private SessionPref pref;
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private FriendAdapter adapterfriend;
+//    private RestaurentListAdapter adapterRestaurent;
     private Fragment CurrentFrag;
     private NestedScrollView nsv;
     private FragInstaLikeProfile profile;
@@ -139,16 +152,25 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         mSwipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.color_pink));
 
         mSwipeRefreshLayout.setOnRefreshListener(() -> {
-            if (null != CurrentFrag) {
-                if (CurrentFrag.getClass().getSimpleName().equals("FragSocialFeed")) {
-                    FragSocialFeed frag = (FragSocialFeed) CurrentFrag;
-                    frag.LoadPageAgain();
+            try {
+                if (null != CurrentFrag) {
+                    if (CurrentFrag.getClass().getSimpleName().equals("FragSocialFeed")) {
+                        FragSocialFeed frag = (FragSocialFeed) CurrentFrag;
+                        frag.LoadPageAgain();
+                    }
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
             callAPIFriends();
+
             callNotification();
         });
 
+//        ll_restaurents = findViewById(R.id.ll_restaurents);
+        ll_mainMenu2 = findViewById(R.id.ll_mainMenu2);
+//        rv_restaurant = findViewById(R.id.rv_restaurant);
+//        iv_rest_search = findViewById(R.id.iv_rest_search);
         txt_serachfriend = findViewById(R.id.txt_serachfriend);
         txt_count = findViewById(R.id.txt_count);
         nsv = findViewById(R.id.nsv);
@@ -164,16 +186,16 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         LinearLayout ll_love_bottom = findViewById(R.id.ll_love_bottom);
         LinearLayout ll_coupon = findViewById(R.id.ll_coupon);
         LinearLayout ll_profile_support = findViewById(R.id.ll_profile_support);
-        ll_profile_menu = findViewById(R.id.ll_profile_menu);
-        txt_my_coupon = findViewById(R.id.txt_my_coupon);
-        txt_store = findViewById(R.id.txt_store);
-        ll_coupon_menu = findViewById(R.id.ll_coupon_menu);
+//        ll_profile_menu = findViewById(R.id.ll_profile_menu);
+//        txt_my_coupon = findViewById(R.id.txt_my_coupon);
+//        txt_store = findViewById(R.id.txt_store);
+//        ll_coupon_menu = findViewById(R.id.ll_coupon_menu);
         ll_option_love = findViewById(R.id.ll_option_love);
         txt_social = findViewById(R.id.txt_social);
         txt_match = findViewById(R.id.txt_match);
-        txt_payment = findViewById(R.id.txt_payment);
-        txt_account = findViewById(R.id.txt_account);
-        txt_personal = findViewById(R.id.txt_personal);
+//        txt_payment = findViewById(R.id.txt_payment);
+//        txt_account = findViewById(R.id.txt_account);
+//        txt_personal = findViewById(R.id.txt_personal);
         iv_plus = findViewById(R.id.iv_plus);
         iv_play_date_logo = findViewById(R.id.iv_play_date_logo);
         iv_love = findViewById(R.id.iv_love);
@@ -199,11 +221,11 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         iv_gallery.setOnClickListener(this);
         ll_profile_insta.setOnClickListener(this);
         iv_plus.setOnClickListener(this);
-        txt_payment.setOnClickListener(this);
-        txt_account.setOnClickListener(this);
-        txt_personal.setOnClickListener(this);
-        txt_store.setOnClickListener(this);
-        txt_my_coupon.setOnClickListener(this);
+//        txt_payment.setOnClickListener(this);
+//        txt_account.setOnClickListener(this);
+//        txt_personal.setOnClickListener(this);
+//        txt_store.setOnClickListener(this);
+//        txt_my_coupon.setOnClickListener(this);
         ll_profile_support.setOnClickListener(this);
         ll_love_bottom.setOnClickListener(this);
         iv_create_ano_ques.setOnClickListener(this);
@@ -213,6 +235,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         ll_Record_video.setOnClickListener(this);
         ll_upload_video.setOnClickListener(this);
         search.setOnClickListener(this);
+//        iv_rest_search.setOnClickListener(this);
 
 
         rv_friends = findViewById(R.id.rv_friends);
@@ -249,6 +272,13 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         setValue();
         callAPIFriends();
 
+
+//        callAPIRestaurant();
+
+//        RecyclerView.LayoutManager manager1 = new LinearLayoutManager(DashboardActivity.this, RecyclerView.HORIZONTAL, false);
+//        adapterRestaurent = new RestaurentListAdapter(new ArrayList<>());
+//        rv_restaurant.setAdapter(adapterRestaurent);
+//        rv_restaurant.setLayoutManager(manager1);
 
         nsv.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
 
@@ -306,13 +336,8 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
                             lst = new ArrayList<>();
                         }
                         if (lst.size() > 0) {
-                            txt_serachfriend.setVisibility(View.GONE);
                             rv_friends.setVisibility(View.VISIBLE);
                             adapterfriend.updateList(lst);
-
-                        } else {
-                            txt_serachfriend.setVisibility(View.VISIBLE);
-                            rv_friends.setVisibility(View.GONE);
                         }
                     }
                 }
@@ -326,6 +351,46 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         });
 
     }
+
+//    private void callAPIRestaurant() {
+//
+//        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+//        Map<String, String> hashMap = new HashMap<>();
+//        hashMap.put("limit", "100");
+//        hashMap.put("pageNo", "1");
+//
+//        Call<RestMain> call = service.restaurants("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+//        call.enqueue(new Callback<RestMain>() {
+//            @Override
+//            public void onResponse(Call<RestMain> call, Response<RestMain> response) {
+//                if (response.code() == 200) {
+//                    assert response.body() != null;
+//                    if (response.body().getStatus() == 1) {
+//                        ArrayList<Restaurant> restaurentlst = (ArrayList<Restaurant>) response.body().getLst();
+//                        if (restaurentlst == null) {
+//                            restaurentlst = new ArrayList<>();
+//                        }
+//                        if (restaurentlst.size() > 0) {
+//                            txt_serachfriend.setVisibility(View.GONE);
+////                            rv_restaurant.setVisibility(View.VISIBLE);
+////                            adapterRestaurent.updateList(restaurentlst);
+//
+//                        } else {
+//                            txt_serachfriend.setVisibility(View.VISIBLE);
+//                            rv_restaurant.setVisibility(View.GONE);
+//                        }
+//                    }
+//                }
+//                mSwipeRefreshLayout.setRefreshing(false);
+//            }
+//
+//            @Override
+//            public void onFailure(Call<RestMain> call, Throwable t) {
+//                t.printStackTrace();
+//            }
+//        });
+//
+//    }
 
     private void setValue() {
         try {
@@ -351,9 +416,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
     private void showPremium() {
         mHandler = new Handler(Looper.getMainLooper());
-        mHandler.postDelayed(() -> {
-            new FullScreenDialog(DashboardActivity.this).show();
-        }, 4 * 30000);
+        mHandler.postDelayed(() -> new FullScreenDialog(DashboardActivity.this).show(), 4 * 30000);
     }
 
 
@@ -383,6 +446,12 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             }
             ft.commitAllowingStateLoss();
 
+            if (CurrentFrag.getClass().getSimpleName().equals("FragSocialFeed")) {
+                mSwipeRefreshLayout.setEnabled(true);
+            } else {
+                mSwipeRefreshLayout.setEnabled(false);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -403,7 +472,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         txt_chat.setTextColor(getResources().getColor(android.R.color.darker_gray));
         iv_dashboard_notification.setBackground(null);
         iv_dashboard_notification.setImageResource(R.drawable.ic_bell);
-
+//        ll_restaurents.setVisibility(View.GONE);
         ll_friends.setVisibility(View.VISIBLE);
         ll_mainMenu.setVisibility(View.VISIBLE);
         ll_her.setVisibility(View.VISIBLE);
@@ -480,7 +549,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             txt_chat.setTextColor(getResources().getColor(android.R.color.darker_gray));
             txt_match.setTextColor(getResources().getColor(android.R.color.darker_gray));
             txt_match.setBackground(null);
-
+//            ll_restaurents.setVisibility(View.GONE);
             ll_friends.setVisibility(View.VISIBLE);
             ll_mainMenu.setVisibility(View.VISIBLE);
             ll_her.setVisibility(View.VISIBLE);
@@ -500,18 +569,20 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             ll_mainMenu.setVisibility(View.GONE);
             ll_her.setVisibility(View.GONE);
             ReplaceFrag(new FragNotification("dashboard"));
-        } else if (id == R.id.txt_payment) {
-
-            txt_payment.setTextColor(getResources().getColor(R.color.white));
-            txt_payment.setBackground(getResources().getDrawable(R.drawable.menu_button));
-
-            txt_personal.setBackground(null);
-            txt_personal.setTextColor(getResources().getColor(android.R.color.darker_gray));
-            txt_account.setBackground(null);
-            txt_account.setTextColor(getResources().getColor(android.R.color.darker_gray));
-
-            ReplaceFrag(new FragMyProfilePayments());
-        } else if (id == R.id.txt_match) {
+        }
+//        else if (id == R.id.txt_payment) {
+//
+//            txt_payment.setTextColor(getResources().getColor(R.color.white));
+//            txt_payment.setBackground(getResources().getDrawable(R.drawable.menu_button));
+//
+//            txt_personal.setBackground(null);
+//            txt_personal.setTextColor(getResources().getColor(android.R.color.darker_gray));
+//            txt_account.setBackground(null);
+//            txt_account.setTextColor(getResources().getColor(android.R.color.darker_gray));
+//
+//            ReplaceFrag(new FragMyProfilePayments());
+//        }
+        else if (id == R.id.txt_match) {
             txt_social.setBackground(null);
             txt_chat.setBackground(null);
             txt_match.setTextColor(getResources().getColor(R.color.white));
@@ -521,52 +592,57 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             txt_social.setTextColor(getResources().getColor(android.R.color.darker_gray));
             txt_chat.setTextColor(getResources().getColor(android.R.color.darker_gray));
             txt_match.setBackground(getResources().getDrawable(R.drawable.menu_button));
-
+//            ll_restaurents.setVisibility(View.GONE);
             ll_friends.setVisibility(View.VISIBLE);
             ll_mainMenu.setVisibility(View.VISIBLE);
             ll_her.setVisibility(View.VISIBLE);
             ReplaceFrag(new FragCardSwipe());
         } else if (id == R.id.txt_chat) {
             startActivity(new Intent(DashboardActivity.this, ChatBaseActivity.class));
-        } else if (id == R.id.txt_personal) {
+        }
+//        else if (id == R.id.txt_personal) {
+//
+//            txt_personal.setTextColor(getResources().getColor(R.color.white));
+//            txt_personal.setBackground(getResources().getDrawable(R.drawable.menu_button));
+//            txt_account.setBackground(null);
+//            txt_account.setTextColor(getResources().getColor(android.R.color.darker_gray));
+//            txt_payment.setBackground(null);
+//            txt_payment.setTextColor(getResources().getColor(android.R.color.darker_gray));
+//
+//            ReplaceFrag(new FragMyProfilePersonal());
+//        }
+//        else if (id == R.id.txt_my_coupon) {
+//
+//            txt_my_coupon.setTextColor(getResources().getColor(R.color.white));
+//            txt_my_coupon.setBackground(getResources().getDrawable(R.drawable.menu_button));
+//            txt_store.setBackground(null);
+//            txt_store.setTextColor(getResources().getColor(android.R.color.darker_gray));
+//            ReplaceFrag(new FragMyCoupons());
+//
+//        }
+//        else if (id == R.id.txt_store) {
 
-            txt_personal.setTextColor(getResources().getColor(R.color.white));
-            txt_personal.setBackground(getResources().getDrawable(R.drawable.menu_button));
-            txt_account.setBackground(null);
-            txt_account.setTextColor(getResources().getColor(android.R.color.darker_gray));
-            txt_payment.setBackground(null);
-            txt_payment.setTextColor(getResources().getColor(android.R.color.darker_gray));
-
-            ReplaceFrag(new FragMyProfilePersonal());
-        } else if (id == R.id.txt_my_coupon) {
-
-            txt_my_coupon.setTextColor(getResources().getColor(R.color.white));
-            txt_my_coupon.setBackground(getResources().getDrawable(R.drawable.menu_button));
-            txt_store.setBackground(null);
-            txt_store.setTextColor(getResources().getColor(android.R.color.darker_gray));
-            ReplaceFrag(new FragMyCoupons());
-
-        } else if (id == R.id.txt_store) {
-
-            txt_store.setTextColor(getResources().getColor(R.color.white));
-            txt_store.setBackground(getResources().getDrawable(R.drawable.menu_button));
-            txt_my_coupon.setBackground(null);
-            txt_my_coupon.setTextColor(getResources().getColor(android.R.color.darker_gray));
-            ReplaceFrag(new FragCouponStore());
-
-
-        } else if (id == R.id.txt_account) {
-
-            txt_account.setTextColor(getResources().getColor(R.color.white));
-            txt_account.setBackground(getResources().getDrawable(R.drawable.menu_button));
-
-            txt_personal.setBackground(null);
-            txt_personal.setTextColor(getResources().getColor(android.R.color.darker_gray));
-            txt_payment.setBackground(null);
-            txt_payment.setTextColor(getResources().getColor(android.R.color.darker_gray));
-
-            ReplaceFrag(new FragMyProfileDetails());
-        } else if (id == R.id.ll_love_bottom) {
+//            txt_store.setTextColor(getResources().getColor(R.color.white));
+//            txt_store.setBackground(getResources().getDrawable(R.drawable.menu_button));
+//            txt_my_coupon.setBackground(null);
+//            txt_my_coupon.setTextColor(getResources().getColor(android.R.color.darker_gray));
+//            ReplaceFrag(new FragCouponStore());
+//
+//
+//        }
+//        else if (id == R.id.txt_account) {
+//
+//            txt_account.setTextColor(getResources().getColor(R.color.white));
+//            txt_account.setBackground(getResources().getDrawable(R.drawable.menu_button));
+//
+//            txt_personal.setBackground(null);
+//            txt_personal.setTextColor(getResources().getColor(android.R.color.darker_gray));
+//            txt_payment.setBackground(null);
+//            txt_payment.setTextColor(getResources().getColor(android.R.color.darker_gray));
+//
+//            ReplaceFrag(new FragMyProfileDetails());
+//        }
+        else if (id == R.id.ll_love_bottom) {
 //            if (OPTION_CLICK == 0) {
 //                return;
 //            }
@@ -578,11 +654,12 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 //            iv_booster.setVisibility(View.GONE);
             ll_option_love.setVisibility(View.VISIBLE);
             ll_friends.setVisibility(View.VISIBLE);
-            ll_profile_menu.setVisibility(View.GONE);
+//            ll_restaurents.setVisibility(View.GONE);
+//            ll_profile_menu.setVisibility(View.GONE);
             iv_love.setBackground(getDrawable(R.drawable.rectangle_back));
             iv_love.setImageResource(R.drawable.love_high);
             iv_coupons.setBackground(null);
-            ll_coupon_menu.setVisibility(View.GONE);
+//            ll_coupon_menu.setVisibility(View.GONE);
             iv_coupons.setImageResource(R.drawable.badge);
             iv_profile_sett.setBackground(null);
             iv_profile_sett.setImageResource(R.drawable.tech_support);
@@ -598,9 +675,10 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             } else {
                 frag = new FragSocialFeed();
             }
-
+//            ll_restaurents.setVisibility(View.GONE);
             ll_friends.setVisibility(View.VISIBLE);
             ll_mainMenu.setVisibility(View.VISIBLE);
+            ll_mainMenu2.setVisibility(View.VISIBLE);
             ll_her.setVisibility(View.VISIBLE);
 
             iv_dashboard_notification.setBackground(null);
@@ -616,26 +694,27 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
             nsv.scrollTo(0, 0);
             OPTION_CLICK = 1;
-            ll_profile_menu.setVisibility(View.GONE);
+//            ll_profile_menu.setVisibility(View.GONE);
             iv_love.setImageResource(R.drawable.love);
             iv_love.setBackground(null);
             iv_coupons.setImageResource(R.drawable.badge_sel);
             iv_coupons.setBackground(getDrawable(R.drawable.rectangle_back));
-            ll_coupon_menu.setVisibility(View.VISIBLE);
+//            ll_coupon_menu.setVisibility(View.VISIBLE);
             ll_option_love.setVisibility(View.GONE);
             iv_love.setBackground(null);
             iv_love.setImageResource(R.drawable.love);
             iv_profile_sett.setBackground(null);
             iv_profile_sett.setImageResource(R.drawable.tech_support);
-            ll_friends.setVisibility(View.VISIBLE);
-            ll_mainMenu.setVisibility(View.VISIBLE);
-            ll_her.setVisibility(View.VISIBLE);
-
-            txt_store.setTextColor(getResources().getColor(R.color.white));
-            txt_store.setBackground(getResources().getDrawable(R.drawable.menu_button));
-            txt_my_coupon.setTextColor(getResources().getColor(android.R.color.darker_gray));
-            txt_my_coupon.setBackground(null);
-            ReplaceFrag(new FragCouponStore());
+            ll_friends.setVisibility(View.GONE);
+//            ll_mainMenu.setVisibility(View.VISIBLE);
+//            ll_mainMenu2.setVisibility(View.VISIBLE);
+//            ll_her.setVisibility(View.VISIBLE);
+//            ll_restaurents.setVisibility(View.VISIBLE);
+//            txt_store.setTextColor(getResources().getColor(R.color.white));
+//            txt_store.setBackground(getResources().getDrawable(R.drawable.menu_button));
+//            txt_my_coupon.setTextColor(getResources().getColor(android.R.color.darker_gray));
+//            txt_my_coupon.setBackground(null);
+            ReplaceFrag(new FragCouponParent());
 
         } else if (id == R.id.ll_profile_support) {
             if (OPTION_CLICK == 2) {
@@ -648,27 +727,26 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             iv_plus.setVisibility(View.GONE);
             ll_option_love.setVisibility(View.GONE);
             ll_friends.setVisibility(View.GONE);
-            ll_profile_menu.setVisibility(View.VISIBLE);
-
+//            ll_profile_menu.setVisibility(View.VISIBLE);
+            ll_mainMenu2.setVisibility(View.GONE);
             iv_coupons.setImageResource(R.drawable.badge);
             iv_coupons.setBackground(null);
-            ll_coupon_menu.setVisibility(View.GONE);
+//            ll_coupon_menu.setVisibility(View.GONE);
             iv_love.setBackground(null);
             iv_love.setImageResource(R.drawable.love);
             iv_profile_sett.setBackground(getDrawable(R.drawable.rectangle_back));
             iv_profile_sett.setImageResource(R.drawable.tech_support_red);
 
 
+//            txt_account.setTextColor(getResources().getColor(R.color.white));
+//            txt_account.setBackground(getResources().getDrawable(R.drawable.menu_button));
+//            txt_personal.setTextColor(getResources().getColor(android.R.color.darker_gray));
+//            txt_personal.setBackground(null);
+//            txt_payment.setTextColor(getResources().getColor(android.R.color.darker_gray));
+//            txt_payment.setBackground(null);
 
-            txt_account.setTextColor(getResources().getColor(R.color.white));
-            txt_account.setBackground(getResources().getDrawable(R.drawable.menu_button));
-            txt_personal.setTextColor(getResources().getColor(android.R.color.darker_gray));
-            txt_personal.setBackground(null);
-            txt_payment.setTextColor(getResources().getColor(android.R.color.darker_gray));
-            txt_payment.setBackground(null);
 
-
-            ReplaceFrag(new FragMyProfileDetails());
+            ReplaceFrag(new FragSettingsParent());
 
         } else if (id == R.id.ll_profile_insta) {
             if (OPTION_CLICK == 3) {
@@ -682,12 +760,13 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 //            iv_booster.setVisibility(View.VISIBLE);
             ll_option_love.setVisibility(View.GONE);
             ll_friends.setVisibility(View.GONE);
-            ll_profile_menu.setVisibility(View.GONE);
+//            ll_profile_menu.setVisibility(View.GONE);
             iv_coupons.setBackground(null);
             iv_coupons.setImageResource(R.drawable.badge);
             iv_love.setBackground(null);
             iv_love.setImageResource(R.drawable.love);
-            ll_coupon_menu.setVisibility(View.GONE);
+//            ll_coupon_menu.setVisibility(View.GONE);
+            ll_mainMenu2.setVisibility(View.GONE);
             iv_profile_sett.setBackground(null);
             iv_profile_sett.setImageResource(R.drawable.tech_support);
             profile = new FragInstaLikeProfile(true);
@@ -772,7 +851,16 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
             ll_mainMenu.setVisibility(View.GONE);
             ll_her.setVisibility(View.GONE);
             ReplaceFrag(new FragSearchUser());
-        } else if (id == R.id.iv_saved) {
+        }
+//        else if (id == R.id.iv_rest_search) {
+//
+//            ll_friends.setVisibility(View.GONE);
+//            ll_mainMenu.setVisibility(View.GONE);
+//            ll_mainMenu2.setVisibility(View.GONE);
+//            ll_her.setVisibility(View.GONE);
+//            ReplaceFrag(new FragmentSearchRestaurent());
+//        }
+        else if (id == R.id.iv_saved) {
 
             ll_friends.setVisibility(View.GONE);
             ll_mainMenu.setVisibility(View.GONE);
@@ -996,6 +1084,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
     @Override
     public void OnFrinedDataClosed() {
+//        ll_restaurents.setVisibility(View.GONE);
         ll_friends.setVisibility(View.VISIBLE);
         ll_option_love.setVisibility(View.VISIBLE);
         ReplaceFrag(new FragSocialFeed());
@@ -1003,12 +1092,11 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
     @Override
     public void OnSuggestionClosed() {
+//        ll_restaurents.setVisibility(View.GONE);
         ll_friends.setVisibility(View.VISIBLE);
         ll_mainMenu.setVisibility(View.VISIBLE);
         ll_her.setVisibility(View.VISIBLE);
         ReplaceFrag(new FragSocialFeed());
-
-
     }
 
     @Override

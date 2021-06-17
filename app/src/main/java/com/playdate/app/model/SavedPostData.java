@@ -10,6 +10,24 @@ public class SavedPostData {
     @SerializedName("mediaFullPath")
     @Expose
     private String mediaFullPath;
+    private String mediaType;
+    private String mediaThumbName;
+
+    public String getMediaThumbName() {
+        return mediaThumbName;
+    }
+
+    public void setMediaThumbName(String mediaThumbName) {
+        this.mediaThumbName = mediaThumbName;
+    }
+
+    public String getMediaType() {
+        return mediaType;
+    }
+
+    public void setMediaType(String mediaType) {
+        this.mediaType = mediaType;
+    }
 
     public String getId() {
         return id;

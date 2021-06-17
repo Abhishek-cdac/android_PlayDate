@@ -1,36 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/cl_page"
-    android:layout_marginBottom="@dimen/_40sdp"
-    android:background="@color/backgroundColour">
+    android:layout_height="wrap_content"
+    android:background="@color/backgroundColour"
+    android:orientation="vertical">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_payment"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_marginLeft="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginRight="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:background="@drawable/round_outline_pink"
+        android:orientation="vertical">
 
-    </androidx.recyclerview.widget.RecyclerView>
 
-    <Button
-        android:id="@+id/btn_add_payment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_25sdp"
-        android:background="@drawable/btn_pink_filled"
-        android:gravity="center"
-        android:paddingHorizontal="@dimen/_25sdp"
-        android:text="@string/add_new_payment_method"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_10sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        <RelativeLayout
+            android:layout_width="match_parent"
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="wrap_content">
+
+            <ImageView
+
+                android:id="@+id/iv_payment"
+                android:layout_width="@dimen/_120sdp"
+                android:layout_height="@dimen/_70sdp"
+                android:layout_alignParentStart="true"
+                android:padding="@dimen/_10sdp"
+                android:src="@drawable/ic_paypal">
+
+            </ImageView>
+
+            <RelativeLayout
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_alignParentEnd="true"
+
+                android:background="@color/color_pink">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:foregroundGravity="center"
+                    android:src="@drawable/more_white">
+
+                </ImageView>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:fontFamily="@font/helvetica_neue"
+            android:gravity="start|center"
+            android:paddingLeft="@dimen/_10sdp"
+            android:paddingRight="@dimen/_10sdp"
+            android:text="myself@me.com"
+            android:textColor="@color/color_pink"
+            android:textSize="@dimen/_11sdp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:fontFamily="@font/helvetica_neue"
+            android:gravity="start|center"
+            android:paddingLeft="@dimen/_10sdp"
+            android:paddingRight="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_20sdp"
+            android:text="added on 15/02/2021"
+            android:textColor="@color/color_pink"
+            android:textSize="@dimen/_11sdp" />
+    </LinearLayout>
+</LinearLayout>
+
+
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:id="@+id/cl_page"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_marginBottom="@dimen/_40sdp"-->
+<!--    android:background="@color/backgroundColour">-->
+
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/recycler_payment"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:nestedScrollingEnabled="false">-->
+
+<!--    </androidx.recyclerview.widget.RecyclerView>-->
+
+<!--    &lt;!&ndash;    <Button&ndash;&gt;-->
+<!--    &lt;!&ndash;        android:id="@+id/btn_add_payment"&ndash;&gt;-->
+<!--    &lt;!&ndash;        android:layout_width="wrap_content"&ndash;&gt;-->
+<!--    &lt;!&ndash;        android:layout_height="wrap_content"&ndash;&gt;-->
+<!--    &lt;!&ndash;        android:layout_marginHorizontal="@dimen/_25sdp"&ndash;&gt;-->
+<!--    &lt;!&ndash;        android:background="@drawable/btn_pink_filled"&ndash;&gt;-->
+<!--    &lt;!&ndash;        android:gravity="center"&ndash;&gt;-->
+<!--    &lt;!&ndash;        android:paddingHorizontal="@dimen/_25sdp"&ndash;&gt;-->
+<!--    &lt;!&ndash;        android:text="@string/add_new_payment_method"&ndash;&gt;-->
+<!--    &lt;!&ndash;        android:textAllCaps="false"&ndash;&gt;-->
+<!--    &lt;!&ndash;        android:textColor="@color/white"&ndash;&gt;-->
+<!--    &lt;!&ndash;        android:textSize="@dimen/_10sdp"&ndash;&gt;-->
+<!--    &lt;!&ndash;        app:layout_constraintBottom_toBottomOf="parent"&ndash;&gt;-->
+<!--    &lt;!&ndash;        app:layout_constraintLeft_toLeftOf="parent"&ndash;&gt;-->
+<!--    &lt;!&ndash;        app:layout_constraintRight_toRightOf="parent" />&ndash;&gt;-->
+
+<!--</RelativeLayout>-->

@@ -20,9 +20,8 @@ import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.Account;
 import com.playdate.app.model.GetCouponsData;
-import com.playdate.app.model.GetCouponsModel;
-import com.playdate.app.model.GetProfileDetails;
-import com.playdate.app.model.GetProileDetailData;
+import com.playdate.app.model.MyCouponsModelStore;
+import com.playdate.app.model.MyCouponsWrapStore;
 import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.ui.coupons.adapters.CouponStoreAdapter;
 import com.playdate.app.util.common.CommonClass;
@@ -48,6 +47,7 @@ public class FragCouponStore extends Fragment implements OnCouponSelected {
 
     public FragCouponStore() {
     }
+
 
     private TextView txt_points;
 
@@ -86,11 +86,8 @@ public class FragCouponStore extends Fragment implements OnCouponSelected {
                         intent.putExtra("Coupon_points", Coupon_points);
                         intent.putExtra("isFromCoupon", true);
 
-
-
                         if (null != account)
                             intent.putExtra("CurrentPoints", account.getCurrentPoints());
-
 
 
                         startActivity(intent);
@@ -110,60 +107,60 @@ public class FragCouponStore extends Fragment implements OnCouponSelected {
         };
 
 
-
+//        callGetCouponsApi();
         return view;
     }
 
     @Override
     public void onResume() {
-        callAPIProfiileDetails();
+        callGetCouponsApi();
         super.onResume();
     }
 
-    private void callAPIProfiileDetails() {
-        SessionPref pref = SessionPref.getInstance(getActivity());
-
-        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-        Map<String, String> hashMap = new HashMap<>();
-
-        hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
-
-        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
-        pd.show();
-
-
-        Call<GetProfileDetails> call = service.getProfileDetails("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
-        call.enqueue(new Callback<GetProfileDetails>() {
-            @Override
-            public void onResponse(Call<GetProfileDetails> call, Response<GetProfileDetails> response) {
-                pd.cancel();
-                if (response.code() == 200) {
-                    try {
-                        if (Objects.requireNonNull(response.body()).getStatus() == 1) {
-                            ArrayList<GetProileDetailData> lst_getPostDetail;
-                            lst_getPostDetail = (ArrayList<GetProileDetailData>) response.body().getData();
-                            if (lst_getPostDetail == null) {
-                                lst_getPostDetail = new ArrayList<>();
-                            }
-                            account = lst_getPostDetail.get(0).getAccount().get(0);
-                            txt_points.setText("" + account.getCurrentPoints());
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    callGetCouponsApi();
-                }
-
-
-            }
-
-            @Override
-            public void onFailure(Call<GetProfileDetails> call, Throwable t) {
-                t.printStackTrace();
-                pd.cancel();
-            }
-        });
-    }
+//    private void callAPIProfiileDetails() {
+//        SessionPref pref = SessionPref.getInstance(getActivity());
+//
+//        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+//        Map<String, String> hashMap = new HashMap<>();
+//
+//        hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
+//
+//        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
+//        pd.show();
+//
+//
+//        Call<GetProfileDetails> call = service.getProfileDetails("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+//        call.enqueue(new Callback<GetProfileDetails>() {
+//            @Override
+//            public void onResponse(Call<GetProfileDetails> call, Response<GetProfileDetails> response) {
+//                pd.cancel();
+//                if (response.code() == 200) {
+//                    try {
+//                        if (Objects.requireNonNull(response.body()).getStatus() == 1) {
+//                            ArrayList<GetProileDetailData> lst_getPostDetail;
+//                            lst_getPostDetail = (ArrayList<GetProileDetailData>) response.body().getData();
+//                            if (lst_getPostDetail == null) {
+//                                lst_getPostDetail = new ArrayList<>();
+//                            }
+//                            account = lst_getPostDetail.get(0).getAccount().get(0);
+//                            txt_points.setText("" + account.getCurrentPoints());
+//                        }
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                    callGetCouponsApi();
+//                }
+//
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<GetProfileDetails> call, Throwable t) {
+//                t.printStackTrace();
+//                pd.cancel();
+//            }
+//        });
+//    }
 
     Account account;
 
@@ -178,15 +175,16 @@ public class FragCouponStore extends Fragment implements OnCouponSelected {
 
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
         pd.show();
-        Call<GetCouponsModel> call = service.getCoupons("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
-        call.enqueue(new Callback<GetCouponsModel>() {
+        Call<MyCouponsModelStore> call = service.getCoupons("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new Callback<MyCouponsModelStore>() {
             @Override
-            public void onResponse(Call<GetCouponsModel> call, Response<GetCouponsModel> response) {
+            public void onResponse(Call<MyCouponsModelStore> call, Response<MyCouponsModelStore> response) {
                 pd.cancel();
                 if (response.code() == 200) {
                     if (Objects.requireNonNull(response.body()).getStatus() == 1) {
                         try {
-                            lst_getCoupons = (ArrayList<GetCouponsData>) response.body().getData();
+                            MyCouponsWrapStore wrap = response.body().getData();
+                            lst_getCoupons = wrap.getGetAllCoupons();
                             if (lst_getCoupons == null) {
                                 lst_getCoupons = new ArrayList<>();
                             }
@@ -195,7 +193,11 @@ public class FragCouponStore extends Fragment implements OnCouponSelected {
                             CouponStoreAdapter adapter = new CouponStoreAdapter(lst_getCoupons, itemClick);
                             rv_coupons_list.setAdapter(adapter);
                             adapter.setListerner(FragCouponStore.this);
-                            adapter.setCurrentPoints(account.getCurrentPoints());
+                            account = wrap.getAccount();
+                            txt_points.setText("" + wrap.getAccount().getCurrentPoints());
+                            adapter.setCurrentPoints(wrap.getAccount().getCurrentPoints());
+
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -218,7 +220,7 @@ public class FragCouponStore extends Fragment implements OnCouponSelected {
             }
 
             @Override
-            public void onFailure(Call<GetCouponsModel> call, Throwable t) {
+            public void onFailure(Call<MyCouponsModelStore> call, Throwable t) {
                 t.printStackTrace();
                 pd.cancel();
                 Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();

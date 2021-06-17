@@ -8,9 +8,6 @@ import java.util.List;
 
 public class GetCouponsModel {
 
-    @Expose
-    private List<GetCouponsData> data;
-
 
 
     @Expose
@@ -18,13 +15,7 @@ public class GetCouponsModel {
     @Expose
     private Long status;
 
-    public List<GetCouponsData> getData() {
-        return data;
-    }
 
-    public void setData(List<GetCouponsData> data) {
-        this.data = data;
-    }
 
     public String getMessage() {
         return message;

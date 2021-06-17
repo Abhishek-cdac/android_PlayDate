@@ -17,6 +17,8 @@ public class SavedPostModel {
     @Expose
     private List<SavedPostData> data = null;
 
+
+
     public Integer getStatus() {
         return status;
     }

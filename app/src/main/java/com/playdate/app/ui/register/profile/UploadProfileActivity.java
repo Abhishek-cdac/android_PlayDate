@@ -28,6 +28,7 @@ import com.playdate.app.ui.register.interest.InterestActivity;
 import com.playdate.app.ui.restaurant.RestaurantActivity;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
+import com.playdate.app.util.image_crop.MainActivity;
 import com.playdate.app.util.session.SessionPref;
 
 import org.json.JSONObject;
@@ -133,7 +134,10 @@ public class UploadProfileActivity extends AppCompatActivity {
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
         pd.show();
 
-        //create a file to write bitmap data
+
+
+
+
         File f = new File(getCacheDir(), "profile");
         try {
             f.createNewFile();
@@ -142,7 +146,7 @@ public class UploadProfileActivity extends AppCompatActivity {
         }
 
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 40 , bos);
         byte[] bitmapdata = bos.toByteArray();
 
 //write the bytes in file
@@ -255,6 +259,9 @@ public class UploadProfileActivity extends AppCompatActivity {
             }
             if (requestCode == PICK_PHOTO_FOR_AVATAR) {
 
+
+
+
                 if (data.getData() == null) {
                     bitmap = (Bitmap) data.getExtras().get("data");
                 } else {
@@ -267,9 +274,15 @@ public class UploadProfileActivity extends AppCompatActivity {
 
 
                 if (null != bitmap) {
-                    binding.profileImage.setImageBitmap(bitmap);
+//                    binding.profileImage.setImageBitmap(bitmap);
                     showChange();
+                    DashboardActivity.bitmap=bitmap;
+                    Intent mIntent = new Intent(this, MainActivity.class);
+                    mIntent.putExtra("isForProfile",true);
+                    startActivity(mIntent);
                 }
+
+
 
             } else if (requestCode == TAKE_PHOTO_CODE) {
 
@@ -286,12 +299,31 @@ public class UploadProfileActivity extends AppCompatActivity {
 
 
                 if (null != bitmap) {
-                    binding.profileImage.setImageBitmap(bitmap);
+//                    binding.profileImage.setImageBitmap(bitmap);
                     showChange();
+                    DashboardActivity.bitmap=bitmap;
+                    Intent mIntent = new Intent(this, MainActivity.class);
+                    mIntent.putExtra("isForProfile",true);
+                    startActivity(mIntent);
                 }
 
 
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        try {
+            if(null!=DashboardActivity.bitmap){
+                bitmap=DashboardActivity.bitmap;
+                binding.profileImage.setImageBitmap(bitmap);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
