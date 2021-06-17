@@ -1,6 +1,7 @@
 package com.playdate.app.ui.notification_screen;
 
 import android.content.Context;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -118,10 +119,16 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
 
                         viewHolderMatched.rl_notification.setVisibility(View.VISIBLE);
 
-//                    String notifiationId = notification_list.get(position).getNotificationId();
-//                    String userId = notification_list.get(position).getUserID();
-                        viewHolderMatched.tv_desc.setText(notification_list.get(position).getNotificationMessage());
-                        viewHolderMatched.tv_name.setText(notification_list.get(position).getFriendRequest().get(0).getUserInfo().get(0).getUsername());
+                        String name = notification_list.get(position).getFriendRequest().get(0).getUserInfo().get(0).getUsername();
+                        String desc = notification_list.get(position).getNotificationMessage();
+
+                        String sourceString = "<b>" + name + "</b> " + desc;
+                        viewHolderMatched.tv_name.setText(Html.fromHtml(sourceString));
+
+//                        viewHolderMatched.tv_desc.setText();
+//                        viewHolderMatched.tv_name.setText();
+
+
                         requestId = notification_list.get(position).getFriendRequest().get(0).getRequestId();
                         Log.e("requestId", "" + requestId);
                         picasso.load(notification_list.get(position).getFriendRequest().get(0).getUserInfo().get(0).getProfilePicPath())
@@ -200,13 +207,90 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
             viewHolderLiked.tv_name.setText(notification_list.get(position).getmUserInformation().get(0).getUsername());
             viewHolderLiked.tv_desc.setText(notification_list.get(position).getNotificationMessage());
 
+            if (notification_list.get(position).getmPostInfo().get(0).getMedia().get(0).getMediaType().equals("Image")) {
+                picasso.load(notification_list.get(position).getmPostInfo().get(0).getMedia().get(0).getMediaFullPath())
+                        .fit()
+                        .centerCrop()
+                        .into(viewHolderLiked.iv_icon_3);
+            } else if (notification_list.get(position).getmPostInfo().get(0).getMedia().get(0).getMediaType().equals("Video")) {
+                picasso.load(notification_list.get(position).getmPostInfo().get(0).getMedia().get(0).getMediaThumbName())
+                        .fit()
+                        .centerCrop()
+                        .into(viewHolderLiked.iv_icon_3);
+            }
+
+            if (notification_list.get(position).isSelected) {
+                viewHolderLiked.rl_notification.setBackgroundColor(mcontext.getResources().getColor(R.color.color_pink_dull));
+            } else {
+                viewHolderLiked.rl_notification.setBackgroundColor(mcontext.getResources().getColor(R.color.backgroundColour));
+            }
+
+            viewHolderLiked.rl_notification.setOnLongClickListener(v -> {
+                Log.e("relativeLayout", "relativeLayout" + position);
+                if (!notification_list.get(position).isSelected) {
+
+                    for (int i = 0; i < notification_list.size(); i++) {
+                        if (position != i) {
+                            notification_list.get(i).setSelected(false);
+                        } else {
+                            notification_list.get(position).setSelected(true);
+                            itemClick.onItemClicks(v, position, 11, notification_list.get(position).getNotificationId(), notification_list.get(position).getUserID());
+                        }
+                    }
+
+                    notifyDataSetChanged();
+
+
+                } else {
+                    notification_list.get(position).setSelected(false);
+                    notifyDataSetChanged();
+                }
+                return true;
+            });
 
         } else if (holder.getItemViewType() == COMMENT) {
             ViewHolderComment viewHolderComment = (ViewHolderComment) holder;
             picasso.load(notification_list.get(position).getmUserInformation().get(0).getProfilePicPath()).placeholder(R.drawable.profile)
                     .into(viewHolderComment.profile_image_3);
-            viewHolderComment.tv_name.setText(notification_list.get(position).getmUserInformation().get(0).getUsername());
-            viewHolderComment.tv_desc.setText(notification_list.get(position).getNotificationMessage());
+            String name = notification_list.get(position).getmUserInformation().get(0).getUsername();
+            String desc = notification_list.get(position).getNotificationMessage();
+
+            String sourceString = "<b>" + name + "</b> " + desc;
+            viewHolderComment.tv_name.setText(Html.fromHtml(sourceString));
+
+//            viewHolderComment.tv_name.setText(notification_list.get(position).getmUserInformation().get(0).getUsername());
+//            viewHolderComment.tv_desc.setText(notification_list.get(position).getNotificationMessage());
+
+            if (notification_list.get(position).isSelected) {
+                viewHolderComment.rl_notification.setBackgroundColor(mcontext.getResources().getColor(R.color.color_pink_dull));
+            } else {
+                viewHolderComment.rl_notification.setBackgroundColor(mcontext.getResources().getColor(R.color.backgroundColour));
+
+            }
+
+            viewHolderComment.rl_notification.setOnLongClickListener(v -> {
+                Log.e("relativeLayout", "relativeLayout" + position);
+                if (!notification_list.get(position).isSelected) {
+
+                    for (int i = 0; i < notification_list.size(); i++) {
+                        if (position != i) {
+                            notification_list.get(i).setSelected(false);
+                        } else {
+                            notification_list.get(position).setSelected(true);
+                            itemClick.onItemClicks(v, position, 11, notification_list.get(position).getNotificationId(), notification_list.get(position).getUserID());
+                        }
+                    }
+
+                    notifyDataSetChanged();
+
+
+                } else {
+                    notification_list.get(position).setSelected(false);
+                    notifyDataSetChanged();
+                }
+                return true;
+            });
+
 
         } else if (holder.getItemViewType() == FRIENDREQUEST) {
             ViewHolder viewHolderMatched = (ViewHolder) holder;
@@ -219,8 +303,12 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
 
 //                    String notifiationId = notification_list.get(position).getNotificationId();
 //                    String userId = notification_list.get(position).getUserID();
-                        viewHolderMatched.tv_desc.setText(notification_list.get(position).getNotificationMessage());
-                        viewHolderMatched.tv_name.setText(notification_list.get(position).getFriendRequest().get(0).getUserInfo().get(0).getUsername());
+
+                        String name = notification_list.get(position).getFriendRequest().get(0).getUserInfo().get(0).getUsername();
+                        String desc = notification_list.get(position).getNotificationMessage();
+
+                        String sourceString = "<b>" + name + "</b> " + desc;
+                        viewHolderMatched.tv_name.setText(Html.fromHtml(sourceString));
                         requestId = notification_list.get(position).getFriendRequest().get(0).getRequestId();
                         Log.e("requestId", "" + requestId);
                         picasso.load(notification_list.get(position).getFriendRequest().get(0).getUserInfo().get(0).getProfilePicPath())
@@ -291,7 +379,7 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
                 //  removeAt(getAdapterPosition());
             });
 
-        } else if(holder.getItemViewType()==DATE_PARTNER || holder.getItemViewType()==MATCH_RQUEST){
+        } else if (holder.getItemViewType() == DATE_PARTNER || holder.getItemViewType() == MATCH_RQUEST) {
             ViewHolderLiked viewHolderLiked = (ViewHolderLiked) holder;
             picasso.load(notification_list.get(position).getmUserInformation().get(0).getProfilePicPath()).placeholder(R.drawable.profile)
                     .into(viewHolderLiked.profile_image_3);
@@ -325,11 +413,13 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
         ImageView profile_image_3, iv_icon_3;
         TextView tv_name, tv_desc;
 
+        RelativeLayout rl_notification;
 
         public ViewHolderLiked(View view) {
             super(view);
             profile_image_3 = itemView.findViewById(R.id.profile_image_3);
             iv_icon_3 = itemView.findViewById(R.id.iv_icon_3);
+            rl_notification = itemView.findViewById(R.id.rl_header);
 
             tv_name = itemView.findViewById(R.id.tv_name_noti);
             tv_desc = itemView.findViewById(R.id.tv_desc_noti);
@@ -341,12 +431,14 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
     public class ViewHolderComment extends RecyclerView.ViewHolder {
         ImageView profile_image_3, iv_icon_3;
         TextView tv_name, tv_desc;
+        RelativeLayout rl_notification;
 
 
         public ViewHolderComment(View view) {
             super(view);
             profile_image_3 = itemView.findViewById(R.id.profile_image_3);
             iv_icon_3 = itemView.findViewById(R.id.iv_icon_3);
+            rl_notification = itemView.findViewById(R.id.rl_header);
 
             tv_name = itemView.findViewById(R.id.tv_name_noti);
             tv_desc = itemView.findViewById(R.id.tv_desc_noti);

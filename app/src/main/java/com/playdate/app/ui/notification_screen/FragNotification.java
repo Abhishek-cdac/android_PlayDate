@@ -82,9 +82,6 @@ public class FragNotification extends Fragment {
                     callMatchRequestStatusUpdateAPI(s, "Verified");
                 } else if (value == 25) {
                     callMatchRequestStatusUpdateAPI(s, "Rejected");
-                } else if (value == 11) {
-
-
                 }
             }
 

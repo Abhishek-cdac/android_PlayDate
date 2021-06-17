@@ -3,6 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:padding="@dimen/_8sdp"
+    android:background="@color/backgroundColour"
+    android:id="@+id/rl_header"
     android:layout_height="wrap_content">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -20,8 +22,9 @@
         android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/profile_image_3"
         android:text="Smitha"
+        android:maxLines="2"
         android:textColor="@color/textColour"
-        android:textStyle="bold" />
+      />
 
     <TextView
         android:id="@+id/tv_desc_noti"
@@ -31,6 +34,8 @@
         android:layout_marginHorizontal="@dimen/_5sdp"
         android:layout_toRightOf="@+id/tv_name_noti"
         android:text="Answered on your picture"
+        android:visibility="gone"
+        android:layout_marginRight="@dimen/_20sdp"
         android:textColor="@color/textColour" />
 
 

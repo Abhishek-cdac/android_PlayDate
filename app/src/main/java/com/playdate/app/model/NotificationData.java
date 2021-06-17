@@ -39,8 +39,20 @@ public class NotificationData {
         this.mUserInformation = mUserInformation;
     }
 
+
     @SerializedName("UserInformation")
     private List<UserInformation> mUserInformation;
+
+    public List<PostInfo> getmPostInfo() {
+        return mPostInfo;
+    }
+
+    public void setmPostInfo(List<PostInfo> mPostInfo) {
+        this.mPostInfo = mPostInfo;
+    }
+
+    @SerializedName("PostInfo")
+    private List<PostInfo> mPostInfo;
 
     @SerializedName("notificationId")
     private String mNotificationId;

@@ -178,13 +178,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/txt_heart_count"
         android:layout_gravity="center"
-
         android:layout_marginLeft="@dimen/_10sdp"
         android:layout_marginRight="@dimen/_10sdp"
         android:fontFamily="@font/helvetica_neue"
         android:textColor="@color/textColour"
         android:textSize="@dimen/_10sdp"
-        android:textStyle="bold" />
+      />
 
 
     <TextView
