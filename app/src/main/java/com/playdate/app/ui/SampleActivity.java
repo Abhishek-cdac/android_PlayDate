@@ -18,6 +18,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.connectycube.messenger.LoginActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -26,8 +27,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.playdate.app.R;
 import com.playdate.app.ui.chat.ChatAdapter;
-import com.playdate.app.util.video_cal_demo.SettingsProvider;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -38,16 +37,19 @@ import static com.playdate.app.ui.register.profile.UploadProfileActivity.PICK_PH
 public class SampleActivity extends AppCompatActivity {
 
     ImageView iv_videoCal;
-    SettingsProvider provider;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sample_location_activity);
 
-        provider.initConnectycubeCredentials(this);
-        provider.initChatConfiguration();
-
         iv_videoCal = findViewById(R.id.iv_videoCal);
+        iv_videoCal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(SampleActivity.this, LoginActivity.class));
+            }
+        });
     }
 }

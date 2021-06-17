@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+            android:id="@+id/menu_logout"
+            android:icon="@drawable/exo_controls_fullscreen_exit"
+            android:title="Logout"
+            app:iconTint="@color/white"
+            app:showAsAction="always" />
+</menu>
