@@ -146,7 +146,8 @@ class ChatMessageRepository(
     fun postsOfDialogId(dialogId: String, pageSize: Int): Listing<ConnectycubeChatMessage> {
         // create a boundary callback which will observe when the user reaches to the edges of
         // the list and update the database with extra data.
-        val boundaryCallback = MessageBoundaryCallback(
+        val boundaryCallback =
+                MessageBoundaryCallback(
             chatMessageApi = chatMessageApi,
             dialogId = dialogId,
             handleResponse = this::insertResultIntoDb,

@@ -5,13 +5,13 @@ import androidx.lifecycle.*
 import androidx.lifecycle.Transformations.map
 import com.connectycube.chat.model.ConnectycubeChatDialog
 import com.connectycube.chat.model.ConnectycubeChatMessage
-import com.connectycube.messenger.R
 import com.connectycube.messenger.data.ChatMessageRepository
 import com.connectycube.messenger.data.ChatRepository
 import com.connectycube.messenger.data.UserRepository
 import com.connectycube.messenger.utilities.convertToMessage
 import com.connectycube.messenger.vo.Resource
 import com.connectycube.users.model.ConnectycubeUser
+import com.playdate.app.R
 import java.util.concurrent.atomic.AtomicBoolean
 
 private const val PAGE_SIZE = 20

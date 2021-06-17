@@ -1,7 +1,7 @@
 package com.connectycube.messenger.utilities
 
 import android.content.Context
-import com.connectycube.messenger.R
+import com.playdate.app.R
 import java.lang.Long.parseLong
 import java.text.DateFormat
 import java.text.SimpleDateFormat

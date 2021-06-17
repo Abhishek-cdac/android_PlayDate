@@ -2,7 +2,7 @@ package com.connectycube.messenger.utilities.image
 
 import android.content.Context
 import android.graphics.Bitmap
-import com.connectycube.messenger.R
+import com.playdate.app.R
 import timber.log.Timber
 import java.io.File
 import java.io.FileNotFoundException
