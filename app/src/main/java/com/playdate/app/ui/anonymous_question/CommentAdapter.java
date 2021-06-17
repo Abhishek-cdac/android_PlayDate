@@ -3,6 +3,7 @@ package com.playdate.app.ui.anonymous_question;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Build;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -69,9 +70,18 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull CommentAdapter.ViewHolder holder, int position) {
         SessionPref pref = SessionPref.getInstance(mContext);
-        holder.name.setText(commentList.get(position).getUsername());
-        holder.desc.setText(commentList.get(position).getComments().getComment());
+
+        String name = commentList.get(position).getUsername();
+        String comment = commentList.get(position).getComments().getComment();
+
+        String sourceString = "<b>" + name + "</b> " + comment;
+        holder.name.setText(Html.fromHtml(sourceString));
+
+//        holder.name.setText(commentList.get(position).getUsername());
+//        holder.desc.setText(commentList.get(position).getComments().getComment());
         userId = commentList.get(position).getUserId();
+        Log.e("CommentUserId",""+userId);
+
         commentId = commentList.get(position).getComments().getCommentId();
         postId = commentList.get(position).getComments().getPostId();
         timeFormat = commentList.get(position).getComments().getEntryDate();
@@ -152,6 +162,18 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             return true;
         });
 
+        holder.delete.setOnClickListener(v -> {
+            try {
+                selected_index = position;
+                commentList.get(selected_index).setDeleted(true);
+                callDeleteCommentApi();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        });
+
+
         //   }
     }
 
@@ -175,10 +197,10 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             time = itemView.findViewById(R.id.comment_time);
             delete = itemView.findViewById(R.id.dustbin);
             relativeLayout = itemView.findViewById(R.id.card_comment);
-            name.setTypeface(Typeface.DEFAULT_BOLD);
+           // name.setTypeface(Typeface.DEFAULT_BOLD);
 
 
-            delete.setOnClickListener(v -> {
+         /*   delete.setOnClickListener(v -> {
                 try {
                     selected_index = getAdapterPosition();
                     commentList.get(selected_index).setDeleted(true);
@@ -188,7 +210,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                 }
 
             });
-
+*/
         }
 
     }
@@ -197,7 +219,10 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         SessionPref pref = SessionPref.getInstance(mContext);
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("userId", userId);
+        Log.e("deleteCommentPostId",""+postId);
+        Log.e("commentId",""+commentId);
+        Log.e("deleteCommentUId",""+pref.getStringVal(SessionPref.LoginUserID));
+        hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
         hashMap.put("postId", postId);
         hashMap.put("commentId", commentId);
         Call<GetCommentModel> call = service.deletePostComment("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);

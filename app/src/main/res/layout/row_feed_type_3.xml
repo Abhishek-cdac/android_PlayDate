@@ -180,7 +180,7 @@
         android:layout_marginRight="@dimen/_10sdp"
         android:fontFamily="@font/helvetica_neue"
         android:text=""
-        android:textColor="@color/black"
+        android:textColor="@color/textColour"
         android:textSize="@dimen/_10sdp"
         android:textStyle="bold"
         android:visibility="gone" />

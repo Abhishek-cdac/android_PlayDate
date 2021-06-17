@@ -33,9 +33,10 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginHorizontal="@dimen/_5sdp"
+                android:maxLines="2"
                 android:layout_toRightOf="@+id/profile_image_1"
                 android:textColor="@color/textColour"
-                android:textStyle="bold" />
+          />
 
             <TextView
                 android:id="@+id/tv_desc_noti"
@@ -44,6 +45,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/tv_name_noti"
                 android:maxLines="2"
+                android:visibility="gone"
                 android:textColor="@color/textColour" />
 
             <ImageView
