@@ -152,8 +152,8 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
     @Override
     public AAH_CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view = null;
-        AAH_CustomViewHolder viewHolder = null;
+        View view;
+        AAH_CustomViewHolder viewHolder;
         mContext = parent.getContext();
         if (viewType == 100) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_load_more, parent, false);
@@ -168,14 +168,6 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_feed_type_video, parent, false);
             viewHolder = new ViewHolderUserVideo(view);
         }
-//        else if (viewType == FragSocialFeed.RESTAURANT) {
-//            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_feed_type_1, parent, false);
-//            viewHolder = new ViewHolderRestaurant(view);
-//        }
-//        else if (viewType == FragSocialFeed.ADDS) {
-//            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_feed_type_4, parent, false);
-//            viewHolder = new ViewHolderAdds(view);
-//        }
 
 
         return viewHolder;
@@ -232,7 +224,6 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                     lst.get(position).setLikes(lst.get(position).getLikes() - 1);
                     userViewHolder.iv_heart.setImageResource(R.drawable.ic_heart);
                     lst.get(position).setTapCount(0);
-//                    lst.get(position).setHeartSelected(false);
                     notifyDataSetChanged();
                     callAPI(lst.get(position).getPostId(), lst.get(position).getIsLike());
                 } else if (lst.get(position).getIsLike() == 0) {

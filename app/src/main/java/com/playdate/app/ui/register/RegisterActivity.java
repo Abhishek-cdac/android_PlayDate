@@ -1,5 +1,6 @@
 package com.playdate.app.ui.register;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -28,11 +29,13 @@ import com.facebook.login.LoginResult;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.Task;
 import com.playdate.app.R;
@@ -53,8 +56,10 @@ import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -68,17 +73,17 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
     private CallbackManager callbackManager;
     private LoginManager loginManager;
 
-    private GoogleApiClient googleApiClient;
-    private ActivityRegisterBinding binding;
+    private GoogleSignInClient googleApiClient;
     private static final int RC_SIGN_IN = 1;
-    CommonClass clsCommon;
-    Intent mIntent;
-
+    private CommonClass clsCommon;
+    private Intent mIntent;
+    SessionPref pref;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mIntent = getIntent();
+        pref = SessionPref.getInstance(this);
         clsCommon = CommonClass.getInstance();
         registerViewModel = new RegisterViewModel();
         registerViewModel.init();
@@ -88,12 +93,14 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
-        googleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this, this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
 
-        binding = DataBindingUtil.setContentView(RegisterActivity.this, R.layout.activity_register);
+        googleApiClient = GoogleSignIn.getClient(this, gso);
+//        googleApiClient = new GoogleApiClient.Builder(this)
+//                .enableAutoManage(this, this)
+//                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+//                .build();
+
+        com.playdate.app.databinding.ActivityRegisterBinding binding = DataBindingUtil.setContentView(RegisterActivity.this, R.layout.activity_register);
         binding.setLifecycleOwner(this);
         binding.setVMRegister(registerViewModel);
         Button logout = binding.logout1;
@@ -139,52 +146,50 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
             }
         });
 
-        registerViewModel.getOnGoogleClick().observe(this, new Observer<Boolean>() {
-
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                calltoGoogle();
-            }
-        });
+        registerViewModel.getOnGoogleClick().observe(this, aBoolean -> calltoGoogle());
 
 
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(
-                        new ResultCallback<Status>() {
-                            @Override
-                            public void onResult(Status status) {
-                                if (status.isSuccess()) {
-                                    Toast.makeText(getApplicationContext(), "LogOut", Toast.LENGTH_LONG).show();
-                                } else {
-                                    Toast.makeText(getApplicationContext(), "Session not close", Toast.LENGTH_LONG).show();
-                                }
-                            }
-                        });
-            }
-        });
+//        logout.setOnClickListener(v -> Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(
+//                new ResultCallback<Status>() {
+//                    @Override
+//                    public void onResult(Status status) {
+//                        if (status.isSuccess()) {
+//                            Toast.makeText(getApplicationContext(), "LogOut", Toast.LENGTH_LONG).show();
+//                        } else {
+//                            Toast.makeText(getApplicationContext(), "Session not close", Toast.LENGTH_LONG).show();
+//                        }
+//                    }
+//                }));
 
+    }
+
+    private String getFCM() {
+        String fcmID = pref.getStringVal(SessionPref.LoginUserFCMID);
+        if (fcmID == null) {
+            fcmID = "99999999";// no fcmid
+        }
+        return fcmID;
+    }
+
+    private String getDeviceID() {
+        @SuppressLint("HardwareIds") String android_id = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+        return android_id;
     }
 
     private void callAPI(RegisterUser registerUser) {
 
-        /*Create handle for the RetrofitInstance interface*/
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("fullName", registerUser.getFullname());
         hashMap.put("email", registerUser.getEmail());
         hashMap.put("address", registerUser.getAddress());
         hashMap.put("deviceType", DEVICE_TYPE);
-        hashMap.put("deviceToken", "12345695");
+        hashMap.put("deviceToken", getFCM());
         hashMap.put("phoneNo", registerUser.getPhoneNo());
         hashMap.put("password", registerUser.getPassword());
         hashMap.put("userType", mIntent.getStringExtra("userType"));
         hashMap.put("inviteCode", "");
-
-        String android_id = Settings.Secure.getString(this.getContentResolver(),
-                Settings.Secure.ANDROID_ID);
-        hashMap.put("deviceID", android_id);
+        hashMap.put("deviceID", getDeviceID());
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
         pd.show();
         Call<RegisterResult> call = service.registerUser(hashMap);
@@ -217,7 +222,7 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
                                 user.getSourceSocialId(),
                                 user.getInviteCode(),
                                 user.getPaymentMode()
-                                );
+                        );
 
                         nextPage(registerUser);
                     } else {
@@ -260,8 +265,17 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
     }
 
     private void calltoGoogle() {
-        Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
-        startActivityForResult(intent, RC_SIGN_IN);
+//        Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
+//        startActivityForResult(intent, RC_SIGN_IN);
+
+//        Set<Scope> requiredScopes = new HashSet<>(2);
+//        requiredScopes.add(Drive.SCOPE_FILE);
+//        requiredScopes.add(Drive.SCOPE_APPFOLDER);
+        GoogleSignInOptions signInOptions =
+                new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .build();
+        GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(this, signInOptions);
+        startActivityForResult(googleSignInClient.getSignInIntent(), 1);
 
     }
 

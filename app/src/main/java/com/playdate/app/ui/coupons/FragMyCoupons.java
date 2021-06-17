@@ -40,6 +40,11 @@ public class FragMyCoupons extends Fragment {
     private Onclick itemClick;
     private TextView txt_points;
 
+    public FragMyCoupons() {
+    }
+
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -124,7 +129,7 @@ public class FragMyCoupons extends Fragment {
                 if (response.code() == 200) {
                     assert response.body() != null;
                     if (response.body().getStatus() == 1) {
-                        MyCouponsWrap wrap=response.body().getData();
+                        MyCouponsWrap wrap = response.body().getData();
                         List<MyCoupons> lst = wrap.getLst();
                         if (lst == null) {
                             lst = new ArrayList<>();

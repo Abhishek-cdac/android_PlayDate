@@ -4,18 +4,19 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.SavedPostData;
 import com.playdate.app.model.SavedPostModel;
-
-import com.playdate.app.ui.my_profile_details.adapters.SavedPostVedioAdapter;
+import com.playdate.app.ui.my_profile_details.adapters.SavedPostAdapter;
 import com.playdate.app.util.session.SessionPref;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ import retrofit2.Response;
 public class FragSavedPost extends Fragment {
 
     private RecyclerView recyclerView;
-    private List<SavedPostData> savedPostDataList ;
+    private List<SavedPostData> savedPostDataList;
 
     @Nullable
     @Override
@@ -61,13 +62,14 @@ public class FragSavedPost extends Fragment {
                             savedPostDataList = new ArrayList<>();
                         }
                         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-                        SavedPostVedioAdapter adapter = new SavedPostVedioAdapter(getActivity(), (ArrayList<SavedPostData>) savedPostDataList);
+                        SavedPostAdapter adapter = new SavedPostAdapter(getActivity(), (ArrayList<SavedPostData>) savedPostDataList);
                         recyclerView.setAdapter(adapter);
                     }
                 } else {
 
                 }
             }
+
             @Override
             public void onFailure(Call<SavedPostModel> call, Throwable t) {
                 t.printStackTrace();
@@ -75,8 +77,6 @@ public class FragSavedPost extends Fragment {
         });
 
     }
-
-
 
 
 }

@@ -89,7 +89,7 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
 
         callAPI();
         setInIt(view);
-
+        setDarkModeSwitch();
         setValues();
         return view;
 
@@ -302,8 +302,8 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
                         if (lstUserSuggestions == null) {
                             lstUserSuggestions = new ArrayList<>();
                         }
-                        if(lstUserSuggestions.size()>0)
-                        showFriendsDialog(lstUserSuggestions);
+                        if (lstUserSuggestions.size() > 0)
+                            showFriendsDialog(lstUserSuggestions);
                     }
                 } else {
                 }
@@ -319,7 +319,7 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
     }
 
     void showFriendsDialog(ArrayList<MatchListUser> lstUserSuggestions) {
-        FriendDialog dialog = new FriendDialog(getActivity(), lstUserSuggestions, true,inviteLink);
+        FriendDialog dialog = new FriendDialog(getActivity(), lstUserSuggestions, true, inviteLink);
         dialog.show();
         dialog.setOnDismissListener(dialog1 -> {
 
@@ -365,16 +365,28 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
         });
     }
 
+    void setDarkModeSwitch() {
+        if (pref.getBoolVal(SessionPref.DARKMODE)) {
+            iv_dark_mode.setImageResource(R.drawable.dark_mode_sel);
+            iv_dark_mode.setRotation(180);
+        } else {
+            iv_dark_mode.setImageResource(R.drawable.dark_mode);
+            iv_dark_mode.setRotation(0);
+        }
+    }
+
     private void imageChange(boolean state) {
         if (state) {
 
             iv_dark_mode.setImageResource(R.drawable.dark_mode_sel);
             iv_dark_mode.setRotation(180);
+            pref.saveBoolKeyVal(SessionPref.DARKMODE, true);
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 
         } else {
             iv_dark_mode.setImageResource(R.drawable.dark_mode);
             iv_dark_mode.setRotation(0);
+            pref.saveBoolKeyVal(SessionPref.DARKMODE, false);
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         }

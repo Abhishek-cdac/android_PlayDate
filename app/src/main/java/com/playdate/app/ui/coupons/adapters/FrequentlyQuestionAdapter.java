@@ -45,11 +45,11 @@ public class FrequentlyQuestionAdapter extends RecyclerView.Adapter<FrequentlyQu
         //if the position is equals to the item position which is to be expanded
         if (currentPosition == position) {
             //creating an animation
-            Animation slideDown = AnimationUtils.loadAnimation(context, R.anim.slide_down);
+           // Animation slideDown = AnimationUtils.loadAnimation(context, R.anim.slide_down);
             //toggling visibility
             holder.linearLayout.setVisibility(View.VISIBLE);
             //adding sliding effect
-            holder.linearLayout.startAnimation(slideDown);
+         //   holder.linearLayout.startAnimation(slideDown);
         }
 
         holder.tv_question.setOnClickListener(new View.OnClickListener() {

@@ -20,12 +20,7 @@ import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.Account;
 import com.playdate.app.model.GetCouponsData;
-import com.playdate.app.model.GetCouponsModel;
-import com.playdate.app.model.GetProfileDetails;
-import com.playdate.app.model.GetProileDetailData;
-import com.playdate.app.model.MyCouponsModel;
 import com.playdate.app.model.MyCouponsModelStore;
-import com.playdate.app.model.MyCouponsWrap;
 import com.playdate.app.model.MyCouponsWrapStore;
 import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.ui.coupons.adapters.CouponStoreAdapter;
@@ -52,6 +47,7 @@ public class FragCouponStore extends Fragment implements OnCouponSelected {
 
     public FragCouponStore() {
     }
+
 
     private TextView txt_points;
 
@@ -92,7 +88,6 @@ public class FragCouponStore extends Fragment implements OnCouponSelected {
 
                         if (null != account)
                             intent.putExtra("CurrentPoints", account.getCurrentPoints());
-
 
 
                         startActivity(intent);
@@ -188,7 +183,7 @@ public class FragCouponStore extends Fragment implements OnCouponSelected {
                 if (response.code() == 200) {
                     if (Objects.requireNonNull(response.body()).getStatus() == 1) {
                         try {
-                            MyCouponsWrapStore wrap=response.body().getData();
+                            MyCouponsWrapStore wrap = response.body().getData();
                             lst_getCoupons = wrap.getGetAllCoupons();
                             if (lst_getCoupons == null) {
                                 lst_getCoupons = new ArrayList<>();
@@ -198,9 +193,11 @@ public class FragCouponStore extends Fragment implements OnCouponSelected {
                             CouponStoreAdapter adapter = new CouponStoreAdapter(lst_getCoupons, itemClick);
                             rv_coupons_list.setAdapter(adapter);
                             adapter.setListerner(FragCouponStore.this);
-                            account=wrap.getAccount();
+                            account = wrap.getAccount();
                             txt_points.setText("" + wrap.getAccount().getCurrentPoints());
                             adapter.setCurrentPoints(wrap.getAccount().getCurrentPoints());
+
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

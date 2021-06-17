@@ -86,7 +86,7 @@
         android:layout_gravity="center"
         android:padding="@dimen/_5sdp"
         app:lottie_autoPlay="true"
-        app:lottie_loop="true"
+        app:lottie_loop="false"
         app:lottie_rawRes="@raw/success"
         app:lottie_url="REPLACE_JSON_URL" />
 </RelativeLayout>
