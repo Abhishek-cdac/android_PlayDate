@@ -81,4 +81,17 @@
 
     </style>
 
+    <style name="Matisse.ConnectyCube" parent="Matisse.Zhihu">
+        <item name="colorPrimary">@color/color_pink</item>
+        <item name="colorPrimaryDark">@color/color_pink_dull</item>
+        <item name="bottomToolbar.apply.textColor">@color/color_pink</item>
+        <item name="item.checkCircle.backgroundColor">@color/color_pink_dull</item>
+        <item name="preview.bottomToolbar.apply.textColor">@color/color_pink</item>
+    </style>
+
+    <style name="ChatMessageItemStyle">
+        <item name="android:layout_marginLeft">@dimen/margin_small</item>
+        <item name="android:layout_marginBottom">@dimen/margin_small</item>
+        <item name="android:layout_marginRight">@dimen/margin_small</item>
+    </style>
 </resources>
