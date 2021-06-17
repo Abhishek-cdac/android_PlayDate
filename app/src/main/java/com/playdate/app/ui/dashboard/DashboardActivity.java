@@ -1,10 +1,15 @@
 package com.playdate.app.ui.dashboard;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -34,39 +39,30 @@ import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.FriendsListModel;
 import com.playdate.app.model.MatchListUser;
-import com.playdate.app.model.RestMain;
-import com.playdate.app.model.RestaurentData;
-import com.playdate.app.model.RestaurentModel;
 import com.playdate.app.service.LocationService;
 import com.playdate.app.ui.anonymous_question.AnonymousQuestionActivity;
 import com.playdate.app.ui.card_swipe.FragCardSwipe;
 import com.playdate.app.ui.chat.request.ChatBaseActivity;
 import com.playdate.app.ui.coupons.FragCouponParent;
-import com.playdate.app.ui.coupons.FragCouponStore;
-import com.playdate.app.ui.coupons.FragMyCoupons;
 import com.playdate.app.ui.dashboard.adapter.FriendAdapter;
-import com.playdate.app.ui.dashboard.adapter.RestaurentListAdapter;
 import com.playdate.app.ui.dashboard.data.CallAPI;
 import com.playdate.app.ui.dashboard.fragments.FragLanding;
 import com.playdate.app.ui.dashboard.fragments.FragSearchUser;
-import com.playdate.app.ui.dashboard.fragments.FragmentSearchRestaurent;
 import com.playdate.app.ui.date.DateBaseActivity;
 import com.playdate.app.ui.date.games.FragGameLeaderBoard;
 import com.playdate.app.ui.date.games.FragStore;
 import com.playdate.app.ui.dialogs.FullScreenDialog;
+import com.playdate.app.ui.dialogs.NoInternetDialog;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.ui.my_profile_details.FragInstaLikeProfile;
 import com.playdate.app.ui.my_profile_details.FragInstaLikeProfileFriends;
-import com.playdate.app.ui.my_profile_details.FragMyProfileDetails;
-import com.playdate.app.ui.my_profile_details.FragMyProfilePayments;
-import com.playdate.app.ui.my_profile_details.FragMyProfilePersonal;
 import com.playdate.app.ui.my_profile_details.FragSavedPost;
 import com.playdate.app.ui.my_profile_details.FragSettingsParent;
 import com.playdate.app.ui.my_profile_details.NewPaymentMethod;
 import com.playdate.app.ui.notification_screen.FragNotification;
-import com.playdate.app.ui.restaurant.adapter.Restaurant;
 import com.playdate.app.ui.social.FragSocialFeed;
 import com.playdate.app.ui.social.upload_media.PostMediaActivity;
+import com.playdate.app.util.common.BaseActivity;
 import com.playdate.app.util.image_crop.MainActivity;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
@@ -90,13 +86,13 @@ import static com.playdate.app.ui.register.profile.UploadProfileActivity.REQUEST
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.TAKE_PHOTO_CODE;
 import static com.playdate.app.util.session.SessionPref.CompleteProfile;
 
-public class DashboardActivity extends AppCompatActivity implements OnInnerFragmentClicks, View.OnClickListener, OnProfilePhotoChageListerner, OnFriendSelected, OnAPIResponce {
+public class DashboardActivity extends BaseActivity implements OnInnerFragmentClicks, View.OnClickListener, OnProfilePhotoChageListerner, OnFriendSelected, OnAPIResponce {
 
     private TextView txt_match, txt_chat;
 
 
     private TextView txt_social;
-//    private TextView txt_payment;
+    //    private TextView txt_payment;
 //    private TextView txt_account;
 //    private TextView txt_personal;
     private TextView txt_count;
@@ -107,7 +103,6 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
     private ImageView iv_play_date_logo;
     private ImageView iv_dashboard_notification;
     private ImageView iv_coupons;
-    private ImageView iv_cart;
     //    private ImageView iv_booster;
     private ImageView profile_image;
     private TextView txt_serachfriend;
@@ -116,14 +111,14 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
     private LinearLayout ll_mainMenu, ll_her;
     private LinearLayout ll_friends;
-//    private LinearLayout ll_profile_menu;
+    //    private LinearLayout ll_profile_menu;
 //    private LinearLayout ll_coupon_menu;
     private LinearLayout ll_option_love;
     private LinearLayout ll_profile_insta;
     private LinearLayout ll_profile_drop_menu;
     private LinearLayout bottomNavigationView;
     private LinearLayout ll_camera_option;
-//    private LinearLayout ll_restaurents;
+    //    private LinearLayout ll_restaurents;
     private LinearLayout ll_mainMenu2;
 //    private ImageView iv_rest_search;
 //    private RecyclerView rv_restaurant;
@@ -133,7 +128,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private FriendAdapter adapterfriend;
-//    private RestaurentListAdapter adapterRestaurent;
+    //    private RestaurentListAdapter adapterRestaurent;
     private Fragment CurrentFrag;
     private NestedScrollView nsv;
     private FragInstaLikeProfile profile;
@@ -201,7 +196,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         iv_love = findViewById(R.id.iv_love);
         iv_profile_sett = findViewById(R.id.iv_profile_sett);
         ll_profile_drop_menu = findViewById(R.id.ll_profile_drop_menu);
-        iv_cart = findViewById(R.id.iv_cart);
+        ImageView iv_cart = findViewById(R.id.iv_cart);
 //        iv_booster = findViewById(R.id.iv_booster);
         ImageView iv_cancel = findViewById(R.id.iv_cancel);
         ImageView iv_gallery = findViewById(R.id.iv_gallery);
@@ -290,13 +285,6 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
                     }
                 }
             }
-            if (scrollY < oldScrollY) {
-                Log.i(TAG, "Scroll UP");
-            }
-
-            if (scrollY == 0) {
-                Log.i(TAG, "TOP SCROLL");
-            }
 
             if (scrollY == (v.getMeasuredHeight() - v.getChildAt(0).getMeasuredHeight()) * -1) {
                 Log.i(TAG, "BOTTOM SCROLL");
@@ -310,8 +298,33 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         });
 
 
+//        ConnectionBroadcastReceiver receiver = new ConnectionBroadcastReceiver();
+//        IntentFilter filter = new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE");
+//        this.registerReceiver(receiver, filter);
     }
 
+//    NoInternetDialog dialog;
+//
+//    class ConnectionBroadcastReceiver extends BroadcastReceiver {
+//
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            if (null == dialog) {
+//                dialog = new NoInternetDialog(DashboardActivity.this);
+//            }
+//
+//            if (intent.getAction().equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
+//                NetworkInfo networkInfo = intent.getParcelableExtra(ConnectivityManager.EXTRA_NETWORK_INFO);
+//                if (networkInfo != null && networkInfo.getDetailedState() == NetworkInfo.DetailedState.CONNECTED) {
+//                    if (dialog.isShowing()) {
+//                        dialog.dismiss();
+//                    }
+//                } else if (networkInfo != null && networkInfo.getDetailedState() == NetworkInfo.DetailedState.DISCONNECTED) {
+//                    dialog.show();
+//                }
+//            }
+//        }
+//    }
 
     private boolean checkFirstFrag() {
         return pref.getBoolVal(SessionPref.LoginUserSuggestionShown);
@@ -949,7 +962,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
 
             if (resultCode != RESULT_OK) {
-                iv_plus.setVisibility(View.VISIBLE);
+//                iv_plus.setVisibility(View.VISIBLE);
 //                iv_booster.setVisibility(View.VISIBLE);
                 return;
             }
@@ -967,7 +980,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
 
                 if (null != bitmap) {
-                    iv_plus.setVisibility(View.VISIBLE);
+//                    iv_plus.setVisibility(View.VISIBLE);
 //                    iv_booster.setVisibility(View.VISIBLE);
                     Intent mIntent = new Intent(DashboardActivity.this, MainActivity.class);
                     startActivity(mIntent);
@@ -988,7 +1001,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
 
                 if (null != bitmap) {
-                    iv_plus.setVisibility(View.VISIBLE);
+//                    iv_plus.setVisibility(View.VISIBLE);
 //                    iv_booster.setVisibility(View.VISIBLE);
                     Intent mIntent = new Intent(DashboardActivity.this, MainActivity.class);
                     startActivity(mIntent);
@@ -1001,7 +1014,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
                     String selectedVideoPath = getPath(contentURI);
                     Log.d("path", selectedVideoPath);
-                    iv_plus.setVisibility(View.VISIBLE);
+//                    iv_plus.setVisibility(View.VISIBLE);
 //                    iv_booster.setVisibility(View.VISIBLE);
                     Intent mIntent = new Intent(DashboardActivity.this, PostMediaActivity.class);
                     mIntent.putExtra("videoPath", selectedVideoPath);
@@ -1009,7 +1022,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
 
                 }
             } else if (requestCode == CAMERA) {
-                iv_plus.setVisibility(View.VISIBLE);
+//                iv_plus.setVisibility(View.VISIBLE);
 //                iv_booster.setVisibility(View.VISIBLE);
                 Uri contentURI = data.getData();
                 String recordedVideoPath = getPath(contentURI);
@@ -1017,6 +1030,10 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
                 Intent mIntent = new Intent(DashboardActivity.this, PostMediaActivity.class);
                 mIntent.putExtra("videoPath", recordedVideoPath);
                 startActivity(mIntent);
+            }
+
+            if (OPTION_CLICK == 3) {
+                iv_plus.setVisibility(View.VISIBLE);
             }
 
         } catch (Exception e) {
@@ -1162,5 +1179,7 @@ public class DashboardActivity extends AppCompatActivity implements OnInnerFragm
         Log.d("Redirected", "redirectToLeaderBoard: ");
         ReplaceFragWithStack(new FragGameLeaderBoard());
     }
+
+
 }
 

@@ -32,7 +32,7 @@ import java.util.ArrayList;
 
 public class FriendDialog extends Dialog implements OnRelationShipSelected {
 
-    public FriendDialog(Context context, ArrayList<MatchListUser> lstUserSuggestions, boolean isForRelationship,String inviteLink) {
+    public FriendDialog(Context context, ArrayList<MatchListUser> lstUserSuggestions, boolean isForRelationship, String inviteLink) {
         super(context, R.style.My_Dialog);
 
         WindowManager.LayoutParams wlmp = getWindow().getAttributes();
@@ -161,6 +161,8 @@ class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
+        if (lstUserSuggestions == null)
+            return 0;
         return lstUserSuggestions.size();
     }
 
