@@ -439,9 +439,9 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
         } else if (id == R.id.txt_chat) {
             startActivity(new Intent(DashboardActivity.this, ChatBaseActivity.class));
         } else if (id == R.id.ll_love_bottom) {
-            if (OPTION_CLICK == 0) {
-                return;
-            }
+//            if (OPTION_CLICK == 0) {
+//                return;
+//            }
             nsv.scrollTo(0, 0);
             OPTION_CLICK = 0;
             iv_play_date_logo.setVisibility(View.VISIBLE);
