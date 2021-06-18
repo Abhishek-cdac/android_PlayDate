@@ -100,7 +100,6 @@ public interface GetDataService {
     @POST("user/get-notifications")
     Call<NotificationModel> getNotification(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
-
     @FormUrlEncoded
     @POST("user/get-user-match-list")
     Call<MatchListModel> getUserMatchList(@Header("Authorization") String token, @FieldMap Map<String, String> param);

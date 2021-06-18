@@ -326,16 +326,20 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
     private void callAPIFeedPost(String mediaId) {
 
         String tagFriends = "";
-        if (null != lstUserSuggestions) {
-            for (int i = 0; i < lstUserSuggestions.size(); i++) {
-                if (lstUserSuggestions.get(i).isSelected()) {
-                    if (tagFriends.isEmpty()) {
-                        tagFriends = lstUserSuggestions.get(i).get_id();
-                    } else {
-                        tagFriends = tagFriends + "," + lstUserSuggestions.get(i).get_id();
+        try {
+            if (null != lstUserSuggestions) {
+                for (int i = 0; i < lstUserSuggestions.size(); i++) {
+                    if (lstUserSuggestions.get(i).isSelected()) {
+                        if (tagFriends.isEmpty()) {
+                            tagFriends = lstUserSuggestions.get(i).get_id();
+                        } else {
+                            tagFriends = tagFriends + "," + lstUserSuggestions.get(i).get_id();
+                        }
                     }
                 }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         SessionPref pref = SessionPref.getInstance(this);
@@ -388,14 +392,18 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
         FriendDialog dialog = new FriendDialog(this, lstUserSuggestions,false,"");
         dialog.show();
         dialog.setOnDismissListener(dialog1 -> {
-            ArrayList<MatchListUser> lst = new ArrayList<>();
-            for (int i = 0; i < lstUserSuggestions.size(); i++) {
-                if (lstUserSuggestions.get(i).isSelected()) {
-                    lst.add(lstUserSuggestions.get(i));
+            try {
+                ArrayList<MatchListUser> lst = new ArrayList<>();
+                for (int i = 0; i < lstUserSuggestions.size(); i++) {
+                    if (lstUserSuggestions.get(i).isSelected()) {
+                        lst.add(lstUserSuggestions.get(i));
+                    }
                 }
+                recycler_tag_friend.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+                recycler_tag_friend.setAdapter(new ChipsAdapter(lst));
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            recycler_tag_friend.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
-            recycler_tag_friend.setAdapter(new ChipsAdapter(lst));
         });
     }
 }

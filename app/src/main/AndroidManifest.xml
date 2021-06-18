@@ -24,6 +24,9 @@
     <uses-permission android:name="android.permission.STORAGE" />
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
 
+
+
+
     <permission
         android:name="com.example.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
@@ -216,15 +219,17 @@
         <activity
             android:name=".util.photoview.PhotoViewActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".util.videocall.VideoCallActivity" />
+        <activity android:name=".util.common.BaseActivity" />
 
 
         <service android:name=".service.LocationService" />
 
-        <receiver android:name=".broadcast.ConnectionBroadcastReceiver">
-            <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-        </receiver>
+<!--        <receiver android:name=".broadcast.ConnectionBroadcastReceiver">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />-->
+<!--            </intent-filter>-->
+<!--        </receiver>-->
 
         <service
             android:name=".ui.social.videoplay.AAH_DownloadService"

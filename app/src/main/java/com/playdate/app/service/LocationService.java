@@ -23,13 +23,11 @@ import java.util.List;
 import java.util.Locale;
 
 public class LocationService extends Service implements LocationListener {
-    double latitude;
-    double longitude;
 
     public LocationService() {
     }
 
-    Context mContext;
+    private Context mContext;
 
     @SuppressLint("MissingPermission")
     @Override
@@ -43,8 +41,8 @@ public class LocationService extends Service implements LocationListener {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
             Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             if (location != null) {
-                latitude = location.getLatitude();
-                longitude = location.getLongitude();
+                double latitude = location.getLatitude();
+                double longitude = location.getLongitude();
                 SessionPref pref = SessionPref.getInstance(this);
                 pref.saveLOngKeyLattitude("lattitude", latitude);
                 pref.saveLongKeyLongitude("longitude", longitude);

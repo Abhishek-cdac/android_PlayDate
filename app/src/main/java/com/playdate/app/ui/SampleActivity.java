@@ -47,7 +47,7 @@ public class SampleActivity extends AppCompatActivity {
         iv_videoCal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // startActivity(new Intent(SampleActivity.this, LoginActivity.class));
+              //  startActivity(new Intent(SampleActivity.this, LoginActivity.class));
             }
         });
     }

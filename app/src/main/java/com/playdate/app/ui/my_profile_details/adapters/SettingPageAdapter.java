@@ -24,13 +24,14 @@ public class SettingPageAdapter extends FragmentPagerAdapter {
             return new FragMyProfileDetails();
         } else if (position == 1) {
             return new FragMyProfilePersonal();
-        } else {
-            return new FragMyProfilePayments();
+        }  else if (position == 2) {
+            return new FragMyProfilePersonal();
         }
+        return new Fragment();
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return 2;
     }
 }
