@@ -1,12 +1,10 @@
 package com.playdate.app.ui.social;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -36,7 +34,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FragSocialFeed extends Fragment  implements OnRefreshPage {
+public class FragSocialFeed extends Fragment implements OnRefreshPage {
 
     public FragSocialFeed() {
     }
@@ -53,7 +51,7 @@ public class FragSocialFeed extends Fragment  implements OnRefreshPage {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.row_social_feed, container, false);
         recycler_view_feed = view.findViewById(R.id.recycler_view_feed);
-    LinearLayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
+        LinearLayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         recycler_view_feed.setLayoutManager(manager);
 
 
@@ -232,9 +230,9 @@ public class FragSocialFeed extends Fragment  implements OnRefreshPage {
 
     @Override
     public void LoadPageAgain() {
-        PageNo=1;
-        boolApiCalling=false;
-        NoMorePages=false;
+        PageNo = 1;
+        boolApiCalling = false;
+        NoMorePages = false;
         lst.clear();
         adapter.notifyDataSetChanged();
         callAPI();

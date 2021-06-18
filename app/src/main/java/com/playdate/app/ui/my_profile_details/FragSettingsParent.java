@@ -86,7 +86,7 @@ public class FragSettingsParent extends Fragment implements View.OnClickListener
 
         txt_account.setOnClickListener(this);
         txt_personal.setOnClickListener(this);
-        txt_payment.setOnClickListener(this);
+//        txt_payment.setOnClickListener(this);
 
         return view;
     }

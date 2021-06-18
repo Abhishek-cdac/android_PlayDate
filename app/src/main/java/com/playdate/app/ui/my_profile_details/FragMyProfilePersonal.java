@@ -65,44 +65,42 @@ public class FragMyProfilePersonal extends Fragment implements View.OnClickListe
         iv_edit_mail.setOnClickListener(this);
         iv_relationship.setOnClickListener(this);
         txt_change_photo.setOnClickListener(this);
+        txt_change_photo.setText("Change profile photo");
         if (pref.getStringVal(SessionPref.LoginUserrelationship).equals("Single")) {
-
-            txt_change_photo.setText("Change profile photo");
             txt_relationship.setText("Single");
         } else {
-            txt_change_photo.setText("Change couple profile photo");
             txt_relationship.setText("In a relationship");
-
         }
-
         setValues();
-
-
         return view;
 
     }
 
     private void setValues() {
-        SessionPref pref = SessionPref.getInstance(getActivity());
-        email.setText(pref.getStringVal(SessionPref.LoginUseremail));
-        String mobile = pref.getStringVal(SessionPref.LoginUserphoneNo);
-        String temp = mobile.substring(0, 3);
-        String temp1 = mobile.substring(3, 6);
-        String temp2 = mobile.substring(6, 10);
-        txt_phone.setText(temp + "-" + temp1 + "-" + temp2);
-        txt_gender.setText(pref.getStringVal(SessionPref.LoginUsergender));
-        String[] s = pref.getStringVal(SessionPref.LoginUserbirthDate).split("T");
-        DOB.setText(s[0]);
-        txt_relationship.setText(pref.getStringVal(SessionPref.LoginUserrelationship));
-        interestin.setText(pref.getStringVal(SessionPref.LoginUserinterestedIn));
-        Picasso picasso = Picasso.get();
-        String img = pref.getStringVal(SessionPref.LoginUserprofilePic);
-        if (img.contains("http")) {
-            picasso.load(img)
-                    .into(profile_image);
-        } else {
-            picasso.load(BASE_URL_IMAGE + img)
-                    .into(profile_image);
+        try {
+            SessionPref pref = SessionPref.getInstance(getActivity());
+            email.setText(pref.getStringVal(SessionPref.LoginUseremail));
+            String mobile = pref.getStringVal(SessionPref.LoginUserphoneNo);
+            String temp = mobile.substring(0, 3);
+            String temp1 = mobile.substring(3, 6);
+            String temp2 = mobile.substring(6, 10);
+            txt_phone.setText(temp + "-" + temp1 + "-" + temp2);
+            txt_gender.setText(pref.getStringVal(SessionPref.LoginUsergender));
+            String[] s = pref.getStringVal(SessionPref.LoginUserbirthDate).split("T");
+            DOB.setText(s[0]);
+            txt_relationship.setText(pref.getStringVal(SessionPref.LoginUserrelationship));
+            interestin.setText(pref.getStringVal(SessionPref.LoginUserinterestedIn));
+            Picasso picasso = Picasso.get();
+            String img = pref.getStringVal(SessionPref.LoginUserprofilePic);
+            if (img.contains("http")) {
+                picasso.load(img)
+                        .into(profile_image);
+            } else {
+                picasso.load(BASE_URL_IMAGE + img)
+                        .into(profile_image);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -143,8 +141,12 @@ public class FragMyProfilePersonal extends Fragment implements View.OnClickListe
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        setValues();
-        OnProfilePhotoChageListerner inf = (OnProfilePhotoChageListerner) getActivity();
-        inf.updateImage();
+        try {
+            setValues();
+            OnProfilePhotoChageListerner inf = (OnProfilePhotoChageListerner) getActivity();
+            inf.updateImage();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

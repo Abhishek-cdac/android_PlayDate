@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rl_main"
-    android:animateLayoutChanges="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     android:background="@color/backgroundColour">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -16,6 +16,7 @@
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nsv"
+            android:overScrollMode="never"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -175,17 +176,16 @@
                     </LinearLayout>
 
 
-
-
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/ll_mainMenu2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:layout_below="@+id/ll_mainMenu"
+                    android:gravity="center"
                     android:orientation="horizontal">
+
                     <LinearLayout
                         android:id="@+id/ll_friends"
                         android:layout_width="match_parent"

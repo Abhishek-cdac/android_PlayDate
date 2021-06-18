@@ -18,31 +18,19 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.fragment.app.FragmentManager;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.playdate.app.R;
 import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
 
 public class MainActivity extends AppCompatActivity {
 
-    // region: Fields and Consts
-
-//  DrawerLayout mDrawerLayout;
-
-//  private ActionBarDrawerToggle mDrawerToggle;
 
     private MainFragment mCurrentFragment;
 
@@ -59,25 +47,19 @@ public class MainActivity extends AppCompatActivity {
         mCropImageViewOptions = options;
 //    updateDrawerTogglesByOptions(options);
     }
+
     boolean isForProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Intent mIntent=getIntent();
-        isForProfile=mIntent.getBooleanExtra("isForProfile",false);
+        Intent mIntent = getIntent();
+        isForProfile = mIntent.getBooleanExtra("isForProfile", false);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-//    mDrawerLayout = findViewById(R.id.drawer_layout);
-
-//    mDrawerToggle =
-//        new ActionBarDrawerToggle(
-//            this, mDrawerLayout, R.string.main_drawer_open, R.string.main_drawer_close);
-//    mDrawerToggle.setDrawerIndicatorEnabled(true);
-//    mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         if (savedInstanceState == null) {
             setMainFragmentByPreset(CropDemoPreset.MIN_MAX_OVERRIDE);
@@ -294,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager
                 .beginTransaction()
-                .replace(R.id.container, MainFragment.newInstance(demoPreset,isForProfile))
+                .replace(R.id.container, MainFragment.newInstance(demoPreset, isForProfile))
                 .commit();
     }
 
