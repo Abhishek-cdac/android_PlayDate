@@ -257,7 +257,7 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
             String name = notification_list.get(position).getmUserInformation().get(0).getUsername();
             String desc = notification_list.get(position).getNotificationMessage();
 
-            String sourceString = "<b>" + name+ "</b> " + desc;
+            String sourceString = "<b>" + name + "</b> " + desc;
             viewHolderComment.tv_name.setText(Html.fromHtml(sourceString));
 
 //            viewHolderComment.tv_name.setText(notification_list.get(position).getmUserInformation().get(0).getUsername());
@@ -404,18 +404,12 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
             });
 
 
-        }
-        else if (holder.getItemViewType() == DATE_PARTNER) {
+        } else if (holder.getItemViewType() == DATE_PARTNER) {
             ViewHolderMatchRequest viewHolderMatchRequest = (ViewHolderMatchRequest) holder;
-            viewHolderMatchRequest.tv_desc.setVisibility(View.VISIBLE);
-
             String name = notification_list.get(position).getmUserInformation().get(0).getUsername();
-            String sourceString = "<b>" + name + "</b> ";
+            String desc = notification_list.get(position).getNotificationMessage();
+            String sourceString = "<b>" + name + "</b> " + desc;
             viewHolderMatchRequest.tv_name.setText(Html.fromHtml(sourceString));
-
-
-//            viewHolderMatchRequest.tv_name.setText(notification_list.get(position).getmUserInformation().get(0).getUsername());
-            viewHolderMatchRequest.tv_desc.setText(notification_list.get(position).getNotificationMessage());
             picasso.load(notification_list.get(position).getmUserInformation().get(0).getProfilePicPath()).placeholder(R.drawable.profile)
                     .into(viewHolderMatchRequest.profile_image);
 
