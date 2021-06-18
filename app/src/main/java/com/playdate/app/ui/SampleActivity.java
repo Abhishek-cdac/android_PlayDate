@@ -18,7 +18,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.connectycube.messenger.LoginActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -48,7 +47,7 @@ public class SampleActivity extends AppCompatActivity {
         iv_videoCal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(SampleActivity.this, LoginActivity.class));
+               // startActivity(new Intent(SampleActivity.this, LoginActivity.class));
             }
         });
     }
