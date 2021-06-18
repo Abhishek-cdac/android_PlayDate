@@ -31,6 +31,8 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
     public static final int COMMENT = 3;
 
     private final Onclick itemClick;
+
+
     private String requestId;
     private final Context mcontext;
 
