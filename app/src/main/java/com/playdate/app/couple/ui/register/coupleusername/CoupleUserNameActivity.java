@@ -43,29 +43,19 @@ public class CoupleUserNameActivity extends AppCompatActivity {
         });
         coupleUserNameViewModel.OnUserNameInput().
 
-                observe(this, new Observer<String>() {
-
-                    @Override
-                    public void onChanged(String charSeq) {
+                observe(this, charSeq -> {
 //                if (charSeq.length() == 5) {
 //                    startTimer();
 //                } else {
 ////                    binding.spinKit.setVisibility(View.GONE);
 //                }
 
-                    }
                 });
 
 //        iv_next
 
         coupleUserNameViewModel.onBackClick().
-
-                observe(this, new Observer<Boolean>() {
-                    @Override
-                    public void onChanged(Boolean click) {
-                        finish();
-                    }
-                });
+                observe(this, click -> finish());
 
 
     }

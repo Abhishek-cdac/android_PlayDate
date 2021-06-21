@@ -69,6 +69,10 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
 
     private Picasso picasso;
     private SessionPref pref;
+    TextView header_text;
+    ImageView connection_img;
+    RelativeLayout single_person;
+    RelativeLayout couple_rl;
 
     @Nullable
     @Override
@@ -79,9 +83,9 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
         picasso = Picasso.get();
         girl_profile_image = view.findViewById(R.id.girl_profile_image);
         boy_profile_image = view.findViewById(R.id.boy_profile_image);
-        ImageView connection_img = view.findViewById(R.id.connection_img);
-        RelativeLayout single_person = view.findViewById(R.id.single_person);
-        RelativeLayout couple_rl = view.findViewById(R.id.couple_rl);
+        connection_img = view.findViewById(R.id.connection_img);
+        single_person = view.findViewById(R.id.single_person);
+        couple_rl = view.findViewById(R.id.couple_rl);
         txtTotalFriend = view.findViewById(R.id.friend_count);
         txtTotalPost = view.findViewById(R.id.post_count);
         iv_send_request = view.findViewById(R.id.iv_send_request);
@@ -91,7 +95,7 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
         txt_login_user = view.findViewById(R.id.txt_login_user);
         iv_booster = view.findViewById(R.id.iv_booster);
         txt_points = view.findViewById(R.id.txt_points);
-        TextView header_text = view.findViewById(R.id.header_text);
+        header_text = view.findViewById(R.id.header_text);
 
 
         if (pref.getBoolVal("isBoosterOn")) {
@@ -169,14 +173,14 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
                             lst_getCoupleDetail = new ArrayList<>();
                         }
 
-                        picasso.load( lst_getCoupleDetail.get(0).getProfile1().get(0).getProfilePicPath())
+                        picasso.load(lst_getCoupleDetail.get(0).getProfile1().get(0).getProfilePicPath())
                                 .placeholder(R.drawable.profile)
                                 .into(boy_profile_image);
 
                         Log.e("getCoupleBoy", "" + lst_getCoupleDetail.get(0).getProfile1().get(0).getProfilePicPath());
                         Log.e("getCoupleGirl", "" + lst_getCoupleDetail.get(0).getProfile2().get(0).getProfilePicPath());
 
-                        picasso.load( lst_getCoupleDetail.get(0).getProfile2().get(0).getProfilePicPath())
+                        picasso.load(lst_getCoupleDetail.get(0).getProfile2().get(0).getProfilePicPath())
                                 .placeholder(R.drawable.profile)
                                 .into(girl_profile_image);
                     } else {
@@ -241,6 +245,24 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
                             }
                             txtTotalFriend.setText(String.valueOf(lst_getPostDetail.get(0).getTotalFriends()));
                             txtTotalPost.setText(String.valueOf(lst_getPostDetail.get(0).getTotalPosts()));
+
+                            pref.saveStringKeyVal(SessionPref.LoginUserrelationship, lst_getPostDetail.get(0).getRelationship());
+                            if (pref.getStringVal(SessionPref.LoginUserrelationship).equals("Single")) {
+                                connection_img.setVisibility(View.GONE);
+                                header_text.setText("About Me");
+                                single_person.setVisibility(View.VISIBLE);
+                                iv_send_request.setVisibility(View.VISIBLE);
+                                iv_chat.setVisibility(View.VISIBLE);
+                                couple_rl.setVisibility(View.GONE);
+                            } else {
+                                callCoupleAPI();
+                                connection_img.setVisibility(View.VISIBLE);
+                                header_text.setText("How we met");
+                                single_person.setVisibility(View.GONE);
+                                couple_rl.setVisibility(View.VISIBLE);
+                                iv_send_request.setVisibility(View.GONE);
+                                iv_chat.setVisibility(View.GONE);
+                            }
 
                             txt_points.setText(lst_getPostDetail.get(0).getAccount().get(0).getCurrentPoints() + " Points");
                         } catch (Exception e) {
