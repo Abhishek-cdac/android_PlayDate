@@ -34,17 +34,17 @@ import static com.playdate.app.util.session.SessionPref.LoginUserpersonalBio;
 
 
 public class CoupleBioActivity extends AppCompatActivity {
-    CoupleBioViewModel coupleBioViewModel;
-    ActivityCoupleBioBinding bioBinding;
-    CommonClass clsCommon;
-    Intent mIntent;
+
+    private CoupleBioViewModel coupleBioViewModel;
+    private CommonClass clsCommon;
+    private Intent mIntent;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         coupleBioViewModel = new CoupleBioViewModel();
         clsCommon = CommonClass.getInstance();
-        bioBinding = DataBindingUtil.setContentView(CoupleBioActivity.this, R.layout.activity_couple_bio);
+        com.playdate.app.databinding.ActivityCoupleBioBinding bioBinding = DataBindingUtil.setContentView(CoupleBioActivity.this, R.layout.activity_couple_bio);
         bioBinding.setLifecycleOwner(this);
         mIntent = getIntent();
         bioBinding.setCoupleBioViewModel(coupleBioViewModel);

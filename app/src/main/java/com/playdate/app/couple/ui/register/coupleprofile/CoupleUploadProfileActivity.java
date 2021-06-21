@@ -44,8 +44,7 @@ import static com.playdate.app.util.session.SessionPref.LoginUserprofilePic;
 
 public class CoupleUploadProfileActivity extends AppCompatActivity {
 
-    CoupleUploadProfileViewModel viewModel;
-    ActivityUploadCoupleProfileBinding binding;
+    private ActivityUploadCoupleProfileBinding binding;
     private ArrayList permissionsToRequest;
     private ArrayList permissionsRejected = new ArrayList();
     private ArrayList permissions = new ArrayList();
@@ -58,7 +57,7 @@ public class CoupleUploadProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new CoupleUploadProfileViewModel();
+        CoupleUploadProfileViewModel viewModel = new CoupleUploadProfileViewModel();
         binding = DataBindingUtil.setContentView(CoupleUploadProfileActivity.this, R.layout.activity_upload_couple_profile);
         binding.setLifecycleOwner(this);
         binding.setCoupleUploadProfileViewModel(viewModel);
@@ -72,43 +71,34 @@ public class CoupleUploadProfileActivity extends AppCompatActivity {
         });
 
         viewModel.onBackClick().observe(this, click -> finish());
-        viewModel.onGalleryClick().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean click) {
-                String[] PERMISSIONS = {
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_EXTERNAL_STORAGE
-                };
-                ActivityCompat.requestPermissions(CoupleUploadProfileActivity.this,
-                        PERMISSIONS,
-                        ALL_PERMISSIONS_RESULT);
-                pickImage();
+        viewModel.onGalleryClick().observe(this, click -> {
+            String[] PERMISSIONS = {
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+            };
+            ActivityCompat.requestPermissions(CoupleUploadProfileActivity.this,
+                    PERMISSIONS,
+                    ALL_PERMISSIONS_RESULT);
+            pickImage();
 
-            }
         });
 
-        viewModel.onCameraClick().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean click) {
-                String[] PERMISSIONS = {
-                        Manifest.permission.CAMERA,
-                };
-                ActivityCompat.requestPermissions(CoupleUploadProfileActivity.this,
-                        PERMISSIONS,
-                        ALL_PERMISSIONS_RESULT);
-                openCamera();
+        viewModel.onCameraClick().observe(this, click -> {
+            String[] PERMISSIONS = {
+                    Manifest.permission.CAMERA,
+            };
+            ActivityCompat.requestPermissions(CoupleUploadProfileActivity.this,
+                    PERMISSIONS,
+                    ALL_PERMISSIONS_RESULT);
+            openCamera();
 
-            }
         });
-        viewModel.OnChangeClick().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean click) {
-                binding.btnCamera.setVisibility(View.VISIBLE);
-                binding.btnGallery.setVisibility(View.VISIBLE);
-                binding.txtOr.setVisibility(View.VISIBLE);
-                binding.btnChangeImage.setVisibility(View.GONE);
-                binding.ivNext.setVisibility(View.GONE);
-            }
+        viewModel.OnChangeClick().observe(this, click -> {
+            binding.btnCamera.setVisibility(View.VISIBLE);
+            binding.btnGallery.setVisibility(View.VISIBLE);
+            binding.txtOr.setVisibility(View.VISIBLE);
+            binding.btnChangeImage.setVisibility(View.GONE);
+            binding.ivNext.setVisibility(View.GONE);
         });
         mIntent = getIntent();
 

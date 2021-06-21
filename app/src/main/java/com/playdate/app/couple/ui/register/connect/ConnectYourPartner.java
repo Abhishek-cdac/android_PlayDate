@@ -16,19 +16,14 @@ import com.playdate.app.util.common.CommonClass;
 
 public class ConnectYourPartner extends AppCompatActivity {
 
-    ConnectYourPartnerViewModel viewModel;
-    ActivityConnectYourPartnerBinding binding;
-
-    boolean once = false;
-    int selectedconnect = -1;
-    CommonClass clsCommon;
-    Intent mIntent;
+    private ActivityConnectYourPartnerBinding binding;
+    private int selectedconnect = -1;
+    private CommonClass clsCommon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ConnectYourPartnerViewModel();
-        mIntent = getIntent();
+        ConnectYourPartnerViewModel viewModel = new ConnectYourPartnerViewModel();
         clsCommon = CommonClass.getInstance();
         binding = DataBindingUtil.setContentView(ConnectYourPartner.this, R.layout.activity_connect_your_partner);
         binding.setLifecycleOwner(this);
@@ -41,14 +36,11 @@ public class ConnectYourPartner extends AppCompatActivity {
             binding.btnInvite.setBackground(getDrawable(R.drawable.normal_btn_back));
             binding.ivNext.setVisibility(View.VISIBLE);
         });
-        viewModel.OnInviteClick().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean click) {
-                selectedconnect = 0;
-                binding.btnJoin.setBackground(getDrawable(R.drawable.normal_btn_back));
-                binding.btnInvite.setBackground(getDrawable(R.drawable.selected_btn_back));
-                binding.ivNext.setVisibility(View.VISIBLE);
-            }
+        viewModel.OnInviteClick().observe(this, click -> {
+            selectedconnect = 0;
+            binding.btnJoin.setBackground(getDrawable(R.drawable.normal_btn_back));
+            binding.btnInvite.setBackground(getDrawable(R.drawable.selected_btn_back));
+            binding.ivNext.setVisibility(View.VISIBLE);
         });
 
         viewModel.OnNextClick().observe(this, click -> {
@@ -67,20 +59,6 @@ public class ConnectYourPartner extends AppCompatActivity {
         viewModel.onBackClick().observe(this, click -> finish());
 
 
-//        if (mIntent.getBooleanExtra("fromProfile", false)) {
-//            new Handler().postDelayed(new Runnable() {
-//                public void run() {
-//
-//                    if (mIntent.getStringExtra("Selected").toLowerCase().equals("invite")) {
-//                        viewModel.setInvite();
-//                    } else {
-//                        viewModel.setJoin();
-//                    }
-//                }
-//            }, 200);
-//
-//
-//        }
     }
 
 

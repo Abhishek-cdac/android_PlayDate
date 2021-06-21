@@ -7,8 +7,6 @@ import androidx.lifecycle.ViewModel;
 
 public class ConnectYourPartnerViewModel extends ViewModel {
 
-
-
     private MutableLiveData<Boolean> inviteClick = new MutableLiveData<>();
     private MutableLiveData<Boolean> BackClick = new MutableLiveData<>();
     private MutableLiveData<Boolean> NextClick = new MutableLiveData<>();
