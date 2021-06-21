@@ -94,30 +94,85 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
 
-        callCoupleAPI();
         callAPI();
         setInIt(view);
         setDarkModeSwitch();
         setValues();
 
+        if (!pref.getStringVal(SessionPref.LoginUserrelationship).equals("Single")) {
+            callCoupleAPI();
+        }
+
+
         return view;
 
     }
 
+    private ArrayList<GetCoupleProfileData> lst_getCoupleDetail;
+
+    private void callCoupleAPI() {
+
+
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
+        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
+        pd.show();
+        Call<GetCoupleProfileModel> call = service.getCoupleProfile("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new Callback<GetCoupleProfileModel>() {
+            @Override
+            public void onResponse(Call<GetCoupleProfileModel> call, Response<GetCoupleProfileModel> response) {
+                pd.cancel();
+                if (response.code() == 200) {
+                    if (response.body().getStatus() == 1) {
+                        lst_getCoupleDetail = (ArrayList<GetCoupleProfileData>) response.body().getData();
+                        if (lst_getCoupleDetail == null) {
+                            lst_getCoupleDetail = new ArrayList<>();
+                        }
+
+                    } else {
+//                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
+                    }
+                } else {
+
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<GetCoupleProfileModel> call, Throwable t) {
+                t.printStackTrace();
+                pd.cancel();
+                Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     Picasso picasso;
+    RelativeLayout change_bio_video_rl;
+    TextView txt_change_bio_video;
+    TextView txt_HowWeMet_detail;
+    RelativeLayout change_howwemet_rl;
+    RelativeLayout change_bio_rl;
+    TextView leave_partner;
+    TextView invite_partner;
+    RelativeLayout create_relation_rl;
+    RelativeLayout leave_relation_rl;
 
     private void setInIt(View view) {
         picasso = Picasso.get();
         ImageView iv_edit_couple_bio = view.findViewById(R.id.iv_edit_couple_bio);
-        RelativeLayout leave_relation_rl = view.findViewById(R.id.leave_relation_rl);
-        RelativeLayout change_bio_video_rl = view.findViewById(R.id.change_bio_video_rl);
-        TextView txt_change_bio_video = view.findViewById(R.id.txt_change_bio_video);
-        TextView txt_HowWeMet_detail = view.findViewById(R.id.txt_howwemet_detail);
-        RelativeLayout change_howwemet_rl = view.findViewById(R.id.change_howwemet_rl);
-        RelativeLayout change_bio_rl = view.findViewById(R.id.change_bio_rl);
-        TextView leave_partner = view.findViewById(R.id.leave_partner);
-        TextView invite_partner = view.findViewById(R.id.invite_partner);
-        RelativeLayout create_relation_rl = view.findViewById(R.id.create_relation_rl);
+        leave_relation_rl = view.findViewById(R.id.leave_relation_rl);
+        change_bio_video_rl = view.findViewById(R.id.change_bio_video_rl);
+        txt_change_bio_video = view.findViewById(R.id.txt_change_bio_video);
+        txt_HowWeMet_detail = view.findViewById(R.id.txt_howwemet_detail);
+        change_howwemet_rl = view.findViewById(R.id.change_howwemet_rl);
+        change_bio_rl = view.findViewById(R.id.change_bio_rl);
+        leave_partner = view.findViewById(R.id.leave_partner);
+        invite_partner = view.findViewById(R.id.invite_partner);
+        create_relation_rl = view.findViewById(R.id.create_relation_rl);
         ImageView iv_edit_bio = view.findViewById(R.id.iv_edit_bio);
         txt_bio = view.findViewById(R.id.txt_bio_detail);
 
@@ -172,32 +227,7 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
         iv_edit_couple_bio.setOnClickListener(this);
         txt_change_photo.setText("Change profile photo");
         txt_username.setText("Username");
-        if (pref.getStringVal(SessionPref.LoginUserrelationship).equals("Single")) {
-//            txt_username.setText("Username");
 
-            create_relation_rl.setVisibility(View.VISIBLE);
-            invite_partner.setVisibility(View.VISIBLE);
-            leave_partner.setVisibility(View.GONE);
-            leave_relation_rl.setVisibility(View.GONE);
-            change_howwemet_rl.setVisibility(View.GONE);
-            txt_HowWeMet_detail.setVisibility(View.GONE);
-            txt_bio.setVisibility(View.VISIBLE);
-            change_bio_rl.setVisibility(View.VISIBLE);
-            txt_change_bio_video.setVisibility(View.VISIBLE);
-            change_bio_video_rl.setVisibility(View.VISIBLE);
-        } else {
-//            txt_change_photo.setText("Change couple profile photo");
-            create_relation_rl.setVisibility(View.GONE);
-            invite_partner.setVisibility(View.GONE);
-            leave_partner.setVisibility(View.VISIBLE);
-            leave_relation_rl.setVisibility(View.VISIBLE);
-            change_howwemet_rl.setVisibility(View.VISIBLE);
-            txt_bio.setVisibility(View.GONE);
-            txt_HowWeMet_detail.setVisibility(View.VISIBLE);
-            change_bio_rl.setVisibility(View.GONE);
-            change_bio_video_rl.setVisibility(View.GONE);
-            txt_change_bio_video.setVisibility(View.GONE);
-        }
     }
 
 
@@ -287,61 +317,19 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
         }
     }
 
-    private ArrayList<GetCoupleProfileData> lst_getCoupleDetail;
-
-    private void callCoupleAPI() {
-
-        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-        Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
-        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
-        pd.show();
-        Call<GetCoupleProfileModel> call = service.getCoupleProfile("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
-        call.enqueue(new Callback<GetCoupleProfileModel>() {
-            @Override
-            public void onResponse(Call<GetCoupleProfileModel> call, Response<GetCoupleProfileModel> response) {
-                pd.cancel();
-                if (response.code() == 200) {
-                    if (response.body().getStatus() == 1) {
-                        lst_getCoupleDetail = (ArrayList<GetCoupleProfileData>) response.body().getData();
-                        if (lst_getCoupleDetail == null) {
-                            lst_getCoupleDetail = new ArrayList<>();
-                        }
-                        Log.e("Couple Id", lst_getCoupleDetail.get(0).getCoupleId());
-
-                        pref.saveStringKeyVal(SessionPref.RelationRequestId, lst_getCoupleDetail.get(0).getCoupleId());
-                    } else {
-                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
-                    }
-                } else {
-                    try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
-                    } catch (Exception e) {
-                        Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<GetCoupleProfileModel> call, Throwable t) {
-                t.printStackTrace();
-                pd.cancel();
-                Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
-
-
     private void callLeaveRelationshipApi() {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
         String userId = pref.getStringVal(SessionPref.LoginUserID);
-        String relatioRequestId = pref.getStringVal(SessionPref.RelationRequestId);
-        Toast.makeText(getActivity(), "relatioRequestId" + relatioRequestId, Toast.LENGTH_SHORT).show();
+//        String relatioRequestId = pref.getStringVal(SessionPref.RelationRequestId);
         hashMap.put("userId", userId);
-        hashMap.put("requestId", relatioRequestId);
+        if (null != lst_getCoupleDetail) {
+            hashMap.put("requestId", lst_getCoupleDetail.get(0).getCoupleId());
+        } else {
+            return;
+        }
+
+
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
         pd.show();
         Call<CommonModel> call = service.leaveRelationship("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
@@ -351,6 +339,7 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
                 pd.cancel();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
+                        callAPI();
                         clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
                         outFromApp();
                     } else {
@@ -576,14 +565,45 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
                 pd.cancel();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
-                        lst_getPostDetail = (ArrayList<GetProileDetailData>) response.body().getData();
-                        if (lst_getPostDetail == null) {
-                            lst_getPostDetail = new ArrayList<>();
+                        try {
+                            lst_getPostDetail = (ArrayList<GetProileDetailData>) response.body().getData();
+                            if (lst_getPostDetail == null) {
+                                lst_getPostDetail = new ArrayList<>();
+                            }
+                            inviteCode = String.valueOf(lst_getPostDetail.get(0).getInviteCode());
+                            inviteLink = String.valueOf(lst_getPostDetail.get(0).getInviteLink());
+                            pref.saveStringKeyVal(SessionPref.LoginUserrelationship, lst_getPostDetail.get(0).getRelationship());
+
+
+                            if (pref.getStringVal(SessionPref.LoginUserrelationship).equals("Single")) {
+                                create_relation_rl.setVisibility(View.VISIBLE);
+                                invite_partner.setVisibility(View.VISIBLE);
+                                leave_partner.setVisibility(View.GONE);
+                                leave_relation_rl.setVisibility(View.GONE);
+                                change_howwemet_rl.setVisibility(View.GONE);
+                                txt_HowWeMet_detail.setVisibility(View.GONE);
+                                txt_bio.setVisibility(View.VISIBLE);
+                                change_bio_rl.setVisibility(View.VISIBLE);
+                                txt_change_bio_video.setVisibility(View.VISIBLE);
+                                change_bio_video_rl.setVisibility(View.VISIBLE);
+                            } else {
+
+                                create_relation_rl.setVisibility(View.GONE);
+                                invite_partner.setVisibility(View.GONE);
+                                leave_partner.setVisibility(View.VISIBLE);
+                                leave_relation_rl.setVisibility(View.VISIBLE);
+                                change_howwemet_rl.setVisibility(View.VISIBLE);
+                                txt_bio.setVisibility(View.GONE);
+                                txt_HowWeMet_detail.setVisibility(View.VISIBLE);
+                                change_bio_rl.setVisibility(View.GONE);
+                                change_bio_video_rl.setVisibility(View.GONE);
+                                txt_change_bio_video.setVisibility(View.GONE);
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-                        inviteCode = String.valueOf(lst_getPostDetail.get(0).getInviteCode());
-                        inviteLink = String.valueOf(lst_getPostDetail.get(0).getInviteLink());
-                        Log.e("inviteCode", "" + inviteCode);
-                        Log.e("inviteLink", "" + inviteLink);
+
                     }
                 }
 

@@ -49,7 +49,7 @@ import retrofit2.Response;
 public class FragCardSwipe extends Fragment {
 
     private CardStackLayoutManager manager;
-    private TinderSwipeAdapter adapter;
+    public TinderSwipeAdapter adapter;
     public ArrayList<Interest> lst_interest;
     private Onclick itemClick;
     private CardStackView cardStackView;
@@ -125,7 +125,7 @@ public class FragCardSwipe extends Fragment {
 
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("limit", "50");
+        hashMap.put("limit", "100");
         hashMap.put("pageNo", "1");
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
         pd.show();

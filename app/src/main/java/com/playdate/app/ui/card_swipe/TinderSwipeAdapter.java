@@ -38,12 +38,12 @@ import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 
 public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.ViewHolder> {
 
-    ArrayList<Interest> lst_interest;
-    List<MatchListUser> tinder_list;
-    Context mContext;
-    String userId;
-    Onclick itemClick;
-    Picasso picasso;
+    private final ArrayList<Interest> lst_interest;
+    public List<MatchListUser> tinder_list;
+    private Context mContext;
+    private String userId;
+    private final Onclick itemClick;
+    private final Picasso picasso;
 
     public TinderSwipeAdapter(List<MatchListUser> tinder_list, ArrayList<Interest> lst_interest, Onclick itemClick) {
         this.tinder_list = tinder_list;

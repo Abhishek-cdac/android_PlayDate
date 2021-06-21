@@ -13,6 +13,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.playdate.app.R;
+import com.playdate.app.data.api.GetDataService;
+import com.playdate.app.data.api.RetrofitClientInstance;
+import com.playdate.app.model.GetProfileDetails;
+import com.playdate.app.model.GetProileDetailData;
 import com.playdate.app.ui.dashboard.OnProfilePhotoChageListerner;
 import com.playdate.app.ui.forgot_password.ForgotPasswordActivity;
 import com.playdate.app.ui.register.age_verification.AgeVerifiationActivity;
@@ -20,10 +24,18 @@ import com.playdate.app.ui.register.gender.GenderSelActivity;
 import com.playdate.app.ui.register.interestin.InterestActivity;
 import com.playdate.app.ui.register.profile.UploadProfileActivity;
 import com.playdate.app.ui.register.relationship.RelationActivity;
+import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 
@@ -35,6 +47,8 @@ public class FragMyProfilePersonal extends Fragment implements View.OnClickListe
     private TextView txt_relationship;
     private TextView interestin;
     private CircleImageView profile_image;
+    private SessionPref pref;
+    private ArrayList<GetProileDetailData> lst_getPostDetail;
 
     public FragMyProfilePersonal() {
     }
@@ -43,7 +57,7 @@ public class FragMyProfilePersonal extends Fragment implements View.OnClickListe
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag_my_personal, container, false);
-        SessionPref pref = SessionPref.getInstance(getActivity());
+        pref = SessionPref.getInstance(getActivity());
         email = view.findViewById(R.id.email);
         txt_phone = view.findViewById(R.id.txt_phone);
         txt_gender = view.findViewById(R.id.txt_gender);
@@ -66,14 +80,53 @@ public class FragMyProfilePersonal extends Fragment implements View.OnClickListe
         iv_relationship.setOnClickListener(this);
         txt_change_photo.setOnClickListener(this);
         txt_change_photo.setText("Change profile photo");
-        if (pref.getStringVal(SessionPref.LoginUserrelationship).equals("Single")) {
-            txt_relationship.setText("Single");
-        } else {
-            txt_relationship.setText("In a relationship");
-        }
+
         setValues();
+        callAPI();
         return view;
 
+    }
+
+    private void callAPI() {
+
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+
+        hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
+
+        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
+        pd.show();
+
+
+        Call<GetProfileDetails> call = service.getProfileDetails("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new Callback<GetProfileDetails>() {
+            @Override
+            public void onResponse(Call<GetProfileDetails> call, Response<GetProfileDetails> response) {
+                pd.cancel();
+                if (response.code() == 200) {
+                    if (response.body().getStatus() == 1) {
+                        lst_getPostDetail = (ArrayList<GetProileDetailData>) response.body().getData();
+                        if (lst_getPostDetail == null) {
+                            lst_getPostDetail = new ArrayList<>();
+                        }
+                        pref.saveStringKeyVal(SessionPref.LoginUserrelationship, lst_getPostDetail.get(0).getRelationship());
+                        if (pref.getStringVal(SessionPref.LoginUserrelationship).equals("Single")) {
+                            txt_relationship.setText("Single");
+                        } else {
+                            txt_relationship.setText("In a relationship");
+                        }
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<GetProfileDetails> call, Throwable t) {
+                t.printStackTrace();
+                pd.cancel();
+            }
+        });
     }
 
     private void setValues() {

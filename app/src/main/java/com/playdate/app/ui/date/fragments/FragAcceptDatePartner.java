@@ -173,7 +173,7 @@ public class FragAcceptDatePartner extends Fragment {
 
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("limit", "10");
+        hashMap.put("limit", "100");
         hashMap.put("pageNo", "1");
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
         pd.show();

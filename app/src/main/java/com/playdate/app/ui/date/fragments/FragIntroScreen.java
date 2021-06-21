@@ -18,6 +18,8 @@ import com.playdate.app.ui.date.OnBackPressed;
 import com.playdate.app.ui.date.fragments.FragSelectPartner;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 
+import java.util.Objects;
+
 public class FragIntroScreen extends Fragment {
     public FragIntroScreen() {
     }
@@ -40,12 +42,11 @@ public class FragIntroScreen extends Fragment {
             OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
             assert frag != null;
             frag.ReplaceFrag(new FragAcceptDatePartner());
-//                startActivity(new Intent(IntroScreen.this, SelectPartner.class));
         });
         cancel.setOnClickListener(v -> {
             try {
                 OnBackPressed inf = (OnBackPressed) getActivity();
-                inf.onBack();
+                Objects.requireNonNull(inf).onBack();
             } catch (Exception e) {
                 e.printStackTrace();
             }

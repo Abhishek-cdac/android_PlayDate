@@ -13,24 +13,21 @@ import androidx.lifecycle.Observer;
 import com.playdate.app.R;
 import com.playdate.app.couple.ui.register.couplebio.CoupleBioActivity;
 import com.playdate.app.databinding.ActivityCoupleUsernameBinding;
-
 import com.playdate.app.util.common.CommonClass;
 
 public class CoupleUserNameActivity extends AppCompatActivity {
-    CoupleUserNameViewModel coupleUserNameViewModel;
-    ActivityCoupleUsernameBinding binding;
-    Intent mIntent;
-    CommonClass clsCommon;
+    private CoupleUserNameViewModel coupleUserNameViewModel;
+    private ActivityCoupleUsernameBinding binding;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        clsCommon = CommonClass.getInstance();
+//        CommonClass clsCommon = CommonClass.getInstance();
         coupleUserNameViewModel = new CoupleUserNameViewModel();
         binding = DataBindingUtil.setContentView(CoupleUserNameActivity.this, R.layout.activity_couple_username);
         binding.setLifecycleOwner(this);
         binding.setCoupleUserNameViewModel(coupleUserNameViewModel);
-        mIntent = getIntent();
+//        Intent mIntent = getIntent();
         binding.setCoupleUserNameViewModel(coupleUserNameViewModel);
 
 
@@ -46,33 +43,22 @@ public class CoupleUserNameActivity extends AppCompatActivity {
         });
         coupleUserNameViewModel.OnUserNameInput().
 
-                observe(this, new Observer<String>() {
-
-                    @Override
-                    public void onChanged(String charSeq) {
+                observe(this, charSeq -> {
 //                if (charSeq.length() == 5) {
 //                    startTimer();
 //                } else {
 ////                    binding.spinKit.setVisibility(View.GONE);
 //                }
 
-                    }
                 });
 
 //        iv_next
 
         coupleUserNameViewModel.onBackClick().
-
-                observe(this, new Observer<Boolean>() {
-                    @Override
-                    public void onChanged(Boolean click) {
-                        finish();
-                    }
-                });
+                observe(this, click -> finish());
 
 
     }
-
 
 
     @Override
@@ -93,7 +79,7 @@ public class CoupleUserNameActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         try {
-            if(null!=handler){
+            if (null != handler) {
                 handler.removeCallbacksAndMessages(null);
             }
         } catch (Exception e) {

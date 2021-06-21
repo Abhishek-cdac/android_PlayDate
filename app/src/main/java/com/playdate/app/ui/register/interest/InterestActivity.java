@@ -216,7 +216,7 @@ public class InterestActivity extends AppCompatActivity implements InterestAdapt
 
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("limit", "50");// format 1990-08-12
+        hashMap.put("limit", "100");// format 1990-08-12
         hashMap.put("pageNo", "1");// format 1990-08-12
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
         pd.show();

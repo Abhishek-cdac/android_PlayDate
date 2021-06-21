@@ -95,12 +95,9 @@ public class RestaurantActivity extends AppCompatActivity {
         });
         viewModel.onBackClick().observe(RestaurantActivity.this, aBoolean -> finish());
 
-        rl_rest_bg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("linear", "onClick:");
-                clsCommon.hideKeyboard(v, RestaurantActivity.this);
-            }
+        rl_rest_bg.setOnClickListener(v -> {
+            Log.d("linear", "onClick:");
+            clsCommon.hideKeyboard(v, RestaurantActivity.this);
         });
     }
 
@@ -111,14 +108,14 @@ public class RestaurantActivity extends AppCompatActivity {
         }
 
         int count = 0;
-        String Selected = "";
+        StringBuilder Selected = new StringBuilder();
         for (int i = 0; i < rest_list.size(); i++) {
             if (rest_list.get(i).isSelected()) {
                 count++;
-                if (Selected.isEmpty()) {
-                    Selected = rest_list.get(i).get_id();
+                if (Selected.length() == 0) {
+                    Selected = new StringBuilder(rest_list.get(i).get_id());
                 } else {
-                    Selected = Selected + "," + rest_list.get(i).get_id();
+                    Selected.append(",").append(rest_list.get(i).get_id());
                 }
             }
         }
@@ -134,14 +131,14 @@ public class RestaurantActivity extends AppCompatActivity {
         Map<String, String> hashMap = new HashMap<>();
 //        String bio = viewModel.BioText.getValue();
         hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
-        hashMap.put("restaurants", Selected);// format 1990-08-12
+        hashMap.put("restaurants", Selected.toString());// format 1990-08-12
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
         pd.show();
 //        Toast.makeText(this, ""+pref.getStringVal(SessionPref.LoginUsertoken), Toast.LENGTH_SHORT).show();
 
 
         Call<LoginResponse> call = service.updateProfile("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
-        String finalSelected = Selected;
+        String finalSelected = Selected.toString();
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
@@ -198,7 +195,7 @@ public class RestaurantActivity extends AppCompatActivity {
 
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("limit", "50");// format 1990-08-12
+        hashMap.put("limit", "100");// format 1990-08-12
         hashMap.put("pageNo", "1");// format 1990-08-12
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
         pd.show();

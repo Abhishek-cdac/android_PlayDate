@@ -19,9 +19,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 public class BlockedUserAdapter extends RecyclerView.Adapter<BlockedUserAdapter.ViewHolder> {
-    private ArrayList<BlockedUser> list;
-    private Picasso picasso;
-    private BlockUserActivity blockUserActivity;
+    private final ArrayList<BlockedUser> list;
+    private final Picasso picasso;
+    private final BlockUserActivity blockUserActivity;
 
     public BlockedUserAdapter(ArrayList<BlockedUser> list, BlockUserActivity blockUserActivity) {
         this.list = list;

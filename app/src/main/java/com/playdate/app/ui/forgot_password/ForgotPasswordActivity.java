@@ -8,7 +8,6 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
 
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
@@ -31,10 +30,10 @@ import retrofit2.Response;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
 
-    ForgotViewModel viewModel;
+    private ForgotViewModel viewModel;
     private ActivityForgotPasswordBinding binding;
-    CommonClass clsCommon;
-    Intent mIntent;
+    private CommonClass clsCommon;
+    private Intent mIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,46 +50,40 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             showChangePasswordScreen();
         }
 
-        viewModel.getResetPass().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String phone) {
+        viewModel.getResetPass().observe(this, phone -> {
 
-                if (phone == null) {
-                    clsCommon.showDialogMsg(ForgotPasswordActivity.this, "PlayDate", "Enter mobile number", "Ok");
+            if (phone == null) {
+                clsCommon.showDialogMsg(ForgotPasswordActivity.this, "PlayDate", "Enter mobile number", "Ok");
 
-                } else if (phone.trim().isEmpty()) {
-                    clsCommon.showDialogMsg(ForgotPasswordActivity.this, "PlayDate", "Enter mobile number", "Ok");
+            } else if (phone.trim().isEmpty()) {
+                clsCommon.showDialogMsg(ForgotPasswordActivity.this, "PlayDate", "Enter mobile number", "Ok");
 
-                } else {
-                    callAPI(phone);
-                }
-
-
+            } else {
+                callAPI(phone);
             }
+
+
         });
-        viewModel.onChangeFinalClick().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean val) {
+        viewModel.onChangeFinalClick().observe(this, val -> {
 
-                if (viewModel.newPass.getValue() == null) {
-                    clsCommon.showDialogMsg(ForgotPasswordActivity.this, "PlayDate", "Enter new password", "Ok");
+            if (viewModel.newPass.getValue() == null) {
+                clsCommon.showDialogMsg(ForgotPasswordActivity.this, "PlayDate", "Enter new password", "Ok");
 
-                } else if (viewModel.newPassConfirm.getValue() == null) {
-                    clsCommon.showDialogMsg(ForgotPasswordActivity.this, "PlayDate", "Confirm new password", "Ok");
+            } else if (viewModel.newPassConfirm.getValue() == null) {
+                clsCommon.showDialogMsg(ForgotPasswordActivity.this, "PlayDate", "Confirm new password", "Ok");
 
-                } else if (viewModel.newPassConfirm.getValue().equals(viewModel.newPass.getValue())) {
-                    if (mIntent.getBooleanExtra("fromProfile", false)) {
-                        callDirectResetAPI(viewModel.newPass.getValue(), viewModel.old_password.getValue());
-                    } else {
-                        callAPIReset(viewModel.newPass.getValue());
-                    }
-
+            } else if (viewModel.newPassConfirm.getValue().equals(viewModel.newPass.getValue())) {
+                if (mIntent.getBooleanExtra("fromProfile", false)) {
+                    callDirectResetAPI(viewModel.newPass.getValue(), viewModel.old_password.getValue());
                 } else {
-                    clsCommon.showDialogMsg(ForgotPasswordActivity.this, "PlayDate", "Confirm password and new password does not match", "Ok");
+                    callAPIReset(viewModel.newPass.getValue());
                 }
 
-
+            } else {
+                clsCommon.showDialogMsg(ForgotPasswordActivity.this, "PlayDate", "Confirm password and new password does not match", "Ok");
             }
+
+
         });
 
     }

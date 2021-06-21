@@ -7,7 +7,8 @@ import com.playdate.app.model.MatchListUser;
 import java.util.List;
 
 public class TinderSwipeCallback extends DiffUtil.Callback {
-    private List<MatchListUser> old, newList;
+    private final List<MatchListUser> old;
+    private final List<MatchListUser> newList;
 
     public TinderSwipeCallback(List<MatchListUser> old, List<MatchListUser> newList) {
         this.old = old;
