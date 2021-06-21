@@ -128,6 +128,15 @@ public interface GetDataService {
     @POST("user/match-request-status-update")
     Call<CommonModel> matchRequestStatusUpdate(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
+
+    @FormUrlEncoded
+    @POST("user/update-status-relationship")
+    Call<CommonModel> relationRequestStatusUpdate(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
+    @FormUrlEncoded
+    @POST("user/leave-relationship")
+    Call<CommonModel> leaveRelationship(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
     @Multipart
     @POST("user/add-media?section=feed&mediaType=image")
     Call<LoginResponse> uploadImageToFeed(@Header("Authorization") String token, @Part MultipartBody.Part filePart);
