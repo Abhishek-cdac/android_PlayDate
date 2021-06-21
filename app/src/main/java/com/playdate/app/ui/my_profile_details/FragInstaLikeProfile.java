@@ -118,22 +118,7 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
                 pref.saveBoolKeyVal("isBoosterOn", isBoosterOn);
             }
         });
-        if (pref.getStringVal(SessionPref.LoginUserrelationship).equals("Single")) {
-            connection_img.setVisibility(View.GONE);
-            header_text.setText("About Me");
-            single_person.setVisibility(View.VISIBLE);
-            iv_send_request.setVisibility(View.VISIBLE);
-            iv_chat.setVisibility(View.VISIBLE);
-            couple_rl.setVisibility(View.GONE);
-        } else {
-            callCoupleAPI();
-            connection_img.setVisibility(View.VISIBLE);
-            header_text.setText("How we met");
-            single_person.setVisibility(View.GONE);
-            couple_rl.setVisibility(View.VISIBLE);
-            iv_send_request.setVisibility(View.GONE);
-            iv_chat.setVisibility(View.GONE);
-        }
+
         callAPI();
         if (itsMe) {
             iv_send_request.setVisibility(View.GONE);
