@@ -168,6 +168,7 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
                         if (lst_getCoupleDetail == null) {
                             lst_getCoupleDetail = new ArrayList<>();
                         }
+//                        Log.e("COUPLEID", lst_getCoupleDetail.get(0).getCoupleId() );
 
                         picasso.load( lst_getCoupleDetail.get(0).getProfile1().get(0).getProfilePicPath())
                                 .placeholder(R.drawable.profile)

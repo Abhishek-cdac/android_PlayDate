@@ -27,6 +27,8 @@ import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.CommonModel;
 import com.playdate.app.model.FriendsListModel;
+import com.playdate.app.model.GetCoupleProfileData;
+import com.playdate.app.model.GetCoupleProfileModel;
 import com.playdate.app.model.GetProfileDetails;
 import com.playdate.app.model.GetProileDetailData;
 import com.playdate.app.model.MatchListUser;
@@ -92,10 +94,12 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
 
+        callCoupleAPI();
         callAPI();
         setInIt(view);
         setDarkModeSwitch();
         setValues();
+
         return view;
 
     }
@@ -183,7 +187,6 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
             change_bio_video_rl.setVisibility(View.VISIBLE);
         } else {
 //            txt_change_photo.setText("Change couple profile photo");
-
             create_relation_rl.setVisibility(View.GONE);
             invite_partner.setVisibility(View.GONE);
             leave_partner.setVisibility(View.VISIBLE);
@@ -284,15 +287,59 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
         }
     }
 
+    private ArrayList<GetCoupleProfileData> lst_getCoupleDetail;
+
+    private void callCoupleAPI() {
+
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
+        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
+        pd.show();
+        Call<GetCoupleProfileModel> call = service.getCoupleProfile("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new Callback<GetCoupleProfileModel>() {
+            @Override
+            public void onResponse(Call<GetCoupleProfileModel> call, Response<GetCoupleProfileModel> response) {
+                pd.cancel();
+                if (response.code() == 200) {
+                    if (response.body().getStatus() == 1) {
+                        lst_getCoupleDetail = (ArrayList<GetCoupleProfileData>) response.body().getData();
+                        if (lst_getCoupleDetail == null) {
+                            lst_getCoupleDetail = new ArrayList<>();
+                        }
+                        Log.e("Couple Id", lst_getCoupleDetail.get(0).getCoupleId());
+
+                        pref.saveStringKeyVal(SessionPref.RelationRequestId, lst_getCoupleDetail.get(0).getCoupleId());
+                    } else {
+                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
+                    }
+                } else {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
+                    } catch (Exception e) {
+                        Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetCoupleProfileModel> call, Throwable t) {
+                t.printStackTrace();
+                pd.cancel();
+                Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+
     private void callLeaveRelationshipApi() {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
         String userId = pref.getStringVal(SessionPref.LoginUserID);
         String relatioRequestId = pref.getStringVal(SessionPref.RelationRequestId);
-        Toast.makeText(getActivity(), "relatioRequestId"+ relatioRequestId, Toast.LENGTH_SHORT).show();
-//        if (relatioRequestId == null) {
-//            relatioRequestId = "";
-//        }
+        Toast.makeText(getActivity(), "relatioRequestId" + relatioRequestId, Toast.LENGTH_SHORT).show();
         hashMap.put("userId", userId);
         hashMap.put("requestId", relatioRequestId);
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
@@ -305,6 +352,7 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
                         clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
+                        outFromApp();
                     } else {
                         clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
                     }

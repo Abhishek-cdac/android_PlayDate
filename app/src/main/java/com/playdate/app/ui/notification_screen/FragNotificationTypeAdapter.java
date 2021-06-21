@@ -115,10 +115,10 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
             view = inflater.inflate(R.layout.row_notification_type_1, parent, false);
             viewHolder = new ViewHolderRelationRequest(view);
         } else if (viewType == FRIENDACCEPTED) {
-            view = inflater.inflate(R.layout.row_notification_type_2, parent, false);
+            view = inflater.inflate(R.layout.row_notification_type_6, parent, false);
             viewHolder = new ViewHolderLiked(view);
         } else if (viewType == RELATIONACCEPTED) {
-            view = inflater.inflate(R.layout.row_notification_type_2, parent, false);
+            view = inflater.inflate(R.layout.row_notification_type_6, parent, false);
             viewHolder = new ViewHolderLiked(view);
         }
 
@@ -538,8 +538,6 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
         }
         else if (holder.getItemViewType() == FRIENDACCEPTED) {
             ViewHolderLiked viewHolderLiked = (ViewHolderLiked) holder;
-            viewHolderLiked.iv_icon_3.setVisibility(View.GONE);
-
 
             String name = notification_list.get(position).getmUserInformation().get(0).getUsername();
             String desc = notification_list.get(position).getNotificationMessage();
@@ -570,9 +568,7 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
                             itemClick.onItemClicks(v, position, 11, notification_list.get(position).getNotificationId(), notification_list.get(position).getUserID());
                         }
                     }
-
                     notifyDataSetChanged();
-
 
                 } else {
                     notification_list.get(position).setSelected(false);
@@ -583,8 +579,6 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
 
         } else if (holder.getItemViewType() == RELATIONACCEPTED) {
             ViewHolderLiked viewHolderLiked = (ViewHolderLiked) holder;
-            viewHolderLiked.iv_icon_3.setVisibility(View.GONE);
-
 
             String name = notification_list.get(position).getmUserInformation().get(0).getUsername();
             String desc = notification_list.get(position).getNotificationMessage();
