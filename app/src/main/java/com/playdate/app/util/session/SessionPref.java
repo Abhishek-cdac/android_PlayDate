@@ -105,6 +105,7 @@ public class SessionPref {
 
     public static String LoginUserSuggestionShown = "LoginUserSuggestionShown";
     public static String DARKMODE = "DARKMODE";
+    public static String RelationRequestId = "relationRequestId";
 
 
     public void saveLoginUser(String id,

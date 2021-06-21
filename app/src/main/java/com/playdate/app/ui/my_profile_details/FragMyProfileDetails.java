@@ -288,10 +288,11 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
         String userId = pref.getStringVal(SessionPref.LoginUserID);
-        String relatioRequestId = pref.getStringVal("relationRequestId");
-        if (relatioRequestId == null) {
-            relatioRequestId = "";
-        }
+        String relatioRequestId = pref.getStringVal(SessionPref.RelationRequestId);
+        Toast.makeText(getActivity(), "relatioRequestId"+ relatioRequestId, Toast.LENGTH_SHORT).show();
+//        if (relatioRequestId == null) {
+//            relatioRequestId = "";
+//        }
         hashMap.put("userId", userId);
         hashMap.put("requestId", relatioRequestId);
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
