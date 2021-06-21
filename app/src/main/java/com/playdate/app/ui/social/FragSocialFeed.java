@@ -107,8 +107,8 @@ public class FragSocialFeed extends Fragment implements OnRefreshPage {
     private void callAPI() {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("limit", "10");// Hardcode
-        hashMap.put("pageNo", "" + PageNo);// Hardcode
+        hashMap.put("limit", "10");
+        hashMap.put("pageNo", "" + PageNo);
         boolApiCalling = true;
 //        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
 //        pd.show();

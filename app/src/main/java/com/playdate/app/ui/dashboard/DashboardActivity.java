@@ -100,7 +100,6 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
     private Fragment CurrentFrag;
     private NestedScrollView nsv;
     private FragInstaLikeProfile profile;
-
     private int count = 0;
     private int OPTION_CLICK = 0;
     private final int CAMERA = 2;

@@ -169,7 +169,7 @@ public class FragCouponStore extends Fragment implements OnCouponSelected {
 
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("limit", "50");
+        hashMap.put("limit", "100");
         hashMap.put("pageNo", "1");
 
 

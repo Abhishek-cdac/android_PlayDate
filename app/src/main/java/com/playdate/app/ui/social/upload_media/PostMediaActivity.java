@@ -145,7 +145,7 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
         // hashMap.put("filter", "");
-        hashMap.put("limit", "50");
+        hashMap.put("limit", "100");
         hashMap.put("pageNo", "1");//Hardcode
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
         pd.show();
