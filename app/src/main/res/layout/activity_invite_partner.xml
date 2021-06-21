@@ -86,6 +86,7 @@
             android:weightSum="2">
 
             <ImageView
+                android:id="@+id/messengerSend"
                 android:layout_width="@dimen/_60sdp"
                 android:layout_height="@dimen/_60sdp"
                 android:layout_margin="@dimen/_5sdp"
@@ -94,22 +95,22 @@
 
             <ImageView
 
+                android:id="@+id/iv_share_code"
                 android:layout_width="@dimen/_70sdp"
                 android:layout_height="@dimen/_70sdp"
                 android:layout_margin="@dimen/_5sdp"
-                android:id="@+id/iv_share_code"
                 android:background="@drawable/circle_playdate_pink"
                 android:padding="@dimen/_8sdp"
                 android:src="@drawable/white_heart" />
 
 
             <ImageView
+                android:id="@+id/textSend"
                 android:layout_width="@dimen/_50sdp"
                 android:layout_height="@dimen/_50sdp"
                 android:layout_margin="@dimen/_8sdp"
                 android:background="@drawable/invite_bg"
                 android:padding="@dimen/_12sdp"
-
                 android:src="@drawable/speech_bubble" />
 
 

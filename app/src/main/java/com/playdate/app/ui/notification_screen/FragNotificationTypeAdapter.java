@@ -111,13 +111,16 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
         } else if (viewType == DATE_PARTNER) {
             view = inflater.inflate(R.layout.row_notification_type_5, parent, false);
             viewHolder = new ViewHolderMatchRequest(view);
-        } else if (viewType == RELATION_REQUEST) {
+        }
+        else if (viewType == RELATION_REQUEST) {
             view = inflater.inflate(R.layout.row_notification_type_1, parent, false);
             viewHolder = new ViewHolderRelationRequest(view);
-        } else if (viewType == FRIENDACCEPTED) {
+        }
+        else if (viewType == FRIENDACCEPTED) {
             view = inflater.inflate(R.layout.row_notification_type_2, parent, false);
             viewHolder = new ViewHolderLiked(view);
-        } else if (viewType == RELATIONACCEPTED) {
+        }
+        else if (viewType == RELATIONACCEPTED) {
             view = inflater.inflate(R.layout.row_notification_type_2, parent, false);
             viewHolder = new ViewHolderLiked(view);
         }
@@ -219,7 +222,9 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
             });
 
 ///// FriendRequest
-        } else if (holder.getItemViewType() == LIKED) {
+
+        }
+        else if (holder.getItemViewType() == LIKED) {
 
             ViewHolderLiked viewHolderLiked = (ViewHolderLiked) holder;
             picasso.load(notification_list.get(position).getmUserInformation().get(0).getProfilePicPath()).placeholder(R.drawable.profile)
@@ -539,30 +544,33 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
                     itemClick.onItemClicks(v, position, 25, requestId);
                 }
             });
-        } else if (holder.getItemViewType() == FRIENDACCEPTED) {
+        }
+        else if (holder.getItemViewType() == FRIENDACCEPTED) {
             ViewHolderLiked viewHolderLiked = (ViewHolderLiked) holder;
             viewHolderLiked.iv_icon_3.setVisibility(View.GONE);
 
             String name = notification_list.get(position).getmUserInformation().get(0).getUsername();
             String desc = notification_list.get(position).getNotificationMessage();
-            String sourceString = name + " " + desc;
+            String sourceString = "<b>" + name + "</b> " + desc;
             viewHolderLiked.tv_name.setText(Html.fromHtml(sourceString));
 
             picasso.load(notification_list.get(position).getmUserInformation().get(0).getProfilePicPath()).placeholder(R.drawable.profile)
                     .into(viewHolderLiked.profile_image_3);
-        } else if (holder.getItemViewType() == RELATIONACCEPTED) {
+        }
+     else if (holder.getItemViewType() == RELATIONACCEPTED) {
             ViewHolderLiked viewHolderLiked = (ViewHolderLiked) holder;
             viewHolderLiked.iv_icon_3.setVisibility(View.GONE);
 
             String name = notification_list.get(position).getmUserInformation().get(0).getUsername();
             String desc = notification_list.get(position).getNotificationMessage();
-            String sourceString = name + " " + desc;
+            String sourceString = "<b>" + name + "</b> " + desc;
             viewHolderLiked.tv_name.setText(Html.fromHtml(sourceString));
 
 
             picasso.load(notification_list.get(position).getmUserInformation().get(0).getProfilePicPath()).placeholder(R.drawable.profile)
                     .into(viewHolderLiked.profile_image_3);
-        }else if (holder.getItemViewType() == RELATION_REQUEST) {
+        }
+           else if (holder.getItemViewType() == RELATION_REQUEST) {
             ViewHolderRelationRequest viewHolderRelationRequest = (ViewHolderRelationRequest) holder;
             relationRequestId = notification_list.get(position).getmRelationRequest().get(0).getmRequestId();
 
@@ -676,7 +684,7 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
             rl_request = itemView.findViewById(R.id.rl_request);
             iv_right = itemView.findViewById(R.id.iv_right);
             iv_cross = itemView.findViewById(R.id.iv_cross);
-            //  icons.setVisibility(View.GONE);
+        //  icons.setVisibility(View.GONE);
             icons.setImageResource(R.drawable.playdate_pink);
         }
 

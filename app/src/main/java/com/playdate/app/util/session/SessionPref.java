@@ -101,6 +101,8 @@ public class SessionPref {
     public static String LoginUsersourceSocialId = "sourceSocialId";
     public static String LoginUserinviteCode = "inviteCode";
     public static String LoginUserpaymentMode = "paymentMode";
+    public static String LoginUserInviteLink = "inviteLink";
+
     public static String LoginUserSuggestionShown = "LoginUserSuggestionShown";
     public static String DARKMODE = "DARKMODE";
 
@@ -125,7 +127,8 @@ public class SessionPref {
                               String sourceType,
                               String sourceSocialId,
                               String inviteCode,
-                              String paymentMode
+                              String paymentMode,
+                              String inviteLink
 
     ) {
         editor.putString(LoginUserID, id);
@@ -149,6 +152,7 @@ public class SessionPref {
         editor.putString(LoginUsersourceSocialId, sourceSocialId);
         editor.putString(LoginUserinviteCode, inviteCode);
         editor.putString(LoginUserpaymentMode, paymentMode);
+        editor.putString(LoginUserInviteLink, inviteLink);
         editor.commit();
     }
 

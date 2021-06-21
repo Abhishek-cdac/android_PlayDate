@@ -21,14 +21,13 @@
 
     <TextView
         android:layout_weight="1"
-
         android:layout_marginLeft="@dimen/_5sdp"
         android:id="@+id/tv_name_noti"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:textAllCaps="false"
-
+        android:layout_gravity="center"
         android:layout_toRightOf="@+id/profile_image_3"
         android:textColor="@color/textColour"
       />

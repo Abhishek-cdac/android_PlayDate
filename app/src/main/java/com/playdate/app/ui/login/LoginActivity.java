@@ -320,7 +320,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     user.getSourceType(),
                     user.getSourceSocialId(),
                     user.getInviteCode(),
-                    user.getPaymentMode());
+                    user.getPaymentMode(),
+                    user.getInviteLink());
 
             Intent mIntent = null;
             Context mContext = LoginActivity.this;

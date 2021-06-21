@@ -5,9 +5,9 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class RelationRequest {
-    @SerializedName("action")//
+    @SerializedName("action")
     private String mAction;
-    @SerializedName("requestId")//
+    @SerializedName("requestId")
     private String mRequestId;
     @SerializedName("status")//
     private String mStatus;

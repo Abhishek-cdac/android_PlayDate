@@ -30,6 +30,9 @@ public class LoginUserDetails {
     String paymentMode;
     String mediaId;
     String fullPath;
+    String inviteLink;
+
+
 
     String relationship;
     String personalBio;
@@ -42,7 +45,13 @@ public class LoginUserDetails {
     @Expose
     ArrayList<Restaurants> restaurants;
 
+    public String getInviteLink() {
+        return inviteLink;
+    }
 
+    public void setInviteLink(String inviteLink) {
+        this.inviteLink = inviteLink;
+    }
     public String getFullPath() {
         return fullPath;
     }
