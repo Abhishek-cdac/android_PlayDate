@@ -82,6 +82,10 @@ public class FragNotification extends Fragment {
                     callMatchRequestStatusUpdateAPI(s, "Verified");
                 } else if (value == 25) {
                     callMatchRequestStatusUpdateAPI(s, "Rejected");
+                } else if (value == 30) {
+                    callRelationStatusUpdate(s, "Verified");
+                } else if (value == 31) {
+                    callRelationStatusUpdate(s, "Rejected");
                 }
             }
 
@@ -90,7 +94,6 @@ public class FragNotification extends Fragment {
                 if (i == 22) {
                     callUpdateNotificationStatusAPI(notifiationId, userId, "read");
                 } else if (i == 11) {
-
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     NotificationBottomSheet sheet = new NotificationBottomSheet();
                     bundle = new Bundle();
@@ -98,8 +101,6 @@ public class FragNotification extends Fragment {
                     bundle.putString("userId", userId);
                     sheet.setArguments(bundle);
                     sheet.show(fragmentManager, "notification bottom sheet");
-
-
                 }
             }
 
@@ -132,9 +133,52 @@ public class FragNotification extends Fragment {
         return view;
     }
 
+    private void callRelationStatusUpdate(String relatioRequestId, String status) {
+        SessionPref pref = SessionPref.getInstance(getActivity());
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        String userId = pref.getStringVal(SessionPref.LoginUserID);
+        pref.saveStringKeyVal("relationRequestId", relatioRequestId);
+        hashMap.put("userId", userId);
+        hashMap.put("requestId", relatioRequestId);
+        hashMap.put("status", status);  //Verified,Rejected
+        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
+        pd.show();
+
+        Call<CommonModel> call = service.relationRequestStatusUpdate("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new Callback<CommonModel>() {
+            @Override
+            public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
+                pd.cancel();
+                if (response.code() == 200) {
+                    if (response.body().getStatus() == 1) {
+                        callGetNotificationAPI();
+                        Log.d("relationRequestId....", pref.getStringVal("relationRequestId"));
+                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
+                    }else{
+                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
+                    }
+                } else {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
+                    } catch (Exception e) {
+
+                        Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CommonModel> call, Throwable t) {
+                t.printStackTrace();
+                pd.cancel();
+                Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void callMatchRequestStatusUpdateAPI(String requestId, String status) {
-
-
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("requestID", requestId);

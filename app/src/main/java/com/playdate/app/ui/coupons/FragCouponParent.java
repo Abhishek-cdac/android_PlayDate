@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +20,9 @@ import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.RestMain;
 import com.playdate.app.ui.dashboard.adapter.RestaurentListAdapter;
+import com.playdate.app.ui.dashboard.fragments.FragmentSearchRestaurent;
+import com.playdate.app.ui.date.fragments.FragLocationTracing;
+import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.ui.restaurant.adapter.Restaurant;
 import com.playdate.app.util.session.SessionPref;
 
@@ -27,6 +31,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,13 +44,14 @@ public class FragCouponParent extends Fragment implements OnSizeDecided, View.On
     private SessionPref pref;
     private TextView txt_store;
     private TextView txt_my_coupon;
-
+private ImageView iv_rest_search;
     @Nullable
     @org.jetbrains.annotations.Nullable
     @Override
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag_coupon_parent, container, false);
         viewpager = view.findViewById(R.id.viewpager);
+        iv_rest_search = view.findViewById(R.id.iv_rest_search);
         txt_store = view.findViewById(R.id.txt_store);
         txt_my_coupon = view.findViewById(R.id.txt_my_coupon);
         pref = SessionPref.getInstance(getActivity());
@@ -60,6 +66,7 @@ public class FragCouponParent extends Fragment implements OnSizeDecided, View.On
         callAPIRestaurant();
         txt_store.setOnClickListener(this);
         txt_my_coupon.setOnClickListener(this);
+        iv_rest_search.setOnClickListener(this);
 
         viewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -143,6 +150,12 @@ public class FragCouponParent extends Fragment implements OnSizeDecided, View.On
             viewpager.setCurrentItem(0);
         } else {
             viewpager.setCurrentItem(1);
+        }
+
+        if (v.getId()==R.id.iv_rest_search) {
+            OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
+            Objects.requireNonNull(frag).ReplaceFrag(new FragmentSearchRestaurent());
+
         }
     }
 }

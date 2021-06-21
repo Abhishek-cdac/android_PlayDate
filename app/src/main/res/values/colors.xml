@@ -56,5 +56,7 @@
     <color name="color_blue_middle">#0066EC</color>
     <color name="color_light_black">#8f000000</color>
 
+    <color name="my_spinner_text_color">#FFFFFFFF</color>
+
 
 </resources>

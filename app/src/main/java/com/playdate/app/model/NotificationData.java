@@ -31,6 +31,17 @@ public class NotificationData {
     @SerializedName("friendRequest")
     private List<FriendRequest> mFriendRequest;
 
+    @SerializedName("relationRequest")
+    private List<RelationRequest> mRelationRequest;
+
+    public List<RelationRequest> getmRelationRequest() {
+        return mRelationRequest;
+    }
+
+    public void setmRelationRequest(List<RelationRequest> mRelationRequest) {
+        this.mRelationRequest = mRelationRequest;
+    }
+
     public List<UserInformation> getmUserInformation() {
         return mUserInformation;
     }

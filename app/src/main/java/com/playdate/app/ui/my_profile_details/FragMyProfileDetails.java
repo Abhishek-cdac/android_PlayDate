@@ -41,10 +41,13 @@ import com.playdate.app.ui.register.bio.BioActivity;
 import com.playdate.app.ui.register.interest.InterestActivity;
 import com.playdate.app.ui.register.profile.UploadProfileActivity;
 import com.playdate.app.ui.register.username.UserNameActivity;
+import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.customcamera.otalia.CameraActivity;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -73,6 +76,7 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
     private ArrayList<GetProileDetailData> lst_getPostDetail;
     private String inviteCode;
     private String inviteLink;
+    private CommonClass clsCommon;
     boolean state = false;
 
     @Nullable
@@ -80,6 +84,7 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag_my_details, container, false);
         pref = SessionPref.getInstance(getActivity());
+        clsCommon = CommonClass.getInstance();
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestId()
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -142,7 +147,7 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
         iv_edit_bio.setOnClickListener(this);
         txt_blocked.setOnClickListener(this);
         create_relation_rl.setOnClickListener(this);
-
+        leave_relation_rl.setOnClickListener(this);
 
         setValues();
   /*      iv_dark_mode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -274,13 +279,56 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
             startActivityForResult(mIntent, 409);
         } else if (id == R.id.create_relation_rl) {
             callGetUserSuggestionAPI();
+        } else if (id == R.id.leave_relation_rl) {
+            callLeaveRelationshipApi();
         }
+    }
 
+    private void callLeaveRelationshipApi() {
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        String userId = pref.getStringVal(SessionPref.LoginUserID);
+        String relatioRequestId = pref.getStringVal("relationRequestId");
+        if (relatioRequestId == null) {
+            relatioRequestId = "";
+        }
+        hashMap.put("userId", userId);
+        hashMap.put("requestId", relatioRequestId);
+        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
+        pd.show();
+        Call<CommonModel> call = service.leaveRelationship("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new Callback<CommonModel>() {
+            @Override
+            public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
+                pd.cancel();
+                if (response.code() == 200) {
+                    if (response.body().getStatus() == 1) {
+                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
+                    } else {
+                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
+                    }
+
+                } else {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
+                    } catch (Exception e) {
+                        Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CommonModel> call, Throwable t) {
+                t.printStackTrace();
+                pd.cancel();
+                Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
     private void callGetUserSuggestionAPI() {
-
 
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
@@ -349,10 +397,21 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
                 pd.cancel();
                 if (response.code() == 200) {
                     assert response.body() != null;
+                    Log.d("Response", response.body().toString());
                     if (response.body().getStatus() == 1) {
-
+                        Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    } else if (response.body().getStatus() == 0) {
+                        Log.d("RESPONSE__________", response.body().getMessage());
+                        Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
                     }
                 } else {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
+                    } catch (Exception e) {
+                        Log.e("EXCEPTION__", e.toString());
+                        Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                    }
                 }
 
             }
