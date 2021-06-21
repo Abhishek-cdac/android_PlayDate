@@ -138,7 +138,7 @@ public class FragNotification extends Fragment {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
         String userId = pref.getStringVal(SessionPref.LoginUserID);
-        pref.saveStringKeyVal("relationRequestId", relatioRequestId);
+        pref.saveStringKeyVal(SessionPref.RelationRequestId, relatioRequestId);
         hashMap.put("userId", userId);
         hashMap.put("requestId", relatioRequestId);
         hashMap.put("status", status);  //Verified,Rejected
@@ -155,7 +155,7 @@ public class FragNotification extends Fragment {
                         callGetNotificationAPI();
                         Log.d("relationRequestId....", pref.getStringVal("relationRequestId"));
                         clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
-                    }else{
+                    } else {
                         clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
                     }
                 } else {

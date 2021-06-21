@@ -224,7 +224,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
                 //Show Password
                 login_Password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                Log.d("UserId & requestId", pref.getStringVal(SessionPref.LoginUserID) + pref.getStringVal("relationRequestId"));
             } else {
                 (iv_show_password).setImageResource(R.drawable.ic_visibility_off);
 
