@@ -26,8 +26,8 @@ import retrofit2.Response;
 
 public class UnblockBottomSheet extends BottomSheetDialogFragment {
 
-    String userID;
-    BlockUserActivity blockUserActivity;
+    private final String userID;
+    private final BlockUserActivity blockUserActivity;
 
     public UnblockBottomSheet(String userID, BlockUserActivity blockUserActivity) {
         this.userID = userID;

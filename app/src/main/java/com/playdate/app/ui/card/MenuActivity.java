@@ -57,7 +57,7 @@ final  int REQUEST_SCAN=100;
         Toast.makeText(this, "Scan", Toast.LENGTH_SHORT).show();
         if ((requestCode == REQUEST_SCAN ) && data != null && data.hasExtra(CardIOActivity.EXTRA_SCAN_RESULT)) {
             String resultDisplayStr="";
-            if (data != null && data.hasExtra(CardIOActivity.EXTRA_SCAN_RESULT)) {
+            if (data.hasExtra(CardIOActivity.EXTRA_SCAN_RESULT)) {
                 Toast.makeText(this, ""+CardIOActivity.EXTRA_SCAN_RESULT.toString(), Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, "Scan Cancelled", Toast.LENGTH_SHORT).show();

@@ -49,7 +49,7 @@ import retrofit2.Response;
 public class FragCardSwipe extends Fragment {
 
     private CardStackLayoutManager manager;
-    private TinderSwipeAdapter adapter;
+    public TinderSwipeAdapter adapter;
     public ArrayList<Interest> lst_interest;
     private Onclick itemClick;
     private CardStackView cardStackView;
