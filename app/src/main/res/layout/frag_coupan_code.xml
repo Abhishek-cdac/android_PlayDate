@@ -185,7 +185,7 @@
             android:layout_marginHorizontal="@dimen/_35sdp"
             android:layout_marginTop="@dimen/_20sdp"
             android:gravity="center"
-            android:visibility="visible"
+            android:visibility="gone"
             android:text="@string/share_code"
             android:textColor="@color/white"
             android:textSize="@dimen/_10sdp" />

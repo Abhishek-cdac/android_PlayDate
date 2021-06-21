@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -34,8 +35,6 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
     public static final int RELATIONACCEPTED = 8;
 
     private final Onclick itemClick;
-
-
     private String requestId;
     private String relationRequestId;
     private final Context mcontext;
@@ -97,19 +96,20 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
             viewHolder = new ViewHolderLiked(view);
 
         } else if (viewType == MATCHED) {
-            view = inflater.inflate(R.layout.row_notification_type_1, parent, false);
+
+            view = inflater.inflate(R.layout.row_notification_type_5, parent, false);
             viewHolder = new ViewHolder(view);
         } else if (viewType == FRIENDREQUEST) {
-            view = inflater.inflate(R.layout.row_notification_type_1, parent, false);
+            view = inflater.inflate(R.layout.row_notification_type_5, parent, false);
             viewHolder = new ViewHolder(view);
         } else if (viewType == COMMENT) {
             view = inflater.inflate(R.layout.row_notification_type_4, parent, false);
             viewHolder = new ViewHolderComment(view);
         } else if (viewType == MATCH_RQUEST) {
-            view = inflater.inflate(R.layout.row_notification_type_1, parent, false);
+            view = inflater.inflate(R.layout.row_notification_type_5, parent, false);
             viewHolder = new ViewHolderMatchRequest(view);
         } else if (viewType == DATE_PARTNER) {
-            view = inflater.inflate(R.layout.row_notification_type_1, parent, false);
+            view = inflater.inflate(R.layout.row_notification_type_5, parent, false);
             viewHolder = new ViewHolderMatchRequest(view);
         } else if (viewType == RELATION_REQUEST) {
             view = inflater.inflate(R.layout.row_notification_type_1, parent, false);
@@ -157,9 +157,11 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
 
                         if (notification_list.get(position).isSelected) {
                             viewHolderMatched.rl_notification.setBackgroundColor(mcontext.getResources().getColor(R.color.color_pink_dull));
-                        } else {
-                            viewHolderMatched.rl_notification.setBackgroundColor(mcontext.getResources().getColor(R.color.white));
+                            viewHolderMatched.main_ll.setBackgroundColor(mcontext.getResources().getColor(R.color.color_pink_dull));
 
+                        } else {
+                            viewHolderMatched.rl_notification.setBackgroundColor(mcontext.getResources().getColor(R.color.backgroundColour));
+                            viewHolderMatched.main_ll.setBackgroundColor(mcontext.getResources().getColor(R.color.backgroundColour));
                         }
 
                         viewHolderMatched.rl_notification.setOnLongClickListener(v -> {
@@ -222,8 +224,16 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
             ViewHolderLiked viewHolderLiked = (ViewHolderLiked) holder;
             picasso.load(notification_list.get(position).getmUserInformation().get(0).getProfilePicPath()).placeholder(R.drawable.profile)
                     .into(viewHolderLiked.profile_image_3);
-            viewHolderLiked.tv_name.setText(notification_list.get(position).getmUserInformation().get(0).getUsername());
-            viewHolderLiked.tv_desc.setText(notification_list.get(position).getNotificationMessage());
+
+
+            String name = notification_list.get(position).getmUserInformation().get(0).getUsername();
+            String desc = notification_list.get(position).getNotificationMessage();
+
+            String sourceString = "<b>" + name + "</b> " + desc;
+            viewHolderLiked.tv_name.setText(Html.fromHtml(sourceString));
+
+//          viewHolderLiked.tv_name.setText(notification_list.get(position).getmUserInformation().get(0).getUsername());
+//          viewHolderLiked.tv_desc.setText(notification_list.get(position).getNotificationMessage());
 
             if (notification_list.get(position).getmPostInfo().get(0).getMedia().get(0).getMediaType().equals("Image")) {
                 picasso.load(notification_list.get(position).getmPostInfo().get(0).getMedia().get(0).getMediaFullPath())
@@ -277,8 +287,8 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
             String sourceString = "<b>" + name + "</b> " + desc;
             viewHolderComment.tv_name.setText(Html.fromHtml(sourceString));
 
-//            viewHolderComment.tv_name.setText(notification_list.get(position).getmUserInformation().get(0).getUsername());
-//            viewHolderComment.tv_desc.setText(notification_list.get(position).getNotificationMessage());
+//          viewHolderComment.tv_name.setText(notification_list.get(position).getmUserInformation().get(0).getUsername());
+//          viewHolderComment.tv_desc.setText(notification_list.get(position).getNotificationMessage());
 
             if (notification_list.get(position).isSelected) {
                 viewHolderComment.rl_notification.setBackgroundColor(mcontext.getResources().getColor(R.color.color_pink_dull));
@@ -313,7 +323,6 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
 /// COMMENT
         }
         else if (holder.getItemViewType() == FRIENDREQUEST) {
-
             ViewHolder viewHolderMatched = (ViewHolder) holder;
             if (notification_list.get(position).getFriendRequest() != null) {
 
@@ -340,10 +349,13 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
 
                         if (notification_list.get(position).isSelected) {
                             viewHolderMatched.rl_notification.setBackgroundColor(mcontext.getResources().getColor(R.color.color_pink_dull));
+                            viewHolderMatched.main_ll.setBackgroundColor(mcontext.getResources().getColor(R.color.color_pink_dull));
                         } else {
-                            viewHolderMatched.rl_notification.setBackgroundColor(mcontext.getResources().getColor(R.color.white));
+                            viewHolderMatched.rl_notification.setBackgroundColor(mcontext.getResources().getColor(R.color.backgroundColour));
+                            viewHolderMatched.main_ll.setBackgroundColor(mcontext.getResources().getColor(R.color.backgroundColour));
 
                         }
+
 
                         viewHolderMatched.rl_notification.setOnLongClickListener(v -> {
                             Log.e("relativeLayout", "relativeLayout" + position);
@@ -403,17 +415,51 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
         }
         else if (holder.getItemViewType() == MATCH_RQUEST) {
             ViewHolderMatchRequest viewHolderMatchRequest = (ViewHolderMatchRequest) holder;
-            viewHolderMatchRequest.rl_request.setVisibility(View.GONE);
-            viewHolderMatchRequest.tv_desc.setVisibility(View.VISIBLE);
+            picasso.load(notification_list.get(position).getmUserInformation().get(0).getProfilePicPath()).placeholder(R.drawable.profile)
+                    .into(viewHolderMatchRequest.profile_image);
+//            viewHolderMatchRequest.tv_name.setText(notification_list.get(position).getmUserInformation().get(0).getUsername());
+//            viewHolderMatchRequest.tv_desc.setText(notification_list.get(position).getNotificationMessage());
 
             String name = notification_list.get(position).getmUserInformation().get(0).getUsername();
             String desc = notification_list.get(position).getNotificationMessage();
             String sourceString = "<b>" + name + "</b> " + desc;
             viewHolderMatchRequest.tv_name.setText(Html.fromHtml(sourceString));
-            picasso.load(notification_list.get(position).getmUserInformation().get(0).getProfilePicPath()).placeholder(R.drawable.profile)
-                    .into(viewHolderMatchRequest.profile_image);
-//            viewHolderMatchRequest.tv_name.setText(notification_list.get(position).getmUserInformation().get(0).getUsername());
-//            viewHolderMatchRequest.tv_desc.setText(notification_list.get(position).getNotificationMessage());
+
+
+            if (notification_list.get(position).isSelected) {
+                viewHolderMatchRequest.rl_notification.setBackgroundColor(mcontext.getResources().getColor(R.color.color_pink_dull));
+                viewHolderMatchRequest.main_ll.setBackgroundColor(mcontext.getResources().getColor(R.color.color_pink_dull));
+            } else {
+                viewHolderMatchRequest.rl_notification.setBackgroundColor(mcontext.getResources().getColor(R.color.backgroundColour));
+                viewHolderMatchRequest.main_ll.setBackgroundColor(mcontext.getResources().getColor(R.color.backgroundColour));
+
+            }
+
+            viewHolderMatchRequest.rl_notification.setOnLongClickListener(v -> {
+                Log.e("relativeLayout", "relativeLayout" + position);
+                if (!notification_list.get(position).isSelected) {
+
+                    for (int i = 0; i < notification_list.size(); i++) {
+                        if (position != i) {
+                            notification_list.get(i).setSelected(false);
+                        } else {
+                            notification_list.get(position).setSelected(true);
+                            itemClick.onItemClicks(v, position, 11, notification_list.get(position).getNotificationId(), notification_list.get(position).getUserID());
+                        }
+                    }
+
+                    notifyDataSetChanged();
+
+
+                } else {
+                    notification_list.get(position).setSelected(false);
+                    notifyDataSetChanged();
+                }
+                return true;
+            });
+            viewHolderMatchRequest.iv_right.setVisibility(View.GONE);
+            viewHolderMatchRequest.iv_cross.setVisibility(View.GONE);
+
             viewHolderMatchRequest.iv_right.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -432,29 +478,91 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
         }
         else if (holder.getItemViewType() == DATE_PARTNER) {
             ViewHolderMatchRequest viewHolderMatchRequest = (ViewHolderMatchRequest) holder;
+            viewHolderMatchRequest.tv_desc.setVisibility(View.VISIBLE);
+
             String name = notification_list.get(position).getmUserInformation().get(0).getUsername();
             String desc = notification_list.get(position).getNotificationMessage();
             String sourceString = "<b>" + name + "</b> " + desc;
             viewHolderMatchRequest.tv_name.setText(Html.fromHtml(sourceString));
+
+
+//          viewHolderMatchRequest.tv_name.setText(notification_list.get(position).getmUserInformation().get(0).getUsername());
+            //   viewHolderMatchRequest.tv_desc.setText(notification_list.get(position).getNotificationMessage());
             picasso.load(notification_list.get(position).getmUserInformation().get(0).getProfilePicPath()).placeholder(R.drawable.profile)
                     .into(viewHolderMatchRequest.profile_image);
-//            viewHolderMatchRequest.iv_right.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    itemClick.onItemClicks(v, position, 24, requestId);
-//                }
-//            });
-//
-//            viewHolderMatchRequest.iv_cross.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Log.e("requestId", "" + requestId);
-//
-//                    itemClick.onItemClicks(v, position, 25, requestId);
-//                }
-//            });
 
-        } else if (holder.getItemViewType() == RELATION_REQUEST) {
+            if (notification_list.get(position).isSelected) {
+                viewHolderMatchRequest.rl_notification.setBackgroundColor(mcontext.getResources().getColor(R.color.color_pink_dull));
+                viewHolderMatchRequest.main_ll.setBackgroundColor(mcontext.getResources().getColor(R.color.color_pink_dull));
+            } else {
+                viewHolderMatchRequest.rl_notification.setBackgroundColor(mcontext.getResources().getColor(R.color.backgroundColour));
+                viewHolderMatchRequest.main_ll.setBackgroundColor(mcontext.getResources().getColor(R.color.backgroundColour));
+
+
+            }
+            viewHolderMatchRequest.rl_notification.setOnLongClickListener(v -> {
+                Log.e("relativeLayout", "relativeLayout" + position);
+                if (!notification_list.get(position).isSelected) {
+
+                    for (int i = 0; i < notification_list.size(); i++) {
+                        if (position != i) {
+                            notification_list.get(i).setSelected(false);
+                        } else {
+                            notification_list.get(position).setSelected(true);
+                            itemClick.onItemClicks(v, position, 11, notification_list.get(position).getNotificationId(), notification_list.get(position).getUserID());
+                        }
+                    }
+
+                    notifyDataSetChanged();
+
+
+                } else {
+                    notification_list.get(position).setSelected(false);
+                    notifyDataSetChanged();
+                }
+                return true;
+            });
+            viewHolderMatchRequest.iv_right.setVisibility(View.GONE);
+            viewHolderMatchRequest.iv_cross.setVisibility(View.GONE);
+            viewHolderMatchRequest.iv_right.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    itemClick.onItemClicks(v, position, 24, requestId);
+                }
+            });
+
+            viewHolderMatchRequest.iv_cross.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.e("requestId", "" + requestId);
+
+                    itemClick.onItemClicks(v, position, 25, requestId);
+                }
+            });
+        } else if (holder.getItemViewType() == FRIENDACCEPTED) {
+            ViewHolderLiked viewHolderLiked = (ViewHolderLiked) holder;
+            viewHolderLiked.iv_icon_3.setVisibility(View.GONE);
+
+            String name = notification_list.get(position).getmUserInformation().get(0).getUsername();
+            String desc = notification_list.get(position).getNotificationMessage();
+            String sourceString = name + " " + desc;
+            viewHolderLiked.tv_name.setText(Html.fromHtml(sourceString));
+
+            picasso.load(notification_list.get(position).getmUserInformation().get(0).getProfilePicPath()).placeholder(R.drawable.profile)
+                    .into(viewHolderLiked.profile_image_3);
+        } else if (holder.getItemViewType() == RELATIONACCEPTED) {
+            ViewHolderLiked viewHolderLiked = (ViewHolderLiked) holder;
+            viewHolderLiked.iv_icon_3.setVisibility(View.GONE);
+
+            String name = notification_list.get(position).getmUserInformation().get(0).getUsername();
+            String desc = notification_list.get(position).getNotificationMessage();
+            String sourceString = name + " " + desc;
+            viewHolderLiked.tv_name.setText(Html.fromHtml(sourceString));
+
+
+            picasso.load(notification_list.get(position).getmUserInformation().get(0).getProfilePicPath()).placeholder(R.drawable.profile)
+                    .into(viewHolderLiked.profile_image_3);
+        }else if (holder.getItemViewType() == RELATION_REQUEST) {
             ViewHolderRelationRequest viewHolderRelationRequest = (ViewHolderRelationRequest) holder;
             relationRequestId = notification_list.get(position).getmRelationRequest().get(0).getmRequestId();
 
@@ -487,39 +595,19 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
                     }
                 }
             });
-        } else if (holder.getItemViewType() == FRIENDACCEPTED) {
-            ViewHolderLiked viewHolderLiked = (ViewHolderLiked) holder;
-            viewHolderLiked.iv_icon_3.setVisibility(View.GONE);
-
-            String name = notification_list.get(position).getmUserInformation().get(0).getUsername();
-            String desc = notification_list.get(position).getNotificationMessage();
-            String sourceString = name + " " + desc;
-            viewHolderLiked.tv_name.setText(Html.fromHtml(sourceString));
-
-            picasso.load(notification_list.get(position).getmUserInformation().get(0).getProfilePicPath()).placeholder(R.drawable.profile)
-                    .into(viewHolderLiked.profile_image_3);
-        } else if (holder.getItemViewType() == RELATIONACCEPTED) {
-            ViewHolderLiked viewHolderLiked = (ViewHolderLiked) holder;
-            viewHolderLiked.iv_icon_3.setVisibility(View.GONE);
-
-            String name = notification_list.get(position).getmUserInformation().get(0).getUsername();
-            String desc = notification_list.get(position).getNotificationMessage();
-            String sourceString = name + " " + desc;
-            viewHolderLiked.tv_name.setText(Html.fromHtml(sourceString));
-
-
-            picasso.load(notification_list.get(position).getmUserInformation().get(0).getProfilePicPath()).placeholder(R.drawable.profile)
-                    .into(viewHolderLiked.profile_image_3);
         }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView profile_image, icons, iv_right, iv_cross;
         TextView tv_name, tv_desc;
+        LinearLayout main_ll;
+
         RelativeLayout rl_request, rl_notification;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            main_ll = itemView.findViewById(R.id.main_ll);
             profile_image = itemView.findViewById(R.id.profile_image_1);
             rl_notification = itemView.findViewById(R.id.rl_notification);
             icons = itemView.findViewById(R.id.iv_icon_1);
@@ -575,10 +663,11 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
         ImageView profile_image, icons, iv_right, iv_cross;
         TextView tv_name, tv_desc;
         RelativeLayout rl_request, rl_notification;
-
+        LinearLayout main_ll;
 
         public ViewHolderMatchRequest(@NonNull View itemView) {
             super(itemView);
+            main_ll = itemView.findViewById(R.id.main_ll);
             profile_image = itemView.findViewById(R.id.profile_image_1);
             rl_notification = itemView.findViewById(R.id.rl_notification);
             icons = itemView.findViewById(R.id.iv_icon_1);
@@ -587,31 +676,32 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
             rl_request = itemView.findViewById(R.id.rl_request);
             iv_right = itemView.findViewById(R.id.iv_right);
             iv_cross = itemView.findViewById(R.id.iv_cross);
-            icons.setVisibility(View.GONE);
-
+            //  icons.setVisibility(View.GONE);
+            icons.setImageResource(R.drawable.playdate_pink);
         }
 
     }
 
-    public class ViewHolderRelationRequest extends RecyclerView.ViewHolder {
-        ImageView profile_image, icons, iv_right, iv_cross;
-        TextView tv_name, tv_desc;
-        RelativeLayout rl_request, rl_notification;
+
+public class ViewHolderRelationRequest extends RecyclerView.ViewHolder {
+    ImageView profile_image, icons, iv_right, iv_cross;
+    TextView tv_name, tv_desc;
+    RelativeLayout rl_request, rl_notification;
 
 
-        public ViewHolderRelationRequest(@NonNull View itemView) {
-            super(itemView);
-            profile_image = itemView.findViewById(R.id.profile_image_1);
-            rl_notification = itemView.findViewById(R.id.rl_notification);
-            icons = itemView.findViewById(R.id.iv_icon_1);
-            tv_name = itemView.findViewById(R.id.tv_name_noti);
-            tv_desc = itemView.findViewById(R.id.tv_desc_noti);
-            rl_request = itemView.findViewById(R.id.rl_request);
-            iv_right = itemView.findViewById(R.id.iv_right);
-            iv_cross = itemView.findViewById(R.id.iv_cross);
-            icons.setVisibility(View.GONE);
-
-        }
+    public ViewHolderRelationRequest(@NonNull View itemView) {
+        super(itemView);
+        profile_image = itemView.findViewById(R.id.profile_image_1);
+        rl_notification = itemView.findViewById(R.id.rl_notification);
+        icons = itemView.findViewById(R.id.iv_icon_1);
+        tv_name = itemView.findViewById(R.id.tv_name_noti);
+        tv_desc = itemView.findViewById(R.id.tv_desc_noti);
+        rl_request = itemView.findViewById(R.id.rl_request);
+        iv_right = itemView.findViewById(R.id.iv_right);
+        iv_cross = itemView.findViewById(R.id.iv_cross);
+        icons.setVisibility(View.GONE);
 
     }
+
+}
 }
