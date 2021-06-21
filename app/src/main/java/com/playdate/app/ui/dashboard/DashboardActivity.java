@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -241,7 +242,6 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
     }
 
     private void callAPIFriends() {
-
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("limit", "100");
@@ -412,7 +412,6 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
     }
 
 
-
     @Override
     public void onClick(View view) {
 
@@ -431,6 +430,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
             ll_mainMenu.setVisibility(View.GONE);
             ll_her.setVisibility(View.GONE);
             ReplaceFrag(new FragNotification("dashboard"));
+
         } else if (id == R.id.txt_match) {
             socialOffMatchOnNotiOff();
             ShowMainMenuWithFriends();
