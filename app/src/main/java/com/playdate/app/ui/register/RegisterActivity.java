@@ -221,7 +221,8 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
                                 user.getSourceType(),
                                 user.getSourceSocialId(),
                                 user.getInviteCode(),
-                                user.getPaymentMode()
+                                user.getPaymentMode(),
+                                user.getInviteLink()
                         );
 
                         nextPage(registerUser);

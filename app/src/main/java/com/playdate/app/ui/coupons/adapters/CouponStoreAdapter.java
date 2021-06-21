@@ -62,6 +62,8 @@ public class CouponStoreAdapter extends RecyclerView.Adapter<CouponStoreAdapter.
         try {
             holder.rest_name.setText(coupon_list.get(position).getCouponTitle());
             picasso.load(coupon_list.get(position).getRestaurants().get(0).getImage())
+                    .placeholder(R.color.color_grey)
+
                     .into(holder.iv_image);
         } catch (Exception e) {
             e.printStackTrace();
