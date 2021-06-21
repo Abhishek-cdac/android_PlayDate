@@ -48,7 +48,8 @@ public class RestaurentListAdapter extends RecyclerView.Adapter<RestaurentListAd
 
 
         picasso.load(lst.get(position).getImage())
-                // .placeholder(R.drawable.profile)
+
+                .placeholder(R.color.color_grey)
                 .into(holder.profile_image);
 
         holder.txt_friend_name.setText(lst.get(position).getName());

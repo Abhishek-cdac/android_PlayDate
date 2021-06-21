@@ -218,7 +218,8 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
             });
 
 ///// FriendRequest
-        } else if (holder.getItemViewType() == LIKED) {
+        }
+        else if (holder.getItemViewType() == LIKED) {
 
             ViewHolderLiked viewHolderLiked = (ViewHolderLiked) holder;
             picasso.load(notification_list.get(position).getmUserInformation().get(0).getProfilePicPath()).placeholder(R.drawable.profile)
@@ -275,7 +276,8 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
                 return true;
             });
 //// LIKED
-        } else if (holder.getItemViewType() == COMMENT) {
+        }
+        else if (holder.getItemViewType() == COMMENT) {
             ViewHolderComment viewHolderComment = (ViewHolderComment) holder;
             picasso.load(notification_list.get(position).getmUserInformation().get(0).getProfilePicPath()).placeholder(R.drawable.profile)
                     .into(viewHolderComment.profile_image_3);
@@ -319,7 +321,8 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
             });
 
 /// COMMENT
-        } else if (holder.getItemViewType() == FRIENDREQUEST) {
+        }
+        else if (holder.getItemViewType() == FRIENDREQUEST) {
             ViewHolder viewHolderMatched = (ViewHolder) holder;
             if (notification_list.get(position).getFriendRequest() != null) {
 
@@ -409,7 +412,8 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
                 //  removeAt(getAdapterPosition());
             });
 
-        } else if (holder.getItemViewType() == MATCH_RQUEST) {
+        }
+        else if (holder.getItemViewType() == MATCH_RQUEST) {
             ViewHolderMatchRequest viewHolderMatchRequest = (ViewHolderMatchRequest) holder;
             picasso.load(notification_list.get(position).getmUserInformation().get(0).getProfilePicPath()).placeholder(R.drawable.profile)
                     .into(viewHolderMatchRequest.profile_image);
@@ -543,7 +547,7 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
 
             String name = notification_list.get(position).getmUserInformation().get(0).getUsername();
             String desc = notification_list.get(position).getNotificationMessage();
-            String sourceString = "<br>" + name + "</br> " + desc;
+            String sourceString = "<b>" + name + "</b> " + desc;
             viewHolderLiked.tv_name.setText(Html.fromHtml(sourceString));
 
             picasso.load(notification_list.get(position).getmUserInformation().get(0).getProfilePicPath()).placeholder(R.drawable.profile)
@@ -581,14 +585,15 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
                 return true;
             });
 
-        } else if (holder.getItemViewType() == RELATIONACCEPTED) {
+        }
+        else if (holder.getItemViewType() == RELATIONACCEPTED) {
             ViewHolderLiked viewHolderLiked = (ViewHolderLiked) holder;
             viewHolderLiked.iv_icon_3.setVisibility(View.GONE);
 
 
             String name = notification_list.get(position).getmUserInformation().get(0).getUsername();
             String desc = notification_list.get(position).getNotificationMessage();
-            String sourceString = "<br>" + name + "</br> " + desc;
+            String sourceString = "<b>" + name + "</b> " + desc;
             viewHolderLiked.tv_name.setText(Html.fromHtml(sourceString));
 
             picasso.load(notification_list.get(position).getmUserInformation().get(0).getProfilePicPath()).placeholder(R.drawable.profile)
@@ -626,7 +631,8 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
                 }
                 return true;
             });
-        } else if (holder.getItemViewType() == RELATION_REQUEST) {
+        }
+        else if (holder.getItemViewType() == RELATION_REQUEST) {
             ViewHolderRelationRequest viewHolderRelationRequest = (ViewHolderRelationRequest) holder;
             relationRequestId = notification_list.get(position).getmRelationRequest().get(0).getmRequestId();
 

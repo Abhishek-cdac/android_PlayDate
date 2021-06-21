@@ -45,7 +45,10 @@ public class MyCouponAdapter extends RecyclerView.Adapter<MyCouponAdapter.ViewHo
     public void onBindViewHolder(@NonNull MyCouponAdapter.ViewHolder holder, int position) {
         try {
             holder.rest_name.setText(list.get(position).getCouponTitle());
-            picasso.load(list.get(position).getRestaurants().get(0).getImage()).into(holder.iv_image);
+            picasso.load(list.get(position).getRestaurants().get(0).getImage())
+                    .placeholder(R.color.color_grey)
+
+                    .into(holder.iv_image);
 
             holder.discount_desc.setText(list.get(position).getCouponDescription());
             String[] str = list.get(position).getCouponValidTillDate().split("T");
