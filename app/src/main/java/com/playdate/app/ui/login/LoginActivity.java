@@ -420,31 +420,37 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     private void handleSignInResult(Task<GoogleSignInAccount> task) {
-        try {
-            GoogleSignInAccount account = task.getResult(ApiException.class);
-            GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
-            if (acct != null) {
-                String personName = acct.getDisplayName();
-                String personGivenName = acct.getGivenName();
-                //  String ServerAuthCode = acct.getIdToken();
 
-                String personEmail = acct.getEmail();
-                String personId = acct.getId();
-                Uri personPhoto = acct.getPhotoUrl();
+        if(task.isSuccessful()){
+            try {
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
+                if (acct != null) {
+                    String personName = acct.getDisplayName();
+                    String personGivenName = acct.getGivenName();
+                    //  String ServerAuthCode = acct.getIdToken();
 
-                Log.e("personEmail", "" + personEmail);
-                // Log.e("ServerAuthCode", "" + ServerAuthCode);
-                Log.e("personId", "" + personId);
-                Log.e("personPhoto", "" + personPhoto);
-                Log.e("personName", "" + personName);
-                callGmailSocialLoginAPI(personEmail, personId, ServerAuthCode);
+                    String personEmail = acct.getEmail();
+                    String personId = acct.getId();
+                    Uri personPhoto = acct.getPhotoUrl();
+
+                    Log.e("personEmail", "" + personEmail);
+                    // Log.e("ServerAuthCode", "" + ServerAuthCode);
+                    Log.e("personId", "" + personId);
+                    Log.e("personPhoto", "" + personPhoto);
+                    Log.e("personName", "" + personName);
+                    callGmailSocialLoginAPI(personEmail, personId, ServerAuthCode);
+                }
+
+
+            } catch (ApiException e) {
+                Log.e("EXCEPTION", e.toString());
+                Log.e("EXCEPTION", "signInResult:failed code=" + e.getStatusCode());
             }
-
-
-        } catch (ApiException e) {
-            Log.e("EXCEPTION", e.toString());
-            Log.e("EXCEPTION", "signInResult:failed code=" + e.getStatusCode());
+        }else{
+            Toast.makeText(getApplicationContext(),"Sign in cancel",Toast.LENGTH_LONG).show();
         }
+
     }
 
     private void callGmailSocialLoginAPI(String personEmail, String personId, String serverAuthCode) {

@@ -79,14 +79,14 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:selectedItemPosition="@={AgeVerificationViewModel.MonthSelectedPosition}"
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/normal_btn_back"
                 android:entries="@{AgeVerificationViewModel.fetchMonths()}"
                 android:popupBackground="@drawable/normal_btn_back"
                 android:scrollbarAlwaysDrawVerticalTrack="true"
-                android:textAlignment="center"
+                android:selectedItemPosition="@={AgeVerificationViewModel.MonthSelectedPosition}"
 
+                android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.502"
@@ -95,6 +95,7 @@
                 app:layout_constraintVertical_bias="0.498" />
 
             <androidx.appcompat.widget.AppCompatSpinner
+
                 android:layout_width="70dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="8dp"
@@ -126,8 +127,8 @@
                 android:background="@drawable/normal_btn_back"
                 android:entries="@{AgeVerificationViewModel.fetchCountriesCode()}"
                 android:gravity="center"
-                android:selectedItemPosition="@={AgeVerificationViewModel.YearSelectedPosition}"
                 android:popupBackground="@drawable/normal_btn_back"
+                android:selectedItemPosition="@={AgeVerificationViewModel.YearSelectedPosition}"
                 android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

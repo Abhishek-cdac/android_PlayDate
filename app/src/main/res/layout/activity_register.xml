@@ -118,27 +118,44 @@
                         android:textColor="@android:color/white"
                         android:textColorHint="@android:color/white"
                         android:textSize="@dimen/_12sdp" />
-
-                    <EditText
-                        android:id="@+id/login_Password"
-                        android:layout_width="match_parent"
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:background="@drawable/rect_button"
-                        android:drawableStart="@drawable/union4"
-                        android:drawablePadding="@dimen/_10sdp"
-                        android:ems="10"
+                        android:layout_marginTop="@dimen/_10sdp">
 
-                        android:hint="@string/Password"
-                        android:inputType="textPassword"
-                        android:maxLength="50"
-                        android:padding="@dimen/_15sdp"
-                        android:singleLine="true"
 
-                        android:text="@={VMRegister.password}"
-                        android:textColor="@android:color/white"
-                        android:textColorHint="@android:color/white"
-                        android:textSize="@dimen/_12sdp" />
+                        <EditText
+                            android:id="@+id/login_Password"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rect_button"
+                            android:drawableStart="@drawable/union4"
+                            android:drawablePadding="@dimen/_10sdp"
+                            android:ems="10"
+
+                            android:hint="@string/Password"
+                            android:inputType="textPassword"
+                            android:maxLength="50"
+                            android:padding="@dimen/_15sdp"
+                            android:singleLine="true"
+
+                            android:text="@={VMRegister.password}"
+                            android:textColor="@android:color/white"
+                            android:textColorHint="@android:color/white"
+                            android:textSize="@dimen/_12sdp" />
+
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:id="@+id/iv_show_password"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentEnd="true"
+                            android:padding="@dimen/_10sdp"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_visibility_off" />
+                    </RelativeLayout>
+
+
 
 
                     <Button
@@ -207,9 +224,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
                     android:gravity="center"
-                    android:padding="@dimen/_15sdp"
                     android:weightSum="1">
 
                     <RelativeLayout

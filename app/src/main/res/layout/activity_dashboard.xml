@@ -158,7 +158,6 @@
                                 android:id="@+id/txt_count"
                                 android:layout_width="@dimen/_12sdp"
                                 android:layout_height="@dimen/_12sdp"
-                                android:layout_alignParentEnd="true"
                                 android:layout_marginTop="@dimen/_2sdp"
                                 android:background="@drawable/round_pink_fill"
                                 android:foregroundGravity="center"

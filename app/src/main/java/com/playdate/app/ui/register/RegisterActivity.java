@@ -5,9 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -69,10 +73,10 @@ import static com.playdate.app.data.api.RetrofitClientInstance.DEVICE_TYPE;
 
 public class RegisterActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
     private RegisterViewModel registerViewModel;
-
+private EditText login_Password;
     private CallbackManager callbackManager;
     private LoginManager loginManager;
-
+    private ImageView iv_show_password;
     private GoogleSignInClient googleApiClient;
     private static final int RC_SIGN_IN = 1;
     private CommonClass clsCommon;
@@ -104,6 +108,11 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
         binding.setLifecycleOwner(this);
         binding.setVMRegister(registerViewModel);
         Button logout = binding.logout1;
+
+        iv_show_password = findViewById(R.id.iv_show_password);
+        login_Password = findViewById(R.id.login_Password);
+
+
 
 
         registerViewModel.getFinish().observe(this, new Observer<Boolean>() {
@@ -140,11 +149,27 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
         registerViewModel.fbClick().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean register) {
-
                 calltoFB();
+            }
+        });
+
+
+        iv_show_password.setOnClickListener(v -> {
+
+            if (login_Password.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())) {
+                (iv_show_password).setImageResource(R.drawable.ic_visibility);
+
+                //Show Password
+                login_Password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            } else {
+                (iv_show_password).setImageResource(R.drawable.ic_visibility_off);
+
+                //Hide Password
+                login_Password.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
             }
         });
+
 
         registerViewModel.getOnGoogleClick().observe(this, aBoolean -> calltoGoogle());
 

@@ -18,9 +18,12 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 
 import com.facebook.login.LoginManager;
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.playdate.app.R;
 import com.playdate.app.couple.ui.register.couplebio.CoupleBioActivity;
 import com.playdate.app.data.api.GetDataService;
@@ -49,6 +52,7 @@ import com.playdate.app.util.customcamera.otalia.CameraActivity;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -62,7 +66,7 @@ import retrofit2.Response;
 import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 import static com.playdate.app.util.session.SessionPref.LoginVerified;
 
-public class FragMyProfileDetails extends Fragment implements View.OnClickListener {
+public class FragMyProfileDetails extends Fragment implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener    {
     public FragMyProfileDetails() {
     }
 
@@ -526,14 +530,20 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
     }
 
     private void signOut() {
+
+
+
+
         mGoogleSignInClient.signOut()
                 .addOnCompleteListener(getActivity(), task -> {
-                    Toast.makeText(getActivity(), "LogOut", Toast.LENGTH_LONG).show();
-                    pref.saveBoolKeyVal(LoginVerified, false);
-                    SessionPref.logout(getActivity());
-                    Intent intent = new Intent(getActivity(), LoginActivity.class);
-                    startActivity(intent);
-                    getActivity().finish();
+                    if(task.isSuccessful()){
+                        Toast.makeText(getActivity(), "LogOut", Toast.LENGTH_LONG).show();
+                        pref.saveBoolKeyVal(LoginVerified, false);
+                        SessionPref.logout(getActivity());
+                        Intent intent = new Intent(getActivity(), LoginActivity.class);
+                        startActivity(intent);
+                        getActivity().finish();
+                    }
                 });
     }
 
@@ -618,4 +628,8 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
     }
 
 
+    @Override
+    public void onConnectionFailed(@NonNull @NotNull ConnectionResult connectionResult) {
+
+    }
 }

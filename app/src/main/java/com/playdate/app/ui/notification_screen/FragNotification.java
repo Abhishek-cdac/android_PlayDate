@@ -24,6 +24,7 @@ import com.playdate.app.model.NotificationData;
 import com.playdate.app.model.NotificationModel;
 import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.ui.chat.request.RequestChatFragment;
+import com.playdate.app.ui.coupons.FragCouponParent;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
@@ -39,9 +40,10 @@ import java.util.Map;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import timber.log.Timber;
 
 public class FragNotification extends Fragment {
-    private String extra;
+    private  String extra;
 
     public FragNotification(String extra) {
         this.extra = extra;
@@ -74,7 +76,7 @@ public class FragNotification extends Fragment {
             public void onItemClicks(View view, int position, int value, String s) {
                 if (value == 20) {
                     callFriedRequestStatusAPI(s, "Verified");
-                    Log.e("request_sent_requestID", "accept" + s);
+                    Timber.e("accept" + s);
                 } else if (value == 21) {
                     callFriedRequestStatusAPI(s, "Rejected");
                     Log.e("request_sent_requestID", "reject" + s);
@@ -120,6 +122,9 @@ public class FragNotification extends Fragment {
                 if (extra.equals("dashboard")) {
                     OnInnerFragmentClicks ref = (OnInnerFragmentClicks) getActivity();
                     ref.Reset();
+                } else if (extra.equals("Coupons")) {
+                    OnInnerFragmentClicks ref = (OnInnerFragmentClicks) getActivity();
+                    ref.ReplaceFrag(new FragCouponParent());
                 } else {
                     OnInnerFragmentClicks ref = (OnInnerFragmentClicks) getActivity();
                     ref.ReplaceFrag(new RequestChatFragment());
