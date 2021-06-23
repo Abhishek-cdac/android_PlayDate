@@ -66,7 +66,7 @@ import retrofit2.Response;
 import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 import static com.playdate.app.util.session.SessionPref.LoginVerified;
 
-public class FragMyProfileDetails extends Fragment implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener    {
+public class FragMyProfileDetails extends Fragment implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
     public FragMyProfileDetails() {
     }
 
@@ -342,7 +342,7 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
                         Log.d("RESPONSEGET", "onResponse: ");
-                        Log.e("ResponseMessage", response.body().getMessage() );
+                        Log.e("ResponseMessage", response.body().getMessage());
 //                        showYesNoDialog();
                         showYesNoDialogRelation();
 //                        callAPI();
@@ -442,14 +442,17 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
                     assert response.body() != null;
                     Log.d("Response", response.body().toString());
                     if (response.body().getStatus() == 1) {
+                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
                         Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     } else if (response.body().getStatus() == 0) {
                         Log.d("RESPONSE__________", response.body().getMessage());
+                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
                         Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        Toast.makeText(getActivity(), "" + jObjError.getString("message"), Toast.LENGTH_SHORT).show();
                         clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Log.e("EXCEPTION__", e.toString());
@@ -544,11 +547,9 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
     private void signOut() {
 
 
-
-
         mGoogleSignInClient.signOut()
                 .addOnCompleteListener(getActivity(), task -> {
-                    if(task.isSuccessful()){
+                    if (task.isSuccessful()) {
                         Toast.makeText(getActivity(), "LogOut", Toast.LENGTH_LONG).show();
                         pref.saveBoolKeyVal(LoginVerified, false);
                         SessionPref.logout(getActivity());
