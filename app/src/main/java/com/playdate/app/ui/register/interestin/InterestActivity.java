@@ -3,6 +3,7 @@ package com.playdate.app.ui.register.interestin;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -50,6 +51,7 @@ public class InterestActivity extends AppCompatActivity {
         binding.setInterestInViewModel(viewModel);
 
 
+
         viewModel.OnNextClick().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean click) {
@@ -91,14 +93,17 @@ public class InterestActivity extends AppCompatActivity {
                 if (click) {
                     Male = true;
                     binding.btnMale.setBackground(getDrawable(R.drawable.selected_btn_back));
+                    binding.ivNext.setVisibility(View.VISIBLE);
+
                 } else {
                     Male = false;
                     binding.btnMale.setBackground(getDrawable(R.drawable.normal_btn_back));
+                    binding.ivNext.setVisibility(View.GONE);
+
                 }
 
                 // binding.btnFemale.setBackground(getDrawable(R.drawable.normal_btn_back));
                 // binding.btnNonBinary.setBackground(getDrawable(R.drawable.normal_btn_back));
-
             }
         });
         viewModel.OnFemaleClick().observe(this, new Observer<Boolean>() {
@@ -108,13 +113,18 @@ public class InterestActivity extends AppCompatActivity {
                 if (click) {
                     FeMale = true;
                     binding.btnFemale.setBackground(getDrawable(R.drawable.selected_btn_back));
+                    binding.ivNext.setVisibility(View.VISIBLE);
+
                 } else {
                     FeMale = false;
                     binding.btnFemale.setBackground(getDrawable(R.drawable.normal_btn_back));
+                    binding.ivNext.setVisibility(View.GONE);
+
                 }
                 //  binding.btnMale.setBackground(getDrawable(R.drawable.normal_btn_back));
 //                binding.btnFemale.setBackground(getDrawable(R.drawable.selected_btn_back));
                 // binding.btnNonBinary.setBackground(getDrawable(R.drawable.normal_btn_back));
+
             }
         });
         viewModel.OnNonBinClick().observe(this, new Observer<Boolean>() {
@@ -124,9 +134,13 @@ public class InterestActivity extends AppCompatActivity {
                 if (click) {
                     Other = true;
                     binding.btnNonBinary.setBackground(getDrawable(R.drawable.selected_btn_back));
+                    binding.ivNext.setVisibility(View.VISIBLE);
+
                 } else {
                     Other = false;
                     binding.btnNonBinary.setBackground(getDrawable(R.drawable.normal_btn_back));
+                    binding.ivNext.setVisibility(View.GONE);
+
                 }
 
                 //  binding.btnMale.setBackground(getDrawable(R.drawable.normal_btn_back));

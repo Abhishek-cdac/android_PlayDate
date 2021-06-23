@@ -60,7 +60,7 @@ public class AgeVerifiationActivity extends AppCompatActivity {
 
             if (age_verify_viewmodel.getYearSelected().toLowerCase().equals("year")) {
                 clsCommon.showDialogMsg(this, "PlayDate", "Please select Year of birth", "Ok");
-            } else if (age_verify_viewmodel.getMonthSelected()==0) {
+            } else if (age_verify_viewmodel.getMonthSelected() == 0) {
                 clsCommon.showDialogMsg(this, "PlayDate", "Please select month of birth", "Ok");
             } else if (age_verify_viewmodel.getDaySelected().toLowerCase().equals("day")) {
                 clsCommon.showDialogMsg(this, "PlayDate", "Please select day of birth", "Ok");
@@ -70,6 +70,7 @@ public class AgeVerifiationActivity extends AppCompatActivity {
             }
 
         });
+
 
         if (mIntent.getBooleanExtra("fromProfile", false)) {
             new Handler().postDelayed(new Runnable() {
@@ -94,19 +95,19 @@ public class AgeVerifiationActivity extends AppCompatActivity {
 
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
-        String MM="";
-        if(age_verify_viewmodel.getMonthSelected()<10){
+        String MM = "";
+        if (age_verify_viewmodel.getMonthSelected() < 10) {
 
-            MM="0"+age_verify_viewmodel.getMonthSelected();
-        }else{
-            MM=""+age_verify_viewmodel.getMonthSelected();
+            MM = "0" + age_verify_viewmodel.getMonthSelected();
+        } else {
+            MM = "" + age_verify_viewmodel.getMonthSelected();
         }
 
-        String DD="";
-        if(age_verify_viewmodel.getDaySelected().length()==1){
-            DD="0"+age_verify_viewmodel.getDaySelected();
-        }else{
-            DD=""+age_verify_viewmodel.getDaySelected();
+        String DD = "";
+        if (age_verify_viewmodel.getDaySelected().length() == 1) {
+            DD = "0" + age_verify_viewmodel.getDaySelected();
+        } else {
+            DD = "" + age_verify_viewmodel.getDaySelected();
         }
 
         String DOB = age_verify_viewmodel.getYearSelected() + "-" + MM + "-" + DD;

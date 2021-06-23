@@ -152,6 +152,7 @@
             android:background="@drawable/arrow_back_circle"
             android:onClick="@{(v) -> InterestInViewModel.onNext(v)}"
             android:padding="@dimen/_12sdp"
+            android:visibility="gone"
             android:src="@drawable/arrow_right" />
     </RelativeLayout>
 
