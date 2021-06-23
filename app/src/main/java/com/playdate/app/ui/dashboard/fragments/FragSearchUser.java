@@ -145,17 +145,15 @@ public class FragSearchUser extends Fragment implements SuggestedFriendAdapter.S
 
     private void callGetUserSuggestionAPI() {
 
-
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
         // hashMap.put("filter", "");
-        hashMap.put("limit", "100");
+        hashMap.put("limit", "300");
         hashMap.put("pageNo", "1");//Hardcode
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
         pd.show();
         SessionPref pref = SessionPref.getInstance(getActivity());
         Log.e("GetUserSuggestionData", "" + pref.getStringVal(SessionPref.LoginUsertoken));
-
         Call<GetUserSuggestion> call = service.getUserSuggestion("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         Log.e("GetUserSuggestionData", "" + hashMap);
         call.enqueue(new Callback<GetUserSuggestion>() {

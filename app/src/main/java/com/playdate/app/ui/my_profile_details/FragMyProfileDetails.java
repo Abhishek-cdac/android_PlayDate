@@ -318,18 +318,16 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
     }
 
     private void callLeaveRelationshipApi() {
+        Log.d("LeaveRelationshipApi", "callLeaveRelationshipApi: ");
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
         String userId = pref.getStringVal(SessionPref.LoginUserID);
-//        String relatioRequestId = pref.getStringVal(SessionPref.RelationRequestId);
         hashMap.put("userId", userId);
         if (null != lst_getCoupleDetail) {
             hashMap.put("requestId", lst_getCoupleDetail.get(0).getCoupleId());
         } else {
             return;
         }
-
-
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
         pd.show();
         Call<CommonModel> call = service.leaveRelationship("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
@@ -339,9 +337,12 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
                 pd.cancel();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
-                        callAPI();
-                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
-                        outFromApp();
+                        Log.d("RESPONSEGET", "onResponse: ");
+                        Log.e("ResponseMessage", response.body().getMessage() );
+//                        showYesNoDialog();
+                        showYesNoDialogRelation();
+//                        callAPI();
+//                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
                     } else {
                         clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
                     }
@@ -496,6 +497,16 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
                 .setMessage("Are you sure you want to logout from PlayDate?")
                 .setCancelable(false)
                 .setPositiveButton("Yes", (dialog, id) -> outFromApp())
+                .setNegativeButton("No", null)
+                .show();
+    }
+
+    private void showYesNoDialogRelation() {
+        new AlertDialog.Builder(getActivity())
+                .setInverseBackgroundForced(true)
+                .setMessage("Are you sure you want to leave this Relationship?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", (dialog, id) -> callAPI())
                 .setNegativeButton("No", null)
                 .show();
     }
