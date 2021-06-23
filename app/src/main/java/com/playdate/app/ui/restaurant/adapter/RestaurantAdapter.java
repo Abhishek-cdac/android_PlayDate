@@ -34,7 +34,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Picasso.get().load(lst.get(position).getImage())
+        Picasso.get().load(lst.get(position).getImage()).centerCrop().fit()
                 .placeholder(R.drawable.cupertino_activity_indicator)
                 .into(holder.imageview);
 //        holder.imageview.setImageResource(lst.get(position).image);
