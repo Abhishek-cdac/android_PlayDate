@@ -11,6 +11,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -19,10 +21,13 @@ import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.RestMain;
+import com.playdate.app.ui.dashboard.OnAPIResponce;
 import com.playdate.app.ui.dashboard.adapter.RestaurentListAdapter;
+import com.playdate.app.ui.dashboard.data.CallAPI;
 import com.playdate.app.ui.dashboard.fragments.FragmentSearchRestaurent;
-import com.playdate.app.ui.date.fragments.FragLocationTracing;
+
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
+import com.playdate.app.ui.notification_screen.FragNotification;
 import com.playdate.app.ui.restaurant.adapter.Restaurant;
 import com.playdate.app.util.session.SessionPref;
 
@@ -37,36 +42,44 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FragCouponParent extends Fragment implements OnSizeDecided, View.OnClickListener {
+public class FragCouponParent extends Fragment implements OnSizeDecided, View.OnClickListener, OnInnerFragmentClicks, OnAPIResponce {
     WrapContentViewPager viewpager;
     RecyclerView rv_restaurant;
     private RestaurentListAdapter adapterRestaurent;
     private SessionPref pref;
     private TextView txt_store;
     private TextView txt_my_coupon;
+    ImageView iv_dashboard_notification;
+    TextView txt_count;
+
 private ImageView iv_rest_search;
+    private Fragment CurrentFrag;
     @Nullable
     @org.jetbrains.annotations.Nullable
     @Override
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag_coupon_parent, container, false);
         viewpager = view.findViewById(R.id.viewpager);
+        callNotification();
+        iv_dashboard_notification = view.findViewById(R.id.iv_dashboard_notification);
         iv_rest_search = view.findViewById(R.id.iv_rest_search);
         txt_store = view.findViewById(R.id.txt_store);
+        txt_count = view.findViewById(R.id.txt_count);
         txt_my_coupon = view.findViewById(R.id.txt_my_coupon);
         pref = SessionPref.getInstance(getActivity());
         rv_restaurant = view.findViewById(R.id.rv_restaurant);
         CoupounPageAdapter adapter = new CoupounPageAdapter(getChildFragmentManager());
         viewpager.setAdapter(adapter);
-
         RecyclerView.LayoutManager manager1 = new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false);
         adapterRestaurent = new RestaurentListAdapter(new ArrayList<>());
         rv_restaurant.setAdapter(adapterRestaurent);
         rv_restaurant.setLayoutManager(manager1);
         callAPIRestaurant();
+
         txt_store.setOnClickListener(this);
         txt_my_coupon.setOnClickListener(this);
         iv_rest_search.setOnClickListener(this);
+        iv_dashboard_notification.setOnClickListener(this);
 
         viewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -148,15 +161,92 @@ private ImageView iv_rest_search;
     public void onClick(View v) {
         if (v.getId() == R.id.txt_store) {
             viewpager.setCurrentItem(0);
-        } else {
+        }
+
+        else if(v.getId()==R.id.iv_dashboard_notification){
+            ReplaceFrag(new FragNotification("Coupons"));
+        }
+
+        else {
             viewpager.setCurrentItem(1);
         }
+
 
         if (v.getId()==R.id.iv_rest_search) {
             OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
             Objects.requireNonNull(frag).ReplaceFrag(new FragmentSearchRestaurent());
 
         }
+    }
+    @Override
+    public void ReplaceFrag(Fragment fragment) {
+        try {
+            CurrentFrag = fragment;
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            if (fragmentManager.getFragments().size() > 0) {
+                ft.replace(R.id.flFragment, fragment, fragment.getClass().getSimpleName());
+            } else {
+                ft.add(R.id.flFragment, fragment, fragment.getClass().getSimpleName());
+            }
+            ft.commitAllowingStateLoss();
+
+          //  mSwipeRefreshLayout.setEnabled(CurrentFrag.getClass().getSimpleName().equals("FragSocialFeed"));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void ReplaceFragWithStack(Fragment fragment) {
+
+    }
+
+    @Override
+    public void NoFriends() {
+
+    }
+
+    @Override
+    public void Reset() {
+
+    }
+
+    @Override
+    public void loadProfile(String UserID) {
+
+    }
+
+    @Override
+    public void loadMatchProfile(String UserID) {
+
+    }
+    CallAPI apiCall;
+
+    void callNotification() {
+        if (null != apiCall) {
+            apiCall.callGetNotificationAPI(getContext());
+        } else {
+            new CallAPI().callGetNotificationAPI(getContext());
+        }
+
+    }
+    @Override
+    public void setNotiCount(int count) {
+        if (count > 0) {
+            txt_count.setVisibility(View.VISIBLE);
+            txt_count.setText("" + count);
+        } else {
+            txt_count.setVisibility(View.GONE);
+            txt_count.setText("");
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        callNotification();
     }
 }
 

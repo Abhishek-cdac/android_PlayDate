@@ -44,6 +44,43 @@
             android:textSize="@dimen/_15sdp"
             android:textStyle="bold" />
 
+        <RelativeLayout
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/_10sdp"
+            android:paddingRight="@dimen/_10sdp">
+
+
+            <ImageView
+                android:id="@+id/iv_dashboard_notification"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_gravity="end|center"
+                android:scaleType="fitXY"
+
+                android:src="@drawable/ic_bell" />
+
+            <TextView
+                android:id="@+id/txt_count"
+                android:layout_width="@dimen/_12sdp"
+                android:layout_height="@dimen/_12sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:background="@drawable/round_pink_fill"
+                android:foregroundGravity="center"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_8sdp"
+                android:textStyle="bold"
+                android:visibility="gone">
+
+            </TextView>
+        </RelativeLayout>
+
+
+
 
     </LinearLayout>
 

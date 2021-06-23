@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
@@ -16,6 +17,8 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.playdate.app.R;
 import com.playdate.app.ui.chat.ChattingAdapter;
+import com.playdate.app.ui.dashboard.OnAPIResponce;
+import com.playdate.app.ui.dashboard.data.CallAPI;
 import com.playdate.app.ui.dashboard.fragments.FragSearchUser;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.ui.notification_screen.FragNotification;
@@ -26,6 +29,7 @@ public class RequestChatFragment extends Fragment implements View.OnClickListene
     ChattingAdapter chattingAdapter;
     FragInbox inboxFrag;
     FragRequest requestFrag;
+    TextView txt_count;
 
 
     public RequestChatFragment() {
@@ -37,11 +41,13 @@ public class RequestChatFragment extends Fragment implements View.OnClickListene
 
         View view = inflater.inflate(R.layout.fragment_request_chat, container, false);
         chattingAdapter = new ChattingAdapter();
+
         ImageView back_anonymous = view.findViewById(R.id.back_anonymous);
         ImageView iv_chat_notification = view.findViewById(R.id.iv_chat_notification);
         EditText edt_search_chat = view.findViewById(R.id.edt_search_chat);
 
         TabLayout tabLayout = view.findViewById(R.id.tab);
+        txt_count = view.findViewById(R.id.txt_count);
         ViewPager viewPager = view.findViewById(R.id.viewpager);
         RelativeLayout rl_page = view.findViewById(R.id.rl_page);
 
@@ -76,6 +82,7 @@ public class RequestChatFragment extends Fragment implements View.OnClickListene
 
             }
         });
+
         back_anonymous.setOnClickListener(this);
         iv_chat_notification.setOnClickListener(this);
 
@@ -119,4 +126,6 @@ public class RequestChatFragment extends Fragment implements View.OnClickListene
         }
 
     }
+
+
 }

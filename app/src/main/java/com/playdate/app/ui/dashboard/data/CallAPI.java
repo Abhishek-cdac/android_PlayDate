@@ -18,6 +18,7 @@ import java.util.Map;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import timber.log.Timber;
 
 public class CallAPI {
     public void callGetNotificationAPI(Context mContext) {
@@ -27,10 +28,10 @@ public class CallAPI {
         hashMap.put("limit", "100");
         hashMap.put("pageNo", "1");//Hardcode
         SessionPref pref = SessionPref.getInstance(mContext);
-        Log.e("GetUserSuggestionData", "" + pref.getStringVal(SessionPref.LoginUsertoken));
+        Timber.tag("GetUserSuggestionData").e("" + pref.getStringVal(SessionPref.LoginUsertoken));
         OnAPIResponce ref= (OnAPIResponce) mContext;
         Call<NotificationModel> call = service.getNotification("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
-        Log.e("GetUserSuggestionData", "" + hashMap);
+        Timber.e("" + hashMap);
         call.enqueue(new Callback<NotificationModel>() {
             @Override
             public void onResponse(Call<NotificationModel> call, Response<NotificationModel> response) {

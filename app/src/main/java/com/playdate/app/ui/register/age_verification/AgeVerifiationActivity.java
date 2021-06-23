@@ -96,6 +96,7 @@ public class AgeVerifiationActivity extends AppCompatActivity {
         Map<String, String> hashMap = new HashMap<>();
         String MM="";
         if(age_verify_viewmodel.getMonthSelected()<10){
+
             MM="0"+age_verify_viewmodel.getMonthSelected();
         }else{
             MM=""+age_verify_viewmodel.getMonthSelected();
