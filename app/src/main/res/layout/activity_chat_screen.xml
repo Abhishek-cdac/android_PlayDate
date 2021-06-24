@@ -22,7 +22,7 @@
             android:layout_alignParentStart="true"
             android:layout_centerInParent="true"
             android:layout_marginEnd="@dimen/_10sdp"
-            android:src="@drawable/arrow_black" />
+            android:src="@drawable/ic_arrow_black" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_image"
@@ -67,7 +67,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerInParent="true"
             android:visibility="visible"
-            android:src="@drawable/video_call" />
+            android:src="@drawable/ic_video_call" />
 
         <ImageView
             android:id="@+id/iv_delete_msg"
@@ -118,7 +118,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:paddingHorizontal="@dimen/_4sdp"
-            android:src="@drawable/add_circle" />
+            android:src="@drawable/ic_add_circle" />
 
         <ImageView
             android:id="@+id/iv_camera"
@@ -127,7 +127,7 @@
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/iv_circle"
             android:paddingHorizontal="@dimen/_4sdp"
-            android:src="@drawable/camera" />
+            android:src="@drawable/ic_camera" />
 
         <ImageView
             android:id="@+id/iv_video"
@@ -146,7 +146,7 @@
             android:layout_marginLeft="-1dp"
             android:layout_toRightOf="@+id/iv_video"
             android:paddingHorizontal="@dimen/_4sdp"
-            android:src="@drawable/voice" />
+            android:src="@drawable/ic_voice" />
 
         <RelativeLayout
             android:id="@+id/msg_dialog"

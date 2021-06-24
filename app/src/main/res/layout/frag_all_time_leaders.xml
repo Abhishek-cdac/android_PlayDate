@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="4dp"
-            android:src="@drawable/crown"
+            android:src="@drawable/ic_crown"
             app:layout_constraintBottom_toTopOf="@+id/iv_winner_image"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />

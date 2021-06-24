@@ -41,7 +41,7 @@
             android:layout_below="@+id/txt_refer"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_5sdp"
-            android:src="@drawable/surprise" />
+            android:src="@drawable/ic_surprise" />
 
         <TextView
             android:id="@+id/txt_points"
@@ -168,6 +168,33 @@
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
                 android:text="GET CODE"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14sdp"
+                android:textStyle="bold" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_earn_point"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/every_time"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_18sdp"
+            android:background="@drawable/path"
+            android:gravity="center"
+            android:visibility="gone">
+
+
+            <TextView
+                android:id="@+id/tv_earn_point"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:text="@string/earn_points"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_14sdp"

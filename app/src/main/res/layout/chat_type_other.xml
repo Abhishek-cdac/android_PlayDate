@@ -10,7 +10,7 @@
         android:id="@+id/diamond"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/diamond_normal" />
+        android:src="@drawable/ic_diamond_normal" />
 
     <!--    <RelativeLayout-->
     <!--        android:layout_width="wrap_content"-->

@@ -113,20 +113,20 @@ public class InviteFriendActivity extends AppCompatActivity implements View.OnCl
     }
 
 
-    @Nullable
-    public String getDefaultSmsAppPackageName(@NonNull final Context context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
-            try {
-                return Telephony.Sms.getDefaultSmsPackage(context);
-            } catch (final Throwable e) {
-            }
-        final Intent intent = new Intent(Intent.ACTION_VIEW)
-                .addCategory(Intent.CATEGORY_DEFAULT).setType("vnd.android-dir/mms-sms");
-        intent.putExtra(Intent.EXTRA_TEXT, inviteLink);
-        final List<ResolveInfo> resolveInfoList = context.getPackageManager().queryIntentActivities(intent, 0);
-        if (!resolveInfoList.isEmpty())
-            return resolveInfoList.get(0).activityInfo.packageName;
-        return null;
-    }
+//    @Nullable
+//    public String getDefaultSmsAppPackageName(@NonNull final Context context) {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+//            try {
+//                return Telephony.Sms.getDefaultSmsPackage(context);
+//            } catch (final Throwable e) {
+//            }
+//        final Intent intent = new Intent(Intent.ACTION_VIEW)
+//                .addCategory(Intent.CATEGORY_DEFAULT).setType("vnd.android-dir/mms-sms");
+//        intent.putExtra(Intent.EXTRA_TEXT, inviteLink);
+//        final List<ResolveInfo> resolveInfoList = context.getPackageManager().queryIntentActivities(intent, 0);
+//        if (!resolveInfoList.isEmpty())
+//            return resolveInfoList.get(0).activityInfo.packageName;
+//        return null;
+//    }
 
 }

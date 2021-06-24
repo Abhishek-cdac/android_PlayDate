@@ -115,6 +115,7 @@ dependencies {
 
     // Add the SDK for Firebase Cloud Messaging
     implementation 'com.google.firebase:firebase-messaging:22.0.0'
+    implementation 'tech.gusavila92:java-android-websocket-client:1.2.2'
 
 
 }

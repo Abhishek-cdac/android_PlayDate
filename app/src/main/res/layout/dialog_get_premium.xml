@@ -56,7 +56,7 @@
                 android:layout_height="@dimen/_40sdp"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:src="@drawable/diamond_normal">
+                android:src="@drawable/ic_diamond_normal">
 
             </ImageView>
 
