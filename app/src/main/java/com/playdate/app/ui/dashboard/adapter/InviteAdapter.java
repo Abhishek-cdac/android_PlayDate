@@ -66,7 +66,6 @@ public class InviteAdapter extends RecyclerView.Adapter<InviteAdapter.ViewHolder
             switch (position) {
                 case 0:
                     break;
-
                 case 1:
                     facebook();
                     break;

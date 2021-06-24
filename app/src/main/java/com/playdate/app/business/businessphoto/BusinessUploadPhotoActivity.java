@@ -14,6 +14,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 
 import com.playdate.app.R;
+import com.playdate.app.business.couponsGenerate.CouponsGeneraterActivity;
 import com.playdate.app.couple.ui.register.coupleprofile.CoupleUploadProfileViewModel;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
@@ -66,7 +67,7 @@ public class BusinessUploadPhotoActivity extends AppCompatActivity {
         viewModel.OnNextClick().observe(this, click -> {
         //    uploadImage();
 
-            startActivity(new Intent(BusinessUploadPhotoActivity.this, InterestActivity
+            startActivity(new Intent(BusinessUploadPhotoActivity.this, CouponsGeneraterActivity
                     .class));
         });
 

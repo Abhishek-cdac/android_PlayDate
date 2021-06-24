@@ -53,6 +53,10 @@
         android:theme="@style/Theme.PlayDate"
         android:usesCleartextTraffic="true">
         <activity android:name=".business.couponsGenerate.CouponsGeneraterActivity"></activity>
+        <activity android:name=".business.businessphoto.BusinessUploadPhotoActivity"></activity>
+         <activity android:name=".business.businessbio.BusinessBioActivity"></activity>
+        <activity android:name=".business.startdate.BusinessStartingDateActivity"></activity>
+
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -109,6 +113,8 @@
         <activity
             android:name=".ui.anonymous_question.AnonymousQuestionActivity"
             android:screenOrientation="portrait" />
+
+
         <activity
             android:name=".ui.login.LoginActivity"
             android:screenOrientation="portrait" />

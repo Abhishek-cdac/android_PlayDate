@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 
 import com.playdate.app.R;
+import com.playdate.app.business.businessphoto.BusinessUploadPhotoActivity;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.databinding.ActivityBusinessBioBinding;
@@ -66,7 +67,7 @@ public class BusinessBioActivity extends AppCompatActivity {
                         setResult(410, mIntent);
                         finish();
                     } else {
-                     //   startActivity(new Intent(BusinessBioActivity.this, CoupleUploadProfileActivity.class));
+                     startActivity(new Intent(BusinessBioActivity.this, BusinessUploadPhotoActivity.class));
 
                     }
                   //  callAPI();
