@@ -44,11 +44,14 @@ public class ActivityCoupons extends AppCompatActivity implements View.OnClickLi
     private String CouponCode;
     private int CurrentPoints;
     private RelativeLayout rl_getcode;
+    private RelativeLayout rl_earn_point;
     private RelativeLayout rl_code;
     private String inviteLink;
     private TextView share_coupans;
     private TextView share_coupans1;
     ArrayList<FaqData> faq_list;
+    ImageView surprise;
+    TextView tv_Get_code;
     RecyclerView rv_frequently;
 
     @Override
@@ -71,6 +74,9 @@ public class ActivityCoupons extends AppCompatActivity implements View.OnClickLi
         TextView tv_code = findViewById(R.id.tv_code);
         share_coupans = findViewById(R.id.share_coupans);
         share_coupans1 = findViewById(R.id.share_coupans1);
+        surprise = findViewById(R.id.surprise);
+        tv_Get_code = findViewById(R.id.tv_Get_code);
+        rl_earn_point = findViewById(R.id.rl_earn_point);
 
         TextView txt_points = findViewById(R.id.txt_points);
         TextView txt_refer = findViewById(R.id.txt_refer);
@@ -85,13 +91,24 @@ public class ActivityCoupons extends AppCompatActivity implements View.OnClickLi
         String couponPoints = mIntent.getStringExtra("Coupon_points");
         int CurrentPoints = mIntent.getIntExtra("CurrentPoints", 0);
         boolean isFromCoupon = mIntent.getBooleanExtra("isFromCoupon", false);
+        boolean isnoBalance = mIntent.getBooleanExtra("No Balance", false);
         txt_points.setText(couponPoints + " Points");
         if (isFromCoupon) {
-            txt_refer.setText(R.string.play_and_earn);
-            every_time.setText(R.string.every_points);
+            if (isnoBalance) {
+                txt_refer.setText(R.string.something_went_wrong);
+                every_time.setText(R.string.dont_have_enough_points);
+                surprise.setImageResource(R.drawable.sad);
+                rl_earn_point.setVisibility(View.VISIBLE);
+                rl_getcode.setVisibility(View.GONE);
+            } else {
+                txt_refer.setText(R.string.play_and_earn);
+                every_time.setText(R.string.every_points);
+                surprise.setImageResource(R.drawable.surprise);
+                rl_earn_point.setVisibility(View.GONE);
+                rl_getcode.setVisibility(View.VISIBLE);
+            }
         } else {
             txt_refer.setText(R.string.refer_your_friend);
-
             every_time.setText(R.string.every_time);
         }
         tv_code.setText(CouponCode);

@@ -40,8 +40,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FragSelectPartner extends Fragment implements SuggestedDateAdapter.SuggestionsAdapterListner {
-
-
     private ArrayList<CreateDateGetPartnerData> lst_CreateDateGetPartner;
     private Onclick itemClick;
     private ViewPager vp_partners;
@@ -50,6 +48,7 @@ public class FragSelectPartner extends Fragment implements SuggestedDateAdapter.
 //    private SpinKitView spin_kit;
     private CommonClass clsCommon;
     private com.gtomato.android.ui.widget.CarouselView carousel;
+
 
     @Nullable
     @Override

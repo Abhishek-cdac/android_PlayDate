@@ -61,7 +61,7 @@ public class FragCouponStore extends Fragment implements OnCouponSelected {
         rv_coupons_list.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
         itemClick = new Onclick() {
             @Override
-            public void onItemClick(View view, int position, int value) {
+            public void onItemClick(View view, int position, int i) {
 
             }
 
@@ -85,6 +85,7 @@ public class FragCouponStore extends Fragment implements OnCouponSelected {
                         intent.putExtra("Coupon_code", Coupon_code);
                         intent.putExtra("Coupon_points", Coupon_points);
                         intent.putExtra("isFromCoupon", true);
+                        intent.putExtra("No Balance", false);
 
                         if (null != account)
                             intent.putExtra("CurrentPoints", account.getCurrentPoints());
@@ -94,8 +95,16 @@ public class FragCouponStore extends Fragment implements OnCouponSelected {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-//
+                } else if (i == 12) {
+                    Intent intent = new Intent(getActivity(), ActivityCoupons.class);
+                    intent.putExtra("Coupon_points", Coupon_points);
+                    intent.putExtra("isFromCoupon", true);
+                    intent.putExtra("No Balance", true);
 
+                    if (null != account)
+                        intent.putExtra("CurrentPoints", account.getCurrentPoints());
+
+                    startActivity(intent);
                 }
 
             }
