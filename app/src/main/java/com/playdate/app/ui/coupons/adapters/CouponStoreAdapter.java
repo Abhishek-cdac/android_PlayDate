@@ -89,7 +89,8 @@ public class CouponStoreAdapter extends RecyclerView.Adapter<CouponStoreAdapter.
                         if (currentPoints >= coupon_list.get(position).getCouponPurchasePoint()) {
                             itemClick.onItemClicks(v, position, 11, coupon_list.get(position).getCouponId(), coupon_list.get(position).getCouponCode(), "" + coupon_list.get(position).getCouponPurchasePoint());
                         } else {
-                            ref.showMsgNoBal();
+                            itemClick.onItemClicks(v, position, 12, coupon_list.get(position).getCouponId(), coupon_list.get(position).getCouponCode(), "" + coupon_list.get(position).getCouponPurchasePoint());
+//                            ref.showMsgNoBal();
                         }
 
                     }
@@ -97,7 +98,9 @@ public class CouponStoreAdapter extends RecyclerView.Adapter<CouponStoreAdapter.
                     if (currentPoints >= coupon_list.get(position).getCouponPurchasePoint()) {
                         itemClick.onItemClicks(v, position, 11, coupon_list.get(position).getCouponId(), coupon_list.get(position).getCouponCode(), "" + coupon_list.get(position).getCouponPurchasePoint());
                     } else {
-                        ref.showMsgNoBal();
+                        itemClick.onItemClicks(v, position, 12, coupon_list.get(position).getCouponId(), coupon_list.get(position).getCouponCode(), "" + coupon_list.get(position).getCouponPurchasePoint());
+
+//                        ref.showMsgNoBal();
                     }
 
                 }

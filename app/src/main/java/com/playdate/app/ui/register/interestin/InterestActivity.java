@@ -50,8 +50,6 @@ public class InterestActivity extends AppCompatActivity {
         binding.setLifecycleOwner(this);
         binding.setInterestInViewModel(viewModel);
 
-
-
         viewModel.OnNextClick().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean click) {
@@ -102,14 +100,17 @@ public class InterestActivity extends AppCompatActivity {
 
                 }
 
+
                 // binding.btnFemale.setBackground(getDrawable(R.drawable.normal_btn_back));
                 // binding.btnNonBinary.setBackground(getDrawable(R.drawable.normal_btn_back));
             }
         });
+        
+
+
         viewModel.OnFemaleClick().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean click) {
-
                 if (click) {
                     FeMale = true;
                     binding.btnFemale.setBackground(getDrawable(R.drawable.selected_btn_back));
