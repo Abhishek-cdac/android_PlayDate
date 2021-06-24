@@ -47,7 +47,7 @@
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
             android:layout_weight="0.8"
-            android:src="@drawable/diamond_normal" />
+            android:src="@drawable/ic_diamond_normal" />
 
         <ImageView
             android:id="@+id/iv_video_play"
@@ -114,7 +114,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/active" />
+                android:src="@drawable/ic_online" />
 
 
         </LinearLayout>
@@ -140,7 +140,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"
-                android:src="@drawable/check_tinder" />
+                android:src="@drawable/ic_check_tinder" />
 
 
             <ImageView
@@ -155,7 +155,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"
-                android:src="@drawable/cross_tinder" />
+                android:src="@drawable/ic_cross_tinder" />
 
 
 

@@ -30,7 +30,7 @@
             android:layout_height="64dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_22sdp"
-            android:src="@drawable/playdate_logo" />
+            android:src="@drawable/ic_playdate" />
     </RelativeLayout>
 
     <!--    <androidx.viewpager2.widget.ViewPager2-->
@@ -48,7 +48,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="4dp"
         android:visibility="gone"
-        android:src="@drawable/crown"
+        android:src="@drawable/ic_crown"
         app:layout_constraintBottom_toTopOf="@+id/vp_partners"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />

@@ -35,7 +35,7 @@
         android:visibility="visible"
         android:layout_width="@dimen/_15sdp"
         android:layout_height="@dimen/_15sdp"
-        android:src="@drawable/diamond"
+        android:src="@drawable/ic_diamond"
         />
     <ImageView
         android:layout_gravity="top|right"
@@ -43,7 +43,7 @@
         android:visibility="visible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/active"
+        android:src="@drawable/ic_online"
         />
 
 

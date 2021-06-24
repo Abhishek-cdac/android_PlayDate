@@ -33,7 +33,7 @@
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/_50sdp"
-            android:src="@drawable/eighteen_plus" />
+            android:src="@drawable/ic_18plus" />
 
         <TextView
             android:id="@+id/txt_agever"

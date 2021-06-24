@@ -52,7 +52,7 @@
             android:layout_gravity="center"
             android:background="@drawable/ic_gray_circle_bg"
             android:padding="@dimen/_7sdp"
-            android:src="@drawable/gallery" />
+            android:src="@drawable/ic_gallery" />
 
         <TextView
             android:layout_width="wrap_content"

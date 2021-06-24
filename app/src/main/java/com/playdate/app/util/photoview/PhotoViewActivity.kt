@@ -1,25 +1,19 @@
-package com.playdate.app.util.photoview;
+package com.playdate.app.util.photoview
 
-import android.os.Bundle;
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import com.playdate.app.R
+import com.playdate.app.databinding.ActivityPhotoviewBinding
+import com.squareup.picasso.Picasso
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-
-import com.playdate.app.R;
-import com.squareup.picasso.Picasso;
-
-public class PhotoViewActivity extends AppCompatActivity {
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        com.playdate.app.databinding.ActivityPhotoviewBinding binding = DataBindingUtil.setContentView(PhotoViewActivity.this, R.layout.activity_photoview);
-        binding.setLifecycleOwner(this);
-        binding.setPhotoViewViewModel(new PhotoViewViewModel());
-//        binding.ivImage.setTransitionName(getIntent().getStringExtra("id"));
-        Picasso.get().load(getIntent().getStringExtra("data")).into(binding.ivImage);
-
-
+class PhotoViewActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val binding: ActivityPhotoviewBinding =
+            DataBindingUtil.setContentView(this@PhotoViewActivity, R.layout.activity_photoview)
+        binding.lifecycleOwner = this
+        binding.photoViewViewModel = PhotoViewViewModel()
+        Picasso.get().load(intent.getStringExtra("data")).into(binding.ivImage)
     }
 }

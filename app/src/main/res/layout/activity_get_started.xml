@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:alpha="0.9"
         android:padding="@dimen/_30sdp"
-        android:src="@drawable/playdate_logo"
+        android:src="@drawable/ic_playdate"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

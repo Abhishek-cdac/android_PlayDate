@@ -25,7 +25,7 @@
             android:layout_marginBottom="@dimen/_2sdp"
             android:layout_weight="1"
             android:padding="@dimen/_4sdp"
-            android:src="@drawable/playdate_logo" />
+            android:src="@drawable/ic_playdate" />
 
         <ImageView
             android:id="@+id/more_option"

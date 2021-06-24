@@ -24,7 +24,7 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:background="?actionBarItemBackground"
-            android:src="@drawable/camera"
+            android:src="@drawable/ic_camera"
             app:layout_constraintBottom_toBottomOf="@id/avatar_img"
             app:layout_constraintEnd_toEndOf="@id/avatar_img"
             tools:ignore="ContentDescription" />

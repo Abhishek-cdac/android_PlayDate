@@ -41,7 +41,7 @@
             android:layout_below="@+id/txt_refer"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_5sdp"
-            android:src="@drawable/surprise" />
+            android:src="@drawable/ic_surprise" />
 
         <TextView
             android:id="@+id/txt_points"

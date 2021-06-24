@@ -1,81 +1,33 @@
+package com.playdate.app.model
 
-package com.playdate.app.model;
+import com.google.gson.annotations.SerializedName
 
-import java.util.List;
-
-import com.google.gson.annotations.SerializedName;
-
-public class FriendRequest {
-
+class FriendRequest {
     @SerializedName("action")
-    private String mAction;
+    var action: String? = null
+
     @SerializedName("requestId")
-    private String mRequestId;
+    var requestId: String? = null
+
     @SerializedName("status")
-    private String mStatus;
+    var status: String? = null
+
     @SerializedName("toUserID")
-    private String mToUserID;
+    var toUserID: String? = null
+
     @SerializedName("userID")
-    private String mUserID;
+    var userID: String? = null
+
     @SerializedName("UserInfo")
-    private List<UserInfo> mUserInfo;
+    var userInfo: List<UserInfo>? = null
+
     @SerializedName("_id")
-    private String m_id;
-
-    public String getAction() {
-        return mAction;
+    private var m_id: String? = null
+    fun get_id(): String? {
+        return m_id
     }
 
-    public void setAction(String action) {
-        mAction = action;
+    fun set_id(_id: String?) {
+        m_id = _id
     }
-
-    public String getRequestId() {
-        return mRequestId;
-    }
-
-    public void setRequestId(String requestId) {
-        mRequestId = requestId;
-    }
-
-    public String getStatus() {
-        return mStatus;
-    }
-
-    public void setStatus(String status) {
-        mStatus = status;
-    }
-
-    public String getToUserID() {
-        return mToUserID;
-    }
-
-    public void setToUserID(String toUserID) {
-        mToUserID = toUserID;
-    }
-
-    public String getUserID() {
-        return mUserID;
-    }
-
-    public void setUserID(String userID) {
-        mUserID = userID;
-    }
-
-    public List<UserInfo> getUserInfo() {
-        return mUserInfo;
-    }
-
-    public void setUserInfo(List<UserInfo> userInfo) {
-        mUserInfo = userInfo;
-    }
-
-    public String get_id() {
-        return m_id;
-    }
-
-    public void set_id(String _id) {
-        m_id = _id;
-    }
-
 }

@@ -1,7 +1,5 @@
-package com.playdate.app.util.photoview;
+package com.playdate.app.util.photoview
 
-import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModel
 
-public class PhotoViewViewModel extends ViewModel {
-
-}
+class PhotoViewViewModel : ViewModel()

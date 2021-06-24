@@ -1,56 +1,44 @@
-package com.playdate.app.util.customcamera.otalia;
+package com.playdate.app.util.customcamera.otalia
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.otaliastudios.cameraview.filter.Filters
+import com.playdate.app.R
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.otaliastudios.cameraview.filter.Filters;
-import com.playdate.app.R;
-
-import org.jetbrains.annotations.NotNull;
-
-public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.ViewHolder> {
-    Filters[] allFilters;
-
-    public FilterAdapter(@NotNull Filters[] allFilters) {
-        this.allFilters = allFilters;
+class FilterAdapter(var allFilters: Array<Filters>) :
+    RecyclerView.Adapter<FilterAdapter.ViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.camera_filters, parent, false)
+        return ViewHolder(view)
     }
 
-    @NonNull
-    @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.camera_filters, parent, false);
-        return new ViewHolder(view);
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.txt_filter_name.text = allFilters[position].toString()
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.txt_filter_name.setText(allFilters[position].toString());
+    var activity: CameraActivity? = null
+    fun setOnClick(activity: CameraActivity?) {
+        this.activity = activity
     }
 
-    CameraActivity activity;
-
-    public void setOnClick(CameraActivity activity) {
-        this.activity = activity;
+    override fun getItemCount(): Int {
+        return allFilters.size
     }
 
-    @Override
-    public int getItemCount() {
-        return allFilters.length;
-    }
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var txt_filter_name: TextView
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txt_filter_name;
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            txt_filter_name = itemView.findViewById(R.id.txt_filter_name);
-            itemView.setOnClickListener(view -> activity.filterClickIndex(getAdapterPosition()));
+        init {
+            txt_filter_name = itemView.findViewById(R.id.txt_filter_name)
+            itemView.setOnClickListener { view: View? ->
+                activity!!.filterClickIndex(
+                    adapterPosition
+                )
+            }
         }
     }
 }
-
