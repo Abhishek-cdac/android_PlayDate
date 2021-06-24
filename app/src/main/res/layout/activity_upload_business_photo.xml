@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="BusinessUploadPhotoViewModel"
+            type="com.playdate.app.business.businessphoto.BusinessUploadPhotoViewModel" />
+
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_20sdp"
+            android:orientation="vertical">
+
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:onClick="@{(v) -> BusinessUploadPhotoViewModel.onBack(v)}"
+                android:padding="@dimen/_2sdp"
+                android:src="@drawable/arrow_back" />
+
+            <TextView
+                android:id="@+id/txt_relation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/lato_bold"
+                android:gravity="start"
+                android:text="@string/business_picture"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_15sdp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:fontFamily="@font/lato_bold"
+                android:gravity="start"
+                android:text="@string/please_upload_business"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_10sdp" />
+        </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card"
+            android:layout_width="@dimen/_250sdp"
+            android:layout_height="@dimen/_200sdp"
+            android:background="@color/white"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="30dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/ll_header"
+            app:cardElevation="0dp">
+
+            <ImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/profile_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/_40sdp"
+                android:scaleType="fitXY"
+                android:background="@color/color_grey_light"
+                android:src="@drawable/business_ic_placeholder_restaurent"
+              />
+
+        </androidx.cardview.widget.CardView>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/card"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:orientation="vertical">
+
+
+            <Button
+                android:id="@+id/btn_gallery"
+                android:layout_width="@dimen/_130sdp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_25sdp"
+                android:layout_marginRight="@dimen/_30sdp"
+                android:background="@drawable/normal_btn_back"
+                android:elevation="@dimen/_15sdp"
+                android:onClick="@{(v) -> BusinessUploadPhotoViewModel.OnGallery(v)}"
+                android:padding="@dimen/_10sdp"
+                android:text="@string/upload"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold" />
+            <Button
+                android:id="@+id/btn_changeImage"
+                android:layout_width="@dimen/_130sdp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:layout_marginLeft="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_25sdp"
+                android:layout_marginRight="@dimen/_30sdp"
+                android:background="@drawable/normal_btn_back"
+                android:elevation="@dimen/_15sdp"
+                android:onClick="@{(v) -> BusinessUploadPhotoViewModel.OnChange(v)}"
+                android:padding="@dimen/_10sdp"
+                android:text="@string/change_image"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/_25sdp"
+                android:fontFamily="@font/lato_bold"
+                android:gravity="center"
+                android:text="OR"
+                android:id="@+id/txt_or"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_10sdp" />
+
+            <Button
+                android:id="@+id/btn_camera"
+                android:layout_width="@dimen/_130sdp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edt_otp"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:background="@drawable/normal_btn_back"
+                android:elevation="@dimen/_15sdp"
+                android:onClick="@{(v) -> BusinessUploadPhotoViewModel.OnCamera(v)}"
+                android:padding="@dimen/_10sdp"
+                android:text="@string/take_photo"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_next"
+            android:layout_width="@dimen/_50sdp"
+            android:visibility="gone"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/_30sdp"
+            android:background="@drawable/arrow_back_circle"
+            android:onClick="@{(v) -> BusinessUploadPhotoViewModel.onNext(v)}"
+            android:padding="@dimen/_12sdp"
+            android:src="@drawable/arrow_right" />
+    </RelativeLayout>
+
+</layout>
