@@ -106,6 +106,8 @@ public class ActivityCoupons extends AppCompatActivity implements View.OnClickLi
                 surprise.setImageResource(R.drawable.surprise);
                 rl_earn_point.setVisibility(View.GONE);
                 rl_getcode.setVisibility(View.VISIBLE);
+
+
             }
         } else {
             txt_refer.setText(R.string.refer_your_friend);
