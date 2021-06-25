@@ -221,8 +221,7 @@
                         android:layout_width="@dimen/_72sdp"
                         android:layout_height="@dimen/_73sdp"
                         android:padding="@dimen/_20sdp"
-                        android:visibility="gone">
-
+                        android:visibility="visible">
 
                         <ImageView
                             android:layout_width="@dimen/_72sdp"

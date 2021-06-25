@@ -76,9 +76,9 @@
                 android:id="@+id/profile_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="@dimen/_40sdp"
                 android:scaleType="fitXY"
                 android:background="@color/color_grey_light"
+
                 android:src="@drawable/business_ic_placeholder_restaurent"
               />
 

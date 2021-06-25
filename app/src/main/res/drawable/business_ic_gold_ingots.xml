@@ -4,32 +4,32 @@
     android:viewportWidth="20"
     android:viewportHeight="20">
   <path
-      android:fillColor="#FF000000"
+      android:fillColor="@color/textColour"
       android:pathData="M18.356,15.29a0.586,0.586 0,0 0,-0.544 -0.368L16.647,14.922l-1.415,-3.538a0.586,0.586 0,0 0,-0.544 -0.368L13.522,11.016l-1.415,-3.538a0.586,0.586 0,0 0,-0.544 -0.368L8.439,7.11a0.586,0.586 0,0 0,-0.544 0.368l-1.415,3.538L5.312,11.016a0.586,0.586 0,0 0,-0.544 0.368l-1.415,3.538L2.187,14.922a0.586,0.586 0,0 0,-0.544 0.368l-1.562,3.906a0.586,0.586 0,0 0,0.544 0.8h18.75a0.586,0.586 0,0 0,0.544 -0.8ZM14.29,12.19 L15.384,14.924L10.865,14.924l1.094,-2.734ZM8.839,8.281h2.332l1.094,2.734L7.739,11.015ZM10.702,12.187 L10.002,13.93 9.302,12.187ZM5.714,12.187L8.039,12.187l1.094,2.734L4.615,14.921ZM1.495,18.828 L2.589,16.094L4.916,16.094l1.094,2.734ZM6.88,17.836 L6.18,16.093L7.572,16.093ZM7.745,18.828L8.839,16.093h2.332l1.094,2.734ZM13.13,17.836 L12.43,16.093h1.394ZM13.995,18.828 L15.089,16.094h2.332l1.094,2.734Z"
       android:strokeAlpha="0.45"
       android:fillAlpha="0.45"/>
   <path
-      android:fillColor="#FF000000"
+      android:fillColor="@color/textColour"
       android:pathData="M15.937,7.94a0.586,0.586 0,0 0,0.8 0.214l2.97,-1.714a0.586,0.586 0,1 0,-0.586 -1.015l-2.97,1.714A0.586,0.586 0,0 0,15.937 7.94Z"
       android:strokeAlpha="0.45"
       android:fillAlpha="0.45"/>
   <path
-      android:fillColor="#FF000000"
+      android:fillColor="@color/textColour"
       android:pathData="M13.564,6.184a0.586,0.586 0,0 0,0.8 -0.214l1.714,-2.97a0.586,0.586 0,1 0,-1.015 -0.586l-1.714,2.97A0.586,0.586 0,0 0,13.564 6.184Z"
       android:strokeAlpha="0.45"
       android:fillAlpha="0.45"/>
   <path
-      android:fillColor="#FF000000"
+      android:fillColor="@color/textColour"
       android:pathData="M0.293,6.44l2.97,1.714a0.586,0.586 0,0 0,0.586 -1.015l-2.97,-1.714a0.586,0.586 0,1 0,-0.586 1.015Z"
       android:strokeAlpha="0.45"
       android:fillAlpha="0.45"/>
   <path
-      android:fillColor="#FF000000"
+      android:fillColor="@color/textColour"
       android:pathData="M10,4.6a0.586,0.586 0,0 0,0.586 -0.586L10.586,0.586a0.586,0.586 0,0 0,-1.172 0L9.414,4.015A0.586,0.586 0,0 0,10 4.6Z"
       android:strokeAlpha="0.45"
       android:fillAlpha="0.45"/>
   <path
-      android:fillColor="#FF000000"
+      android:fillColor="@color/textColour"
       android:pathData="M5.635,5.969a0.586,0.586 0,1 0,1.015 -0.586l-1.714,-2.97a0.586,0.586 0,1 0,-1.015 0.586Z"
       android:strokeAlpha="0.45"
       android:fillAlpha="0.45"/>
