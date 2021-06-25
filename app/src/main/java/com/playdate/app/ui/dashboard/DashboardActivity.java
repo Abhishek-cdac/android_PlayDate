@@ -43,6 +43,7 @@ import com.playdate.app.ui.dashboard.data.CallAPI;
 import com.playdate.app.ui.dashboard.fragments.FragLanding;
 import com.playdate.app.ui.dashboard.fragments.FragSearchUser;
 import com.playdate.app.ui.date.DateBaseActivity;
+import com.playdate.app.ui.date.fragments.FragLocationTracing;
 import com.playdate.app.ui.date.games.FragGameLeaderBoard;
 import com.playdate.app.ui.date.games.FragStore;
 import com.playdate.app.ui.dialogs.FullScreenDialog;
@@ -490,6 +491,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
             iv_profile_sett.setImageResource(R.drawable.tech_support);
             ll_friends.setVisibility(View.GONE);
             ReplaceFrag(new FragCouponParent());
+          //   ReplaceFrag(new FragLocationTracing());
 
         } else if (id == R.id.ll_profile_support) {
             if (OPTION_CLICK == 2) {

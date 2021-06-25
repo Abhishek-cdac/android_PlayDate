@@ -106,7 +106,7 @@
                 android:layout_height="@dimen/_40sdp"
                 android:background="@drawable/pink_bg_circular"
                 android:padding="@dimen/_10sdp"
-                android:src="@drawable/search" />
+                android:src="@drawable/ic_search" />
         </LinearLayout>
 
 

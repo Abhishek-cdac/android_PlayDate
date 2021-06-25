@@ -18,7 +18,7 @@
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
             android:layout_gravity="center"
-            android:src="@drawable/arrow_black" />
+            android:src="@drawable/ic_arrow_black" />
 
         <ImageView
             android:layout_width="0dp"
@@ -27,7 +27,7 @@
             android:layout_marginBottom="@dimen/_2sdp"
             android:layout_weight="1"
             android:padding="@dimen/_4sdp"
-            android:src="@drawable/playdate_logo" />
+            android:src="@drawable/ic_playdate" />
 
         <ImageView
             android:id="@+id/more_option"

@@ -20,7 +20,7 @@
             android:layout_marginBottom="@dimen/_5sdp"
             android:layout_toLeftOf="@+id/txt_cancel"
             android:background="@drawable/circle_pink"
-            android:drawableStart="@drawable/search"
+            android:drawableStart="@drawable/ic_search"
             android:drawablePadding="@dimen/_8sdp"
             android:hint="@string/search_here"
             android:inputType="textEmailAddress"

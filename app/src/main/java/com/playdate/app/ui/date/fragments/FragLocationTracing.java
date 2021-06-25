@@ -14,13 +14,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.github.ybq.android.spinkit.SpinKitView;
+import com.google.android.gms.maps.GoogleMap;
 import com.playdate.app.R;
-import com.playdate.app.ui.date.fragments.FragLocationConfirmation;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 
-public class FragLocationTracing extends Fragment {
+public class FragLocationTracing extends Fragment  {
     public FragLocationTracing() {
     }
+
 
     SpinKitView spin_kit_location_trace;
     SpinKitView spin_kit_dots1;
@@ -41,6 +42,7 @@ public class FragLocationTracing extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_location_tracing, container, false);
+
 
         spin_kit_location_trace = view.findViewById(R.id.spin_kit_location_trace);
         spin_kit_dots1 = view.findViewById(R.id.spin_kit_dots1);
@@ -142,4 +144,5 @@ public class FragLocationTracing extends Fragment {
             }
         }, 3000);
     }
+
 }

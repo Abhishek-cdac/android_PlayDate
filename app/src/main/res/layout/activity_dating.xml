@@ -23,7 +23,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="@dimen/_10sdp"
             android:padding="@dimen/_15sdp"
-            android:src="@drawable/playdate_logo" />
+            android:src="@drawable/ic_playdate" />
 
         <ImageView
             android:layout_width="@dimen/_30sdp"

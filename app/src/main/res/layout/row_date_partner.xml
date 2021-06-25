@@ -12,7 +12,7 @@
 
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="4dp"
-        android:src="@drawable/crown"
+        android:src="@drawable/ic_crown"
 
         />
 

@@ -12,10 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.material.badge.BadgeUtils;
 import com.playdate.app.R;
 import com.playdate.app.ui.date.OnBackPressed;
-import com.playdate.app.ui.date.fragments.FragSelectPartner;
+
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 
 import java.util.Objects;

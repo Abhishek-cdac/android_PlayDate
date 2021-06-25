@@ -31,7 +31,7 @@ public class InvitePartnerActivity extends AppCompatActivity {
     Intent mIntent;
     LoginUserDetails loginUserDetails;
     String inviteLink = "Welcome to PlayDate";
-
+String inviteLink1;
 
     ImageView messengerSend, textSend;
 
@@ -40,10 +40,11 @@ public class InvitePartnerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         viewModel = new InvitepartnerViewModel();
         mIntent = getIntent();
-      /*  loginUserDetails = new LoginUserDetails();
-        inviteLink = loginUserDetails.getInviteLink();
-*/
-        Log.e("InvitePartnerActivity", "" + inviteLink);
+        loginUserDetails = new LoginUserDetails();
+        inviteLink1 = loginUserDetails.getInviteLink();
+
+        Log.e("InvitePartnerActivity1", "" + inviteLink1);
+Log.e("InvitePartnerActivity", "" + inviteLink);
 
 
         clsCommon = CommonClass.getInstance();

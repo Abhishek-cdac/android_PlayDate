@@ -41,7 +41,7 @@
             android:layout_below="@+id/txt_refer"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_5sdp"
-            android:src="@drawable/surprise" />
+            android:src="@drawable/ic_surprise" />
 
         <TextView
             android:id="@+id/txt_points"
@@ -257,7 +257,7 @@
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:background="@drawable/grey_rectangle"
             android:padding="@dimen/_3sdp"
-            android:src="@drawable/instagram" />
+            android:src="@drawable/ic_instagram" />
 
         <ImageView
             android:id="@+id/whatsup_coupan"

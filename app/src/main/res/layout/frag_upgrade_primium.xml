@@ -319,7 +319,7 @@
                     android:layout_height="@dimen/_30sdp"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/diamond_normal" />
+                    android:src="@drawable/ic_diamond_normal" />
             </RelativeLayout>
 
 

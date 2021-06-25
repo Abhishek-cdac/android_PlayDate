@@ -31,7 +31,7 @@
             android:layout_height="64dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_22sdp"
-            android:src="@drawable/playdate_logo" />
+            android:src="@drawable/ic_playdate" />
     </RelativeLayout>
 
     <ImageView
@@ -62,7 +62,7 @@
         android:layout_above="@+id/btn_proceed"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/_40sdp"
-        android:src="@drawable/open" />
+        android:src="@drawable/ic_open" />
 
     <Button
         android:id="@+id/btn_proceed"

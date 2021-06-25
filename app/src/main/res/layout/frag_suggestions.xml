@@ -86,7 +86,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_8sdp"
         android:visibility="gone"
-        android:src="@drawable/diamond">
+        android:src="@drawable/ic_diamond">
 
 
     </ImageView>
