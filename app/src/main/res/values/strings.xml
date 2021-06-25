@@ -42,9 +42,11 @@
     <string name="we_sent_a_code">We Sent A Code</string>
     <string name="please_enter_the_verification_code">Please enter the verification code</string>
     <string name="please_enter_the_dob">Please enter your date of birth</string>
+    <string name="please_enter_the_start_date">Please enter the date the business has started</string>
     <string name="that_has_been_sent_to_you_via_sms_at">that has been sent to you via SMS at</string>
     <string name="_202_505_0126">202-505-0126</string>
     <string name="age_verification">Age Verification</string>
+    <string name="business_start_date">Business Starting Date</string>
     <string name="relationship">Relationship</string>
     <string name="interestin">Interested In</string>
     <string name="relationship_desc">Please select your relationship status</string>
@@ -62,17 +64,22 @@
     <string name="please_select_your_sex_orie">Please select your sex orientation</string>
     <string name="please_select_interest">Please select your interests</string>
     <string name="please_upload">Please upload a profile picture</string>
+    <string name="please_upload_business">Please upload a photo of your business</string>
     <string name="create_username">Create username</string>
     <string name="create_couplename">Create couple name</string>
     <string name="search_for_a_username_to_display_on_your_profile">Search for a username to display on your profile</string>
     <string name="search_for_a_couplename_to_display_on_your_profile">Search for a couple name to display on your profile</string>
     <string name="personal_bio">Personal Bio</string>
     <string name="couple_bio">Couple Bio</string>
+    <string name="business_bio">Business Bio</string>
     <string name="forgot_string">Enter registered mobile number</string>
     <string name="write_a_short_bio_that_will_be_displayed_on_your_profile">Write a short bio that will be displayed on your profile</string>
+    <string name="write_a_short_bio_about_your_business">Write a short bio about your business</string>
     <string name="couple_short_note">Tell your friends how you and your partner met</string>
+    <string name="business_short_note">Tell your friends about your business</string>
     <string name="profile_picture">Profile Picture</string>
     <string name="couple_profile_picture">Couple Profile Picture</string>
+    <string name="business_picture">Business photo</string>
     <string name="upload">Upload</string>
     <string name="take_photo">TAKE PHOTO</string>
     <string name="change_image">Change Image</string>
@@ -115,6 +122,7 @@
     <string name="add_comment">Add a comment...</string>
     <string name="refer_your_friend">Refer your Friends and Earn Points</string>
     <string name="earn_point">and Earn Points</string>
+    <string name="coupons_generator">coupon Generator</string>
     <string name="play_and_earn">Play and Earn \n</string>
     <string name="ur_discount">Your Discount Coupon</string>
     <string name="points">100 Points</string>
@@ -307,4 +315,14 @@
     <string name="title_audio_call">Audio call</string>
 
 
+    <string name="coupon_detail">Coupon Details</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="coupon_title"> Coupon Title</string>
+    <string name="coupon_points_value"> Points Value</string>
+    <string name="coupon_awarded_by">Awarded By</string>
+    <string name="coupon_availability">Availability Days</string>
+    <string name="coupon_new_price">New Price</string>
+    <string name="coupon_amount_off">Amount Off</string>
+    <string name="coupon_free_item">Free Item</string>
+    <string name="coupon_percent_off">Percentage Off</string>
 </resources>

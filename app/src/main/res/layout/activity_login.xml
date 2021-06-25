@@ -233,7 +233,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:src="@drawable/profile" />
+                            android:src="@drawable/buainess_ic_business_and_trade" />
 
                     </RelativeLayout>
 

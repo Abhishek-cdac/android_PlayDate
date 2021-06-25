@@ -33,10 +33,10 @@ public class InviteAdapter extends RecyclerView.Adapter<InviteAdapter.ViewHolder
         this.inviteCode = inviteCode;
         this.inviteLink = inviteLink;
 
-        invite_list.add(new Invite(R.drawable.ic_user, "Follow Contacts"));
-        invite_list.add(new Invite(R.drawable.ic_facebook, "Invite Friends by Facebook"));
-        invite_list.add(new Invite(R.drawable.ic_message, "Invite Friends by SMS"));
-        invite_list.add(new Invite(R.drawable.ic_upload, "Invite Friends by..."));
+        invite_list.add(new Invite(R.drawable.business_ic_icon_feather_user, "Follow Contacts"));
+        invite_list.add(new Invite(R.drawable.business_ic_facebook, "Invite Friends by Facebook"));
+        invite_list.add(new Invite(R.drawable.business_ic_icon_message_square, "Invite Friends by SMS"));
+        invite_list.add(new Invite(R.drawable.business_ic_icon_feather_upload, "Invite Friends by..."));
     }
 
     Context mContext;
@@ -66,7 +66,6 @@ public class InviteAdapter extends RecyclerView.Adapter<InviteAdapter.ViewHolder
             switch (position) {
                 case 0:
                     break;
-
                 case 1:
                     facebook();
                     break;
