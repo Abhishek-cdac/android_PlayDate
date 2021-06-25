@@ -22,6 +22,7 @@ import com.playdate.app.model.GetCoupleProfileData;
 import com.playdate.app.model.GetCoupleProfileModel;
 import com.playdate.app.model.GetProfileDetails;
 import com.playdate.app.model.GetProileDetailData;
+import com.playdate.app.ui.chat.ChatMainActivity;
 import com.playdate.app.ui.dialogs.BoosterDialogDM;
 import com.playdate.app.ui.my_profile_details.adapters.InstaPhotosAdapter;
 import com.playdate.app.ui.playvideo.ExoPlayerActivity;
@@ -133,7 +134,7 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
 
         iv_send_request.setOnClickListener(this);
         profile_image.setOnClickListener(this);
-
+        iv_chat.setOnClickListener(this);
 
         return view;
     }
@@ -310,6 +311,12 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        } else if (id == R.id.iv_chat) {
+            Intent mIntent = new Intent(getActivity(), ChatMainActivity.class);
+            mIntent.putExtra("Name", "");
+            mIntent.putExtra("Image", "");
+            mIntent.putExtra("UserID", "");
+            startActivity(mIntent);
         }
     }
 }

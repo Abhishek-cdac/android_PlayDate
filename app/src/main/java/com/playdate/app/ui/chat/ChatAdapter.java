@@ -1,8 +1,6 @@
 package com.playdate.app.ui.chat;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
@@ -11,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -27,12 +24,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.playdate.app.R;
-import com.playdate.app.model.Chat;
 import com.playdate.app.model.chat_models.ChatAttachment;
 import com.playdate.app.model.chat_models.ChatMessage;
-import com.playdate.app.ui.dashboard.DashboardActivity;
-import com.playdate.app.ui.dialogs.DialogWinner;
-import com.playdate.app.ui.dialogs.FullScreenDialog;
 import com.playdate.app.util.common.EnlargeMediaChat;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
@@ -61,7 +54,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public static int ME = 2;
     public static int OPPONENT = 0;
     //    private ArrayList<ChatExample> chatExampleList;
-    private ArrayList<ChatMessage> chatmsgList;
+    private ArrayList<ChatMessage> lst_chat;
     private String urls_image;
     private MediaPlayer mediaPlayer;
     private GoogleMap googleMap;
@@ -70,50 +63,52 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private String to;
     private final static String myId = "jid_1111";
     private final static String polling = "polling";
-    FragChatMain ref;
+//    FragChatMain ref;
+    SessionPref pref;
+    String LoginUserID;
 
-    public ChatAdapter(ArrayList<ChatMessage> chatmsgList, FragChatMain ref) {
-        this.chatmsgList = chatmsgList;
-        this.ref = ref;
-        ArrayList<Chat> chat_list = new ArrayList<>();
-        chat_list.add(new Chat("Hey Myron! looks like we matched", "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg", ME));
-        chat_list.add(new Chat("Hey Kayle! yeah it looks like we can have a nice conversation", "https://images.saymedia-content.com/.image/t_share/MTc0MDkwNjUxNDc2OTYwODM0/5-instagram-models-you-should-be-following.png", OPPONENT));
-        chat_list.add(new Chat("Nice Smile btw!1", "https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", ME));
-        chat_list.add(new Chat("Not better than you.", "https://s29588.pcdn.co/wp-content/uploads/sites/2/2018/08/Claire-Abbott-1.jpg.optimal.jpg", OPPONENT));
-        chat_list.add(new Chat("According to Forbes,which entreprenour became first person in history to have net worth of $400 billion?", "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/4p3a7420-copy-1524689604.jpg", OTHER));
-        chat_list.add(new Chat("Hey Kayle! yeah it looks like we can have a nice conversation", "https://images.saymedia-content.com/.image/t_share/MTc0MDkwNjUxNDc2OTYwODM0/5-instagram-models-you-should-be-following.png", OPPONENT));
-        chat_list.add(new Chat("Nice Smile btw!1", "https://images.saymedia-content.com/.image/t_share/MTc1MDE0NzI4MTg2OTk2NTIz/5-instagram-models-you-should-be-following.png", ME));
-        chat_list.add(new Chat("Not better than you.", "https://s29588.pcdn.co/wp-content/uploads/sites/2/2018/08/Claire-Abbott-1.jpg.optimal.jpg", OPPONENT));
-
+    public ChatAdapter(ArrayList<ChatMessage> chatmsgList,Context mContext) {
+        this.lst_chat = chatmsgList;
+//        this.ref = ref;
+        pref=SessionPref.getInstance(mContext);
+        LoginUserID=pref.getStringVal(SessionPref.LoginUserID);
+        this.mContext=mContext;
     }
 
     @Override
     public int getItemCount() {
-        return chatmsgList.size();
+        if(lst_chat ==null)
+            return 0;
+        return lst_chat.size();
     }
 
     @Override
     public int getItemViewType(int position) {
-        from = chatmsgList.get(position).getFrom();
-        to = chatmsgList.get(position).getTo();
+//        from = chatmsgList.get(position).getFrom();
+//        to = chatmsgList.get(position).getTo();
 
-        if (myId.equals(from)) {
-            ME = 0;
-        } else if (myId.equals(to)) {
-            ME = 1;
-        } else if (from.equals(polling)) {
-            ME = 2;
+        if (LoginUserID.equals(lst_chat.get(position).getUserID())) {
+//            if (myId.equals(from)) {
+                ME = 0;
+//            } else if (myId.equals(to)) {
+//                ME = 1;
+//            } else if (from.equals(polling)) {
+//                ME = 2;
+//            }
+            return 0;
+        } else {
+            return 1;
         }
 
-        switch (ME) {
-            case 0:
-                return 0;
-            case 1:
-                return 1;
-            case 2:
-                return 2;
-        }
-        return OTHER;
+//        switch (ME) {
+//            case 0:
+//                return 0;
+//            case 1:
+//                return 1;
+//            case 2:
+//                return 2;
+//        }
+//        return OTHER;
     }
 
     @NonNull
@@ -122,7 +117,8 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         View view = null;
         RecyclerView.ViewHolder viewHolder = null;
-        mContext = parent.getContext();
+//        mContext = parent.getContext();
+
         if (viewType == 0) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_type_me, parent, false);
             viewHolder = new ViewHolderMe(view);
@@ -147,11 +143,11 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (holder.getItemViewType() == 0) {
             /// ME
             ViewHolderMe viewHolderMe = (ViewHolderMe) holder;
-//            Picasso.get().load(chatmsgList.get(position).getProfilePhoto())
-//                    .placeholder(R.drawable.cupertino_activity_indicator)
-//                    .into(viewHolderMe.iv_profile);
+            Picasso.get().load(lst_chat.get(position).getUserImage())
+                    .placeholder(R.drawable.cupertino_activity_indicator)
+                    .into(viewHolderMe.profile_image_me);
 
-            switch (chatmsgList.get(position).getType()) {
+            switch (lst_chat.get(position).getType()) {
                 case "text":
                     viewHolderMe.tv_msg.setVisibility(View.VISIBLE);
                     viewHolderMe.chat_image.setVisibility(View.GONE);
@@ -162,7 +158,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     viewHolderMe.rl_maps.setVisibility(View.GONE);
                     viewHolderMe.mv_location.setVisibility(View.GONE);
 
-                    viewHolderMe.tv_msg.setText(chatmsgList.get(position).getText());
+                    viewHolderMe.tv_msg.setText(lst_chat.get(position).getText());
                     //text
 
                     break;
@@ -177,7 +173,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     viewHolderMe.mv_location.setVisibility(View.GONE);
 //                viewHolderMe.mv_location.setVisibility(View.GONE);
 
-                    viewHolderMe.chat_image.setImageDrawable(chatmsgList.get(position).getDrawable());
+                    viewHolderMe.chat_image.setImageDrawable(lst_chat.get(position).getDrawable());
                     //image
                     break;
                 case "video":
@@ -191,7 +187,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     viewHolderMe.rl_maps.setVisibility(View.GONE);
 
 
-                    viewHolderMe.chat_video.setVideoURI(chatmsgList.get(position).getUri());
+                    viewHolderMe.chat_video.setVideoURI(lst_chat.get(position).getUri());
 
                     viewHolderMe.img_playback.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -232,7 +228,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         } else {
                             viewHolderMe.play_audio.setImageResource(R.drawable.exo_icon_pause);
                             try {
-                                mediaPlayer.setDataSource(chatmsgList.get(position).getText());
+                                mediaPlayer.setDataSource(lst_chat.get(position).getText());
                                 mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                                     @Override
                                     public void onCompletion(MediaPlayer mediaPlayer) {
@@ -275,13 +271,12 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             viewHolderMe.mv_location.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    /////
-                    ref.onMapClick(chatmsgList.get(position).getLattitude(), chatmsgList.get(position).getLongitude());
-                    Toast.makeText(mContext, chatmsgList.get(position).getLattitude() + " , " + chatmsgList.get(position).getLongitude(), Toast.LENGTH_SHORT).show();
+                    //ref.onMapClick(chatmsgList.get(position).getLattitude(), chatmsgList.get(position).getLongitude());
+                    Toast.makeText(mContext, lst_chat.get(position).getLattitude() + " , " + lst_chat.get(position).getLongitude(), Toast.LENGTH_SHORT).show();
                 }
             });
             viewHolderMe.chat_image.setOnClickListener(v -> {
-                enlarge = new EnlargeMediaChat(mContext, chatmsgList.get(position).getDrawable(), ChatAdapter.this);
+                enlarge = new EnlargeMediaChat(mContext, lst_chat.get(position).getDrawable(), ChatAdapter.this);
                 enlarge.show();
 
             });
@@ -291,19 +286,19 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             /// OPPONENT
             ViewHolderOponent viewHolderOponent = (ViewHolderOponent) holder;
 
-            Picasso.get().load(chatmsgList.get(position).getProfilePhoto())
+            Picasso.get().load(lst_chat.get(position).getUserImage())
                     .placeholder(R.drawable.cupertino_activity_indicator)
                     .into(viewHolderOponent.iv_profile);
 
-            if (chatmsgList.get(position).getType().equals("text")) {
+            if (lst_chat.get(position).getType().equals("text")) {
                 viewHolderOponent.tv_msg.setVisibility(View.VISIBLE);
                 viewHolderOponent.chat_image.setVisibility(View.GONE);
-                viewHolderOponent.tv_msg.setText(chatmsgList.get(position).getText());
+                viewHolderOponent.tv_msg.setText(lst_chat.get(position).getText());
 
-            } else if (chatmsgList.get(position).getType().equals("image")) {
+            } else if (lst_chat.get(position).getType().equals("image")) {
                 viewHolderOponent.tv_msg.setVisibility(View.GONE);
                 viewHolderOponent.chat_image.setVisibility(View.VISIBLE);
-                ArrayList<ChatAttachment> chatAttachmentList = new ArrayList<>(chatmsgList.get(position).getAttachment());
+                ArrayList<ChatAttachment> chatAttachmentList = new ArrayList<>(lst_chat.get(position).getAttachment());
 
                 for (int i = 0; i < chatAttachmentList.size(); i++) {
                     urls_image = chatAttachmentList.get(i).getUrl();
@@ -332,13 +327,13 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     }
                 });
 
-            } else if (chatmsgList.get(position).getType().equals("video")) {
+            } else if (lst_chat.get(position).getType().equals("video")) {
                 viewHolderOponent.tv_msg.setVisibility(View.GONE);
                 viewHolderOponent.chat_image.setVisibility(View.GONE);
 
                 viewHolderOponent.chat_video.setVisibility(View.VISIBLE);
 //                viewHolderOponent.chat_video.setVideoPath(chatmsgList.get(position).getText());
-                viewHolderOponent.chat_video.setVideoURI(chatmsgList.get(position).getUri());
+                viewHolderOponent.chat_video.setVideoURI(lst_chat.get(position).getUri());
                 viewHolderOponent.chat_video.start();
 //                viewHolderMe.chat_video.setOnClickListener(new View.OnClickListener() {
 //                    @Override
@@ -351,7 +346,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         } ///
         else if (holder.getItemViewType() == 2) {
             ViewHolderOther viewHolderOther = (ViewHolderOther) holder;
-            viewHolderOther.tv_msg.setText(chatmsgList.get(position).getText());
+            viewHolderOther.tv_msg.setText(lst_chat.get(position).getText());
             viewHolderOther.answer1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -386,16 +381,21 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     EnlargeMediaChat enlarge;
 
-    public void addToListText(EditText et_msg) {
-        chatmsgList.add(new ChatMessage("text", myId, "jid_1109", et_msg.getText().toString()));
+//    public void addToListText(EditText et_msg) {
+//        chatmsgList.add(new ChatMessage("text", myId, "jid_1109", et_msg.getText().toString()));
+//        notifyDataSetChanged();
+//        et_msg.setText("");
+//    }
+    public void addToListText(String msg,String UserID,String userName,String userImage) {
+        lst_chat.add(new ChatMessage("text",userName, userImage, UserID, msg));
         notifyDataSetChanged();
-        et_msg.setText("");
+//        et_msg.setText("");
     }
 
-    public void addQuestion(String question) {
-        chatmsgList.add(new ChatMessage("text", polling, "jid_1109", question));
-        notifyDataSetChanged();
-    }
+//    public void addQuestion(String question) {
+//        chatmsgList.add(new ChatMessage("text", polling, "jid_1109", question));
+//        notifyDataSetChanged();
+//    }
 
     //// code for  saving image as file
     public void addToListImage(Bitmap bitmap) {
@@ -448,38 +448,38 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     Drawable drawable;
 
-    public void addImage(Drawable d) {
-        chatmsgList.add(new ChatMessage("image", myId, "jid_1109", d));
-        notifyDataSetChanged();
-    }
+//    public void addImage(Drawable d) {
+//        chatmsgList.add(new ChatMessage("image", myId, "jid_1109", d));
+//        notifyDataSetChanged();
+//    }
 
-    public void addSmiley(Drawable smiley) {
-        chatmsgList.add(new ChatMessage("image", myId, "jid_1109", smiley));
-        notifyDataSetChanged();
-
-    }
-
-    public void addVIdeo(Uri selectedVideoPath) {
-        chatmsgList.add(new ChatMessage("video", myId, "jid_1109", selectedVideoPath));
-        notifyDataSetChanged();
-    }
-
-    public void addToListAudio(String mFileName) {
-        chatmsgList.add(new ChatMessage("audio", myId, "jid_1109", mFileName));
-        notifyDataSetChanged();
-    }
-
-    public void sendLcation(double latttitude, double longitude) {
-        chatmsgList.add(new ChatMessage("location", myId, "jid_1109", latttitude, longitude));
-        notifyDataSetChanged();
-    }
+//    public void addSmiley(Drawable smiley) {
+//        chatmsgList.add(new ChatMessage("image", myId, "jid_1109", smiley));
+//        notifyDataSetChanged();
+//
+//    }
+//
+//    public void addVIdeo(Uri selectedVideoPath) {
+//        chatmsgList.add(new ChatMessage("video", myId, "jid_1109", selectedVideoPath));
+//        notifyDataSetChanged();
+//    }
+//
+//    public void addToListAudio(String mFileName) {
+//        chatmsgList.add(new ChatMessage("audio", myId, "jid_1109", mFileName));
+//        notifyDataSetChanged();
+//    }
+//
+//    public void sendLcation(double latttitude, double longitude) {
+//        chatmsgList.add(new ChatMessage("location", myId, "jid_1109", latttitude, longitude));
+//        notifyDataSetChanged();
+//    }
 
     public void resizeToNrmal() {
         enlarge.cancel();
     }
 
     public void removeFromList(int position) {
-        chatmsgList.remove(position);
+        lst_chat.remove(position);
         notifyDataSetChanged();
         bottomSheet.dismiss();
     }
@@ -507,7 +507,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     int selectedPosition = -1;
 
     public class ViewHolderMe extends RecyclerView.ViewHolder {
-        ImageView iv_profile;
+        ImageView profile_image_me;
         ImageView chat_image;
         TextView tv_msg;
         VideoView chat_video;
@@ -526,7 +526,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         public ViewHolderMe(View view) {
             super(view);
-            iv_profile = view.findViewById(R.id.profile_image_me);
+            profile_image_me = view.findViewById(R.id.profile_image_me);
             chat_image = view.findViewById(R.id.chat_image);
             tv_msg = view.findViewById(R.id.tv_chat);
             chat_video = view.findViewById(R.id.chat_video);

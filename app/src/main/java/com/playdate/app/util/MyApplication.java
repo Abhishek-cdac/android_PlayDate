@@ -1,28 +1,37 @@
 package com.playdate.app.util;
 
 import android.app.Application;
-import android.util.Log;
+import android.widget.Toast;
 
-//import com.github.nkzawa.socketio.client.IO;
-//import com.github.nkzawa.socketio.client.Socket;
+import io.socket.client.IO;
+import io.socket.client.Socket;
+
+import static com.playdate.app.data.api.RetrofitClientInstance.SOCKET_URL;
 
 public class MyApplication extends Application {
-//    private com.github.nkzawa.socketio.client.Socket mSocket;
-//    private static final String URL = "http://139.59.0.106:3000";
+    private Socket mSocket;
 
     @Override
     public void onCreate() {
         super.onCreate();
-//        try {
-        
-//            mSocket = IO.socket(URL);
-//            mSocket.connect();
-//        } catch (Exception e) {
-//            Log.d("****", e.toString());
-//        }
+        connectWebSocket();
     }
 
-//    public Socket getmSocket() {
-//        return mSocket;
-//    }
+    private void connectWebSocket() {
+
+        {
+            try {
+                mSocket = IO.socket(SOCKET_URL);
+                mSocket.connect();
+            } catch (Exception e) {
+                Toast.makeText(this, "Error connecting socket" + e.toString(), Toast.LENGTH_SHORT).show();
+            }
+        }
+
+    }
+
+    public Socket getmSocket() {
+        return mSocket;
+    }
+
 }

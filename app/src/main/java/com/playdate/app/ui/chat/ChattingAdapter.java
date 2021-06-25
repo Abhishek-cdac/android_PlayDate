@@ -16,16 +16,17 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
-import com.playdate.app.model.chat_models.ChatExample;
+import com.playdate.app.model.chat_models.ChatList;
 import com.playdate.app.ui.chat.request.FragInbox;
 import com.playdate.app.ui.chat.request.Onclick;
+import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyViewHolder> {
 
-    ArrayList<ChatExample> inboxList;
+    ArrayList<ChatList> lst_msgs;
     Context mcontext;
     Onclick itemClick;
     private FragInbox frag;
@@ -37,12 +38,14 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
 
     LandingBottomSheet bottomSheet;
     Picasso picasso;
+    SessionPref pref;
 
-    public ChattingAdapter(ArrayList<ChatExample> inboxList, Onclick itemClick, FragInbox frag) {
-        this.inboxList = inboxList;
+    public ChattingAdapter(ArrayList<ChatList> inboxList, Onclick itemClick, FragInbox frag) {
+        this.lst_msgs = inboxList;
         this.itemClick = itemClick;
         this.frag = frag;
         picasso = Picasso.get();
+        pref = SessionPref.getInstance(frag.getActivity());
     }
 
     public ChattingAdapter(String name, String image) {
@@ -88,8 +91,8 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
 //    }
 
     public void deleteChat(int index) {
-        if (null != inboxList) {
-            inboxList.remove(index);
+        if (null != lst_msgs) {
+            lst_msgs.remove(index);
             notifyDataSetChanged();
             bottomSheet.dismiss();
         }
@@ -111,9 +114,34 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.user_name.setText(inboxList.get(position).getSenderName());
-        picasso.load(inboxList.get(position).getProfilePhoto())
-                .placeholder(R.drawable.profile).into(holder.profile_image);
+        try {
+            if (!pref.getStringVal(SessionPref.LoginUserID).equals(lst_msgs.get(position).getLstFrom().get(0).getUserId())) {
+                holder.user_name.setText(lst_msgs.get(position).getLstFrom().get(0).getUsername());
+                picasso.load(lst_msgs.get(position).getLstFrom().get(0).getProfilePicPath()).placeholder(R.drawable.profile).into(holder.profile_image);
+                if(lst_msgs.get(position).getLstFrom().get(0).getOnlineStatus().toLowerCase().equals("online")){
+                    holder.img_active.setVisibility(View.VISIBLE);
+                }else{
+                    holder.img_active.setVisibility(View.GONE);
+                }
+
+
+
+            } else if (!pref.getStringVal(SessionPref.LoginUserID).equals(lst_msgs.get(position).getLstToUser().get(0).getUserId())) {
+                holder.user_name.setText(lst_msgs.get(position).getLstToUser().get(0).getUsername());
+                picasso.load(lst_msgs.get(position).getLstToUser().get(0).getProfilePicPath()).placeholder(R.drawable.profile).into(holder.profile_image);
+                if(lst_msgs.get(position).getLstToUser().get(0).getOnlineStatus().toLowerCase().equals("online")){
+                    holder.img_active.setVisibility(View.VISIBLE);
+                }else{
+                    holder.img_active.setVisibility(View.GONE);
+                }
+            }
+
+            holder.msg.setText(lst_msgs.get(position).getLastMsg().get(0).getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     public void addtoList(String name, String imageUrl) {
@@ -122,11 +150,11 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
 
     @Override
     public int getItemCount() {
-        return inboxList.size();
+        return lst_msgs.size();
     }
 
-    public void filterList(ArrayList<ChatExample> filteredList) {
-        inboxList = filteredList;
+    public void filterList(ArrayList<ChatList> filteredList) {
+        lst_msgs = filteredList;
         Log.d("CHAttingAdapterClass", "CHAttingAdapterClass");
         notifyDataSetChanged();
 
@@ -135,7 +163,7 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView user_name, msg, txt_notify, txt_time;
-        public ImageView profile_image, img_more, iv_delete_chat;
+        public ImageView profile_image, img_more, img_active;
         public RelativeLayout main_menu;
         public LinearLayout ll_chat_details;
         public LinearLayout main_ll;
@@ -150,7 +178,7 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
             img_more = view.findViewById(R.id.img_more);
             profile_image = view.findViewById(R.id.profile_image);
             ll_chat_details = view.findViewById(R.id.ll_chat_details);
-//            iv_delete_chat = view.findViewById(R.id.iv_delete_chat);
+            img_active = view.findViewById(R.id.img_active);
             main_ll = view.findViewById(R.id.main_ll);
 
             main_ll.setOnClickListener(new View.OnClickListener() {

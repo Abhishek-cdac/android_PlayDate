@@ -27,7 +27,6 @@
         android:layout_width="@dimen/_32sdp"
         android:layout_height="@dimen/_32sdp"
         android:layout_toRightOf="@+id/back_anonymous"
-        android:src="@drawable/model1"
         app:civ_border_color="@android:color/transparent" />
     <ImageView
         android:layout_gravity="top|left"
@@ -40,7 +39,7 @@
     <ImageView
         android:layout_gravity="top|right"
         android:id="@+id/img_active"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_online"
@@ -63,7 +62,6 @@
             android:id="@+id/user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="KaylaJenner11"
             android:textColor="@color/textColour"
             android:textSize="@dimen/_12sdp" />
 
@@ -72,7 +70,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/color_grey"
-            android:text="Active Now"
             android:maxLines="1"
             android:textSize="@dimen/_10sdp" />
 

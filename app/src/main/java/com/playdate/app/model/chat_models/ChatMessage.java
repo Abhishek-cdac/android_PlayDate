@@ -137,41 +137,86 @@ public class ChatMessage {
         this.attachment = attachment;
     }
 
-    public ChatMessage(String type, String from, String to, List<ChatAttachment> attachment) {
-        this.type = type;
-        this.from = from;
-        this.to = to;
-        this.attachment = attachment;
+//    public ChatMessage(String type, String from, String to, List<ChatAttachment> attachment) {
+//        this.type = type;
+//        this.from = from;
+//        this.to = to;
+//        this.attachment = attachment;
+//    }
+//    public ChatMessage(String type, String UserID, String UserName, String ImagePath) {
+//        this.type = type;
+//        this.from = UserID;
+//        this.to = to;
+//        this.attachment = attachment;
+//    }
+//
+//    public ChatMessage(String type, String from, String to, Uri uri) {
+//        this.uri = uri;
+//        this.type = type;
+//        this.from = from;
+//        this.to = to;
+//    }
+//
+//    public ChatMessage(String type, String from, String to, String text) {
+//        this.type = type;
+//        this.text = text;
+//        this.from = from;
+//        this.to = to;
+//    }
+
+
+
+//    public ChatMessage(String type, String from, String to, Drawable drawable) {
+//        this.type = type;
+//        this.from = from;
+//        this.to = to;
+//        this.drawable = drawable;
+//    }
+//
+//    public ChatMessage(String type, String from, String to, double lattitude, double longitude) {
+//        this.lattitude = lattitude;
+//        this.longitude = longitude;
+//        this.type = type;
+//        this.from = from;
+//        this.to = to;
+//    }
+
+    String UserName;
+    String UserImage;
+    String UserID;
+
+
+    public ChatMessage(String Type,String userName, String userImage, String userID, String msg) {
+        this.type = Type;
+        UserName = userName;
+        UserImage = userImage;
+        UserID = userID;
+        this.text = msg;
     }
 
-    public ChatMessage(String type, String from, String to, Uri uri) {
-        this.uri = uri;
-        this.type = type;
-        this.from = from;
-        this.to = to;
+    public String getUserName() {
+        return UserName;
     }
 
-    public ChatMessage(String type, String from, String to, String text) {
-        this.type = type;
-        this.text = text;
-        this.from = from;
-        this.to = to;
+    public void setUserName(String userName) {
+        UserName = userName;
+    }
+
+    public String getUserImage() {
+        return UserImage;
+    }
+
+    public void setUserImage(String userImage) {
+        UserImage = userImage;
+    }
+
+    public String getUserID() {
+        return UserID;
+    }
+
+    public void setUserID(String userID) {
+        UserID = userID;
     }
 
 
-
-    public ChatMessage(String type, String from, String to, Drawable drawable) {
-        this.type = type;
-        this.from = from;
-        this.to = to;
-        this.drawable = drawable;
-    }
-
-    public ChatMessage(String type, String from, String to, double lattitude, double longitude) {
-        this.lattitude = lattitude;
-        this.longitude = longitude;
-        this.type = type;
-        this.from = from;
-        this.to = to;
-    }
 }

@@ -7,22 +7,25 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Handler;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.playdate.app.ui.dialogs.NoInternetDialog;
+import com.playdate.app.util.MyApplication;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
 
-import org.java_websocket.client.WebSocketClient;
-import org.java_websocket.handshake.ServerHandshake;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.net.InetAddress;
-import java.net.Socket;
-import java.net.URI;
-import java.nio.ByteBuffer;
+import java.net.URISyntaxException;
+
+import io.socket.client.IO;
+import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -65,55 +68,67 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    WebSocketClient mWebSocketClient;
+    public Socket mSocket;
+
+
     private void connectWebSocket() {
-        URI uri;
-        try {
-            uri = new URI("http://139.59.0.106:3000/chat");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return;
+
+        {
+            try {
+               MyApplication application= (MyApplication) getApplication();
+                mSocket=application.getmSocket();
+                checkConnect();
+              //  mSocket.on("chat_message", onNewMessage);
+             //   mSocket.on("Data", onNewMessage);
+
+
+            } catch (Exception e) {
+                Toast.makeText(this, "" + e.toString(), Toast.LENGTH_SHORT).show();
+            }
         }
 
-        mWebSocketClient = new WebSocketClient(uri) {
-            @Override
-            public void onOpen(ServerHandshake serverHandshake) {
-                Log.i("Websocket", "Opened");
-//                mWebSocketClient.send("Hello from " + Build.MANUFACTURER + " " + Build.MODEL);
-            }
+    }
 
-            @Override
-            public void onMessage(String s) {
-                final String message = s;
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-//                        TextView textView = (TextView)findViewById(R.id.messages);
-//                        textView.setText(textView.getText() + "\n" + message);
-                    }
-                });
-            }
+    Handler mHandler;
 
-            @Override
-            public void onClosing(int code, String reason, boolean remote) {
-                super.onClosing(code, reason, remote);
-                Log.i("Websocket", "onClosing " + reason);
-            }
-
-            @Override
-            public void onClose(int i, String s, boolean b) {
-                Log.i("Websocket", "Closed " + s);
-            }
-
-            @Override
-            public void onError(Exception e) {
-                Log.i("Websocket", "Error " + e.getMessage());
-            }
-        };
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
         try {
-            mWebSocketClient.connect();
+            if(null!=mHandler){
+                mHandler.removeCallbacksAndMessages(null);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    boolean isConnectedToSocket=false;
+    void checkConnect() {
+        if (!isConnectedToSocket) {
+            mHandler = new Handler();
+            mHandler.postDelayed(() -> {
+                if (mSocket.connected()) {
+                    try {
+                        isConnectedToSocket=true;
+                        //Toast.makeText(BaseActivity.this, "Connected to socket", Toast.LENGTH_SHORT).show();
+                        JSONObject jsonObject = new JSONObject();
+                        SessionPref pref = SessionPref.getInstance(BaseActivity.this);
+                        jsonObject.put("userId", pref.getStringVal(SessionPref.LoginUserID));
+                        jsonObject.put("token", pref.getStringVal(SessionPref.LoginUsertoken));
+                        mSocket.emit("online", jsonObject);
+    //                    mSocket.emit("chat_message", "test messgae from ajit");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                      //  Toast.makeText(BaseActivity.this, "emit"+e.toString(), Toast.LENGTH_SHORT).show();
+                    }
+
+
+
+                }
+            }, 1500);
+        }
+    }
+
+
 }
