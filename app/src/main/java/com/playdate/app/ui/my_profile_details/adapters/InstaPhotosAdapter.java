@@ -49,7 +49,7 @@ public class InstaPhotosAdapter extends RecyclerView.Adapter<InstaPhotosAdapter.
     @Override
     public void onBindViewHolder(@NonNull InstaPhotosAdapter.ViewHolder holder, int position) {
         if (isLocked) {
-            holder.iv_payment.setImageResource(R.drawable.pink_lock);
+            holder.iv_payment.setImageResource(R.drawable.ic_pink_lock);
 //            holder.iv_payment.setImageResource(R.drawable.pink_timelapse);
             // holder.iv_chat.setImageResource(R.drawable.chat_black);
             holder.card_grid.setCardBackgroundColor(mContext.getResources().getColor(R.color.black_back));

@@ -40,7 +40,7 @@
             android:layout_height="@dimen/_20sdp"
             android:visibility="invisible"
             android:layout_weight="0.1"
-            android:src="@drawable/maximize" />
+            android:src="@drawable/ic_maximize" />
 
         <ImageView
             android:id="@+id/item_premium"

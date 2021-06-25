@@ -257,7 +257,7 @@
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:background="@drawable/grey_rectangle"
             android:padding="@dimen/_3sdp"
-            android:src="@drawable/instagram" />
+            android:src="@drawable/ic_instagram" />
 
         <ImageView
             android:id="@+id/whatsup_coupan"

@@ -40,7 +40,7 @@
             android:layout_below="@+id/refer"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_25sdp"
-            android:src="@drawable/offer" />
+            android:src="@drawable/ic_offer" />
 
         <TextView
             android:id="@+id/points"
@@ -263,7 +263,7 @@
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:background="@drawable/grey_rectangle"
             android:padding="@dimen/_3sdp"
-            android:src="@drawable/instagram" />
+            android:src="@drawable/ic_instagram" />
         <ImageView
             android:id="@+id/whtasapp_coupan"
             android:layout_width="wrap_content"
@@ -299,7 +299,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/circledot"
             android:padding="@dimen/_8sdp"
-            android:src="@drawable/standingman" />
+            android:src="@drawable/ic_standing_man" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -307,14 +307,14 @@
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:background="@drawable/circledot"
             android:padding="@dimen/_8sdp"
-            android:src="@drawable/standingman" />
+            android:src="@drawable/ic_standing_man" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/circledot"
             android:padding="@dimen/_8sdp"
-            android:src="@drawable/standingman" />
+            android:src="@drawable/ic_standing_man" />
 
     </LinearLayout>
 
