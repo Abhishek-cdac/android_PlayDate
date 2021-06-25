@@ -47,214 +47,210 @@
 
     </RelativeLayout>
 
-<androidx.core.widget.NestedScrollView
-    android:layout_width="match_parent"
-    android:layout_below="@+id/main_c"
-    android:layout_height="wrap_content">
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/_20sdp">
-
-        <TextView
-            android:id="@+id/tv_frequently"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/lato_bold"
-            android:text="@string/coupon_detail"
-            android:textAllCaps="true"
-            android:textColor="@color/textColour"
-            android:textSize="@dimen/_14sdp" />
-
+        android:layout_below="@+id/main_c">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_100sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:background="@color/color_grey_light"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/restaurent_img"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:foregroundGravity="center"
-                android:src="@drawable/ic_photo_camera" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/_20sdp">
 
             <TextView
+                android:id="@+id/tv_frequently"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/restaurent_img"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"
-                android:text="Add Image"
+                android:fontFamily="@font/lato_bold"
+                android:text="@string/coupon_detail"
                 android:textAllCaps="true"
-                android:textColor="@color/black"
+                android:textColor="@color/textColour"
                 android:textSize="@dimen/_14sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_90sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@color/color_grey_light"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+
+                    android:id="@+id/restaurent_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:foregroundGravity="center"
+                    android:src="@drawable/ic_photo_camera" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/restaurent_img"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:text="Add Image"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14sdp" />
+            </LinearLayout>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:drawableLeft="@drawable/business_ic_font"
+                android:drawablePadding="@dimen/_10sdp"
+                android:hint="@string/coupon_title"
+                android:padding="@dimen/_10sdp"
+                android:textColor="@color/textColour" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_2sdp"
+                android:layout_centerVertical="true"
+                android:background="@color/color_grey_light"
+                android:padding="@dimen/_5sdp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:drawableLeft="@drawable/business_ic_percent"
+                android:drawablePadding="@dimen/_10sdp"
+                android:hint="@string/coupon_percent_off"
+                android:padding="@dimen/_10sdp"
+                android:textColor="@color/textColour" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_2sdp"
+                android:layout_centerVertical="true"
+                android:background="@color/color_grey_light"
+                android:padding="@dimen/_5sdp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:drawableLeft="@drawable/business_ic_calendar"
+                android:drawablePadding="@dimen/_10sdp"
+                android:hint="@string/coupon_availability"
+                android:padding="@dimen/_10sdp"
+                android:textColor="@color/textColour" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_2sdp"
+                android:layout_centerVertical="true"
+                android:background="@color/color_grey_light"
+                android:padding="@dimen/_5sdp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:drawableLeft="@drawable/business_ic_money"
+                android:drawablePadding="@dimen/_10sdp"
+                android:hint="@string/coupon_amount_off"
+                android:padding="@dimen/_10sdp"
+                android:textColor="@color/textColour" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_2sdp"
+                android:layout_centerVertical="true"
+                android:background="@color/color_grey_light"
+                android:padding="@dimen/_5sdp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:drawableLeft="@drawable/business_ic_resource_new"
+                android:drawablePadding="@dimen/_10sdp"
+                android:hint="@string/coupon_new_price"
+                android:padding="@dimen/_10sdp"
+                android:textColor="@color/textColour" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_2sdp"
+                android:layout_centerVertical="true"
+                android:background="@color/color_grey_light"
+                android:padding="@dimen/_5sdp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:drawableLeft="@drawable/business_ic_gift_box"
+                android:drawablePadding="@dimen/_10sdp"
+                android:hint="@string/coupon_free_item"
+                android:padding="@dimen/_10sdp"
+                android:textColor="@color/textColour" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_2sdp"
+                android:layout_centerVertical="true"
+                android:background="@color/color_grey_light"
+                android:padding="@dimen/_5sdp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:drawableLeft="@drawable/business_ic_gold_ingots"
+                android:drawablePadding="@dimen/_10sdp"
+                android:hint="@string/coupon_points_value"
+                android:padding="@dimen/_10sdp"
+                android:textColor="@color/textColour" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_2sdp"
+                android:layout_centerVertical="true"
+                android:background="@color/color_grey_light"
+                android:padding="@dimen/_5sdp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:drawableLeft="@drawable/business_ic_console__1"
+                android:drawablePadding="@dimen/_10sdp"
+                android:hint="@string/coupon_awarded_by"
+                android:padding="@dimen/_10sdp"
+                android:textColor="@color/textColour" />
+
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_2sdp"
+                android:layout_centerVertical="true"
+                android:background="@color/color_grey_light"
+                android:padding="@dimen/_5sdp" />
+
+            <Button
+                android:id="@+id/btnCreateCoupons"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/filled_button"
+                android:fontFamily="@font/lato_bold"
+                android:text="@string/create_coupon"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_18sdp"
+                android:textStyle="bold" />
+
         </LinearLayout>
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:drawableLeft="@drawable/business_ic_font"
-            android:drawablePadding="@dimen/_10sdp"
-            android:hint="@string/coupon_title"
-            android:padding="@dimen/_10sdp"
-            android:textColor="@color/textColour" />
-
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_2sdp"
-            android:layout_centerVertical="true"
-            android:background="@color/view_color"
-            android:padding="@dimen/_5sdp" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:drawableLeft="@drawable/business_ic_percent"
-
-            android:drawablePadding="@dimen/_10sdp"
-            android:hint="@string/coupon_percent_off"
-            android:padding="@dimen/_10sdp"
-            android:textColor="@color/textColour" />
-
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_2sdp"
-            android:layout_centerVertical="true"
-            android:background="@color/view_color"
-            android:padding="@dimen/_5sdp" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@null"
-
-            android:drawableLeft="@drawable/business_ic_calendar"
-            android:drawablePadding="@dimen/_10sdp"
-            android:hint="@string/coupon_availability"
-            android:padding="@dimen/_10sdp"
-            android:textColor="@color/textColour" />
-
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_2sdp"
-            android:layout_centerVertical="true"
-            android:background="@color/view_color"
-            android:padding="@dimen/_5sdp" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@null"
-
-            android:drawableLeft="@drawable/business_ic_money"
-            android:drawablePadding="@dimen/_10sdp"
-            android:hint="@string/coupon_amount_off"
-            android:padding="@dimen/_10sdp"
-            android:textColor="@color/textColour" />
-
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_2sdp"
-            android:layout_centerVertical="true"
-            android:background="@color/view_color"
-            android:padding="@dimen/_5sdp" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@null"
-
-            android:drawableLeft="@drawable/business_ic_resource_new"
-            android:drawablePadding="@dimen/_10sdp"
-            android:hint="@string/coupon_new_price"
-            android:padding="@dimen/_10sdp"
-            android:textColor="@color/textColour" />
-
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_2sdp"
-            android:layout_centerVertical="true"
-            android:background="@color/view_color"
-            android:padding="@dimen/_5sdp" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@null"
-
-            android:drawableLeft="@drawable/business_ic_gift_box"
-            android:drawablePadding="@dimen/_10sdp"
-            android:hint="@string/coupon_free_item"
-            android:padding="@dimen/_10sdp"
-            android:textColor="@color/textColour" />
-
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_2sdp"
-            android:layout_centerVertical="true"
-            android:background="@color/view_color"
-            android:padding="@dimen/_5sdp" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:drawableLeft="@drawable/business_ic_gold_ingots"
-
-            android:drawablePadding="@dimen/_10sdp"
-            android:hint="@string/coupon_points_value"
-            android:padding="@dimen/_10sdp"
-            android:textColor="@color/textColour" />
-
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_2sdp"
-            android:layout_centerVertical="true"
-            android:background="@color/view_color"
-            android:padding="@dimen/_5sdp" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:drawableLeft="@drawable/business_ic_console__1"
-            android:drawablePadding="@dimen/_10sdp"
-            android:hint="@string/coupon_awarded_by"
-            android:padding="@dimen/_10sdp"
-            android:textColor="@color/textColour" />
-
-
-        <View
-            android:padding="@dimen/_5sdp"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_2sdp"
-            android:layout_centerVertical="true"
-            android:background="@color/view_color" />
-        <Button
-            android:id="@+id/btnLogin"
-            android:layout_width="@dimen/_150sdp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/filled_button"
-            android:fontFamily="@font/lato_bold"
-            android:text="@string/save_changes"
-            android:textAllCaps="false"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_18sdp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
-</androidx.core.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 
     <!--    </ScrollView>-->

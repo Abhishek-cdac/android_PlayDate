@@ -122,7 +122,7 @@
     <string name="add_comment">Add a comment...</string>
     <string name="refer_your_friend">Refer your Friends and Earn Points</string>
     <string name="earn_point">and Earn Points</string>
-    <string name="coupons_generator">coupon Generator</string>
+    <string name="coupons_generator">Coupon Generator</string>
     <string name="play_and_earn">Play and Earn \n</string>
     <string name="ur_discount">Your Discount Coupon</string>
     <string name="points">100 Points</string>
@@ -317,12 +317,15 @@
 
     <string name="coupon_detail">Coupon Details</string>
     <string name="save_changes">Save Changes</string>
-    <string name="coupon_title"> Coupon Title</string>
-    <string name="coupon_points_value"> Points Value</string>
+    <string name="coupon_create">Coupon Created</string>
+    <string name="create_coupon">Create coupons</string>
+    <string name="coupon_title">Coupon Title</string>
+    <string name="coupon_points_value">Points Value</string>
     <string name="coupon_awarded_by">Awarded By</string>
     <string name="coupon_availability">Availability Days</string>
     <string name="coupon_new_price">New Price</string>
-    <string name="coupon_amount_off">Amount Off</string>
+    <string name="coupon_amount_off"> Amount Off</string>
     <string name="coupon_free_item">Free Item</string>
     <string name="coupon_percent_off">Percentage Off</string>
+    <string name="chooseLevel">Choose Level</string>
 </resources>
