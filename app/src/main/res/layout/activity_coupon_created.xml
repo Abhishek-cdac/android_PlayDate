@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_header"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/rl_header"
-    android:background="@color/black"
+    android:background="@color/black_back"
     android:orientation="vertical">
 
     <ImageView
@@ -39,13 +39,13 @@
                 android:textStyle="bold" />
 
             <ImageView
-                android:layout_below="@+id/text_coupon"
                 android:id="@+id/img_coupons"
                 android:layout_width="match_parent"
-                android:layout_marginTop="@dimen/_20sdp"
                 android:layout_height="@dimen/_150sdp"
+                android:layout_below="@+id/text_coupon"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center_vertical|center_horizontal"
+                android:layout_marginTop="@dimen/_20sdp"
                 android:padding="@dimen/_10sdp"
                 android:src="@drawable/business_ic_flat" />
 
@@ -81,8 +81,8 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tv_ur_code"
                         android:layout_centerHorizontal="true"
-                        android:textColor="@color/white"
                         android:text="AUX52NJHJ"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/_14sdp"
                         android:textStyle="bold" />
 
@@ -111,8 +111,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:text="@string/copy"
                         android:layout_centerVertical="true"
+                        android:text="@string/copy"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_10sdp" />
 
@@ -121,10 +121,10 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/copy"
                         android:layout_centerHorizontal="true"
-                        android:text="@string/code"
+                        android:layout_marginTop="@dimen/_5sdp"
                         android:gravity="center"
 
-                        android:layout_marginTop="@dimen/_5sdp"
+                        android:text="@string/code"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_10sdp" />
 
@@ -137,7 +137,6 @@
                 android:id="@+id/share_coupans1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="visible"
                 android:layout_below="@+id/rl_code"
                 android:layout_centerHorizontal="true"
                 android:layout_marginHorizontal="@dimen/_35sdp"
@@ -145,7 +144,8 @@
                 android:gravity="center"
                 android:text="@string/share_code"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_10sdp" />
+                android:textSize="@dimen/_10sdp"
+                android:visibility="visible" />
 
             <LinearLayout
                 android:id="@+id/rl_social"
@@ -182,7 +182,6 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginHorizontal="@dimen/_15sdp"
                     android:background="@drawable/grey_rectangle"
-                    android:padding="@dimen/_3sdp"
                     android:src="@drawable/icons_whatsapp" />
 
                 <ImageView
