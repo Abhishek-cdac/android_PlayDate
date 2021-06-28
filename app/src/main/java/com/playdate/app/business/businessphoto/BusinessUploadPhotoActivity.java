@@ -14,7 +14,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 
 import com.playdate.app.R;
-import com.playdate.app.business.couponsGenerate.FragCouponsGenerater;
 import com.playdate.app.business.dashboard_business.DashboardBusiness;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
