@@ -236,6 +236,9 @@
             android:screenOrientation="portrait" />
         <activity android:name=".util.videocall.VideoCallActivity" />
         <activity android:name=".util.common.BaseActivity" />
+        <activity
+            android:name=".ui.chat.ChatMainActivity"
+            android:screenOrientation="portrait" />
 
         <service android:name=".service.LocationService" /> <!-- <receiver android:name=".broadcast.ConnectionBroadcastReceiver"> -->
         <!-- <intent-filter> -->

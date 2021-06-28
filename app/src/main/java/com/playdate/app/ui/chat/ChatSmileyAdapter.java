@@ -18,11 +18,11 @@ import java.util.ArrayList;
 public class ChatSmileyAdapter extends RecyclerView.Adapter<ChatSmileyAdapter.ViewHolder> {
     Context mContext;
     ArrayList<Integer> list;
-    FragChatMain ref;
+//    FragChatMain ref;
 
-    public ChatSmileyAdapter(ArrayList<Integer> list, FragChatMain ref) {
+    public ChatSmileyAdapter(ArrayList<Integer> list) {
         this.list = list;
-        this.ref = ref;
+//        this.ref = ref;
     }
 
     @NonNull
@@ -56,7 +56,7 @@ public class ChatSmileyAdapter extends RecyclerView.Adapter<ChatSmileyAdapter.Vi
             card_smiley.setPadding(0, 0, 0, 0);
             ll_color.getLayoutParams().height = 100;
             ll_color.getLayoutParams().width = 100;
-            itemView.setOnClickListener(view -> ref.onSmileyChange(getAdapterPosition()));
+//            itemView.setOnClickListener(view -> ref.onSmileyChange(getAdapterPosition()));
         }
     }
 }

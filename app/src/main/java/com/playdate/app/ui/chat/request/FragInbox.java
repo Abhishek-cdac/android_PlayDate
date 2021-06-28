@@ -1,12 +1,12 @@
 package com.playdate.app.ui.chat.request;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,30 +17,31 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
-import com.playdate.app.model.chat_models.ChatExample;
-import com.playdate.app.model.chat_models.ChatMessage;
-import com.playdate.app.model.chat_models.ChatUserList;
+import com.playdate.app.data.api.RetrofitClientInstance;
+import com.playdate.app.model.chat_models.ChatList;
+import com.playdate.app.model.chat_models.ChatResponse;
+import com.playdate.app.ui.chat.ChatMainActivity;
 import com.playdate.app.ui.chat.ChattingAdapter;
-import com.playdate.app.ui.chat.FragChatMain;
-import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.util.common.TransparentProgressDialog;
+import com.playdate.app.util.session.SessionPref;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FragInbox extends Fragment implements onClickEventListener {
-    private ArrayList<ChatExample> chatExampleList;
-    private ArrayList<ChatMessage> chatMessageList;
+    private ArrayList<ChatList> lst_chat_users;
+    //    private ArrayList<ChatMessage> chatMessageList;
     private ChattingAdapter chattingAdapter;
     private RecyclerView recyclerView;
     private Onclick itemClick;
     private RelativeLayout rl_c;
     private RequestAdapter requestAdapter;
+    SessionPref pref;
 
     @Nullable
     @Override
@@ -48,7 +49,7 @@ public class FragInbox extends Fragment implements onClickEventListener {
         View view = inflater.inflate(R.layout.frag_inbox_list, container, false);
         recyclerView = view.findViewById(R.id.friend_list);
         rl_c = view.findViewById(R.id.rl_c);
-
+        pref = SessionPref.getInstance(getActivity());
         callApiForChats();
 //            setAdapter();
 
@@ -56,40 +57,37 @@ public class FragInbox extends Fragment implements onClickEventListener {
     }
 
     private void callApiForChats() {
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://mocki.io/v1/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        GetDataService getServiceApi = retrofit.create(GetDataService.class);
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        SessionPref pref = SessionPref.getInstance(getActivity());
+        hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
         pd.show();
+        Call<ChatResponse> callChats = service.getChatUsers("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
 
-        Call<ChatUserList> callChats = getServiceApi.getChats();
-
-        callChats.enqueue(new Callback<ChatUserList>() {
+        callChats.enqueue(new Callback<ChatResponse>() {
             @Override
-            public void onResponse(Call<ChatUserList> call, Response<ChatUserList> response) {
-                Log.d("Response ", response.toString());
-                pd.cancel();
-                chatExampleList = new ArrayList<>(response.body().getChats());
-                Log.d("ChatmessageLIst", chatExampleList.toString());
+            public void onResponse(Call<ChatResponse> call, Response<ChatResponse> response) {
+                try {
+                    if (response.body().getStatus() == 1) {
+                        lst_chat_users = response.body().getLst();
 
-                for (int i = 0; i < chatExampleList.size(); i++) {
-                    chattingAdapter = new ChattingAdapter(chatExampleList, itemClick, FragInbox.this);
-                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-                    recyclerView.setLayoutManager(mLayoutManager);
-                    recyclerView.setItemAnimator(new DefaultItemAnimator());
-                    recyclerView.setAdapter(chattingAdapter);
+                        chattingAdapter = new ChattingAdapter(lst_chat_users, itemClick, FragInbox.this);
+                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+                        recyclerView.setLayoutManager(mLayoutManager);
+                        recyclerView.setItemAnimator(new DefaultItemAnimator());
+                        recyclerView.setAdapter(chattingAdapter);
+                    }
+                    pd.cancel();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+
             }
 
             @Override
-            public void onFailure(Call<ChatUserList> call, Throwable t) {
-                Log.d("Error code", t + "Failed to get data");
+            public void onFailure(Call<ChatResponse> call, Throwable t) {
                 pd.cancel();
-                Toast.makeText(getActivity(), t + "Failed to get data", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -97,14 +95,30 @@ public class FragInbox extends Fragment implements onClickEventListener {
 
     @Override
     public void onClickEvent(int position) {
-        chatMessageList = new ArrayList<>(chatExampleList.get(position).getMessages());
-        String sender_name = chatExampleList.get(position).getSenderName();
-        String sender_profile_image = chatExampleList.get(position).getProfilePhoto();
 
 
-        OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
-        if (frag != null) {
-            frag.ReplaceFragWithStack(new FragChatMain(chatMessageList, sender_name, sender_profile_image));
+        try {
+            if (null != lst_chat_users) {
+                if (!pref.getStringVal(SessionPref.LoginUserID).equals(lst_chat_users.get(position).getLstFrom().get(0).getUserId())) {
+                    Intent mIntent = new Intent(getActivity(), ChatMainActivity.class);
+                    mIntent.putExtra("Name", lst_chat_users.get(position).getLstFrom().get(0).getUsername());
+                    mIntent.putExtra("Image", lst_chat_users.get(position).getLstFrom().get(0).getProfilePicPath());
+                    mIntent.putExtra("UserID", lst_chat_users.get(position).getLstFrom().get(0).getUserId());
+                    mIntent.putExtra("chatId", lst_chat_users.get(position).getChatId());
+                    startActivity(mIntent);
+                } else if (!pref.getStringVal(SessionPref.LoginUserID).equals(lst_chat_users.get(position).getLstToUser().get(0).getUserId())) {
+                    Intent mIntent = new Intent(getActivity(), ChatMainActivity.class);
+                    mIntent.putExtra("Name", lst_chat_users.get(position).getLstToUser().get(0).getUsername());
+                    mIntent.putExtra("Image", lst_chat_users.get(position).getLstToUser().get(0).getProfilePicPath());
+                    mIntent.putExtra("UserID", lst_chat_users.get(position).getLstToUser().get(0).getUserId());
+                    mIntent.putExtra("chatId", lst_chat_users.get(position).getChatId());
+                    startActivity(mIntent);
+                }
+
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -124,22 +138,22 @@ public class FragInbox extends Fragment implements onClickEventListener {
     public void filter(String s) {
         Log.d("Filter Method", "In Filter method");
         try {
-            ArrayList<ChatExample> filteredList = new ArrayList<>();
+            ArrayList<ChatList> filteredList = new ArrayList<>();
 //        chatExampleList = new ArrayList<>(); ////for search purpose comment it
 
-            for (ChatExample item : chatExampleList) {
-                if (item.getSenderName().toLowerCase().contains(s.toLowerCase())) {
-                    filteredList.add(item);
-                    Log.d("SIZE", String.valueOf(filteredList.size()));
-                }
-            }
+//            for (ChatList item : lst_chat_users) {
+//                if (item.getSenderName().toLowerCase().contains(s.toLowerCase())) {
+//                    filteredList.add(item);
+//                    Log.d("SIZE", String.valueOf(filteredList.size()));
+//                }
+//            }
 
             for (int i = 0; i < filteredList.size(); i++) {
-                Log.d("SENDERNAME", filteredList.get(i).getSenderName());
+//                Log.d("SENDERNAME", filteredList.get(i).getSenderName());
 
             }
 //        chattingAdapter = new ChattingAdapter();  ////for search purpose comment it
-            chattingAdapter.filterList(filteredList);
+//            chattingAdapter.filterList(filteredList);
         } catch (Exception e) {
             Log.d("Exception during search", e.toString());
 

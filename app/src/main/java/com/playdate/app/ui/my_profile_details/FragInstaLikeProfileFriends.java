@@ -2,7 +2,6 @@ package com.playdate.app.ui.my_profile_details;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +23,7 @@ import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.CommonModel;
 import com.playdate.app.model.GetProfileDetails;
 import com.playdate.app.model.GetProileDetailData;
+import com.playdate.app.ui.chat.ChatMainActivity;
 import com.playdate.app.ui.dashboard.OnFriendSelected;
 import com.playdate.app.ui.my_profile_details.adapters.InstaPhotosAdapter;
 import com.playdate.app.ui.playvideo.ExoPlayerActivity;
@@ -118,6 +118,7 @@ public class FragInstaLikeProfileFriends extends Fragment implements onPhotoClic
 
         iv_send_request.setOnClickListener(this);
         profile_image.setOnClickListener(this);
+        iv_chat.setOnClickListener(this);
 
         view.setFocusableInTouchMode(true);
         view.requestFocus();
@@ -209,8 +210,6 @@ public class FragInstaLikeProfileFriends extends Fragment implements onPhotoClic
 
     @Override
     public void onTypeChange(int type) {
-
-
 
 
     }
@@ -347,6 +346,15 @@ public class FragInstaLikeProfileFriends extends Fragment implements onPhotoClic
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        } else if (id == R.id.iv_chat) {
+            if (null != lst_getPostDetail) {
+                Intent mIntent = new Intent(getActivity(), ChatMainActivity.class);
+                mIntent.putExtra("Name", lst_getPostDetail.get(0).getUsername());
+                mIntent.putExtra("Image", lst_getPostDetail.get(0).getProfilePicPath());
+                mIntent.putExtra("UserID", lst_getPostDetail.get(0).get_id());
+                startActivity(mIntent);
+            }
+
         }
     }
 }
