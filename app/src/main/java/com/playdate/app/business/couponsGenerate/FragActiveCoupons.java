@@ -25,6 +25,7 @@ public class FragActiveCoupons extends Fragment {
         View view = inflater.inflate(R.layout.frag_active_coupons, container, false);
         rv_coupons_list = view.findViewById(R.id.rv_coupons_list);
         enableSwipeToDeleteAndUndo();
+        enableSwipeToUpdateAndUndo();
 
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         rv_coupons_list.setLayoutManager(manager);
@@ -34,6 +35,22 @@ public class FragActiveCoupons extends Fragment {
 
         return view;
     }
+
+    private void enableSwipeToUpdateAndUndo() {
+        SwipeToUpdateCallback swipeToUpdateCallback = new SwipeToUpdateCallback(getActivity()) {
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                final int position = viewHolder.getAdapterPosition();
+
+
+                adapter.removeItem(position);
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeToUpdateCallback);
+        itemTouchHelper.attachToRecyclerView(rv_coupons_list);
+    }
+
 
     private void enableSwipeToDeleteAndUndo() {
         SwipeToDeleteCallback swipeToDeleteCallback = new SwipeToDeleteCallback(getActivity()) {
