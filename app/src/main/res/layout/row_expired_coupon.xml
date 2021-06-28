@@ -53,7 +53,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_3sdp"
                     android:text="EXPIRED"
-                    android:textColor="@color/black"
+                    android:textColor="@color/textColour"
                     android:textSize="@dimen/_13sdp"
                     android:textStyle="bold" />
 
@@ -71,8 +71,7 @@
                         android:layout_height="@dimen/_20sdp"
                         android:src="@drawable/exchange"
                         android:textAlignment="center"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_13sdp" />
+                        />
 
                 </LinearLayout>
 
