@@ -94,6 +94,7 @@ public class FragCouponParentBusiness extends Fragment implements OnInnerFragmen
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             FragmentTransaction ft = fragmentManager.beginTransaction();
             if (fragmentManager.getFragments().size() > 0) {
+
                 ft.replace(R.id.flFragment, fragment, fragment.getClass().getSimpleName());
             } else {
                 ft.add(R.id.flFragment, fragment, fragment.getClass().getSimpleName());
