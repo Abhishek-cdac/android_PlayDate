@@ -14,7 +14,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 
 import com.playdate.app.R;
-import com.playdate.app.business.couponsGenerate.FragCouponsGenerater;
 import com.playdate.app.business.dashboard_business.DashboardBusiness;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
@@ -94,9 +93,9 @@ public class BusinessUploadPhotoActivity extends AppCompatActivity {
 
         });
         viewModel.OnChangeClick().observe(this, click -> {
-            binding.btnCamera.setVisibility(View.VISIBLE);
+            binding.btnCamera.setVisibility(View.GONE);
             binding.btnGallery.setVisibility(View.VISIBLE);
-            binding.txtOr.setVisibility(View.VISIBLE);
+            binding.txtOr.setVisibility(View.GONE);
             binding.btnChangeImage.setVisibility(View.GONE);
             binding.ivNext.setVisibility(View.GONE);
         });

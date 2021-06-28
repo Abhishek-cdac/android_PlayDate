@@ -55,7 +55,7 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".business.couponsGenerate.FragCouponCreated"></activity>
         <activity android:name=".business.chooselevel.ChooseLevelActivity" />
-        <activity android:name=".business.couponsGenerate.FragCouponsGenerater" />
+        <activity android:name=".business.couponsGenerate.DialogCouponsGenerater" />
         <activity android:name=".business.businessphoto.BusinessUploadPhotoActivity" />
         <activity android:name=".business.businessbio.BusinessBioActivity" />
         <activity android:name=".business.startdate.BusinessStartingDateActivity" />

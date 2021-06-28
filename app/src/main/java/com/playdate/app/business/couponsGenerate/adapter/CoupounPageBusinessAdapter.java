@@ -6,10 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.playdate.app.business.couponsGenerate.FragActiveCoupons;
-import com.playdate.app.business.couponsGenerate.FragCouponCreated;
-import com.playdate.app.business.couponsGenerate.FragCouponsGenerater;
 import com.playdate.app.business.couponsGenerate.FragExpiredCoupon;
-import com.playdate.app.ui.coupons.FragCouponStore;
 
 public class CoupounPageBusinessAdapter extends FragmentPagerAdapter {
     int totalTabs;
