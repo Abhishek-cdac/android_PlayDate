@@ -89,7 +89,7 @@
                         android:layout_height="wrap_content"
                         android:text="Expires"
                         android:textAlignment="center"
-                        android:textColor="@color/black"
+                        android:textColor="@color/textColour"
                         android:textSize="@dimen/_13sdp"
                         android:textStyle="bold" />
 
@@ -99,7 +99,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/_3sdp"
                         android:text="24/06"
-                        android:textColor="@color/black"
+                        android:textColor="@color/textColour"
                         android:textSize="@dimen/_13sdp"
                         android:textStyle="bold" />
                 </LinearLayout>

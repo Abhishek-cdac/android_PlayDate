@@ -7,8 +7,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class
-RetrofitClientInstance {
+public class RetrofitClientInstance {
 
     private static Retrofit retrofit;
     private static final String BASE_URL = "http://139.59.0.106:3000/api/";
