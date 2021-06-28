@@ -60,7 +60,7 @@
                 android:layout_height="@dimen/_30sdp"
                 android:background="@drawable/rectangle_back"
                 android:padding="@dimen/_3sdp"
-                android:src="@drawable/badgepink" />
+                android:src="@drawable/badge_sel" />
 
 
         </LinearLayout>
