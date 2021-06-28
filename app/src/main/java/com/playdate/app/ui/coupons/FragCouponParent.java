@@ -52,8 +52,9 @@ public class FragCouponParent extends Fragment implements OnSizeDecided, View.On
     ImageView iv_dashboard_notification;
     TextView txt_count;
 
-private ImageView iv_rest_search;
+    private ImageView iv_rest_search;
     private Fragment CurrentFrag;
+
     @Nullable
     @org.jetbrains.annotations.Nullable
     @Override
@@ -161,23 +162,20 @@ private ImageView iv_rest_search;
     public void onClick(View v) {
         if (v.getId() == R.id.txt_store) {
             viewpager.setCurrentItem(0);
-        }
-
-        else if(v.getId()==R.id.iv_dashboard_notification){
+        } else if (v.getId() == R.id.iv_dashboard_notification) {
             ReplaceFrag(new FragNotification("Coupons"));
-        }
-
-        else {
+        } else {
             viewpager.setCurrentItem(1);
         }
 
 
-        if (v.getId()==R.id.iv_rest_search) {
+        if (v.getId() == R.id.iv_rest_search) {
             OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
             Objects.requireNonNull(frag).ReplaceFrag(new FragmentSearchRestaurent());
 
         }
     }
+
     @Override
     public void ReplaceFrag(Fragment fragment) {
         try {
@@ -191,7 +189,7 @@ private ImageView iv_rest_search;
             }
             ft.commitAllowingStateLoss();
 
-          //  mSwipeRefreshLayout.setEnabled(CurrentFrag.getClass().getSimpleName().equals("FragSocialFeed"));
+            //  mSwipeRefreshLayout.setEnabled(CurrentFrag.getClass().getSimpleName().equals("FragSocialFeed"));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -222,6 +220,7 @@ private ImageView iv_rest_search;
     public void loadMatchProfile(String UserID) {
 
     }
+
     CallAPI apiCall;
 
     void callNotification() {
@@ -232,6 +231,7 @@ private ImageView iv_rest_search;
         }
 
     }
+
     @Override
     public void setNotiCount(int count) {
         if (count > 0) {

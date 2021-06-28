@@ -14,12 +14,11 @@ import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 
 import com.playdate.app.R;
-import com.playdate.app.business.couponsGenerate.CouponsGeneraterActivity;
-import com.playdate.app.couple.ui.register.coupleprofile.CoupleUploadProfileViewModel;
+import com.playdate.app.business.couponsGenerate.FragCouponsGenerater;
+import com.playdate.app.business.dashboard_business.DashboardBusiness;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.databinding.ActivityUploadBusinessPhotoBinding;
-import com.playdate.app.databinding.ActivityUploadCoupleProfileBinding;
 import com.playdate.app.model.LoginResponse;
 import com.playdate.app.model.LoginUserDetails;
 import com.playdate.app.ui.register.interest.InterestActivity;
@@ -65,10 +64,10 @@ public class BusinessUploadPhotoActivity extends AppCompatActivity {
 
 
         viewModel.OnNextClick().observe(this, click -> {
-        //    uploadImage();
-
-            startActivity(new Intent(BusinessUploadPhotoActivity.this, CouponsGeneraterActivity
+            //    uploadImage();
+            startActivity(new Intent(BusinessUploadPhotoActivity.this, DashboardBusiness
                     .class));
+            finish();
         });
 
         viewModel.onBackClick().observe(this, click -> finish());
@@ -156,13 +155,13 @@ public class BusinessUploadPhotoActivity extends AppCompatActivity {
                 if (response.code() == 200) {
 
                     LoginUserDetails user = response.body().getUserData();
-                    pref.saveStringKeyVal(LoginUserprofilePic,user.getProfilePicPath());
+                    pref.saveStringKeyVal(LoginUserprofilePic, user.getProfilePicPath());
 
                     if (mIntent.getBooleanExtra("fromProfile", false)) {
                         Intent mIntent = new Intent();
                         setResult(407, mIntent);
                         finish();
-                    }else{
+                    } else {
                         startActivity(new Intent(BusinessUploadPhotoActivity.this, InterestActivity
                                 .class));
                     }

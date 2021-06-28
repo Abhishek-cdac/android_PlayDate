@@ -62,7 +62,8 @@ public class BusinessStartingDateActivity extends AppCompatActivity {
                 clsCommon.showDialogMsg(this, "PlayDate", "Please select day of business starting date", "Ok");
             } else {
                 startActivity(new Intent(BusinessStartingDateActivity.this, BusinessBioActivity.class));
-            //    callAPI();
+                finish();
+                //    callAPI();
             }
 
         });
@@ -122,11 +123,12 @@ public class BusinessStartingDateActivity extends AppCompatActivity {
                 pd.cancel();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
-                      //  pref.saveStringKeyVal(SessionPref.LoginUserBusinessStartDate, BusinessStartDate);
+                        //  pref.saveStringKeyVal(SessionPref.LoginUserBusinessStartDate, BusinessStartDate);
                         if (mIntent.getBooleanExtra("fromProfile", false)) {
                             finish();
                         } else {
                             startActivity(new Intent(BusinessStartingDateActivity.this, BusinessBioActivity.class));
+                            finish();
                         }
 
 

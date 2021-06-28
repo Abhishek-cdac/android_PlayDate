@@ -68,7 +68,7 @@ public class BusinessBioActivity extends AppCompatActivity {
                         finish();
                     } else {
                      startActivity(new Intent(BusinessBioActivity.this, BusinessUploadPhotoActivity.class));
-
+                     finish();
                     }
                   //  callAPI();
                 }
