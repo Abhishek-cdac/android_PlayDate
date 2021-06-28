@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,24 +13,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.playdate.app.R;
-import com.playdate.app.business.couponsGenerate.adapter.ActiveCouponsAdapter;
 import com.playdate.app.business.couponsGenerate.adapter.CoupounPageBusinessAdapter;
-import com.playdate.app.ui.coupons.CoupounPageAdapter;
-import com.playdate.app.ui.coupons.WrapContentViewPager;
-import com.playdate.app.ui.dashboard.adapter.MoreSuggestionPagerAdapter;
-import com.playdate.app.ui.dashboard.adapter.RestaurentListAdapter;
-import com.playdate.app.ui.dialogs.BoosterDialogDM;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
-import com.playdate.app.ui.notification_screen.FragNotification;
 import com.playdate.app.util.session.SessionPref;
 
-public class FragCouponParentBusiness extends Fragment {
+public class FragCouponParentBusiness extends Fragment implements OnInnerFragmentClicks {
 
     //    WrapContentViewPager viewpager;
     ViewPager viewpager;
@@ -65,7 +56,8 @@ public class FragCouponParentBusiness extends Fragment {
         generator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new FragCouponsGenerater(getActivity()).show();
+                ReplaceFragWithStack(new FragCouponGenerator());
+//                new DialogCouponsGenerater(getActivity()).show();
             }
         });
 
@@ -93,6 +85,69 @@ public class FragCouponParentBusiness extends Fragment {
 
 
         return view;
+    }
+
+    @Override
+    public void ReplaceFrag(Fragment fragment) {
+        try {
+            CurrentFrag = fragment;
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            if (fragmentManager.getFragments().size() > 0) {
+                ft.replace(R.id.flFragment, fragment, fragment.getClass().getSimpleName());
+            } else {
+                ft.add(R.id.flFragment, fragment, fragment.getClass().getSimpleName());
+            }
+            ft.commitAllowingStateLoss();
+
+            //  mSwipeRefreshLayout.setEnabled(CurrentFrag.getClass().getSimpleName().equals("FragSocialFeed"));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void ReplaceFragWithStack(Fragment fragment) {
+        try {
+            CurrentFrag = fragment;
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            if (fragmentManager.getFragments().size() > 0) {
+                ft.replace(R.id.flFragment, fragment, fragment.getClass().getSimpleName());
+            } else {
+                ft.add(R.id.flFragment, fragment, fragment.getClass().getSimpleName());
+            }
+            ft.addToBackStack("tags");
+            ft.commitAllowingStateLoss();
+
+            //  mSwipeRefreshLayout.setEnabled(CurrentFrag.getClass().getSimpleName().equals("FragSocialFeed"));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void NoFriends() {
+
+    }
+
+    @Override
+    public void Reset() {
+
+    }
+
+    @Override
+    public void loadProfile(String UserID) {
+
+    }
+
+    @Override
+    public void loadMatchProfile(String UserID) {
+
+    }
+}
 
 //        CoupounPageBusinessAdapter adapter = new CoupounPageBusinessAdapter(getChildFragmentManager());
 //        viewpager.setAdapter(adapter);
@@ -193,6 +248,3 @@ public class FragCouponParentBusiness extends Fragment {
 //    public void loadMatchProfile(String UserID) {
 //
 //    }
-
-    }
-}

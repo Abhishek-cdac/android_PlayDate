@@ -21,12 +21,12 @@ import android.widget.ImageView;
 import com.playdate.app.R;
 
 
-public class FragCouponsGenerater extends Dialog {
+public class DialogCouponsGenerater extends Dialog {
 
     ImageView iv_back;
     Button btnCreateCoupons;
 
-    public FragCouponsGenerater(@NonNull Context context) {
+    public DialogCouponsGenerater(@NonNull Context context) {
         super(context, R.style.My_Dialog);
 
         WindowManager.LayoutParams wlmp = getWindow().getAttributes();
