@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:id="@+id/rl_body"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundColour">
 
@@ -196,8 +196,8 @@
                 android:drawablePadding="@dimen/_10sdp"
                 android:hint="@string/coupon_free_item"
                 android:padding="@dimen/_10sdp"
-                android:textSize="@dimen/_12sdp"
-                android:textColor="@color/textColour" />
+                android:textColor="@color/textColour"
+                android:textSize="@dimen/_12sdp" />
 
             <View
                 android:layout_width="wrap_content"
@@ -213,9 +213,9 @@
                 android:drawableLeft="@drawable/business_ic_gold_ingots"
                 android:drawablePadding="@dimen/_10sdp"
                 android:hint="@string/coupon_points_value"
-                android:textSize="@dimen/_12sdp"
                 android:padding="@dimen/_10sdp"
-                android:textColor="@color/textColour" />
+                android:textColor="@color/textColour"
+                android:textSize="@dimen/_12sdp" />
 
             <View
                 android:layout_width="wrap_content"
@@ -224,17 +224,67 @@
                 android:background="@color/color_grey_light"
                 android:padding="@dimen/_5sdp" />
 
-            <EditText
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:id="@+id/rl_awarded"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/tv_awarded"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:drawableStart="@drawable/business_ic_console__1"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:hint="@string/coupon_awarded_by"
+                    android:padding="@dimen/_10sdp"
+                    android:textColor="@color/textColour"
+                    android:textSize="@dimen/_12sdp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/iv_drop"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/ic_arrow_drop_down"/>
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_dropdown"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@null"
-                android:drawableLeft="@drawable/business_ic_console__1"
-                android:drawablePadding="@dimen/_10sdp"
-                android:textSize="@dimen/_12sdp"
-                android:drawableEnd="@drawable/ic_arrow_drop_down"
-                android:hint="@string/coupon_awarded_by"
-                android:padding="@dimen/_10sdp"
-                android:textColor="@color/textColour" />
+                android:background="@color/color_grey_light"
+                android:orientation="vertical"
+                android:paddingVertical="@dimen/_5sdp"
+                android:paddingLeft="@dimen/_30sdp"
+                android:visibility="gone">
+
+
+                <TextView
+                    android:id="@+id/tv_level"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Level"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_11sdp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="@dimen/_3sdp"
+                    android:text="Game Winner"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_11sdp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Game Loser"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_11sdp" />
+            </LinearLayout>
 
 
             <View

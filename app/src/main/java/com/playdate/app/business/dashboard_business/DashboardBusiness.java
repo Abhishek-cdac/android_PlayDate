@@ -27,7 +27,6 @@ public class DashboardBusiness extends AppCompatActivity implements OnInnerFragm
         Fragment fragOne;
         fragOne = new FragCouponParentBusiness();
         ReplaceFrag(fragOne);
-
     }
 
     @Override

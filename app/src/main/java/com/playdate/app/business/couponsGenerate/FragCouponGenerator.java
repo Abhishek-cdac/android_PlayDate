@@ -6,7 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,13 +16,20 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.playdate.app.R;
-import com.playdate.app.util.common.CommonClass;
+import com.playdate.app.business.couponsGenerate.dialogs.DialogCouponCreated;
+import com.playdate.app.business.couponsGenerate.dialogs.DialogLevelSelector;
 
 public class FragCouponGenerator extends Fragment {
 
     Button btnCreateCoupons;
     ImageView iv_back_generator;
     RelativeLayout rl_body;
+    LinearLayout ll_dropdown;
+    TextView tv_awarded;
+    TextView tv_level;
+    RelativeLayout rl_awarded;
+    ImageView iv_drop;
+    boolean isDropdownVisible = false;
 
     @Nullable
     @Override
@@ -29,6 +38,11 @@ public class FragCouponGenerator extends Fragment {
         btnCreateCoupons = view.findViewById(R.id.btnCreateCoupons);
         iv_back_generator = view.findViewById(R.id.iv_back_generator);
         rl_body = view.findViewById(R.id.rl_body);
+        ll_dropdown = view.findViewById(R.id.ll_dropdown);
+        tv_awarded = view.findViewById(R.id.tv_awarded);
+        rl_awarded = view.findViewById(R.id.rl_awarded);
+        tv_level = view.findViewById(R.id.tv_level);
+        iv_drop = view.findViewById(R.id.iv_drop);
 
 //        int height = new CommonClass().getScreenHeight(getActivity());
 //
@@ -42,11 +56,10 @@ public class FragCouponGenerator extends Fragment {
 //        rl_body.getLayoutParams().height = height - (m1 + m2 + m3 + m4 + m5 + m6);
 
 
-
         btnCreateCoupons.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new FragCouponCreated(getActivity()).show();
+                new DialogCouponCreated(getActivity()).show();
             }
         });
 
@@ -56,6 +69,29 @@ public class FragCouponGenerator extends Fragment {
                 getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             }
         });
+        rl_awarded.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isDropdownVisible) {
+                    ll_dropdown.setVisibility(View.GONE);
+                    iv_drop.setImageResource(R.drawable.ic_arrow_drop_down);
+                    isDropdownVisible = false;
+                } else {
+                    ll_dropdown.setVisibility(View.VISIBLE);
+                    iv_drop.setImageResource(R.drawable.ic_arrow_drop_up);
+                    isDropdownVisible = true;
+                }
+            }
+        });
+
+        tv_level.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DialogLevelSelector(getActivity()).show();
+            }
+        });
+
+
         return view;
     }
 

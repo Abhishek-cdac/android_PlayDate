@@ -1,24 +1,19 @@
 package com.playdate.app.business.couponsGenerate;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import com.playdate.app.R;
+import com.playdate.app.business.couponsGenerate.dialogs.DialogCouponCreated;
 
 
 public class DialogCouponsGenerater extends Dialog {
@@ -53,7 +48,7 @@ public class DialogCouponsGenerater extends Dialog {
         btnCreateCoupons.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new FragCouponCreated(context).show();
+                new DialogCouponCreated(context).show();
                 dismiss();
 
             }

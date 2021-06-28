@@ -64,4 +64,10 @@ public class ActiveCouponsAdapter extends RecyclerView.Adapter<ActiveCouponsAdap
             tv_date = itemView.findViewById(R.id.tv_date);
         }
     }
+
+    public void removeItem(int position) {
+        list.remove(position);
+        notifyItemRemoved(position);
+    }
+
 }
