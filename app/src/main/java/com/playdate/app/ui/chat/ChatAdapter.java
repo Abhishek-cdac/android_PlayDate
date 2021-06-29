@@ -3,6 +3,7 @@ package com.playdate.app.ui.chat;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -26,10 +27,17 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.playdate.app.R;
+import com.playdate.app.data.api.GetDataService;
+import com.playdate.app.data.api.RetrofitClientInstance;
+import com.playdate.app.model.CommonModel;
+
 import com.playdate.app.model.UserInfo;
 import com.playdate.app.model.chat_models.ChatAttachment;
 import com.playdate.app.model.chat_models.ChatMessage;
+import com.playdate.app.ui.register.profile.UploadProfileActivity;
+import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.EnlargeMediaChat;
+import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
 
@@ -45,6 +53,9 @@ import java.util.Objects;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.facebook.FacebookSdk.getCacheDir;
 
@@ -62,7 +73,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private MediaPlayer mediaPlayer;
     private GoogleMap googleMap;
 
-//    private String from;
+    //    private String from;
 //    private String to;
 //    private final static String myId = "jid_1111";
 //    private final static String polling = "polling";
@@ -168,9 +179,9 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     //temp
 
                     try {
-                        String msgTemp=lst_chat.get(position).getMessage();
-                        int p=Integer.parseInt(msgTemp);
-                        viewHolderMe.tv_msg.setText( new String(Character.toChars(p)));
+                        String msgTemp = lst_chat.get(position).getMessage();
+                        int p = Integer.parseInt(msgTemp);
+                        viewHolderMe.tv_msg.setText(new String(Character.toChars(p)));
 
                         viewHolderMe.tv_msg.setBackground(null);
                         viewHolderMe.tv_msg.setBackgroundColor(Color.WHITE);
@@ -317,9 +328,9 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 //temp
 
                 try {
-                    String msgTemp=lst_chat.get(position).getMessage();
-                    int p=Integer.parseInt(msgTemp);
-                    viewHolderOponent.tv_msg.setText( new String(Character.toChars(p)));
+                    String msgTemp = lst_chat.get(position).getMessage();
+                    int p = Integer.parseInt(msgTemp);
+                    viewHolderOponent.tv_msg.setText(new String(Character.toChars(p)));
                     viewHolderOponent.tv_msg.setBackground(null);
                     viewHolderOponent.tv_msg.setBackgroundColor(Color.WHITE);
                     viewHolderOponent.tv_msg.setTextSize(mContext.getResources().getDimension(R.dimen._12sdp));
@@ -463,10 +474,11 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 //        notifyDataSetChanged();
 //    }
 
-    //// code for  saving image as file
     public void addToListImage(Bitmap bitmap) {
+//        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(mContext);
+//        pd.show();
 
-        File f = new File(getCacheDir(), "profile");
+        File f = new File(getCacheDir(), "chat");
         try {
             f.createNewFile();
         } catch (IOException e) {
@@ -474,7 +486,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
 
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 40, bos);
         byte[] bitmapdata = bos.toByteArray();
 
 //write the bytes in file
@@ -500,16 +512,34 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             e.printStackTrace();
         }
 
-        MultipartBody.Part filePart = MultipartBody.Part.createFormData("userProfilePic", f.getName(), RequestBody.create(MediaType.parse("image/png"), f));
+        SessionPref pref = SessionPref.getInstance(mContext);
+        MultipartBody.Part filePart = MultipartBody.Part.createFormData("mediaFeed", f.getName(), RequestBody.create(MediaType.parse("image/png"), f));
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Log.d("UPLOADFILEPART", String.valueOf(filePart));
+        Call<CommonModel> call = service.addmediaImage("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), filePart);
+        call.enqueue(new Callback<CommonModel>() {
+            @Override
+            public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
+                if (response.code() == 200) {
+                    if (response.body().getStatus() == 1) {
+                        Toast.makeText(mContext, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        Drawable d = new BitmapDrawable(mContext.getResources(), bitmap);
 
-        Log.d("FILEPART", String.valueOf(filePart));
+//                        lst_chat.add(new ChatMessage("image",d))
+                    } else {
+                        Toast.makeText(mContext, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(mContext, "An error occured", Toast.LENGTH_SHORT).show();
+                }
+            }
 
+            @Override
+            public void onFailure(Call<CommonModel> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
 
-//        chatmsgList.add(filePart);
-
-//        chatAttachmentList.add(new ChatAttachment(uri.toString()));
-//        chatmsgList.add(new ChatMessage("image",myId,"jid_1109",chatAttachmentList));
-//        notifyDataSetChanged();
     }
 
     Drawable drawable;

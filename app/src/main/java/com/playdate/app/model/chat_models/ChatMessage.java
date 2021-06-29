@@ -223,6 +223,14 @@ public class ChatMessage {
         this.message = msg;
     }
 
+    public ChatMessage(String Type, String userName, String userImage, String userID, Drawable drawable) {
+        this.type = Type;
+        UserName = userName;
+        UserImage = userImage;
+        userId = userID;
+        this.drawable = drawable;
+    }
+
     public String getUserName() {
         return UserName;
     }

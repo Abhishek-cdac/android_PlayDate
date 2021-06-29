@@ -490,9 +490,10 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 
                     if (null != bitmap) {
                         Log.d("BITMAP VALUE", bitmap.toString());
-                        sheet.dismiss();
-                        Drawable d = new BitmapDrawable(getResources(), bitmap);
-//                        adapter.addImage(d);
+//                        sheet.dismiss();
+
+//                        Drawable d = new BitmapDrawable(getResources(), bitmap);
+                        adapter.addToListImage(bitmap);
                         scrollTOEnd();
 
 
@@ -705,7 +706,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             intent.putExtra("return-data", true);
             startActivityForResult(intent, REQUEST_TAKE_GALLERY_VIDEO);
         } else if (id == R.id.iv_camera) {
-
+            onGallerySelect();
         } else if (id == R.id.iv_mic) {
             startRecording();
         } else if (id == R.id.iv_smiley) {
