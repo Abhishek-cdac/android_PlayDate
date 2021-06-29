@@ -45,6 +45,7 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.Task;
 import com.playdate.app.R;
+import com.playdate.app.business.dashboard_business.DashboardBusiness;
 import com.playdate.app.business.startdate.BusinessStartingDateActivity;
 import com.playdate.app.couple.ui.register.connect.ConnectYourPartner;
 import com.playdate.app.data.api.GetDataService;
@@ -140,7 +141,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         rl_couple.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, BusinessStartingDateActivity.class));
+                startActivity(new Intent(LoginActivity.this, DashboardBusiness.class));
 
             }
         });
