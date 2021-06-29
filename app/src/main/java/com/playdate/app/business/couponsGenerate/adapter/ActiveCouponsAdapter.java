@@ -69,21 +69,6 @@ public class ActiveCouponsAdapter extends RecyclerView.Adapter<ActiveCouponsAdap
             discount_desc = itemView.findViewById(R.id.discount_desc);
             tv_date = itemView.findViewById(R.id.tv_date);
             rl_coupons = itemView.findViewById(R.id.rl_coupons);
-//            rl_coupons.setOnTouchListener(new OnSwipeTouchListener(mcontext){
-//                @Override
-//                public void onSwipeLeft() {
-//                    super.onSwipeLeft();
-//                    Toast.makeText(mcontext, "SWIPE LEFT", Toast.LENGTH_SHORT).show();
-//                }
-//
-//                @Override
-//                public void onSwipeRight() {
-//                    super.onSwipeRight();
-//                    Toast.makeText(mcontext, "SWIPE RIGHT", Toast.LENGTH_SHORT).show();
-//
-//                }
-//            });
-
         }
     }
 
@@ -93,3 +78,6 @@ public class ActiveCouponsAdapter extends RecyclerView.Adapter<ActiveCouponsAdap
     }
 
 }
+
+
+
