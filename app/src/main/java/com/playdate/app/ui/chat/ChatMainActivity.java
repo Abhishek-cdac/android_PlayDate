@@ -32,23 +32,31 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.connectycube.videochat.RTCClient;
+import com.connectycube.videochat.RTCSession;
 import com.playdate.app.R;
 import com.playdate.app.model.chat_models.ChatMessage;
 import com.playdate.app.service.GpsTracker;
+import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
+import com.playdate.app.ui.notification_screen.FragNotification;
 import com.playdate.app.util.common.BaseActivity;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
+import com.playdate.app.util.videocall.FragVideoCall;
+import com.playdate.app.util.videocall.VideoCallActivity;
 
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import io.socket.emitter.Emitter;
 
 import static android.Manifest.permission.RECORD_AUDIO;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import static com.connectycube.videochat.RTCTypes.ConferenceType.CONFERENCE_TYPE_VIDEO;
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.ALL_PERMISSIONS_RESULT;
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.PICK_PHOTO_FOR_AVATAR;
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.REQUEST_TAKE_GALLERY_VIDEO;
@@ -405,9 +413,6 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     }
 
 
-
-
-
     @Override
     public void onLocationSelect() {
 
@@ -501,7 +506,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             } else {
                 sendMessgae(msg);
             }
-        }else if(id==R.id.iv_video){
+        } else if (id == R.id.iv_video) {
             Intent intent;
             if (android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
                 intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
@@ -512,14 +517,20 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             intent.setAction(Intent.ACTION_GET_CONTENT);
             intent.putExtra("return-data", true);
             startActivityForResult(intent, REQUEST_TAKE_GALLERY_VIDEO);
-        }else if(id==R.id.iv_camera){
+        } else if (id == R.id.iv_camera) {
 
-        }else if(id==R.id.iv_mic){
+        } else if (id == R.id.iv_mic) {
             startRecording();
-        }else if(id==R.id.video_cal){
+        } else if (id == R.id.video_cal) {
+            /* frag vc layout */
+//            OnInnerFragmentClicks ref = (OnInnerFragmentClicks) getApplicationContext();
+//            ref.ReplaceFrag(new FragVideoCall());
 
+            /* VideoCallActivity */
+//            Intent intent = new Intent(getApplicationContext(), VideoCallActivity.class);
+//            startActivity(intent);
 
-        }else if(id==R.id.iv_smiley){
+        } else if (id == R.id.iv_smiley) {
             if (isVisible) {
                 rv_smileys.setVisibility(View.GONE);
                 isVisible = false;

@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.connectycube.videochat.view.RTCSurfaceView xmlns:android="http://schemas.android.com/apk/res/android"
+    <com.connectycube.videochat.view.RTCSurfaceView
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/localView"
         android:layout_width="100dp"
         android:layout_centerHorizontal="true"
