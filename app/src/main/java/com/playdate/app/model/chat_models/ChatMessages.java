@@ -10,6 +10,7 @@ public class ChatMessages {
     String status;
     String userId;
     String messageId;
+    String entryDate;
 
     @SerializedName("UserInfo")
     ArrayList<UserInfo>lstUser;
@@ -52,5 +53,9 @@ public class ChatMessages {
 
     public void setMessageId(String messageId) {
         this.messageId = messageId;
+    }
+
+    public String getEntryDate() {
+        return entryDate;
     }
 }

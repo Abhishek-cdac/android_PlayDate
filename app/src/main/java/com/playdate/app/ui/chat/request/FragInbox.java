@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
@@ -22,6 +23,7 @@ import com.playdate.app.model.chat_models.ChatList;
 import com.playdate.app.model.chat_models.ChatResponse;
 import com.playdate.app.ui.chat.ChatMainActivity;
 import com.playdate.app.ui.chat.ChattingAdapter;
+import com.playdate.app.ui.social.FragSocialFeed;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
 
@@ -33,7 +35,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FragInbox extends Fragment implements onClickEventListener {
+public class FragInbox extends Fragment implements onClickEventListener  {
     private ArrayList<ChatList> lst_chat_users;
     //    private ArrayList<ChatMessage> chatMessageList;
     private ChattingAdapter chattingAdapter;
@@ -41,6 +43,7 @@ public class FragInbox extends Fragment implements onClickEventListener {
     private Onclick itemClick;
     private RelativeLayout rl_c;
     private RequestAdapter requestAdapter;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     SessionPref pref;
 
     @Nullable
@@ -48,12 +51,23 @@ public class FragInbox extends Fragment implements onClickEventListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag_inbox_list, container, false);
         recyclerView = view.findViewById(R.id.friend_list);
+        mSwipeRefreshLayout = view.findViewById(R.id.swiperefresh);
         rl_c = view.findViewById(R.id.rl_c);
         pref = SessionPref.getInstance(getActivity());
-        callApiForChats();
-//            setAdapter();
 
+        mSwipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.color_pink));
+
+        mSwipeRefreshLayout.setOnRefreshListener(() -> {
+            callApiForChats();
+
+        });
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        callApiForChats();
     }
 
     private void callApiForChats() {
@@ -82,12 +96,13 @@ public class FragInbox extends Fragment implements onClickEventListener {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
+                mSwipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
             public void onFailure(Call<ChatResponse> call, Throwable t) {
                 pd.cancel();
+                mSwipeRefreshLayout.setRefreshing(false);
             }
         });
     }

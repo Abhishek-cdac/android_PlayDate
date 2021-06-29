@@ -2,6 +2,7 @@ package com.playdate.app.ui.chat;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -21,6 +22,7 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.playdate.app.R;
@@ -60,10 +62,10 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private MediaPlayer mediaPlayer;
     private GoogleMap googleMap;
 
-    private String from;
-    private String to;
-    private final static String myId = "jid_1111";
-    private final static String polling = "polling";
+//    private String from;
+//    private String to;
+//    private final static String myId = "jid_1111";
+//    private final static String polling = "polling";
     //    FragChatMain ref;
     SessionPref pref;
     String LoginUserID;
@@ -142,7 +144,8 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        lst_chat.get(position).setType("text");
+        if (lst_chat.get(position).getType() == null)
+            lst_chat.get(position).setType("text");
         if (holder.getItemViewType() == 0) {
             /// ME
             ViewHolderMe viewHolderMe = (ViewHolderMe) holder;
@@ -161,10 +164,27 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     viewHolderMe.rl_maps.setVisibility(View.GONE);
                     viewHolderMe.mv_location.setVisibility(View.GONE);
 
-                    viewHolderMe.tv_msg.setText(lst_chat.get(position).getMessage());
-                    //text
+
+                    //temp
+
+                    try {
+                        String msgTemp=lst_chat.get(position).getMessage();
+                        int p=Integer.parseInt(msgTemp);
+                        viewHolderMe.tv_msg.setText( new String(Character.toChars(p)));
+
+                        viewHolderMe.tv_msg.setBackground(null);
+                        viewHolderMe.tv_msg.setBackgroundColor(Color.WHITE);
+                        viewHolderMe.tv_msg.setTextSize(mContext.getResources().getDimension(R.dimen._12sdp));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        viewHolderMe.tv_msg.setText(lst_chat.get(position).getMessage());
+                    }
+                    //temp
+
 
                     break;
+
+
                 case "image":
                     viewHolderMe.tv_msg.setVisibility(View.GONE);
                     viewHolderMe.chat_image.setVisibility(View.VISIBLE);
@@ -294,7 +314,28 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             if (lst_chat.get(position).getType().equals("text")) {
                 viewHolderOponent.tv_msg.setVisibility(View.VISIBLE);
                 viewHolderOponent.chat_image.setVisibility(View.GONE);
-                viewHolderOponent.tv_msg.setText(lst_chat.get(position).getMessage());
+                //temp
+
+                try {
+                    String msgTemp=lst_chat.get(position).getMessage();
+                    int p=Integer.parseInt(msgTemp);
+                    viewHolderOponent.tv_msg.setText( new String(Character.toChars(p)));
+                    viewHolderOponent.tv_msg.setBackground(null);
+                    viewHolderOponent.tv_msg.setBackgroundColor(Color.WHITE);
+                    viewHolderOponent.tv_msg.setTextSize(mContext.getResources().getDimension(R.dimen._12sdp));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    viewHolderOponent.tv_msg.setText(lst_chat.get(position).getMessage());
+                }
+                //temp
+//                viewHolderOponent.tv_msg.setText(lst_chat.get(position).getMessage());
+
+            } else if (lst_chat.get(position).getType().equals("typing")) {
+                viewHolderOponent.tv_msg.setVisibility(View.VISIBLE);
+                viewHolderOponent.chat_image.setVisibility(View.GONE);
+                viewHolderOponent.typing.setVisibility(View.VISIBLE);
+                viewHolderOponent.tv_msg.setVisibility(View.GONE);
+
 
             } else if (lst_chat.get(position).getType().equals("image")) {
                 viewHolderOponent.tv_msg.setVisibility(View.GONE);
@@ -394,9 +435,27 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         userInfo.setProfilePicPath(userImage);
         ChatMessage chat = new ChatMessage("text", userName, userImage, UserID, msg);
         chat.setUserInfo(info);
-        lst_chat.add(chat);
+        lst_chat.add(0, chat);
         notifyDataSetChanged();
 //        et_msg.setText("");
+    }
+
+    public void addTyping(String UserID, String userName, String userImage) {
+        UserInfo userInfo = new UserInfo();
+        ArrayList<UserInfo> info = new ArrayList<>();
+        info.add(userInfo);
+        userInfo.setProfilePicPath(userImage);
+        ChatMessage chat = new ChatMessage("typing", userName, userImage, UserID, "");
+        chat.setUserInfo(info);
+        lst_chat.add(0, chat);
+        ;
+        notifyDataSetChanged();
+//        et_msg.setText("");
+    }
+
+    public void removeTyping() {
+        lst_chat.remove(0);
+        notifyDataSetChanged();
     }
 
 //    public void addQuestion(String question) {
@@ -611,6 +670,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         ImageView chat_image;
         VideoView chat_video;
         TextView tv_msg;
+        LottieAnimationView typing;
         RelativeLayout rl_body;
 
         public ViewHolderOponent(View view) {
@@ -619,6 +679,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             chat_image = view.findViewById(R.id.chat_image);
             tv_msg = view.findViewById(R.id.tv_chat_oponent);
             chat_video = view.findViewById(R.id.chat_video);
+            typing = view.findViewById(R.id.typing);
             rl_body = view.findViewById(R.id.rl_body);
 
             tv_msg.setOnLongClickListener(new View.OnLongClickListener() {

@@ -7,13 +7,13 @@ import java.util.ArrayList;
 public class ChatList {
     String userId;
     String toUserId;
-    String unreadChat;
+    int unreadChat;
 
-    public String getUnreadChat() {
+    public int getUnreadChat() {
         return unreadChat;
     }
 
-    public void setUnreadChat(String unreadChat) {
+    public void setUnreadChat(int unreadChat) {
         this.unreadChat = unreadChat;
     }
 
