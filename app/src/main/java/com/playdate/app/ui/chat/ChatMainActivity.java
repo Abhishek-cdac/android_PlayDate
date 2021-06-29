@@ -162,6 +162,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         iv_mic.setOnClickListener(this);
         iv_circle.setOnClickListener(this);
         iv_smiley.setOnClickListener(this);
+        video_cal.setOnClickListener(this);
 
         createRoom();
         mSocket.on("chat_message_room", onNewMessage);
@@ -515,6 +516,9 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 
         }else if(id==R.id.iv_mic){
             startRecording();
+        }else if(id==R.id.video_cal){
+
+
         }else if(id==R.id.iv_smiley){
             if (isVisible) {
                 rv_smileys.setVisibility(View.GONE);
@@ -540,5 +544,4 @@ interface onImageSelectListener {
 
     void onGallerySelect();
 }
-
 
