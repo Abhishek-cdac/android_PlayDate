@@ -1,4 +1,4 @@
-package com.playdate.app.business.couponsGenerate;
+package com.playdate.app.business.couponsGenerate.dialogs;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,11 +21,11 @@ import android.widget.RelativeLayout;
 import com.playdate.app.R;
 import com.playdate.app.business.chooselevel.ChooseLevelActivity;
 
-public class FragCouponCreated extends Dialog {
+public class DialogCouponCreated extends Dialog {
 
     ImageView iv_close;
 
-    public FragCouponCreated(@NonNull Context context) {
+    public DialogCouponCreated(@NonNull Context context) {
         super(context,R.style.My_Dialog);
         WindowManager.LayoutParams wlmp = getWindow().getAttributes();
 

@@ -106,6 +106,7 @@
     <string name="create_date">Create Date</string>
     <string name="buy_coins">Buy Coins</string>
     <string name="send_coins">Send Coins</string>
+    <string name="confirm">Confirm</string>
     <string name="keep_playing">Keep Playing</string>
     <string name="finish_date">Finish Date</string>
     <string name="use_date_coin">Use Date Coin</string>
