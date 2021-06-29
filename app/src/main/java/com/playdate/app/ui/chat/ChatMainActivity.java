@@ -111,6 +111,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     RecyclerView.LayoutManager manager;
     private int PageNumber = 1;
     JSONObject objNotTyping;
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,7 +152,6 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         rv_smileys.setLayoutManager(manager1);
 
 
-
         try {
             Intent mIntent = getIntent();
             if (null != mIntent) {
@@ -171,7 +171,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         getEmoticon();
 //        addQuestions();
 
-        ChatSmileyAdapter chatSmileyAdapter = new ChatSmileyAdapter(lstSmiley,this);
+        ChatSmileyAdapter chatSmileyAdapter = new ChatSmileyAdapter(lstSmiley, this);
         rv_smileys.setAdapter(chatSmileyAdapter);
 
         chat_name.setOnClickListener(this);
@@ -187,6 +187,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         createRoom();
         mSocket.on("chat_message_room", onNewMessage);
         mSocket.on("typing", onTyping);
+        readMsgEmit();
 
         JSONObject objTyping = getJOBTyping(true);
         objNotTyping = getJOBTyping(false);
@@ -232,11 +233,25 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 
     }
 
+    private void readMsgEmit() {
+        try {
+            JSONObject readMsg = new JSONObject();
+
+            readMsg.put("userId", pref.getStringVal(SessionPref.LoginUserID));
+            readMsg.put("chatId", chatId);
+
+            mSocket.emit("chat_message_read", readMsg);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
     private Runnable input_finish_checker = new Runnable() {
         public void run() {
             if (System.currentTimeMillis() > (last_text_edit + delay - 500)) {
-                if(null!=objNotTyping)
-                mSocket.emit("typing", objNotTyping);
+                if (null != objNotTyping)
+                    mSocket.emit("typing", objNotTyping);
             }
         }
     };
@@ -581,7 +596,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     public void onSmileyChange(int position) {
         int smiley = lstSmiley.get(position);
 //        Drawable drawable = getResources().getDrawable(smiley);
-        sendMessgae(""+smiley);
+        sendMessgae("" + smiley);
 
     }
 
@@ -707,7 +722,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 
     @Override
     protected void onDestroy() {
-        if(null!=handler){
+        if (null != handler) {
             handler.removeCallbacksAndMessages(null);
         }
         super.onDestroy();
