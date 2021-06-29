@@ -115,26 +115,14 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         try {
-            if (!pref.getStringVal(SessionPref.LoginUserID).equals(lst_msgs.get(position).getLstFrom().get(0).getUserId())) {
-                holder.user_name.setText(lst_msgs.get(position).getLstFrom().get(0).getUsername());
-                picasso.load(lst_msgs.get(position).getLstFrom().get(0).getProfilePicPath()).placeholder(R.drawable.profile).into(holder.profile_image);
-                if(lst_msgs.get(position).getLstFrom().get(0).getOnlineStatus().toLowerCase().equals("online")){
-                    holder.img_active.setVisibility(View.VISIBLE);
-                }else{
-                    holder.img_active.setVisibility(View.GONE);
-                }
-
-
-
-            } else if (!pref.getStringVal(SessionPref.LoginUserID).equals(lst_msgs.get(position).getLstToUser().get(0).getUserId())) {
-                holder.user_name.setText(lst_msgs.get(position).getLstToUser().get(0).getUsername());
-                picasso.load(lst_msgs.get(position).getLstToUser().get(0).getProfilePicPath()).placeholder(R.drawable.profile).into(holder.profile_image);
-                if(lst_msgs.get(position).getLstToUser().get(0).getOnlineStatus().toLowerCase().equals("online")){
-                    holder.img_active.setVisibility(View.VISIBLE);
-                }else{
-                    holder.img_active.setVisibility(View.GONE);
-                }
+            holder.user_name.setText(lst_msgs.get(position).getLstFrom().get(0).getUsername());
+            picasso.load(lst_msgs.get(position).getLstFrom().get(0).getProfilePicPath()).placeholder(R.drawable.profile).into(holder.profile_image);
+            if (lst_msgs.get(position).getLstFrom().get(0).getOnlineStatus().toLowerCase().equals("online")) {
+                holder.img_active.setVisibility(View.VISIBLE);
+            } else {
+                holder.img_active.setVisibility(View.GONE);
             }
+
 
             holder.msg.setText(lst_msgs.get(position).getLastMsg().get(0).getMessage());
         } catch (Exception e) {
