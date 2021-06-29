@@ -13,7 +13,16 @@
         android:layout_height="@dimen/_130sdp"
         android:layout_centerHorizontal="true"
         android:background="@drawable/coupon_bg">
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_35sdp"
+            android:paddingHorizontal="@dimen/_20sdp"
+            android:text="CURRENT POINTS"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_18sdp"
+            android:textStyle="bold" />
         <TextView
             android:id="@+id/txt_points"
             android:layout_width="wrap_content"

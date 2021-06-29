@@ -4,12 +4,12 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 
-import java.io.Serializable;
-import java.util.List;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.playdate.app.model.chat_models.ChatAttachment;
+import com.playdate.app.model.UserInfo;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ChatMessage {
@@ -62,9 +62,47 @@ public class ChatMessage {
     @SerializedName("type")
     @Expose
     private String type;
-    @SerializedName("text")
-    @Expose
-    private String text;
+
+
+    private String message;
+    private String entryDate;
+    private String userId;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    @SerializedName("UserInfo")
+    ArrayList<UserInfo> UserInfo;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getEntryDate() {
+        return entryDate;
+    }
+
+    public void setEntryDate(String entryDate) {
+        this.entryDate = entryDate;
+    }
+
+    public ArrayList<com.playdate.app.model.UserInfo> getUserInfo() {
+        return UserInfo;
+    }
+
+    public void setUserInfo(ArrayList<com.playdate.app.model.UserInfo> userInfo) {
+        UserInfo = userInfo;
+    }
+
     @SerializedName("from")
     @Expose
     private String from;
@@ -89,13 +127,6 @@ public class ChatMessage {
         this.type = type;
     }
 
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
 
     public String getFrom() {
         return from;
@@ -165,7 +196,6 @@ public class ChatMessage {
 //    }
 
 
-
 //    public ChatMessage(String type, String from, String to, Drawable drawable) {
 //        this.type = type;
 //        this.from = from;
@@ -183,15 +213,14 @@ public class ChatMessage {
 
     String UserName;
     String UserImage;
-    String UserID;
 
 
-    public ChatMessage(String Type,String userName, String userImage, String userID, String msg) {
+    public ChatMessage(String Type, String userName, String userImage, String userID, String msg) {
         this.type = Type;
         UserName = userName;
         UserImage = userImage;
-        UserID = userID;
-        this.text = msg;
+        userId = userID;
+        this.message = msg;
     }
 
     public String getUserName() {
@@ -211,11 +240,11 @@ public class ChatMessage {
     }
 
     public String getUserID() {
-        return UserID;
+        return userId;
     }
 
     public void setUserID(String userID) {
-        UserID = userID;
+        userId = userID;
     }
 
 

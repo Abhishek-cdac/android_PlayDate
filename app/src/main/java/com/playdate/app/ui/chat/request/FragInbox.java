@@ -99,21 +99,12 @@ public class FragInbox extends Fragment implements onClickEventListener {
 
         try {
             if (null != lst_chat_users) {
-                if (!pref.getStringVal(SessionPref.LoginUserID).equals(lst_chat_users.get(position).getLstFrom().get(0).getUserId())) {
-                    Intent mIntent = new Intent(getActivity(), ChatMainActivity.class);
-                    mIntent.putExtra("Name", lst_chat_users.get(position).getLstFrom().get(0).getUsername());
-                    mIntent.putExtra("Image", lst_chat_users.get(position).getLstFrom().get(0).getProfilePicPath());
-                    mIntent.putExtra("UserID", lst_chat_users.get(position).getLstFrom().get(0).getUserId());
-                    mIntent.putExtra("chatId", lst_chat_users.get(position).getChatId());
-                    startActivity(mIntent);
-                } else if (!pref.getStringVal(SessionPref.LoginUserID).equals(lst_chat_users.get(position).getLstToUser().get(0).getUserId())) {
-                    Intent mIntent = new Intent(getActivity(), ChatMainActivity.class);
-                    mIntent.putExtra("Name", lst_chat_users.get(position).getLstToUser().get(0).getUsername());
-                    mIntent.putExtra("Image", lst_chat_users.get(position).getLstToUser().get(0).getProfilePicPath());
-                    mIntent.putExtra("UserID", lst_chat_users.get(position).getLstToUser().get(0).getUserId());
-                    mIntent.putExtra("chatId", lst_chat_users.get(position).getChatId());
-                    startActivity(mIntent);
-                }
+                Intent mIntent = new Intent(getActivity(), ChatMainActivity.class);
+                mIntent.putExtra("Name", lst_chat_users.get(position).getLstFrom().get(0).getUsername());
+                mIntent.putExtra("Image", lst_chat_users.get(position).getLstFrom().get(0).getProfilePicPath());
+                mIntent.putExtra("UserID", lst_chat_users.get(position).getLstFrom().get(0).getUserId());
+                mIntent.putExtra("chatId", lst_chat_users.get(position).getChatId());
+                startActivity(mIntent);
 
 
             }

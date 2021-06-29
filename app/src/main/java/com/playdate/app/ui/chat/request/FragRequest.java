@@ -47,7 +47,7 @@ public class FragRequest extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag_request_list, container, false);
         recyclerView = view.findViewById(R.id.friend_list);
-        callApiForChats();
+//        callApiForChats();
         return view;
     }
 

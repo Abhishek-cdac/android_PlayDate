@@ -30,7 +30,6 @@
             android:layout_height="@dimen/_30sdp"
             android:layout_centerInParent="true"
             android:layout_toRightOf="@+id/arrow_back"
-            android:src="@drawable/model1"
             app:civ_border_color="@android:color/transparent" />
 
         <LinearLayout
@@ -87,6 +86,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/rv_smileys"
+        android:layout_marginBottom="@dimen/_5sdp"
         android:layout_below="@+id/main_menu">
 
         <androidx.recyclerview.widget.RecyclerView
