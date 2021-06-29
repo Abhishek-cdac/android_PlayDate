@@ -4,25 +4,23 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
-import com.playdate.app.ui.anonymous_question.adapter.SmileyAdapter;
 
 import java.util.ArrayList;
 
 public class ChatSmileyAdapter extends RecyclerView.Adapter<ChatSmileyAdapter.ViewHolder> {
     Context mContext;
     ArrayList<Integer> list;
-//    FragChatMain ref;
+    ChatMainActivity chatMainActivity;
 
-    public ChatSmileyAdapter(ArrayList<Integer> list) {
+    public ChatSmileyAdapter(ArrayList<Integer> list, ChatMainActivity chatMainActivity) {
         this.list = list;
-//        this.ref = ref;
+        this.chatMainActivity = chatMainActivity;
     }
 
     @NonNull
@@ -35,7 +33,7 @@ public class ChatSmileyAdapter extends RecyclerView.Adapter<ChatSmileyAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ChatSmileyAdapter.ViewHolder holder, int position) {
-        holder.ll_color.setBackground(mContext.getDrawable(list.get(position)));
+        holder.txt_smiley.setText(new String(Character.toChars(list.get(position))));
     }
 
     @Override
@@ -44,19 +42,19 @@ public class ChatSmileyAdapter extends RecyclerView.Adapter<ChatSmileyAdapter.Vi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        LinearLayout ll_color;
-        CardView card_smiley;
+        TextView txt_smiley;
+//        CardView card_smiley;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            ll_color = itemView.findViewById(R.id.ll_color);
-            card_smiley = itemView.findViewById(R.id.card_smiley);
-            card_smiley.getLayoutParams().height = 100;
-            card_smiley.getLayoutParams().width = 100;
-            card_smiley.setPadding(0, 0, 0, 0);
-            ll_color.getLayoutParams().height = 100;
-            ll_color.getLayoutParams().width = 100;
-//            itemView.setOnClickListener(view -> ref.onSmileyChange(getAdapterPosition()));
+            txt_smiley = itemView.findViewById(R.id.txt_smiley);
+//            card_smiley = itemView.findViewById(R.id.card_smiley);
+//            card_smiley.getLayoutParams().height = 100;
+//            card_smiley.getLayoutParams().width = 100;
+//            card_smiley.setPadding(0, 0, 0, 0);
+//            txt_smiley.getLayoutParams().height = 100;
+//            txt_smiley.getLayoutParams().width = 100;
+            itemView.setOnClickListener(view -> chatMainActivity.onSmileyChange(getAdapterPosition()));
         }
     }
 }

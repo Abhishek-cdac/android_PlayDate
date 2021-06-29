@@ -217,7 +217,7 @@
                 android:layout_height="@dimen/_12sdp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/black_add">
+                android:src="@drawable/add_circle">
 
             </ImageView>
 

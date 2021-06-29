@@ -18,7 +18,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MyViewHolder> {
-    private List<Inbox> inboxList;
+    private final List<Inbox> inboxList;
     Onclick itemClick;
 
     public InboxAdapter(List<Inbox> inboxList, Onclick itemClick) {
@@ -33,10 +33,10 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MyViewHolder
 
         public MyViewHolder(View view) {
             super(view);
-            txt_time = (TextView) view.findViewById(R.id.txt_time);
-            title = (TextView) view.findViewById(R.id.user_name);
-            txt_notify = (TextView) view.findViewById(R.id.txt_notify);
-            msg = (TextView) view.findViewById(R.id.txt_msg);
+            txt_time = view.findViewById(R.id.txt_time);
+            title = view.findViewById(R.id.user_name);
+            txt_notify = view.findViewById(R.id.txt_count);
+            msg = view.findViewById(R.id.txt_msg);
             main_menu = view.findViewById(R.id.main_rl);
             img_more = view.findViewById(R.id.img_more);
             profile_image = view.findViewById(R.id.profile_image);

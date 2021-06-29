@@ -28,7 +28,7 @@ import java.util.ArrayList;
 public class RequestChatFragment extends Fragment implements View.OnClickListener {
     ChattingAdapter chattingAdapter;
     FragInbox inboxFrag;
-    FragRequest requestFrag;
+//    FragRequest requestFrag;
     TextView txt_count;
 
 
@@ -52,16 +52,16 @@ public class RequestChatFragment extends Fragment implements View.OnClickListene
         RelativeLayout rl_page = view.findViewById(R.id.rl_page);
 
         tabLayout.addTab(tabLayout.newTab().setText("Inbox"));
-        tabLayout.addTab(tabLayout.newTab().setText("   Requests   "));
+//        tabLayout.addTab(tabLayout.newTab().setText("   Requests   "));
 
         ArrayList<Fragment> lstPages = new ArrayList<>();
         inboxFrag = new FragInbox();
-        requestFrag = new FragRequest();
+//        requestFrag = new FragRequest();
 
         lstPages.add(inboxFrag);
-        lstPages.add(requestFrag);
+//        lstPages.add(requestFrag);
 
-        RequestChatAdapter pagerAdapter = new RequestChatAdapter(getChildFragmentManager(), tabLayout.getTabCount(), lstPages);
+        RequestChatAdapter pagerAdapter = new RequestChatAdapter(getChildFragmentManager(),1, lstPages);
         viewPager.setAdapter(pagerAdapter);
         viewPager.setCurrentItem(0);
         tabLayout.setTabIndicatorFullWidth(false);
@@ -95,10 +95,14 @@ public class RequestChatFragment extends Fragment implements View.OnClickListene
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 try {
-                    if (null != inboxFrag || null != requestFrag) {
+                    if (null != inboxFrag) {
                         inboxFrag.filter(s.toString());
-                        requestFrag.filter(s.toString());
+//                        requestFrag.filter(s.toString());
                     }
+//                    if (null != inboxFrag || null != requestFrag) {
+//                        inboxFrag.filter(s.toString());
+//                        requestFrag.filter(s.toString());
+//                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

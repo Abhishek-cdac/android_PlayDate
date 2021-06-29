@@ -7,12 +7,22 @@ import java.util.ArrayList;
 public class ChatList {
     String userId;
     String toUserId;
+    int unreadChat;
+
+    public int getUnreadChat() {
+        return unreadChat;
+    }
+
+    public void setUnreadChat(int unreadChat) {
+        this.unreadChat = unreadChat;
+    }
+
     String chatId;
     @SerializedName("fromUser")
     ArrayList<FromUser>lstFrom;
 
-    @SerializedName("toUser")
-    ArrayList<FromUser>lstToUser;
+//    @SerializedName("toUser")
+//    ArrayList<FromUser>lstToUser;
 
     @SerializedName("chatMessage")
     ArrayList<ChatMessages>lastMsg;
@@ -33,13 +43,13 @@ public class ChatList {
         this.lstFrom = lstFrom;
     }
 
-    public ArrayList<FromUser> getLstToUser() {
-        return lstToUser;
-    }
-
-    public void setLstToUser(ArrayList<FromUser> lstToUser) {
-        this.lstToUser = lstToUser;
-    }
+//    public ArrayList<FromUser> getLstToUser() {
+//        return lstToUser;
+//    }
+//
+//    public void setLstToUser(ArrayList<FromUser> lstToUser) {
+//        this.lstToUser = lstToUser;
+//    }
 
     public ArrayList<ChatMessages> getLastMsg() {
         return lastMsg;

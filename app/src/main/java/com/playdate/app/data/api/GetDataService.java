@@ -22,6 +22,7 @@ import com.playdate.app.model.RegisterResult;
 import com.playdate.app.model.RestMain;
 import com.playdate.app.model.RestaurentModel;
 import com.playdate.app.model.SavedPostModel;
+import com.playdate.app.model.chat_models.ChatMsgResp;
 import com.playdate.app.model.chat_models.ChatResponse;
 import com.playdate.app.model.chat_models.ChatUserList;
 import com.playdate.app.ui.social.model.PostHistory;
@@ -289,7 +290,9 @@ public interface GetDataService {
     @POST("user/get-chat-users")
     Call<ChatResponse> getChatUsers(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
-
+    @FormUrlEncoded
+    @POST("user/get-chat-message")
+    Call<ChatMsgResp> getChatMessage(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
 
 }

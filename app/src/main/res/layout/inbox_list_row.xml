@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    android:id="@+id/main_rl"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_rl"
     android:layout_width="match_parent"
-    android:background="@color/backgroundColour"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/backgroundColour">
 
     <LinearLayout
 
@@ -16,86 +15,85 @@
         android:orientation="horizontal"
         android:padding="@dimen/_10sdp">
 
-<FrameLayout
-    android:layout_width="@dimen/_32sdp"
-    android:layout_height="@dimen/_32sdp">
+        <FrameLayout
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profile_image"
-        android:layout_weight=".2"
-        android:layout_gravity="center"
-        android:layout_width="@dimen/_32sdp"
-        android:layout_height="@dimen/_32sdp"
-        android:layout_toRightOf="@+id/back_anonymous"
-        app:civ_border_color="@android:color/transparent" />
-    <ImageView
-        android:layout_gravity="top|left"
-        android:id="@+id/img_diamond"
-        android:visibility="visible"
-        android:layout_width="@dimen/_15sdp"
-        android:layout_height="@dimen/_15sdp"
-        android:src="@drawable/ic_diamond"
-        />
-    <ImageView
-        android:layout_gravity="top|right"
-        android:id="@+id/img_active"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_online"
-        />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_image"
+                android:layout_width="@dimen/_38sdp"
+                android:layout_height="@dimen/_38sdp"
+                android:layout_gravity="center"
+                android:layout_toRightOf="@+id/back_anonymous"
+                app:civ_border_color="@android:color/transparent" />
 
+            <ImageView
+                android:id="@+id/img_diamond"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
 
-</FrameLayout>
+                android:layout_gravity="top|left"
+                android:src="@drawable/ic_diamond"
+                android:visibility="gone" />
 
-    <LinearLayout
-        android:layout_weight="1"
-
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_toRightOf="@+id/profile_image"
-        android:orientation="vertical"
-        android:id="@+id/ll_name"
-        android:paddingHorizontal="@dimen/_8sdp">
-
-        <TextView
-            android:id="@+id/user_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/textColour"
-            android:textSize="@dimen/_12sdp" />
-
-        <TextView
-            android:id="@+id/txt_msg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/color_grey"
-            android:maxLines="1"
-            android:textSize="@dimen/_10sdp" />
+            <ImageView
+                android:id="@+id/img_active"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|right"
+                android:src="@drawable/ic_online"
+                android:visibility="gone" />
 
 
-    </LinearLayout>
+        </FrameLayout>
+
         <LinearLayout
-            android:layout_gravity="center"
-            android:layout_weight=".2"
-            android:layout_width="wrap_content"
+            android:id="@+id/ll_name"
+
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/ll_name"
-            android:id="@+id/ll_chat_details"
+            android:layout_toRightOf="@+id/profile_image"
+            android:layout_weight="1"
             android:orientation="vertical"
-            android:layout_alignParentEnd="true"
             android:paddingHorizontal="@dimen/_8sdp">
 
             <TextView
-                android:layout_gravity="center"
+                android:id="@+id/user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="sdsad"
+                android:textColor="@color/textColour"
+                android:textSize="@dimen/_12sdp" />
+
+            <TextView
+                android:id="@+id/txt_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:textColor="@color/color_grey"
+                android:textSize="@dimen/_10sdp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_chat_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_weight=".2"
+            android:gravity="end"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/_8sdp">
+
+            <TextView
                 android:id="@+id/txt_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:gravity="end"
                 android:textColor="@color/color_grey"
-                android:text="10:33"
-                android:gravity="center"
-                android:padding="@dimen/_4sdp"
-               android:textSize="@dimen/_8sdp" />
+                android:textSize="@dimen/_8sdp" />
 
 
             <ImageView
@@ -104,35 +102,37 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:src="@drawable/horizontal_more"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
             <TextView
-                android:visibility="gone"
-                android:layout_gravity="center"
-                android:id="@+id/txt_notify"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:text="10"
+                android:id="@+id/txt_count"
+                android:layout_width="@dimen/_18sdp"
+                android:layout_height="@dimen/_18sdp"
+                android:layout_gravity="end"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:background="@drawable/bg_pink"
                 android:gravity="center"
                 android:padding="@dimen/_4sdp"
-                android:background="@drawable/bg_pink"
-                android:textSize="@dimen/_8sdp" />
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_8sdp"
+                android:visibility="visible" />
 
 
         </LinearLayout>
+
         <ImageView
+            android:id="@+id/iv_delete_chat"
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
             android:layout_alignParentEnd="true"
             android:layout_gravity="center"
-            android:id="@+id/iv_delete_chat"
             android:layout_toRightOf="@+id/ll_name"
             android:layout_weight=".2"
             android:orientation="vertical"
-            android:visibility="gone"
             android:paddingHorizontal="@dimen/_8sdp"
-            android:src="@drawable/bin"/>
+            android:src="@drawable/bin"
+            android:visibility="gone" />
 
     </LinearLayout>
 </RelativeLayout>
