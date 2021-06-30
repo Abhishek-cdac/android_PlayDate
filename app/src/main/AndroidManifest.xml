@@ -53,9 +53,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PlayDate"
         android:usesCleartextTraffic="true">
-        <activity android:name=".business.couponsGenerate.dialogs.DialogCouponCreated"></activity>
+      <!--  <activity android:name=".business.couponsGenerate.dialogs.DialogCouponCreated" />-->
         <activity android:name=".business.chooselevel.ChooseLevelActivity" />
-        <activity android:name=".business.couponsGenerate.DialogCouponsGenerater" />
+       <!-- <activity android:name=".business.couponsGenerate.DialogCouponsGenerater" />-->
         <activity android:name=".business.businessphoto.BusinessUploadPhotoActivity" />
         <activity android:name=".business.businessbio.BusinessBioActivity" />
         <activity android:name=".business.startdate.BusinessStartingDateActivity" />
@@ -180,8 +180,7 @@
             android:name=".util.image_crop.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Base.Theme.AppCompat" />
-        <activity android:name=".business.dashboard_business.DashboardBusiness">
-        </activity>
+        <activity android:name=".business.dashboard_business.DashboardBusiness"></activity>
         <activity
             android:name=".ui.onboarding.OnBoardingActivity"
             android:screenOrientation="portrait"
@@ -191,7 +190,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".ui.coupons.ActivityCoupons"

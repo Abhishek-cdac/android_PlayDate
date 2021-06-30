@@ -75,11 +75,11 @@ public class BaseActivity extends AppCompatActivity {
 
         {
             try {
-               MyApplication application= (MyApplication) getApplication();
+                MyApplication application= (MyApplication) getApplication();
                 mSocket=application.getmSocket();
                 checkConnect();
-              //  mSocket.on("chat_message", onNewMessage);
-             //   mSocket.on("Data", onNewMessage);
+                //  mSocket.on("chat_message", onNewMessage);
+                //   mSocket.on("Data", onNewMessage);
 
 
             } catch (Exception e) {
@@ -117,10 +117,10 @@ public class BaseActivity extends AppCompatActivity {
                         jsonObject.put("userId", pref.getStringVal(SessionPref.LoginUserID));
                         jsonObject.put("token", pref.getStringVal(SessionPref.LoginUsertoken));
                         mSocket.emit("online", jsonObject);
-    //                    mSocket.emit("chat_message", "test messgae from ajit");
+                        //                    mSocket.emit("chat_message", "test messgae from ajit");
                     } catch (Exception e) {
                         e.printStackTrace();
-                      //  Toast.makeText(BaseActivity.this, "emit"+e.toString(), Toast.LENGTH_SHORT).show();
+                        //  Toast.makeText(BaseActivity.this, "emit"+e.toString(), Toast.LENGTH_SHORT).show();
                     }
 
 
