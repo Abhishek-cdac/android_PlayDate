@@ -294,6 +294,13 @@ public interface GetDataService {
     @POST("user/get-chat-message")
     Call<ChatMsgResp> getChatMessage(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
+    @Multipart
+    @POST("user/add-media?section=chat&mediaType=image")
+    Call<CommonModel> addmediaImage(@Header("Authorization") String token, @Part MultipartBody.Part filePart);
+
+    @Multipart
+    @POST("user/add-media?section=chat&mediaType=video")
+    Call<CommonModel> addmediaVideo(@Header("Authorization") String token, @Part MultipartBody.Part filePart);
 
 }
 

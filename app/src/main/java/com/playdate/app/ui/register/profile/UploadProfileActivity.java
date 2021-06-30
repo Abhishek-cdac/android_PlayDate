@@ -135,9 +135,6 @@ public class UploadProfileActivity extends AppCompatActivity {
         pd.show();
 
 
-
-
-
         File f = new File(getCacheDir(), "profile");
         try {
             f.createNewFile();
@@ -175,7 +172,7 @@ public class UploadProfileActivity extends AppCompatActivity {
         SessionPref pref = SessionPref.getInstance(this);
         MultipartBody.Part filePart = MultipartBody.Part.createFormData("userProfilePic", f.getName(), RequestBody.create(MediaType.parse("image/png"), f));
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-        Log.d("UPLOADFILEPART", String.valueOf(filePart));
+            Log.d("UPLOADFILEPART", String.valueOf(filePart));
         Call<LoginResponse> call = service.uploadImage("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), filePart);
         call.enqueue(new Callback<LoginResponse>() {
             @Override
@@ -258,9 +255,6 @@ public class UploadProfileActivity extends AppCompatActivity {
                 return;
             }
             if (requestCode == PICK_PHOTO_FOR_AVATAR) {
-
-
-
 
                 if (data.getData() == null) {
                     bitmap = (Bitmap) data.getExtras().get("data");
