@@ -41,16 +41,25 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
+import com.playdate.app.model.LoginResponse;
+import com.playdate.app.model.LoginUserDetails;
 import com.playdate.app.model.chat_models.ChatMessage;
 import com.playdate.app.model.chat_models.ChatMsgResp;
 import com.playdate.app.service.GpsTracker;
+import com.playdate.app.ui.dashboard.DashboardActivity;
+import com.playdate.app.ui.social.upload_media.PostMediaActivity;
 import com.playdate.app.util.common.BaseActivity;
+import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,6 +67,9 @@ import java.util.Map;
 import java.util.UUID;
 
 import io.socket.emitter.Emitter;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -336,6 +348,106 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             }
         });
     }
+
+
+    private void uploadImage() {
+        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
+        pd.show();
+
+        //create a file to write bitmap data
+        File currentFile = null;
+        /*if (isVideo) {
+
+            currentFile = new File(getIntent().getStringExtra("videoPath"));
+//            long length = currentFile.length();
+//            length = length / 1024;
+//            Toast.makeText(this, "Video size:" + length + "KB", Toast.LENGTH_LONG).show();
+        } else {*/
+            String filename = "";
+            filename = "profile.png";
+            currentFile = new File(getCacheDir(), filename);
+            try {
+                currentFile.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            FileOutputStream fos = null;
+            try {
+                fos = new FileOutputStream(currentFile);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                DashboardActivity.bitmap.compress(Bitmap.CompressFormat.JPEG, 40, stream);
+                byte[] byteArray = stream.toByteArray();
+                fos.write(byteArray);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                fos.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+      //  }
+
+
+        SessionPref pref = SessionPref.getInstance(this);
+        MultipartBody.Part filePart = null;
+        GetDataService service = null;
+        Call<LoginResponse> call;
+     /*   if (isVideo) {
+            filePart = MultipartBody.Part.createFormData("mediaFeed", currentFile.getName(), RequestBody.create(MediaType.parse("video/mp4"), currentFile));
+            service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+            call = service.uploadVideoToFeed("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), filePart);
+        } else {*/
+
+            filePart = MultipartBody.Part.createFormData("mediaFeed", currentFile.getName(), RequestBody.create(MediaType.parse("image/png"), currentFile));
+            service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+            call = service.uploadImageToFeed("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), filePart);
+      //  }
+
+
+        call.enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                pd.dismiss();
+                if (response.code() == 200) {
+
+                    if (response.body().getStatus() == 1) {
+                        LoginUserDetails user = response.body().getUserData();
+                     //   callAPIFeedPost(user.getMediaId());
+                    } else {
+                        new CommonClass().showDialogMsg(ChatMainActivity.this, "PlayDate", "An error occurred!", "Ok");
+                    }
+
+
+                } else {
+                    new CommonClass().showDialogMsg(ChatMainActivity.this, "PlayDate", "An error occurred!", "Ok");
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                t.printStackTrace();
+                pd.dismiss();
+            }
+        });
+    }
+
+
 
 
     void scrollTOEnd() {
@@ -705,11 +817,23 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             intent.putExtra("return-data", true);
             startActivityForResult(intent, REQUEST_TAKE_GALLERY_VIDEO);
         } else if (id == R.id.iv_camera) {
+            String[] PERMISSIONS = {
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+            };
+            ActivityCompat.requestPermissions(ChatMainActivity.this,
+                    PERMISSIONS,
+                    ALL_PERMISSIONS_RESULT);
 
+//            bottomNavigationView.setVisibility(View.VISIBLE);
+//            ll_camera_option.setVisibility(View.GONE);
+//            iv_play_date_logo.setVisibility(View.VISIBLE);
+            pickImage();
         } else if (id == R.id.iv_mic) {
             startRecording();
         } else if (id == R.id.iv_smiley) {
             if (isVisible) {
+
                 rv_smileys.setVisibility(View.GONE);
                 isVisible = false;
             } else {

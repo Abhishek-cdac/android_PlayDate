@@ -611,7 +611,6 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
             ll_her.setVisibility(View.GONE);
             ReplaceFrag(new FragSearchUser());
         } else if (id == R.id.iv_saved) {
-
             ll_friends.setVisibility(View.GONE);
             ll_mainMenu.setVisibility(View.GONE);
             ll_her.setVisibility(View.GONE);
