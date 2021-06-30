@@ -448,7 +448,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         chat.setUserInfo(info);
         lst_chat.add(0, chat);
         notifyDataSetChanged();
-//        et_msg.setText("");
+//      et_msg.setText("");
     }
 
     public void addTyping(String UserID, String userName, String userImage) {
@@ -459,7 +459,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         ChatMessage chat = new ChatMessage("typing", userName, userImage, UserID, "");
         chat.setUserInfo(info);
         lst_chat.add(0, chat);
-        ;
+
         notifyDataSetChanged();
 //        et_msg.setText("");
     }
@@ -525,7 +525,9 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         Toast.makeText(mContext, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
                         Drawable d = new BitmapDrawable(mContext.getResources(), bitmap);
 
-//                        lst_chat.add(new ChatMessage("image",d))
+                    //  lst_chat.add(new ChatMessage("image",d));
+                    // lst_chat.add(new ChatMessage( "media", userName, userImage, userId, d ));
+
                     } else {
                         Toast.makeText(mContext, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     }

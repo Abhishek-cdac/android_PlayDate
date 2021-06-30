@@ -44,8 +44,10 @@ import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.chat_models.ChatMessage;
 import com.playdate.app.model.chat_models.ChatMsgResp;
 import com.playdate.app.service.GpsTracker;
+import com.playdate.app.ui.dashboard.DashboardActivity;
 import com.playdate.app.util.common.BaseActivity;
 import com.playdate.app.util.common.TransparentProgressDialog;
+import com.playdate.app.util.image_crop.MainActivity;
 import com.playdate.app.util.session.SessionPref;
 
 import org.json.JSONException;
@@ -378,13 +380,10 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                 if (!lstChat.get(0).getType().equals("typing")) {
                     adapter.addTyping(data.getString("userId"), data.getString("username"), data.getString("profilePic"));
                 }
-
 //                Toast.makeText(this, "Opponent typing", Toast.LENGTH_SHORT).show();
             }
-//
 //            adapter.addToListText(data.getString("message"), data.getString("userId"), data.getString("username"), data.getString("profilePic"));
 //            scrollTOEnd();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -410,7 +409,6 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             et_msg.setText("");
             et_msg.requestFocus();
         }
-
     }
 
 
@@ -478,6 +476,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             if (resultCode == Activity.RESULT_OK) {
                 if (requestCode == PICK_PHOTO_FOR_AVATAR) {
 
+
                     if (data.getData() == null) {
                         bitmap = (Bitmap) data.getExtras().get("data");
                     } else {
@@ -487,16 +486,12 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                             e.printStackTrace();
                         }
                     }
-
                     if (null != bitmap) {
                         Log.d("BITMAP VALUE", bitmap.toString());
-//                        sheet.dismiss();
-
-//                        Drawable d = new BitmapDrawable(getResources(), bitmap);
+//                      sheet.dismiss();
+//                      Drawable d = new BitmapDrawable(getResources(), bitmap);
                         adapter.addToListImage(bitmap);
                         scrollTOEnd();
-
-
                     }
                 } else if (requestCode == REQUEST_TAKE_GALLERY_VIDEO) {
                     if (data != null) {
@@ -506,7 +501,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                         String selectedVideoPath = contentURI.toString();
 //                        String selectedVideoPath = getPath(contentURI);
                         Log.d("path", selectedVideoPath);
-//                        adapter.addVIdeo(contentURI);
+                   //    adapter.addVIdeo(contentURI);
                         scrollTOEnd();
 
 
@@ -521,10 +516,8 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                         Log.d("BITMAP VALUE", bitmap.toString());
                         sheet.dismiss();
                         Drawable d = new BitmapDrawable(getResources(), bitmap);
-//                        adapter.addImage(d);
+//                      adapter.addImage(d);
                         scrollTOEnd();
-
-
                     }
                 }
 
@@ -574,16 +567,19 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         }
     }
 
-    private void pickImage() {
+    private void pickImage()
+    {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         intent.setType("image/*");
         startActivityForResult(intent, PICK_PHOTO_FOR_AVATAR);
     }
 
-    private void getEmoticon() {
+    private void getEmoticon()
+    {
         for (int i = 0; i <= intEmoji.length; i++) {
 //            String emoji = new String(Character.toChars(i));
-            try {
+            try
+            {
                 lstSmiley.add(intEmoji[i]);
             } catch (Exception ex) {
                 ex.printStackTrace();
