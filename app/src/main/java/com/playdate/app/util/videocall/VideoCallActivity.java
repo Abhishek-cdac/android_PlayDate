@@ -41,7 +41,7 @@ public class VideoCallActivity extends AppCompatActivity implements RTCClientSes
         //localView.release(); // releases all related GL resources
         //localView.setScalingType(scalingType); //Set how the video will fill the allowed layout area
         // localView.setMirror(mirror); //Set if the video stream should be mirrored or not.
-        //localView.requestLayout(); // Request to invalidate view when something has changed
+        //localView.requestLayout(); // Request to invalidate vi-*ew when something has changed
 
 
         ConnectycubeChatService.getInstance().getVideoChatWebRTCSignalingManager().addSignalingManagerListener(new VideoChatSignalingManagerListener() {
