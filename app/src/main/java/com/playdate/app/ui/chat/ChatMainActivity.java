@@ -9,8 +9,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.media.MediaPlayer;
@@ -56,18 +54,27 @@ import com.playdate.app.util.MyApplication;
 import com.playdate.app.util.common.BaseActivity;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
-import com.playdate.app.videocall.activities.OpponentsActivity;
+import com.playdate.app.videocall.activities.CallActivity;
+import com.playdate.app.videocall.activities.PermissionsActivity;
 import com.playdate.app.videocall.services.LoginService;
 import com.playdate.app.videocall.util.QBResRequestExecutor;
+import com.playdate.app.videocall.utils.CollectionsUtils;
 import com.playdate.app.videocall.utils.Consts;
 import com.playdate.app.videocall.utils.PermissionsChecker;
 import com.playdate.app.videocall.utils.QBEntityCallbackImpl;
 import com.playdate.app.videocall.utils.SharedPrefsHelper;
 import com.playdate.app.videocall.utils.ToastUtils;
+import com.playdate.app.videocall.utils.WebRtcSessionManager;
 import com.quickblox.core.QBEntityCallback;
 import com.quickblox.core.exception.QBResponseException;
+import com.quickblox.core.request.GenericQueryRule;
+import com.quickblox.core.request.QBPagedRequestBuilder;
 import com.quickblox.users.QBUsers;
 import com.quickblox.users.model.QBUser;
+import com.quickblox.videochat.webrtc.QBRTCClient;
+import com.quickblox.videochat.webrtc.QBRTCSession;
+import com.quickblox.videochat.webrtc.QBRTCTypes;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -78,6 +85,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -123,14 +131,14 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     private MediaPlayer mediaPlayer;
     private String mFileName = null;
     private static final String[] permissions = {Manifest.permission.RECORD_AUDIO};
-    private String AudioSavePathInDevice = null;
+    private final String AudioSavePathInDevice = null;
     private TransparentProgressDialog pd;
     private String UserID = "";
 
     private final int REQUEST_AUDIO_PERMISSION_CODE = 1;
 
 
-    private Integer[] intEmoji = {
+    private final Integer[] intEmoji = {
             0x1F600, 0x1F603, 0x1F604, 0x1F601, 0x1F606, 0x1F605, 0x1F923, 0x1F602, 0x1F61A, 0x1F619,
             0x1F642, 0x1F643, 0x1F609, 0x1F60A, 0x1F607, 0x1F60B, 0x1F60D, 0x1F929, 0x1F618, 0x1F617,
             0x1F61C, 0x1F92A, 0x1F61D, 0x1F911, 0x1F917, 0x1F92B, 0x1F914, 0x1F910, 0x1F928, 0x1F610,
@@ -200,7 +208,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                 chatId = mIntent.getStringExtra("chatId");
             }
 
-            picasso.get().load(sender_photo).placeholder(R.drawable.cupertino_activity_indicator).into(profile_image);
+            Picasso.get().load(sender_photo).placeholder(R.drawable.cupertino_activity_indicator).into(profile_image);
             chat_name.setText(sender_name);
         } catch (Exception e) {
             e.printStackTrace();
@@ -269,6 +277,8 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 
         userForSave = createUserWithEnteredData();
         startSignUpNewUser(userForSave);
+        checker = new PermissionsChecker(getApplicationContext());
+        loadUsers();
 
     }
 
@@ -514,7 +524,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         super.onActivityResult(requestCode, resultCode, data);
         try {
             if (resultCode == Activity.RESULT_OK) {
-                if (requestCode == PICK_PHOTO_FOR_AVATAR|| requestCode== TAKE_PHOTO_CODE) {
+                if (requestCode == PICK_PHOTO_FOR_AVATAR || requestCode == TAKE_PHOTO_CODE) {
 
 
                     if (data.getData() == null) {
@@ -800,7 +810,6 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             }
         } else if (id == R.id.iv_circle) {
             new ChatBottomSheet("Extra", this).show(getSupportFragmentManager(), "ModalBottomSheet");
-            ;
         } else if (id == R.id.arrow_back || id == R.id.profile_image) {
             finish();
         } else if (id == R.id.iv_send) {
@@ -809,7 +818,6 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             pickVideo();
         } else if (id == R.id.iv_camera) {
             new ChatBottomSheet("", this).show(getSupportFragmentManager(), "ModalBottomSheet");
-            ;
         } else if (id == R.id.iv_mic) {
             startRecording();
         } else if (id == R.id.iv_smiley) {
@@ -932,15 +940,9 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     private void runNextScreen() {
         if (sharedPrefsHelper.hasQbUser()) {
             LoginService.start(ChatMainActivity.this, sharedPrefsHelper.getQbUser());
-            OpponentsActivity.start(ChatMainActivity.this);
+            startCall(true, sharedPrefsHelper.getQbUser());
+
         } else {
-//            new Handler().postDelayed(new Runnable() {
-//                @Override
-//                public void run() {
-//                    LoginActivity.start(ChatMainActivity.this);
-//                    finish();
-//                }
-//            }, SPLASH_DELAY);
         }
     }
 
@@ -987,7 +989,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 //                        Log.d(TAG, "SignUp Successful");
 //                        ChatMainActivity.result=result;
                         saveUserData(newUser);
-//                        loginToChat(result);
+                        loginToChat(result);
                     }
 
                     @Override
@@ -1010,8 +1012,10 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             @Override
             public void onSuccess(QBUser user, Bundle params) {
 //                Log.d(TAG, "SignIn Successful");
-                sharedPrefsHelper.saveQbUser(userForSave);
-                updateUserOnServer(qbUser);
+                sharedPrefsHelper.saveQbUser(user);
+                updateUserOnServer(user);
+                loginToChat(user);
+
             }
 
             @Override
@@ -1055,6 +1059,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 
     private void saveUserData(QBUser qbUser) {
         SharedPrefsHelper sharedPrefsHelper = SharedPrefsHelper.getInstance();
+        qbUser.setPassword(MyApplication.USER_DEFAULT_PASSWORD);
         sharedPrefsHelper.saveQbUser(qbUser);
     }
 
@@ -1071,6 +1076,89 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             qbUser.setPassword(MyApplication.USER_DEFAULT_PASSWORD);
         }
         return qbUser;
+    }
+
+
+//    private static final String TAG = OpponentsActivity.class.getSimpleName();
+
+    private static final int PER_PAGE_SIZE_100 = 100;
+    private static final String ORDER_RULE = "order";
+    private static final String ORDER_DESC_UPDATED = "desc date updated_at";
+    private PermissionsChecker checker;
+
+
+    private void loadUsers() {
+        ArrayList<GenericQueryRule> rules = new ArrayList<>();
+        rules.add(new GenericQueryRule(ORDER_RULE, ORDER_DESC_UPDATED));
+
+        QBPagedRequestBuilder qbPagedRequestBuilder = new QBPagedRequestBuilder();
+        qbPagedRequestBuilder.setRules(rules);
+        qbPagedRequestBuilder.setPerPage(PER_PAGE_SIZE_100);
+        qbPagedRequestBuilder.setPage(0);
+
+        QBUsers.getUserByLogin(userIDTo).performAsync(new QBEntityCallback<QBUser>() {
+            @Override
+            public void onSuccess(QBUser qbUsers, Bundle bundle) {
+
+
+                if (checker.lacksPermissions(Consts.PERMISSIONS)) {
+                    startPermissionsActivity(false);
+                }
+
+            }
+
+            @Override
+            public void onError(QBResponseException e) {
+            }
+        });
+    }
+
+    private void startPermissionsActivity(boolean checkOnlyAudio) {
+        PermissionsActivity.startActivity(this, checkOnlyAudio, Consts.PERMISSIONS);
+    }
+
+
+    private void startCall(boolean isVideoCall, QBUser qbUsers) {
+//        Log.d(TAG, "Starting Call");
+        List<QBUser> selectedUsers = new ArrayList<>();
+        selectedUsers.add(qbUsers);
+        ArrayList<Integer> opponentsList = CollectionsUtils.getIdsSelectedOpponents(selectedUsers);
+        QBRTCTypes.QBConferenceType conferenceType = isVideoCall
+                ? QBRTCTypes.QBConferenceType.QB_CONFERENCE_TYPE_VIDEO
+                : QBRTCTypes.QBConferenceType.QB_CONFERENCE_TYPE_AUDIO;
+//        Log.d(TAG, "conferenceType = " + conferenceType);
+
+        QBRTCClient qbrtcClient = QBRTCClient.getInstance(getApplicationContext());
+        QBRTCSession newQbRtcSession = qbrtcClient.createNewSessionWithOpponents(opponentsList, conferenceType);
+        WebRtcSessionManager.getInstance(this).setCurrentSession(newQbRtcSession);
+
+        // Make Users FullName Strings and ID's list for iOS VOIP push
+        String newSessionID = newQbRtcSession.getSessionID();
+        ArrayList<String> opponentsIDsList = new ArrayList<>();
+        ArrayList<String> opponentsNamesList = new ArrayList<>();
+        List<QBUser> usersInCall = selectedUsers;
+
+        // the Caller in exactly first position is needed regarding to iOS 13 functionality
+        usersInCall.add(0, qbUsers);
+
+        for (QBUser user : usersInCall) {
+            String userId = user.getId().toString();
+            String userName = "";
+            if (TextUtils.isEmpty(user.getFullName())) {
+                userName = user.getLogin();
+            } else {
+                userName = user.getFullName();
+            }
+
+            opponentsIDsList.add(userId);
+            opponentsNamesList.add(userName);
+        }
+
+//        String opponentsIDsString = TextUtils.join(",", opponentsIDsList);
+//        String opponentNamesString = TextUtils.join(",", opponentsNamesList);
+
+//        Log.d(TAG, "New Session with ID: " + newSessionID + "\n Users in Call: " + "\n" + opponentsIDsString + "\n" + opponentNamesString);
+        CallActivity.start(this, false);
     }
 
 

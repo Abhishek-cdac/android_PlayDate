@@ -7,10 +7,10 @@ import androidx.lifecycle.ViewModel;
 
 public class ConnectYourPartnerViewModel extends ViewModel {
 
-    private MutableLiveData<Boolean> inviteClick = new MutableLiveData<>();
-    private MutableLiveData<Boolean> BackClick = new MutableLiveData<>();
-    private MutableLiveData<Boolean> NextClick = new MutableLiveData<>();
-    private MutableLiveData<Boolean> joinClick = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> inviteClick = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> BackClick = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> NextClick = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> joinClick = new MutableLiveData<>();
 
 
     public void setJoin(){

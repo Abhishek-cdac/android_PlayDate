@@ -9,11 +9,11 @@ import androidx.lifecycle.ViewModel;
 public class GenderViewModel extends ViewModel {
     public MutableLiveData<Boolean> RegisterClick = new MutableLiveData<>();
 
-    private MutableLiveData<Boolean> MaleClick = new MutableLiveData<>();
-    private MutableLiveData<Boolean> BackClick = new MutableLiveData<>();
-    private MutableLiveData<Boolean> NextClick = new MutableLiveData<>();
-    private MutableLiveData<Boolean> FemaleClick = new MutableLiveData<>();
-    private MutableLiveData<Boolean> NBClick = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> MaleClick = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> BackClick = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> NextClick = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> FemaleClick = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> NBClick = new MutableLiveData<>();
     private MutableLiveData<Boolean> Register;
 
     public MutableLiveData<Boolean> onRegisterUser() {

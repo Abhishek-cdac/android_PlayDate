@@ -171,11 +171,7 @@ public class BusinessStartingDateViewModel extends ViewModel {
 
     public void setYear(int position) {
         if (position != 0) {
-            if (isLeapYear(Integer.parseInt(yearlist.get(position)))) {
-                isLeapYear = true;
-            } else {
-                isLeapYear = false;
-            }
+            isLeapYear = isLeapYear(Integer.parseInt(yearlist.get(position)));
             fetchDays();
 
         }

@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel;
 
 public class RecordVideoViewModel extends ViewModel {
 
-    private  MutableLiveData<Boolean> NextClick = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> NextClick = new MutableLiveData<>();
 
 
     public MutableLiveData<Boolean> OnNextClick() {

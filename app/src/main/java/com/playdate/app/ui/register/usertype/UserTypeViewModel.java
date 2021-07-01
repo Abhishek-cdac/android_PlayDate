@@ -9,10 +9,10 @@ import androidx.lifecycle.ViewModel;
 public class UserTypeViewModel extends ViewModel {
     public MutableLiveData<Boolean> RegisterClick = new MutableLiveData<>();
 
-    private MutableLiveData<Boolean> SingleClick = new MutableLiveData<>();
-    private MutableLiveData<Boolean> BackClick = new MutableLiveData<>();
-    private MutableLiveData<Boolean> NextClick = new MutableLiveData<>();
-    private MutableLiveData<Boolean> BusinessClick = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> SingleClick = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> BackClick = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> NextClick = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> BusinessClick = new MutableLiveData<>();
     private MutableLiveData<Boolean> Register;
 
     public MutableLiveData<Boolean> onRegisterUser() {

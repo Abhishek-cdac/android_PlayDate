@@ -8,10 +8,10 @@ import androidx.lifecycle.ViewModel;
 public class RelatiponShipViewModel extends ViewModel {
     public MutableLiveData<Boolean> RegisterClick = new MutableLiveData<>();
 
-    private MutableLiveData<Boolean> SingleClick = new MutableLiveData<>();
-    private MutableLiveData<Boolean> BackClick = new MutableLiveData<>();
-    private MutableLiveData<Boolean> NextClick = new MutableLiveData<>();
-    private MutableLiveData<Boolean> TakenClick = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> SingleClick = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> BackClick = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> NextClick = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> TakenClick = new MutableLiveData<>();
     private MutableLiveData<Boolean> Register;
 
     public MutableLiveData<Boolean> onRegisterUser() {

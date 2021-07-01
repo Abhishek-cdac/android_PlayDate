@@ -21,7 +21,7 @@ import com.quickblox.core.QBEntityCallback;
 import com.quickblox.core.exception.QBResponseException;
 import com.quickblox.core.request.GenericQueryRule;
 import com.quickblox.core.request.QBPagedRequestBuilder;
-import com.playdate.app.util.MyApplication;;
+import com.playdate.app.util.MyApplication;
 import com.playdate.app.R;
 import com.playdate.app.videocall.activities.CallActivity;
 import com.playdate.app.videocall.db.QbUsersDbManager;

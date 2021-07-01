@@ -41,7 +41,7 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
 
     private final Picasso picasso;
 
-    private ArrayList<NotificationData> notification_list;
+    private final ArrayList<NotificationData> notification_list;
 
 
     public FragNotificationTypeAdapter(FragmentActivity activity, ArrayList<NotificationData> lst_notifications, Onclick itemClick) {

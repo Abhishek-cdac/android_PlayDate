@@ -25,7 +25,7 @@ public class CouponStoreAdapter extends RecyclerView.Adapter<CouponStoreAdapter.
     private ArrayList<GetCouponsData> coupon_list = new ArrayList<>();
     private final Onclick itemClick;
     private final Picasso picasso;
-    private CommonClass clsCommon;
+    private final CommonClass clsCommon;
     private FragCouponStore ref;
     private int currentPoints;
 

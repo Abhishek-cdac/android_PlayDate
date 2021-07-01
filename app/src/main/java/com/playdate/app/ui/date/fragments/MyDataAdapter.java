@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class MyDataAdapter extends RecyclerView.Adapter<MyDataAdapter.ViewHolder> {
     Onclick itemClick;
 
-    private ArrayList<CreateDateGetPartnerData> list;
+    private final ArrayList<CreateDateGetPartnerData> list;
     private FragSelectPartner frag;
 
     Picasso picasso;

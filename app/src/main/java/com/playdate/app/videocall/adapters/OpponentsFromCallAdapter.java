@@ -32,10 +32,10 @@ public class OpponentsFromCallAdapter extends RecyclerView.Adapter<OpponentsFrom
     private final int itemHeight;
     private final int itemWidth;
 
-    private Context context;
-    private BaseConversationFragment baseConversationFragment;
-    private List<QBUser> opponents;
-    private LayoutInflater inflater;
+    private final Context context;
+    private final BaseConversationFragment baseConversationFragment;
+    private final List<QBUser> opponents;
+    private final LayoutInflater inflater;
     private OnAdapterEventListener adapterListener;
 
     public OpponentsFromCallAdapter(Context context, BaseConversationFragment baseConversationFragment, List<QBUser> users, int width, int height) {
@@ -126,10 +126,10 @@ public class OpponentsFromCallAdapter extends RecyclerView.Adapter<OpponentsFrom
         public ViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
-            opponentsName = (TextView) itemView.findViewById(R.id.opponentName);
-            connectionStatus = (TextView) itemView.findViewById(R.id.connectionStatus);
-            opponentView = (QBRTCSurfaceView) itemView.findViewById(R.id.opponentView);
-            progressBar = (ProgressBar) itemView.findViewById(R.id.progress_bar_adapter);
+            opponentsName = itemView.findViewById(R.id.opponentName);
+            connectionStatus = itemView.findViewById(R.id.connectionStatus);
+            opponentView = itemView.findViewById(R.id.opponentView);
+            progressBar = itemView.findViewById(R.id.progress_bar_adapter);
         }
 
         private void setListener(ViewHolderClickListener viewHolderClickListener) {

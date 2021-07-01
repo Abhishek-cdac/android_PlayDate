@@ -16,7 +16,7 @@ public class SeekBarPreference extends Preference implements SeekBar.OnSeekBarCh
     private static final String SEEKBAR_NS = "http://schemas.android.com/apk/res-auto";
 
 
-    private Context context;
+    private final Context context;
     private SeekBar seekBar;
     private int progress, maxSeekBarValue, minSeekBarValue, seekBarStepSize;
 
@@ -55,7 +55,7 @@ public class SeekBarPreference extends Preference implements SeekBar.OnSeekBarCh
     @Override
     protected void onBindView(View view) {
         super.onBindView(view);
-        seekBar = (SeekBar) view.findViewById(R.id.seekbar);
+        seekBar = view.findViewById(R.id.seekbar);
         seekBar.setMax(maxSeekBarValue);
         seekBar.setProgress(progress);
         seekBar.setOnSeekBarChangeListener(this);

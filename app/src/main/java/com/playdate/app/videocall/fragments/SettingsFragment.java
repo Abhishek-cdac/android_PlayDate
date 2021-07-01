@@ -25,7 +25,7 @@ public class SettingsFragment extends PreferenceFragment {
                              Bundle savedInstanceState) {
         View v = super.onCreateView(inflater, container, savedInstanceState);
         if (v != null) {
-            ListView lv = (ListView) v.findViewById(android.R.id.list);
+            ListView lv = v.findViewById(android.R.id.list);
             lv.setPadding(0, 0, 0, 0);
         }
         return v;

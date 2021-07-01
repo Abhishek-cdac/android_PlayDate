@@ -4,34 +4,13 @@
     style="@style/MatchParent"
     tools:ignore="RtlHardcoded,RtlSymmetry">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        style="@style/MatchParent"
-        android:orientation="vertical">
-
-        <TextView
-            style="@style/MatchWidth"
-            android:layout_marginLeft="12dp"
-            android:padding="4dp"
-            android:text="@string/text_select_users_to_call"
-            tools:ignore="RtlHardcoded" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/list_select_users"
-            style="@style/ListViewWithoutDividerStyle"
-            android:layout_weight="9"
-            android:fadeScrollbars="false"
-            android:scrollbars="vertical"
-            tools:listitem="@layout/list_item_user" />
-
-        <Button
-            android:id="@+id/btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Connect">
-
-
-        </Button>
-    </LinearLayout>
+    <TextView
+        style="@style/MatchWidth"
+        android:layout_gravity="center"
+        android:layout_marginLeft="12dp"
+        android:gravity="center"
+        android:padding="4dp"
+        android:id="@+id/txt_calling"
+        android:text="Calling ..."
+        tools:ignore="RtlHardcoded" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

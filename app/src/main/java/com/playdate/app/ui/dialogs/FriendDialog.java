@@ -114,9 +114,9 @@ public class FriendDialog extends Dialog implements OnRelationShipSelected {
 class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder> {
 
     private Context mcontext;
-    private ArrayList<MatchListUser> lstUserSuggestions;
-    private boolean isForRelationship;
-    private FriendDialog ref;
+    private final ArrayList<MatchListUser> lstUserSuggestions;
+    private final boolean isForRelationship;
+    private final FriendDialog ref;
 
     public FriendAdapter(ArrayList<MatchListUser> lstUserSuggestions, boolean isForRelationship, FriendDialog ref) {
         this.lstUserSuggestions = lstUserSuggestions;

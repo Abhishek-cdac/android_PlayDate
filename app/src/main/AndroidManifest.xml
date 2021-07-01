@@ -254,18 +254,29 @@
         <activity android:name=".videocall.activities.BaseActivity">
 
         </activity>
-        <activity android:name=".videocall.activities.OpponentsActivity">
+        <activity
+            android:name=".videocall.activities.OpponentsActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
 
-        </activity>
 
-        <activity android:name=".videocall.activities.PermissionsActivity">
+        <activity android:name=".videocall.activities.PermissionsActivity"
+            android:screenOrientation="portrait" />
 
-        </activity>
 
-        <activity android:name=".videocall.activities.SettingsActivity">
+        <activity
+            android:name=".videocall.activities.SettingsActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:screenOrientation="portrait" />
 
-        </activity>
-
+        <activity
+            android:name=".videocall.activities.CallActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+             />
 
         <service android:name=".videocall.services.LoginService" />
 

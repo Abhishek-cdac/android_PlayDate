@@ -45,8 +45,8 @@ public class BusinessUploadPhotoActivity extends AppCompatActivity {
 
     private ActivityUploadBusinessPhotoBinding binding;
     private ArrayList permissionsToRequest;
-    private ArrayList permissionsRejected = new ArrayList();
-    private ArrayList permissions = new ArrayList();
+    private final ArrayList permissionsRejected = new ArrayList();
+    private final ArrayList permissions = new ArrayList();
     public final static int ALL_PERMISSIONS_RESULT = 107;
     public final static int PICK_PHOTO_FOR_AVATAR = 150;
     public final static int TAKE_PHOTO_CODE = 0;

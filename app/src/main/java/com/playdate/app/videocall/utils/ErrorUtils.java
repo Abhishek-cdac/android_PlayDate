@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.quickblox.core.exception.QBResponseException;
-import com.playdate.app.util.MyApplication;;
+import com.playdate.app.util.MyApplication;
 import com.playdate.app.R;
 
 import java.util.List;
@@ -19,7 +19,7 @@ public class ErrorUtils {
 
     private static final String NO_CONNECTION_ERROR = MyApplication.getInstance().getString(R.string.no_connection_error);
     private static final String NO_RESPONSE_TIMEOUT = MyApplication.getInstance().getString(R.string.no_responce_timeout);
-    private static Handler mainThreadHandler = new Handler(Looper.getMainLooper());
+    private static final Handler mainThreadHandler = new Handler(Looper.getMainLooper());
 
     private ErrorUtils() {
     }

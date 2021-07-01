@@ -93,8 +93,8 @@ public class FragRestaurantSelection extends Fragment implements restaurantSelec
        // hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
         hashMap.put("lat", String.valueOf(latitude));
         hashMap.put("long", String.valueOf(longitude));
-        Log.e("lat",""+String.valueOf(latitude));
-        Log.e("long",""+String.valueOf(longitude));
+        Log.e("lat",""+ latitude);
+        Log.e("long",""+ longitude);
 
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
         pd.show();
@@ -122,7 +122,7 @@ public class FragRestaurantSelection extends Fragment implements restaurantSelec
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message").toString(), "Ok");
+                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                     }

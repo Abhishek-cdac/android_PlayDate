@@ -164,7 +164,7 @@ public class LoginService extends Service {
             @Override
             public void signalingCreated(QBSignaling qbSignaling, boolean createdLocally) {
                 if (!createdLocally) {
-                    rtcClient.addSignaling((QBWebRTCSignaling) qbSignaling);
+                    rtcClient.addSignaling(qbSignaling);
                 }
             }
         });

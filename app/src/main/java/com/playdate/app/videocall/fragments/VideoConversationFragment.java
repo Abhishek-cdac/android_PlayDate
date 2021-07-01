@@ -62,7 +62,7 @@ import static android.widget.LinearLayout.HORIZONTAL;
 public class VideoConversationFragment extends BaseConversationFragment implements Serializable,
         QBRTCClientVideoTracksCallbacks<QBRTCSession>, QBRTCSessionStateCallback<QBRTCSession>,
         QBRTCSessionEventsCallback, OpponentsFromCallAdapter.OnAdapterEventListener {
-    private String TAG = VideoConversationFragment.class.getSimpleName();
+    private final String TAG = VideoConversationFragment.class.getSimpleName();
 
     public static final String CAMERA_ENABLED = "is_camera_enabled";
     public static final String IS_CURRENT_CAMERA_FRONT = "is_camera_front";
@@ -202,20 +202,20 @@ public class VideoConversationFragment extends BaseConversationFragment implemen
         opponentViewHolders = new SparseArray<>(opponents.size());
         isRemoteShown = false;
 
-        localVideoView = (QBRTCSurfaceView) view.findViewById(R.id.local_video_view);
+        localVideoView = view.findViewById(R.id.local_video_view);
         initCorrectSizeForLocalView();
         localVideoView.setZOrderMediaOverlay(true);
 
-        remoteFullScreenVideoView = (QBRTCSurfaceView) view.findViewById(R.id.remote_video_view);
+        remoteFullScreenVideoView = view.findViewById(R.id.remote_video_view);
         remoteFullScreenVideoView.setOnClickListener(localViewOnClickListener);
 
         if (!isPeerToPeerCall) {
-            recyclerView = (RecyclerView) view.findViewById(R.id.grid_opponents);
+            recyclerView = view.findViewById(R.id.grid_opponents);
 
             recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), R.dimen.grid_item_divider));
             recyclerView.setHasFixedSize(true);
             final int columnsCount = defineColumnsCount();
-            LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), HORIZONTAL, false);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false);
             recyclerView.setLayoutManager(layoutManager);
 
             //for correct removing item in adapter
@@ -228,13 +228,13 @@ public class VideoConversationFragment extends BaseConversationFragment implemen
                 }
             });
         }
-        connectionStatusLocal = (TextView) view.findViewById(R.id.connection_status_local);
+        connectionStatusLocal = view.findViewById(R.id.connection_status_local);
 
-        cameraToggle = (ToggleButton) view.findViewById(R.id.toggle_camera);
+        cameraToggle = view.findViewById(R.id.toggle_camera);
         cameraToggle.setVisibility(View.VISIBLE);
         cameraToggle.setChecked(SharedPrefsHelper.getInstance().get(CAMERA_ENABLED, true));
         toggleCamera(cameraToggle.isChecked());
-        actionVideoButtonsLayout = (LinearLayout) view.findViewById(R.id.element_set_video_buttons);
+        actionVideoButtonsLayout = view.findViewById(R.id.element_set_video_buttons);
 
         isCurrentCameraFront = SharedPrefsHelper.getInstance().get(IS_CURRENT_CAMERA_FRONT, true);
         if (!isCurrentCameraFront) {
@@ -850,7 +850,7 @@ public class VideoConversationFragment extends BaseConversationFragment implemen
 
     class DividerItemDecoration extends RecyclerView.ItemDecoration {
 
-        private int space;
+        private final int space;
 
         public DividerItemDecoration(@NonNull Context context, @DimenRes int dimensionDivider) {
             this.space = context.getResources().getDimensionPixelSize(dimensionDivider);

@@ -30,7 +30,7 @@ public class ValidationUtils {
         }
 
         if (!isCorrect) {
-            editText.setError(String.format(context.getString(R.string.error_name_must_not_contain_special_characters_from_app), context.getString(resFieldName), String.valueOf(maxLength)));
+            editText.setError(String.format(context.getString(R.string.error_name_must_not_contain_special_characters_from_app), context.getString(resFieldName), maxLength));
         }
 
         return isCorrect;

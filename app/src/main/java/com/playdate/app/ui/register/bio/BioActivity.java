@@ -65,7 +65,7 @@ public class BioActivity extends AppCompatActivity {
             public void onChanged(Boolean click) {
                 if (null == viewModel.BioText.getValue()) {
                     clsCommon.showDialogMsg(BioActivity.this, "PlayDate", "Enter your personal bio.", "Ok");
-                } else if (viewModel.BioText.getValue().toString().trim().equals("")) {
+                } else if (viewModel.BioText.getValue().trim().equals("")) {
                     clsCommon.showDialogMsg(BioActivity.this, "PlayDate", "Enter your personal bio.", "Ok");
                 } else {
 //                    startActivity(new Intent(BioActivity.this, UploadProfileActivity
@@ -135,7 +135,7 @@ public class BioActivity extends AppCompatActivity {
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        clsCommon.showDialogMsg(BioActivity.this, "PlayDate", jObjError.getString("message").toString(), "Ok");
+                        clsCommon.showDialogMsg(BioActivity.this, "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(BioActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                     }

@@ -29,7 +29,7 @@ public class SuggestedDateAdapter extends RecyclerView.Adapter<SuggestedDateAdap
 
     private final List<CreateDateGetPartnerData> suggestions_list;
     private List<CreateDateGetPartnerData> suggestionsListFiltered;
-    private Onclick itemClick;
+    private final Onclick itemClick;
     private FragSearchUser userFrag;
     private Context mcontext;
     private final Picasso picasso;

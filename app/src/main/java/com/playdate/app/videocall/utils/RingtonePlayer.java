@@ -17,7 +17,7 @@ public class RingtonePlayer {
 
     private static final String TAG = RingtonePlayer.class.getSimpleName();
     private MediaPlayer mediaPlayer;
-    private Context context;
+    private final Context context;
 
     public RingtonePlayer(Context context, int resource) {
         this.context = context;

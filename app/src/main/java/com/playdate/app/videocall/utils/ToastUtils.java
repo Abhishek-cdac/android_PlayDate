@@ -2,7 +2,7 @@ package com.playdate.app.videocall.utils;
 
 import android.widget.Toast;
 
-import com.playdate.app.util.MyApplication;;
+import com.playdate.app.util.MyApplication;
 
 import androidx.annotation.StringRes;
 

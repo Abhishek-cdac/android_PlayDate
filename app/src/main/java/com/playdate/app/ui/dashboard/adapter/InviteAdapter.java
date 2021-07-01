@@ -26,7 +26,7 @@ public class InviteAdapter extends RecyclerView.Adapter<InviteAdapter.ViewHolder
 
     private final ArrayList<Invite> invite_list = new ArrayList<>();
     private FragmentManager fm;
-    private String inviteCode;
+    private final String inviteCode;
     private final String inviteLink;
 
     public InviteAdapter(String inviteCode, String inviteLink) {

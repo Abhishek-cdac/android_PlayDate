@@ -51,7 +51,7 @@ public abstract class BaseToolBarFragment extends Fragment {
 
     static class FragmentLifeCycleHandler extends Handler {
 
-        private WeakReference<Fragment> fragmentRef;
+        private final WeakReference<Fragment> fragmentRef;
 
         FragmentLifeCycleHandler(Fragment fragment) {
 

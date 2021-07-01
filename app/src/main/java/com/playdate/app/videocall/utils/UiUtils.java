@@ -4,7 +4,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 
-import com.playdate.app.util.MyApplication;;
+import com.playdate.app.util.MyApplication;
 import com.playdate.app.R;
 
 import java.util.HashMap;
@@ -21,7 +21,7 @@ public class UiUtils {
 
     private static final int COLOR_MAX_VALUE = 255;
     private static final float COLOR_ALPHA = 0.8f;
-    private static Map<Integer, Integer> colorsMap = new HashMap<>();
+    private static final Map<Integer, Integer> colorsMap = new HashMap<>();
 
     private static final Random random = new Random();
     private static int previousColor;

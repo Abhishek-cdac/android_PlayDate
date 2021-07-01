@@ -8,7 +8,7 @@ import android.util.Log;
 
 public class DbHelper extends SQLiteOpenHelper {
 
-    private String TAG = DbHelper.class.getSimpleName();
+    private final String TAG = DbHelper.class.getSimpleName();
 
     private static final String DB_NAME = "groupchatwebrtcDB";
 

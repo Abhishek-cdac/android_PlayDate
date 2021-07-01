@@ -66,11 +66,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (lst.get(getAdapterPosition()).isSelected()) {
-                        lst.get(getAdapterPosition()).selected = false;
-                    } else {
-                        lst.get(getAdapterPosition()).selected = true;
-                    }
+                    lst.get(getAdapterPosition()).selected = !lst.get(getAdapterPosition()).isSelected();
 
                     notifyDataSetChanged();
                 }

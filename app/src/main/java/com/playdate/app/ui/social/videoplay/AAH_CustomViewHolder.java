@@ -20,7 +20,7 @@ public class AAH_CustomViewHolder extends RecyclerView.ViewHolder {
 
     public AAH_CustomViewHolder(View x) {
         super(x);
-        aah_vi = (AAH_VideoImage) x.findViewWithTag("aah_vi");
+        aah_vi = x.findViewWithTag("aah_vi");
     }
 
     public void playVideo() {

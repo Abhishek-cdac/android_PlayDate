@@ -14,10 +14,10 @@ import java.util.List;
 
 
 public class QbUsersDbManager {
-    private static String TAG = QbUsersDbManager.class.getSimpleName();
+    private static final String TAG = QbUsersDbManager.class.getSimpleName();
 
     private static QbUsersDbManager instance;
-    private Context mContext;
+    private final Context mContext;
 
     private QbUsersDbManager(Context context) {
         this.mContext = context;

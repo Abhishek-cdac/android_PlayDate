@@ -8,9 +8,9 @@ import androidx.lifecycle.ViewModel;
 public class UserNameViewModel extends ViewModel {
     public MutableLiveData<Boolean> RegisterClick = new MutableLiveData<>();
 
-    private MutableLiveData<Boolean> SingleClick = new MutableLiveData<>();
-    private MutableLiveData<Boolean> BackClick = new MutableLiveData<>();
-    private MutableLiveData<Boolean> NextClick = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> SingleClick = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> BackClick = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> NextClick = new MutableLiveData<>();
     public MutableLiveData<String> UserName = new MutableLiveData<>();
     private MutableLiveData<Boolean> Register;
 

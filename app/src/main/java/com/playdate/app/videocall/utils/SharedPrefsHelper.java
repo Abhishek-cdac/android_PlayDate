@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.quickblox.core.helper.StringifyArrayList;
-import com.playdate.app.util.MyApplication;;
+import com.playdate.app.util.MyApplication;
 import com.quickblox.users.model.QBUser;
 
 public class SharedPrefsHelper {
@@ -17,7 +17,7 @@ public class SharedPrefsHelper {
     private static final String QB_USER_TAGS = "qb_user_tags";
 
     private static SharedPrefsHelper instance;
-    private SharedPreferences sharedPreferences;
+    private final SharedPreferences sharedPreferences;
 
     public static synchronized SharedPrefsHelper getInstance() {
         if (instance == null) {
@@ -115,7 +115,7 @@ public class SharedPrefsHelper {
     }
 
     public boolean hasQbUser() {
-        return has(QB_USER_LOGIN) && has(QB_USER_PASSWORD);
+        return has(QB_USER_LOGIN);
     }
 
     public void clearAllData() {

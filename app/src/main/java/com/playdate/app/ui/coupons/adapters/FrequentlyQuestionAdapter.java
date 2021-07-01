@@ -22,7 +22,7 @@ public class FrequentlyQuestionAdapter extends RecyclerView.Adapter<FrequentlyQu
 
 
     ArrayList<FaqData> list = new ArrayList<>();
-    private Context context;
+    private final Context context;
 
     private static int currentPosition = 0;
     public FrequentlyQuestionAdapter(ArrayList<FaqData> faq_list, Context context) {

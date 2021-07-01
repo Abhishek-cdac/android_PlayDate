@@ -65,19 +65,19 @@ public class AudioConversationFragment extends BaseConversationFragment implemen
         }
         timerCallText = view.findViewById(R.id.timer_call);
 
-        ImageView firstOpponentAvatarImageView = (ImageView) view.findViewById(R.id.image_caller_avatar);
+        ImageView firstOpponentAvatarImageView = view.findViewById(R.id.image_caller_avatar);
         firstOpponentAvatarImageView.setBackgroundDrawable(UiUtils.getColorCircleDrawable(opponents.get(0).getId()));
 
-        alsoOnCallText = (TextView) view.findViewById(R.id.text_also_on_call);
+        alsoOnCallText = view.findViewById(R.id.text_also_on_call);
         setVisibilityAlsoOnCallTextView();
 
-        firstOpponentNameTextView = (TextView) view.findViewById(R.id.text_caller_name);
+        firstOpponentNameTextView = view.findViewById(R.id.text_caller_name);
         firstOpponentNameTextView.setText(opponents.get(0).getFullName());
 
-        otherOpponentsTextView = (TextView) view.findViewById(R.id.text_other_inc_users);
+        otherOpponentsTextView = view.findViewById(R.id.text_other_inc_users);
         otherOpponentsTextView.setText(getOtherOpponentsNames());
 
-        audioSwitchToggleButton = (ToggleButton) view.findViewById(R.id.toggle_speaker);
+        audioSwitchToggleButton = view.findViewById(R.id.toggle_speaker);
         audioSwitchToggleButton.setVisibility(View.VISIBLE);
         audioSwitchToggleButton.setChecked(SharedPrefsHelper.getInstance().get(SPEAKER_ENABLED, true));
 

@@ -38,17 +38,17 @@ import java.util.Objects;
 
 public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private Context mContext;
-    private boolean isImageFitToScreen = false;
+    private final Context mContext;
+    private final boolean isImageFitToScreen = false;
     public static int OTHER = 0;
     public static int ME = 2;
     public static int OPPONENT = 0;
     //    private ArrayList<ChatExample> chatExampleList;
-    private ArrayList<ChatMessage> lst_chat;
+    private final ArrayList<ChatMessage> lst_chat;
     //    private String urls_image;
     private MediaPlayer mediaPlayer;
     private GoogleMap googleMap;
-    private Picasso picasso;
+    private final Picasso picasso;
 
     //    private String from;
 //    private String to;

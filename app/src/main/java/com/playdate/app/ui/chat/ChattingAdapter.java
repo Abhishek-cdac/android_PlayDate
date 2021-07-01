@@ -273,10 +273,10 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
 
         public MyViewHolder(View view) {
             super(view);
-            txt_time = (TextView) view.findViewById(R.id.txt_time);
-            user_name = (TextView) view.findViewById(R.id.user_name);
-            txt_count = (TextView) view.findViewById(R.id.txt_count);
-            msg = (TextView) view.findViewById(R.id.txt_msg);
+            txt_time = view.findViewById(R.id.txt_time);
+            user_name = view.findViewById(R.id.user_name);
+            txt_count = view.findViewById(R.id.txt_count);
+            msg = view.findViewById(R.id.txt_msg);
             main_menu = view.findViewById(R.id.main_rl);
             img_more = view.findViewById(R.id.img_more);
             profile_image = view.findViewById(R.id.profile_image);

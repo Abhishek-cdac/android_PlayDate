@@ -33,7 +33,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FragRequest extends Fragment {
     RequestAdapter requestAdapter;
-    private List<Inbox> inboxList = new ArrayList<>();
+    private final List<Inbox> inboxList = new ArrayList<>();
     RecyclerView recyclerView;
     ArrayList<ChatExample> chatExampleList;
 

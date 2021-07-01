@@ -12,7 +12,7 @@ public class WebRtcSessionManager extends QBRTCClientSessionCallbacksImpl {
     private static final String TAG = WebRtcSessionManager.class.getSimpleName();
 
     private static WebRtcSessionManager instance;
-    private Context context;
+    private final Context context;
 
     private static QBRTCSession currentSession;
 

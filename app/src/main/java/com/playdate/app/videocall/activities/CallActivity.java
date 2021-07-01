@@ -76,8 +76,8 @@ public class CallActivity extends BaseActivity implements IncomeCallFragmentCall
     public static final String INCOME_CALL_FRAGMENT = "income_call_fragment";
     public static final int REQUEST_PERMISSION_SETTING = 545;
 
-    private ArrayList<CurrentCallStateCallback> currentCallStateCallbackList = new ArrayList<>();
-    private QbUsersDbManager dbManager = QbUsersDbManager.getInstance(this);
+    private final ArrayList<CurrentCallStateCallback> currentCallStateCallbackList = new ArrayList<>();
+    private final QbUsersDbManager dbManager = QbUsersDbManager.getInstance(this);
     private Handler showIncomingCallWindowTaskHandler;
     private ConnectionListenerImpl connectionListener;
     private ServiceConnection callServiceConnection;
@@ -101,7 +101,7 @@ public class CallActivity extends BaseActivity implements IncomeCallFragmentCall
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_call);
         checker = new PermissionsChecker(this);
     }
 
@@ -118,10 +118,6 @@ public class CallActivity extends BaseActivity implements IncomeCallFragmentCall
 
         if (callService.isCallMode()) {
             checkPermission();
-            if (callService.isSharingScreenState()) {
-                startScreenSharing(null);
-                return;
-            }
             addConversationFragment(isInComingCall);
         } else {
             if (getIntent() != null && getIntent().getExtras() != null) {
@@ -160,6 +156,7 @@ public class CallActivity extends BaseActivity implements IncomeCallFragmentCall
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         Log.i(TAG, "onActivityResult requestCode=" + requestCode + ", resultCode= " + resultCode);
         if (resultCode == Consts.EXTRA_LOGIN_RESULT_CODE) {
             if (data != null) {
@@ -172,31 +169,14 @@ public class CallActivity extends BaseActivity implements IncomeCallFragmentCall
                 }
             }
         }
-        if (requestCode == QBRTCScreenCapturer.REQUEST_MEDIA_PROJECTION
-                && resultCode == Activity.RESULT_OK && data != null) {
-            startScreenSharing(data);
-            Log.i(TAG, "Starting Screen Capture");
-        }
     }
 
-    private void startScreenSharing(final Intent data) {
-//        Fragment fragmentByTag = getSupportFragmentManager().findFragmentByTag(ScreenShareFragment.class.getSimpleName());
-//        if (!(fragmentByTag instanceof ScreenShareFragment)) {
-//            ScreenShareFragment screenShareFragment = ScreenShareFragment.newInstance();
-//            FragmentExecuotr.addFragment(getSupportFragmentManager(), R.id.fragment_container, screenShareFragment, ScreenShareFragment.class.getSimpleName());
-//
-//            if (data != null) {
-//                callService.startScreenSharing(data);
-//            }
-//        }
-    }
 
     private void startSuitableFragment(boolean isInComingCall) {
         QBRTCSession session = WebRtcSessionManager.getInstance(this).getCurrentSession();
         if (session != null) {
             if (isInComingCall) {
                 initIncomingCallTask();
-                startLoadAbsentUsers();
                 addIncomeCallFragment();
                 checkPermission();
             } else {
@@ -247,32 +227,6 @@ public class CallActivity extends BaseActivity implements IncomeCallFragmentCall
         startActivityForResult(intent, REQUEST_PERMISSION_SETTING);
     }
 
-    private void startLoadAbsentUsers() {
-        ArrayList<QBUser> usersFromDb = dbManager.getAllUsers();
-        ArrayList<Integer> allParticipantsOfCall = new ArrayList<>();
-
-        if (opponentsIdsList != null) {
-            allParticipantsOfCall.addAll(opponentsIdsList);
-        }
-
-        if (isInComingCall) {
-            Integer callerID = callService.getCallerId();
-            if (callerID != null) {
-                allParticipantsOfCall.add(callerID);
-            }
-        }
-
-        ArrayList<Integer> idsUsersNeedLoad = UsersUtils.getIdsNotLoadedUsers(usersFromDb, allParticipantsOfCall);
-        if (!idsUsersNeedLoad.isEmpty()) {
-            requestExecutor.loadUsersByIds(idsUsersNeedLoad, new QBEntityCallbackImpl<ArrayList<QBUser>>() {
-                @Override
-                public void onSuccess(ArrayList<QBUser> users, Bundle params) {
-                    dbManager.saveAllUsers(users, false);
-                    notifyCallStateListenersNeedUpdateOpponentsList(users);
-                }
-            });
-        }
-    }
 
     private void initSettingsStrategy() {
         if (opponentsIdsList != null) {
@@ -343,7 +297,7 @@ public class CallActivity extends BaseActivity implements IncomeCallFragmentCall
     public void finish() {
         //Fix bug when user returns to call from service and the backstack doesn't have any screens
         CallService.stop(this);
-        OpponentsActivity.start(this);
+//        OpponentsActivity.start(this);
         super.finish();
     }
 
@@ -363,26 +317,35 @@ public class CallActivity extends BaseActivity implements IncomeCallFragmentCall
     }
 
     private void addConversationFragment(boolean isIncomingCall) {
-        BaseConversationFragment conversationFragment = BaseConversationFragment.newInstance(
-                isVideoCall
-                        ? new VideoConversationFragment()
-                        : new AudioConversationFragment(),
-                isIncomingCall);
-        FragmentExecuotr.addFragment(getSupportFragmentManager(), R.id.fragment_container, conversationFragment, conversationFragment.getClass().getSimpleName());
+        try {
+            BaseConversationFragment conversationFragment = BaseConversationFragment.newInstance(
+                    isVideoCall
+                            ? new VideoConversationFragment()
+                            : new AudioConversationFragment(),
+                    isIncomingCall);
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, conversationFragment,  conversationFragment.getClass().getSimpleName()).commitAllowingStateLoss();
+//            FragmentExecuotr.addFragment(getSupportFragmentManager(), R.id.fragment_container, conversationFragment, conversationFragment.getClass().getSimpleName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void showNotificationPopUp(final int text, final boolean show) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                LinearLayout connectionView = (LinearLayout) View.inflate(CallActivity.this, R.layout.connection_popup, null);
-                if (show) {
-                    ((TextView) connectionView.findViewById(R.id.notification)).setText(text);
-                    if (connectionView.getParent() == null) {
-                        ((ViewGroup) CallActivity.this.findViewById(R.id.fragment_container)).addView(connectionView);
+                try {
+                    LinearLayout connectionView = (LinearLayout) View.inflate(CallActivity.this, R.layout.connection_popup, null);
+                    if (show) {
+                        ((TextView) connectionView.findViewById(R.id.notification)).setText(text);
+                        if (connectionView.getParent() == null) {
+                            ((ViewGroup) CallActivity.this.findViewById(R.id.fragment_container)).addView(connectionView);
+                        }
+                    } else {
+                        ((ViewGroup) CallActivity.this.findViewById(R.id.fragment_container)).removeView(connectionView);
                     }
-                } else {
-                    ((ViewGroup) CallActivity.this.findViewById(R.id.fragment_container)).removeView(connectionView);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -675,11 +638,11 @@ public class CallActivity extends BaseActivity implements IncomeCallFragmentCall
         }
     }
 
-    private void notifyCallStateListenersNeedUpdateOpponentsList(final ArrayList<QBUser> newUsers) {
-        for (CurrentCallStateCallback callback : currentCallStateCallbackList) {
-            callback.onOpponentsListUpdated(newUsers);
-        }
-    }
+//    private void notifyCallStateListenersNeedUpdateOpponentsList(final ArrayList<QBUser> newUsers) {
+//        for (CurrentCallStateCallback callback : currentCallStateCallbackList) {
+//            callback.onOpponentsListUpdated(newUsers);
+//        }
+//    }
 
     private void notifyCallStateListenersCallTime(String callTime) {
         for (CurrentCallStateCallback callback : currentCallStateCallbackList) {

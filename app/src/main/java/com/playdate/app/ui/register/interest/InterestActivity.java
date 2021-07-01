@@ -192,7 +192,7 @@ public class InterestActivity extends AppCompatActivity implements InterestAdapt
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        clsCommon.showDialogMsg(InterestActivity.this, "PlayDate", jObjError.getString("message").toString(), "Ok");
+                        clsCommon.showDialogMsg(InterestActivity.this, "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(InterestActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                     }
@@ -239,7 +239,7 @@ public class InterestActivity extends AppCompatActivity implements InterestAdapt
 
                         if (mIntent.getBooleanExtra("fromProfile", false)) {
 
-                            String interestList[] = pref.getStringVal(SessionPref.LoginUserInterestsIDS).split(",");
+                            String[] interestList = pref.getStringVal(SessionPref.LoginUserInterestsIDS).split(",");
 
                             for (int i = 0; i < lst_interest.size(); i++) {
                                 for (String s : interestList) {
@@ -262,7 +262,7 @@ public class InterestActivity extends AppCompatActivity implements InterestAdapt
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        clsCommon.showDialogMsg(InterestActivity.this, "PlayDate", jObjError.getString("message").toString(), "Ok");
+                        clsCommon.showDialogMsg(InterestActivity.this, "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(InterestActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                     }

@@ -76,8 +76,8 @@ public class CallService extends Service {
     private static final String CHANNEL_ID = "Quickblox channel";
     private static final String CHANNEL_NAME = "Quickblox background service";
 
-    private HashMap<Integer, QBRTCVideoTrack> videoTrackMap = new HashMap<>();
-    private CallServiceBinder callServiceBinder = new CallServiceBinder();
+    private final HashMap<Integer, QBRTCVideoTrack> videoTrackMap = new HashMap<>();
+    private final CallServiceBinder callServiceBinder = new CallServiceBinder();
     private NetworkConnectionListener networkConnectionListener;
     private NetworkConnectionChecker networkConnectionChecker;
     private SessionEventsListener sessionEventsListener;
@@ -94,8 +94,8 @@ public class CallService extends Service {
     private QBRTCClient rtcClient;
     private RingtonePlayer ringtonePlayer;
 
-    private CallTimerTask callTimerTask = new CallTimerTask();
-    private Timer callTimer = new Timer();
+    private final CallTimerTask callTimerTask = new CallTimerTask();
+    private final Timer callTimer = new Timer();
     private Long callTime;
 
     public static void start(Context context) {
@@ -286,12 +286,7 @@ public class CallService extends Service {
             }
         });
 
-        appRTCAudioManager.start(new AppRTCAudioManager.AudioManagerEvents() {
-            @Override
-            public void onAudioDeviceChanged(AppRTCAudioManager.AudioDevice audioDevice, Set<AppRTCAudioManager.AudioDevice> set) {
-                ToastUtils.shortToast("Audio Device Switched to " + audioDevice);
-            }
-        });
+        appRTCAudioManager.start((audioDevice, set) -> ToastUtils.shortToast("Audio Device Switched to " + audioDevice));
 
         if (currentSessionExist() && currentSession.getConferenceType() == QBRTCTypes.QBConferenceType.QB_CONFERENCE_TYPE_AUDIO) {
             appRTCAudioManager.selectAudioDevice(AppRTCAudioManager.AudioDevice.EARPIECE);
@@ -764,18 +759,18 @@ public class CallService extends Service {
 
         @Override
         public void onCameraFreezed(String s) {
-            ToastUtils.shortToast("Camera Freezed");
+//            ToastUtils.shortToast("Camera Freezed");
             hangUpCurrentSession(new HashMap<>());
         }
 
         @Override
         public void onCameraOpening(String s) {
-            ToastUtils.shortToast("Camera Opening");
+//            ToastUtils.shortToast("Camera Opening");
         }
 
         @Override
         public void onFirstFrameAvailable() {
-            ToastUtils.shortToast("Camera onFirstFrameAvailable");
+//            ToastUtils.shortToast("Camera onFirstFrameAvailable");
         }
 
         @Override

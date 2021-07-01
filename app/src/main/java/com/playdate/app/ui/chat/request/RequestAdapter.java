@@ -46,8 +46,8 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.MyViewHo
 
         public MyViewHolder(View view) {
             super(view);
-            title = (TextView) view.findViewById(R.id.user_name);
-            msg = (TextView) view.findViewById(R.id.txt_msg);
+            title = view.findViewById(R.id.user_name);
+            msg = view.findViewById(R.id.txt_msg);
             main_menu = view.findViewById(R.id.main_rl);
             img_accept = view.findViewById(R.id.img_accept);
             img_reject = view.findViewById(R.id.img_reject);

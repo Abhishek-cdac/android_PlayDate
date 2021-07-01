@@ -24,6 +24,7 @@ import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -110,7 +111,7 @@ class VideoPreviewActivity : AppCompatActivity() {
         val filePart = MultipartBody.Part.createFormData(
             "userProfileVideo",
             videoResult!!.file.name,
-            RequestBody.create("video/mp4".toMediaTypeOrNull(), videoResult!!.file)
+            videoResult!!.file.asRequestBody("video/mp4".toMediaTypeOrNull())
         )
         val service =
             RetrofitClientInstance.getRetrofitInstance().create(GetDataService::class.java)

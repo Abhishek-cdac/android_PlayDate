@@ -132,7 +132,7 @@ public class FragCouponParent extends Fragment implements OnSizeDecided, View.On
                 if (response.code() == 200) {
                     assert response.body() != null;
                     if (response.body().getStatus() == 1) {
-                        ArrayList<Restaurant> restaurentlst = (ArrayList<Restaurant>) response.body().getLst();
+                        ArrayList<Restaurant> restaurentlst = response.body().getLst();
                         if (restaurentlst == null) {
                             restaurentlst = new ArrayList<>();
                         }
