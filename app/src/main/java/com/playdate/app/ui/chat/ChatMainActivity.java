@@ -469,7 +469,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         mFileName += "/AudioRecording.3gp";
 
         String uuid = UUID.randomUUID().toString();
-        mFileName = this.getExternalCacheDir().getAbsolutePath() + "/" + uuid + ".3gp";
+        mFileName = this.getExternalCacheDir().getAbsolutePath() + "/" + uuid + ".mp3";
         Log.d("FILENAME...", mFileName);
         iv_mic.setEnabled(true);
         pd = TransparentProgressDialog.getInstance(this);
@@ -508,7 +508,6 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             }
         }, 3000);
     }
-
 
 
     Bitmap bitmap = null;
@@ -576,12 +575,40 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             return null;
     }
 
-    File audioFIle = null;
+    File audioFile = null;
+
     private void addToListAudio(String mFileName) {
+        audioFile = new File(mFileName);
+        SessionPref pref = SessionPref.getInstance(this);
+        MultipartBody.Part filePart = MultipartBody.Part.createFormData("mediaFeed", audioFile.getName(), RequestBody.create(MediaType.parse("audio/*"), audioFile));
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Call<ChatFileUpload> call = service.addmediaAudio("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), filePart);
+        call.enqueue(new Callback<ChatFileUpload>() {
+            @Override
+            public void onResponse(Call<ChatFileUpload> call, Response<ChatFileUpload> response) {
+                if (response.code() == 200) {
+                    if (response.body().getStatus() == 1) {
+                        ChatFile media = response.body().getChatFile();
+                        sendMessgae("", "media", media.getMediaId());
+                        Log.d("AUDIO ADDED", "ADded audio");
+
+                    } else {
+                        Log.e("Status code 0", "onResponse" + response.body().getMessage());
+                    }
+                } else {
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ChatFileUpload> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
 
     }
 
     File currentFile = null;
+
     private void addToListVideo(String videoPath) {
         currentFile = new File(videoPath);
         SessionPref pref = SessionPref.getInstance(this);

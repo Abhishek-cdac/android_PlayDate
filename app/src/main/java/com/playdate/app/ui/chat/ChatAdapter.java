@@ -224,7 +224,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             } else {
                                 viewHolderMe.play_audio.setImageResource(R.drawable.exo_icon_pause);
                                 try {
-                                    mediaPlayer.setDataSource(lst_chat.get(position).getMessage());
+                                    mediaPlayer.setDataSource(lst_chat.get(position).getMediaInfo().get(0).getMediaFullPath());
                                     mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                                         @Override
                                         public void onCompletion(MediaPlayer mediaPlayer) {
@@ -359,6 +359,45 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         });
                         break;
                     case "audio":
+                        viewHolderOponent.tv_msg.setVisibility(View.GONE);
+                        viewHolderOponent.chat_image.setVisibility(View.GONE);
+                        viewHolderOponent.iv_thumb.setVisibility(View.GONE);
+                        viewHolderOponent.rl_audio.setVisibility(View.VISIBLE);
+                        viewHolderOponent.img_playback.setVisibility(View.GONE);
+//                        viewHolderOponent.card_video.setVisibility(View.GONE);
+//                        viewHolderOponent.rl_maps.setVisibility(View.GONE);
+//                        viewHolderOponent.mv_location.setVisibility(View.GONE);
+
+
+                        viewHolderOponent.play_audio.setOnClickListener(v -> {
+                            mediaPlayer = new MediaPlayer();
+
+                            if (mediaPlayer.isPlaying()) {
+                                mediaPlayer.pause();
+                                viewHolderOponent.play_audio.setImageResource(R.drawable.play);
+
+
+                            } else {
+                                viewHolderOponent.play_audio.setImageResource(R.drawable.exo_icon_pause);
+                                try {
+                                    mediaPlayer.setDataSource(lst_chat.get(position).getMediaInfo().get(0).getMediaFullPath());
+                                    mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                                        @Override
+                                        public void onCompletion(MediaPlayer mediaPlayer) {
+                                            stopPlaying();
+                                            viewHolderOponent.play_audio.setImageResource(R.drawable.play);
+
+
+                                        }
+                                    });
+                                    mediaPlayer.prepare();
+                                    mediaPlayer.start();
+                                } catch (IOException e) {
+                                    Log.d(":playRecording()", e.toString());
+                                }
+                            }
+
+                        });
                         break;
 
                     case "location":
@@ -630,6 +669,8 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         TextView tv_msg;
         LottieAnimationView typing;
         RelativeLayout rl_body;
+        RelativeLayout rl_audio;
+        ImageView play_audio;
 
         public ViewHolderOponent(View view) {
             super(view);
@@ -640,6 +681,8 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             img_playback = view.findViewById(R.id.img_playback);
             typing = view.findViewById(R.id.typing);
             rl_body = view.findViewById(R.id.rl_body);
+            play_audio = view.findViewById(R.id.play_audio);
+            rl_audio = view.findViewById(R.id.rl_audio);
 
             tv_msg.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
@@ -653,6 +696,17 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 }
             });
             chat_image.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    selectedPosition = getAdapterPosition();
+
+//                    ref.onMessageSelectToDelete(getAdapterPosition());
+                    showBottomSheet(selectedPosition);
+                    notifyDataSetChanged();
+                    return true;
+                }
+            });
+            rl_audio.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
                     selectedPosition = getAdapterPosition();
