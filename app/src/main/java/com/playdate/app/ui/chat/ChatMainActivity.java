@@ -288,6 +288,9 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         try {
             mSocket.on("chat_message_room", onNewMessage);
             mSocket.on("typing", onTyping);
+            mSocket.on("chat_room", ChatRoomCreated);
+            Log.d("****mSocket", mSocket.id());
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -397,17 +400,22 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 
         try {
             JSONObject data = (JSONObject) args[0];
-            Log.d("****", data.toString());
+            Log.d("****OnNewMsg", data.toString());
             String userIDFromIP = data.getString("userId");
-            if (!UserID.equals(userIDFromIP)) {
-                if (lstChat.get(0).getType().equals("typing")) {
-                    lstChat.remove(0);
-                    adapter.notifyDataSetChanged();
-                }
-            }
-            adapter.addToListText(data.getString("message"), userIDFromIP, data.getString("username"), data.getString("profilePic"));
-            scrollTOEnd();
+            if (userIDFromIP.equals(userIDTo) || userIDFromIP.equals(UserID)) {
 
+
+                if (!UserID.equals(userIDFromIP)) {
+                    if (lstChat.get(0).getType().equals("typing")) {
+                        lstChat.remove(0);
+                        adapter.notifyDataSetChanged();
+                    }
+                } else {
+                    readMsgEmit();
+                }
+                adapter.addToListText(data.getString("message"), userIDFromIP, data.getString("username"), data.getString("profilePic"));
+                scrollTOEnd();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -419,11 +427,24 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             JSONObject data = (JSONObject) args[0];
             Log.d("****typing", data.toString());
             String userIDFromIP = data.getString("userId");
-            if (!UserID.equals(userIDFromIP)) {
-                if (!lstChat.get(0).getType().equals("typing")) {
-                    adapter.addTyping(data.getString("userId"), data.getString("username"), data.getString("profilePic"));
+            if (userIDFromIP.equals(userIDTo) || userIDFromIP.equals(UserID)) {
+                if (!UserID.equals(userIDFromIP)) {
+                    if (!lstChat.get(0).getType().equals("typing")) {
+                        adapter.addTyping(data.getString("userId"), data.getString("username"), data.getString("profilePic"));
+                    }
                 }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    });
+
+    Emitter.Listener ChatRoomCreated = args -> runOnUiThread(() -> {
+
+        try {
+            JSONObject data = (JSONObject) args[0];
+            Log.d("****ChatRoomCreated", data.toString());
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -565,7 +586,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 
             } else {
                 Log.d("Failed", "Failed to load");
-                Toast.makeText(this, "Failed to load", Toast.LENGTH_SHORT).show();
+                //  Toast.makeText(this, "Failed to load", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -1138,7 +1159,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             @Override
             public void onSuccess(QBUser user, Bundle bundle) {
 
-                Opponent=user;
+                Opponent = user;
                 if (checker.lacksPermissions(Consts.PERMISSIONS)) {
                     startPermissionsActivity(false);
                 }
