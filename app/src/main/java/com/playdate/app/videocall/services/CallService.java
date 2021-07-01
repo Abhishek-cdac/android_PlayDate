@@ -286,7 +286,9 @@ public class CallService extends Service {
             }
         });
 
-        appRTCAudioManager.start((audioDevice, set) -> ToastUtils.shortToast("Audio Device Switched to " + audioDevice));
+        appRTCAudioManager.start((audioDevice, set) -> {
+//            ToastUtils.shortToast("Audio Device Switched to " + audioDevice);
+        });
 
         if (currentSessionExist() && currentSession.getConferenceType() == QBRTCTypes.QBConferenceType.QB_CONFERENCE_TYPE_AUDIO) {
             appRTCAudioManager.selectAudioDevice(AppRTCAudioManager.AudioDevice.EARPIECE);
@@ -742,19 +744,19 @@ public class CallService extends Service {
 
         @Override
         public void connectivityChanged(boolean availableNow) {
-            ToastUtils.shortToast("Internet Connection " + (availableNow ? "Available" : "Unavailable"));
+//            ToastUtils.shortToast("Internet Connection " + (availableNow ? "Available" : "Unavailable"));
         }
     }
 
     private class CameraEventsListener implements CameraVideoCapturer.CameraEventsHandler {
         @Override
         public void onCameraError(String s) {
-            ToastUtils.shortToast("Camera Error: " + s);
+//            ToastUtils.shortToast("Camera Error: " + s);
         }
 
         @Override
         public void onCameraDisconnected() {
-            ToastUtils.shortToast("Camera Disconnected");
+//            ToastUtils.shortToast("Camera Disconnected");
         }
 
         @Override
@@ -775,7 +777,7 @@ public class CallService extends Service {
 
         @Override
         public void onCameraClosed() {
-            ToastUtils.shortToast("Camera Closed");
+//            ToastUtils.shortToast("Camera Closed");
         }
     }
 

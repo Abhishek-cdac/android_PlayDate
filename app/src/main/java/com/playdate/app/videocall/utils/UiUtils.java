@@ -29,17 +29,17 @@ public class UiUtils {
     private UiUtils() {
     }
 
-    public static Drawable getGreyCircleDrawable() {
-        return getColoredCircleDrawable(MyApplication.getInstance().getResources().getColor(R.color.color_grey));
-    }
+//    public static Drawable getGreyCircleDrawable() {
+//        return getColoredCircleDrawable(MyApplication.getInstance().getResources().getColor(R.color.color_grey));
+//    }
+//
+//    public static Drawable getRandomColorCircleDrawable() {
+//        return getColoredCircleDrawable(getRandomCircleColor());
+//    }
 
-    public static Drawable getRandomColorCircleDrawable() {
-        return getColoredCircleDrawable(getRandomCircleColor());
-    }
-
-    public static Drawable getColorCircleDrawable(int colorPosition) {
-        return getColoredCircleDrawable(getCircleColor(colorPosition % RANDOM_COLOR_END_RANGE));
-    }
+//    public static Drawable getColorCircleDrawable(int colorPosition) {
+//        return getColoredCircleDrawable(getCircleColor(colorPosition % RANDOM_COLOR_END_RANGE));
+//    }
 
     public static Drawable getColoredCircleDrawable(@ColorInt int color) {
         GradientDrawable drawable = (GradientDrawable) MyApplication.getInstance().getResources().getDrawable(R.drawable.shape_circle);
@@ -47,20 +47,20 @@ public class UiUtils {
         return drawable;
     }
 
-    public static int getRandomCircleColor() {
-        int randomNumber = random.nextInt(RANDOM_COLOR_END_RANGE) + 1;
-
-        int generatedColor = getCircleColor(randomNumber);
-        if (generatedColor != previousColor) {
-            previousColor = generatedColor;
-            return generatedColor;
-        } else {
-            do {
-                generatedColor = getRandomCircleColor();
-            } while (generatedColor != previousColor);
-        }
-        return previousColor;
-    }
+//    public static int getRandomCircleColor() {
+//        int randomNumber = random.nextInt(RANDOM_COLOR_END_RANGE) + 1;
+//
+//        int generatedColor = getCircleColor(randomNumber);
+//        if (generatedColor != previousColor) {
+//            previousColor = generatedColor;
+//            return generatedColor;
+//        } else {
+//            do {
+//                generatedColor = getRandomCircleColor();
+//            } while (generatedColor != previousColor);
+//        }
+//        return previousColor;
+//    }
 
     public static int getCircleColor(@IntRange(from = RANDOM_COLOR_START_RANGE, to = RANDOM_COLOR_END_RANGE)
                                              int colorPosition) {

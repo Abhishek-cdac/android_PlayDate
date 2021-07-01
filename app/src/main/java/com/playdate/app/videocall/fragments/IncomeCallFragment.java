@@ -144,7 +144,7 @@ public class IncomeCallFragment extends Fragment implements Serializable, View.O
         takeButton = view.findViewById(R.id.image_button_accept_call);
 
         if (currentSession != null) {
-            callerAvatarImageView.setBackgroundDrawable(getBackgroundForCallerAvatar(currentSession.getCallerID()));
+//            callerAvatarImageView.setBackgroundDrawable(getBackgroundForCallerAvatar(currentSession.getCallerID()));
 
             QBUser callerUser = qbUserDbManager.getUserById(currentSession.getCallerID());
             if (callerUser != null && !TextUtils.isEmpty(callerUser.getFullName())) {
@@ -187,9 +187,9 @@ public class IncomeCallFragment extends Fragment implements Serializable, View.O
         }
     }
 
-    private Drawable getBackgroundForCallerAvatar(int callerId) {
-        return UiUtils.getColorCircleDrawable(callerId);
-    }
+//    private Drawable getBackgroundForCallerAvatar(int callerId) {
+//        return UiUtils.getColorCircleDrawable(callerId);
+//    }
 
     private void startCallNotification() {
         Log.d(TAG, "startCallNotification()");

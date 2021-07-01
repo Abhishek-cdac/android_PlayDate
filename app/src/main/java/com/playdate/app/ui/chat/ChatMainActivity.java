@@ -975,7 +975,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     private void runNextScreen() {
         if (sharedPrefsHelper.hasQbUser()) {
             LoginService.start(ChatMainActivity.this, sharedPrefsHelper.getQbUser());
-            startCall(true, sharedPrefsHelper.getQbUser());
+            startCall(true, Opponent);
 
         } else {
         }
@@ -1121,6 +1121,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     private static final String ORDER_DESC_UPDATED = "desc date updated_at";
     private PermissionsChecker checker;
 
+    QBUser Opponent;
 
     private void loadUsers() {
         ArrayList<GenericQueryRule> rules = new ArrayList<>();
@@ -1133,9 +1134,9 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 
         QBUsers.getUserByLogin(userIDTo).performAsync(new QBEntityCallback<QBUser>() {
             @Override
-            public void onSuccess(QBUser qbUsers, Bundle bundle) {
+            public void onSuccess(QBUser user, Bundle bundle) {
 
-
+                Opponent=user;
                 if (checker.lacksPermissions(Consts.PERMISSIONS)) {
                     startPermissionsActivity(false);
                 }

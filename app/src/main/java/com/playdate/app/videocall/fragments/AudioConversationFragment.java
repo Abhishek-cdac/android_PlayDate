@@ -60,13 +60,14 @@ public class AudioConversationFragment extends BaseConversationFragment implemen
     @Override
     protected void initViews(View view) {
         super.initViews(view);
-        if (view == null) {
-            return;
-        }
         timerCallText = view.findViewById(R.id.timer_call);
 
         ImageView firstOpponentAvatarImageView = view.findViewById(R.id.image_caller_avatar);
-        firstOpponentAvatarImageView.setBackgroundDrawable(UiUtils.getColorCircleDrawable(opponents.get(0).getId()));
+//        try {
+//            firstOpponentAvatarImageView.setBackgroundDrawable(UiUtils.getColorCircleDrawable(opponents.get(0).getId()));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
         alsoOnCallText = view.findViewById(R.id.text_also_on_call);
         setVisibilityAlsoOnCallTextView();
