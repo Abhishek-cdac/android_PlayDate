@@ -17,21 +17,26 @@ public class ChatMessage {
     Bitmap bitmap;
     Drawable drawable;
     Uri uri;
-    double lattitude, longitude;
+    @SerializedName("lat")
+    String lattitude;
 
-    public double getLattitude() {
+    @SerializedName("long")
+    String longitude;
+
+
+    public String getLattitude() {
         return lattitude;
     }
 
-    public void setLattitude(double lattitude) {
+    public void setLattitude(String lattitude) {
         this.lattitude = lattitude;
     }
 
-    public double getLongitude() {
+    public String getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(double longitude) {
+    public void setLongitude(String longitude) {
         this.longitude = longitude;
     }
 
@@ -59,7 +64,7 @@ public class ChatMessage {
         this.drawable = drawable;
     }
 
-    @SerializedName("type")
+    @SerializedName("messageType")
     @Expose
     private String type;
 
@@ -78,6 +83,12 @@ public class ChatMessage {
 
     @SerializedName("UserInfo")
     ArrayList<UserInfo> UserInfo;
+    @SerializedName("mediaInfo")
+    ArrayList<MediaInfo> mediaInfo;
+
+    public ArrayList<MediaInfo> getMediaInfo() {
+        return mediaInfo;
+    }
 
     public String getMessage() {
         return message;

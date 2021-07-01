@@ -14,12 +14,12 @@ import com.playdate.app.R;
 
 public class ChatBottomSheet extends BottomSheetDialogFragment {
     String text;
-//    FragChatMain ref;
+    ChatMainActivity ref;
 
-//    public ChatBottomSheet(String text, FragChatMain ref) {
-//        this.text = text;
-//        this.ref = ref;
-//    }
+    public ChatBottomSheet(String text,ChatMainActivity ref) {
+        this.text = text;
+        this.ref = ref;
+    }
 
     @Nullable
     @Override
@@ -34,7 +34,7 @@ public class ChatBottomSheet extends BottomSheetDialogFragment {
             ll_location.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    ref.onLocationSelect();
+                    ref.onLocationSelect();
                 }
             });
 
@@ -49,13 +49,13 @@ public class ChatBottomSheet extends BottomSheetDialogFragment {
             ll_gallery.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    ref.onGallerySelect();
+                    ref.onGallerySelect();
                 }
             });
             ll_camera.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    ref.onCameraSelect();
+                    ref.onCameraSelect();
                 }
             });
         }

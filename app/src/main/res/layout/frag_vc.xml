@@ -13,17 +13,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_opponents"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layoutDirection="ltr"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/list_item_call_opponent"
-            tools:targetApi="jelly_bean_mr1" />
+
 
         <Chronometer
             android:id="@+id/chronometer"

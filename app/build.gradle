@@ -108,7 +108,7 @@ dependencies {
 
 //    implementation 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.1.0'
 
-    implementation "com.connectycube:connectycube-android-sdk-videochat:1.9.2"
+//    implementation "com.connectycube:connectycube-android-sdk-videochat:1.9.2"
     implementation 'com.jakewharton.timber:timber:4.7.1'// logs the request
 
     // Add the Firebase SDK for Google Analytics
@@ -121,6 +121,8 @@ dependencies {
         exclude group: 'org.json', module: 'json'
     }
 
+
+    implementation "com.quickblox:quickblox-android-sdk-videochat-webrtc:3.9.2"
 
 
 }

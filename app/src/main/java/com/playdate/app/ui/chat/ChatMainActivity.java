@@ -2,9 +2,12 @@ package com.playdate.app.ui.chat;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -19,7 +22,9 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -32,6 +37,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
@@ -41,18 +47,34 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
+import com.playdate.app.model.chat_models.ChatFile;
+import com.playdate.app.model.chat_models.ChatFileUpload;
 import com.playdate.app.model.chat_models.ChatMessage;
 import com.playdate.app.model.chat_models.ChatMsgResp;
 import com.playdate.app.service.GpsTracker;
-import com.playdate.app.ui.dashboard.DashboardActivity;
+import com.playdate.app.util.MyApplication;
 import com.playdate.app.util.common.BaseActivity;
 import com.playdate.app.util.common.TransparentProgressDialog;
-import com.playdate.app.util.image_crop.MainActivity;
 import com.playdate.app.util.session.SessionPref;
+import com.playdate.app.videocall.activities.OpponentsActivity;
+import com.playdate.app.videocall.services.LoginService;
+import com.playdate.app.videocall.util.QBResRequestExecutor;
+import com.playdate.app.videocall.utils.Consts;
+import com.playdate.app.videocall.utils.PermissionsChecker;
+import com.playdate.app.videocall.utils.QBEntityCallbackImpl;
+import com.playdate.app.videocall.utils.SharedPrefsHelper;
+import com.playdate.app.videocall.utils.ToastUtils;
+import com.quickblox.core.QBEntityCallback;
+import com.quickblox.core.exception.QBResponseException;
+import com.quickblox.users.QBUsers;
+import com.quickblox.users.model.QBUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,6 +82,9 @@ import java.util.Map;
 import java.util.UUID;
 
 import io.socket.emitter.Emitter;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -79,7 +104,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     private ImageView iv_mic;
     private EditText et_msg;
     private ImageView iv_delete_msg;
-    private ImageView video_cal;
+    private ImageView iv_video_call;
     private String sender_photo;
     private String sender_name;
     private String chatId;
@@ -114,18 +139,30 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     private int PageNumber = 1;
     JSONObject objNotTyping;
 
+    long delay = 1000; // 1 seconds after user stops typing
+    long last_text_edit = 0;
+    Handler handler = new Handler(Looper.getMainLooper());
+
+    private boolean isMoreData = true;
+    boolean audioRecordingPermissionGranted = false;
+
+    // Video Calling
+
+    protected QBResRequestExecutor requestExecutor;
+    protected SharedPrefsHelper sharedPrefsHelper;
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_screen);
-        ActivityCompat.requestPermissions(this, permissions, REQUEST_AUDIO_PERMISSION_CODE);
+
         pref = SessionPref.getInstance(ChatMainActivity.this);
+        requestExecutor = MyApplication.getInstance().getQbResRequestExecutor();
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         UserID = pref.getStringVal(SessionPref.LoginUserID);
-        mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
-        mFileName += "/AudioRecording.3gp";
 
+        sharedPrefsHelper = SharedPrefsHelper.getInstance();
         scrollview = findViewById(R.id.scrollview);
         rl_chat = findViewById(R.id.rl_chat);
         rv_smileys = findViewById(R.id.rv_smileys);
@@ -141,7 +178,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         TextView chat_name = findViewById(R.id.chat_name);
         ImageView iv_smiley = findViewById(R.id.iv_smiley);
         iv_delete_msg = findViewById(R.id.iv_delete_msg);
-        video_cal = findViewById(R.id.video_cal);
+        iv_video_call = findViewById(R.id.iv_video_call);
 
         lstSmiley = new ArrayList<>();
 
@@ -185,10 +222,10 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         iv_mic.setOnClickListener(this);
         iv_circle.setOnClickListener(this);
         iv_smiley.setOnClickListener(this);
+        iv_video_call.setOnClickListener(this);
 
         createRoom();
-        mSocket.on("chat_message_room", onNewMessage);
-        mSocket.on("typing", onTyping);
+        listen();
         readMsgEmit();
 
         JSONObject objTyping = getJOBTyping(true);
@@ -221,18 +258,27 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         scrollview.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
 
             if (scrollY == 0) {
-//                Toast.makeText(this, "at top", Toast.LENGTH_SHORT).show();
                 callAPI();
 
             }
-//            if (scrollY == (v.getMeasuredHeight() - v.getChildAt(0).getMeasuredHeight()) * -1) {
-//                Toast.makeText(this, "at bottom", Toast.LENGTH_SHORT).show();
-//            }
-
 
         });
         callAPI();
 
+        //video call
+
+        userForSave = createUserWithEnteredData();
+        startSignUpNewUser(userForSave);
+
+    }
+
+    private void listen() {
+        try {
+            mSocket.on("chat_message_room", onNewMessage);
+            mSocket.on("typing", onTyping);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void readMsgEmit() {
@@ -249,7 +295,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     }
 
 
-    private Runnable input_finish_checker = new Runnable() {
+    private final Runnable input_finish_checker = new Runnable() {
         public void run() {
             if (System.currentTimeMillis() > (last_text_edit + delay - 500)) {
                 if (null != objNotTyping)
@@ -258,11 +304,6 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         }
     };
 
-    long delay = 1000; // 1 seconds after user stops typing
-    long last_text_edit = 0;
-    Handler handler = new Handler(Looper.getMainLooper());
-
-    private boolean isMoreData = true;
 
     private JSONObject getJOBTyping(boolean typing) {
         JSONObject jsonObject = new JSONObject();
@@ -292,10 +333,6 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         hashMap.put("pageNo", "" + PageNumber);
         hashMap.put("chatId", chatId);
         hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
-
-//        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
-//        pd.show();
-
 
         Call<ChatMsgResp> call = service.getChatMessage("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<ChatMsgResp>() {
@@ -341,13 +378,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 
 
     void scrollTOEnd() {
-        scrollview.post(new Runnable() {
-            @Override
-            public void run() {
-                scrollview.fullScroll(View.FOCUS_DOWN);
-            }
-        });
-//        rv_chat.post(() -> rv_chat.scrollToPosition(adapter.getItemCount() - 1));
+        scrollview.post(() -> scrollview.fullScroll(View.FOCUS_DOWN));
     }
 
     Emitter.Listener onNewMessage = args -> runOnUiThread(() -> {
@@ -380,16 +411,13 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                 if (!lstChat.get(0).getType().equals("typing")) {
                     adapter.addTyping(data.getString("userId"), data.getString("username"), data.getString("profilePic"));
                 }
-//                Toast.makeText(this, "Opponent typing", Toast.LENGTH_SHORT).show();
             }
-//            adapter.addToListText(data.getString("message"), data.getString("userId"), data.getString("username"), data.getString("profilePic"));
-//            scrollTOEnd();
         } catch (Exception e) {
             e.printStackTrace();
         }
     });
 
-    private void sendMessgae(String msg) {
+    private void sendMessgae(String msg, String Type, String mediaID) {
         if (null != mSocket) {
             if (mSocket.connected()) {
 
@@ -401,6 +429,14 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                     jsonObject.put("chatId", chatId);
                     jsonObject.put("username", pref.getStringVal(SessionPref.LoginUserusername));
                     jsonObject.put("profilePic", pref.getStringVal(SessionPref.LoginUserprofilePic));
+
+
+                    jsonObject.put("mediaId", mediaID);
+                    jsonObject.put("lat", 0);
+                    jsonObject.put("long", 0);
+                    jsonObject.put("messageType", Type);
+
+
                     mSocket.emit("chat_message_room", jsonObject);
                 } catch (Exception ignored) {
 
@@ -412,21 +448,25 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     }
 
 
-    String question = "According to Forbes,which entreprenour became first person in history to have net worth of $400 billion?";
-
-    private void addQuestions() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-//                adapter.addQuestion(question);
-                scrollTOEnd();
-
-
-            }
-        }, 5000);
-    }
+//    String question = "According to Forbes,which entreprenour became first person in history to have net worth of $400 billion?";
+//
+//    private void addQuestions() {
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+////                adapter.addQuestion(question);
+//                scrollTOEnd();
+//
+//
+//            }
+//        }, 5000);
+//    }
 
     private void startRecording() {
+        ActivityCompat.requestPermissions(this, permissions, REQUEST_AUDIO_PERMISSION_CODE);
+        mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
+        mFileName += "/AudioRecording.3gp";
+
         String uuid = UUID.randomUUID().toString();
         mFileName = this.getExternalCacheDir().getAbsolutePath() + "/" + uuid + ".3gp";
         Log.d("FILENAME...", mFileName);
@@ -474,7 +514,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         super.onActivityResult(requestCode, resultCode, data);
         try {
             if (resultCode == Activity.RESULT_OK) {
-                if (requestCode == PICK_PHOTO_FOR_AVATAR) {
+                if (requestCode == PICK_PHOTO_FOR_AVATAR|| requestCode== TAKE_PHOTO_CODE) {
 
 
                     if (data.getData() == null) {
@@ -490,18 +530,14 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                         Log.d("BITMAP VALUE", bitmap.toString());
 //                      sheet.dismiss();
 //                      Drawable d = new BitmapDrawable(getResources(), bitmap);
-                        adapter.addToListImage(bitmap);
+                        addToListImage(bitmap);
                         scrollTOEnd();
                     }
                 } else if (requestCode == REQUEST_TAKE_GALLERY_VIDEO) {
                     if (data != null) {
                         Uri contentURI = data.getData();
-
-                        Log.d("CONTENTURI ", String.valueOf(contentURI));
-                        String selectedVideoPath = contentURI.toString();
-//                        String selectedVideoPath = getPath(contentURI);
-                        Log.d("path", selectedVideoPath);
-                   //    adapter.addVIdeo(contentURI);
+                        String selectedVideoPath = getPath(contentURI);
+                        addToListVideo(selectedVideoPath);
                         scrollTOEnd();
 
 
@@ -510,15 +546,6 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                         Toast.makeText(this, "FAIELD TO GET DATA", Toast.LENGTH_SHORT).show();
                     }
 
-                } else if (requestCode == TAKE_PHOTO_CODE) {
-                    bitmap = (Bitmap) data.getExtras().get("data");
-                    if (null != bitmap) {
-                        Log.d("BITMAP VALUE", bitmap.toString());
-                        sheet.dismiss();
-                        Drawable d = new BitmapDrawable(getResources(), bitmap);
-//                      adapter.addImage(d);
-                        scrollTOEnd();
-                    }
                 }
 
             } else {
@@ -533,7 +560,96 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 
     }
 
-    boolean audioRecordingPermissionGranted = false;
+    public String getPath(Uri uri) {
+        String[] projection = {MediaStore.Video.Media.DATA};
+        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
+        if (cursor != null) {
+            int column_index = cursor
+                    .getColumnIndexOrThrow(MediaStore.Video.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        } else
+            return null;
+    }
+
+    File currentFile = null;
+
+    private void addToListVideo(String videoPath) {
+        currentFile = new File(videoPath);
+        SessionPref pref = SessionPref.getInstance(this);
+        MultipartBody.Part filePart = MultipartBody.Part.createFormData("mediaFeed", currentFile.getName(), RequestBody.create(MediaType.parse("video/mp4"), currentFile));
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Call<ChatFileUpload> call = service.addmediaVideo("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), filePart);
+        call.enqueue(new Callback<ChatFileUpload>() {
+            @Override
+            public void onResponse(Call<ChatFileUpload> call, Response<ChatFileUpload> response) {
+                if (response.code() == 200) {
+                    if (response.body().getStatus() == 1) {
+                        ChatFile media = response.body().getChatFile();
+                        sendMessgae("", "media", media.getMediaId());
+
+                    } else {
+                    }
+                } else {
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ChatFileUpload> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
+    public void addToListImage(Bitmap bitmap) {
+
+        File f = new File(getCacheDir(), "chat.png");
+        try {
+            f.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 40, bos);
+        byte[] bitmapdata = bos.toByteArray();
+
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(f);
+            fos.write(bitmapdata);
+            fos.flush();
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        SessionPref pref = SessionPref.getInstance(this);
+        MultipartBody.Part filePart = MultipartBody.Part.createFormData("mediaFeed", f.getName(), RequestBody.create(MediaType.parse("image/png"), f));
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Call<ChatFileUpload> call = service.addMediaImage("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), filePart);
+        call.enqueue(new Callback<ChatFileUpload>() {
+            @Override
+            public void onResponse(Call<ChatFileUpload> call, Response<ChatFileUpload> response) {
+                if (response.code() == 200) {
+                    if (response.body().getStatus() == 1) {
+                        ChatFile media = response.body().getChatFile();
+                        sendMessgae("", "media", media.getMediaId());
+
+                    } else {
+                    }
+                } else {
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ChatFileUpload> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -567,19 +683,16 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         }
     }
 
-    private void pickImage()
-    {
+    private void pickImage() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         intent.setType("image/*");
         startActivityForResult(intent, PICK_PHOTO_FOR_AVATAR);
     }
 
-    private void getEmoticon()
-    {
+    private void getEmoticon() {
         for (int i = 0; i <= intEmoji.length; i++) {
 //            String emoji = new String(Character.toChars(i));
-            try
-            {
+            try {
                 lstSmiley.add(intEmoji[i]);
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -593,7 +706,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     public void onSmileyChange(int position) {
         int smiley = lstSmiley.get(position);
 //        Drawable drawable = getResources().getDrawable(smiley);
-        sendMessgae("" + smiley);
+        sendMessgae("" + smiley, "emoji", null);
 
     }
 
@@ -681,39 +794,54 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     public void onClick(View v) {
 
         int id = v.getId();
-        if (id == R.id.arrow_back || id == R.id.profile_image) {
+        if (id == R.id.iv_video_call) {
+            if (checkOverlayPermissions()) {
+                runNextScreen();
+            }
+        } else if (id == R.id.iv_circle) {
+            new ChatBottomSheet("Extra", this).show(getSupportFragmentManager(), "ModalBottomSheet");
+            ;
+        } else if (id == R.id.arrow_back || id == R.id.profile_image) {
             finish();
         } else if (id == R.id.iv_send) {
-            String msg = et_msg.getText().toString();
-            if (msg.isEmpty()) {
-                Toast.makeText(ChatMainActivity.this, "Empty message can't send", Toast.LENGTH_SHORT).show();
-            } else {
-                sendMessgae(msg);
-            }
+            validateMsg();
         } else if (id == R.id.iv_video) {
-            Intent intent;
-            if (android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
-                intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
-            } else {
-                intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Video.Media.INTERNAL_CONTENT_URI);
-            }
-            intent.setType("video/*");
-            intent.setAction(Intent.ACTION_GET_CONTENT);
-            intent.putExtra("return-data", true);
-            startActivityForResult(intent, REQUEST_TAKE_GALLERY_VIDEO);
+            pickVideo();
         } else if (id == R.id.iv_camera) {
-            onGallerySelect();
+            new ChatBottomSheet("", this).show(getSupportFragmentManager(), "ModalBottomSheet");
+            ;
         } else if (id == R.id.iv_mic) {
             startRecording();
         } else if (id == R.id.iv_smiley) {
-            if (isVisible) {
-                rv_smileys.setVisibility(View.GONE);
-                isVisible = false;
-            } else {
-                rv_smileys.setVisibility(View.VISIBLE);
-                isVisible = true;
-            }
+            smileyCode();
         }
+
+    }
+
+    private void validateMsg() {
+        String msg = et_msg.getText().toString();
+        if (msg.isEmpty()) {
+            Toast.makeText(ChatMainActivity.this, "Empty message can't send", Toast.LENGTH_SHORT).show();
+        } else {
+            sendMessgae(msg, "text", null);
+        }
+    }
+
+    private void smileyCode() {
+        if (isVisible) {
+            rv_smileys.setVisibility(View.GONE);
+            isVisible = false;
+        } else {
+            rv_smileys.setVisibility(View.VISIBLE);
+            isVisible = true;
+        }
+    }
+
+    public void pickVideo() {
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
+        galleryIntent.setType("video/*");
+        startActivityForResult(Intent.createChooser(galleryIntent, "Select Video"), REQUEST_TAKE_GALLERY_VIDEO);
 
     }
 
@@ -725,6 +853,227 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         super.onDestroy();
 
     }
+
+//video Call
+
+    private static final String OVERLAY_PERMISSION_CHECKED_KEY = "overlay_checked";
+    private static final String MI_OVERLAY_PERMISSION_CHECKED_KEY = "mi_overlay_checked";
+
+    private static final int ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE = 1764;
+
+    private void buildOverlayPermissionAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Overlay Permission Required");
+        builder.setIcon(R.drawable.ic_error_outline_gray_24dp);
+        builder.setMessage("To receive calls in background - \nPlease Allow overlay permission in Android Settings");
+        builder.setCancelable(false);
+
+        builder.setNeutralButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ToastUtils.longToast("You might miss calls while your application in background");
+                sharedPrefsHelper.save(OVERLAY_PERMISSION_CHECKED_KEY, true);
+            }
+        });
+
+        builder.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                showAndroidOverlayPermissionsSettings();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            alertDialog.create();
+            alertDialog.show();
+        }
+    }
+
+    private void showAndroidOverlayPermissionsSettings() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(ChatMainActivity.this)) {
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+            intent.setData(Uri.parse("package:" + getApplicationContext().getPackageName()));
+            startActivityForResult(intent, ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE);
+        } else {
+//            Log.d(TAG, "Application Already has Overlay Permission");
+        }
+    }
+
+    private void buildMIUIOverlayPermissionAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Additional Overlay Permission Required");
+        builder.setIcon(R.drawable.ic_error_outline_orange_24dp);
+        builder.setMessage("Please make sure that all additional permissions granted");
+        builder.setCancelable(false);
+
+        builder.setNeutralButton("I'm sure", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                sharedPrefsHelper.save(MI_OVERLAY_PERMISSION_CHECKED_KEY, true);
+                runNextScreen();
+            }
+        });
+
+        builder.setPositiveButton("Mi Settings", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                showMiUiPermissionsSettings();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            alertDialog.create();
+            alertDialog.show();
+        }
+    }
+
+    private void runNextScreen() {
+        if (sharedPrefsHelper.hasQbUser()) {
+            LoginService.start(ChatMainActivity.this, sharedPrefsHelper.getQbUser());
+            OpponentsActivity.start(ChatMainActivity.this);
+        } else {
+//            new Handler().postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    LoginActivity.start(ChatMainActivity.this);
+//                    finish();
+//                }
+//            }, SPLASH_DELAY);
+        }
+    }
+
+    private void showMiUiPermissionsSettings() {
+        Intent intent = new Intent("miui.intent.action.APP_PERM_EDITOR");
+        intent.setClassName("com.miui.securitycenter",
+                "com.miui.permcenter.permissions.PermissionsEditorActivity");
+        intent.putExtra("extra_pkgname", getPackageName());
+        startActivityForResult(intent, ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE);
+    }
+
+    private boolean checkOverlayPermissions() {
+//        Log.e(TAG, "Checking Permissions");
+        boolean overlayChecked = sharedPrefsHelper.get(OVERLAY_PERMISSION_CHECKED_KEY, false);
+        boolean miOverlayChecked = sharedPrefsHelper.get(MI_OVERLAY_PERMISSION_CHECKED_KEY, false);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!Settings.canDrawOverlays(this) && !overlayChecked) {
+//                Log.e(TAG, "Android Overlay Permission NOT Granted");
+                buildOverlayPermissionAlertDialog();
+                return false;
+            } else if (PermissionsChecker.isMiUi() && !miOverlayChecked) {
+//                Log.e(TAG, "Xiaomi Device. Need additional Overlay Permissions");
+                buildMIUIOverlayPermissionAlertDialog();
+                return false;
+            }
+        }
+//        Log.e(TAG, "All Overlay Permission Granted");
+        sharedPrefsHelper.save(OVERLAY_PERMISSION_CHECKED_KEY, true);
+        sharedPrefsHelper.save(MI_OVERLAY_PERMISSION_CHECKED_KEY, true);
+        return true;
+    }
+
+    private QBUser userForSave;
+    public QBUser result;
+
+
+    private void startSignUpNewUser(final QBUser newUser) {
+//        Log.d(TAG, "SignUp New User");
+//        showProgressDialog(R.string.dlg_creating_new_user);
+        requestExecutor.signUpNewUser(newUser, new QBEntityCallback<QBUser>() {
+                    @Override
+                    public void onSuccess(QBUser result, Bundle params) {
+//                        Log.d(TAG, "SignUp Successful");
+//                        ChatMainActivity.result=result;
+                        saveUserData(newUser);
+//                        loginToChat(result);
+                    }
+
+                    @Override
+                    public void onError(QBResponseException e) {
+//                        Log.d(TAG, "Error SignUp" + e.getMessage());
+                        if (e.getHttpStatusCode() == Consts.ERR_LOGIN_ALREADY_TAKEN_HTTP_STATUS) {
+                            signInCreatedUser(newUser);
+                        } else {
+//                            hideProgressDialog();
+                            ToastUtils.longToast(R.string.sign_up_error);
+                        }
+                    }
+                }
+        );
+    }
+
+    private void signInCreatedUser(final QBUser qbUser) {
+//        Log.d(TAG, "SignIn Started");
+        requestExecutor.signInUser(qbUser, new QBEntityCallbackImpl<QBUser>() {
+            @Override
+            public void onSuccess(QBUser user, Bundle params) {
+//                Log.d(TAG, "SignIn Successful");
+                sharedPrefsHelper.saveQbUser(userForSave);
+                updateUserOnServer(qbUser);
+            }
+
+            @Override
+            public void onError(QBResponseException responseException) {
+//                Log.d(TAG, "Error SignIn" + responseException.getMessage());
+//                hideProgressDialog();
+                ToastUtils.longToast(R.string.sign_in_error);
+            }
+        });
+    }
+
+    private void loginToChat(final QBUser qbUser) {
+        qbUser.setPassword(MyApplication.USER_DEFAULT_PASSWORD);
+        userForSave = qbUser;
+        startLoginService(qbUser);
+    }
+
+    private void startLoginService(QBUser qbUser) {
+        Intent tempIntent = new Intent(this, LoginService.class);
+        PendingIntent pendingIntent = createPendingResult(Consts.EXTRA_LOGIN_RESULT_CODE, tempIntent, 0);
+        LoginService.start(this, qbUser, pendingIntent);
+    }
+
+    private void updateUserOnServer(QBUser user) {
+        user.setPassword(null);
+        QBUsers.updateUser(user).performAsync(new QBEntityCallback<QBUser>() {
+            @Override
+            public void onSuccess(QBUser qbUser, Bundle bundle) {
+//                hideProgressDialog();
+//                OpponentsActivity.start(ChatMainActivity.this);
+//                finish();
+            }
+
+            @Override
+            public void onError(QBResponseException e) {
+//                hideProgressDialog();
+                ToastUtils.longToast(R.string.update_user_error);
+            }
+        });
+    }
+
+    private void saveUserData(QBUser qbUser) {
+        SharedPrefsHelper sharedPrefsHelper = SharedPrefsHelper.getInstance();
+        sharedPrefsHelper.saveQbUser(qbUser);
+    }
+
+    private QBUser createUserWithEnteredData() {
+        return createQBUserWithCurrentData(pref.getStringVal(SessionPref.LoginUserID), pref.getStringVal(SessionPref.LoginUserusername));
+    }
+
+    private QBUser createQBUserWithCurrentData(String userLogin, String userFullName) {
+        QBUser qbUser = null;
+        if (!TextUtils.isEmpty(userLogin) && !TextUtils.isEmpty(userFullName)) {
+            qbUser = new QBUser();
+            qbUser.setLogin(userLogin);
+            qbUser.setFullName(userFullName);
+            qbUser.setPassword(MyApplication.USER_DEFAULT_PASSWORD);
+        }
+        return qbUser;
+    }
+
+
 }
 
 
