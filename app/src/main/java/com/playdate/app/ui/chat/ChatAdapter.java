@@ -729,41 +729,42 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             typing = view.findViewById(R.id.typing);
             rl_body = view.findViewById(R.id.rl_body);
             play_audio = view.findViewById(R.id.play_audio);
+
             rl_audio = view.findViewById(R.id.rl_audio);
 
-            tv_msg.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    selectedPosition = getAdapterPosition();
-
-//                    ref.onMessageSelectToDelete(getAdapterPosition());
-                    showBottomSheet(selectedPosition);
-                    notifyDataSetChanged();
-                    return true;
-                }
-            });
-            chat_image.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    selectedPosition = getAdapterPosition();
-
-//                    ref.onMessageSelectToDelete(getAdapterPosition());
-                    showBottomSheet(selectedPosition);
-                    notifyDataSetChanged();
-                    return true;
-                }
-            });
-            rl_audio.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    selectedPosition = getAdapterPosition();
-
-//                    ref.onMessageSelectToDelete(getAdapterPosition());
-                    showBottomSheet(selectedPosition);
-                    notifyDataSetChanged();
-                    return true;
-                }
-            });
+//            tv_msg.setOnLongClickListener(new View.OnLongClickListener() {
+//                @Override
+//                public boolean onLongClick(View v) {
+//                    selectedPosition = getAdapterPosition();
+//
+////                    ref.onMessageSelectToDelete(getAdapterPosition());
+//                    showBottomSheet(selectedPosition);
+//                    notifyDataSetChanged();
+//                    return true;
+//                }
+//            });
+//            chat_image.setOnLongClickListener(new View.OnLongClickListener() {
+//                @Override
+//                public boolean onLongClick(View v) {
+//                    selectedPosition = getAdapterPosition();
+//
+////                    ref.onMessageSelectToDelete(getAdapterPosition());
+//                    showBottomSheet(selectedPosition);
+//                    notifyDataSetChanged();
+//                    return true;
+//                }
+//            });
+//            rl_audio.setOnLongClickListener(new View.OnLongClickListener() {
+//                @Override
+//                public boolean onLongClick(View v) {
+//                    selectedPosition = getAdapterPosition();
+//
+////                    ref.onMessageSelectToDelete(getAdapterPosition());
+//                    showBottomSheet(selectedPosition);
+//                    notifyDataSetChanged();
+//                    return true;
+//                }
+//            });
 
 //            card_video.setOnLongClickListener(new View.OnLongClickListener() {
 //                @Override
