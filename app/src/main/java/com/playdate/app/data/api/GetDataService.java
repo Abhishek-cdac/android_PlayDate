@@ -307,6 +307,9 @@ public interface GetDataService {
     @POST("user/add-media?section=chat&mediaType=video")
     Call<ChatFileUpload> addmediaVideo(@Header("Authorization") String token, @Part MultipartBody.Part filePart);
 
+    @Multipart
+    @POST("user/add-chat-media?section=chat&mediaType=audio")
+    Call<ChatFileUpload> addmediaAudio(@Header("Authorization") String token, @Part MultipartBody.Part filePart);
 }
 
 

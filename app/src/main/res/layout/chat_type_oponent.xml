@@ -34,11 +34,10 @@
         android:layout_height="@dimen/_40sdp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
+        android:visibility="gone"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        android:visibility="gone"
-        app:lottie_rawRes="@raw/typing"
-       />
+        app:lottie_rawRes="@raw/typing" />
 
 
     <ImageView
@@ -80,6 +79,60 @@
             android:visibility="visible" />
 
     </androidx.cardview.widget.CardView>
+
+    <RelativeLayout
+        android:id="@+id/rl_audio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/_5sdp"
+        android:layout_toRightOf="@+id/profile_image_oponent"
+        android:background="@drawable/btn_black_filled"
+        android:paddingHorizontal="@dimen/_12sdp"
+        android:paddingVertical="@dimen/_8sdp"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/play_audio"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/play" />
+
+        <ImageView
+            android:id="@+id/audio_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/play_audio"
+            android:src="@drawable/horizontal_more" />
+
+        <ImageView
+            android:id="@+id/audio_more2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/_2sdp"
+            android:layout_toRightOf="@+id/audio_more"
+            android:src="@drawable/horizontal_more" />
+
+        <ImageView
+            android:id="@+id/audio_more3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/_2sdp"
+            android:layout_toRightOf="@+id/audio_more2"
+            android:src="@drawable/horizontal_more" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/_2sdp"
+            android:layout_toRightOf="@+id/audio_more3"
+            android:src="@drawable/horizontal_more" />
+    </RelativeLayout>
 
 
 </RelativeLayout>
