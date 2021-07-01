@@ -730,7 +730,6 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             rl_body = view.findViewById(R.id.rl_body);
             play_audio = view.findViewById(R.id.play_audio);
 
-
             rl_audio = view.findViewById(R.id.rl_audio);
 
 //            tv_msg.setOnLongClickListener(new View.OnLongClickListener() {
