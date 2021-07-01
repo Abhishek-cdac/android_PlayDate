@@ -9,8 +9,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.media.MediaPlayer;
@@ -53,6 +51,7 @@ import com.playdate.app.model.chat_models.ChatMessage;
 import com.playdate.app.model.chat_models.ChatMsgResp;
 import com.playdate.app.service.GpsTracker;
 import com.playdate.app.util.MyApplication;
+import com.playdate.app.util.common.AudioRecordProgressDialog;
 import com.playdate.app.util.common.BaseActivity;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
@@ -125,6 +124,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     private static final String[] permissions = {Manifest.permission.RECORD_AUDIO};
     private String AudioSavePathInDevice = null;
     private TransparentProgressDialog pd;
+    private AudioRecordProgressDialog apd;
     private String UserID = "";
 
     private final int REQUEST_AUDIO_PERMISSION_CODE = 1;
@@ -472,8 +472,8 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         mFileName = this.getExternalCacheDir().getAbsolutePath() + "/" + uuid + ".mp3";
         Log.d("FILENAME...", mFileName);
         iv_mic.setEnabled(true);
-        pd = TransparentProgressDialog.getInstance(this);
-        pd.show();
+        apd = AudioRecordProgressDialog.getInstance(this);
+        apd.show();
 
         mRecorder = new MediaRecorder();
         mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
@@ -496,7 +496,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         new Handler().postDelayed(new Runnable() {
             public void run() {
                 mRecorder.stop();
-                pd.cancel();
+                apd.cancel();
                 Log.d("Recording STopped", "Recording Stop");
                 Toast.makeText(getApplicationContext(), "Recording Stop", Toast.LENGTH_SHORT).show();
                 addToListAudio(mFileName);
