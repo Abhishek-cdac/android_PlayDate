@@ -16,7 +16,7 @@ public class ChatBottomSheet extends BottomSheetDialogFragment {
     String text;
     ChatMainActivity ref;
 
-    public ChatBottomSheet(String text,ChatMainActivity ref) {
+    public ChatBottomSheet(String text, ChatMainActivity ref) {
         this.text = text;
         this.ref = ref;
     }
@@ -31,11 +31,9 @@ public class ChatBottomSheet extends BottomSheetDialogFragment {
             LinearLayout ll_location;
 
             ll_location = view.findViewById(R.id.ll_location);
-            ll_location.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ref.onLocationSelect();
-                }
+            ll_location.setOnClickListener(v -> {
+                ref.onLocationSelect();
+                dismiss();
             });
 
 
@@ -46,17 +44,13 @@ public class ChatBottomSheet extends BottomSheetDialogFragment {
             ll_gallery = view.findViewById(R.id.ll_gallery);
             ll_camera = view.findViewById(R.id.ll_camera);
 
-            ll_gallery.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ref.onGallerySelect();
-                }
+            ll_gallery.setOnClickListener(v -> {
+                ref.onGallerySelect();
+                dismiss();
             });
-            ll_camera.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ref.onCameraSelect();
-                }
+            ll_camera.setOnClickListener(v -> {
+                ref.onCameraSelect();
+                dismiss();
             });
         }
         return view;

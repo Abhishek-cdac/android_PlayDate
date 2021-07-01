@@ -29,16 +29,27 @@
         android:textSize="@dimen/_10sdp"
         android:visibility="visible" />
 
-    <ImageView
-        android:id="@+id/chat_image"
+    <androidx.cardview.widget.CardView
         android:layout_width="@dimen/_150sdp"
         android:layout_height="@dimen/_150sdp"
         android:layout_centerVertical="true"
+        android:id="@+id/cv_image"
+        app:cardCornerRadius="@dimen/_5sdp"
+        android:visibility="gone"
+        android:background="@color/color_grey_light_too"
         android:layout_marginRight="@dimen/_5sdp"
         android:layout_toLeftOf="@+id/profile_image_me"
-        android:scaleType="fitXY"
-        android:src="@drawable/profile"
-        android:visibility="gone" />
+        android:foregroundGravity="center"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/chat_image"
+            android:layout_width="@dimen/_145sdp"
+            android:layout_height="@dimen/_145sdp"
+            android:scaleType="fitXY"
+            android:visibility="visible" />
+    </androidx.cardview.widget.CardView>
+
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_video"
@@ -49,7 +60,7 @@
         android:layout_toLeftOf="@+id/profile_image_me"
         android:visibility="gone"
         app:cardBackgroundColor="@color/color_grey_light_very"
-        app:cardCornerRadius="@dimen/_10sdp">
+        app:cardCornerRadius="@dimen/_5sdp">
 
         <ImageView
             android:id="@+id/iv_thumb"

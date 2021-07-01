@@ -6,6 +6,22 @@ public class MediaInfo {
     String mediaFullPath;
     String mediaThumbName;
 
+    public void setMediaType(String mediaType) {
+        this.mediaType = mediaType;
+    }
+
+    public void setMediaId(String mediaId) {
+        this.mediaId = mediaId;
+    }
+
+    public void setMediaFullPath(String mediaFullPath) {
+        this.mediaFullPath = mediaFullPath;
+    }
+
+    public void setMediaThumbName(String mediaThumbName) {
+        this.mediaThumbName = mediaThumbName;
+    }
+
     public String getMediaType() {
         return mediaType;
     }
