@@ -456,6 +456,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 //            public void run() {
 ////                adapter.addQuestion(question);
 //                scrollTOEnd();
+
 //
 //
 //            }
@@ -498,6 +499,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                 pd.cancel();
                 Log.d("Recording STopped", "Recording Stop");
                 Toast.makeText(getApplicationContext(), "Recording Stop", Toast.LENGTH_SHORT).show();
+                addToListAudio(mFileName);
 
 //                adapter.addToListAudio(mFileName);
                 scrollTOEnd();
@@ -507,6 +509,8 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         }, 3000);
     }
 
+
+
     Bitmap bitmap = null;
 
     @Override
@@ -514,7 +518,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         super.onActivityResult(requestCode, resultCode, data);
         try {
             if (resultCode == Activity.RESULT_OK) {
-                if (requestCode == PICK_PHOTO_FOR_AVATAR|| requestCode== TAKE_PHOTO_CODE) {
+                if (requestCode == PICK_PHOTO_FOR_AVATAR || requestCode == TAKE_PHOTO_CODE) {
 
 
                     if (data.getData() == null) {
@@ -572,8 +576,12 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             return null;
     }
 
-    File currentFile = null;
+    File audioFIle = null;
+    private void addToListAudio(String mFileName) {
 
+    }
+
+    File currentFile = null;
     private void addToListVideo(String videoPath) {
         currentFile = new File(videoPath);
         SessionPref pref = SessionPref.getInstance(this);

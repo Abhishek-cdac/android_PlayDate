@@ -142,7 +142,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 //                    .placeholder(R.drawable.cupertino_activity_indicator)
                     .into(viewHolderMe.profile_image_me);
 
-            if (lst_chat.get(position).getType().equals("text") || lst_chat.get(position).getType().equals("emoji") ) {
+            if (lst_chat.get(position).getType().equals("text") || lst_chat.get(position).getType().equals("emoji")) {
                 viewHolderMe.tv_msg.setVisibility(View.VISIBLE);
                 viewHolderMe.chat_image.setVisibility(View.GONE);
                 viewHolderMe.iv_thumb.setVisibility(View.GONE);
@@ -294,7 +294,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             Picasso.get().load(lst_chat.get(position).getUserInfo().get(0).getProfilePicPath())
                     .into(viewHolderOponent.iv_profile);
 
-            if (lst_chat.get(position).getType().equals("text")||lst_chat.get(position).getType().equals("emoji")) {
+            if (lst_chat.get(position).getType().equals("text") || lst_chat.get(position).getType().equals("emoji")) {
                 viewHolderOponent.tv_msg.setVisibility(View.VISIBLE);
                 viewHolderOponent.chat_image.setVisibility(View.GONE);
                 //temp
