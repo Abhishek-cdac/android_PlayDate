@@ -24,16 +24,27 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.playdate.app.R;
+import com.playdate.app.data.api.GetDataService;
+import com.playdate.app.data.api.RetrofitClientInstance;
+import com.playdate.app.model.CommonModel;
+import com.playdate.app.model.FriendsListModel;
 import com.playdate.app.model.UserInfo;
 import com.playdate.app.model.chat_models.ChatMessage;
 import com.playdate.app.ui.playvideo.ExoPlayerActivity;
+import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.photoview.PhotoViewActivity;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -539,9 +550,45 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 //    }
 
     public void removeFromList(int position) {
-        lst_chat.remove(position);
-        notifyDataSetChanged();
-        bottomSheet.dismiss();
+
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("userId", LoginUserID);
+        hashMap.put("chatId", lst_chat.get(position).getChatId());
+        hashMap.put("messageId", lst_chat.get(position).getMessageId());
+        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(mContext);
+        pd.show();
+
+        Call<CommonModel> call = service.deleteChatMessage("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new Callback<CommonModel>() {
+            @Override
+            public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
+                pd.cancel();
+                if (response.code() == 200) {
+                    if (response.body().getStatus() == 1) {
+                        lst_chat.remove(position);
+                        notifyDataSetChanged();
+                    } else {
+                        Toast.makeText(mContext, "Unable to delete", Toast.LENGTH_SHORT).show();
+
+                    }
+                    bottomSheet.dismiss();
+                } else {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CommonModel> call, Throwable t) {
+                t.printStackTrace();
+                pd.cancel();
+            }
+        });
+
+//        lst_chat.remove(position);
+//        notifyDataSetChanged();
+//        bottomSheet.dismiss();
+
     }
 
     public void dismissSheet() {
