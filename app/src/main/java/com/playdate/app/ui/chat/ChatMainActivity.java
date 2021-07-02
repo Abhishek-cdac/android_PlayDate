@@ -9,9 +9,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.location.LocationListener;
 import android.location.LocationManager;
-import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Build;
@@ -28,7 +26,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,15 +42,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
+import com.playdate.app.model.UserInfo;
 import com.playdate.app.model.chat_models.ChatFile;
 import com.playdate.app.model.chat_models.ChatFileUpload;
 import com.playdate.app.model.chat_models.ChatMessage;
 import com.playdate.app.model.chat_models.ChatMsgResp;
+import com.playdate.app.model.chat_models.MediaInfo;
 import com.playdate.app.service.GpsTracker;
 import com.playdate.app.util.MyApplication;
 import com.playdate.app.util.common.AudioRecordProgressDialog;
 import com.playdate.app.util.common.BaseActivity;
-import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
 import com.playdate.app.videocall.activities.CallActivity;
 import com.playdate.app.videocall.activities.PermissionsActivity;
@@ -113,29 +111,31 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     private ImageView iv_mic;
     private EditText et_msg;
     private ImageView iv_delete_msg;
-    private ImageView iv_video_call;
     private String sender_photo;
     private String sender_name;
     private String chatId;
     private String userIDTo;
-    private RelativeLayout rl_chat;
+    //    private RelativeLayout rl_chat;
     private ArrayList<ChatMessage> chatMsgList;
     private ArrayList<Integer> lstSmiley;
     private NestedScrollView scrollview;
     private LocationManager locationManager;
-    private LocationListener locationListener;
+    //    private LocationListener locationListener;
     SessionPref pref;
-    private ChatBottomSheet sheet;
+    //    private ChatBottomSheet sheet;
     private boolean isVisible = false;
 
     private MediaRecorder mRecorder;
-    private MediaPlayer mediaPlayer;
+    //    private MediaPlayer mediaPlayer;
     private String mFileName = null;
     private static final String[] permissions = {Manifest.permission.RECORD_AUDIO};
-    private final String AudioSavePathInDevice = null;
-    private TransparentProgressDialog pd;
+    //    private final String AudioSavePathInDevice = null;
+//    private TransparentProgressDialog pd;
     private AudioRecordProgressDialog apd;
     private String UserID = "";
+    double lattitude;
+    double longitude;
+
 
     private final int REQUEST_AUDIO_PERMISSION_CODE = 1;
 
@@ -174,7 +174,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 
         sharedPrefsHelper = SharedPrefsHelper.getInstance();
         scrollview = findViewById(R.id.scrollview);
-        rl_chat = findViewById(R.id.rl_chat);
+//        rl_chat = findViewById(R.id.rl_chat);
         rv_smileys = findViewById(R.id.rv_smileys);
         iv_mic = findViewById(R.id.iv_mic);
         ImageView iv_circle = findViewById(R.id.iv_circle);
@@ -188,7 +188,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         TextView chat_name = findViewById(R.id.chat_name);
         ImageView iv_smiley = findViewById(R.id.iv_smiley);
         iv_delete_msg = findViewById(R.id.iv_delete_msg);
-        iv_video_call = findViewById(R.id.iv_video_call);
+        ImageView iv_video_call = findViewById(R.id.iv_video_call);
 
         lstSmiley = new ArrayList<>();
 
@@ -288,6 +288,9 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         try {
             mSocket.on("chat_message_room", onNewMessage);
             mSocket.on("typing", onTyping);
+            mSocket.on("chat_room", ChatRoomCreated);
+            Log.d("****mSocket", mSocket.id());
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -397,17 +400,48 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 
         try {
             JSONObject data = (JSONObject) args[0];
-            Log.d("****", data.toString());
+            Log.d("****OnNewMsg", data.toString());
             String userIDFromIP = data.getString("userId");
-            if (!UserID.equals(userIDFromIP)) {
-                if (lstChat.get(0).getType().equals("typing")) {
-                    lstChat.remove(0);
-                    adapter.notifyDataSetChanged();
-                }
-            }
-            adapter.addToListText(data.getString("message"), userIDFromIP, data.getString("username"), data.getString("profilePic"));
-            scrollTOEnd();
+            if (userIDFromIP.equals(userIDTo) || userIDFromIP.equals(UserID)) {
 
+
+                if (!UserID.equals(userIDFromIP)) {
+                    if (lstChat.get(0).getType().equals("typing")) {
+                        lstChat.remove(0);
+                        adapter.notifyDataSetChanged();
+                    }
+                } else {
+                    readMsgEmit();
+                }
+                ArrayList<MediaInfo> lstMedia = new ArrayList<>();
+                try {
+
+                    MediaInfo mediaInfo = new MediaInfo();
+                    mediaInfo.setMediaType(data.getString("mediaType"));
+                    mediaInfo.setMediaId(data.getString("mediaId"));
+                    mediaInfo.setMediaFullPath(data.getString("mediaFullPath"));
+                    lstMedia.add(mediaInfo);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                UserInfo userInfo = new UserInfo();
+                ArrayList<UserInfo> info = new ArrayList<>();
+                info.add(userInfo);
+                userInfo.setProfilePicPath(data.getString("profilePic"));
+                ChatMessage chat = new ChatMessage();
+                chat.setType(data.getString("messageType"));
+                chat.setUserName(data.getString("username"));
+                chat.setUserID(userIDFromIP);
+                chat.setMessage(data.getString("message"));
+                chat.setLattitude(data.getString("lat"));
+                chat.setLattitude(data.getString("long"));
+                chat.setUserInfo(info);
+                chat.setMediaInfo(lstMedia);
+
+                adapter.addToListText(chat);
+                scrollTOEnd();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -419,11 +453,45 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             JSONObject data = (JSONObject) args[0];
             Log.d("****typing", data.toString());
             String userIDFromIP = data.getString("userId");
-            if (!UserID.equals(userIDFromIP)) {
-                if (!lstChat.get(0).getType().equals("typing")) {
-                    adapter.addTyping(data.getString("userId"), data.getString("username"), data.getString("profilePic"));
+            if (userIDFromIP.equals(userIDTo) || userIDFromIP.equals(UserID)) {
+                if (!UserID.equals(userIDFromIP)) {
+                    if (!lstChat.get(0).getType().equals("typing")) {
+
+                        ArrayList<MediaInfo> lstMedia = new ArrayList<>();
+
+                        UserInfo userInfo = new UserInfo();
+                        ArrayList<UserInfo> info = new ArrayList<>();
+
+                        userInfo.setProfilePicPath(data.getString("profilePic"));
+                        info.add(userInfo);
+                        ChatMessage chat = new ChatMessage();
+                        chat.setType("typing");
+                        chat.setUserName(data.getString("username"));
+                        chat.setUserID(userIDFromIP);
+                        chat.setMessage("");
+                        chat.setLattitude("0");
+                        chat.setLattitude("");
+                        chat.setUserInfo(info);
+                        chat.setMediaInfo(lstMedia);
+
+                        adapter.addToListText(chat);
+                        scrollTOEnd();
+
+
+                    }
                 }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    });
+
+    Emitter.Listener ChatRoomCreated = args -> runOnUiThread(() -> {
+
+        try {
+            JSONObject data = (JSONObject) args[0];
+            Log.d("****ChatRoomCreated", data.toString());
+            chatId = data.getString("chatId");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -444,8 +512,8 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 
 
                     jsonObject.put("mediaId", mediaID);
-                    jsonObject.put("lat", 0);
-                    jsonObject.put("long", 0);
+                    jsonObject.put("lat", lattitude);
+                    jsonObject.put("long", longitude);
                     jsonObject.put("messageType", Type);
 
 
@@ -565,7 +633,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 
             } else {
                 Log.d("Failed", "Failed to load");
-                Toast.makeText(this, "Failed to load", Toast.LENGTH_SHORT).show();
+                //  Toast.makeText(this, "Failed to load", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -706,7 +774,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         }
 
         if (!audioRecordingPermissionGranted) {
-            Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -761,18 +829,18 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     @Override
     public void onLocationSelect() {
 
-        sheet.dismiss();
+//        sheet.dismiss();
         GpsTracker gpsTracker = new GpsTracker(this);
         if (gpsTracker.canGetLocation()) {
-            double lattitude = gpsTracker.getLatitude();
-            double longitude = gpsTracker.getLongitude();
+            this.lattitude = gpsTracker.getLatitude();
+            this.longitude = gpsTracker.getLongitude();
             Log.e("latlong", "" + lattitude + "  " + longitude);
             if (String.valueOf(lattitude).equals("0.0") && String.valueOf(longitude).equals("0.0")) {
                 Toast.makeText(this, "Wait a moment", Toast.LENGTH_SHORT).show();
             } else {
+                sendMessgae("", "location", "");
 //                adapter.sendLcation(lattitude, longitude);
             }
-//            Toast.makeText(this,""+lattitude +" , "+ longitude,Toast.LENGTH_SHORT).show();
 
         } else {
             gpsTracker.showSettingsAlert();
@@ -1138,7 +1206,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             @Override
             public void onSuccess(QBUser user, Bundle bundle) {
 
-                Opponent=user;
+                Opponent = user;
                 if (checker.lacksPermissions(Consts.PERMISSIONS)) {
                     startPermissionsActivity(false);
                 }

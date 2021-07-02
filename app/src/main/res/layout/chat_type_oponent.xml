@@ -40,15 +40,23 @@
         app:lottie_rawRes="@raw/typing" />
 
 
-    <ImageView
-        android:id="@+id/chat_image"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_img"
         android:layout_width="@dimen/_150sdp"
         android:layout_height="@dimen/_150sdp"
-        android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/_5sdp"
         android:layout_toRightOf="@+id/profile_image_oponent"
-        android:src="@drawable/profile"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:layout_centerVertical="true"
+        app:cardBackgroundColor="@color/color_grey_light_very"
+        app:cardCornerRadius="@dimen/_5sdp">
+
+    <ImageView
+        android:id="@+id/chat_image"
+        android:layout_width="@dimen/_145sdp"
+        android:layout_height="@dimen/_145sdp"
+        android:visibility="visible" />
+    </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_image"
@@ -58,8 +66,8 @@
         android:layout_marginLeft="@dimen/_5sdp"
         android:layout_toRightOf="@+id/profile_image_oponent"
         android:visibility="gone"
-        app:cardBackgroundColor="@color/color_grey_light_very"
-        app:cardCornerRadius="@dimen/_10sdp">
+        app:cardBackgroundColor="@color/color_grey_light_too"
+        app:cardCornerRadius="@dimen/_5sdp">
 
 
         <ImageView

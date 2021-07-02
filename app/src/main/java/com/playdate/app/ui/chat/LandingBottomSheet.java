@@ -18,16 +18,10 @@ import com.playdate.app.ui.my_profile_details.FragInstaLikeProfile;
 
 public class LandingBottomSheet extends BottomSheetDialogFragment {
 
-    RelativeLayout rl_delete_msg;
-    RelativeLayout rl_viewProfile;
-    RelativeLayout rl_block;
-    RelativeLayout report_comment_rl;
-    TextView share;
-    ChattingAdapter chattingAdapter;
-    ChatAdapter chatAdapter;
-    int index;
-    String from = "";
-    String inviteLink = "Hey, welcome to playDAte";
+    private ChattingAdapter chattingAdapter;
+    private ChatAdapter chatAdapter;
+    private final int index;
+    private String from;
 
     public LandingBottomSheet(ChattingAdapter chattingAdapter, int index, String from) {
         this.chattingAdapter = chattingAdapter;
@@ -45,11 +39,11 @@ public class LandingBottomSheet extends BottomSheetDialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag_chat_landing_bottomsheet, container, false);
-        rl_delete_msg = view.findViewById(R.id.rl_delete_msg);
-        rl_viewProfile = view.findViewById(R.id.rl_viewProfile);
-        report_comment_rl = view.findViewById(R.id.report_comment_rl);
-        rl_block = view.findViewById(R.id.rl_block);
-        share = view.findViewById(R.id.share);
+        RelativeLayout rl_delete_msg = view.findViewById(R.id.rl_delete_msg);
+        RelativeLayout rl_viewProfile = view.findViewById(R.id.rl_viewProfile);
+        RelativeLayout report_comment_rl = view.findViewById(R.id.report_comment_rl);
+        RelativeLayout rl_block = view.findViewById(R.id.rl_block);
+        TextView share = view.findViewById(R.id.share);
 
         if (from.equals("chat")) {
             report_comment_rl.setVisibility(View.GONE);
@@ -57,32 +51,25 @@ public class LandingBottomSheet extends BottomSheetDialogFragment {
             share.setText("Share");
 
         }
-        rl_delete_msg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (from.equals("chat")) {
-                    chatAdapter.removeFromList(index);
-                } else {
-                    chattingAdapter.deleteChat(index);
-                }
-
+        rl_delete_msg.setOnClickListener(v -> {
+            if (from.equals("chat")) {
+                chatAdapter.removeFromList(index);
+            } else {
+                chattingAdapter.deleteChat(index);
             }
+
         });
 
-        rl_viewProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (from.equals("chat")) {
+        rl_viewProfile.setOnClickListener(v -> {
+            if (from.equals("chat")) {
 
-                    shareTextUrl();
-                } else {
+                shareTextUrl();
+            } else {
 
-                    OnInnerFragmentClicks ref = (OnInnerFragmentClicks) getActivity();
-//                ref.loadProfile(lst.get(position).getUserId());
-                    ref.ReplaceFragWithStack(new FragInstaLikeProfile());
-                    chattingAdapter.dismissSheet();
+                OnInnerFragmentClicks ref = (OnInnerFragmentClicks) getActivity();
+                ref.ReplaceFragWithStack(new FragInstaLikeProfile());
+                chattingAdapter.dismissSheet();
 
-                }
             }
         });
 
@@ -94,6 +81,7 @@ public class LandingBottomSheet extends BottomSheetDialogFragment {
         Intent share = new Intent(android.content.Intent.ACTION_SEND);
         share.setType("text/plain");
         share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+        String inviteLink = "Hey, welcome to playDAte";
         share.putExtra(Intent.EXTRA_TEXT, inviteLink);
         startActivity(Intent.createChooser(share, "PlayDate InviteLink!"));
         chatAdapter.dismissSheet();

@@ -99,6 +99,7 @@
         android:padding="@dimen/_10sdp"
         android:id="@+id/edt_search_chat"
         android:hint="  Search"
+        android:textColor="@color/white"
         android:textColorHint="@color/white"
         android:background="@drawable/bg_dull_pink"
         android:layout_height="wrap_content"/>
