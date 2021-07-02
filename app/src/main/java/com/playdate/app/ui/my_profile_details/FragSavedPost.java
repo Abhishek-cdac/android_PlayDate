@@ -57,7 +57,7 @@ public class FragSavedPost extends Fragment {
             public void onResponse(Call<SavedPostModel> call, Response<SavedPostModel> response) {
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
-                        savedPostDataList = (ArrayList<SavedPostData>) response.body().getData();
+                        savedPostDataList = response.body().getData();
                         if (savedPostDataList == null) {
                             savedPostDataList = new ArrayList<>();
                         }

@@ -238,11 +238,6 @@ class GameCamera : AppCompatActivity(), View.OnClickListener, OptionView.Callbac
             }
         }
 
-        override fun onCameraError(exception: CameraException) {
-            super.onCameraError(exception)
-//            message("Got CameraException #" + exception.reason, true)
-        }
-
         override fun onPictureTaken(result: PictureResult) {
             super.onPictureTaken(result)
             val intent = Intent(this@GameCamera, PostMediaActivity::class.java)
@@ -328,7 +323,7 @@ class GameCamera : AppCompatActivity(), View.OnClickListener, OptionView.Callbac
 
     }
 
-    var flashStatus = 0;
+    var flashStatus = 0
 
     var count = 1
     fun showRecordingTime() {
@@ -355,24 +350,24 @@ class GameCamera : AppCompatActivity(), View.OnClickListener, OptionView.Callbac
         if (recycler_view_filter.visibility == View.VISIBLE) {
 
             val param = rl_menu.layoutParams as ViewGroup.MarginLayoutParams
-            var valueInPixels = getResources().getDimension(R.dimen._10sdp)
+            var valueInPixels = resources.getDimension(R.dimen._10sdp)
             param.setMargins(0, 0, 0, valueInPixels.toInt())
             rl_menu.layoutParams = param
 
             val paramtextSwitcher = textSwitcher.layoutParams as ViewGroup.MarginLayoutParams
-            var valueInPixelstextSwitcher = getResources().getDimension(R.dimen._80sdp)
+            var valueInPixelstextSwitcher = resources.getDimension(R.dimen._80sdp)
             paramtextSwitcher.setMargins(0, 0, 0, valueInPixelstextSwitcher.toInt())
             textSwitcher.layoutParams = paramtextSwitcher
 
             recycler_view_filter.visibility = View.GONE
         } else {
-            var valueInPixels = getResources().getDimension(R.dimen._90sdp)
+            var valueInPixels = resources.getDimension(R.dimen._90sdp)
             val param = rl_menu.layoutParams as ViewGroup.MarginLayoutParams
             param.setMargins(0, 0, 0, valueInPixels.toInt())
             rl_menu.layoutParams = param
 
             val paramtextSwitcher = textSwitcher.layoutParams as ViewGroup.MarginLayoutParams
-            var valueInPixelstextSwitcher = getResources().getDimension(R.dimen._160sdp)
+            var valueInPixelstextSwitcher = resources.getDimension(R.dimen._160sdp)
             paramtextSwitcher.setMargins(0, 0, 0, valueInPixelstextSwitcher.toInt())
             textSwitcher.layoutParams = paramtextSwitcher
 

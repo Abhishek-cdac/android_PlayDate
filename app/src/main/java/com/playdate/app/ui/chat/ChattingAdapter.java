@@ -37,7 +37,7 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
     Context mcontext;
     Onclick itemClick;
     private FragInbox frag;
-    int selectedIndex = -1;
+    //    int selectedIndex = -1;
     int selectedToDelete = -1;
 
     //    Bundle bundle = new Bundle();
@@ -73,37 +73,6 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
 
     }
 
-//    @Override
-//    public Filter getFilter() {
-//        return new Filter() {
-//            @Override
-//            protected FilterResults performFiltering(CharSequence constraint) {
-//                String charsequence = constraint.toString();
-//                if (charsequence.isEmpty()) {
-//                    search_list = inboxList;
-//                } else {
-//                    ArrayList<ChatExample> filteredList = new ArrayList<>();
-//                    for (ChatExample row : inboxList) {
-//                        Log.d("ROW of sendername", row.getSenderName());
-//                        if (row.getSenderName().toLowerCase().contains(charsequence.toLowerCase())) {
-//                            filteredList.add(row);
-//                        }
-//                    }
-//                    search_list = filteredList;
-//                }
-//                FilterResults results = new FilterResults();
-//                results.values = search_list;
-//                return results;
-//            }
-//
-//            @Override
-//            protected void publishResults(CharSequence constraint, FilterResults results) {
-//                search_list = (ArrayList<ChatExample>) results.values;
-//                notifyDataSetChanged();
-//
-//            }
-//        };
-//    }
 
     public void deleteChat(int index) {
         if (null != lst_msgs) {
@@ -155,7 +124,6 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
                 holder.msg.setBackground(null);
                 holder.msg.setBackgroundColor(Color.WHITE);
 
-
             } catch (Exception e) {
                 e.printStackTrace();
                 holder.msg.setText(lst_msgs.get(position).getLastMsg().get(0).getMessage());
@@ -177,24 +145,15 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
             String formattedDate = df.format(date);
 
             if (formattedDate.contains(todaysDate)) {
-//                String[] lst=formattedDate.split(" ");
-//                SimpleDateFormat formatShort = new SimpleDateFormat("hh:mm aa", Locale.US);
 
                 SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 SimpleDateFormat format2 = new SimpleDateFormat("hh:mm aa");
 
                 try {
                     date = format1.parse(formattedDate);
-//                    System.out.println(format1.format(date)); //current format: 2013-02-21
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-//                System.out.println(format2.format(date));
-
-
-//                Date dt = new Date(formattedDate);
-//                SimpleDateFormat sdf = new SimpleDateFormat("hh:mm aa");
-//                String time1 = sdf.format(dt);
                 holder.txt_time.setText(format2.format(date));
 
             } else if (findDayDiff(formattedDate) == 1) {
@@ -205,24 +164,17 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
 
                 try {
                     date = format1.parse(formattedDate);
-//                    System.out.println(format1.format(date)); //current format: 2013-02-21
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
                 holder.txt_time.setText(format2.format(date));
             }
 
-//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//            Date ddd = null;
-//            try {
-//                ddd = sdf.parse(formattedDate);
-//            } catch (ParseException e) {
-//                e.printStackTrace();
-//            }
-//            long millis = ddd.getTime();
-//            String text = TimeAgo.using(millis);
-//            holder.txt_time.setText(text.toLowerCase());
+            holder.main_ll.setOnClickListener(v -> {
 
+                Log.d("ONClick Event", "onClick:");
+                frag.onClickEvent(lst_msgs.get(position));
+            });
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -273,25 +225,16 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
 
         public MyViewHolder(View view) {
             super(view);
-            txt_time = (TextView) view.findViewById(R.id.txt_time);
-            user_name = (TextView) view.findViewById(R.id.user_name);
-            txt_count = (TextView) view.findViewById(R.id.txt_count);
-            msg = (TextView) view.findViewById(R.id.txt_msg);
+            txt_time = view.findViewById(R.id.txt_time);
+            user_name = view.findViewById(R.id.user_name);
+            txt_count = view.findViewById(R.id.txt_count);
+            msg = view.findViewById(R.id.txt_msg);
             main_menu = view.findViewById(R.id.main_rl);
             img_more = view.findViewById(R.id.img_more);
             profile_image = view.findViewById(R.id.profile_image);
             ll_chat_details = view.findViewById(R.id.ll_chat_details);
             img_active = view.findViewById(R.id.img_active);
             main_ll = view.findViewById(R.id.main_ll);
-
-            main_ll.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    selectedIndex = getAdapterPosition();
-                    Log.d("ONClick Event", "onClick:");
-                    frag.onClickEvent(selectedIndex);
-                }
-            });
 
 
             main_ll.setOnLongClickListener(v -> {

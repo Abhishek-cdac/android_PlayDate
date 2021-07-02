@@ -60,7 +60,7 @@ public class CoupleBioActivity extends AppCompatActivity {
             public void onChanged(Boolean click) {
                 if (null == coupleBioViewModel.BioText.getValue()) {
                     clsCommon.showDialogMsg(CoupleBioActivity.this, "PlayDate", "Enter your couple bio.", "Ok");
-                } else if (coupleBioViewModel.BioText.getValue().toString().trim().equals("")) {
+                } else if (coupleBioViewModel.BioText.getValue().trim().equals("")) {
                     clsCommon.showDialogMsg(CoupleBioActivity.this, "PlayDate", "Enter your couple bio.", "Ok");
                 } else {
 
@@ -127,7 +127,7 @@ public class CoupleBioActivity extends AppCompatActivity {
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        clsCommon.showDialogMsg(CoupleBioActivity.this, "PlayDate", jObjError.getString("message").toString(), "Ok");
+                        clsCommon.showDialogMsg(CoupleBioActivity.this, "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(CoupleBioActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                     }

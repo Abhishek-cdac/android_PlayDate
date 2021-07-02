@@ -77,7 +77,7 @@ public class AgeVerifiationActivity extends AppCompatActivity {
                 public void run() {
 
                     String CurrentDOB = mIntent.getStringExtra("CurrentDOB");
-                    String ar[] = CurrentDOB.split("-");
+                    String[] ar = CurrentDOB.split("-");
                     String CurrentYYYY = ar[0];
                     String CurrentMM = ar[1];
                     String CurrentDDD = ar[2];
@@ -143,7 +143,7 @@ public class AgeVerifiationActivity extends AppCompatActivity {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
                         Log.e("PlayDateDOB", "" + response.body().getMessage());
 
-                        clsCommon.showDialogMsg(AgeVerifiationActivity.this, "PlayDate", jObjError.getString("message").toString(), "Ok");
+                        clsCommon.showDialogMsg(AgeVerifiationActivity.this, "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(AgeVerifiationActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                     }

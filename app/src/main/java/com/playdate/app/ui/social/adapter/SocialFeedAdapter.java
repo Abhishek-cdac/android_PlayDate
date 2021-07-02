@@ -53,7 +53,7 @@ import retrofit2.Response;
 public class SocialFeedAdapter extends AAH_VideosAdapter {
 
 
-    private ArrayList<PostDetails> lst;
+    private final ArrayList<PostDetails> lst;
     private final Picasso picasso;
     private final SessionPref pref;
     private final FragmentActivity activity;

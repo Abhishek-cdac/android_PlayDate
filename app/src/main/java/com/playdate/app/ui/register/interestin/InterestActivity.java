@@ -162,7 +162,7 @@ public class InterestActivity extends AppCompatActivity {
             new Handler().postDelayed(new Runnable() {
                 public void run() {
 
-                    String arr[] = mIntent.getStringExtra("Selected").split(",");
+                    String[] arr = mIntent.getStringExtra("Selected").split(",");
 
                     for (String s : arr) {
                         if (s.equals("Male")) {
@@ -220,7 +220,7 @@ public class InterestActivity extends AppCompatActivity {
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        clsCommon.showDialogMsg(InterestActivity.this, "PlayDate", jObjError.getString("message").toString(), "Ok");
+                        clsCommon.showDialogMsg(InterestActivity.this, "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(InterestActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                     }

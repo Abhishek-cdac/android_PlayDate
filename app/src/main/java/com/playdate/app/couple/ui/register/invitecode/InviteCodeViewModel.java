@@ -9,9 +9,9 @@ public class InviteCodeViewModel extends ViewModel {
 
     public MutableLiveData<Boolean> RegisterClick = new MutableLiveData<>();
 
-    private MutableLiveData<Boolean> BackClick = new MutableLiveData<>();
-    private MutableLiveData<Boolean> SubmitClick = new MutableLiveData<>();
-    private MutableLiveData<Boolean> ResendClick = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> BackClick = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> SubmitClick = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> ResendClick = new MutableLiveData<>();
     public MutableLiveData<String> txtInviteCode = new MutableLiveData<>();
     public MutableLiveData<String> resendIn = new MutableLiveData<>();
 

@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 public class RestaurantSelectionAdapter extends RecyclerView.Adapter<RestaurantSelectionAdapter.ViewHolder> {
     private ArrayList<RestaurentData> list = new ArrayList<>();
-    private FragRestaurantSelection frag;
+    private final FragRestaurantSelection frag;
 
     int selectedposition = -1;
     Context mcontext;

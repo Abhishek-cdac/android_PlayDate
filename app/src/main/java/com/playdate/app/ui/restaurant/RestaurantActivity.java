@@ -154,7 +154,7 @@ public class RestaurantActivity extends AppCompatActivity {
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        clsCommon.showDialogMsg(RestaurantActivity.this, "PlayDate", jObjError.getString("message").toString(), "Ok");
+                        clsCommon.showDialogMsg(RestaurantActivity.this, "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(RestaurantActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                     }
@@ -224,7 +224,7 @@ public class RestaurantActivity extends AppCompatActivity {
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        clsCommon.showDialogMsg(RestaurantActivity.this, "PlayDate", jObjError.getString("message").toString(), "Ok");
+                        clsCommon.showDialogMsg(RestaurantActivity.this, "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(RestaurantActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                     }

@@ -23,7 +23,7 @@ allprojects {
         jcenter()
         maven { url 'https://jitpack.io' }
         maven {
-            url "https://github.com/ConnectyCube/connectycube-android-sdk-releases/raw/master/"
+            url "https://github.com/QuickBlox/quickblox-android-sdk-releases/raw/master/"
         }
     }
 }

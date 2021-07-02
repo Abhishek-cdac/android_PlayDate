@@ -157,7 +157,7 @@ public class FragmentSearchRestaurent extends Fragment implements RestaurentAdap
                 if (response.code() == 200) {
                     assert response.body() != null;
                     if (response.body().getStatus() == 1) {
-                        ArrayList<Restaurant> restaurantLst = (ArrayList<Restaurant>) response.body().getLst();
+                        ArrayList<Restaurant> restaurantLst = response.body().getLst();
                         if (restaurantLst == null) {
                             restaurantLst = new ArrayList<>();
                         }

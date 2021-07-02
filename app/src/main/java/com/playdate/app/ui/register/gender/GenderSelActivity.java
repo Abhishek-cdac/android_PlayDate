@@ -121,7 +121,7 @@ public class GenderSelActivity extends AppCompatActivity {
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        clsCommon.showDialogMsg(GenderSelActivity.this, "PlayDate", jObjError.getString("message").toString(), "Ok");
+                        clsCommon.showDialogMsg(GenderSelActivity.this, "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(GenderSelActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                     }

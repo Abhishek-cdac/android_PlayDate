@@ -108,8 +108,8 @@ dependencies {
 
 //    implementation 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.1.0'
 
-    implementation "com.connectycube:connectycube-android-sdk-videochat:1.9.2"
-    implementation 'com.jakewharton.timber:timber:4.7.1'
+//    implementation "com.connectycube:connectycube-android-sdk-videochat:1.9.2"
+    implementation 'com.jakewharton.timber:timber:4.7.1'// logs the request
 
     // Add the Firebase SDK for Google Analytics
     implementation 'com.google.firebase:firebase-analytics:19.0.0'
@@ -117,10 +117,12 @@ dependencies {
     // Add the SDK for Firebase Cloud Messaging
     implementation 'com.google.firebase:firebase-messaging:22.0.0'
 //    implementation 'tech.gusavila92:java-android-websocket-client:1.2.2'
-    implementation ('io.socket:socket.io-client:2.0.0') {
+    implementation('io.socket:socket.io-client:2.0.0') {
         exclude group: 'org.json', module: 'json'
     }
 
+
+    implementation "com.quickblox:quickblox-android-sdk-videochat-webrtc:3.9.2"
 
 
 }

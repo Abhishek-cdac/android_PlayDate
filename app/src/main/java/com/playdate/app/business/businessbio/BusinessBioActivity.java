@@ -58,7 +58,7 @@ public class BusinessBioActivity extends AppCompatActivity {
             public void onChanged(Boolean click) {
                 if (null == businessBioViewModel.BioText.getValue()) {
                     clsCommon.showDialogMsg(BusinessBioActivity.this, "PlayDate", "Enter your business bio.", "Ok");
-                } else if (businessBioViewModel.BioText.getValue().toString().trim().equals("")) {
+                } else if (businessBioViewModel.BioText.getValue().trim().equals("")) {
                     clsCommon.showDialogMsg(BusinessBioActivity.this, "PlayDate", "Enter your business bio.", "Ok");
                 } else {
 
@@ -125,7 +125,7 @@ public class BusinessBioActivity extends AppCompatActivity {
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        clsCommon.showDialogMsg(BusinessBioActivity.this, "PlayDate", jObjError.getString("message").toString(), "Ok");
+                        clsCommon.showDialogMsg(BusinessBioActivity.this, "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(BusinessBioActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                     }

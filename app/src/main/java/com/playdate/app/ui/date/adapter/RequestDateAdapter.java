@@ -40,7 +40,7 @@ public class RequestDateAdapter extends RecyclerView.Adapter<RequestDateAdapter.
 
         public MyViewHolder(View view) {
             super(view);
-            title = (TextView) view.findViewById(R.id.user_name);
+            title = view.findViewById(R.id.user_name);
 
             main_menu = view.findViewById(R.id.main_rl);
             img_accept = view.findViewById(R.id.img_accept);

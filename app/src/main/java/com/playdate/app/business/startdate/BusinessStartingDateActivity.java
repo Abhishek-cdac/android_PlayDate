@@ -74,7 +74,7 @@ public class BusinessStartingDateActivity extends AppCompatActivity {
                 public void run() {
 
                     String CurrentDOB = mIntent.getStringExtra("CurrentDOB");
-                    String ar[] = CurrentDOB.split("-");
+                    String[] ar = CurrentDOB.split("-");
                     String CurrentYYYY = ar[0];
                     String CurrentMM = ar[1];
                     String CurrentDDD = ar[2];
@@ -141,7 +141,7 @@ public class BusinessStartingDateActivity extends AppCompatActivity {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
                         Log.e("PlayDateBSD", "" + response.body().getMessage());
 
-                        clsCommon.showDialogMsg(BusinessStartingDateActivity.this, "PlayDate", jObjError.getString("message").toString(), "Ok");
+                        clsCommon.showDialogMsg(BusinessStartingDateActivity.this, "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(BusinessStartingDateActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                     }

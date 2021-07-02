@@ -22,6 +22,7 @@ import com.playdate.app.model.RegisterResult;
 import com.playdate.app.model.RestMain;
 import com.playdate.app.model.RestaurentModel;
 import com.playdate.app.model.SavedPostModel;
+import com.playdate.app.model.chat_models.ChatFileUpload;
 import com.playdate.app.model.chat_models.ChatMsgResp;
 import com.playdate.app.model.chat_models.ChatResponse;
 import com.playdate.app.model.chat_models.ChatUserList;
@@ -291,16 +292,25 @@ public interface GetDataService {
     Call<ChatResponse> getChatUsers(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
     @FormUrlEncoded
+    @POST("user/delete-chat-message")
+    Call<CommonModel> deleteChatMessage(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
+    @FormUrlEncoded
     @POST("user/get-chat-message")
     Call<ChatMsgResp> getChatMessage(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
     @Multipart
     @POST("user/add-media?section=chat&mediaType=image")
-    Call<CommonModel> addmediaImage(@Header("Authorization") String token, @Part MultipartBody.Part filePart);
+    Call<ChatFileUpload> addMediaImage(@Header("Authorization") String token, @Part MultipartBody.Part filePart);
 
     @Multipart
     @POST("user/add-media?section=chat&mediaType=video")
-    Call<CommonModel> addmediaVideo(@Header("Authorization") String token, @Part MultipartBody.Part filePart);
+    Call<ChatFileUpload> addmediaVideo(@Header("Authorization") String token, @Part MultipartBody.Part filePart);
+
+    @Multipart
+    @POST("user/add-chat-media?section=chat&mediaType=audio")
+    Call<ChatFileUpload> addmediaAudio(@Header("Authorization") String token, @Part MultipartBody.Part filePart);
+
 
 }
 

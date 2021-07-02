@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
@@ -23,7 +24,6 @@ import com.playdate.app.model.chat_models.ChatList;
 import com.playdate.app.model.chat_models.ChatResponse;
 import com.playdate.app.ui.chat.ChatMainActivity;
 import com.playdate.app.ui.chat.ChattingAdapter;
-import com.playdate.app.ui.social.FragSocialFeed;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
 
@@ -35,10 +35,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FragInbox extends Fragment implements onClickEventListener  {
+public class FragInbox extends Fragment implements onClickEventListener {
     private ArrayList<ChatList> lst_chat_users;
-    //    private ArrayList<ChatMessage> chatMessageList;
-    private ChattingAdapter chattingAdapter;
+    private ChattingAdapter adapter;
     private RecyclerView recyclerView;
     private Onclick itemClick;
     private RelativeLayout rl_c;
@@ -86,11 +85,11 @@ public class FragInbox extends Fragment implements onClickEventListener  {
                     if (response.body().getStatus() == 1) {
                         lst_chat_users = response.body().getLst();
 
-                        chattingAdapter = new ChattingAdapter(lst_chat_users, itemClick, FragInbox.this);
+                        adapter = new ChattingAdapter(lst_chat_users, itemClick, FragInbox.this);
                         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
                         recyclerView.setLayoutManager(mLayoutManager);
                         recyclerView.setItemAnimator(new DefaultItemAnimator());
-                        recyclerView.setAdapter(chattingAdapter);
+                        recyclerView.setAdapter(adapter);
                     }
                     pd.cancel();
                 } catch (Exception e) {
@@ -109,18 +108,23 @@ public class FragInbox extends Fragment implements onClickEventListener  {
 
 
     @Override
-    public void onClickEvent(int position) {
+    public void onClickEvent(ChatList item) {
 
 
         try {
             if (null != lst_chat_users) {
                 Intent mIntent = new Intent(getActivity(), ChatMainActivity.class);
-                mIntent.putExtra("Name", lst_chat_users.get(position).getLstFrom().get(0).getUsername());
-                mIntent.putExtra("Image", lst_chat_users.get(position).getLstFrom().get(0).getProfilePicPath());
-                mIntent.putExtra("UserID", lst_chat_users.get(position).getLstFrom().get(0).getUserId());
-                mIntent.putExtra("chatId", lst_chat_users.get(position).getChatId());
+                mIntent.putExtra("Name", item.getLstFrom().get(0).getUsername());
+                mIntent.putExtra("Image", item.getLstFrom().get(0).getProfilePicPath());
+                mIntent.putExtra("UserID", item.getLstFrom().get(0).getUserId());
+                mIntent.putExtra("chatId", item.getChatId());
+
                 startActivity(mIntent);
 
+
+                if (null != edt_search_chat) {
+                    edt_search_chat.setText("");
+                }
 
             }
         } catch (Exception e) {
@@ -131,38 +135,31 @@ public class FragInbox extends Fragment implements onClickEventListener  {
 
     public void onAcceptChatRequest(String name, String image) {
         Log.d("Accepted", "onAcceptChatRequest: ");
-        chattingAdapter = new ChattingAdapter(name, image);
+        adapter = new ChattingAdapter(name, image);
 
     }
 
     public void setFilters(CharSequence s) {
 //        chattingAdapter.getFilter().filter(s);
-        chattingAdapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();
 
     }
 
-    public void filter(String s) {
-        Log.d("Filter Method", "In Filter method");
+    EditText edt_search_chat;
+
+    public void filter(String s, EditText edt_search_chat) {
         try {
             ArrayList<ChatList> filteredList = new ArrayList<>();
-//        chatExampleList = new ArrayList<>(); ////for search purpose comment it
 
-//            for (ChatList item : lst_chat_users) {
-//                if (item.getSenderName().toLowerCase().contains(s.toLowerCase())) {
-//                    filteredList.add(item);
-//                    Log.d("SIZE", String.valueOf(filteredList.size()));
-//                }
-//            }
-
-            for (int i = 0; i < filteredList.size(); i++) {
-//                Log.d("SENDERNAME", filteredList.get(i).getSenderName());
-
+            for (ChatList item : lst_chat_users) {
+                if (item.getLstFrom().get(0).getUsername().toLowerCase().contains(s.toLowerCase())) {
+                    filteredList.add(item);
+                    Log.d("SIZE", String.valueOf(filteredList.size()));
+                }
             }
-//        chattingAdapter = new ChattingAdapter();  ////for search purpose comment it
-//            chattingAdapter.filterList(filteredList);
-        } catch (Exception e) {
-            Log.d("Exception during search", e.toString());
 
+            adapter.filterList(filteredList);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -171,7 +168,7 @@ public class FragInbox extends Fragment implements onClickEventListener  {
 
 
 interface onClickEventListener {
-    void onClickEvent(int position);
+    void onClickEvent(ChatList item);
 }
 
 

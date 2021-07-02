@@ -164,11 +164,12 @@ public class FragSocialFeed extends Fragment implements OnRefreshPage {
                                 if (object.getPostMedia().get(0).getMediaFullPath().toLowerCase().contains(".mp4"))
                                     urls.add(object.getPostMedia().get(0).getMediaFullPath());
                             }
+                            recycler_view_feed.preDownload(urls);
                         } catch (Exception e) {
                             e.printStackTrace();
 //                            Toast.makeText(getActivity(), "" + e.toString(), Toast.LENGTH_SHORT).show();
                         }
-                        recycler_view_feed.preDownload(urls);
+
                         recycler_view_feed.setVisiblePercent(70);
                         recycler_view_feed.setPlayOnlyFirstVideo(true);
                         recycler_view_feed.setAdapter(adapter);

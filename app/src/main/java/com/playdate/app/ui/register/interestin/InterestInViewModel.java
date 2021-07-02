@@ -15,11 +15,11 @@ public class InterestInViewModel extends ViewModel {
 
     public MutableLiveData<Boolean> RegisterClick = new MutableLiveData<>();
 
-    private MutableLiveData<Boolean> maleClick = new MutableLiveData<>();
-    private MutableLiveData<Boolean> BackClick = new MutableLiveData<>();
-    private MutableLiveData<Boolean> NextClick = new MutableLiveData<>();
-    private MutableLiveData<Boolean> femaleClick = new MutableLiveData<>();
-    private MutableLiveData<Boolean> nonBin = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> maleClick = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> BackClick = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> NextClick = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> femaleClick = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> nonBin = new MutableLiveData<>();
     private MutableLiveData<Boolean> Register;
 
     public void setMale(){
