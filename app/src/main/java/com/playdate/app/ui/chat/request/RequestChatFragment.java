@@ -99,10 +99,10 @@ public class RequestChatFragment extends Fragment implements View.OnClickListene
                         inboxFrag.filter(s.toString());
 //                        requestFrag.filter(s.toString());
                     }
-                    if (null != inboxFrag ) {
-                        inboxFrag.filter(s.toString());
-//                        requestFrag.filter(s.toString());
-                    }
+//                    if (null != inboxFrag ) {
+//                        inboxFrag.filter(s.toString());
+////                        requestFrag.filter(s.toString());
+//                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

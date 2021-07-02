@@ -147,19 +147,19 @@ public class FragInbox extends Fragment implements onClickEventListener  {
             ArrayList<ChatList> filteredList = new ArrayList<>();
 //        chatExampleList = new ArrayList<>(); ////for search purpose comment it
 
-//            for (ChatList item : lst_chat_users) {
-//                if (item.getSenderName().toLowerCase().contains(s.toLowerCase())) {
-//                    filteredList.add(item);
-//                    Log.d("SIZE", String.valueOf(filteredList.size()));
-//                }
-//            }
+            for (ChatList item : lst_chat_users) {
+                if (item.getLstFrom().get(0).getUsername().toLowerCase().contains(s.toLowerCase())) {
+                    filteredList.add(item);
+                    Log.d("SIZE", String.valueOf(filteredList.size()));
+                }
+            }
 
             for (int i = 0; i < filteredList.size(); i++) {
 //                Log.d("SENDERNAME", filteredList.get(i).getSenderName());
 
             }
 //        chattingAdapter = new ChattingAdapter();  ////for search purpose comment it
-//            chattingAdapter.filterList(filteredList);
+            chattingAdapter.filterList(filteredList);
         } catch (Exception e) {
             Log.d("Exception during search", e.toString());
 
