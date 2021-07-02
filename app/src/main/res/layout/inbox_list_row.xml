@@ -7,8 +7,6 @@
     android:background="@color/backgroundColour">
 
     <LinearLayout
-
-
         android:id="@+id/main_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -92,15 +90,19 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:gravity="end"
+                android:text="yesterday"
                 android:textColor="@color/color_grey"
                 android:textSize="@dimen/_8sdp" />
 
 
             <ImageView
+                android:padding="@dimen/_3sdp"
                 android:id="@+id/img_more"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="end"
+                android:gravity="end"
+                android:layout_marginTop="@dimen/_2sdp"
                 android:src="@drawable/horizontal_more"
                 android:visibility="gone" />
 

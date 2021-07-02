@@ -71,11 +71,12 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MyViewHolder
         if (position >= 4) {
             holder.txt_notify.setVisibility(View.GONE);
             holder.img_more.setVisibility(View.VISIBLE);
-        } else {
+        } else
+            {
             holder.txt_notify.setVisibility(View.VISIBLE);
             holder.txt_notify.setText(inbox.getNotification());
             holder.img_more.setVisibility(View.GONE);
-        }
+            }
     }
 
     @Override

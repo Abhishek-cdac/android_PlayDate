@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +31,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+
+import timber.log.Timber;
 
 public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyViewHolder> {
 
@@ -102,10 +105,14 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
             holder.user_name.setText(lst_msgs.get(position).getLstFrom().get(0).getUsername());
             if (lst_msgs.get(position).getUnreadChat() == 0) {
                 holder.txt_count.setVisibility(View.GONE);
+                holder.img_more.setVisibility(View.VISIBLE);
             } else {
                 holder.txt_count.setText("" + lst_msgs.get(position).getUnreadChat());
                 holder.txt_count.setVisibility(View.VISIBLE);
+                holder.img_more.setVisibility(View.GONE);
             }
+
+
 
 
             picasso.load(lst_msgs.get(position).getLstFrom().get(0).getProfilePicPath()).placeholder(R.drawable.profile).into(holder.profile_image);
@@ -175,6 +182,17 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
                 Log.d("ONClick Event", "onClick:");
                 frag.onClickEvent(lst_msgs.get(position));
             });
+//            holder.img_more.setOnClickListener(v -> {
+//                Timber.e("img_more");
+//                Toast.makeText(v.getContext(), "img_more clicked", Toast.LENGTH_SHORT).show();
+//                selectedToDelete = position;
+//                showBottomSheet(selectedToDelete , lst_msgs.get(position).getToUserId());
+//                notifyDataSetChanged();
+//               // return true;
+//
+//            });
+
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -236,10 +254,15 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
             img_active = view.findViewById(R.id.img_active);
             main_ll = view.findViewById(R.id.main_ll);
 
-
-            main_ll.setOnLongClickListener(v -> {
+        /*    main_ll.setOnLongClickListener(v -> {
                 selectedToDelete = getAdapterPosition();
-                showBottomSheet(selectedToDelete);
+                showBottomSheet(selectedToDelete, lst_msgs.get(getAbsoluteAdapterPosition()).getToUserId() );
+                notifyDataSetChanged();
+                return true;
+            }); */
+            img_more.setOnLongClickListener(v -> {
+                selectedToDelete = getAdapterPosition();
+                showBottomSheet(selectedToDelete, lst_msgs.get(getAbsoluteAdapterPosition()).getToUserId() );
                 notifyDataSetChanged();
                 return true;
             });
@@ -248,9 +271,9 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
     }
 
 
-    private void showBottomSheet(int selectedToDelete) {
+    private void showBottomSheet(int selectedToDelete, String toUserId) {
         FragmentManager fragmentManager = ((AppCompatActivity) mcontext).getSupportFragmentManager();
-        bottomSheet = new LandingBottomSheet(this, selectedToDelete, "landing");
+        bottomSheet = new LandingBottomSheet(this, selectedToDelete, "landing", toUserId );
         bottomSheet.show(fragmentManager, "ModalBottomSheet");
     }
 
