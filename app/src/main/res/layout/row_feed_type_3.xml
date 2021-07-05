@@ -43,7 +43,7 @@
             android:layout_height="@dimen/_20sdp"
             android:layout_gravity="center"
             android:scaleType="fitXY"
-            android:src="@drawable/medal_normal" />
+            android:src="@drawable/ic_medal" />
 
     </LinearLayout>
 

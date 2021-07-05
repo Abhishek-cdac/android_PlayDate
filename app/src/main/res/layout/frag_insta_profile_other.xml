@@ -165,7 +165,7 @@
         android:layout_marginTop="@dimen/_25sdp"
         android:fontFamily="@font/lato_bold"
         android:gravity="center"
-        android:text="About Me"
+        android:text="@string/about_me"
         android:textColor="@color/color_pink"
         android:textSize="@dimen/_12sdp"
         android:textStyle="bold" />

@@ -26,15 +26,15 @@
             android:src="@drawable/ic_playdate" />
 
         <ImageView
+            android:id="@+id/iv_close"
             android:layout_width="@dimen/_30sdp"
             android:layout_height="@dimen/_30sdp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/_10sdp"
-            android:id="@+id/iv_close"
             android:layout_marginRight="@dimen/_10sdp"
             android:padding="@dimen/_8sdp"
-            android:src="@drawable/cancel" />
+            android:src="@drawable/ic_close" />
 
         <Button
             android:layout_width="match_parent"

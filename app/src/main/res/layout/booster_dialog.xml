@@ -14,7 +14,7 @@
         android:layout_gravity="end"
         android:layout_marginTop="@dimen/_50sdp"
         android:layout_marginEnd="@dimen/_20sdp"
-        android:src="@drawable/cancel" />
+        android:src="@drawable/ic_close" />
 
     <ImageView
         android:id="@+id/medal"

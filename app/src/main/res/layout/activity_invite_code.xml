@@ -42,11 +42,12 @@
 
 
             <ImageView
-                android:src="@drawable/balloons"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:src="@drawable/balloons">
 
             </ImageView>
+
             <TextView
 
                 android:id="@+id/txt_invite"
@@ -73,16 +74,18 @@
                 android:text="@string/invite_code_desc"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_12sdp" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginRight="@dimen/_10sdp"
-                android:padding="@dimen/_8sdp"
                 android:gravity="center"
+                android:padding="@dimen/_8sdp"
                 android:text="@string/please_type"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_14sdp" />
+
             <EditText
                 android:id="@+id/edt_otp"
                 android:layout_width="@dimen/_160sdp"
@@ -121,53 +124,49 @@
                 android:textStyle="bold" />
 
 
-
-
         </LinearLayout>
 
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/ll_header"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical"
+            android:padding="@dimen/_12sdp"
+            android:visibility="gone">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/txt_resend"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:fontFamily="@font/lato_bold"
+                android:gravity="center"
+                android:text="@string/didn_t_get_a_code"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold"
+                android:visibility="gone" />
 
-<LinearLayout
-    android:layout_below="@+id/ll_header"
-    android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:padding="@dimen/_12sdp"
-    android:visibility="gone"
-    android:layout_alignParentBottom="true"
-    android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/txt_resend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/_30sdp"
+                android:fontFamily="@font/lato_bold"
+                android:gravity="center"
+                android:onClick="@{(v) -> InviteCodeViewModel.onResend(v)}"
+                android:text="@string/resend"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_15sdp"
+                android:textStyle="bold"
+                android:visibility="gone" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:layout_above="@+id/txt_resend"
-        android:layout_gravity="center"
-        android:layout_marginBottom="@dimen/_10sdp"
-        android:fontFamily="@font/lato_bold"
-        android:gravity="center"
-        android:text="@string/didn_t_get_a_code"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_12sdp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/txt_resend"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="center"
-        android:layout_marginBottom="@dimen/_30sdp"
-        android:fontFamily="@font/lato_bold"
-        android:visibility="gone"
-        android:gravity="center"
-        android:onClick="@{(v) -> InviteCodeViewModel.onResend(v)}"
-        android:text="@string/resend"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_15sdp"
-        android:textStyle="bold"/>
-
-</LinearLayout>
+        </LinearLayout>
 
 
     </RelativeLayout>

@@ -65,7 +65,7 @@
                 android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginRight="@dimen/_10sdp"
                 android:background="@drawable/rect_normal"
-                android:drawableEnd="@drawable/check_circl"
+                android:drawableEnd="@drawable/ic_check_circle"
                 android:drawablePadding="@dimen/_6sdp"
                 android:hint="Type username"
                 android:inputType="text"

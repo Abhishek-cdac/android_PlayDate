@@ -20,7 +20,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_35sdp"
             android:paddingHorizontal="@dimen/_20sdp"
-            android:text="CURRENT POINTS"
+            android:text="@string/current_points"
             android:textColor="@color/white"
             android:textSize="@dimen/_18sdp"
             android:textStyle="bold" />
