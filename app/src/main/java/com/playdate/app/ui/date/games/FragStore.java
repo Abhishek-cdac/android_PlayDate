@@ -3,25 +3,19 @@ package com.playdate.app.ui.date.games;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
 import com.playdate.app.ui.dashboard.DashboardActivity;
-import com.playdate.app.ui.date.OnBackPressed;
 import com.playdate.app.ui.date.adapter.StoreDMAdapter;
 import com.playdate.app.ui.date.adapter.StoreDateCoinAdpter;
 import com.playdate.app.ui.date.adapter.StoreGameCoinAdapter;

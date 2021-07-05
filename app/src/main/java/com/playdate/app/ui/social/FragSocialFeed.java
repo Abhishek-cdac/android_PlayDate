@@ -43,7 +43,7 @@ public class FragSocialFeed extends Fragment implements OnRefreshPage {
     boolean NoMorePages = false;
 
     private AAH_CustomRecyclerView recycler_view_feed;
-    private SwipeRefreshLayout mSwipeRefreshLayout;
+//    private SwipeRefreshLayout mSwipeRefreshLayout;
     boolean boolApiCalling = false;
 
     @Nullable
@@ -93,7 +93,6 @@ public class FragSocialFeed extends Fragment implements OnRefreshPage {
     public void onStop() {
         try {
             recycler_view_feed.stopVideos();
-//            Toast.makeText(getActivity(), "Video Stopped", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             e.printStackTrace();
         }

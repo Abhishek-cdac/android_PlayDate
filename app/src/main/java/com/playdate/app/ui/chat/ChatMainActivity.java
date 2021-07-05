@@ -134,16 +134,14 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     private final int REQUEST_AUDIO_PERMISSION_CODE = 1;
 
 
-    RecyclerView.LayoutManager manager;
     private int PageNumber = 1;
-    JSONObject objNotTyping;
+    private JSONObject objNotTyping;
 
-    long delay = 1000; // 1 seconds after user stops typing
-    long last_text_edit = 0;
-    Handler handler = new Handler(Looper.getMainLooper());
+    private final long delay = 1000; // 1 seconds after user stops typing
+    private long last_text_edit = 0;
+    private final Handler handler = new Handler(Looper.getMainLooper());
 
     private boolean isMoreData = true;
-    boolean audioRecordingPermissionGranted = false;
 
     // Video Calling
 
@@ -182,7 +180,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         lstSmiley = new ArrayList<>();
 
 
-        manager = new LinearLayoutManager(this, RecyclerView.VERTICAL, true);
+        RecyclerView.LayoutManager manager = new LinearLayoutManager(this, RecyclerView.VERTICAL, true);
         rv_chat.setLayoutManager(manager);
 
 
@@ -766,7 +764,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_AUDIO_PERMISSION_CODE) {
-            audioRecordingPermissionGranted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+            boolean audioRecordingPermissionGranted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
         }
 
 //        if (!audioRecordingPermissionGranted) {
