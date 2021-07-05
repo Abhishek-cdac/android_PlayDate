@@ -51,6 +51,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final ArrayList<ChatMessage> lst_chat;
     private MediaPlayer mediaPlayer;
     private GoogleMap googleMap;
+
     private final Picasso picasso;
     private final SessionPref pref;
     private final String LoginUserID;

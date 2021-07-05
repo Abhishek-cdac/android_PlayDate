@@ -143,10 +143,6 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
                         String sourceString = "<b>" + name + "</b> " + desc;
                         viewHolderMatched.tv_name.setText(Html.fromHtml(sourceString));
 
-//                        viewHolderMatched.tv_desc.setText();
-//                        viewHolderMatched.tv_name.setText();
-
-
                         requestId = notification_list.get(position).getFriendRequest().get(0).getRequestId();
                         Log.e("requestId", "" + requestId);
                         picasso.load(notification_list.get(position).getFriendRequest().get(0).getUserInfo().get(0).getProfilePicPath())
@@ -266,7 +262,7 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
                         }
                     }
 
-                    notifyDataSetChanged();
+                    notifyItemChanged(position);
 
 
                 } else {

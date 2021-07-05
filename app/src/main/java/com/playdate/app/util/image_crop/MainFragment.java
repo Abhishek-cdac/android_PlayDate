@@ -1,27 +1,11 @@
-// "Therefore those skilled at the unorthodox
-// are infinite as heaven and earth,
-// inexhaustible as the great rivers.
-// When they come to an end,
-// they begin again,
-// like the days and months;
-// they die and are reborn,
-// like the four seasons."
-//
-// - Sun Tsu,
-// "The Art of War"
 
 package com.playdate.app.util.image_crop;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -29,32 +13,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+
 import com.playdate.app.R;
 import com.playdate.app.ui.dashboard.DashboardActivity;
 import com.playdate.app.ui.social.upload_media.PostMediaActivity;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-
-/**
- * The fragment that will show the Image Cropping UI by requested preset.
- */
 public final class MainFragment extends Fragment
         implements CropImageView.OnSetImageUriCompleteListener,
         CropImageView.OnCropImageCompleteListener {
 
-    // region: Fields and Consts
-
     private CropDemoPreset mDemoPreset;
 
     private CropImageView mCropImageView;
-    // endregion
-
-    /**
-     * Returns a new instance of this fragment for the given section number.
-     */
+   
     public static MainFragment newInstance(CropDemoPreset demoPreset, boolean isFromProfile) {
         MainFragment fragment = new MainFragment();
         Bundle args = new Bundle();
@@ -64,18 +38,11 @@ public final class MainFragment extends Fragment
         return fragment;
     }
 
-    /**
-     * Set the image to show for cropping.
-     */
     public void setImageUri(Uri imageUri) {
         mCropImageView.setImageUriAsync(imageUri);
-        //        CropImage.activity(imageUri)
-        //                .start(getContext(), this);
+       
     }
 
-    /**
-     * Set the options of the crop image view to the given values.
-     */
     public void setCropImageViewOptions(CropImageViewOptions options) {
         mCropImageView.setScaleType(options.scaleType);
         mCropImageView.setCropShape(options.cropShape);
@@ -91,16 +58,11 @@ public final class MainFragment extends Fragment
         mCropImageView.setFlippedVertically(options.flipVertically);
     }
 
-    /**
-     * Set the initial rectangle to use.
-     */
     public void setInitialCropRect() {
         mCropImageView.setCropRect(new Rect(100, 300, 500, 1200));
     }
 
-    /**
-     * Reset crop window to initial rectangle.
-     */
+   
     public void resetCropRect() {
         mCropImageView.resetCropRect();
     }
@@ -208,7 +170,6 @@ public final class MainFragment extends Fragment
         if (error == null) {
             Toast.makeText(getActivity(), "Image load successful", Toast.LENGTH_SHORT).show();
         } else {
-            Log.e("AIC", "Failed to load image by URI", error);
             Toast.makeText(getActivity(), "Image load failed: " + error.getMessage(), Toast.LENGTH_LONG)
                     .show();
         }

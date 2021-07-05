@@ -465,12 +465,12 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                 if (lst.get(position).getIsGallerySave() == 1) {
                     lst.get(position).setIsGallerySave(0);
                     videoHolder.savePost.setImageResource(R.drawable.icon_bookmark);
-                    notifyDataSetChanged();
+                    notifyItemChanged(position);
                     callSavePostAPI(lst.get(position).getPostId(), lst.get(position).getIsGallerySave());
                 } else if (lst.get(position).getIsGallerySave() == 0) {
                     videoHolder.savePost.setImageResource(R.drawable.ic_icons8_bookmark);
                     lst.get(position).setIsGallerySave(1);
-                    notifyDataSetChanged();
+                    notifyItemChanged(position);
                     callSavePostAPI(lst.get(position).getPostId(), lst.get(position).getIsGallerySave());
                 }
             });

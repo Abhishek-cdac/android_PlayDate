@@ -1,8 +1,6 @@
 package com.playdate.app.ui.social.upload_media;
 
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -16,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.MediaSource;
@@ -40,7 +37,6 @@ import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
-import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -125,7 +121,6 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
         edt_location.setHint("fetching loaction...");
 
 
-
         setData();
 
 
@@ -196,7 +191,7 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
 
     private void setData() {
         SessionPref pref = SessionPref.getInstance(this);
-        Toast.makeText(this,"CITY location"+ pref.getStringVal("LastCity"), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "CITY location" + pref.getStringVal("LastCity"), Toast.LENGTH_SHORT).show();
         edt_location.setText(pref.getStringVal("LastCity"));
         String img = pref.getStringVal(SessionPref.LoginUserprofilePic);
         if (img.contains("http")) {
@@ -389,7 +384,7 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
     }
 
     void showFriendsDialog() {
-        FriendDialog dialog = new FriendDialog(this, lstUserSuggestions,false,"");
+        FriendDialog dialog = new FriendDialog(this, lstUserSuggestions, false, "");
         dialog.show();
         dialog.setOnDismissListener(dialog1 -> {
             try {

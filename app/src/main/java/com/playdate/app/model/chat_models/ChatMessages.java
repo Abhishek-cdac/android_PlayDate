@@ -11,9 +11,29 @@ public class ChatMessages {
     String userId;
     String messageId;
     String entryDate;
+    String messageType;
+
+    public void setEntryDate(String entryDate) {
+        this.entryDate = entryDate;
+    }
+
+    public String getMessageType() {
+        return messageType;
+    }
+
+    public void setMessageType(String messageType) {
+        this.messageType = messageType;
+    }
 
     @SerializedName("UserInfo")
     ArrayList<UserInfo>lstUser;
+
+    @SerializedName("media")
+    ArrayList<MediaInfo>lstMedia;
+
+    public ArrayList<MediaInfo> getLstMedia() {
+        return lstMedia;
+    }
 
     public ArrayList<UserInfo> getLstUser() {
         return lstUser;

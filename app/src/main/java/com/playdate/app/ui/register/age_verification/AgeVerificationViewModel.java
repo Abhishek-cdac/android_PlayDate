@@ -19,8 +19,7 @@ public class AgeVerificationViewModel extends ViewModel {
     public MutableLiveData<Integer> YearSelectedPosition = new MutableLiveData<>();
     public MutableLiveData<List<String>> daysList = new MutableLiveData<>();
 
-//    private MutableLiveData<Boolean> userMutableLiveData;
-//    private MutableLiveData<Boolean> Register;
+
 
     public String getYearSelected() {
         return yearlist.get(YearSelectedPosition.getValue());

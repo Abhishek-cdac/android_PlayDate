@@ -1,6 +1,5 @@
 package com.playdate.app.ui.notification_screen;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +15,6 @@ import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.CommonModel;
-import com.playdate.app.ui.dashboard.DashboardActivity;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
 
@@ -30,6 +28,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class NotificationBottomSheet extends BottomSheetDialogFragment {
+
+    FragNotification fragNotification;
+
+    public NotificationBottomSheet(FragNotification fragNotification) {
+        this.fragNotification = fragNotification;
+    }
 
     @Nullable
     @Override
@@ -74,8 +78,11 @@ public class NotificationBottomSheet extends BottomSheetDialogFragment {
                     if (response.body().getStatus() == 1) {
 
                         Toast.makeText(getActivity(), "Successfully Deleted!", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getActivity(), DashboardActivity.class);
-                        startActivity(intent);
+//                        Intent intent = new Intent(getActivity(), DashboardActivity.class);
+//                        startActivity(intent);
+                        dismiss();
+                        if (null != fragNotification)
+                            fragNotification.callGetNotificationAPI();
 
                     }
                 } else {

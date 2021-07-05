@@ -43,9 +43,6 @@ public class FragSelectPartner extends Fragment implements SuggestedDateAdapter.
     private ArrayList<CreateDateGetPartnerData> lst_CreateDateGetPartner;
     private Onclick itemClick;
     private ViewPager vp_partners;
-    //    private TextView tv_waiting;
-//    private TextView tv_or;
-//    private SpinKitView spin_kit;
     private CommonClass clsCommon;
     private com.gtomato.android.ui.widget.CarouselView carousel;
 

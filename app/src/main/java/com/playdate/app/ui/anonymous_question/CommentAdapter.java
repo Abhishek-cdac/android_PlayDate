@@ -1,7 +1,6 @@
 package com.playdate.app.ui.anonymous_question;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.text.Html;
 import android.util.Log;
@@ -40,16 +39,13 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder> {
-    ArrayList<Comments> list = new ArrayList<>();
-    ArrayList<GetCommentData> commentList;
-    boolean selected = false;
-    int selected_index = -1;
-    Onclick itemClick;
-    String DATE_FORMAT_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
-    Context mContext;
-    onCommentDelete ref;
-    String userId, postId, commentId;
-    String timeFormat, timeFormat_new;
+    private ArrayList<GetCommentData> commentList;
+    private int selected_index = -1;
+    private final Onclick itemClick;
+    private Context mContext;
+    private onCommentDelete ref;
+    private String postId;
+    private String commentId;
 
     public CommentAdapter(Context applicationContext, ArrayList<GetCommentData> lst_getComment, Onclick itemClick) {
         this.commentList = lst_getComment;
@@ -77,14 +73,10 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         String sourceString = "<b>" + name + "</b> " + comment;
         holder.name.setText(Html.fromHtml(sourceString));
 
-//        holder.name.setText(commentList.get(position).getUsername());
-//        holder.desc.setText(commentList.get(position).getComments().getComment());
-        userId = commentList.get(position).getUserId();
-        Log.e("CommentUserId",""+userId);
 
         commentId = commentList.get(position).getComments().getCommentId();
         postId = commentList.get(position).getComments().getPostId();
-        timeFormat = commentList.get(position).getComments().getEntryDate();
+        String timeFormat = commentList.get(position).getComments().getEntryDate();
 
 
         timeFormat = timeFormat.replace("T", " ");
@@ -109,11 +101,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         long millis = ddd.getTime();
         String text = TimeAgo.using(millis);
         holder.time.setText(text.toLowerCase());
-        Log.e("MyFinalValue", "" + text);
-
-
-//        if (selected_index == position) {
-//            Log.e("selected_index..",""+selected_index);
 
         if (commentList.get(position).isSelected) {
             holder.relativeLayout.setBackgroundColor(mContext.getResources().getColor(R.color.color_grey));
@@ -140,7 +127,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
         holder.relativeLayout.setOnLongClickListener(v -> {
             int selected_index = position;
-            Log.e("relativeLayout", "relativeLayout" + selected_index);
             if (!commentList.get(selected_index).isSelected) {
 
                 for (int i = 0; i < commentList.size(); i++) {
@@ -173,8 +159,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
         });
 
-
-        //   }
     }
 
     @Override
@@ -197,20 +181,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             time = itemView.findViewById(R.id.comment_time);
             delete = itemView.findViewById(R.id.dustbin);
             relativeLayout = itemView.findViewById(R.id.card_comment);
-           // name.setTypeface(Typeface.DEFAULT_BOLD);
-
-
-         /*   delete.setOnClickListener(v -> {
-                try {
-                    selected_index = getAdapterPosition();
-                    commentList.get(selected_index).setDeleted(true);
-                    callDeleteCommentApi();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            });
-*/
         }
 
     }
@@ -219,9 +189,9 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         SessionPref pref = SessionPref.getInstance(mContext);
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
-        Log.e("deleteCommentPostId",""+postId);
-        Log.e("commentId",""+commentId);
-        Log.e("deleteCommentUId",""+pref.getStringVal(SessionPref.LoginUserID));
+        Log.e("deleteCommentPostId", "" + postId);
+        Log.e("commentId", "" + commentId);
+        Log.e("deleteCommentUId", "" + pref.getStringVal(SessionPref.LoginUserID));
         hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
         hashMap.put("postId", postId);
         hashMap.put("commentId", commentId);
@@ -229,17 +199,12 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         call.enqueue(new retrofit2.Callback<GetCommentModel>() {
             @Override
             public void onResponse(Call<GetCommentModel> call, Response<GetCommentModel> response) {
-//                pd.cancel();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
-                        commentdeleted(selected_index);
+                        commentDeleted(selected_index);
                         callGetCommentApi();
 
-                    } else {
-
                     }
-                } else {
-
                 }
 
 
@@ -248,13 +213,11 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             @Override
             public void onFailure(Call<GetCommentModel> call, Throwable t) {
                 t.printStackTrace();
-//                pd.cancel();
-//                Toast.makeText(BioActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void commentdeleted(int selected_index) {
+    private void commentDeleted(int selected_index) {
 
 
         if (commentList.get(selected_index).isDeleted) {
@@ -269,8 +232,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                 e.printStackTrace();
                 ref.ChangeCount(0);
             }
-        } else {
-            //code for undo
         }
 
     }
@@ -285,7 +246,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         call.enqueue(new retrofit2.Callback<GetCommentModel>() {
             @Override
             public void onResponse(Call<GetCommentModel> call, Response<GetCommentModel> response) {
-//                pd.cancel();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
                         commentList = (ArrayList<GetCommentData>) response.body().getData();
@@ -295,11 +255,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
                         notifyDataSetChanged();
 
-                    } else {
-
                     }
-                } else {
-
                 }
 
 
@@ -308,19 +264,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             @Override
             public void onFailure(Call<GetCommentModel> call, Throwable t) {
                 t.printStackTrace();
-//                pd.cancel();
-//                Toast.makeText(BioActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
-
-    }
-
-
-    private String getFormattedDate(Date timeZone) {
-
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        String formattedDate = df.format(timeZone);
-        return formattedDate;
 
     }
 }

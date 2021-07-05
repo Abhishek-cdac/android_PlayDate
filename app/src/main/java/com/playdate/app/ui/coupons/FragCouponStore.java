@@ -44,7 +44,7 @@ public class FragCouponStore extends Fragment implements OnCouponSelected {
     private ArrayList<GetCouponsData> lst_getCoupons;
     private CommonClass clsCommon;
     private Onclick itemClick;
-
+    private Account account;
     public FragCouponStore() {
     }
 
@@ -114,9 +114,6 @@ public class FragCouponStore extends Fragment implements OnCouponSelected {
 
             }
         };
-
-
-//        callGetCouponsApi();
         return view;
     }
 
@@ -126,52 +123,7 @@ public class FragCouponStore extends Fragment implements OnCouponSelected {
         super.onResume();
     }
 
-//    private void callAPIProfiileDetails() {
-//        SessionPref pref = SessionPref.getInstance(getActivity());
-//
-//        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-//        Map<String, String> hashMap = new HashMap<>();
-//
-//        hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
-//
-//        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
-//        pd.show();
-//
-//
-//        Call<GetProfileDetails> call = service.getProfileDetails("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
-//        call.enqueue(new Callback<GetProfileDetails>() {
-//            @Override
-//            public void onResponse(Call<GetProfileDetails> call, Response<GetProfileDetails> response) {
-//                pd.cancel();
-//                if (response.code() == 200) {
-//                    try {
-//                        if (Objects.requireNonNull(response.body()).getStatus() == 1) {
-//                            ArrayList<GetProileDetailData> lst_getPostDetail;
-//                            lst_getPostDetail = (ArrayList<GetProileDetailData>) response.body().getData();
-//                            if (lst_getPostDetail == null) {
-//                                lst_getPostDetail = new ArrayList<>();
-//                            }
-//                            account = lst_getPostDetail.get(0).getAccount().get(0);
-//                            txt_points.setText("" + account.getCurrentPoints());
-//                        }
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
-//                    callGetCouponsApi();
-//                }
-//
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<GetProfileDetails> call, Throwable t) {
-//                t.printStackTrace();
-//                pd.cancel();
-//            }
-//        });
-//    }
 
-    Account account;
 
     private void callGetCouponsApi() {
         SessionPref pref = SessionPref.getInstance(getActivity());

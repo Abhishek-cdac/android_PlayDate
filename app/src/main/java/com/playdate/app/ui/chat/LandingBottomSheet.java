@@ -2,6 +2,7 @@ package com.playdate.app.ui.chat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +14,18 @@ import androidx.annotation.Nullable;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.playdate.app.R;
+import com.playdate.app.data.api.GetDataService;
+import com.playdate.app.data.api.RetrofitClientInstance;
+import com.playdate.app.model.LoginResponse;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.ui.my_profile_details.FragInstaLikeProfile;
+import com.playdate.app.util.session.SessionPref;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Response;
 
 public class LandingBottomSheet extends BottomSheetDialogFragment {
 
@@ -22,11 +33,15 @@ public class LandingBottomSheet extends BottomSheetDialogFragment {
     private ChatAdapter chatAdapter;
     private final int index;
     private String from;
+    String toUserId;
 
-    public LandingBottomSheet(ChattingAdapter chattingAdapter, int index, String from) {
+
+    public LandingBottomSheet(ChattingAdapter chattingAdapter, int index, String from, String toUserId) {
         this.chattingAdapter = chattingAdapter;
         this.index = index;
         this.from = from;
+        this.toUserId = toUserId;
+
     }
 
     public LandingBottomSheet(ChatAdapter chatAdapter, int index, String from) {
@@ -43,6 +58,7 @@ public class LandingBottomSheet extends BottomSheetDialogFragment {
         RelativeLayout rl_viewProfile = view.findViewById(R.id.rl_viewProfile);
         RelativeLayout report_comment_rl = view.findViewById(R.id.report_comment_rl);
         RelativeLayout rl_block = view.findViewById(R.id.rl_block);
+        TextView report_user = view.findViewById(R.id.report_user);
         TextView share = view.findViewById(R.id.share);
 
         if (from.equals("chat")) {
@@ -51,6 +67,29 @@ public class LandingBottomSheet extends BottomSheetDialogFragment {
             share.setText("Share");
 
         }
+        else{
+            report_user.setText("Report User");
+
+        }
+
+
+
+        report_comment_rl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("toUserId chat Report", ""+toUserId);
+                callBlockUser(toUserId , "Report");
+            }
+        });
+
+        rl_block.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("toUserId chat block", ""+toUserId);
+                callBlockUser(toUserId , "Block");
+            }
+        });
+
         rl_delete_msg.setOnClickListener(v -> {
             if (from.equals("chat")) {
                 chatAdapter.removeFromList(index);
@@ -62,10 +101,8 @@ public class LandingBottomSheet extends BottomSheetDialogFragment {
 
         rl_viewProfile.setOnClickListener(v -> {
             if (from.equals("chat")) {
-
                 shareTextUrl();
             } else {
-
                 OnInnerFragmentClicks ref = (OnInnerFragmentClicks) getActivity();
                 ref.ReplaceFragWithStack(new FragInstaLikeProfile());
                 chattingAdapter.dismissSheet();
@@ -76,6 +113,47 @@ public class LandingBottomSheet extends BottomSheetDialogFragment {
 
         return view;
     }
+
+    private void callBlockUser(String toUserId, String action) {
+        SessionPref pref = SessionPref.getInstance(getActivity());
+
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
+        hashMap.put("action", action);//Block or Report
+        hashMap.put("toUserId", toUserId);
+
+//        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(mContext);
+//        pd.show();
+
+        Call<LoginResponse> call = service.addUserReportBlock("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new retrofit2.Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+//                pd.cancel();
+                if (response.code() == 200) {
+                    if (response.body().getStatus() == 1) {
+                        Log.e("successful", ""+ toUserId +" "+  action);
+                        dismiss();
+                    } else {
+                    }
+                } else {
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                t.printStackTrace();
+//                pd.cancel();
+//                Toast.makeText(BioActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
 
     private void shareTextUrl() {
         Intent share = new Intent(android.content.Intent.ACTION_SEND);

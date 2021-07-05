@@ -23,6 +23,7 @@ import com.playdate.app.model.LoginResponse;
 import com.playdate.app.ui.anonymous_question.adapter.ColorAdapter;
 import com.playdate.app.ui.anonymous_question.adapter.SmileyAdapter;
 import com.playdate.app.ui.dashboard.DashboardActivity;
+import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
 
@@ -51,11 +52,7 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
 //  private ArrayList<MatchListUser> lstUserSuggestions = new ArrayList<>();
 
 
-    Integer[] intEmoji = {
-            0x1F600, 0x1F603, 0x1F604, 0x1F601, 0x1F606, 0x1F605, 0x1F923, 0x1F602, 0x1F61A, 0x1F619,
-            0x1F642, 0x1F643, 0x1F609, 0x1F60A, 0x1F607, 0x1F60B, 0x1F60D, 0x1F929, 0x1F618, 0x1F617,
-            0x1F61C, 0x1F92A, 0x1F61D, 0x1F911, 0x1F917, 0x1F92B, 0x1F914, 0x1F910, 0x1F928, 0x1F610,
-    };
+
     String ques;
 
     @Override
@@ -95,17 +92,7 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
     }
 
     private void getEmoticon() {
-
-        for (int i = 0; i <= intEmoji.length; i++) {
-//            String emoji = new String(Character.toChars(i));
-            try {
-                lstSmiley.add(intEmoji[i]);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-
-        }
-
+        lstSmiley=new CommonClass().getEmojiArr();
 
     }
 

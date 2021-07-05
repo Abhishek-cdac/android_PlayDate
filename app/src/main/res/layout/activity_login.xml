@@ -192,7 +192,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:src="@drawable/image2" />
+                            android:src="@drawable/fb" />
+
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -211,7 +212,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:src="@drawable/image4" />
+                            android:src="@drawable/g_plus" />
 
                     </RelativeLayout>
 
