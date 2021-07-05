@@ -123,11 +123,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         gmap = googleMap;
         mIntent = getIntent();
         lattitude = mIntent.getDoubleExtra("lattitude", 0.0);
-        lattitude = mIntent.getDoubleExtra("longitude", 0.0);
+        longitude = mIntent.getDoubleExtra("longitude", 0.0);
 
         gmap.setMinZoomPreference(16);
         Toast.makeText(this, "" + lattitude + " , " + longitude, Toast.LENGTH_SHORT).show();
-        LatLng ny = new LatLng(25.2323, 85.17361);
+        LatLng ny = new LatLng(lattitude, longitude);
+//        gmap.addMarker(new MarkerOptions().position(ny));
         gmap.moveCamera(CameraUpdateFactory.newLatLng(ny));
 
         btn_send.setOnClickListener(new View.OnClickListener() {
@@ -136,7 +137,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 sendLocation();
             }
         });
-
 
     }
 
@@ -151,7 +151,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 .setNegativeButton("No", null)
                 .show();
 
-
     }
 
     Bitmap bitmap123;
@@ -159,24 +158,31 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private void captureScreenShot() {
 
         GoogleMap.SnapshotReadyCallback callback = new GoogleMap.SnapshotReadyCallback() {
-
-
             @Override
             public void onSnapshotReady(@Nullable Bitmap snapshot) {
                 bitmap123 = snapshot;
+                Log.d("LocationImg MapActivity", "sharelocation: " + bitmap123.toString());
+                byte[] byteArray = new byte[0];
+                try {
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    bitmap123.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    byteArray = stream.toByteArray();
+                } catch (Exception e) {
+                    Log.e("ScreneExcptionBytAray", "onSnapshotReady: " + e.toString());
+                    e.printStackTrace();
+                }
 
-                Log.d("LocationImg MapActivity", "sharelocation: "+bitmap123.toString());
+                //                chatMainActivity.sharelocation(byteArray);
 
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bitmap123.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                byte[] byteArray = stream.toByteArray();
-
-
-//                chatMainActivity.sharelocation(byteArray);
-
-//                Intent intent = new Intent(MapActivity.this, ImageViewActivity.class);
-//                intent.putExtra("image", byteArray);
-//                startActivity(intent);
+                try {
+                    Intent intent = new Intent(MapActivity.this, ImageViewActivity.class);
+                    intent.putExtra("imageLocation", byteArray);
+                    Log.d("BYTEARRAY", "onSnap"+byteArray);
+                    startActivity(intent);
+                } catch (Exception e) {
+                    Log.e("ScreenCaptureException", "onSnapshotReady: " + e.toString());
+                    e.printStackTrace();
+                }
             }
         };
         gmap.snapshot(callback);

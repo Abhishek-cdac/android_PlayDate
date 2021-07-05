@@ -815,7 +815,11 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             if (String.valueOf(lattitude).equals("0.0") && String.valueOf(longitude).equals("0.0")) {
                 Toast.makeText(this, "Wait a moment", Toast.LENGTH_SHORT).show();
             } else {
-                sendMessgae("", "location", "");
+                Intent intent = new Intent(ChatMainActivity.this,MapActivity.class);
+                intent.putExtra("lattitude",lattitude);
+                intent.putExtra("longitude",longitude);
+                startActivity(intent);
+//                sendMessgae("", "location", "");
 //                adapter.sendLcation(lattitude, longitude);
             }
 

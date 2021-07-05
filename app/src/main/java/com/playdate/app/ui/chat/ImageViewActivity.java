@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
@@ -20,8 +21,12 @@ public class ImageViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_imageview);
         ImageView imageView = findViewById(R.id.imageView);
+//        Log.e("IMageViewActivity", "IMageViewActivity");
 
-        byte[] byteArray = getIntent().getByteArrayExtra("image");
+
+        byte[] byteArray = getIntent().getByteArrayExtra("imageLocation");
+        Log.d("BYTEARRAY", "onSnap"+byteArray);
+
         bitmapImage = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
 
         imageView.setImageBitmap(bitmapImage);
