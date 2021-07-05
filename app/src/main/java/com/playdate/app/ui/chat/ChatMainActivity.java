@@ -621,12 +621,12 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                     }
 
                 } else if (requestCode == REQUEST_LOCATION_CODE) {
-                    if(data.getBooleanExtra("locationImg",false)){
+                    if (data.getBooleanExtra("locationImg", false)) {
                         sharelocation();
                     }
                 }
 
-            } else{
+            } else {
                 Log.d("Failed", "Failed to load");
                 //  Toast.makeText(this, "Failed to load", Toast.LENGTH_SHORT).show();
             }
@@ -956,7 +956,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             handler.removeCallbacksAndMessages(null);
         }
 
-        locationBitmap=null;
+        locationBitmap = null;
         super.onDestroy();
 
     }
@@ -1275,9 +1275,8 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 //        }
 
         if (locationBitmap != null) {
-            Log.d("locatinBitmap", "locatinBitmap not null");
             addToListImage(locationBitmap, true);
-
+            Log.d("locatinBitmap", "locatinBitmap not null");
         } else {
             Log.d("locatinBitmap", "locatinBitmap null");
         }
