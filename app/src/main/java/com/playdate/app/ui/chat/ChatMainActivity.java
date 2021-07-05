@@ -620,12 +620,12 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                         Toast.makeText(this, "FAIELD TO GET DATA", Toast.LENGTH_SHORT).show();
                     }
 
-                } else if (requestCode == REQUEST_LOCATION_CODE) {
-                    if(data.getBooleanExtra("locationImg",false)){
-                        sharelocation();
-                    }
                 }
 
+            }else if (requestCode == REQUEST_LOCATION_CODE) {
+                if(data.getBooleanExtra("locationImg",false)){
+                    sharelocation();
+                }
             } else{
                 Log.d("Failed", "Failed to load");
                 //  Toast.makeText(this, "Failed to load", Toast.LENGTH_SHORT).show();
@@ -723,7 +723,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         bitmap.compress(Bitmap.CompressFormat.JPEG, 40, bos);
         byte[] bitmapdata = bos.toByteArray();
 
-        FileOutputStream fos = null;
+        FileOutputStream fos;
         try {
             fos = new FileOutputStream(f);
             fos.write(bitmapdata);
