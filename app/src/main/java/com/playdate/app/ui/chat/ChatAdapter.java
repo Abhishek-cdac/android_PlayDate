@@ -152,7 +152,6 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 viewHolderMe.mv_location.setVisibility(View.VISIBLE);
 
 
-
             } else {
 
 
@@ -507,9 +506,8 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             tv_msg.setOnLongClickListener(this);
             chat_image.setOnLongClickListener(this);
             card_video.setOnLongClickListener(this);
+            mv_location.setOnLongClickListener(this);
             rl_audio.setOnLongClickListener(this);
-
-
         }
 
 

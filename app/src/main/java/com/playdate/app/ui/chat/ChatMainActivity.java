@@ -621,8 +621,15 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                     }
 
                 } else if (requestCode == REQUEST_LOCATION_CODE) {
-                    if (data.getBooleanExtra("locationImg", false)) {
+                    Toast.makeText(this, "REQUEST_LOCATION_CODE " + locationBitmap.toString(), Toast.LENGTH_SHORT).show();
+
+                    if (data.getBooleanExtra("locationImg", false))         {
+                        Toast.makeText(this, "REQUEST_LOCATION_CODE " + locationBitmap.toString(), Toast.LENGTH_SHORT).show();
                         sharelocation();
+                        addToListImage(locationBitmap, true);
+
+                    } else {
+                        Toast.makeText(this, "REQUEST_LOCATION_CODE " + data.getBooleanExtra("locationImg", false), Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -1273,6 +1280,8 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 //        } catch (Exception e) {
 //            e.getMessage();
 //        }
+        Toast.makeText(this, "ShareLocation Called", Toast.LENGTH_SHORT).show();
+
 
         if (locationBitmap != null) {
             addToListImage(locationBitmap, true);

@@ -165,15 +165,5 @@
     </RelativeLayout>
 
 
-    <!--    <fragment-->
-    <!--        android:id="@+id/frag_location"-->
-    <!--        android:layout_width="@dimen/_150sdp"-->
-    <!--        android:layout_height="@dimen/_150sdp"-->
-    <!--        android:layout_centerVertical="true"-->
-    <!--        android:layout_marginRight="@dimen/_5sdp"-->
-    <!--        android:layout_toLeftOf="@+id/profile_image_me"-->
-    <!--        -->
-    <!--        android:name="com.google.android.gms.maps.SupportMapFragment"/>-->
-
 
 </RelativeLayout>
