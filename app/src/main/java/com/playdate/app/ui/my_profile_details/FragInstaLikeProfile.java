@@ -2,7 +2,6 @@ package com.playdate.app.ui.my_profile_details;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +44,7 @@ import retrofit2.Response;
 import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 
 public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View.OnClickListener {
+
     private ImageView iv_send_request;
     private ImageView iv_chat;
     private ImageView iv_booster;
@@ -56,24 +56,21 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
     private TextView txt_points;
     private ArrayList<GetProileDetailData> lst_getPostDetail;
     private ArrayList<GetCoupleProfileData> lst_getCoupleDetail;
-
     boolean isBoosterOn = false;
-
-    public FragInstaLikeProfile() {
-    }
-
     private boolean itsMe = true;
+    private Picasso picasso;
+    private SessionPref pref;
+    private TextView header_text;
+    private ImageView connection_img;
+    private RelativeLayout single_person;
+    private RelativeLayout couple_rl;
 
     public FragInstaLikeProfile(boolean itsMe) {
         this.itsMe = itsMe;
     }
 
-    private Picasso picasso;
-    private SessionPref pref;
-    TextView header_text;
-    ImageView connection_img;
-    RelativeLayout single_person;
-    RelativeLayout couple_rl;
+    public FragInstaLikeProfile() {
+    }
 
     @Nullable
     @Override
@@ -120,7 +117,7 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
             }
         });
 
-        callAPI();
+
         if (itsMe) {
             iv_send_request.setVisibility(View.GONE);
             iv_chat.setVisibility(View.GONE);
@@ -130,6 +127,7 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
             iv_chat.setVisibility(View.VISIBLE);
         }
 
+        callAPI();
         setValue();
 
         iv_send_request.setOnClickListener(this);
@@ -158,14 +156,10 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
                         if (lst_getCoupleDetail == null) {
                             lst_getCoupleDetail = new ArrayList<>();
                         }
-//                        Log.e("COUPLEID", lst_getCoupleDetail.get(0).getCoupleId() );
-
                         picasso.load(lst_getCoupleDetail.get(0).getProfile1().get(0).getProfilePicPath())
                                 .placeholder(R.drawable.profile)
                                 .into(boy_profile_image);
 
-                        Log.e("getCoupleBoy", "" + lst_getCoupleDetail.get(0).getProfile1().get(0).getProfilePicPath());
-                        Log.e("getCoupleGirl", "" + lst_getCoupleDetail.get(0).getProfile2().get(0).getProfilePicPath());
 
                         picasso.load(lst_getCoupleDetail.get(0).getProfile2().get(0).getProfilePicPath())
                                 .placeholder(R.drawable.profile)
@@ -241,6 +235,17 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
                                 iv_send_request.setVisibility(View.VISIBLE);
                                 iv_chat.setVisibility(View.VISIBLE);
                                 couple_rl.setVisibility(View.GONE);
+
+
+                                if (itsMe) {
+                                    iv_send_request.setVisibility(View.GONE);
+                                    iv_chat.setVisibility(View.GONE);
+                                    InstaPhotosAdapter.isLocked = false;
+                                } else {
+                                    iv_send_request.setVisibility(View.VISIBLE);
+                                    iv_chat.setVisibility(View.VISIBLE);
+                                }
+
                             } else {
                                 callCoupleAPI();
                                 connection_img.setVisibility(View.VISIBLE);

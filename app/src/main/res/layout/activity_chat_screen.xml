@@ -43,7 +43,6 @@
                 android:id="@+id/chat_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="KaylaJenner11"
                 android:textColor="@color/textColour"
                 android:textSize="@dimen/_12sdp" />
 
@@ -66,7 +65,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerInParent="true"
             android:src="@drawable/ic_video_call"
-            android:visibility="visible" />
+            android:visibility="invisible" />
 
         <ImageView
             android:id="@+id/iv_delete_msg"

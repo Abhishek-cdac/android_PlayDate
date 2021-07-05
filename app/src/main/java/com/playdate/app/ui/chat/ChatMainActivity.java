@@ -262,7 +262,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             }
 
         });
-        callAPI();
+
 
         //video call
 
@@ -482,6 +482,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             JSONObject data = (JSONObject) args[0];
             Log.d("****ChatRoomCreated", data.toString());
             chatId = data.getString("chatId");
+            callAPI();
         } catch (Exception e) {
             e.printStackTrace();
         }
