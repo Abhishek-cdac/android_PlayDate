@@ -19,6 +19,7 @@ import com.playdate.app.couple.ui.register.invitesent.InviteSentActivity;
 import com.playdate.app.databinding.ActivityInvitePartnerBinding;
 import com.playdate.app.model.LoginUserDetails;
 import com.playdate.app.util.common.CommonClass;
+import com.playdate.app.util.session.SessionPref;
 
 public class InvitePartnerActivity extends AppCompatActivity {
     InvitepartnerViewModel viewModel;
@@ -30,8 +31,8 @@ public class InvitePartnerActivity extends AppCompatActivity {
     CommonClass clsCommon;
     Intent mIntent;
     LoginUserDetails loginUserDetails;
-    String inviteLink = "Welcome to PlayDate";
-String inviteLink1;
+    String inviteLink = null;
+    String inviteLink1;
 
     ImageView messengerSend, textSend;
 
@@ -40,11 +41,13 @@ String inviteLink1;
         super.onCreate(savedInstanceState);
         viewModel = new InvitepartnerViewModel();
         mIntent = getIntent();
+        SessionPref pref = SessionPref.getInstance(this);
         loginUserDetails = new LoginUserDetails();
+        inviteLink = pref.getStringVal(SessionPref.LoginUserInviteLink);
         inviteLink1 = loginUserDetails.getInviteLink();
 
         Log.e("InvitePartnerActivity1", "" + inviteLink1);
-Log.e("InvitePartnerActivity", "" + inviteLink);
+        Log.e("InvitePartnerActivity", "" + inviteLink);
 
 
         clsCommon = CommonClass.getInstance();

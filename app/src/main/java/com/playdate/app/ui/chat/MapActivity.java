@@ -172,7 +172,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 byte[] byteArray = stream.toByteArray();
 
 
-                chatMainActivity.sharelocation(byteArray);
+//                chatMainActivity.sharelocation(byteArray);
 
 //                Intent intent = new Intent(MapActivity.this, ImageViewActivity.class);
 //                intent.putExtra("image", byteArray);

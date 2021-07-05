@@ -311,7 +311,9 @@ public interface GetDataService {
     @POST("user/add-chat-media?section=chat&mediaType=audio")
     Call<ChatFileUpload> addmediaAudio(@Header("Authorization") String token, @Part MultipartBody.Part filePart);
 
-
+    @FormUrlEncoded
+    @POST("user/delete-chat-room")
+    Call<CommonModel> deleteChatRoom(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 }
 
 
