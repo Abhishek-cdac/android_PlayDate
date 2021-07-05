@@ -2,6 +2,7 @@ package com.playdate.app.ui.chat;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.util.Log;
@@ -149,6 +150,8 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 viewHolderMe.rl_audio.setVisibility(View.GONE);
                 viewHolderMe.rl_maps.setVisibility(View.VISIBLE);
                 viewHolderMe.mv_location.setVisibility(View.VISIBLE);
+
+                viewHolderMe.mv_location.setImageBitmap(locationImage);
 
             } else {
 
@@ -450,6 +453,12 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         notifyDataSetChanged();
     }
 
+    Bitmap locationImage = null;
+
+    public void addLocationImage(Bitmap bitmap) {
+        locationImage = bitmap;
+    }
+
 
     public class ViewHolderOther extends RecyclerView.ViewHolder {
         TextView tv_msg;
@@ -481,7 +490,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         ImageView img_playback;
         ImageView iv_mute_unmute;
         CardView card_image;
-        MapView mv_location;
+        ImageView mv_location;
         //        GoogleMap googleMap;
         int pos;
 

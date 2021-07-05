@@ -16,6 +16,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
+import com.playdate.app.model.CommonModel;
 import com.playdate.app.model.LoginResponse;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.ui.my_profile_details.FragInstaLikeProfile;
@@ -25,6 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LandingBottomSheet extends BottomSheetDialogFragment {
@@ -34,13 +36,15 @@ public class LandingBottomSheet extends BottomSheetDialogFragment {
     private final int index;
     private String from;
     String toUserId;
+    String chatId;
 
 
-    public LandingBottomSheet(ChattingAdapter chattingAdapter, int index, String from, String toUserId) {
+    public LandingBottomSheet(ChattingAdapter chattingAdapter, int index, String from, String toUserId, String chatId) {
         this.chattingAdapter = chattingAdapter;
         this.index = index;
         this.from = from;
         this.toUserId = toUserId;
+        this.chatId = chatId;
 
     }
 
@@ -66,27 +70,25 @@ public class LandingBottomSheet extends BottomSheetDialogFragment {
             rl_block.setVisibility(View.GONE);
             share.setText("Share");
 
-        }
-        else{
+        } else {
             report_user.setText("Report User");
 
         }
 
 
-
         report_comment_rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("toUserId chat Report", ""+toUserId);
-                callBlockUser(toUserId , "Report");
+                Log.e("toUserId chat Report", "" + toUserId);
+                callBlockUser(toUserId, "Report");
             }
         });
 
         rl_block.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("toUserId chat block", ""+toUserId);
-                callBlockUser(toUserId , "Block");
+                Log.e("toUserId chat block", "" + toUserId);
+                callBlockUser(toUserId, "Block");
             }
         });
 
@@ -94,7 +96,7 @@ public class LandingBottomSheet extends BottomSheetDialogFragment {
             if (from.equals("chat")) {
                 chatAdapter.removeFromList(index);
             } else {
-                chattingAdapter.deleteChat(index);
+                callDeleteChatRoom(chatId);
             }
 
         });
@@ -112,6 +114,37 @@ public class LandingBottomSheet extends BottomSheetDialogFragment {
 
 
         return view;
+    }
+
+    private void callDeleteChatRoom(String chatId) {
+        SessionPref pref = SessionPref.getInstance(getActivity());
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
+        hashMap.put("chatId", chatId);
+
+        Call<CommonModel> call = service.deleteChatRoom("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new Callback<CommonModel>() {
+            @Override
+            public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
+                if (response.code() == 200) {
+                    if (response.body().getStatus() == 1) {
+                        chattingAdapter.deleteChat(index);
+                    } else {
+
+                    }
+                } else {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CommonModel> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+
     }
 
     private void callBlockUser(String toUserId, String action) {
@@ -133,7 +166,7 @@ public class LandingBottomSheet extends BottomSheetDialogFragment {
 //                pd.cancel();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
-                        Log.e("successful", ""+ toUserId +" "+  action);
+                        Log.e("successful", "" + toUserId + " " + action);
                         dismiss();
                     } else {
                     }

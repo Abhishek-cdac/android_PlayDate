@@ -269,7 +269,8 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
 
             itemView.setOnLongClickListener(v -> {
                 selectedToDelete = getAdapterPosition();
-                showBottomSheet(selectedToDelete, lst_msgs.get(getAbsoluteAdapterPosition()).getToUserId());
+                String chatId = lst_msgs.get(getAbsoluteAdapterPosition()).getChatId();
+                showBottomSheet(selectedToDelete, lst_msgs.get(getAbsoluteAdapterPosition()).getToUserId(), chatId);
                 notifyDataSetChanged();
                 return true;
             });
@@ -278,9 +279,9 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
     }
 
 
-    private void showBottomSheet(int selectedToDelete, String toUserId) {
+    private void showBottomSheet(int selectedToDelete, String toUserId, String chatId) {
         FragmentManager fragmentManager = ((AppCompatActivity) mContext).getSupportFragmentManager();
-        bottomSheet = new LandingBottomSheet(this, selectedToDelete, "landing", toUserId);
+        bottomSheet = new LandingBottomSheet(this, selectedToDelete, "landing", toUserId, chatId);
         bottomSheet.show(fragmentManager, "ModalBottomSheet");
     }
 
