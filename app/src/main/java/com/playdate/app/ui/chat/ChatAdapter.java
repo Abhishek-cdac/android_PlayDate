@@ -143,14 +143,18 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 //temp
             } else if (lst_chat.get(position).getType().equals("location")) {
                 viewHolderMe.tv_msg.setVisibility(View.GONE);
-                viewHolderMe.cv_image.setVisibility(View.GONE);
+                viewHolderMe.cv_image.setVisibility(View.VISIBLE);
                 viewHolderMe.iv_thumb.setVisibility(View.GONE);
+                viewHolderMe.rl_audio.setVisibility(View.GONE);
                 viewHolderMe.img_playback.setVisibility(View.GONE);
                 viewHolderMe.card_video.setVisibility(View.GONE);
-                viewHolderMe.rl_audio.setVisibility(View.GONE);
-                viewHolderMe.rl_maps.setVisibility(View.VISIBLE);
-                viewHolderMe.mv_location.setVisibility(View.VISIBLE);
-
+                viewHolderMe.rl_maps.setVisibility(View.GONE);
+                viewHolderMe.mv_location.setVisibility(View.GONE);
+                try {
+                    picasso.load(lst_chat.get(position).getMediaInfo().get(0).getMediaFullPath()).into(viewHolderMe.chat_image);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
             } else {
 
@@ -278,6 +282,17 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     //temp
                     break;
                 case "location":
+
+                    try {
+                        viewHolderOponent.tv_msg.setVisibility(View.GONE);
+                        viewHolderOponent.card_img.setVisibility(View.VISIBLE);
+
+                        picasso.get().load(lst_chat.get(position).getMediaInfo().get(0).getMediaFullPath())
+                                .into(viewHolderOponent.chat_image);
+                       // viewHolderOponent.chat_image.setOnClickListener(v -> showPhoto(lst_chat.get(position).getMediaInfo().get(0).getMediaFullPath()));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
 
                     break;

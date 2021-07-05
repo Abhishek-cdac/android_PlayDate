@@ -620,20 +620,13 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                         Toast.makeText(this, "FAIELD TO GET DATA", Toast.LENGTH_SHORT).show();
                     }
 
-                } else if (requestCode == REQUEST_LOCATION_CODE) {
-                    Toast.makeText(this, "REQUEST_LOCATION_CODE " + locationBitmap.toString(), Toast.LENGTH_SHORT).show();
-
-                    if (data.getBooleanExtra("locationImg", false))         {
-                        Toast.makeText(this, "REQUEST_LOCATION_CODE " + locationBitmap.toString(), Toast.LENGTH_SHORT).show();
-                        sharelocation();
-                        addToListImage(locationBitmap, true);
-
-                    } else {
-                        Toast.makeText(this, "REQUEST_LOCATION_CODE " + data.getBooleanExtra("locationImg", false), Toast.LENGTH_SHORT).show();
-                    }
                 }
 
-            } else {
+            }else if (requestCode == REQUEST_LOCATION_CODE) {
+                if(data.getBooleanExtra("locationImg",false)){
+                    sharelocation();
+                }
+            } else{
                 Log.d("Failed", "Failed to load");
                 //  Toast.makeText(this, "Failed to load", Toast.LENGTH_SHORT).show();
             }
@@ -730,7 +723,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         bitmap.compress(Bitmap.CompressFormat.JPEG, 40, bos);
         byte[] bitmapdata = bos.toByteArray();
 
-        FileOutputStream fos = null;
+        FileOutputStream fos;
         try {
             fos = new FileOutputStream(f);
             fos.write(bitmapdata);
@@ -963,7 +956,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             handler.removeCallbacksAndMessages(null);
         }
 
-        locationBitmap = null;
+        locationBitmap=null;
         super.onDestroy();
 
     }
@@ -1280,12 +1273,11 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 //        } catch (Exception e) {
 //            e.getMessage();
 //        }
-        Toast.makeText(this, "ShareLocation Called", Toast.LENGTH_SHORT).show();
-
 
         if (locationBitmap != null) {
-            addToListImage(locationBitmap, true);
             Log.d("locatinBitmap", "locatinBitmap not null");
+            addToListImage(locationBitmap, true);
+
         } else {
             Log.d("locatinBitmap", "locatinBitmap null");
         }
