@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.LocationManager;
 import android.media.MediaRecorder;
 import android.net.Uri;
@@ -135,7 +136,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     private String UserID = "";
     double lattitude;
     double longitude;
-
+    Bitmap locatinImage = null;
 
     private final int REQUEST_AUDIO_PERMISSION_CODE = 1;
 
@@ -653,6 +654,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             return cursor.getString(column_index);
         } else
             return null;
+
     }
 
     File audioFile = null;
@@ -765,7 +767,6 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 
     }
 
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -816,7 +817,6 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         }
     }
 
-
     @Override
     public void onSmileyChange(int position) {
         int smiley = lstSmiley.get(position);
@@ -824,7 +824,6 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         sendMessgae("" + smiley, "emoji", null);
 
     }
-
 
     @Override
     public void onLocationSelect() {
@@ -838,19 +837,20 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             if (String.valueOf(lattitude).equals("0.0") && String.valueOf(longitude).equals("0.0")) {
                 Toast.makeText(this, "Wait a moment", Toast.LENGTH_SHORT).show();
             } else {
-                sendMessgae("", "location", "");
+                Intent intent = new Intent(ChatMainActivity.this, MapActivity.class);
+                intent.putExtra("lattitude", lattitude);
+                intent.putExtra("longitude", longitude);
+                startActivity(intent);
+
+//                sendMessgae("", "location", "");
 //                adapter.sendLcation(lattitude, longitude);
             }
 
         } else {
             gpsTracker.showSettingsAlert();
         }
-
-
         scrollTOEnd();
-
     }
-
 
     void createRoom() {
         if (null != mSocket) {
@@ -1268,6 +1268,25 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     }
 
 
+    public void sharelocation(byte[] byteArray) {
+
+        sendMessgae("", "location", "");
+        locatinImage = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+
+        Log.d("LocationImage", "sharelocation: "+locatinImage.toString());
+//        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+//        locatinImage.compress(Bitmap.CompressFormat.PNG, 100, stream);
+//        byte[] byteArray1 = stream.toByteArray();
+//
+//        Intent intent = new Intent(ChatMainActivity.this, ImageViewActivity.class);
+//        intent.putExtra("image", byteArray1);
+//        startActivity(intent);
+
+//        adapter.addLocationImage(locatinImage);
+
+    }
+
+
 }
 
 
@@ -1282,5 +1301,3 @@ interface onImageSelectListener {
 
     void onGallerySelect();
 }
-
-

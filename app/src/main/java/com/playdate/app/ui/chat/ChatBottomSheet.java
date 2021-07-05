@@ -37,6 +37,8 @@ public class ChatBottomSheet extends BottomSheetDialogFragment {
             });
 
 
+
+
         } else {
             view = inflater.inflate(R.layout.frag_image_select_bottom_sheet, container, false);
             LinearLayout ll_camera, ll_gallery;
@@ -56,3 +58,5 @@ public class ChatBottomSheet extends BottomSheetDialogFragment {
         return view;
     }
 }
+
+
