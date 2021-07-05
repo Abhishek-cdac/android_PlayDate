@@ -32,21 +32,22 @@ public class OnBoardingImageFragment extends Fragment {
         View view = inflater.inflate(R.layout.on_boarding, container, false);
         ImageView img_back = view.findViewById(R.id.img_back);
         //  img_back.setImageResource(R.drawable.couple1);
-        switch (position) {
-            case 0:
-                img_back.setImageResource(R.drawable.couple1);
-                break;
-            case 1:
-                img_back.setImageResource(R.drawable.couple1);
-                break;
-            case 2:
-                img_back.setImageResource(R.drawable.couple1);
-                break;
-            case 3:
-                img_back.setImageResource(R.drawable.couple1);
-                break;
-
-        }
+        img_back.setImageResource(R.drawable.couple1);
+//        switch (position) {
+//            case 0:
+//                img_back.setImageResource(R.drawable.couple1);
+//                break;
+//            case 1:
+//                img_back.setImageResource(R.drawable.couple1);
+//                break;
+//            case 2:
+//                img_back.setImageResource(R.drawable.couple1);
+//                break;
+//            case 3:
+//                img_back.setImageResource(R.drawable.couple1);
+//                break;
+//
+//        }
 
         return view;
     }

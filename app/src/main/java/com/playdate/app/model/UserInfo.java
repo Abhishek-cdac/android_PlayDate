@@ -11,8 +11,16 @@ public class UserInfo {
     private String mProfileVideoPath;
     @SerializedName("username")
     private String mUsername;
+
     @SerializedName("_id")
     private String m_id;
+
+    @SerializedName("userId")
+    private String userId ;
+
+    public String getUserId() {
+        return userId;
+    }
 
     public String getProfilePicPath() {
         return mProfilePicPath;

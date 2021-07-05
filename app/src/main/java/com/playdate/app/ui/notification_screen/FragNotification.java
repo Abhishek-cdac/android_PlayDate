@@ -97,7 +97,7 @@ public class FragNotification extends Fragment {
                     callUpdateNotificationStatusAPI(notifiationId, userId, "read");
                 } else if (i == 11) {
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                    NotificationBottomSheet sheet = new NotificationBottomSheet();
+                    NotificationBottomSheet sheet = new NotificationBottomSheet(FragNotification.this);
                     bundle = new Bundle();
                     bundle.putString("notifiationId", notifiationId);
                     bundle.putString("userId", userId);
@@ -309,7 +309,7 @@ public class FragNotification extends Fragment {
         });
     }
 
-    private void callGetNotificationAPI() {
+    public void callGetNotificationAPI() {
 
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();

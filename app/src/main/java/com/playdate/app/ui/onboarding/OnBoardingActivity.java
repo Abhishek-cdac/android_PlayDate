@@ -28,8 +28,6 @@ public class OnBoardingActivity extends AppCompatActivity {
         binding.setLifecycleOwner(this);
         binding.setOnBoardingViewModel(loginViewModel);
         binding.tabLayout.setupWithViewPager(binding.viewPager);
-//        binding.getFadevisible();
-//        binding.getIndicator();
         binding.setManager(getSupportFragmentManager());
 
         loginViewModel.getStarted().observe(this, aBoolean -> {
@@ -71,7 +69,6 @@ public class OnBoardingActivity extends AppCompatActivity {
 
     @BindingAdapter({"setUpWithViewpager"})
     public static void setUpWithViewpager(final com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator indicator, ViewPager viewPager) {
-//        indicator.setViewPager(viewPager);
     }
 
 

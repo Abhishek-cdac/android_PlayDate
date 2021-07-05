@@ -52,6 +52,7 @@ import com.playdate.app.service.GpsTracker;
 import com.playdate.app.util.MyApplication;
 import com.playdate.app.util.common.AudioRecordProgressDialog;
 import com.playdate.app.util.common.BaseActivity;
+import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.session.SessionPref;
 import com.playdate.app.videocall.activities.CallActivity;
 import com.playdate.app.videocall.activities.PermissionsActivity;
@@ -110,41 +111,26 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     private ChatAdapter adapter;
     private ImageView iv_mic;
     private EditText et_msg;
-    private ImageView iv_delete_msg;
     private String sender_photo;
     private String sender_name;
     private String chatId;
     private String userIDTo;
-    //    private RelativeLayout rl_chat;
-    private ArrayList<ChatMessage> chatMsgList;
     private ArrayList<Integer> lstSmiley;
     private NestedScrollView scrollview;
-    private LocationManager locationManager;
-    //    private LocationListener locationListener;
-    SessionPref pref;
-    //    private ChatBottomSheet sheet;
+    private SessionPref pref;
     private boolean isVisible = false;
-
     private MediaRecorder mRecorder;
-    //    private MediaPlayer mediaPlayer;
     private String mFileName = null;
     private static final String[] permissions = {Manifest.permission.RECORD_AUDIO};
-    //    private final String AudioSavePathInDevice = null;
-//    private TransparentProgressDialog pd;
     private AudioRecordProgressDialog apd;
     private String UserID = "";
-    double lattitude;
-    double longitude;
+    private double lattitude;
+    private double longitude;
 
 
     private final int REQUEST_AUDIO_PERMISSION_CODE = 1;
 
 
-    private final Integer[] intEmoji = {
-            0x1F600, 0x1F603, 0x1F604, 0x1F601, 0x1F606, 0x1F605, 0x1F923, 0x1F602, 0x1F61A, 0x1F619,
-            0x1F642, 0x1F643, 0x1F609, 0x1F60A, 0x1F607, 0x1F60B, 0x1F60D, 0x1F929, 0x1F618, 0x1F617,
-            0x1F61C, 0x1F92A, 0x1F61D, 0x1F911, 0x1F917, 0x1F92B, 0x1F914, 0x1F910, 0x1F928, 0x1F610,
-    };
     RecyclerView.LayoutManager manager;
     private int PageNumber = 1;
     JSONObject objNotTyping;
@@ -169,7 +155,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 
         pref = SessionPref.getInstance(ChatMainActivity.this);
         requestExecutor = MyApplication.getInstance().getQbResRequestExecutor();
-        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         UserID = pref.getStringVal(SessionPref.LoginUserID);
 
         sharedPrefsHelper = SharedPrefsHelper.getInstance();
@@ -187,7 +173,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         ImageView profile_image = findViewById(R.id.profile_image);
         TextView chat_name = findViewById(R.id.chat_name);
         ImageView iv_smiley = findViewById(R.id.iv_smiley);
-        iv_delete_msg = findViewById(R.id.iv_delete_msg);
+        ImageView iv_delete_msg = findViewById(R.id.iv_delete_msg);
         ImageView iv_video_call = findViewById(R.id.iv_video_call);
 
         lstSmiley = new ArrayList<>();
@@ -420,6 +406,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                     mediaInfo.setMediaType(data.getString("mediaType"));
                     mediaInfo.setMediaId(data.getString("mediaId"));
                     mediaInfo.setMediaFullPath(data.getString("mediaFullPath"));
+                    mediaInfo.setMediaThumbName(data.getString("mediaFullPathThumb"));
                     lstMedia.add(mediaInfo);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -773,24 +760,23 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             audioRecordingPermissionGranted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
         }
 
-        if (!audioRecordingPermissionGranted) {
-//            Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
-        }
+//        if (!audioRecordingPermissionGranted) {
+////            Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
+//        }
     }
-
-    public boolean checkPermission() {
-        int result = ContextCompat.checkSelfPermission(getApplicationContext(),
-                WRITE_EXTERNAL_STORAGE);
-        int result1 = ContextCompat.checkSelfPermission(getApplicationContext(),
-                RECORD_AUDIO);
-        return result == PackageManager.PERMISSION_GRANTED &&
-                result1 == PackageManager.PERMISSION_GRANTED;
-    }
+//
+//    public boolean checkPermission() {
+//        int result = ContextCompat.checkSelfPermission(getApplicationContext(),
+//                WRITE_EXTERNAL_STORAGE);
+//        int result1 = ContextCompat.checkSelfPermission(getApplicationContext(),
+//                RECORD_AUDIO);
+//        return result == PackageManager.PERMISSION_GRANTED &&
+//                result1 == PackageManager.PERMISSION_GRANTED;
+//    }
 
 
     private void openCamera() {
         try {
-            final String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/picFolder/";
             Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             startActivityForResult(cameraIntent, TAKE_PHOTO_CODE);
         } catch (Exception e) {
@@ -805,22 +791,13 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     }
 
     private void getEmoticon() {
-        for (int i = 0; i <= intEmoji.length; i++) {
-//            String emoji = new String(Character.toChars(i));
-            try {
-                lstSmiley.add(intEmoji[i]);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-
-        }
+        lstSmiley = new CommonClass().getEmojiArr();
     }
 
 
     @Override
     public void onSmileyChange(int position) {
         int smiley = lstSmiley.get(position);
-//        Drawable drawable = getResources().getDrawable(smiley);
         sendMessgae("" + smiley, "emoji", null);
 
     }

@@ -25,6 +25,7 @@
         android:layout_marginTop="132dp"
         android:scaleType="fitXY"
         android:src="@drawable/ic_question_mark"
+        android:visibility="gone"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -35,6 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/_40sdp"
         android:layout_marginTop="@dimen/_30sdp"
+
         android:layout_marginRight="@dimen/_40sdp"
         android:orientation="vertical"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -98,8 +100,6 @@
                 android:textSize="@dimen/_16sdp" />
 
         </RelativeLayout>
-
-
 
 
     </LinearLayout>

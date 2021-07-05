@@ -6,15 +6,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,13 +32,13 @@ public class NewPaymentMethod extends Fragment implements AdapterView.OnItemSele
     public NewPaymentMethod() {
     }
 
-   private EditText et_cad_no;
-   private EditText et_card_name;
-   private EditText et_card_cvv;
-   private EditText edt_year;
-   private EditText edt_month;
-   private ImageView iv_card;
-   private int CardSelected = 0;
+    private EditText et_cad_no;
+    private EditText et_card_name;
+    private EditText et_card_cvv;
+    private EditText edt_year;
+    private EditText edt_month;
+    private ImageView iv_card;
+    private int CardSelected = 0;
 
     @Nullable
     @Override
@@ -60,11 +56,8 @@ public class NewPaymentMethod extends Fragment implements AdapterView.OnItemSele
         ImageView iv_checkbox = view.findViewById(R.id.iv_checkbox);
         Button btn_scan_card = view.findViewById(R.id.btn_scan_card);
 
-        int height = new CommonClass().getScreenHeight(getActivity());
-        cl_page.getLayoutParams().height = height;
+        cl_page.getLayoutParams().height = new CommonClass().getScreenHeight(getActivity());
 
-//        spinner_month.setOnItemSelectedListener(this);
-//        spinner_year.setOnItemSelectedListener(this);
         btn_scan_card.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), CardIOActivity.class)
                     .putExtra(CardIOActivity.EXTRA_REQUIRE_EXPIRY, true)
@@ -78,24 +71,13 @@ public class NewPaymentMethod extends Fragment implements AdapterView.OnItemSele
             getActivity().startActivityForResult(intent, 857);
         });
 
-        rl_check.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                iv_checkbox.setVisibility(View.INVISIBLE);
-//                if (iv_checkbox.isOpaque()) {
-//                    iv_checkbox.setVisibility(View.INVISIBLE);
-//                } else {
-//                    iv_checkbox.setVisibility(View.VISIBLE);
-//                }
-            }
+        rl_check.setOnClickListener(v -> {
+            iv_checkbox.setVisibility(View.INVISIBLE);
         });
 
-        rl_visa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PaymentDialog dialog = new PaymentDialog(getActivity(), CardSelected, NewPaymentMethod.this);
-                dialog.show();
-            }
+        rl_visa.setOnClickListener(v -> {
+            PaymentDialog dialog = new PaymentDialog(getActivity(), CardSelected, NewPaymentMethod.this);
+            dialog.show();
         });
 
 //        List<String> list = new ArrayList<>();

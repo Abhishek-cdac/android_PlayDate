@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,10 +39,7 @@ public class FragInbox extends Fragment implements onClickEventListener {
     private ChattingAdapter adapter;
     private RecyclerView recyclerView;
     private Onclick itemClick;
-    private RelativeLayout rl_c;
-    private RequestAdapter requestAdapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
-    SessionPref pref;
 
     @Nullable
     @Override
@@ -51,15 +47,10 @@ public class FragInbox extends Fragment implements onClickEventListener {
         View view = inflater.inflate(R.layout.frag_inbox_list, container, false);
         recyclerView = view.findViewById(R.id.friend_list);
         mSwipeRefreshLayout = view.findViewById(R.id.swiperefresh);
-        rl_c = view.findViewById(R.id.rl_c);
-        pref = SessionPref.getInstance(getActivity());
 
         mSwipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.color_pink));
 
-        mSwipeRefreshLayout.setOnRefreshListener(() -> {
-            callApiForChats();
-
-        });
+        mSwipeRefreshLayout.setOnRefreshListener(() -> FragInbox.this.callApiForChats());
         return view;
     }
 
@@ -133,14 +124,7 @@ public class FragInbox extends Fragment implements onClickEventListener {
     }
 
 
-    public void onAcceptChatRequest(String name, String image) {
-        Log.d("Accepted", "onAcceptChatRequest: ");
-        adapter = new ChattingAdapter(name, image);
-
-    }
-
     public void setFilters(CharSequence s) {
-//        chattingAdapter.getFilter().filter(s);
         adapter.notifyDataSetChanged();
 
     }
