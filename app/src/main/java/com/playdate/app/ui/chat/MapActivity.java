@@ -1,50 +1,34 @@
 package com.playdate.app.ui.chat;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.PersistableBundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.playdate.app.R;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.util.Date;
+
+import static com.playdate.app.ui.register.profile.UploadProfileActivity.REQUEST_LOCATION_CODE;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap gmap;
-    Intent mIntent;
-    double lattitude, longitude;
-    Button btn_send;
-    MapView mapView;
-    ChatMainActivity chatMainActivity;
+    private double lattitude, longitude;
+    private Button btn_send;
+    private MapView mapView;
 
     private static final String MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey";
 
@@ -53,11 +37,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         btn_send = findViewById(R.id.btn_send);
-        chatMainActivity = new ChatMainActivity();
 
-//        mIntent = getIntent();
-//        lattitude = mIntent.getDoubleExtra("lattitude", 0.0);
-//        lattitude = mIntent.getDoubleExtra("longitude", 0.0);
+
+        Intent mIntent = getIntent();
+        lattitude = mIntent.getDoubleExtra("lattitude", 0.0);
+        longitude = mIntent.getDoubleExtra("longitude", 0.0);
+
 
         Bundle mapViewBundle = null;
         if (savedInstanceState != null) {
@@ -121,14 +106,15 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         gmap = googleMap;
-        mIntent = getIntent();
-        lattitude = mIntent.getDoubleExtra("lattitude", 0.0);
-        longitude = mIntent.getDoubleExtra("longitude", 0.0);
+//        mIntent = getIntent();
+//        lattitude = mIntent.getDoubleExtra("lattitude", 0.0);
+//        longitude = mIntent.getDoubleExtra("longitude", 0.0);
+
 
         gmap.setMinZoomPreference(16);
         Toast.makeText(this, "" + lattitude + " , " + longitude, Toast.LENGTH_SHORT).show();
         LatLng ny = new LatLng(lattitude, longitude);
-//        gmap.addMarker(new MarkerOptions().position(ny));
+        gmap.addMarker(new MarkerOptions().position(ny));
         gmap.moveCamera(CameraUpdateFactory.newLatLng(ny));
 
         btn_send.setOnClickListener(new View.OnClickListener() {
@@ -153,41 +139,37 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
     }
 
-    Bitmap bitmap123;
 
     private void captureScreenShot() {
 
-        GoogleMap.SnapshotReadyCallback callback = new GoogleMap.SnapshotReadyCallback() {
-            @Override
-            public void onSnapshotReady(@Nullable Bitmap snapshot) {
-                bitmap123 = snapshot;
-                Log.d("LocationImg MapActivity", "sharelocation: " + bitmap123.toString());
-                byte[] byteArray = new byte[0];
-                try {
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    bitmap123.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                    byteArray = stream.toByteArray();
-                } catch (Exception e) {
-                    Log.e("ScreneExcptionBytAray", "onSnapshotReady: " + e.toString());
-                    e.printStackTrace();
-                }
+        GoogleMap.SnapshotReadyCallback callback = snapshot -> {
+            Bitmap bitmap;
+            bitmap = snapshot;
 
-                //                chatMainActivity.sharelocation(byteArray);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 40, baos);
+            ChatMainActivity.locationBitmap = bitmap;
 
-                try {
-                    Intent intent = new Intent(MapActivity.this, ImageViewActivity.class);
-                    intent.putExtra("imageLocation", byteArray);
-                    Log.d("BYTEARRAY", "onSnap"+byteArray);
-                    startActivity(intent);
-                } catch (Exception e) {
-                    Log.e("ScreenCaptureException", "onSnapshotReady: " + e.toString());
-                    e.printStackTrace();
-                }
-            }
+//            byte[] b = baos.toByteArray();
+//            String temp = Base64.encodeToString(b, Base64.DEFAULT);
+//
+//            SessionPref pref = SessionPref.getInstance(MapActivity.this);
+//            pref.saveStringKeyVal("locationImg", temp);
+//
+//            chatMainActivity.sharelocation(temp);
+
+
+            Intent intent = new Intent();
+            intent.putExtra("locationImg", true);
+            setResult(REQUEST_LOCATION_CODE, intent);
+            finish();
+
         };
         gmap.snapshot(callback);
     }
 }
+
+
 
 
 

@@ -151,7 +151,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 viewHolderMe.rl_maps.setVisibility(View.VISIBLE);
                 viewHolderMe.mv_location.setVisibility(View.VISIBLE);
 
-                viewHolderMe.mv_location.setImageBitmap(locationImage);
+
 
             } else {
 
@@ -452,13 +452,6 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         bottomSheet.dismiss();
         notifyDataSetChanged();
     }
-
-    Bitmap locationImage = null;
-
-    public void addLocationImage(Bitmap bitmap) {
-        locationImage = bitmap;
-    }
-
 
     public class ViewHolderOther extends RecyclerView.ViewHolder {
         TextView tv_msg;

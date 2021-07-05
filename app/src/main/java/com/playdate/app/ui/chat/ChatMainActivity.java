@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.LocationManager;
 import android.media.MediaRecorder;
 import android.net.Uri;
@@ -22,6 +23,7 @@ import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -101,6 +103,7 @@ import static android.Manifest.permission.RECORD_AUDIO;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.ALL_PERMISSIONS_RESULT;
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.PICK_PHOTO_FOR_AVATAR;
+import static com.playdate.app.ui.register.profile.UploadProfileActivity.REQUEST_LOCATION_CODE;
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.REQUEST_TAKE_GALLERY_VIDEO;
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.TAKE_PHOTO_CODE;
 
@@ -600,7 +603,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                         Log.d("BITMAP VALUE", bitmap.toString());
 //                      sheet.dismiss();
 //                      Drawable d = new BitmapDrawable(getResources(), bitmap);
-                        addToListImage(bitmap);
+                        addToListImage(bitmap, false);
                         scrollTOEnd();
                     }
                 } else if (requestCode == REQUEST_TAKE_GALLERY_VIDEO) {
@@ -616,9 +619,13 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                         Toast.makeText(this, "FAIELD TO GET DATA", Toast.LENGTH_SHORT).show();
                     }
 
+                } else if (requestCode == REQUEST_LOCATION_CODE) {
+                    if(data.getBooleanExtra("locationImg",false)){
+                        sharelocation();
+                    }
                 }
 
-            } else {
+            } else{
                 Log.d("Failed", "Failed to load");
                 //  Toast.makeText(this, "Failed to load", Toast.LENGTH_SHORT).show();
             }
@@ -703,8 +710,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         });
     }
 
-    public void addToListImage(Bitmap bitmap) {
-
+    public void addToListImage(Bitmap bitmap, boolean isLocation) {
         File f = new File(getCacheDir(), "chat.png");
         try {
             f.createNewFile();
@@ -725,7 +731,6 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         SessionPref pref = SessionPref.getInstance(this);
         MultipartBody.Part filePart = MultipartBody.Part.createFormData("mediaFeed", f.getName(), RequestBody.create(MediaType.parse("image/png"), f));
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
@@ -736,8 +741,11 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
                         ChatFile media = response.body().getChatFile();
-                        sendMessgae("", "media", media.getMediaId());
-
+                        if (isLocation) {
+                            sendMessgae("", "location", media.getMediaId());
+                        } else {
+                            sendMessgae("", "media", media.getMediaId());
+                        }
                     } else {
                     }
                 } else {
@@ -815,10 +823,12 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             if (String.valueOf(lattitude).equals("0.0") && String.valueOf(longitude).equals("0.0")) {
                 Toast.makeText(this, "Wait a moment", Toast.LENGTH_SHORT).show();
             } else {
-                Intent intent = new Intent(ChatMainActivity.this,MapActivity.class);
-                intent.putExtra("lattitude",lattitude);
-                intent.putExtra("longitude",longitude);
-                startActivity(intent);
+                Intent intent = new Intent(ChatMainActivity.this, MapActivity.class);
+                intent.putExtra("lattitude", lattitude);
+                intent.putExtra("longitude", longitude);
+                startActivityForResult(intent, REQUEST_LOCATION_CODE);
+
+//                startActivity(intent);
 //                sendMessgae("", "location", "");
 //                adapter.sendLcation(lattitude, longitude);
             }
@@ -944,6 +954,8 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         if (null != handler) {
             handler.removeCallbacksAndMessages(null);
         }
+
+        locationBitmap=null;
         super.onDestroy();
 
     }
@@ -1248,7 +1260,27 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         CallActivity.start(this, false);
     }
 
+    public static Bitmap locationBitmap = null;
 
+
+    public void sharelocation() {
+//        String encodedString = pref.getStringVal("locationImg");
+//        try {
+//            byte[] encodeByte = Base64.decode(encoded, Base64.DEFAULT);
+//            locationBitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+//
+//        } catch (Exception e) {
+//            e.getMessage();
+//        }
+
+        if (locationBitmap != null) {
+            Log.d("locatinBitmap", "locatinBitmap not null");
+            addToListImage(locationBitmap, true);
+
+        } else {
+            Log.d("locatinBitmap", "locatinBitmap null");
+        }
+    }
 }
 
 

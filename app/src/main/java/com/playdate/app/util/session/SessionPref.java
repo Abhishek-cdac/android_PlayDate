@@ -35,6 +35,7 @@ public class SessionPref {
         editor.commit();
     }
 
+
     public void saveLOngKeyLattitude(String key, double val) {
         editor.putLong(key, Double.doubleToRawLongBits(val));
         editor.commit();

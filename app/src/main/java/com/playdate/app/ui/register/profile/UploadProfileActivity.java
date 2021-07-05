@@ -62,6 +62,7 @@ public class UploadProfileActivity extends AppCompatActivity {
     public final static int PICK_PHOTO_FOR_AVATAR = 150;
     public final static int TAKE_PHOTO_CODE = 0;
     public final static int REQUEST_TAKE_GALLERY_VIDEO = 200;
+    public final static int REQUEST_LOCATION_CODE = 10;
     private Intent mIntent;
 
     @Override

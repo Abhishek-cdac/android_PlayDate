@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.ImageView;
 
@@ -11,6 +12,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.playdate.app.R;
+import com.playdate.app.util.session.SessionPref;
+
+import java.io.FileInputStream;
 
 public class ImageViewActivity extends AppCompatActivity {
 
@@ -21,13 +25,19 @@ public class ImageViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_imageview);
         ImageView imageView = findViewById(R.id.imageView);
-//        Log.e("IMageViewActivity", "IMageViewActivity");
 
+        SessionPref pref = SessionPref.getInstance(ImageViewActivity.this);
+        String encodedString = pref.getStringVal("locationImg");
+        try {
+            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+            bitmapImage = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
 
-        byte[] byteArray = getIntent().getByteArrayExtra("imageLocation");
-        Log.d("BYTEARRAY", "onSnap"+byteArray);
+        } catch (Exception e) {
+            e.getMessage();
+        }
 
-        bitmapImage = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+//        byte[] byteArray = getIntent().getByteArrayExtra("image");
+//        bitmapImage = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
 
         imageView.setImageBitmap(bitmapImage);
     }
