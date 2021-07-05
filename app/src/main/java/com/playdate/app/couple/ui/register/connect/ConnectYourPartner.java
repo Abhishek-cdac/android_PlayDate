@@ -16,6 +16,7 @@ import com.playdate.app.util.common.CommonClass;
 
 public class ConnectYourPartner extends AppCompatActivity {
 
+
     private ActivityConnectYourPartnerBinding binding;
     private int selectedconnect = -1;
     private CommonClass clsCommon;
