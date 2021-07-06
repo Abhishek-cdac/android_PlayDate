@@ -27,7 +27,6 @@ import com.playdate.app.util.session.SessionPref;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -112,32 +111,21 @@ public class BusinessUploadPhotoActivity extends AppCompatActivity {
         File f = new File(getCacheDir(), "profile");
         try {
             f.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
-        byte[] bitmapdata = bos.toByteArray();
+
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+            byte[] bitmapdata = bos.toByteArray();
 
 //write the bytes in file
-        FileOutputStream fos = null;
-        try {
+            FileOutputStream fos = null;
+
             fos = new FileOutputStream(f);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        try {
+
             fos.write(bitmapdata);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
+
             fos.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
+
             fos.close();
         } catch (IOException e) {
             e.printStackTrace();

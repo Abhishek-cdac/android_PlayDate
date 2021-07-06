@@ -15,7 +15,7 @@ class BlockedUserAdapter(
     private val list: ArrayList<BlockedUser>,
     private val blockUserActivity: BlockUserActivity
 ) : RecyclerView.Adapter<BlockedUserAdapter.ViewHolder>() {
-    private val picasso: Picasso
+    private val picasso: Picasso = Picasso.get()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.row_blocked_users, null)
         return ViewHolder(view)
@@ -40,7 +40,7 @@ class BlockedUserAdapter(
         init {
             txt_name = itemView.findViewById(R.id.txt_name)
             img_friend = itemView.findViewById(R.id.img_friend)
-            itemView.setOnClickListener { v: View? ->
+            itemView.setOnClickListener {
                 blockUserActivity.showModel(
                     list[adapterPosition].toUserId
                 )
@@ -48,7 +48,4 @@ class BlockedUserAdapter(
         }
     }
 
-    init {
-        picasso = Picasso.get()
-    }
 }

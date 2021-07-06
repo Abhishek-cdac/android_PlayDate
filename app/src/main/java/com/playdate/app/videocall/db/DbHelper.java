@@ -8,7 +8,6 @@ import android.util.Log;
 
 public class DbHelper extends SQLiteOpenHelper {
 
-    private final String TAG = DbHelper.class.getSimpleName();
 
     private static final String DB_NAME = "groupchatwebrtcDB";
 
@@ -27,7 +26,6 @@ public class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        Log.d(TAG, "--- onCreate database ---");
         db.execSQL("create table " + DB_TABLE_NAME + " ("
                 + DB_COLUMN_ID + " integer primary key autoincrement,"
                 + DB_COLUMN_USER_ID + " integer,"

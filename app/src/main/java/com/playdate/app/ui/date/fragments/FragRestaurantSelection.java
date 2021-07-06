@@ -48,7 +48,7 @@ public class FragRestaurantSelection extends Fragment implements restaurantSelec
     private RecyclerView rv_restaurant;
     private CommonClass clsCommon;
     private ArrayList<RestaurentData> lst_getRestaurantsDetail;
-    double latitude, longitude;
+    private double latitude, longitude;
     public FragRestaurantSelection() {
     }
 
@@ -93,8 +93,8 @@ public class FragRestaurantSelection extends Fragment implements restaurantSelec
        // hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
         hashMap.put("lat", String.valueOf(latitude));
         hashMap.put("long", String.valueOf(longitude));
-        Log.e("lat",""+ latitude);
-        Log.e("long",""+ longitude);
+//        Log.e("lat",""+ latitude);
+//        Log.e("long",""+ longitude);
 
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
         pd.show();
