@@ -1,5 +1,6 @@
 package com.playdate.app.ui.chat.request;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -8,25 +9,41 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.google.android.material.tabs.TabLayout;
 import com.playdate.app.R;
+import com.playdate.app.data.api.GetDataService;
+import com.playdate.app.data.api.RetrofitClientInstance;
+import com.playdate.app.model.chat_models.ChatList;
+import com.playdate.app.model.chat_models.ChatResponse;
+import com.playdate.app.ui.chat.ChatMainActivity;
 import com.playdate.app.ui.chat.ChattingAdapter;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.ui.notification_screen.FragNotification;
+import com.playdate.app.util.common.TransparentProgressDialog;
+import com.playdate.app.util.session.SessionPref;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
-public class RequestChatFragment extends Fragment implements View.OnClickListener {
-    ChattingAdapter chattingAdapter;
-    FragInbox inboxFrag;
-    //    FragRequest requestFrag;
-    TextView txt_count;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
+public class RequestChatFragment extends Fragment implements View.OnClickListener, onClickEventListener {
+
+    private ArrayList<ChatList> lst_chat_users;
+    private ChattingAdapter adapter;
+    private RecyclerView recyclerView;
+    private Onclick itemClick;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     public RequestChatFragment() {
     }
@@ -39,42 +56,9 @@ public class RequestChatFragment extends Fragment implements View.OnClickListene
         ImageView back_anonymous = view.findViewById(R.id.back_anonymous);
         ImageView iv_chat_notification = view.findViewById(R.id.iv_chat_notification);
         EditText edt_search_chat = view.findViewById(R.id.edt_search_chat);
+        recyclerView = view.findViewById(R.id.friend_list);
+        mSwipeRefreshLayout = view.findViewById(R.id.swiperefresh);
 
-        TabLayout tabLayout = view.findViewById(R.id.tab);
-        txt_count = view.findViewById(R.id.txt_count);
-        ViewPager viewPager = view.findViewById(R.id.viewpager);
-
-        tabLayout.addTab(tabLayout.newTab().setText("Inbox"));
-
-        ArrayList<Fragment> lstPages = new ArrayList<>();
-        inboxFrag = new FragInbox();
-
-        lstPages.add(inboxFrag);
-
-        RequestChatAdapter pagerAdapter = new RequestChatAdapter(getChildFragmentManager(), 1, lstPages);
-        viewPager.setAdapter(pagerAdapter);
-        viewPager.setCurrentItem(0);
-        tabLayout.setTabIndicatorFullWidth(false);
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-
-        back_anonymous.setOnClickListener(this);
-        iv_chat_notification.setOnClickListener(this);
 
         edt_search_chat.addTextChangedListener(new TextWatcher() {
             @Override
@@ -85,9 +69,7 @@ public class RequestChatFragment extends Fragment implements View.OnClickListene
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                if (null != inboxFrag) {
-                    inboxFrag.filter(s.toString(), edt_search_chat);
-                }
+                filter(s.toString());
 
             }
 
@@ -97,6 +79,13 @@ public class RequestChatFragment extends Fragment implements View.OnClickListene
         });
 
 
+        mSwipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.color_pink));
+
+        mSwipeRefreshLayout.setOnRefreshListener(RequestChatFragment.this::callApiForChats);
+
+        back_anonymous.setOnClickListener(this);
+        iv_chat_notification.setOnClickListener(this);
+
         return view;
     }
 
@@ -105,13 +94,110 @@ public class RequestChatFragment extends Fragment implements View.OnClickListene
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.back_anonymous) {
-            getActivity().finish();
+            requireActivity().finish();
         } else if (id == R.id.iv_chat_notification) {
             OnInnerFragmentClicks ref = (OnInnerFragmentClicks) getActivity();
-            ref.ReplaceFrag(new FragNotification("chat"));
+            Objects.requireNonNull(ref).ReplaceFrag(new FragNotification("chat"));
         }
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        callApiForChats();
+    }
 
+    private void callApiForChats() {
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        SessionPref pref = SessionPref.getInstance(getActivity());
+        hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
+        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
+        pd.show();
+        Call<ChatResponse> callChats = service.getChatUsers("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+
+        callChats.enqueue(new Callback<ChatResponse>() {
+            @Override
+            public void onResponse(Call<ChatResponse> call, Response<ChatResponse> response) {
+                try {
+                    assert response.body() != null;
+                    if (response.body().getStatus() == 1) {
+                        lst_chat_users = response.body().getLst();
+
+                        adapter = new ChattingAdapter(lst_chat_users, itemClick, RequestChatFragment.this);
+                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+                        recyclerView.setLayoutManager(mLayoutManager);
+                        recyclerView.setItemAnimator(new DefaultItemAnimator());
+                        recyclerView.setAdapter(adapter);
+                    }
+                    pd.cancel();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onFailure(Call<ChatResponse> call, Throwable t) {
+                pd.cancel();
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
+    }
+
+
+    @Override
+    public void onClickEvent(ChatList item) {
+
+
+        try {
+            if (null != lst_chat_users) {
+                Intent mIntent = new Intent(getActivity(), ChatMainActivity.class);
+                mIntent.putExtra("Name", item.getLstFrom().get(0).getUsername());
+                mIntent.putExtra("Image", item.getLstFrom().get(0).getProfilePicPath());
+                mIntent.putExtra("UserID", item.getLstFrom().get(0).getUserId());
+                mIntent.putExtra("chatId", item.getChatId());
+
+                startActivity(mIntent);
+
+
+                if (null != edt_search_chat) {
+                    edt_search_chat.setText("");
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void setFilters(CharSequence s) {
+        adapter.notifyDataSetChanged();
+
+    }
+
+    EditText edt_search_chat;
+
+    public void filter(String str) {
+        try {
+            ArrayList<ChatList> filteredList = new ArrayList<>();
+
+            for (ChatList item : lst_chat_users) {
+                if (item.getLstFrom().get(0).getUsername().toLowerCase().contains(str.toLowerCase())) {
+                    filteredList.add(item);
+                }
+            }
+
+            adapter.filterList(filteredList);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+}
+
+interface onClickEventListener {
+    void onClickEvent(ChatList item);
 }

@@ -40,9 +40,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -57,6 +55,7 @@ import retrofit2.Response;
 import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 
 public class PostMediaActivity extends AppCompatActivity implements View.OnClickListener {
+
     private TextView txt_myname;
     private EditText edt_location;
     private EditText edt_desc;
@@ -75,13 +74,10 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
         ImageView iv_add = findViewById(R.id.iv_add);
         pvMain = findViewById(R.id.ep_video_view);
         recycler_tag_friend = findViewById(R.id.recycler_tag_friend);
-
         ImageView iv_back = findViewById(R.id.iv_back);
-//        LottieAnimationView animationView = findViewById(R.id.animationView);
-//        ImageView iv_location = findViewById(R.id.iv_location);
         ImageView iv_done = findViewById(R.id.iv_done);
         txt_myname = findViewById(R.id.txt_myname);
-
+        picasso = Picasso.get();
         ImageView img_upload = findViewById(R.id.img_upload);
 
         edt_location = findViewById(R.id.edt_location);
@@ -102,7 +98,7 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
             absPlayerInternal.prepare(mediaSource);
             absPlayerInternal.setPlayWhenReady(true); // start loading video and play it at the moment a chunk of it is available offline
 
-            pvMain.setPlayer(absPlayerInternal); //
+            pvMain.setPlayer(absPlayerInternal);
             pvMain.hideController();
             pvMain.setControllerAutoShow(false);
             pvMain.setControllerHideOnTouch(true);
@@ -189,17 +185,19 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
+    Picasso picasso;
+
     private void setData() {
         SessionPref pref = SessionPref.getInstance(this);
         Toast.makeText(this, "CITY location" + pref.getStringVal("LastCity"), Toast.LENGTH_SHORT).show();
         edt_location.setText(pref.getStringVal("LastCity"));
         String img = pref.getStringVal(SessionPref.LoginUserprofilePic);
         if (img.contains("http")) {
-            Picasso.get().load(img)
+            picasso.load(img)
                     .placeholder(R.drawable.cupertino_activity_indicator)
                     .into(iv_profile);
         } else {
-            Picasso.get().load(BASE_URL_IMAGE + img)
+            picasso.load(BASE_URL_IMAGE + img)
                     .placeholder(R.drawable.cupertino_activity_indicator)
                     .into(iv_profile);
         }
@@ -219,62 +217,41 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
-    private static final String VIDEO_DIRECTORY = "/playdate";
+//    private static final String VIDEO_DIRECTORY = "/playdate";
 
     private void uploadImage() {
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
         pd.show();
 
         //create a file to write bitmap data
-        File currentFile = null;
+        File currentFile;
         if (isVideo) {
 
             currentFile = new File(getIntent().getStringExtra("videoPath"));
-//            long length = currentFile.length();
-//            length = length / 1024;
-//            Toast.makeText(this, "Video size:" + length + "KB", Toast.LENGTH_LONG).show();
         } else {
             String filename = "";
             filename = "profile.png";
             currentFile = new File(getCacheDir(), filename);
             try {
                 currentFile.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            FileOutputStream fos = null;
-            try {
-                fos = new FileOutputStream(currentFile);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-
-            try {
+                FileOutputStream fos = new FileOutputStream(currentFile);
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 DashboardActivity.bitmap.compress(Bitmap.CompressFormat.JPEG, 40, stream);
                 byte[] byteArray = stream.toByteArray();
                 fos.write(byteArray);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
 
-            try {
                 fos.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
+
                 fos.close();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
 
         SessionPref pref = SessionPref.getInstance(this);
-        MultipartBody.Part filePart = null;
-        GetDataService service = null;
+        MultipartBody.Part filePart;
+        GetDataService service;
         Call<LoginResponse> call;
         if (isVideo) {
             filePart = MultipartBody.Part.createFormData("mediaFeed", currentFile.getName(), RequestBody.create(MediaType.parse("video/mp4"), currentFile));

@@ -17,8 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
 import com.playdate.app.model.chat_models.ChatList;
-import com.playdate.app.ui.chat.request.FragInbox;
 import com.playdate.app.ui.chat.request.Onclick;
+import com.playdate.app.ui.chat.request.RequestChatFragment;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
 
@@ -35,7 +35,7 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
     private ArrayList<ChatList> lst_msgs;
     private Context mContext;
     private Onclick itemClick;
-    private final FragInbox frag;
+    private final RequestChatFragment frag;
     private int selectedToDelete = -1;
 
 
@@ -50,7 +50,7 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
     private final SimpleDateFormat df;
     private final SimpleDateFormat sdf;
 
-    public ChattingAdapter(ArrayList<ChatList> inboxList, Onclick itemClick, FragInbox frag) {
+    public ChattingAdapter(ArrayList<ChatList> inboxList, Onclick itemClick, RequestChatFragment frag) {
         this.lst_msgs = inboxList;
         this.itemClick = itemClick;
         this.frag = frag;

@@ -544,7 +544,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         apd = AudioRecordProgressDialog.getInstance(this);
 
 
-
+        
         apd.show();
 
         mRecorder = new MediaRecorder();
@@ -1297,3 +1297,5 @@ interface onImageSelectListener {
 
     void onGallerySelect();
 }
+
+

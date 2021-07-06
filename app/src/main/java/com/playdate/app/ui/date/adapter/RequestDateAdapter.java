@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.playdate.app.R;
 import com.playdate.app.model.CreateDateGetMyPartnerReqData;
 
-import com.playdate.app.ui.chat.request.FragInbox;
 import com.playdate.app.ui.chat.request.Onclick;
 
 import com.squareup.picasso.Picasso;
@@ -24,7 +23,7 @@ import java.util.ArrayList;
 public class RequestDateAdapter extends RecyclerView.Adapter<RequestDateAdapter.MyViewHolder> {
     ArrayList<CreateDateGetMyPartnerReqData> lst_getReqPartnerDetail;
     Onclick itemClick;
-    FragInbox ref;
+//    FragInbox ref;
     String requestId;
 
     public RequestDateAdapter(ArrayList<CreateDateGetMyPartnerReqData> lst_getReqPartnerDetail, Onclick itemClick) {

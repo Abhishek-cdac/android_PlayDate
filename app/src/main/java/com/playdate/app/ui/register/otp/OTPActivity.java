@@ -3,7 +3,7 @@ package com.playdate.app.ui.register.otp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
+import android.os.Looper;
 import android.view.View;
 import android.widget.Toast;
 
@@ -34,11 +34,13 @@ import static com.playdate.app.util.session.SessionPref.LoginVerified;
 
 public class OTPActivity extends AppCompatActivity {
 
-    String phone;
-    CommonClass clsCommon;
+    private String phone;
+    private CommonClass clsCommon;
     private OTPViewModel otpViewModel;
     private ActivityOtpBinding binding;
-    Intent mIntent;
+    private Intent mIntent;
+    private Handler mHandler;
+    private static int TIMER = 3000;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,6 +51,7 @@ public class OTPActivity extends AppCompatActivity {
         binding.setLifecycleOwner(this);
         binding.setOTPViewModel(otpViewModel);
         mIntent = getIntent();
+        mHandler = new Handler(Looper.getMainLooper());
         phone = mIntent.getStringExtra("Phone");
         otpViewModel.setMobile(phone);
         otpViewModel.startTimer();
@@ -79,7 +82,6 @@ public class OTPActivity extends AppCompatActivity {
 
         });
         otpViewModel.resendClick.observe(this, loginUser -> {
-//            Toast.makeText(OTPActivity.this, "Resent", Toast.LENGTH_SHORT).show();
             binding.txtResend.setVisibility(View.INVISIBLE);
             binding.txtTimer.setVisibility(View.VISIBLE);
             otpViewModel.startTimer();
@@ -107,20 +109,24 @@ public class OTPActivity extends AppCompatActivity {
 
     }
 
+
     private void stopAnimAfter3Sec() {
         binding.spinKit.setVisibility(View.VISIBLE);
         binding.ivDone.setVisibility(View.GONE);
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
+        mHandler.postDelayed(() -> {
+            binding.spinKit.setVisibility(View.INVISIBLE);
+            binding.ivDone.setVisibility(View.VISIBLE);
+        }, TIMER);
+    }
 
-                binding.spinKit.setVisibility(View.INVISIBLE);
-                binding.ivDone.setVisibility(View.VISIBLE);
-            }
-        }, 3000);
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (null != mHandler)
+            mHandler.removeCallbacksAndMessages(null);
     }
 
     private void callAPI() {
-        /*Create handle for the RetrofitInstance interface*/
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("phoneNo", phone);
@@ -134,9 +140,8 @@ public class OTPActivity extends AppCompatActivity {
                 pd.cancel();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
-                        Log.d("OTP..", response.body().toString());
                         nextPage();
-                        SessionPref pref=SessionPref.getInstance(OTPActivity.this);
+                        SessionPref pref = SessionPref.getInstance(OTPActivity.this);
                         pref.saveBoolKeyVal(LoginVerified, true);
                         finish();
                     } else {
@@ -165,29 +170,20 @@ public class OTPActivity extends AppCompatActivity {
     }
 
     private void callAPIResentOTP() {
-        /*Create handle for the RetrofitInstance interface*/
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("phoneNo", phone);
-//        hashMap.put("otp", otpViewModel.txtOTP.getValue());
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
         pd.show();
 
         SessionPref pref = SessionPref.getInstance(this);
         Call<LoginResponse> call;
-//        if (mIntent.getBooleanExtra("resetPassword", false)) {
-//            call = service.forgotPasswordSentOtp(hashMap);
-//        } else {
         call = service.resendVerifyOtp("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
-//        }
-
 
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 pd.cancel();
-
-
             }
 
             @Override
@@ -200,11 +196,7 @@ public class OTPActivity extends AppCompatActivity {
     }
 
     private void nextPage() {
-//        if (mIntent.getBooleanExtra("resetPassword", false)) {
-//
-//        } else {
         OTPActivity.this.startActivity(new Intent(OTPActivity.this, AgeVerifiationActivity.class));
-//        }
 
     }
 }

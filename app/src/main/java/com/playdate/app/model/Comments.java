@@ -12,7 +12,7 @@ public class Comments {
     private String commentId;
     @Expose
     private String postId;
- @Expose
+    @Expose
     private String entryDate;
 
     public String getEntryDate() {

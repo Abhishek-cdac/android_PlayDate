@@ -27,12 +27,7 @@ public class FullScreenDialog extends Dialog {
                 R.layout.dialog_get_premium, null);
         getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         setContentView(view);
-        ImageView iv_close=view.findViewById(R.id.iv_close);
-        iv_close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dismiss();
-            }
-        });
+        ImageView iv_close = view.findViewById(R.id.iv_close);
+        iv_close.setOnClickListener(view1 -> dismiss());
     }
 }

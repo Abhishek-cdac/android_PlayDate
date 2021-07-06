@@ -318,7 +318,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                                 Uri gmmIntentUri = Uri.parse("geo:" + lattitude + "," + longitude + "?z=17");
                                 Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                                 mapIntent.setPackage("com.google.android.apps.maps");
-
+                                
                                 if (mapIntent.resolveActivity(mContext.getPackageManager()) != null) {
                                     mContext.startActivity(mapIntent);
                                 } else {
@@ -674,5 +674,6 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 }
+
 
 

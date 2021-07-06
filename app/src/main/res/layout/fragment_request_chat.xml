@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_chat_landing"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/ll_chat_landing"
     android:background="@color/backgroundColour"
+    android:orientation="vertical"
     tools:context=".ui.chat.request.RequestChatFragment">
 
     <RelativeLayout
@@ -21,8 +21,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="@dimen/_10sdp"
             android:layout_centerInParent="true"
+            android:layout_marginStart="@dimen/_10sdp"
             android:src="@drawable/ic_arrow_back_black" />
 
         <LinearLayout
@@ -50,13 +50,14 @@
 
 
         </LinearLayout>
+
         <RelativeLayout
             android:layout_width="@dimen/_40sdp"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/_10sdp"
-
             android:layout_alignParentEnd="true"
+
             android:layout_centerInParent="true"
+            android:paddingLeft="@dimen/_10sdp"
             android:paddingRight="@dimen/_10sdp">
 
 
@@ -91,42 +92,38 @@
 
 
     <EditText
+        android:id="@+id/edt_search_chat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/_20sdp"
         android:layout_marginRight="@dimen/_20sdp"
+        android:background="@drawable/bg_dull_pink"
         android:drawableLeft="@drawable/ic_search"
         android:drawablePadding="@dimen/_5sdp"
-        android:layout_width="match_parent"
-        android:padding="@dimen/_10sdp"
-        android:id="@+id/edt_search_chat"
         android:hint="  Search"
+        android:padding="@dimen/_10sdp"
         android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:background="@drawable/bg_dull_pink"
-        android:layout_height="wrap_content"/>
-
+        android:textColorHint="@color/white" />
 
     <RelativeLayout
+        android:id="@+id/rl_c"
         android:layout_width="match_parent"
-        android:id="@+id/rl_page"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/backgroundColour"
+        android:paddingHorizontal="@dimen/_10sdp"
+        android:paddingTop="@dimen/_10sdp">
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swiperefresh"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:tabGravity="fill"
-            app:tabTextAppearance="@style/CustomTabs"
-            android:textAlignment="center"
-            app:tabIndicatorColor="@color/color_pink"
-            app:tabIndicatorGravity="bottom"
-            app:tabSelectedTextColor="@color/textColour"
-            app:tabTextColor="@color/blue_grey" />
+            android:layout_height="wrap_content">
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/viewpager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/tab" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/friend_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </RelativeLayout>
 

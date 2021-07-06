@@ -40,7 +40,6 @@ public class BioActivity extends AppCompatActivity {
     private BioViewModel viewModel;
     private CommonClass clsCommon;
     private Intent mIntent;
-    private LinearLayout ll_bio_bg;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,14 +50,11 @@ public class BioActivity extends AppCompatActivity {
         bioBinding.setLifecycleOwner(this);
         mIntent = getIntent();
         bioBinding.setBioViewModel(viewModel);
-        ll_bio_bg = findViewById(R.id.ll_bio_bg);
+        LinearLayout ll_bio_bg = findViewById(R.id.ll_bio_bg);
 
         if (mIntent.getBooleanExtra("fromProfile", false)) {
             SessionPref pref = SessionPref.getInstance(this);
             viewModel.BioText.setValue(pref.getStringVal(LoginUserpersonalBio));
-        } else {
-
-
         }
         viewModel.OnNextClick().observe(this, new Observer<Boolean>() {
             @Override

@@ -1,6 +1,7 @@
 package com.playdate.app.ui.date.fragments;
 
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +16,19 @@ import androidx.fragment.app.Fragment;
 import com.playdate.app.R;
 import com.playdate.app.ui.date.games.FragGameMenu;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
+import com.squareup.picasso.Picasso;
 
 public class FragLocationConfirmation extends Fragment {
+
+    private String name;
+    private String image;
+    private String address;
+
+    public FragLocationConfirmation(String name, String image, String address) {
+        this.name = name;
+        this.image = image;
+        this.address = address;
+    }
 
     public FragLocationConfirmation() {
     }
@@ -34,6 +46,9 @@ public class FragLocationConfirmation extends Fragment {
         tv_details = view.findViewById(R.id.tv_details);
         btn_proceed = view.findViewById(R.id.btn_proceed);
 
+        String nameAdd = "<b>" + name + "</b>" + " , " + address;
+        Picasso.get().load(image).placeholder(R.drawable.cupertino_activity_indicator).into(image_restaurant);
+        tv_details.setText(Html.fromHtml(nameAdd));
         btn_proceed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
