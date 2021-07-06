@@ -3,6 +3,7 @@ package com.playdate.app.model.chat_models;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ChatMsgResp {
 
@@ -11,6 +12,26 @@ public class ChatMsgResp {
 
     @SerializedName("data")
     private ArrayList<ChatMessage> lstChatMsg;
+
+    public List<String> getPromotions() {
+        return promotions;
+    }
+
+    public void setPromotions(List<String> promotions) {
+        this.promotions = promotions;
+    }
+
+    private List<String> promotions ;
+
+    public ArrayList<Questions> getLstQuestions() {
+        return lstQuestions;
+    }
+
+    public void setLstQuestions(ArrayList<Questions> lstQuestions) {
+        this.lstQuestions = lstQuestions;
+    }
+
+    private ArrayList<Questions> lstQuestions;
 
     public int getStatus() {
         return status;
