@@ -32,10 +32,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FragMyCoupons extends Fragment {
+
     private RecyclerView rv_coupons_list;
     private Onclick itemClick;
     private TextView txt_points;
-
     public FragMyCoupons() {
     }
 

@@ -40,16 +40,16 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FragCouponStore extends Fragment implements OnCouponSelected {
+
     private RecyclerView rv_coupons_list;
     private ArrayList<GetCouponsData> lst_getCoupons;
     private CommonClass clsCommon;
     private Onclick itemClick;
     private Account account;
+    private TextView txt_points;
+
     public FragCouponStore() {
     }
-
-
-    private TextView txt_points;
 
     @Nullable
     @Override
@@ -122,7 +122,6 @@ public class FragCouponStore extends Fragment implements OnCouponSelected {
         callGetCouponsApi();
         super.onResume();
     }
-
 
 
     private void callGetCouponsApi() {

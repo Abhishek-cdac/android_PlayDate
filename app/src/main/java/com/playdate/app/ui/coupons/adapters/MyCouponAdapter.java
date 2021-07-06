@@ -23,10 +23,10 @@ import java.util.List;
 import static android.content.Context.CLIPBOARD_SERVICE;
 
 public class MyCouponAdapter extends RecyclerView.Adapter<MyCouponAdapter.ViewHolder> {
-    //    ArrayList<MyCoupons> list = new ArrayList<>();
-    List<MyCoupons> list;
-    Picasso picasso;
-    Context mContext;
+
+    private final List<MyCoupons> list;
+    private final Picasso picasso;
+    private Context mContext;
 
     public MyCouponAdapter(List<MyCoupons> lst) {
         this.list = lst;

@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -43,8 +42,6 @@ import com.playdate.app.ui.dashboard.data.CallAPI;
 import com.playdate.app.ui.dashboard.fragments.FragLanding;
 import com.playdate.app.ui.dashboard.fragments.FragSearchUser;
 import com.playdate.app.ui.date.DateBaseActivity;
-import com.playdate.app.ui.date.fragments.FragLocationTracing;
-import com.playdate.app.ui.date.fragments.FragSelectDate;
 import com.playdate.app.ui.date.games.FragGameLeaderBoard;
 import com.playdate.app.ui.date.games.FragStore;
 import com.playdate.app.ui.dialogs.FullScreenDialog;
@@ -296,7 +293,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
 
     }
 
-    Handler mHandler;
+    private Handler mHandler;
 
     private void showPremium() {
         mHandler = new Handler(Looper.getMainLooper());

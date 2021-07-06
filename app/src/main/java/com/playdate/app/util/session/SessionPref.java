@@ -3,8 +3,13 @@ package com.playdate.app.util.session;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+
 public class SessionPref {
     static SessionPref ref;
+
+    //app
+    public static final String SHARED_PREF_KEY = "playdate_shared_pref";
+    public static final int SHARED_PREF_MODE = 0;// 0 - for private mode
 
     public static SessionPref getInstance(Context mContext) {
         if (ref == null) {
@@ -18,12 +23,12 @@ public class SessionPref {
     static SharedPreferences.Editor editor;
 
     private static void init(Context mContext) {
-        pref = mContext.getSharedPreferences("playdate_shared_pref", 0); // 0 - for private mode
+        pref = mContext.getSharedPreferences(SHARED_PREF_KEY, SHARED_PREF_MODE); // 0 - for private mode
         editor = pref.edit();
     }
 
     public static void logout(Context mContext) {
-        pref = mContext.getSharedPreferences("playdate_shared_pref", 0); // 0 - for private mode
+        pref = mContext.getSharedPreferences(SHARED_PREF_KEY, SHARED_PREF_MODE); // 0 - for private mode
         editor = pref.edit();
         editor.clear();
         editor.commit();

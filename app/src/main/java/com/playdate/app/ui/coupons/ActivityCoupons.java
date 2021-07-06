@@ -16,14 +16,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
-import com.playdate.app.couple.ui.register.coupleprofile.CoupleUploadProfileActivity;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.FaqData;
 import com.playdate.app.model.FaqModel;
 import com.playdate.app.model.GetCouponsModel;
 import com.playdate.app.ui.coupons.adapters.FrequentlyQuestionAdapter;
-import com.playdate.app.ui.restaurant.adapter.Restaurant;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
@@ -42,17 +40,15 @@ import retrofit2.Response;
 
 public class ActivityCoupons extends AppCompatActivity implements View.OnClickListener {
     private String CouponCode;
-    private int CurrentPoints;
+//    private int CurrentPoints;
     private RelativeLayout rl_getcode;
-    private RelativeLayout rl_earn_point;
     private RelativeLayout rl_code;
     private String inviteLink;
     private TextView share_coupans;
     private TextView share_coupans1;
-    ArrayList<FaqData> faq_list;
-    ImageView surprise;
-    TextView tv_Get_code;
-    RecyclerView rv_frequently;
+    private ArrayList<FaqData> faq_list;
+//    private TextView tv_Get_code;
+    private RecyclerView rv_frequently;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,18 +61,18 @@ public class ActivityCoupons extends AppCompatActivity implements View.OnClickLi
 
         RelativeLayout copy_code = findViewById(R.id.copy_code);
 
-        ImageView whatsup_coupan = findViewById(R.id.whatsup_coupan);
+//        ImageView whatsup_coupan = findViewById(R.id.whatsup_coupan);
         ImageView iv_back = findViewById(R.id.iv_back);
-        ImageView message_coupan = findViewById(R.id.message_coupan);
-        ImageView instagram_coupan = findViewById(R.id.instagram_coupan);
-        ImageView facebook_coupan = findViewById(R.id.facebook_coupan);
+//        ImageView message_coupan = findViewById(R.id.message_coupan);
+//        ImageView instagram_coupan = findViewById(R.id.instagram_coupan);
+//        ImageView facebook_coupan = findViewById(R.id.facebook_coupan);
 
         TextView tv_code = findViewById(R.id.tv_code);
         share_coupans = findViewById(R.id.share_coupans);
         share_coupans1 = findViewById(R.id.share_coupans1);
-        surprise = findViewById(R.id.surprise);
-        tv_Get_code = findViewById(R.id.tv_Get_code);
-        rl_earn_point = findViewById(R.id.rl_earn_point);
+        ImageView surprise = findViewById(R.id.surprise);
+//        tv_Get_code = findViewById(R.id.tv_Get_code);
+        RelativeLayout rl_earn_point = findViewById(R.id.rl_earn_point);
 
         TextView txt_points = findViewById(R.id.txt_points);
         TextView txt_refer = findViewById(R.id.txt_refer);
