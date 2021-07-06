@@ -1,33 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?><!--<fragment xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:map="http://schemas.android.com/apk/res-auto"-->
-<!--    xmlns:tools="http://schemas.android.com/tools"-->
-<!--    android:id="@+id/map"-->
-<!--    android:name="com.google.android.gms.maps.SupportMapFragment"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent"-->
-<!--    android:layout_above="@+id/btn_send"-->
-<!--    android:layout_alignParentTop="true"-->
-<!--    map:cameraZoom="15"-->
-<!--    map:mapType="normal"-->
-<!--    map:uiCompass="true"-->
-<!--    tools:context=".ui.chat.MapActivity" />-->
-
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rl_chat"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <!--    <com.google.android.gms.maps.MapView xmlns:map="http://schemas.android.com/apk/res-auto"-->
-    <!--        xmlns:tools="http://schemas.android.com/tools"-->
-    <!--        android:id="@+id/mapView"-->
-    <!--        android:name="com.google.android.gms.maps.SupportMapFragment"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="0dp"-->
-    <!--        android:layout_above="@+id/btn_send"-->
-    <!--        android:layout_alignParentTop="true"-->
-    <!--        tools:context=".ui.chat.MapActivity" />-->
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/map_view"
@@ -43,7 +18,6 @@
         android:layout_alignParentBottom="true"
         android:drawableStart="@drawable/ic_pin_pink"
         android:drawablePadding="@dimen/_10sdp"
-        android:gravity=""
         android:paddingVertical="@dimen/_12sdp"
         android:paddingLeft="@dimen/_15sdp"
         android:text="Share Location"

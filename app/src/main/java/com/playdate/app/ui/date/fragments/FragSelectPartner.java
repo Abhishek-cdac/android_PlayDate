@@ -22,7 +22,7 @@ import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.CreateDateGetPartnerData;
 import com.playdate.app.model.CreateDateGetPartnerModel;
 import com.playdate.app.ui.chat.request.Onclick;
-import com.playdate.app.ui.date.OnBackPressed;
+import com.playdate.app.ui.interfaces.OnBackPressed;
 import com.playdate.app.ui.date.adapter.SuggestedDateAdapter;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.util.common.CommonClass;

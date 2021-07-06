@@ -152,7 +152,7 @@ public class UserNameActivity extends AppCompatActivity {
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        clsCommon.showDialogMsg(UserNameActivity.this, "PlayDate", jObjError.getJSONArray("data").getJSONObject(0).getString("msg"), "Ok");
+                        clsCommon.showDialogMsg(UserNameActivity.this, "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(UserNameActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                     }

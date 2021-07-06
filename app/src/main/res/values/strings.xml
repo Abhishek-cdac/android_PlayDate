@@ -518,6 +518,8 @@ Build version 4.0.3-java</string>
     <string name="opponents">and %s other</string>
     <string name="opponent">and %s </string>
     <string name="ringing">Ringing</string>
+    <string name="current_points">CURRENT POINTS</string>
+    <string name="about_me">About Me</string>
 
     <string name="chat">Chat</string>
     <string name="match">Match</string>

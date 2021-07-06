@@ -169,47 +169,48 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
 
     private void callAPIFeedPost() {
         SessionPref pref = SessionPref.getInstance(this);
-     /*   String Location = pref.getStringVal("LastCity");
-        if (Location.isEmpty()) {
-            Location = "India";
-        }*/
-        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-        Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("location", "India");
-        hashMap.put("postType", "Question");
-        hashMap.put("tag", ques);
-        hashMap.put("colorCode", HexColor);
-        hashMap.put("emojiCode", "" + lstSmiley.get(selectedSmileyIndex));
 
-        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
-        pd.show();
+        try {
+            GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+            Map<String, String> hashMap = new HashMap<>();
+            hashMap.put("location", "India");
+            hashMap.put("postType", "Question");
+            hashMap.put("tag", ques);
+            hashMap.put("colorCode", HexColor);
+            hashMap.put("emojiCode", "" + lstSmiley.get(selectedSmileyIndex));
 
-        Call<LoginResponse> call = service.addPostFeed("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
-        call.enqueue(new Callback<LoginResponse>() {
-            @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                pd.cancel();
-                if (response.code() == 200) {
-                    assert response.body() != null;
-                    if (response.body().getStatus() == 1) {
-                        try {
-                            Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(intent);
+            TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
+            pd.show();
 
-                        } catch (Exception e) {
-                            e.printStackTrace();
+            Call<LoginResponse> call = service.addPostFeed("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+            call.enqueue(new Callback<LoginResponse>() {
+                @Override
+                public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                    pd.cancel();
+                    if (response.code() == 200) {
+                        assert response.body() != null;
+                        if (response.body().getStatus() == 1) {
+                            try {
+                                Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
-                t.printStackTrace();
-                pd.cancel();
-            }
-        });
+                @Override
+                public void onFailure(Call<LoginResponse> call, Throwable t) {
+                    t.printStackTrace();
+                    pd.cancel();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

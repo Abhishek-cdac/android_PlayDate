@@ -66,7 +66,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
 
     }
 
-    public void animateHeart(final ImageView view, View iv) {
+    public void animateHeart(final ImageView view, View iv, int position) {
 
         ScaleAnimation scaleAnimation = new ScaleAnimation(0.0f, 1.5f, 0.0f, 1.5f,
                 Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
@@ -87,7 +87,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
             view.clearAnimation();
 
             iv.setVisibility(View.GONE);
-            notifyDataSetChanged();
+            notifyItemChanged(position);
         }, 900);
 
 
@@ -209,31 +209,30 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
 
 
             picasso.load(lst.get(position).getLstpostby().get(0).getProfilePicPath())
-                    .placeholder(R.drawable.cupertino_activity_indicator)
                     .into(userViewHolder.iv_profile);
 
             if (lst.get(position).getIsLike() == 1) {
-                userViewHolder.iv_heart.setImageResource(R.drawable.red_heart);
-            } else {
                 userViewHolder.iv_heart.setImageResource(R.drawable.ic_heart);
+            } else {
+                userViewHolder.iv_heart.setImageResource(R.drawable.ic_heart_black);
             }
 
             userViewHolder.iv_heart.setOnClickListener(view -> {
                 if (lst.get(position).getIsLike() == 1) {
                     lst.get(position).setIsLike(0);
                     lst.get(position).setLikes(lst.get(position).getLikes() - 1);
-                    userViewHolder.iv_heart.setImageResource(R.drawable.ic_heart);
+                    userViewHolder.iv_heart.setImageResource(R.drawable.ic_heart_black);
                     lst.get(position).setTapCount(0);
-                    notifyDataSetChanged();
                     callAPI(lst.get(position).getPostId(), lst.get(position).getIsLike());
                 } else if (lst.get(position).getIsLike() == 0) {
-                    userViewHolder.iv_heart.setImageResource(R.drawable.red_heart);
+                    userViewHolder.iv_heart.setImageResource(R.drawable.ic_heart);
                     lst.get(position).setIsLike(1);
                     lst.get(position).setLikes(lst.get(position).getLikes() + 1);
                     lst.get(position).setTapCount(0);
-                    notifyDataSetChanged();
+
                     callAPI(lst.get(position).getPostId(), lst.get(position).getIsLike());
                 }
+                notifyItemChanged(position);
             });
             try {
                 userViewHolder.txt_heart_count.setText(lst.get(position).getLikes() + " Loves");
@@ -302,12 +301,12 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                 if (lst.get(position).getIsGallerySave() == 1) {
                     lst.get(position).setIsGallerySave(0);
                     userViewHolder.savePost.setImageResource(R.drawable.icon_bookmark);
-                    notifyDataSetChanged();
+                    notifyItemChanged(position);
                     callSavePostAPI(lst.get(position).getPostId(), lst.get(position).getIsGallerySave());
                 } else if (lst.get(position).getIsGallerySave() == 0) {
                     userViewHolder.savePost.setImageResource(R.drawable.ic_icons8_bookmark);
                     lst.get(position).setIsGallerySave(1);
-                    notifyDataSetChanged();
+                    notifyItemChanged(position);
                     callSavePostAPI(lst.get(position).getPostId(), lst.get(position).getIsGallerySave());
                 }
             });
@@ -325,10 +324,9 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
 
                         lst.get(position).setIsLike(1);
                         lst.get(position).setLikes(lst.get(position).getLikes() + 1);
-
                         userViewHolder.iv_heart_red.setVisibility(View.VISIBLE);
+                        animateHeart(userViewHolder.iv_heart_red, userViewHolder.iv_heart_red, position);
                         callAPI(lst.get(position).getPostId(), lst.get(position).getLikes());
-                        animateHeart(userViewHolder.iv_heart_red, userViewHolder.iv_heart_red);
 
                     } else {
                         lst.get(position).setTapCount(lst.get(position).getTapCount() + 1);
@@ -366,31 +364,30 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                     .into(videoHolder.videoImg.getImageView());
 
             picasso.load(lst.get(position).getLstpostby().get(0).getProfilePicPath())
-                    .placeholder(R.drawable.cupertino_activity_indicator)
                     .into(videoHolder.iv_profile);
 
             if (lst.get(position).getIsLike() == 1) {
-                videoHolder.iv_heart.setImageResource(R.drawable.red_heart);
-            } else {
                 videoHolder.iv_heart.setImageResource(R.drawable.ic_heart);
+            } else {
+                videoHolder.iv_heart.setImageResource(R.drawable.ic_heart_black);
             }
 
             videoHolder.iv_heart.setOnClickListener(view -> {
                 if (lst.get(position).getIsLike() == 1) {
                     lst.get(position).setIsLike(0);
                     lst.get(position).setLikes(lst.get(position).getLikes() - 1);
-                    videoHolder.iv_heart.setImageResource(R.drawable.ic_heart);
+                    videoHolder.iv_heart.setImageResource(R.drawable.ic_heart_black);
                     lst.get(position).setTapCount(0);
 //                    lst.get(position).setHeartSelected(false);
-                    notifyDataSetChanged();
+                    notifyItemChanged(position);
                     callAPI(lst.get(position).getPostId(), lst.get(position).getIsLike());
                 } else if (lst.get(position).getIsLike() == 0) {
-                    videoHolder.iv_heart.setImageResource(R.drawable.red_heart);
+                    videoHolder.iv_heart.setImageResource(R.drawable.ic_heart);
                     lst.get(position).setIsLike(1);
                     lst.get(position).setTapCount(0);
                     lst.get(position).setLikes(lst.get(position).getLikes() + 1);
 //                    lst.get(position).setHeartSelected(true);
-                    notifyDataSetChanged();
+                    notifyItemChanged(position);
                     callAPI(lst.get(position).getPostId(), lst.get(position).getIsLike());
                 } else {
 //                    callAPI(lst.get(position).getPostId(), lst.get(position).getLikes());
@@ -485,7 +482,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                         lst.get(position).setLikes(lst.get(position).getLikes() + 1);
                         videoHolder.iv_heart_red.setVisibility(View.VISIBLE);
                         callAPI(lst.get(position).getPostId(), lst.get(position).getLikes());
-                        animateHeart(videoHolder.iv_heart_red, videoHolder.iv_heart_red);
+                        animateHeart(videoHolder.iv_heart_red, videoHolder.iv_heart_red, position);
 
                     } else {
                         lst.get(position).setTapCount(lst.get(position).getTapCount() + 1);
@@ -811,9 +808,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
         sheet.show(fragmentManager, "comment bootom sheet");
     }
 
-    void notifyAdapter() {
-        notifyDataSetChanged();
-    }
+
 
 //    public class ViewHolderAdds extends RecyclerView.ViewHolder {
 //        ImageView iv_heart_red;
@@ -888,7 +883,6 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                 activity.startActivityForResult(mIntent, 410);
             });
             edt_comment.setOnClickListener(v -> {
-//                    Activity origin = (Activity) mContext;
                 Intent mIntent = new Intent(activity, AnonymousQuestionActivity.class);
                 mIntent.putExtra("Anonymous", true);
                 mIntent.putExtra("post_id", lst.get(getAdapterPosition()).getPostId());

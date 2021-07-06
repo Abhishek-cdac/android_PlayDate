@@ -253,7 +253,7 @@
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:background="@drawable/blue_rectangle"
             android:padding="@dimen/_8sdp"
-            android:src="@drawable/facebook_logo" />
+            android:src="@drawable/fb" />
 
         <ImageView
             android:id="@+id/instagram_coupan"
@@ -261,7 +261,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginHorizontal="@dimen/_15sdp"
-            android:background="@drawable/grey_rectangle"
+            android:background="@drawable/ic_grey_rectangle"
             android:padding="@dimen/_3sdp"
             android:src="@drawable/ic_instagram" />
         <ImageView
@@ -270,7 +270,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginHorizontal="@dimen/_15sdp"
-            android:background="@drawable/grey_rectangle"
+            android:background="@drawable/ic_grey_rectangle"
             android:padding="@dimen/_3sdp"
             android:src="@drawable/icons_whatsapp" />
 

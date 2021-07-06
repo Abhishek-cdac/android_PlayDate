@@ -24,10 +24,10 @@
 
         <com.playdate.app.ui.coupons.WrapContentViewPager
             android:id="@+id/viewpager"
-            android:nestedScrollingEnabled="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tab">
+            android:layout_below="@+id/tab"
+            android:nestedScrollingEnabled="false">
 
 
         </com.playdate.app.ui.coupons.WrapContentViewPager>

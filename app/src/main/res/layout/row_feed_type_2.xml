@@ -30,7 +30,7 @@
                 android:layout_width="@dimen/_18sdp"
                 android:layout_height="@dimen/_18sdp"
                 android:background="@color/white"
-                android:src="@drawable/model2" />
+           />
 
         </androidx.cardview.widget.CardView>
 
@@ -78,9 +78,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/white"
-                android:scaleType="fitXY"
-
-                android:src="@drawable/model1" />
+                android:scaleType="fitXY" />
 
         </androidx.cardview.widget.CardView>
 
@@ -158,7 +156,7 @@
         android:layout_marginLeft="@dimen/_10sdp"
         android:layout_marginRight="@dimen/_10sdp"
         android:fontFamily="@font/lato_bold"
-        android:text="1,829 Hearts"
+        android:text="0 Hearts"
         android:textColor="@color/textColour"
         android:textSize="@dimen/_10sdp"
         android:textStyle="bold" />
@@ -172,7 +170,6 @@
         android:layout_marginLeft="@dimen/_10sdp"
         android:layout_marginRight="@dimen/_10sdp"
         android:fontFamily="@font/helvetica_neue"
-        android:text="@string/str_temp"
         android:textColor="@color/textColour"
         android:textSize="@dimen/_10sdp"
         android:textStyle="bold" />

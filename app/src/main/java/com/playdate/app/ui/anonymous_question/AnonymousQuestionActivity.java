@@ -176,6 +176,7 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
 
     @Override
     public void onBackPressed() {
+
         setResult(104, null);
         super.onBackPressed();
 
@@ -239,13 +240,13 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
     }
 
     public void ChangeCount(int number) {
-        if(anonymous){
+        if (anonymous) {
             if (number == 0) {
                 text_count.setText("No Answer");
             } else {
                 text_count.setText(number + " Answer");
             }
-        }else{
+        } else {
             if (number == 0) {
                 text_count.setText("No Comments");
             } else {
@@ -299,7 +300,7 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
                         try {
                             if (anonymous) {
                                 boolean alreadyPresent = false;
-                                if(null!=lst_getComment){
+                                if (null != lst_getComment) {
                                     for (int i = 0; i < lst_getComment.size(); i++) {
                                         if (lst_getComment.get(i).getUserId().equals(pref.getStringVal(SessionPref.LoginUserID))) {
                                             alreadyPresent = true;
@@ -309,7 +310,7 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
                                     if (!alreadyPresent) {
                                         new AnonymousMedalDialog(AnonymousQuestionActivity.this).show();
                                     }
-                                }else{
+                                } else {
                                     new AnonymousMedalDialog(AnonymousQuestionActivity.this).show();
                                 }
 

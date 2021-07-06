@@ -3,7 +3,6 @@ package com.playdate.app.ui.dialogs;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,15 +15,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
-import com.playdate.app.model.GetUserSuggestionData;
 import com.playdate.app.model.MatchListUser;
+import com.playdate.app.ui.interfaces.OnRelationShipSelected;
 import com.playdate.app.ui.invite.InviteFriendActivity;
 import com.squareup.picasso.Picasso;
 

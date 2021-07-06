@@ -115,23 +115,6 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
         setContentView(R.layout.activity_dashboard);
         mSwipeRefreshLayout = findViewById(R.id.swipeContainer);
         mSwipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.color_pink));
-
-        mSwipeRefreshLayout.setOnRefreshListener(() -> {
-            try {
-                if (null != CurrentFrag) {
-                    if (CurrentFrag.getClass().getSimpleName().equals("FragSocialFeed")) {
-                        FragSocialFeed frag = (FragSocialFeed) CurrentFrag;
-                        frag.LoadPageAgain();
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            callAPIFriends();
-
-            callNotification();
-        });
-
         ll_mainMenu2 = findViewById(R.id.ll_mainMenu2);
         txt_count = findViewById(R.id.txt_count);
         nsv = findViewById(R.id.nsv);
@@ -217,6 +200,21 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
 
         });
 
+        mSwipeRefreshLayout.setOnRefreshListener(() -> {
+            try {
+                if (null != CurrentFrag) {
+                    if (CurrentFrag.getClass().getSimpleName().equals("FragSocialFeed")) {
+                        FragSocialFeed frag = (FragSocialFeed) CurrentFrag;
+                        frag.LoadPageAgain();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            callAPIFriends();
+
+            callNotification();
+        });
 
         iv_cancel.setOnClickListener(this);
         iv_gallery.setOnClickListener(this);
