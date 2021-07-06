@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,8 +67,9 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        if (lst_chat == null)
+        if (lst_chat == null) {
             return 0;
+        }
         return lst_chat.size();
     }
 
@@ -155,7 +157,6 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
 
             } else {
 
@@ -249,7 +250,24 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 Toast.makeText(mContext, lst_chat.get(position).getLattitude() + " , " + lst_chat.get(position).getLongitude(), Toast.LENGTH_SHORT).show();
             });
             viewHolderMe.chat_image.setOnClickListener(v -> {
-                showPhoto(lst_chat.get(position).getMediaInfo().get(0).getMediaFullPath());
+                if (lst_chat.get(position).getType().equals("location")) {
+
+                    double lattitude = Double.parseDouble(lst_chat.get(position).getLattitude());
+                    double longitude = Double.parseDouble(lst_chat.get(position).getLongitude());
+
+                    Uri gmmIntentUri = Uri.parse("geo:" + lattitude + "," + longitude + "?z=17");
+                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                    mapIntent.setPackage("com.google.android.apps.maps");
+                    if (mapIntent.resolveActivity(mContext.getPackageManager()) != null) {
+                        mContext.startActivity(mapIntent);
+                    } else {
+                        Toast.makeText(mContext, "Can't load Maps", Toast.LENGTH_SHORT).show();
+                    }
+
+
+                } else {
+                    showPhoto(lst_chat.get(position).getMediaInfo().get(0).getMediaFullPath());
+                }
 
             });
             viewHolderMe.img_playback.setOnClickListener(v -> playVideo(lst_chat.get(position).getMediaInfo().get(0).getMediaFullPath()));
@@ -290,7 +308,27 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
                         picasso.get().load(lst_chat.get(position).getMediaInfo().get(0).getMediaFullPath())
                                 .into(viewHolderOponent.chat_image);
-                       // viewHolderOponent.chat_image.setOnClickListener(v -> showPhoto(lst_chat.get(position).getMediaInfo().get(0).getMediaFullPath()));
+
+                        viewHolderOponent.chat_image.setOnClickListener(v -> {
+                            if (lst_chat.get(position).getType().equals("location")) {
+
+                                double lattitude = Double.parseDouble(lst_chat.get(position).getLattitude());
+                                double longitude = Double.parseDouble(lst_chat.get(position).getLongitude());
+
+                                Uri gmmIntentUri = Uri.parse("geo:" + lattitude + "," + longitude + "?z=17");
+                                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                                mapIntent.setPackage("com.google.android.apps.maps");
+                                
+                                if (mapIntent.resolveActivity(mContext.getPackageManager()) != null) {
+                                    mContext.startActivity(mapIntent);
+                                } else {
+                                    Toast.makeText(mContext, "Can't load Maps", Toast.LENGTH_SHORT).show();
+                                }
+
+
+                            } else {
+                            }
+                        });
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -424,13 +462,13 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 //    }
 
 
-    public void removeFromList(int position) {
-
+    public void removeFromList(int positiontoDelete) {
+        Log.d("positiontoDelete", "removeFromList: " + positiontoDelete);
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("userId", LoginUserID);
-        hashMap.put("chatId", lst_chat.get(position).getChatId());
-        hashMap.put("messageId", lst_chat.get(position).getMessageId());
+        hashMap.put("chatId", lst_chat.get(positiontoDelete).getChatId());
+        hashMap.put("messageId", lst_chat.get(positiontoDelete).getMessageId());
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(mContext);
         pd.show();
 
@@ -441,7 +479,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 pd.cancel();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
-                        lst_chat.remove(position);
+                        lst_chat.remove(positiontoDelete);
                         notifyDataSetChanged();
                     } else {
                         Toast.makeText(mContext, "Unable to delete", Toast.LENGTH_SHORT).show();
@@ -500,7 +538,6 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         CardView card_image;
         ImageView mv_location;
         //        GoogleMap googleMap;
-        int pos;
 
         public ViewHolderMe(View view) {
             super(view);
@@ -518,20 +555,20 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             mv_location = view.findViewById(R.id.mv_location);
             rl_body = view.findViewById(R.id.rl_body);
             rl_maps = view.findViewById(R.id.rl_maps);
-            pos = getAdapterPosition();
             tv_msg.setOnLongClickListener(this);
             chat_image.setOnLongClickListener(this);
             card_video.setOnLongClickListener(this);
+            iv_thumb.setOnLongClickListener(this);
+            img_playback.setOnLongClickListener(this);
+            mv_location.setOnLongClickListener(this);
             rl_audio.setOnLongClickListener(this);
-
-
         }
 
 
         @Override
         public boolean onLongClick(View v) {
 //            int id = v.getId();
-            callCommon(pos);
+            callCommon(getAbsoluteAdapterPosition());
             return false;
         }
     }
@@ -548,6 +585,8 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     LandingBottomSheet bottomSheet;
 
     private void showBottomSheet(int selectedPosition) {
+        Log.d("positiontoDelete", "removeFromListBottom: " + selectedPosition);
+
         FragmentManager fragmentManager = ((AppCompatActivity) mContext).getSupportFragmentManager();
         bottomSheet = new LandingBottomSheet(this, selectedPosition, "chat");
         bottomSheet.show(fragmentManager, "ModalBottomSheet");

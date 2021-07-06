@@ -128,6 +128,7 @@
     <string name="ur_discount">Your Discount Coupon</string>
     <string name="points">100 Points</string>
     <string name="get_code">GET CODE</string>
+    <string name="getting_ur_location">Getting your location…</string>
     <string name="earn_points">EARN MORE POINTS</string>
     <string name="something_went_wrong">Uh oh… \nSomething went wrong</string>
     <string name="dont_have_enough_points">It looks like you don\'t have enough points to purchase this coupon</string>
