@@ -44,6 +44,7 @@ import com.playdate.app.ui.dashboard.fragments.FragLanding;
 import com.playdate.app.ui.dashboard.fragments.FragSearchUser;
 import com.playdate.app.ui.date.DateBaseActivity;
 import com.playdate.app.ui.date.fragments.FragLocationTracing;
+import com.playdate.app.ui.date.fragments.FragSelectDate;
 import com.playdate.app.ui.date.games.FragGameLeaderBoard;
 import com.playdate.app.ui.date.games.FragStore;
 import com.playdate.app.ui.dialogs.FullScreenDialog;
@@ -419,6 +420,10 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
         int id = view.getId();
         if (id == R.id.iv_date) {
             startActivity(new Intent(DashboardActivity.this, DateBaseActivity.class));
+           /* ll_her.setVisibility(View.GONE);
+            ll_mainMenu2.setVisibility(View.GONE);
+            ll_mainMenu.setVisibility(View.GONE);
+            ReplaceFrag(new FragSelectDate());*/
 
         } else if (id == R.id.txt_social) {
             socialOnMatchOffNotiOff();
@@ -491,7 +496,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
             iv_profile_sett.setImageResource(R.drawable.tech_support);
             ll_friends.setVisibility(View.GONE);
             ReplaceFrag(new FragCouponParent());
-          //   ReplaceFrag(new FragLocationTracing());
+            //   ReplaceFrag(new FragLocationTracing());
 
         } else if (id == R.id.ll_profile_support) {
             if (OPTION_CLICK == 2) {

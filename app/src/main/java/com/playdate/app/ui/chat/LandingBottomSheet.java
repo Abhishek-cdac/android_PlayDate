@@ -45,7 +45,6 @@ public class LandingBottomSheet extends BottomSheetDialogFragment {
         this.from = from;
         this.toUserId = toUserId;
         this.chatId = chatId;
-
     }
 
     public LandingBottomSheet(ChatAdapter chatAdapter, int index, String from) {
@@ -69,10 +68,8 @@ public class LandingBottomSheet extends BottomSheetDialogFragment {
             report_comment_rl.setVisibility(View.GONE);
             rl_block.setVisibility(View.GONE);
             share.setText("Share");
-
         } else {
             report_user.setText("Report User");
-
         }
 
 

@@ -518,4 +518,8 @@ Build version 4.0.3-java</string>
     <string name="opponents">and %s other</string>
     <string name="opponent">and %s </string>
     <string name="ringing">Ringing</string>
+
+    <string name="chat">Chat</string>
+    <string name="match">Match</string>
+    <string name="social">Social</string>
 </resources>
