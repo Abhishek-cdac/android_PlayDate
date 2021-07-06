@@ -4,16 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
-import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,7 +21,6 @@ import com.playdate.app.databinding.ActivityInterestBinding;
 import com.playdate.app.model.Interest;
 import com.playdate.app.model.InterestsMain;
 import com.playdate.app.model.LoginResponse;
-import com.playdate.app.ui.register.bio.BioActivity;
 import com.playdate.app.ui.register.interest.adapter.InterestAdapter;
 import com.playdate.app.ui.restaurant.RestaurantActivity;
 import com.playdate.app.util.common.CommonClass;
@@ -44,26 +40,23 @@ import retrofit2.Response;
 
 public class InterestActivity extends AppCompatActivity implements InterestAdapter.InterestAdapterListner {
 
-    InterestViewModel viewModel;
-    ActivityInterestBinding binding;
-
-    ArrayList<Interest> lst_interest;
-    InterestAdapter adapter;
-    Intent mIntent;
-    RecyclerView recyclerView;
-    RelativeLayout rl_interest_bg;
-    CommonClass clsCommon;
+    private ActivityInterestBinding binding;
+    private ArrayList<Interest> lst_interest;
+    private InterestAdapter adapter;
+    private Intent mIntent;
+    private RecyclerView recyclerView;
+    private CommonClass clsCommon;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         clsCommon = CommonClass.getInstance();
-        viewModel = new InterestViewModel();
+        InterestViewModel viewModel = new InterestViewModel();
         binding = DataBindingUtil.setContentView(InterestActivity.this, R.layout.activity_interest);
         binding.setLifecycleOwner(this);
 
         binding.setInterestViewModel(viewModel);
-        rl_interest_bg = findViewById(R.id.rl_interest_bg);
+        RelativeLayout rl_interest_bg = findViewById(R.id.rl_interest_bg);
         recyclerView = binding.recyclerviewInterest;
         recyclerView.setLayoutManager(new GridLayoutManager(InterestActivity.this, 2));
         recyclerView.setHasFixedSize(true);
@@ -72,26 +65,8 @@ public class InterestActivity extends AppCompatActivity implements InterestAdapt
         getInterest();
 
 
-      /*  binding.edtSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                adapter.getFilter().filter(query);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                adapter.getFilter().filter(newText);
-                return false;
-            }
-        });*/
-
-        rl_interest_bg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("linear", "onClick:");
-                clsCommon.hideKeyboard(v, InterestActivity.this);
-            }
+        rl_interest_bg.setOnClickListener(v -> {
+            clsCommon.hideKeyboard(v, InterestActivity.this);
         });
         binding.edtSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -110,18 +85,7 @@ public class InterestActivity extends AppCompatActivity implements InterestAdapt
             }
         });
 
-        viewModel.OnNextClick().observe(InterestActivity.this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-
-//                    startActivity(new Intent(InterestActivity.this, RestaurantActivity
-//                            .class));
-                callSaveAPI();
-
-//                }
-
-            }
-        });
+        viewModel.OnNextClick().observe(InterestActivity.this, aBoolean -> callSaveAPI());
     }
 
     private void callSaveAPI() {
@@ -129,18 +93,18 @@ public class InterestActivity extends AppCompatActivity implements InterestAdapt
         if (null == lst_interest) {
             return;
         }
-        String selected = "";
-        String selectedText = "";
+        StringBuilder selected = new StringBuilder();
+        StringBuilder selectedText = new StringBuilder();
         int count = 0;
         for (int i = 0; i < lst_interest.size(); i++) {
             if (lst_interest.get(i).isSelected()) {
                 count++;
-                if (selected.isEmpty()) {
-                    selected = lst_interest.get(i).get_id();
-                    selectedText = lst_interest.get(i).getName();
+                if (selected.length() == 0) {
+                    selected = new StringBuilder(lst_interest.get(i).get_id());
+                    selectedText = new StringBuilder(lst_interest.get(i).getName());
                 } else {
-                    selected = selected + "," + lst_interest.get(i).get_id();
-                    selectedText = selectedText + "," + lst_interest.get(i).getName();
+                    selected.append(",").append(lst_interest.get(i).get_id());
+                    selectedText.append(",").append(lst_interest.get(i).getName());
                 }
             }
         }
@@ -161,14 +125,14 @@ public class InterestActivity extends AppCompatActivity implements InterestAdapt
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
-        hashMap.put("interested", selected);
+        hashMap.put("interested", selected.toString());
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
         pd.show();
 //        SessionPref pref = SessionPref.getInstance(this);
 
         Call<LoginResponse> call = service.updateProfile("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
-        String finalSelected = selected;
-        String finalSelectedText = selectedText;
+        String finalSelected = selected.toString();
+        String finalSelectedText = selectedText.toString();
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
@@ -283,26 +247,8 @@ public class InterestActivity extends AppCompatActivity implements InterestAdapt
 
     }
 
-    private void filter(String str) {
-//        if (str.length() > 0) {
-//            ArrayList<Interest> filteredNames = new ArrayList<>();
-//            for (Interest s : lst_interest) {
-//                if (s.getName().toLowerCase().contains(str.toLowerCase())) {
-//                    filteredNames.add(s);
-//                }
-//            }
-//            adapter.updateList(filteredNames);
-//            adapter.notifyDataSetChanged();
-//        } else {
-//            adapter.updateList(lst_interest);
-//            adapter.notifyDataSetChanged();
-//        }
-
-
-    }
 
     @Override
     public void onInterestSelected(Interest interest) {
-        Log.e("filter interest", "" + interest);
     }
 }

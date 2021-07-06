@@ -54,7 +54,7 @@
                     android:id="@+id/iv_plus"
                     android:layout_width="@dimen/_15sdp"
                     android:layout_height="@dimen/_15sdp"
-                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginStart="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:src="@drawable/plus"
                     android:visibility="gone">
@@ -101,7 +101,7 @@
                             android:paddingTop="@dimen/_5sdp"
                             android:paddingRight="@dimen/_10sdp"
                             android:paddingBottom="@dimen/_5sdp"
-                            android:text="Social"
+                            android:text="@string/social"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/_15sdp"
                             android:textStyle="bold" />
@@ -116,7 +116,7 @@
                             android:paddingTop="@dimen/_5sdp"
                             android:paddingRight="@dimen/_10sdp"
                             android:paddingBottom="@dimen/_5sdp"
-                            android:text="Match"
+                            android:text="@string/match"
                             android:textColor="@android:color/darker_gray"
                             android:textSize="@dimen/_15sdp"
                             android:textStyle="bold" />
@@ -131,7 +131,7 @@
                             android:paddingTop="@dimen/_5sdp"
                             android:paddingRight="@dimen/_10sdp"
                             android:paddingBottom="@dimen/_5sdp"
-                            android:text="Chat"
+                            android:text="@string/chat"
                             android:textColor="@android:color/darker_gray"
                             android:textSize="@dimen/_15sdp"
                             android:textStyle="bold" />

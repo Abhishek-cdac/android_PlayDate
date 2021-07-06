@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.InputFilter;
-import android.text.Spanned;
-import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -13,7 +11,6 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
 
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
@@ -37,11 +34,10 @@ import retrofit2.Response;
 import static com.playdate.app.util.session.SessionPref.LoginUserusername;
 
 public class UserNameActivity extends AppCompatActivity {
-    UserNameViewModel userNameViewModel;
-    ActivityUsernameBinding binding;
-    Intent mIntent;
-    CommonClass clsCommon;
-    RelativeLayout rl_username_bg;
+    private UserNameViewModel userNameViewModel;
+    private ActivityUsernameBinding binding;
+    private Intent mIntent;
+    private CommonClass clsCommon;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,13 +49,10 @@ public class UserNameActivity extends AppCompatActivity {
         binding.setUserNameViewModel(userNameViewModel);
         mIntent = getIntent();
         binding.setUserNameViewModel(userNameViewModel);
-        rl_username_bg = findViewById(R.id.rl_username_bg);
+        RelativeLayout rl_username_bg = findViewById(R.id.rl_username_bg);
         if (mIntent.getBooleanExtra("fromProfile", false)) {
             SessionPref pref = SessionPref.getInstance(this);
             userNameViewModel.OnUserNameInput().setValue(pref.getStringVal(LoginUserusername));
-        } else {
-
-
         }
 
         InputFilter filter = (source, start, end, dest, dstart, dend) -> {
@@ -70,7 +63,7 @@ public class UserNameActivity extends AppCompatActivity {
             }
             return null;
         };
-        binding.edtFullname.setFilters(new InputFilter[] { filter });
+        binding.edtFullname.setFilters(new InputFilter[]{filter});
 
 
         userNameViewModel.OnNextClick().observe(this, click -> {
@@ -82,37 +75,22 @@ public class UserNameActivity extends AppCompatActivity {
         });
         userNameViewModel.OnUserNameInput().
 
-                observe(this, new Observer<String>() {
-
-                    @Override
-                    public void onChanged(String charSeq) {
+                observe(this, charSeq -> {
 //                if (charSeq.length() == 5) {
 //                    startTimer();
 //                } else {
 ////                    binding.spinKit.setVisibility(View.GONE);
 //                }
 
-                    }
                 });
 
 //        iv_next
 
         userNameViewModel.onBackClick().
 
-                observe(this, new Observer<Boolean>() {
-                    @Override
-                    public void onChanged(Boolean click) {
-                        finish();
-                    }
-                });
+                observe(this, click -> finish());
 
-        rl_username_bg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("linear", "onClick:");
-                clsCommon.hideKeyboard(v, UserNameActivity.this);
-            }
-        });
+        rl_username_bg.setOnClickListener(v -> clsCommon.hideKeyboard(v, UserNameActivity.this));
 
     }
 
@@ -197,18 +175,18 @@ public class UserNameActivity extends AppCompatActivity {
         }
     }
 
-    private void startTimer() {
-        binding.spinKit.setVisibility(View.VISIBLE);
-        new CommonClass().hideKeyboard(binding.spinKit, this);
-        handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                binding.spinKit.setVisibility(View.GONE);
-                binding.ivNext.setVisibility(View.VISIBLE);
-                binding.edtFullname.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.check, 0);
-
-            }
-        }, 1000);
-    }
+//    private void startTimer() {
+//        binding.spinKit.setVisibility(View.VISIBLE);
+//        new CommonClass().hideKeyboard(binding.spinKit, this);
+//        handler = new Handler();
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                binding.spinKit.setVisibility(View.GONE);
+//                binding.ivNext.setVisibility(View.VISIBLE);
+//                binding.edtFullname.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.check, 0);
+//
+//            }
+//        }, 1000);
+//    }
 }

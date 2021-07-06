@@ -8,8 +8,6 @@ import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -18,7 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -26,11 +23,9 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -38,18 +33,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Scope;
-import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.Task;
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
-import com.playdate.app.databinding.ActivityRegisterBinding;
 import com.playdate.app.model.LoginUserDetails;
 import com.playdate.app.model.RegisterResult;
 import com.playdate.app.model.RegisterUser;
-import com.playdate.app.ui.login.LoginActivity;
 import com.playdate.app.ui.register.otp.OTPActivity;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
@@ -60,10 +50,8 @@ import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -72,8 +60,8 @@ import retrofit2.Response;
 import static com.playdate.app.data.api.RetrofitClientInstance.DEVICE_TYPE;
 
 public class RegisterActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
-    private RegisterViewModel registerViewModel;
-private EditText login_Password;
+
+    private EditText login_Password;
     private CallbackManager callbackManager;
     private LoginManager loginManager;
     private ImageView iv_show_password;
@@ -81,7 +69,7 @@ private EditText login_Password;
     private static final int RC_SIGN_IN = 1;
     private CommonClass clsCommon;
     private Intent mIntent;
-    SessionPref pref;
+    private SessionPref pref;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -89,8 +77,7 @@ private EditText login_Password;
         mIntent = getIntent();
         pref = SessionPref.getInstance(this);
         clsCommon = CommonClass.getInstance();
-        registerViewModel = new RegisterViewModel();
-        registerViewModel.init();
+        RegisterViewModel registerViewModel = new RegisterViewModel();
         FacebookSdk.sdkInitialize(this);
         callbackManager = CallbackManager.Factory.create();
 
@@ -99,29 +86,17 @@ private EditText login_Password;
                 .build();
 
         googleApiClient = GoogleSignIn.getClient(this, gso);
-//        googleApiClient = new GoogleApiClient.Builder(this)
-//                .enableAutoManage(this, this)
-//                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-//                .build();
 
         com.playdate.app.databinding.ActivityRegisterBinding binding = DataBindingUtil.setContentView(RegisterActivity.this, R.layout.activity_register);
         binding.setLifecycleOwner(this);
         binding.setVMRegister(registerViewModel);
-        Button logout = binding.logout1;
+//        Button logout = binding.logout1;
 
         iv_show_password = findViewById(R.id.iv_show_password);
         login_Password = findViewById(R.id.login_Password);
 
 
-
-
-        registerViewModel.getFinish().observe(this, new Observer<Boolean>() {
-
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                finish();
-            }
-        });
+        registerViewModel.getFinish().observe(this, aBoolean -> finish());
 
         registerViewModel.getRegisterUser().observe(this, registerUser -> {
             if (TextUtils.isEmpty(Objects.requireNonNull(registerUser).getFullname())) {
@@ -132,13 +107,7 @@ private EditText login_Password;
                 clsCommon.showDialogMsg(RegisterActivity.this, "PlayDate", "Enter phone number", "Ok");
             } else if ((registerUser).getPhoneNo().length() < 10) {
                 clsCommon.showDialogMsg(RegisterActivity.this, "PlayDate", "Enter proper phone number", "Ok");
-            }
-//                else if (TextUtils.isEmpty(Objects.requireNonNull(registerUser).getEmail())) {
-//                    clsCommon.showDialogMsg(RegisterActivity.this, "PlayDate", "Enter email id", "Ok");
-//                } else if (!registerUser.isEmailValid()) {
-//                    clsCommon.showDialogMsg(RegisterActivity.this, "PlayDate", "Enter valid email id", "Ok");
-//                }
-            else if (TextUtils.isEmpty(Objects.requireNonNull(registerUser).getPassword())) {
+            } else if (TextUtils.isEmpty(Objects.requireNonNull(registerUser).getPassword())) {
                 clsCommon.showDialogMsg(RegisterActivity.this, "PlayDate", "Enter password", "Ok");
             } else {
                 callAPI(registerUser);
@@ -146,12 +115,7 @@ private EditText login_Password;
 
         });
 
-        registerViewModel.fbClick().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean register) {
-                calltoFB();
-            }
-        });
+        registerViewModel.fbClick().observe(this, register -> callToFB());
 
 
         iv_show_password.setOnClickListener(v -> {
@@ -171,20 +135,8 @@ private EditText login_Password;
         });
 
 
-        registerViewModel.getOnGoogleClick().observe(this, aBoolean -> calltoGoogle());
+        registerViewModel.getOnGoogleClick().observe(this, aBoolean -> callToGoogle());
 
-
-//        logout.setOnClickListener(v -> Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(
-//                new ResultCallback<Status>() {
-//                    @Override
-//                    public void onResult(Status status) {
-//                        if (status.isSuccess()) {
-//                            Toast.makeText(getApplicationContext(), "LogOut", Toast.LENGTH_LONG).show();
-//                        } else {
-//                            Toast.makeText(getApplicationContext(), "Session not close", Toast.LENGTH_LONG).show();
-//                        }
-//                    }
-//                }));
 
     }
 
@@ -285,18 +237,11 @@ private EditText login_Password;
         mIntent.putExtra("Email", registerUser.getEmail());
         mIntent.putExtra("Password", registerUser.getPassword());
         mIntent.putExtra("Forgot", false);
-//        registerViewModel.clearFileds();
         startActivity(mIntent);
         finish();
     }
 
-    private void calltoGoogle() {
-//        Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
-//        startActivityForResult(intent, RC_SIGN_IN);
-
-//        Set<Scope> requiredScopes = new HashSet<>(2);
-//        requiredScopes.add(Drive.SCOPE_FILE);
-//        requiredScopes.add(Drive.SCOPE_APPFOLDER);
+    private void callToGoogle() {
         GoogleSignInOptions signInOptions =
                 new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                         .build();
@@ -305,7 +250,7 @@ private EditText login_Password;
 
     }
 
-    private void calltoFB() {
+    private void callToFB() {
         FacebookSdk.sdkInitialize(RegisterActivity.this);
         callbackManager = CallbackManager.Factory.create();
         facebookLogin();
@@ -337,8 +282,6 @@ private EditText login_Password;
             GoogleSignInAccount account = task.getResult(ApiException.class);
             Log.d("Email ", account.getEmail());
             Log.d("Name ", account.getDisplayName());
-
-
         } catch (ApiException e) {
             Log.d("EXCEPTION", "signInResult:failed code=" + e.getStatusCode());
         }
@@ -361,26 +304,21 @@ private EditText login_Password;
 
                                         loginResult.getAccessToken(),
 
-                                        new GraphRequest.GraphJSONObjectCallback() {
+                                        (object, response) -> {
 
-                                            @Override
-                                            public void onCompleted(JSONObject object,
-                                                                    GraphResponse response) {
+                                            if (object != null) {
+                                                try {
+                                                    String name = object.getString("name");
+//                                                    String email = object.getString("email");
+//                                                    String fbUserID = object.getString("id");
 
-                                                if (object != null) {
-                                                    try {
-                                                        String name = object.getString("name");
-                                                        String email = object.getString("email");
-                                                        String fbUserID = object.getString("id");
+                                                    Log.d("Name of user ", name);
+                                                    disconnectFromFacebook();
 
-                                                        Log.d("Name of user ", name);
-                                                        disconnectFromFacebook();
-
-                                                        // do action after Facebook login success
-                                                        // or call your API
-                                                    } catch (JSONException | NullPointerException e) {
-                                                        e.printStackTrace();
-                                                    }
+                                                    // do action after Facebook login success
+                                                    // or call your API
+                                                } catch (JSONException | NullPointerException e) {
+                                                    e.printStackTrace();
                                                 }
                                             }
                                         });
@@ -417,13 +355,7 @@ private EditText login_Password;
                 "/me/permissions/",
                 null,
                 HttpMethod.DELETE,
-                new GraphRequest
-                        .Callback() {
-                    @Override
-                    public void onCompleted(GraphResponse graphResponse) {
-                        LoginManager.getInstance().logOut();
-                    }
-                })
+                graphResponse -> LoginManager.getInstance().logOut())
                 .executeAsync();
     }
 

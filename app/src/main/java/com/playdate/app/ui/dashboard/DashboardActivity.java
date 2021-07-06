@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -43,7 +42,6 @@ import com.playdate.app.ui.dashboard.data.CallAPI;
 import com.playdate.app.ui.dashboard.fragments.FragLanding;
 import com.playdate.app.ui.dashboard.fragments.FragSearchUser;
 import com.playdate.app.ui.date.DateBaseActivity;
-import com.playdate.app.ui.date.fragments.FragLocationTracing;
 import com.playdate.app.ui.date.games.FragGameLeaderBoard;
 import com.playdate.app.ui.date.games.FragStore;
 import com.playdate.app.ui.dialogs.FullScreenDialog;
@@ -114,23 +112,6 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
         setContentView(R.layout.activity_dashboard);
         mSwipeRefreshLayout = findViewById(R.id.swipeContainer);
         mSwipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.color_pink));
-
-        mSwipeRefreshLayout.setOnRefreshListener(() -> {
-            try {
-                if (null != CurrentFrag) {
-                    if (CurrentFrag.getClass().getSimpleName().equals("FragSocialFeed")) {
-                        FragSocialFeed frag = (FragSocialFeed) CurrentFrag;
-                        frag.LoadPageAgain();
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            callAPIFriends();
-
-            callNotification();
-        });
-
         ll_mainMenu2 = findViewById(R.id.ll_mainMenu2);
         txt_count = findViewById(R.id.txt_count);
         nsv = findViewById(R.id.nsv);
@@ -216,6 +197,21 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
 
         });
 
+        mSwipeRefreshLayout.setOnRefreshListener(() -> {
+            try {
+                if (null != CurrentFrag) {
+                    if (CurrentFrag.getClass().getSimpleName().equals("FragSocialFeed")) {
+                        FragSocialFeed frag = (FragSocialFeed) CurrentFrag;
+                        frag.LoadPageAgain();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            callAPIFriends();
+
+            callNotification();
+        });
 
         iv_cancel.setOnClickListener(this);
         iv_gallery.setOnClickListener(this);
@@ -297,7 +293,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
 
     }
 
-    Handler mHandler;
+    private Handler mHandler;
 
     private void showPremium() {
         mHandler = new Handler(Looper.getMainLooper());
@@ -419,6 +415,10 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
         int id = view.getId();
         if (id == R.id.iv_date) {
             startActivity(new Intent(DashboardActivity.this, DateBaseActivity.class));
+           /* ll_her.setVisibility(View.GONE);
+            ll_mainMenu2.setVisibility(View.GONE);
+            ll_mainMenu.setVisibility(View.GONE);
+            ReplaceFrag(new FragSelectDate());*/
 
         } else if (id == R.id.txt_social) {
             socialOnMatchOffNotiOff();
@@ -491,7 +491,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
             iv_profile_sett.setImageResource(R.drawable.tech_support);
             ll_friends.setVisibility(View.GONE);
             ReplaceFrag(new FragCouponParent());
-          //   ReplaceFrag(new FragLocationTracing());
+            //   ReplaceFrag(new FragLocationTracing());
 
         } else if (id == R.id.ll_profile_support) {
             if (OPTION_CLICK == 2) {

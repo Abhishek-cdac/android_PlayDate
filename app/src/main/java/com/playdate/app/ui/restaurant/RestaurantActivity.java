@@ -21,8 +21,6 @@ import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.databinding.ActivityRestaurantBinding;
 import com.playdate.app.model.LoginResponse;
 import com.playdate.app.model.RestMain;
-import com.playdate.app.ui.dashboard.DashboardActivity;
-import com.playdate.app.ui.register.bio.BioActivity;
 import com.playdate.app.ui.restaurant.adapter.Restaurant;
 import com.playdate.app.ui.restaurant.adapter.RestaurantAdapter;
 import com.playdate.app.util.common.CommonClass;
@@ -41,24 +39,21 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RestaurantActivity extends AppCompatActivity {
-    RestaurantViewModel viewModel;
-    ActivityRestaurantBinding binding;
-
-    ArrayList<Restaurant> rest_list;
-    RestaurantAdapter adapter;
-    CommonClass clsCommon;
-    RelativeLayout rl_rest_bg;
-    RecyclerView recyclerView;
+    private ActivityRestaurantBinding binding;
+    private ArrayList<Restaurant> rest_list;
+    private RestaurantAdapter adapter;
+    private CommonClass clsCommon;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new RestaurantViewModel();
+        RestaurantViewModel viewModel = new RestaurantViewModel();
         clsCommon = CommonClass.getInstance();
         binding = DataBindingUtil.setContentView(RestaurantActivity.this, R.layout.activity_restaurant);
         binding.setLifecycleOwner(this);
         binding.setRestaurantViewModel(viewModel);
-        rl_rest_bg= findViewById(R.id.rl_rest_bg);
+        RelativeLayout rl_rest_bg = findViewById(R.id.rl_rest_bg);
 
         getRest();
 
@@ -101,7 +96,7 @@ public class RestaurantActivity extends AppCompatActivity {
         });
     }
 
-    
+
     private void callAPI() {
         if (rest_list == null) {
             return;

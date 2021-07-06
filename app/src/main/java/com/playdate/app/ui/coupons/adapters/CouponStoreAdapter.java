@@ -16,16 +16,14 @@ import com.playdate.app.R;
 import com.playdate.app.model.GetCouponsData;
 import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.ui.coupons.FragCouponStore;
-import com.playdate.app.util.common.CommonClass;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class CouponStoreAdapter extends RecyclerView.Adapter<CouponStoreAdapter.ViewHolder> {
-    private ArrayList<GetCouponsData> coupon_list = new ArrayList<>();
+    private final ArrayList<GetCouponsData> coupon_list;
     private final Onclick itemClick;
     private final Picasso picasso;
-    private final CommonClass clsCommon;
     private FragCouponStore ref;
     private int currentPoints;
 
@@ -34,9 +32,6 @@ public class CouponStoreAdapter extends RecyclerView.Adapter<CouponStoreAdapter.
         this.coupon_list = lst_getCoupons;
         this.itemClick = itemClick;
         picasso = Picasso.get();
-        clsCommon = new CommonClass();
-
-//        coupon_list.add(new CouponStore("Tiki Village", "Enjoy 15% OFF on our specials meals and drinks", "100", "https://www.google.co.in/imgres?imgurl=https%3A%2F%2Fwww.patnabeats.com%2Fwp-content%2Fuploads%2F2018%2F12%2FLazeez-Gold-3.jpg&imgrefurl=https%3A%2F%2Fwww.patnabeats.com%2Fhave-an-amazing-experience-of-lazeez-cuisines-in-a-gufaa-themed-restaurant-in-patna%2F&tbnid=FJg_OjSYjHeSTM&vet=12ahUKEwij-uD8yMPwAhVCSisKHclCCDUQMygAegUIARDQAQ..i&docid=w0ba22AtaqsSGM&w=1024&h=678&q=restaurant&ved=2ahUKEwij-uD8yMPwAhVCSisKHclCCDUQMygAegUIARDQAQ"));
     }
 
     public void setListerner(FragCouponStore ref) {
@@ -49,9 +44,7 @@ public class CouponStoreAdapter extends RecyclerView.Adapter<CouponStoreAdapter.
     @Override
     public CouponStoreAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         mContext = parent.getContext();
-        View view = LayoutInflater.from(mContext).inflate(R.layout.row_coupon_store, parent, false);
-
-        return new ViewHolder(view);
+        return new ViewHolder(LayoutInflater.from(mContext).inflate(R.layout.row_coupon_store, parent, false));
     }
 
     @Override
@@ -79,33 +72,30 @@ public class CouponStoreAdapter extends RecyclerView.Adapter<CouponStoreAdapter.
         }
 
 
-        holder.rl_coupons.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (coupon_list.get(position).getPurchased() != null) {
-                    if (coupon_list.get(position).getPurchased().size() > 0) {
-                        ref.showMsg();
-                    } else {
-                        if (currentPoints >= coupon_list.get(position).getCouponPurchasePoint()) {
-                            itemClick.onItemClicks(v, position, 11, coupon_list.get(position).getCouponId(), coupon_list.get(position).getCouponCode(), "" + coupon_list.get(position).getCouponPurchasePoint());
-                        } else {
-                            itemClick.onItemClicks(v, position, 12, coupon_list.get(position).getCouponId(), coupon_list.get(position).getCouponCode(), "" + coupon_list.get(position).getCouponPurchasePoint());
-//                            ref.showMsgNoBal();
-                        }
-
-                    }
+        holder.rl_coupons.setOnClickListener(v -> {
+            if (coupon_list.get(position).getPurchased() != null) {
+                if (coupon_list.get(position).getPurchased().size() > 0) {
+                    ref.showMsg();
                 } else {
                     if (currentPoints >= coupon_list.get(position).getCouponPurchasePoint()) {
                         itemClick.onItemClicks(v, position, 11, coupon_list.get(position).getCouponId(), coupon_list.get(position).getCouponCode(), "" + coupon_list.get(position).getCouponPurchasePoint());
                     } else {
                         itemClick.onItemClicks(v, position, 12, coupon_list.get(position).getCouponId(), coupon_list.get(position).getCouponCode(), "" + coupon_list.get(position).getCouponPurchasePoint());
-
-//                        ref.showMsgNoBal();
+//                            ref.showMsgNoBal();
                     }
 
                 }
+            } else {
+                if (currentPoints >= coupon_list.get(position).getCouponPurchasePoint()) {
+                    itemClick.onItemClicks(v, position, 11, coupon_list.get(position).getCouponId(), coupon_list.get(position).getCouponCode(), "" + coupon_list.get(position).getCouponPurchasePoint());
+                } else {
+                    itemClick.onItemClicks(v, position, 12, coupon_list.get(position).getCouponId(), coupon_list.get(position).getCouponCode(), "" + coupon_list.get(position).getCouponPurchasePoint());
+
+//                        ref.showMsgNoBal();
+                }
 
             }
+
         });
 
     }
@@ -119,7 +109,7 @@ public class CouponStoreAdapter extends RecyclerView.Adapter<CouponStoreAdapter.
         this.currentPoints = points;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView iv_image;
         TextView rest_name, discount_desc, points;
         RelativeLayout rl_coupons;

@@ -1,4 +1,4 @@
-package com.playdate.app.ui.dialogs;
+package com.playdate.app.ui.interfaces;
 
 public interface OnRelationShipSelected {
     void closed();

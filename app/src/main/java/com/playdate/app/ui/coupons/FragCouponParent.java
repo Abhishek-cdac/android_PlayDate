@@ -25,7 +25,6 @@ import com.playdate.app.ui.dashboard.OnAPIResponce;
 import com.playdate.app.ui.dashboard.adapter.RestaurentListAdapter;
 import com.playdate.app.ui.dashboard.data.CallAPI;
 import com.playdate.app.ui.dashboard.fragments.FragmentSearchRestaurent;
-
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.ui.notification_screen.FragNotification;
 import com.playdate.app.ui.restaurant.adapter.Restaurant;
@@ -43,17 +42,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FragCouponParent extends Fragment implements OnSizeDecided, View.OnClickListener, OnInnerFragmentClicks, OnAPIResponce {
-    WrapContentViewPager viewpager;
-    RecyclerView rv_restaurant;
+    private WrapContentViewPager viewpager;
+    private RecyclerView rv_restaurant;
     private RestaurentListAdapter adapterRestaurent;
     private SessionPref pref;
     private TextView txt_store;
     private TextView txt_my_coupon;
-    ImageView iv_dashboard_notification;
-    TextView txt_count;
-
-    private ImageView iv_rest_search;
-    private Fragment CurrentFrag;
+    private TextView txt_count;
 
     @Nullable
     @org.jetbrains.annotations.Nullable
@@ -62,8 +57,8 @@ public class FragCouponParent extends Fragment implements OnSizeDecided, View.On
         View view = inflater.inflate(R.layout.frag_coupon_parent, container, false);
         viewpager = view.findViewById(R.id.viewpager);
         callNotification();
-        iv_dashboard_notification = view.findViewById(R.id.iv_dashboard_notification);
-        iv_rest_search = view.findViewById(R.id.iv_rest_search);
+        ImageView iv_dashboard_notification = view.findViewById(R.id.iv_dashboard_notification);
+        ImageView iv_rest_search = view.findViewById(R.id.iv_rest_search);
         txt_store = view.findViewById(R.id.txt_store);
         txt_count = view.findViewById(R.id.txt_count);
         txt_my_coupon = view.findViewById(R.id.txt_my_coupon);
@@ -179,7 +174,6 @@ public class FragCouponParent extends Fragment implements OnSizeDecided, View.On
     @Override
     public void ReplaceFrag(Fragment fragment) {
         try {
-            CurrentFrag = fragment;
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             FragmentTransaction ft = fragmentManager.beginTransaction();
             if (fragmentManager.getFragments().size() > 0) {
@@ -189,7 +183,6 @@ public class FragCouponParent extends Fragment implements OnSizeDecided, View.On
             }
             ft.commitAllowingStateLoss();
 
-            //  mSwipeRefreshLayout.setEnabled(CurrentFrag.getClass().getSimpleName().equals("FragSocialFeed"));
 
         } catch (Exception e) {
             e.printStackTrace();

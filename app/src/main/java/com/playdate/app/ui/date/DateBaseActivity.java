@@ -10,12 +10,11 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.playdate.app.R;
 import com.playdate.app.ui.date.fragments.FragIntroScreen;
-import com.playdate.app.ui.date.games.FragGameLeaderBoard;
-import com.playdate.app.ui.date.games.FragGameMenu;
+import com.playdate.app.ui.interfaces.OnBackPressed;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 
 
-public class DateBaseActivity extends AppCompatActivity implements OnInnerFragmentClicks,OnBackPressed {
+public class DateBaseActivity extends AppCompatActivity implements OnInnerFragmentClicks, OnBackPressed {
     private FragmentManager fm;
     private FragmentTransaction ft;
 

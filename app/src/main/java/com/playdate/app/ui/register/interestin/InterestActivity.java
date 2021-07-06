@@ -32,13 +32,13 @@ import retrofit2.Response;
 
 public class InterestActivity extends AppCompatActivity {
 
-    InterestInViewModel viewModel;
-    ActivityInterestinBinding binding;
-    boolean Male = false;
-    boolean FeMale = false;
-    boolean Other = false;
-    CommonClass clsCommon;
-    Intent mIntent;
+    private InterestInViewModel viewModel;
+    private ActivityInterestinBinding binding;
+    private boolean Male = false;
+    private boolean FeMale = false;
+    private boolean Other = false;
+    private CommonClass clsCommon;
+    private Intent mIntent;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

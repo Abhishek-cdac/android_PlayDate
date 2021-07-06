@@ -34,9 +34,9 @@ public class LandingBottomSheet extends BottomSheetDialogFragment {
     private ChattingAdapter chattingAdapter;
     private ChatAdapter chatAdapter;
     private final int index;
-    private String from;
-    String toUserId;
-    String chatId;
+    private final String from;
+    private String toUserId;
+    private String chatId;
 
 
     public LandingBottomSheet(ChattingAdapter chattingAdapter, int index, String from, String toUserId, String chatId) {
@@ -45,7 +45,6 @@ public class LandingBottomSheet extends BottomSheetDialogFragment {
         this.from = from;
         this.toUserId = toUserId;
         this.chatId = chatId;
-
     }
 
     public LandingBottomSheet(ChatAdapter chatAdapter, int index, String from) {
@@ -70,27 +69,19 @@ public class LandingBottomSheet extends BottomSheetDialogFragment {
             report_comment_rl.setVisibility(View.GONE);
             rl_block.setVisibility(View.GONE);
             share.setText("Share");
-
         } else {
             report_user.setText("Report User");
-
         }
 
 
-        report_comment_rl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.e("toUserId chat Report", "" + toUserId);
-                callBlockUser(toUserId, "Report");
-            }
+        report_comment_rl.setOnClickListener(v -> {
+            Log.e("toUserId chat Report", "" + toUserId);
+            callBlockUser(toUserId, "Report");
         });
 
-        rl_block.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.e("toUserId chat block", "" + toUserId);
-                callBlockUser(toUserId, "Block");
-            }
+        rl_block.setOnClickListener(v -> {
+            Log.e("toUserId chat block", "" + toUserId);
+            callBlockUser(toUserId, "Block");
         });
 
         rl_delete_msg.setOnClickListener(v -> {
@@ -157,9 +148,6 @@ public class LandingBottomSheet extends BottomSheetDialogFragment {
         hashMap.put("action", action);//Block or Report
         hashMap.put("toUserId", toUserId);
 
-//        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(mContext);
-//        pd.show();
-
         Call<LoginResponse> call = service.addUserReportBlock("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new retrofit2.Callback<LoginResponse>() {
             @Override
@@ -181,8 +169,6 @@ public class LandingBottomSheet extends BottomSheetDialogFragment {
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 t.printStackTrace();
-//                pd.cancel();
-//                Toast.makeText(BioActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
 

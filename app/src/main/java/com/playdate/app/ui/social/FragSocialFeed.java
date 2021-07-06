@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
@@ -39,12 +38,10 @@ public class FragSocialFeed extends Fragment implements OnRefreshPage {
     public FragSocialFeed() {
     }
 
-    int PageNo = 1;
-    boolean NoMorePages = false;
-
+    private int PageNo = 1;
+    private boolean NoMorePages = false;
     private AAH_CustomRecyclerView recycler_view_feed;
-    private SwipeRefreshLayout mSwipeRefreshLayout;
-    boolean boolApiCalling = false;
+    private boolean boolApiCalling = false;
 
     @Nullable
     @Override
@@ -53,18 +50,7 @@ public class FragSocialFeed extends Fragment implements OnRefreshPage {
         recycler_view_feed = view.findViewById(R.id.recycler_view_feed);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         recycler_view_feed.setLayoutManager(manager);
-
-
-//        recycler_view_feed.setHasFixedSize(true);
-
-//        recycler_view_feed.addOnScrollListener(new EndlessRecyclerViewScrollListener(manager) {
-//            @Override
-//            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-//                Toast.makeText(getActivity(), "LAst", Toast.LENGTH_LONG).show();
-//            }
-//        });
         callAPI();
-
         return view;
     }
 
@@ -93,7 +79,6 @@ public class FragSocialFeed extends Fragment implements OnRefreshPage {
     public void onStop() {
         try {
             recycler_view_feed.stopVideos();
-//            Toast.makeText(getActivity(), "Video Stopped", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -110,15 +95,11 @@ public class FragSocialFeed extends Fragment implements OnRefreshPage {
         hashMap.put("limit", "10");
         hashMap.put("pageNo", "" + PageNo);
         boolApiCalling = true;
-//        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
-//        pd.show();
         SessionPref pref = SessionPref.getInstance(getActivity());
-
         Call<PostHistory> call = service.getPostFeed("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<PostHistory>() {
             @Override
             public void onResponse(Call<PostHistory> call, Response<PostHistory> response) {
-//                pd.cancel();
 
                 if (response.code() == 200) {
                     assert response.body() != null;
@@ -127,13 +108,13 @@ public class FragSocialFeed extends Fragment implements OnRefreshPage {
                         lstData = new ArrayList<>();
                         if (PageNo == 1) {
                             OnInnerFragmentClicks ref = (OnInnerFragmentClicks) getActivity();
-                            ref.NoFriends();
+                            Objects.requireNonNull(ref).NoFriends();
                             return;
                         }
                     } else if (PageNo == 1) {
                         if (lstData.isEmpty()) {
                             OnInnerFragmentClicks ref = (OnInnerFragmentClicks) getActivity();
-                            ref.NoFriends();
+                            Objects.requireNonNull(ref).NoFriends();
                             return;
                         }
 
@@ -142,10 +123,8 @@ public class FragSocialFeed extends Fragment implements OnRefreshPage {
 
                     if (lst.size() > 0) {
                         lst.remove(lst.size() - 1);
-//                        adapter.notifyDataSetChanged();
                         lst.addAll(lstData);
                         adapter.notifyDataSetChanged();
-//                        recycler_view_feed.scrollToPosition(lst.size()-1);
                     } else {
                         lst = lstData;
                         adapter = new SocialFeedAdapter(getActivity(), lst);
@@ -167,7 +146,6 @@ public class FragSocialFeed extends Fragment implements OnRefreshPage {
                             recycler_view_feed.preDownload(urls);
                         } catch (Exception e) {
                             e.printStackTrace();
-//                            Toast.makeText(getActivity(), "" + e.toString(), Toast.LENGTH_SHORT).show();
                         }
 
                         recycler_view_feed.setVisiblePercent(70);
@@ -211,7 +189,6 @@ public class FragSocialFeed extends Fragment implements OnRefreshPage {
             @Override
             public void onFailure(Call<PostHistory> call, Throwable t) {
                 t.printStackTrace();
-//                pd.cancel();
             }
         });
 
@@ -222,7 +199,6 @@ public class FragSocialFeed extends Fragment implements OnRefreshPage {
     public void onResume() {
         super.onResume();
         try {
-
             recycler_view_feed.playAvailableVideos(0);
         } catch (Exception e) {
             e.printStackTrace();
