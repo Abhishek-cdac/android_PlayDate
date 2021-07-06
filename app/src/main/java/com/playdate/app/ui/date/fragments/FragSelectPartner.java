@@ -45,7 +45,11 @@ public class FragSelectPartner extends Fragment implements SuggestedDateAdapter.
     private ViewPager vp_partners;
     private CommonClass clsCommon;
     private com.gtomato.android.ui.widget.CarouselView carousel;
+    private String from;
 
+    public FragSelectPartner(String from) {
+        this.from = from;
+    }
 
     @Nullable
     @Override
@@ -96,7 +100,7 @@ public class FragSelectPartner extends Fragment implements SuggestedDateAdapter.
 
                     try {
                         OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
-                        Fragment fragment = new FragPartnerSelected();
+                        Fragment fragment = new FragPartnerSelected(from);
                         Bundle bundle = new Bundle();
                         bundle.putString("profile_name", lst_CreateDateGetPartner.get(position).getUsername());
                         bundle.putString("profile_points", lst_CreateDateGetPartner.get(position).getTotalPoints());

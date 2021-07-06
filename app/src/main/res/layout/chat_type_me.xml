@@ -37,15 +37,15 @@
         android:layout_marginRight="@dimen/_5sdp"
         android:layout_toLeftOf="@+id/profile_image_me"
         android:background="@color/color_grey_light_too"
-        android:foregroundGravity="center"
+        android:foregroundGravity="center_horizontal"
         android:gravity="center"
         android:visibility="gone"
         app:cardCornerRadius="@dimen/_5sdp">
 
         <ImageView
             android:id="@+id/chat_image"
-            android:layout_width="@dimen/_145sdp"
-            android:layout_height="@dimen/_145sdp"
+            android:layout_width="@dimen/_147sdp"
+            android:layout_height="@dimen/_147sdp"
             android:scaleType="fitXY"
             android:visibility="visible" />
     </androidx.cardview.widget.CardView>

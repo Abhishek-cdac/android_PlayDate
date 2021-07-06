@@ -52,6 +52,7 @@ public class LandingBottomSheet extends BottomSheetDialogFragment {
         this.chatAdapter = chatAdapter;
         this.index = index;
         this.from = from;
+
     }
 
     @Nullable

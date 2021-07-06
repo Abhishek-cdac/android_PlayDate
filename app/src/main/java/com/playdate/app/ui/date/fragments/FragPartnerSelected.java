@@ -23,6 +23,7 @@ import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.DateRequestData;
 import com.playdate.app.model.DatingRequest;
 import com.playdate.app.model.DatingRequestStatus;
+import com.playdate.app.service.GpsTracker;
 import com.playdate.app.ui.date.OnBackPressed;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.util.common.CommonClass;
@@ -41,8 +42,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FragPartnerSelected extends Fragment {
-    public FragPartnerSelected() {
-    }
+
 
     private ImageView iv_accepted;
     private TextView tv_waiting;
@@ -50,6 +50,11 @@ public class FragPartnerSelected extends Fragment {
     boolean accepted = false;
     private CommonClass clsCommon;
     private SpinKitView spin_kit;
+    private String from;
+
+    public FragPartnerSelected(String from) {
+        this.from = from;
+    }
 
     @Nullable
     @Override
@@ -214,7 +219,13 @@ public class FragPartnerSelected extends Fragment {
 
         mHandler.postDelayed(() -> {
             OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
-            Objects.requireNonNull(frag).ReplaceFrag(new FragSelectDate());
+            //checkfor virtual
+            if (from.equals("in Person")) {
+                Objects.requireNonNull(frag).ReplaceFrag(new FragLocationTracing());
+            } else {
+                Objects.requireNonNull(frag).ReplaceFrag(new FragRestaurantSelection());
+            }
+
         }, 1500);
 
     }

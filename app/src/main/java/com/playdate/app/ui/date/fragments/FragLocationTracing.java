@@ -1,27 +1,60 @@
 package com.playdate.app.ui.date.fragments;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.github.ybq.android.spinkit.SpinKitView;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.playdate.app.R;
+import com.playdate.app.data.api.GetDataService;
+import com.playdate.app.data.api.RetrofitClientInstance;
+import com.playdate.app.model.RestMain;
+import com.playdate.app.service.GpsTracker;
+import com.playdate.app.service.LocationService;
+import com.playdate.app.ui.chat.ChatMainActivity;
+import com.playdate.app.ui.chat.MapActivity;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
+import com.playdate.app.ui.restaurant.RestaurantActivity;
+import com.playdate.app.ui.restaurant.adapter.Restaurant;
+import com.playdate.app.ui.restaurant.adapter.RestaurantAdapter;
+import com.playdate.app.util.common.CommonClass;
+import com.playdate.app.util.common.TransparentProgressDialog;
+import com.playdate.app.util.session.SessionPref;
 
-public class FragLocationTracing extends Fragment  {
-    public FragLocationTracing() {
-    }
+import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.playdate.app.ui.register.profile.UploadProfileActivity.REQUEST_LOCATION_CODE;
+
+public class FragLocationTracing extends Fragment implements OnMapReadyCallback {
 
     SpinKitView spin_kit_location_trace;
     SpinKitView spin_kit_dots1;
@@ -37,13 +70,30 @@ public class FragLocationTracing extends Fragment  {
     ImageView iv_check_mine;
     ImageView iv_check_other;
     ImageView iv_check_rest;
+    public static double lattitude;
+    public static double longitude;
+    private GoogleMap mMap;
+    ArrayList<Restaurant> rest_list;
+    CommonClass clsCommon;
+
+    public FragLocationTracing() {
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_location_tracing, container, false);
 
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
+                .findFragmentById(R.id.map);
 
+        if (mapFragment != null) {
+            mapFragment.getMapAsync(this);
+        } else {
+            Log.d("MapFragment", "onCreateView: ");
+        }
+
+        clsCommon = CommonClass.getInstance();
         spin_kit_location_trace = view.findViewById(R.id.spin_kit_location_trace);
         spin_kit_dots1 = view.findViewById(R.id.spin_kit_dots1);
         spin_kit_dots2 = view.findViewById(R.id.spin_kit_dots2);
@@ -58,32 +108,37 @@ public class FragLocationTracing extends Fragment  {
         iv_check_mine = view.findViewById(R.id.iv_check_mine);
         iv_check_other = view.findViewById(R.id.iv_check_other);
         iv_check_rest = view.findViewById(R.id.iv_check_rest);
+
+        Toast.makeText(getActivity(), "" + lattitude + " , " + longitude, Toast.LENGTH_SHORT).show();
         animationFirst();
+        getRest();
 
         return view;
     }
 
-//    @Override
-//    protected void onCreate(@Nullable Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_location_tracing);
+//    private void locationFetch() {
 //
-//        spin_kit_location_trace = findViewById(R.id.spin_kit_location_trace);
-//        spin_kit_dots1 = findViewById(R.id.spin_kit_dots1);
-//        spin_kit_dots2 = findViewById(R.id.spin_kit_dots2);
 //
-//        rl_other = findViewById(R.id.rl_other);
-//        rl_mine = findViewById(R.id.rl_mine);
-//        tv_location = findViewById(R.id.tv_location);
+//        GpsTracker gpsTracker = new GpsTracker(getActivity());
+//        if (gpsTracker.canGetLocation()) {
+//            this.lattitude = gpsTracker.getLatitude();
+//            this.longitude = gpsTracker.getLongitude();
+//            Log.d("latlong", "" + lattitude + "  " + longitude);
+//            if (String.valueOf(lattitude).equals("0.0") || String.valueOf(longitude).equals("0.0")) {
+//                locationFetch();
+//                Toast.makeText(getActivity(), "" + lattitude + " , " + longitude, Toast.LENGTH_SHORT).show();
+////                animationFirst();
 //
-//        iv_my_image = findViewById(R.id.iv_my_image);
-//        iv_partner_image = findViewById(R.id.iv_partner_image);
-//        iv_pin_restaurent = findViewById(R.id.iv_pin_restaurent);
-//        iv_check_mine = findViewById(R.id.iv_check_mine);
-//        iv_check_other = findViewById(R.id.iv_check_other);
-//        iv_check_rest = findViewById(R.id.iv_check_rest);
-//        animationFirst();
-//
+//            } else {
+//                Log.d("Current Location", "locationFetch: " + lattitude + " , " + longitude);
+//                Toast.makeText(getActivity(), "" + lattitude + " , " + longitude, Toast.LENGTH_SHORT).show();
+//                animationSecond();
+////                animationFirst();
+//            }
+//        } else {
+//            gpsTracker.showSettingsAlert();
+////            locationFetch();
+//        }
 //    }
 
     private void animationFirst() {
@@ -100,12 +155,12 @@ public class FragLocationTracing extends Fragment  {
                 spin_kit_location_trace.getLayoutParams().width = 450;
                 animationSecond();
             }
-        }, 5000);
-
+        }, 2000);
 
     }
 
     private void animationSecond() {
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -116,7 +171,7 @@ public class FragLocationTracing extends Fragment  {
                 spin_kit_location_trace.getLayoutParams().width = 350;
                 animationThird();
             }
-        }, 5000);
+        }, 2000);
     }
 
     private void animationThird() {
@@ -131,7 +186,52 @@ public class FragLocationTracing extends Fragment  {
                 spin_kit_location_trace.getLayoutParams().width = 200;
                 reDirect();
             }
-        }, 5000);
+        }, 3000);
+    }
+
+    private void getRest() {
+
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("limit", "100");// format 1990-08-12
+        hashMap.put("pageNo", "1");// format 1990-08-12
+        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
+        pd.show();
+        SessionPref pref = SessionPref.getInstance(getActivity());
+//        Toast.makeText(this, ""+pref.getStringVal(SessionPref.LoginUsertoken), Toast.LENGTH_SHORT).show();
+
+
+        Call<RestMain> call = service.restaurants("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new Callback<RestMain>() {
+            @Override
+            public void onResponse(Call<RestMain> call, Response<RestMain> response) {
+                pd.cancel();
+                if (response.code() == 200) {
+                    assert response.body() != null;
+                    if (response.body().getStatus() == 1) {
+                        rest_list = response.body().getLst();
+                        if (rest_list == null) {
+                            rest_list = new ArrayList<>();
+                        }
+                    } else {
+
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<RestMain> call, Throwable t) {
+                t.printStackTrace();
+                pd.cancel();
+                Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
     }
 
     private void reDirect() {
@@ -139,10 +239,16 @@ public class FragLocationTracing extends Fragment  {
             @Override
             public void run() {
                 OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
-                frag.ReplaceFrag(new FragLocationConfirmation());
-//                startActivity(new Intent(getActivity(), LocationConfirmationActivity.class));
+                frag.ReplaceFrag(new FragLocationConfirmation(rest_list.get(0).getName(), rest_list.get(0).getImage(), rest_list.get(0).getAddress()));
             }
-        }, 3000);
+        }, 1500);
     }
 
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        mMap = googleMap;
+        LatLng loc = new LatLng(lattitude, longitude);
+        mMap.setMinZoomPreference(12);
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
+    }
 }

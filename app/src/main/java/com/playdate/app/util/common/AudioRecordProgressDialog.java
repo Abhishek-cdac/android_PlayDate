@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import androidx.annotation.NonNull;
 
 import com.playdate.app.R;
+import com.playdate.app.ui.chat.ChatMainActivity;
 
 public class AudioRecordProgressDialog extends Dialog {
 
@@ -38,5 +39,6 @@ public class AudioRecordProgressDialog extends Dialog {
                 R.layout.audio_record_dialog, null);
         getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         setContentView(view);
+
     }
 }
