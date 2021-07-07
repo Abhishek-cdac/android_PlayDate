@@ -55,8 +55,7 @@ public class SuggestionAdapter extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, final int position) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.frag_suggestions, container, false);
-
-        ImageView iv_send_request, profile_image, iv_chat_icon;
+     ImageView iv_send_request, profile_image, iv_chat_icon;
         TextView txt_header_Suggestions;
         profile_image = view.findViewById(R.id.profile_image);
         iv_send_request = view.findViewById(R.id.iv_send_request);
@@ -68,7 +67,8 @@ public class SuggestionAdapter extends PagerAdapter {
             profile_image.setBackgroundColor(context.getResources().getColor(R.color.color_grey_light));
         }
 
-        picasso.load(suggestions_list.get(position).getProfilePicPath()).placeholder(R.drawable.ic_baseline_person_24)
+
+                picasso.load(suggestions_list.get(position).getProfilePicPath()).placeholder(R.drawable.ic_baseline_person_24)
                 .fit()
                 .centerCrop()
                 .into(profile_image);
@@ -109,7 +109,8 @@ public class SuggestionAdapter extends PagerAdapter {
         });
 
         iv_chat_icon.setOnClickListener(v -> {
-            Toast.makeText(context, "Comming soon", Toast.LENGTH_SHORT).show();
+            itemClick.onItemClicks(v, position, 12, userId);
+
         });
 
 

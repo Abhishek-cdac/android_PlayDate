@@ -314,6 +314,16 @@ public interface GetDataService {
     @FormUrlEncoded
     @POST("user/delete-chat-room")
     Call<CommonModel> deleteChatRoom(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
+    @FormUrlEncoded
+    @POST("user/add-chat-request")
+    Call<CommonModel> addChatRequest(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
+    @FormUrlEncoded
+    @POST("user/chat-request-status-update")
+    Call<CommonModel> chatRequestStatusUpdate(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
+
 }
 
 

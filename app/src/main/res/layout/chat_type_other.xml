@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -15,9 +16,10 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:cardElevation="0dp"
+        app:cardBackgroundColor="@color/transparent"
         android:layout_marginStart="@dimen/_5sdp"
-        android:layout_toEndOf="@+id/diamond"
-        android:background="@color/transparent">
+        android:layout_toEndOf="@+id/diamond">
 
         <TextView
             android:id="@+id/tv_chat_other"
@@ -28,40 +30,54 @@
             android:background="@drawable/btn_blue_filled"
             android:paddingHorizontal="@dimen/_12sdp"
             android:textAlignment="center"
+
             android:paddingTop="@dimen/_8sdp"
             android:paddingBottom="@dimen/_27sdp"
             android:text="Hey myron! how are you"
             android:textColor="@color/white"
             android:textSize="@dimen/_10sdp" />
 
-        <TextView
-            android:id="@+id/answer1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_gravity="bottom|left"
-            android:layout_marginStart="@dimen/_20sdp"
-            android:layout_marginEnd="@dimen/_8sdp"
-            android:background="@drawable/pink_filled"
-            android:paddingHorizontal="@dimen/_18sdp"
-            android:paddingVertical="@dimen/_8sdp"
-            android:text="Elon Musk"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_10sdp" />
 
-        <TextView
-            android:id="@+id/answer2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_8sdp"
-            android:layout_gravity="bottom|right"
-            android:layout_marginEnd="@dimen/_20sdp"
-            android:background="@drawable/pink_filled"
-            android:paddingHorizontal="@dimen/_18sdp"
-            android:paddingVertical="@dimen/_8sdp"
-            android:text="Jeff Beroz"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_10sdp" />
+        <LinearLayout
+            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_width="match_parent"
+            android:weightSum="1"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_weight=".5"
+                android:id="@+id/answer1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_gravity="bottom|left"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:background="@drawable/pink_filled"
+                android:paddingHorizontal="@dimen/_18sdp"
+                android:paddingVertical="@dimen/_8sdp"
+                android:text="boris jhonson"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_10sdp" />
+
+            <TextView
+                android:id="@+id/answer2"
+                android:gravity="center"
+                android:layout_weight=".5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_gravity="bottom|right"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:background="@drawable/pink_filled"
+                android:paddingHorizontal="@dimen/_18sdp"
+                android:paddingVertical="@dimen/_8sdp"
+                android:text="narendra damodar modi"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_10sdp" />
+        </LinearLayout>
+
 
     </androidx.cardview.widget.CardView>
 

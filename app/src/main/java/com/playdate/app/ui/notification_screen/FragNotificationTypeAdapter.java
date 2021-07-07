@@ -33,6 +33,8 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
     public static final int RELATION_REQUEST = 6;
     public static final int FRIENDACCEPTED = 7;
     public static final int RELATIONACCEPTED = 8;
+    public static final int CHAT_REQUEST = 9;
+
 
     private final Onclick itemClick;
     private String requestId;
@@ -79,6 +81,8 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
                 return RELATIONACCEPTED;
             case "FriendAccepted":
                 return FRIENDACCEPTED;
+          /*  case "":
+                return CHAT_REQUEST;*/
             default:
                 return -1;
         }
@@ -121,6 +125,10 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
             view = inflater.inflate(R.layout.row_notification_type_6, parent, false);
             viewHolder = new ViewHolderLiked(view);
         }
+      /*  else { // chat request need to implement
+            view = inflater.inflate(R.layout.row_notification_type_5, parent, false);
+            viewHolder = new ViewHolderChatRequest(view);
+        }*/
 
         return viewHolder;
 
@@ -656,6 +664,97 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
                 }
             });
         }
+
+      /*  else {  // chat request need to implement
+            ViewHolderChatRequest viewHolderChatRequest = (ViewHolderChatRequest) holder;
+            if (notification_list.get(position).getFriendRequest() != null) {
+
+                if (notification_list.get(position).getFriendRequest().size() > 0) {
+                    if (notification_list.get(position).getFriendRequest().get(0).getStatus().toLowerCase().equals("pending")) {
+
+                        viewHolderChatRequest.rl_notification.setVisibility(View.VISIBLE);
+
+//                    String notifiationId = notification_list.get(position).getNotificationId();
+//                    String userId = notification_list.get(position).getUserID();
+
+                        String name = notification_list.get(position).getFriendRequest().get(0).getUserInfo().get(0).getUsername();
+                        String desc = notification_list.get(position).getNotificationMessage();
+
+                        String sourceString = "<b>" + name + "</b> " + desc;
+                        viewHolderChatRequest.tv_name.setText(Html.fromHtml(sourceString));
+                        requestId = notification_list.get(position).getFriendRequest().get(0).getRequestId();
+                        Log.e("requestId", "" + requestId);
+                        picasso.load(notification_list.get(position).getFriendRequest().get(0).getUserInfo().get(0).getProfilePicPath())
+                                .placeholder(R.drawable.profile)
+                                .fit()
+                                .centerCrop()
+                                .into(viewHolderChatRequest.profile_image);
+
+                        if (notification_list.get(position).isSelected) {
+                            viewHolderChatRequest.rl_notification.setBackgroundColor(mcontext.getResources().getColor(R.color.color_pink_dull));
+                            viewHolderChatRequest.main_ll.setBackgroundColor(mcontext.getResources().getColor(R.color.color_pink_dull));
+                        } else {
+                            viewHolderChatRequest.rl_notification.setBackgroundColor(mcontext.getResources().getColor(R.color.backgroundColour));
+                            viewHolderChatRequest.main_ll.setBackgroundColor(mcontext.getResources().getColor(R.color.backgroundColour));
+
+                        }
+
+
+                        viewHolderChatRequest.rl_notification.setOnLongClickListener(v -> {
+                            Log.e("relativeLayout", "relativeLayout" + position);
+                            if (!notification_list.get(position).isSelected) {
+
+                                for (int i = 0; i < notification_list.size(); i++) {
+                                    if (position != i) {
+                                        notification_list.get(i).setSelected(false);
+                                    } else {
+                                        notification_list.get(position).setSelected(true);
+                                        itemClick.onItemClicks(v, position, 11, notification_list.get(position).getNotificationId(), notification_list.get(position).getUserID());
+                                    }
+                                }
+
+                                notifyDataSetChanged();
+
+
+                            } else {
+                                notification_list.get(position).setSelected(false);
+                                notifyDataSetChanged();
+                            }
+                            return true;
+                        });
+                    } else {
+                        //    iv_send_request.setImageResource(R.drawable.sent_request);
+                    }
+
+
+                }
+            }
+
+
+            viewHolderChatRequest.iv_right.setOnClickListener(v -> {
+
+                try {
+                    itemClick.onItemClicks(v, position, 32, requestId);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+            });
+            viewHolderChatRequest.iv_cross.setOnClickListener(v -> {
+                try {
+                    Log.e("requestId", "" + requestId);
+
+                    itemClick.onItemClicks(v, position, 33, requestId);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+                //  removeAt(getAdapterPosition());
+            });
+        }*/
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -666,6 +765,27 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
         RelativeLayout rl_request, rl_notification;
 
         public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            main_ll = itemView.findViewById(R.id.main_ll);
+            profile_image = itemView.findViewById(R.id.profile_image_1);
+            rl_notification = itemView.findViewById(R.id.rl_notification);
+            icons = itemView.findViewById(R.id.iv_icon_1);
+            tv_name = itemView.findViewById(R.id.tv_name_noti);
+            tv_desc = itemView.findViewById(R.id.tv_desc_noti);
+            rl_request = itemView.findViewById(R.id.rl_request);
+            iv_right = itemView.findViewById(R.id.iv_right);
+            iv_cross = itemView.findViewById(R.id.iv_cross);
+            icons.setVisibility(View.GONE);
+
+        }
+    } public class ViewHolderChatRequest extends RecyclerView.ViewHolder {
+        ImageView profile_image, icons, iv_right, iv_cross;
+        TextView tv_name, tv_desc;
+        LinearLayout main_ll;
+
+        RelativeLayout rl_request, rl_notification;
+
+        public ViewHolderChatRequest(@NonNull View itemView) {
             super(itemView);
             main_ll = itemView.findViewById(R.id.main_ll);
             profile_image = itemView.findViewById(R.id.profile_image_1);

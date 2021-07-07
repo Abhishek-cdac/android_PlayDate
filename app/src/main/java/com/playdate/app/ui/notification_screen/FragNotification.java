@@ -89,6 +89,13 @@ public class FragNotification extends Fragment {
                 } else if (value == 31) {
                     callRelationStatusUpdate(s, "Rejected");
                 }
+             /*   else  if (value == 32) {
+                    callChatRequestStatusUpdate(s, "Active");
+                }
+                else  if(value == 33){
+                    callChatRequestStatusUpdate(s, "Reject");
+                }
+*/
             }
 
             @Override
@@ -183,6 +190,52 @@ public class FragNotification extends Fragment {
         });
     }
 
+
+   /* private void callChatRequestStatusUpdate(String chatRequestId, String status) {
+        SessionPref pref = SessionPref.getInstance(getActivity());
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        String userId = pref.getStringVal(SessionPref.LoginUserID);
+      //  pref.saveStringKeyVal(SessionPref.RelationRequestId, relatioRequestId);
+        hashMap.put("userId", userId);
+        hashMap.put("requestId", chatRequestId);
+        hashMap.put("status", status);  //Active,Rejected
+        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
+        pd.show();
+
+        Call<CommonModel> call = service.chatRequestStatusUpdate("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new Callback<CommonModel>() {
+            @Override
+            public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
+                pd.cancel();
+                if (response.code() == 200) {
+                    if (response.body().getStatus() == 1) {
+                        callGetNotificationAPI();
+                        Log.d("ChatRequestId....", ""+ chatRequestId);
+                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
+                    } else {
+                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
+                    }
+                } else {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
+                    } catch (Exception e) {
+
+                        Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CommonModel> call, Throwable t) {
+                t.printStackTrace();
+                pd.cancel();
+                Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+*/
     private void callMatchRequestStatusUpdateAPI(String requestId, String status) {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();

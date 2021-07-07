@@ -76,8 +76,8 @@
                     android:layout_marginHorizontal="@dimen/_4sdp"
                     android:layout_toRightOf="@+id/iv_right"
                     android:background="@drawable/icon_bg"
-                    android:padding="@dimen/_5sdp"
-                    android:src="@drawable/icon_cancel" />
+                    android:padding="@dimen/_1sdp"
+                    android:src="@drawable/ic_baseline_clear_24" />
 
 
 
