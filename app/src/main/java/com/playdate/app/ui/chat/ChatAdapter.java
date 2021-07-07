@@ -255,7 +255,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     double lattitude = Double.parseDouble(lst_chat.get(position).getLattitude());
                     double longitude = Double.parseDouble(lst_chat.get(position).getLongitude());
 
-                    Uri gmmIntentUri = Uri.parse("geo:" + lattitude + "," + longitude + "?z=17");
+                    Uri gmmIntentUri = Uri.parse("geo:" + lattitude + "," + longitude + "?z=17?q=restaurants");
                     Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                     mapIntent.setPackage("com.google.android.apps.maps");
                     if (mapIntent.resolveActivity(mContext.getPackageManager()) != null) {
