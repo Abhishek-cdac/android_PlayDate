@@ -105,31 +105,6 @@ public class FragLocationTracing extends Fragment implements OnMapReadyCallback 
         return view;
     }
 
-//    private void locationFetch() {
-//
-//
-//        GpsTracker gpsTracker = new GpsTracker(getActivity());
-//        if (gpsTracker.canGetLocation()) {
-//            this.lattitude = gpsTracker.getLatitude();
-//            this.longitude = gpsTracker.getLongitude();
-//            Log.d("latlong", "" + lattitude + "  " + longitude);
-//            if (String.valueOf(lattitude).equals("0.0") || String.valueOf(longitude).equals("0.0")) {
-//                locationFetch();
-//                Toast.makeText(getActivity(), "" + lattitude + " , " + longitude, Toast.LENGTH_SHORT).show();
-////                animationFirst();
-//
-//            } else {
-//                Log.d("Current Location", "locationFetch: " + lattitude + " , " + longitude);
-//                Toast.makeText(getActivity(), "" + lattitude + " , " + longitude, Toast.LENGTH_SHORT).show();
-//                animationSecond();
-////                animationFirst();
-//            }
-//        } else {
-//            gpsTracker.showSettingsAlert();
-////            locationFetch();
-//        }
-//    }
-
     private void animationFirst() {
 
         new Handler().postDelayed(new Runnable() {
@@ -230,10 +205,10 @@ public class FragLocationTracing extends Fragment implements OnMapReadyCallback 
 
         for (int i = 0; i < rest_list.size(); i++) {
 
-            double difference = 25.8670033 - Double.parseDouble(rest_list.get(i).getLat());
+            double difference = lattitude - Double.parseDouble(rest_list.get(i).getLat());
 
             for (int j = i + 1; j < rest_list.size(); j++) {
-                double diffnew = 25.8670033 - Double.parseDouble(rest_list.get(j).getLat());
+                double diffnew = lattitude - Double.parseDouble(rest_list.get(j).getLat());
 
                 if (difference < diffnew) {
                     newLatti = rest_list.get(i).getLat();
@@ -241,7 +216,7 @@ public class FragLocationTracing extends Fragment implements OnMapReadyCallback 
                 }
             }
 
-            Double differenceNew = 25.8670033 - Double.parseDouble(rest_list.get(i).getLat());
+            Double differenceNew = lattitude - Double.parseDouble(rest_list.get(i).getLat());
             difflist.add(differenceNew);
 
             Log.d("DiffList", "latLongsOfRestaurantDiff: " + difflist.get(i));
@@ -310,7 +285,7 @@ public class FragLocationTracing extends Fragment implements OnMapReadyCallback 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
-        LatLng loc = new LatLng(25.8670033, 85.1736956);
+        LatLng loc = new LatLng(lattitude, longitude);
 
         mMap.setMinZoomPreference(12);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
