@@ -82,6 +82,7 @@ public class SessionPref {
     }
 
 
+    public static String isBusiness = "isBusiness";
     public static String LoginUserID = "id";
     public static String LoginUserFCMID = "id";
     public static String LoginVerified = "LoginVerified";
@@ -135,7 +136,8 @@ public class SessionPref {
                               String sourceSocialId,
                               String inviteCode,
                               String paymentMode,
-                              String inviteLink
+                              String inviteLink,
+                              boolean userType
 
     ) {
         editor.putString(LoginUserID, id);
@@ -160,6 +162,7 @@ public class SessionPref {
         editor.putString(LoginUserinviteCode, inviteCode);
         editor.putString(LoginUserpaymentMode, paymentMode);
         editor.putString(LoginUserInviteLink, inviteLink);
+        editor.putBoolean(isBusiness, userType);
         editor.commit();
     }
 

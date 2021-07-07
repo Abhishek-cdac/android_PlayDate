@@ -10,7 +10,6 @@ import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -36,7 +35,6 @@ import com.facebook.login.LoginResult;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.ApiException;
@@ -45,9 +43,10 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.Task;
 import com.playdate.app.R;
+import com.playdate.app.business.businessbio.BusinessBioActivity;
+import com.playdate.app.business.businessphoto.BusinessUploadPhotoActivity;
 import com.playdate.app.business.dashboard_business.DashboardBusiness;
 import com.playdate.app.business.startdate.BusinessStartingDateActivity;
-import com.playdate.app.couple.ui.register.connect.ConnectYourPartner;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.databinding.ActivityLoginBinding;
@@ -137,13 +136,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         RelativeLayout rl_couple = findViewById(R.id.rl_couple);
         iv_show_password = findViewById(R.id.iv_show_password);
         login_Password = findViewById(R.id.login_Password);
-        rl_couple.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, DashboardBusiness.class));
-
-            }
-        });
+        rl_couple.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, DashboardBusiness.class)));
 
         loginViewModel.getUser().observe(this, loginUser -> {
 
@@ -299,6 +292,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private void checkForTheLastActivity(LoginResponse body) {
         try {
             LoginUserDetails user = body.getUserData();
+            boolean isBusiness = user.getUserType().toLowerCase().equals("business");
+
             SessionPref.getInstance(LoginActivity.this).saveLoginUser(
                     user.getId(),
                     user.getFullName(),
@@ -321,43 +316,55 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     user.getSourceSocialId(),
                     user.getInviteCode(),
                     user.getPaymentMode(),
-                    user.getInviteLink());
+                    user.getInviteLink(),
+                    isBusiness
+            );
 
             Intent mIntent = null;
             Context mContext = LoginActivity.this;
-            if (user.getStatus().equals("false")) {
-                mIntent = new Intent(mContext, OTPActivity.class);
-                mIntent.putExtra("Phone", user.getPhoneNo());
-                mIntent.putExtra("resendOTP", true);
-                mIntent.putExtra("Forgot", false);
-
-            } else if (user.getBirthDate() == null) {
-                mIntent = new Intent(mContext, AgeVerifiationActivity.class);
-
-            } else if (user.getGender() == null) {
-                mIntent = new Intent(mContext, GenderSelActivity.class);
-            } else if (user.getRelationship() == null) {
-                mIntent = new Intent(mContext, RelationActivity.class);
-            } else if (user.getUsername() == null) {
-                mIntent = new Intent(mContext, UserNameActivity.class);
-            } else if (user.getPersonalBio() == null) {
-                mIntent = new Intent(mContext, BioActivity.class);
-            } else if (user.getProfilePicPath() == null) {
-                mIntent = new Intent(mContext, UploadProfileActivity.class);
-            } else if (user.getInterested() == null) {
-                mIntent = new Intent(mContext, InterestActivity.class);
-            } else if (user.getRestaurants() == null) {
-                mIntent = new Intent(mContext, RestaurantActivity.class);
-            } else if (user.getProfileVideoPath() == null) {
-                mIntent = new Intent(mContext, CameraActivity.class);
+            if (isBusiness) {
+                if (user.getBirthDate() == null) {
+                    mIntent = new Intent(mContext, BusinessStartingDateActivity.class);
+                } else if (user.getPersonalBio() == null) {
+                    mIntent = new Intent(mContext, BusinessBioActivity.class);
+                } else if (user.getProfilePicPath() == null) {
+                    mIntent = new Intent(mContext, UploadProfileActivity.class);
+                } else {
+                    mIntent = new Intent(mContext, BusinessUploadPhotoActivity.class);
+                }
             } else {
-                mIntent = new Intent(mContext, DashboardActivity.class);
-                SessionPref.getInstance(mContext).saveBoolKeyVal(LoginVerified, true);
+                if (user.getStatus().equals("false")) {
+                    mIntent = new Intent(mContext, OTPActivity.class);
+                    mIntent.putExtra("Phone", user.getPhoneNo());
+                    mIntent.putExtra("resendOTP", true);
+                    mIntent.putExtra("Forgot", false);
+
+                } else if (user.getBirthDate() == null) {
+                    mIntent = new Intent(mContext, AgeVerifiationActivity.class);
+
+                } else if (user.getGender() == null) {
+                    mIntent = new Intent(mContext, GenderSelActivity.class);
+                } else if (user.getRelationship() == null) {
+                    mIntent = new Intent(mContext, RelationActivity.class);
+                } else if (user.getUsername() == null) {
+                    mIntent = new Intent(mContext, UserNameActivity.class);
+                } else if (user.getPersonalBio() == null) {
+                    mIntent = new Intent(mContext, BioActivity.class);
+                } else if (user.getProfilePicPath() == null) {
+                    mIntent = new Intent(mContext, UploadProfileActivity.class);
+                } else if (user.getInterested() == null) {
+                    mIntent = new Intent(mContext, InterestActivity.class);
+                } else if (user.getRestaurants() == null) {
+                    mIntent = new Intent(mContext, RestaurantActivity.class);
+                } else if (user.getProfileVideoPath() == null) {
+                    mIntent = new Intent(mContext, CameraActivity.class);
+                } else {
+                    mIntent = new Intent(mContext, DashboardActivity.class);
+                    SessionPref.getInstance(mContext).saveBoolKeyVal(LoginVerified, true);
+                }
             }
-            if (null != mIntent) {
-                startActivity(mIntent);
-                finish();
-            }
+            startActivity(mIntent);
+            finish();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -422,7 +429,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     private void handleSignInResult(Task<GoogleSignInAccount> task) {
 
-        if(task.isSuccessful()){
+        if (task.isSuccessful()) {
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
@@ -448,8 +455,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 Log.e("EXCEPTION", e.toString());
                 Log.e("EXCEPTION", "signInResult:failed code=" + e.getStatusCode());
             }
-        }else{
-            Toast.makeText(getApplicationContext(),"Sign in cancel",Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getApplicationContext(), "Sign in cancel", Toast.LENGTH_LONG).show();
         }
 
     }

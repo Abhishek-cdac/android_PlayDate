@@ -103,8 +103,12 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
         setDarkModeSwitch();
         setValues();
 
-        if (!pref.getStringVal(SessionPref.LoginUserrelationship).equals("Single")) {
-            callCoupleAPI();
+        try {
+            if (!pref.getStringVal(SessionPref.LoginUserrelationship).equals("Single")) {
+                callCoupleAPI();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
 

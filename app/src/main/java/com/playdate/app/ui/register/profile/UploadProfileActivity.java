@@ -13,6 +13,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 
 import com.playdate.app.R;
+import com.playdate.app.business.businessphoto.BusinessUploadPhotoActivity;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.databinding.ActivityUploadProfileBinding;
@@ -134,8 +135,14 @@ public class UploadProfileActivity extends AppCompatActivity {
                         setResult(407, mIntent);
                         finish();
                     } else {
-                        startActivity(new Intent(UploadProfileActivity.this, InterestActivity
-                                .class));
+                        if(pref.getBoolVal(SessionPref.isBusiness)){
+                            startActivity(new Intent(UploadProfileActivity.this, BusinessUploadPhotoActivity
+                                    .class));
+                        }else{
+                            startActivity(new Intent(UploadProfileActivity.this, InterestActivity
+                                    .class));
+                        }
+
                     }
 
 

@@ -16,6 +16,7 @@ import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.databinding.ActivityBusinessBioBinding;
 
 import com.playdate.app.model.LoginResponse;
+import com.playdate.app.ui.register.profile.UploadProfileActivity;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
@@ -67,10 +68,9 @@ public class BusinessBioActivity extends AppCompatActivity {
                         setResult(410, mIntent);
                         finish();
                     } else {
-                     startActivity(new Intent(BusinessBioActivity.this, BusinessUploadPhotoActivity.class));
-                     finish();
+                        callAPI();
                     }
-                  //  callAPI();
+                  //
                 }
 
 
@@ -92,7 +92,7 @@ public class BusinessBioActivity extends AppCompatActivity {
         Map<String, String> hashMap = new HashMap<>();
         String bio = businessBioViewModel.BioText.getValue();
         hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
-        hashMap.put("businessbio", bio);// format 1990-08-12
+        hashMap.put("personalBio", bio);
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
         pd.show();
 //      Toast.makeText(this, ""+pref.getStringVal(SessionPref.LoginUsertoken), Toast.LENGTH_SHORT).show();
@@ -113,7 +113,7 @@ public class BusinessBioActivity extends AppCompatActivity {
                             finish();
                         } else {
 
-                          //  startActivity(new Intent(BusinessBioActivity.this, CoupleUploadProfileActivity.class));
+                            startActivity(new Intent(BusinessBioActivity.this, UploadProfileActivity.class));
 
                         }
 

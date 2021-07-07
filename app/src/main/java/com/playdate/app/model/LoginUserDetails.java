@@ -31,8 +31,15 @@ public class LoginUserDetails {
     String mediaId;
     String fullPath;
     String inviteLink;
+    String userType;
 
+    public String getUserType() {
+        return userType;
+    }
 
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
 
     String relationship;
     String personalBio;

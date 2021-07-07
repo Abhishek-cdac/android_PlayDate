@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -63,24 +62,23 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/card"
             android:layout_width="@dimen/_250sdp"
-            android:layout_height="@dimen/_200sdp"
+            android:layout_height="@dimen/_250sdp"
+            android:layout_below="@+id/ll_header"
+            android:layout_centerHorizontal="true"
             android:background="@color/white"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="30dp"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/ll_header"
             app:cardElevation="0dp">
 
             <ImageView
-                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/profile_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="fitXY"
                 android:background="@color/color_grey_light"
+                android:padding="@dimen/_35sdp"
+                android:scaleType="fitXY"
 
-                android:src="@drawable/business_ic_placeholder_restaurent"
-              />
+                android:src="@drawable/business_ic_placeholder_restaurent" />
 
         </androidx.cardview.widget.CardView>
 
@@ -110,13 +108,13 @@
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
+
             <Button
 
                 android:id="@+id/btn_changeImage"
                 android:layout_width="@dimen/_130sdp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:visibility="gone"
                 android:layout_marginLeft="@dimen/_30sdp"
                 android:layout_marginTop="@dimen/_25sdp"
                 android:layout_marginRight="@dimen/_30sdp"
@@ -127,9 +125,11 @@
                 android:text="@string/change_image"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/_12sdp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone" />
 
             <TextView
+                android:id="@+id/txt_or"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -137,10 +137,9 @@
                 android:fontFamily="@font/lato_bold"
                 android:gravity="center"
                 android:text="OR"
-                android:id="@+id/txt_or"
-                android:visibility="gone"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_10sdp" />
+                android:textSize="@dimen/_10sdp"
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/btn_camera"
@@ -154,10 +153,10 @@
                 android:onClick="@{(v) -> BusinessUploadPhotoViewModel.OnCamera(v)}"
                 android:padding="@dimen/_10sdp"
                 android:text="@string/take_photo"
-                android:visibility="gone"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/_12sdp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone" />
 
 
         </LinearLayout>
@@ -165,7 +164,6 @@
         <ImageView
             android:id="@+id/iv_next"
             android:layout_width="@dimen/_50sdp"
-            android:visibility="gone"
             android:layout_height="@dimen/_50sdp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
@@ -173,7 +171,8 @@
             android:background="@drawable/arrow_back_circle"
             android:onClick="@{(v) -> BusinessUploadPhotoViewModel.onNext(v)}"
             android:padding="@dimen/_12sdp"
-            android:src="@drawable/arrow_right" />
+            android:src="@drawable/arrow_right"
+            android:visibility="gone" />
     </RelativeLayout>
 
 </layout>

@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.playdate.app.R;
+import com.playdate.app.business.startdate.BusinessStartingDateActivity;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.databinding.ActivityOtpBinding;
@@ -40,7 +41,7 @@ public class OTPActivity extends AppCompatActivity {
     private ActivityOtpBinding binding;
     private Intent mIntent;
     private Handler mHandler;
-    private static int TIMER = 3000;
+    private SessionPref pref;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,7 +56,7 @@ public class OTPActivity extends AppCompatActivity {
         phone = mIntent.getStringExtra("Phone");
         otpViewModel.setMobile(phone);
         otpViewModel.startTimer();
-
+        pref = SessionPref.getInstance(this);
         otpViewModel.onRegisterUser().observe(this, loginUser -> {
 
 
@@ -113,6 +114,7 @@ public class OTPActivity extends AppCompatActivity {
     private void stopAnimAfter3Sec() {
         binding.spinKit.setVisibility(View.VISIBLE);
         binding.ivDone.setVisibility(View.GONE);
+        int TIMER = 3000;
         mHandler.postDelayed(() -> {
             binding.spinKit.setVisibility(View.INVISIBLE);
             binding.ivDone.setVisibility(View.VISIBLE);
@@ -141,7 +143,6 @@ public class OTPActivity extends AppCompatActivity {
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
                         nextPage();
-                        SessionPref pref = SessionPref.getInstance(OTPActivity.this);
                         pref.saveBoolKeyVal(LoginVerified, true);
                         finish();
                     } else {
@@ -196,7 +197,12 @@ public class OTPActivity extends AppCompatActivity {
     }
 
     private void nextPage() {
-        OTPActivity.this.startActivity(new Intent(OTPActivity.this, AgeVerifiationActivity.class));
+        if (pref.getBoolVal(SessionPref.isBusiness)) {
+            OTPActivity.this.startActivity(new Intent(OTPActivity.this, BusinessStartingDateActivity.class));
+        } else {
+            OTPActivity.this.startActivity(new Intent(OTPActivity.this, AgeVerifiationActivity.class));
+        }
+
 
     }
 }

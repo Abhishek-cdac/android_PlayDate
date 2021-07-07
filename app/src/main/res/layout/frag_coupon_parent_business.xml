@@ -117,7 +117,7 @@
         app:tabTextAppearance="@style/CustomTabs"
         app:tabTextColor="@color/blue_grey" />
 
-    <androidx.viewpager.widget.ViewPager
+    <com.playdate.app.ui.coupons.WrapContentViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

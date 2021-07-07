@@ -47,7 +47,9 @@ public class BusinessStartingDateActivity extends AppCompatActivity {
 
 
         business_Starting_Date_ViewModel.onRegisterUser().observe(this, loginUser -> BusinessStartingDateActivity.this.startActivity(new Intent(BusinessStartingDateActivity.this, OTPActivity.class)));
-        business_Starting_Date_ViewModel.iv_backClick.observe(this, loginUser -> finish());
+        business_Starting_Date_ViewModel.iv_backClick.observe(this, loginUser -> {
+            finish();
+        });
         business_Starting_Date_ViewModel.DaySelectedPosition().observe(this, val -> {
         });
         business_Starting_Date_ViewModel.MonthSelectedPosition().observe(this, val -> business_Starting_Date_ViewModel.setDays(val));
@@ -61,9 +63,7 @@ public class BusinessStartingDateActivity extends AppCompatActivity {
             } else if (business_Starting_Date_ViewModel.getDaySelected().toLowerCase().equals("day")) {
                 clsCommon.showDialogMsg(this, "PlayDate", "Please select day of business starting date", "Ok");
             } else {
-                startActivity(new Intent(BusinessStartingDateActivity.this, BusinessBioActivity.class));
-                finish();
-                //    callAPI();
+                   callAPI();
             }
 
         });

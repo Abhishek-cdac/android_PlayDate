@@ -68,13 +68,14 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
     private GoogleSignInClient googleApiClient;
     private static final int RC_SIGN_IN = 1;
     private CommonClass clsCommon;
-    private Intent mIntent;
+    private boolean isBusiness = false;
+
     private SessionPref pref;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mIntent = getIntent();
+
         pref = SessionPref.getInstance(this);
         clsCommon = CommonClass.getInstance();
         RegisterViewModel registerViewModel = new RegisterViewModel();
@@ -94,23 +95,38 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
 
         iv_show_password = findViewById(R.id.iv_show_password);
         login_Password = findViewById(R.id.login_Password);
+        String userType = getIntent().getStringExtra("userType");
 
+        if (userType.toLowerCase().equals("person")) {
+            isBusiness = false;
+        } else {
+            isBusiness = true;
+            binding.edtFullname.setHint("Business Name");
+            SessionPref pref = SessionPref.getInstance(this);
+            pref.saveBoolKeyVal(SessionPref.isBusiness, isBusiness);
+        }
 
         registerViewModel.getFinish().observe(this, aBoolean -> finish());
 
         registerViewModel.getRegisterUser().observe(this, registerUser -> {
             if (TextUtils.isEmpty(Objects.requireNonNull(registerUser).getFullname())) {
-                clsCommon.showDialogMsg(RegisterActivity.this, "PlayDate", "Enter full name", "Ok");
+                if (isBusiness) {
+                    clsCommon.showDialogMsg(RegisterActivity.this, "PlayDate", "Enter Business Name", "Ok");
+                } else {
+                    clsCommon.showDialogMsg(RegisterActivity.this, "PlayDate", "Enter Full Name", "Ok");
+                }
+
             } else if (TextUtils.isEmpty(Objects.requireNonNull(registerUser).getAddress())) {
-                clsCommon.showDialogMsg(RegisterActivity.this, "PlayDate", "Enter address", "Ok");
+                clsCommon.showDialogMsg(RegisterActivity.this, "PlayDate", "Enter Address", "Ok");
             } else if (TextUtils.isEmpty(Objects.requireNonNull(registerUser).getPhoneNo())) {
-                clsCommon.showDialogMsg(RegisterActivity.this, "PlayDate", "Enter phone number", "Ok");
+                clsCommon.showDialogMsg(RegisterActivity.this, "PlayDate", "Enter Phone Number", "Ok");
             } else if ((registerUser).getPhoneNo().length() < 10) {
-                clsCommon.showDialogMsg(RegisterActivity.this, "PlayDate", "Enter proper phone number", "Ok");
+                clsCommon.showDialogMsg(RegisterActivity.this, "PlayDate", "Enter Proper Phone Number", "Ok");
             } else if (TextUtils.isEmpty(Objects.requireNonNull(registerUser).getPassword())) {
-                clsCommon.showDialogMsg(RegisterActivity.this, "PlayDate", "Enter password", "Ok");
+                clsCommon.showDialogMsg(RegisterActivity.this, "PlayDate", "Enter Password", "Ok");
             } else {
-                callAPI(registerUser);
+
+                callAPI(registerUser, userType);
             }
 
         });
@@ -153,7 +169,8 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
         return android_id;
     }
 
-    private void callAPI(RegisterUser registerUser) {
+    private void callAPI(RegisterUser registerUser, String userType) {
+
 
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
@@ -164,7 +181,7 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
         hashMap.put("deviceToken", getFCM());
         hashMap.put("phoneNo", registerUser.getPhoneNo());
         hashMap.put("password", registerUser.getPassword());
-        hashMap.put("userType", mIntent.getStringExtra("userType"));
+        hashMap.put("userType", userType);
         hashMap.put("inviteCode", "");
         hashMap.put("deviceID", getDeviceID());
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
@@ -199,7 +216,8 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
                                 user.getSourceSocialId(),
                                 user.getInviteCode(),
                                 user.getPaymentMode(),
-                                user.getInviteLink()
+                                user.getInviteLink(),
+                                user.getUserType().toLowerCase().equals("business")
                         );
 
                         nextPage(registerUser);

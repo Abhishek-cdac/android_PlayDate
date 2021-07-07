@@ -29,7 +29,6 @@ public class RegisterViewModel extends ViewModel {
     public MutableLiveData<RegisterUser> getRegisterUser() {
 
         if (userMutableLiveData == null) {
-            Log.d("ddd", "init called");
             userMutableLiveData = new MutableLiveData<>();
             user = new RegisterUser("", "", "", "", "", "");
         }

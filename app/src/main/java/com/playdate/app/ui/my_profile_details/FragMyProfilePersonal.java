@@ -109,11 +109,15 @@ public class FragMyProfilePersonal extends Fragment implements View.OnClickListe
                         if (lst_getPostDetail == null) {
                             lst_getPostDetail = new ArrayList<>();
                         }
-                        pref.saveStringKeyVal(SessionPref.LoginUserrelationship, lst_getPostDetail.get(0).getRelationship());
-                        if (pref.getStringVal(SessionPref.LoginUserrelationship).equals("Single")) {
-                            txt_relationship.setText("Single");
-                        } else {
-                            txt_relationship.setText("In a relationship");
+                        try {
+                            pref.saveStringKeyVal(SessionPref.LoginUserrelationship, lst_getPostDetail.get(0).getRelationship());
+                            if (pref.getStringVal(SessionPref.LoginUserrelationship).equals("Single")) {
+                                txt_relationship.setText("Single");
+                            } else {
+                                txt_relationship.setText("In a relationship");
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
                     }
                 }

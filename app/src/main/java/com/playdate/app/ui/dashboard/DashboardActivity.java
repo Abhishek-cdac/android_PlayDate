@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.playdate.app.R;
+import com.playdate.app.business.couponsGenerate.FragCouponParentBusiness;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.FriendsListModel;
@@ -105,6 +106,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
     private final int CAMERA = 2;
 
     public static Bitmap bitmap = null;
+    ImageView iv_date;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -139,7 +141,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
         ImageView iv_create_ano_ques = findViewById(R.id.iv_create_ano_ques);
         ImageView iv_dashboard_notification = findViewById(R.id.iv_dashboard_notification);
         iv_coupons = findViewById(R.id.iv_coupons);
-        ImageView iv_date = findViewById(R.id.iv_date);
+        iv_date = findViewById(R.id.iv_date);
         LinearLayout ll_take_photo = findViewById(R.id.ll_take_photo);
         LinearLayout ll_upload_photo = findViewById(R.id.ll_upload_photo);
         LinearLayout ll_Record_video = findViewById(R.id.ll_Record_video);
@@ -153,10 +155,14 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
         rv_friends.setAdapter(adapterfriend);
         rv_friends.setLayoutManager(manager);
 
-        if (pref.getStringVal(SessionPref.LoginUserrelationship).equals("Single")) {
-            txt_match.setVisibility(View.VISIBLE);
-        } else {
+        if (pref.getBoolVal(SessionPref.isBusiness)) {
             txt_match.setVisibility(View.GONE);
+        } else {
+            if (pref.getStringVal(SessionPref.LoginUserrelationship).equals("Single")) {
+                txt_match.setVisibility(View.VISIBLE);
+            } else {
+                txt_match.setVisibility(View.GONE);
+            }
         }
         boolean isFirstTime = checkFirstFrag();
         Fragment fragOne;
@@ -490,7 +496,12 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
             iv_profile_sett.setBackground(null);
             iv_profile_sett.setImageResource(R.drawable.tech_support);
             ll_friends.setVisibility(View.GONE);
-            ReplaceFrag(new FragCouponParent());
+            if(pref.getBoolVal(SessionPref.isBusiness)){
+                ReplaceFrag(new FragCouponParentBusiness());
+            }else{
+                ReplaceFrag(new FragCouponParent());
+            }
+
             //   ReplaceFrag(new FragLocationTracing());
 
         } else if (id == R.id.ll_profile_support) {
@@ -825,10 +836,15 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
     protected void onResume() {
         super.onResume();
         callNotification();
-        if (pref.getStringVal(SessionPref.LoginUserrelationship).equals("Single")) {
-            txt_match.setVisibility(View.VISIBLE);
-        } else {
+        if (pref.getBoolVal(SessionPref.isBusiness)) {
             txt_match.setVisibility(View.GONE);
+            iv_date.setImageResource(R.drawable.ic_white_add_circle);
+        } else {
+            if (pref.getStringVal(SessionPref.LoginUserrelationship).equals("Single")) {
+                txt_match.setVisibility(View.VISIBLE);
+            } else {
+                txt_match.setVisibility(View.GONE);
+            }
         }
         try {
             boolean permissionGranted = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;

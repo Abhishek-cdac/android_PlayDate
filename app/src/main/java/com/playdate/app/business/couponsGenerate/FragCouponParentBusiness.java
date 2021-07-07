@@ -19,13 +19,15 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.playdate.app.R;
 import com.playdate.app.business.couponsGenerate.adapter.CoupounPageBusinessAdapter;
+import com.playdate.app.ui.coupons.OnSizeDecided;
+import com.playdate.app.ui.coupons.WrapContentViewPager;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.util.session.SessionPref;
 
-public class FragCouponParentBusiness extends Fragment implements OnInnerFragmentClicks {
+public class FragCouponParentBusiness extends Fragment implements OnInnerFragmentClicks , OnSizeDecided {
 
     //    WrapContentViewPager viewpager;
-    ViewPager viewpager;
+    WrapContentViewPager viewpager;
     private RecyclerView rv_coupons_list;
     private SessionPref pref;
     private TextView txt_coupons;
@@ -53,6 +55,7 @@ public class FragCouponParentBusiness extends Fragment implements OnInnerFragmen
         tabLayout.addTab(tabLayout.newTab().setText(" Active "));
         tabLayout.addTab(tabLayout.newTab().setText("   Expired   "));
 
+
         generator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,6 +82,26 @@ public class FragCouponParentBusiness extends Fragment implements OnInnerFragmen
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+        viewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                viewpager.reMeasureCurrentPage(position);
+                if (position == 0) {
+                } else {
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
 
             }
         });
@@ -146,6 +169,11 @@ public class FragCouponParentBusiness extends Fragment implements OnInnerFragmen
 
     @Override
     public void loadMatchProfile(String UserID) {
+
+    }
+
+    @Override
+    public void setSize(double size) {
 
     }
 }
