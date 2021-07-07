@@ -12,46 +12,25 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_diamond_normal" />
 
-    <!--    <RelativeLayout-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        app:layout_constraintLeft_toRightOf="@+id/diamond"-->
-    <!--        app:layout_constraintTop_toTopOf="parent"-->
-    <!--        android:layout_height="wrap_content">-->
-
-    <!--        <TextView-->
-    <!--            android:id="@+id/tv_chat_other"-->
-    <!--            android:layout_width="@dimen/_240sdp"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_centerVertical="true"-->
-    <!--            android:layout_marginLeft="@dimen/_5sdp"-->
-    <!--            android:background="@drawable/btn_blue_filled"-->
-    <!--            android:maxLines="5"-->
-    <!--            android:paddingHorizontal="@dimen/_12sdp"-->
-    <!--            android:paddingVertical="@dimen/_8sdp"-->
-    <!--            android:text="Hey myron! how are you Hey myron!how are youHey myron! how are youHey myron!how are youHey myron! how are you "-->
-    <!--            android:textColor="@color/white"-->
-    <!--            android:textSize="@dimen/_10sdp"-->
-    <!--            />-->
-    <!--    </RelativeLayout>-->
-
     <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/transparent"
         android:layout_marginStart="@dimen/_5sdp"
-        android:layout_toEndOf="@+id/diamond">
+        android:layout_toEndOf="@+id/diamond"
+        android:background="@color/transparent">
 
         <TextView
             android:id="@+id/tv_chat_other"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginBottom="@dimen/_18sdp"
             android:background="@drawable/btn_blue_filled"
             android:paddingHorizontal="@dimen/_12sdp"
+            android:textAlignment="center"
             android:paddingTop="@dimen/_8sdp"
-            android:paddingBottom="@dimen/_25sdp"
-            android:text="Hey myron! how are you,Hey myron! how are you ,Hey myron! how are you  how are you ,Hey myron! how are you ,Hey myron! how are you  Hey myron!how are youHey myron! how are youHey myron!how are youHey myron! how are you "
+            android:paddingBottom="@dimen/_27sdp"
+            android:text="Hey myron! how are you"
             android:textColor="@color/white"
             android:textSize="@dimen/_10sdp" />
 
@@ -61,7 +40,8 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_gravity="bottom|left"
-            android:layout_marginStart="@dimen/_25sdp"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
             android:background="@drawable/pink_filled"
             android:paddingHorizontal="@dimen/_18sdp"
             android:paddingVertical="@dimen/_8sdp"
@@ -73,8 +53,9 @@
             android:id="@+id/answer2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
             android:layout_gravity="bottom|right"
-            android:layout_marginEnd="@dimen/_25sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
             android:background="@drawable/pink_filled"
             android:paddingHorizontal="@dimen/_18sdp"
             android:paddingVertical="@dimen/_8sdp"
