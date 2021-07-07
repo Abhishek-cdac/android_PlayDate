@@ -2,7 +2,6 @@ package com.playdate.app.ui.chat;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -23,12 +22,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.CommonModel;
 import com.playdate.app.model.chat_models.ChatMessage;
+import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.ui.playvideo.ExoPlayerActivity;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.photoview.PhotoViewActivity;
@@ -50,20 +49,25 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final Context mContext;
     private final ArrayList<ChatMessage> lst_chat;
+    //    private final ArrayList<PollingQuestion> lst_pollingQuestion;
+//    private ArrayList<ChatTotalResponse> lst_chatResponse = new ArrayList<>();
     private MediaPlayer mediaPlayer;
     private GoogleMap googleMap;
-
+    private final Onclick itemClick;
     private final Picasso picasso;
     private final SessionPref pref;
     private final String LoginUserID;
 
-    public ChatAdapter(ArrayList<ChatMessage> chatmsgList, Context mContext) {
+    public ChatAdapter(ArrayList<ChatMessage> chatmsgList, Context mContext, Onclick itemClick) {
         this.lst_chat = chatmsgList;
+        this.itemClick = itemClick;
         picasso = Picasso.get();
         pref = SessionPref.getInstance(mContext);
         LoginUserID = pref.getStringVal(SessionPref.LoginUserID);
         this.mContext = mContext;
+
     }
+
 
     @Override
     public int getItemCount() {
@@ -75,10 +79,16 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        if (LoginUserID.equals(lst_chat.get(position).getUserID())) {
-            return 0;
+
+
+        if (lst_chat.get(position).getType().toLowerCase().equals("polling")) {
+            return 2;
         } else {
-            return 1;
+            if (LoginUserID.equals(lst_chat.get(position).getUserID())) {
+                return 0;
+            } else {
+                return 1;
+            }
         }
 
     }
@@ -155,7 +165,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 try {
                     picasso.load(lst_chat.get(position).getMediaInfo().get(0).getMediaFullPath()).into(viewHolderMe.chat_image);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    e.printStackTrace(); //working ok , Take a data from that object now
                 }
 
             } else {
@@ -318,7 +328,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                                 Uri gmmIntentUri = Uri.parse("geo:" + lattitude + "," + longitude + "?z=17");
                                 Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                                 mapIntent.setPackage("com.google.android.apps.maps");
-                                
+
                                 if (mapIntent.resolveActivity(mContext.getPackageManager()) != null) {
                                     mContext.startActivity(mapIntent);
                                 } else {
@@ -409,17 +419,18 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         } ///
         else if (holder.getItemViewType() == 2) {
             ViewHolderOther viewHolderOther = (ViewHolderOther) holder;
-            viewHolderOther.tv_msg.setText(lst_chat.get(position).getMessage());
+            viewHolderOther.tv_msg.setText(lst_chat.get(position).getPolling().getQuestion());
+            viewHolderOther.answer1.setText(lst_chat.get(position).getPolling().getPollingOption().get(0).getOption());
+            viewHolderOther.answer2.setText(lst_chat.get(position).getPolling().getPollingOption().get(1).getOption());
+
             viewHolderOther.answer1.setOnClickListener(v -> {
-                pref.saveStringKeyVal("Answer", viewHolderOther.answer1.getText().toString());
-                new WinnerActivity(mContext, "1").show();
-                notifyDataSetChanged();
+                itemClick.onItemClicks(v, position, 10, lst_chat.get(position).getPolling().getPollingOption().get(0).getQuestionId(),
+                        lst_chat.get(position).getPolling().getPollingOption().get(0).getOptionId());
+
             });
             viewHolderOther.answer2.setOnClickListener(v -> {
-                pref.saveStringKeyVal("Answer", viewHolderOther.answer2.getText().toString());
-                new WinnerActivity(mContext, "0").show();
-
-                notifyDataSetChanged();
+                itemClick.onItemClicks(v, position, 10, lst_chat.get(position).getPolling().getPollingOption().get(1).getQuestionId(),
+                        lst_chat.get(position).getPolling().getPollingOption().get(1).getOptionId());
             });
         }
     }

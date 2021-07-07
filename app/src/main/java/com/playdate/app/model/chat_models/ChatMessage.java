@@ -27,6 +27,16 @@ public class ChatMessage {
     private String chatId;
     private String messageId;
 
+    public String getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(String questionId) {
+        this.questionId = questionId;
+    }
+
+    private String questionId;
+
     @SerializedName("from")
     @Expose
     private String from;
@@ -39,6 +49,16 @@ public class ChatMessage {
 
     @SerializedName("mediaInfo")
     ArrayList<MediaInfo> mediaInfo;
+
+    PollingQuestion polling;
+
+    public PollingQuestion getPolling() {
+        return polling;
+    }
+
+    public void setPolling(PollingQuestion polling) {
+        this.polling = polling;
+    }
 
     String UserName;
     String UserImage;

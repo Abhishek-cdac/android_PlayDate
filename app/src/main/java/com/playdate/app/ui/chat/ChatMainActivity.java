@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.location.LocationManager;
 import android.media.MediaRecorder;
 import android.net.Uri;
@@ -23,7 +22,6 @@ import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -36,11 +34,11 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.JsonObject;
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
@@ -50,7 +48,10 @@ import com.playdate.app.model.chat_models.ChatFileUpload;
 import com.playdate.app.model.chat_models.ChatMessage;
 import com.playdate.app.model.chat_models.ChatMsgResp;
 import com.playdate.app.model.chat_models.MediaInfo;
+import com.playdate.app.model.chat_models.PollingQuestion;
+import com.playdate.app.model.chat_models.PollingResponse;
 import com.playdate.app.service.GpsTracker;
+import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.util.MyApplication;
 import com.playdate.app.util.common.AudioRecordProgressDialog;
 import com.playdate.app.util.common.BaseActivity;
@@ -99,7 +100,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.Manifest.permission.RECORD_AUDIO;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.ALL_PERMISSIONS_RESULT;
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.PICK_PHOTO_FOR_AVATAR;
@@ -129,6 +129,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     private String UserID = "";
     private double lattitude;
     private double longitude;
+    private Onclick itemClick;
 
 
     private final int REQUEST_AUDIO_PERMISSION_CODE = 1;
@@ -269,6 +270,36 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         checker = new PermissionsChecker(getApplicationContext());
         loadUsers();
 
+        itemClick = new Onclick() {
+            @Override
+            public void onItemClick(View view, int position, int value) {
+
+            }
+
+            @Override
+            public void onItemClicks(View view, int position, int value, String s) {
+
+            }
+
+            @Override
+            public void onItemClicks(View v, int adapterPosition, int i, String questionId, String optionId) {
+                if (i == 10) {
+                    sendResponse(questionId, optionId);
+                }
+
+            }
+
+            @Override
+            public void onItemClicks(View v, int absoluteAdapterPosition, int i, String commentId, String postId, String userId) {
+
+            }
+
+            @Override
+            public void onItemClicks(View v, int position, int i, String username, String totalPoints, String id, String profilePicPath) {
+
+            }
+        };
+
     }
 
     private void listen() {
@@ -276,6 +307,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             mSocket.on("chat_message_room", onNewMessage);
             mSocket.on("typing", onTyping);
             mSocket.on("chat_room", ChatRoomCreated);
+            mSocket.on("chat_question_answer", ChatQuestioAnswer);
             Log.d("****mSocket", mSocket.id());
 
         } catch (Exception e) {
@@ -322,6 +354,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     }
 
     private ArrayList<ChatMessage> lstChat;
+    private ArrayList<PollingQuestion> lstPollingQuestion;
 
     private void callAPI() {
 
@@ -341,15 +374,33 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             @Override
             public void onResponse(Call<ChatMsgResp> call, Response<ChatMsgResp> response) {
 //                pd.cancel();
+
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
                         ChatMsgResp resp = response.body();
                         if (null == lstChat) {
                             lstChat = new ArrayList<>();
+//                            lstPollingQuestion = new ArrayList<>();
+
                         }
                         if (PageNumber == 1) {
                             lstChat = resp.getLstChatMsg();
-                            adapter = new ChatAdapter(lstChat, ChatMainActivity.this);
+                            lstPollingQuestion = resp.getLstPollingQuestion();
+//                            lst_chatResponse.add(new ChatTotalResponse(lstChat, lstPollingQuestion));
+
+
+                            if (null != lstPollingQuestion) {
+
+                                for (int i = 0; i < lstPollingQuestion.size(); i++) {
+                                    ChatMessage msg = new ChatMessage();
+                                    msg.setPolling(lstPollingQuestion.get(i));
+                                    msg.setType("polling");
+                                    lstChat.add(msg);
+                                }
+
+                            }// run and check
+
+                            adapter = new ChatAdapter(lstChat, ChatMainActivity.this, itemClick);
                             rv_chat.setAdapter(adapter);
                             scrollTOEnd();
                         } else {
@@ -486,6 +537,23 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         }
     });
 
+    Emitter.Listener ChatQuestioAnswer = args -> runOnUiThread(() -> {
+        try {
+            JSONObject data = (JSONObject) args[0];
+            Log.d("****ChatQuestionAnswer", data.toString());
+            PollingResponse response = new PollingResponse();
+            response.setIsRightAnswer(data.getString("isRightAnswer"));
+            response.setPoints(data.getString("points"));
+            response.setAnswerOrder(data.getInt("answerOrder"));
+
+            Toast.makeText(this, "isRightAnswer " + data.getString("isRightAnswer"), Toast.LENGTH_SHORT).show();
+            Log.d("RightAnswer", "isRightAnswer: " + data.getString("isRightAnswer"));
+
+        } catch (Exception e) {
+
+        }
+    });
+
     private void sendMessgae(String msg, String Type, String mediaID) {
         if (null != mSocket) {
             if (mSocket.connected()) {
@@ -513,6 +581,32 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             }
             et_msg.setText("");
             et_msg.requestFocus();
+        }
+    }
+
+    private void sendResponse(String questionId, String optionId) {
+
+        if (null != mSocket) {
+            if (mSocket.connected()) {
+
+                try {
+                    JSONObject jsonObject = new JSONObject();
+
+                    jsonObject.put("userId", pref.getStringVal(SessionPref.LoginUserID));
+                    jsonObject.put("chatId", chatId);
+                    jsonObject.put("username", pref.getStringVal(SessionPref.LoginUserusername));
+                    jsonObject.put("profilePic", pref.getStringVal(SessionPref.LoginUserprofilePic));
+
+                    jsonObject.put("questionId", questionId);
+                    jsonObject.put("optionId", optionId);
+
+                    mSocket.emit("chat_question_answer", jsonObject);
+                    Log.d("sendResponse", "sendResponse: ");
+
+                } catch (Exception ignored) {
+                }
+
+            }
         }
     }
 
@@ -544,7 +638,6 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         apd = AudioRecordProgressDialog.getInstance(this);
 
 
-        
         apd.show();
 
         mRecorder = new MediaRecorder();
@@ -623,11 +716,11 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 
                 }
 
-            }else if (requestCode == REQUEST_LOCATION_CODE) {
-                if(data.getBooleanExtra("locationImg",false)){
+            } else if (requestCode == REQUEST_LOCATION_CODE) {
+                if (data.getBooleanExtra("locationImg", false)) {
                     sharelocation();
                 }
-            } else{
+            } else {
                 Log.d("Failed", "Failed to load");
                 //  Toast.makeText(this, "Failed to load", Toast.LENGTH_SHORT).show();
             }
@@ -855,6 +948,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                     jsonObject.put("token", pref.getStringVal(SessionPref.LoginUsertoken));
                     jsonObject.put("toUserId", userIDTo);
                     mSocket.emit("chat_room", jsonObject);
+
                 } catch (Exception ignored) {
 
                 }
@@ -957,7 +1051,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             handler.removeCallbacksAndMessages(null);
         }
 
-        locationBitmap=null;
+        locationBitmap = null;
         super.onDestroy();
 
     }
