@@ -1,8 +1,5 @@
 package com.playdate.app.ui.date.fragments;
 
-import android.Manifest;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -16,7 +13,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.github.ybq.android.spinkit.SpinKitView;
@@ -25,19 +21,14 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.RestMain;
-import com.playdate.app.service.GpsTracker;
-import com.playdate.app.service.LocationService;
-import com.playdate.app.ui.chat.ChatMainActivity;
-import com.playdate.app.ui.chat.MapActivity;
+import com.playdate.app.model.RestaurentData;
+import com.playdate.app.model.RestaurentModel;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
-import com.playdate.app.ui.restaurant.RestaurantActivity;
 import com.playdate.app.ui.restaurant.adapter.Restaurant;
-import com.playdate.app.ui.restaurant.adapter.RestaurantAdapter;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
@@ -51,8 +42,6 @@ import java.util.Map;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.playdate.app.ui.register.profile.UploadProfileActivity.REQUEST_LOCATION_CODE;
 
 public class FragLocationTracing extends Fragment implements OnMapReadyCallback {
 
@@ -116,31 +105,6 @@ public class FragLocationTracing extends Fragment implements OnMapReadyCallback 
         return view;
     }
 
-//    private void locationFetch() {
-//
-//
-//        GpsTracker gpsTracker = new GpsTracker(getActivity());
-//        if (gpsTracker.canGetLocation()) {
-//            this.lattitude = gpsTracker.getLatitude();
-//            this.longitude = gpsTracker.getLongitude();
-//            Log.d("latlong", "" + lattitude + "  " + longitude);
-//            if (String.valueOf(lattitude).equals("0.0") || String.valueOf(longitude).equals("0.0")) {
-//                locationFetch();
-//                Toast.makeText(getActivity(), "" + lattitude + " , " + longitude, Toast.LENGTH_SHORT).show();
-////                animationFirst();
-//
-//            } else {
-//                Log.d("Current Location", "locationFetch: " + lattitude + " , " + longitude);
-//                Toast.makeText(getActivity(), "" + lattitude + " , " + longitude, Toast.LENGTH_SHORT).show();
-//                animationSecond();
-////                animationFirst();
-//            }
-//        } else {
-//            gpsTracker.showSettingsAlert();
-////            locationFetch();
-//        }
-//    }
-
     private void animationFirst() {
 
         new Handler().postDelayed(new Runnable() {
@@ -184,6 +148,7 @@ public class FragLocationTracing extends Fragment implements OnMapReadyCallback 
                 tv_location.setText("We found you...");
                 spin_kit_location_trace.getLayoutParams().height = 200;
                 spin_kit_location_trace.getLayoutParams().width = 200;
+
                 reDirect();
             }
         }, 3000);
@@ -198,8 +163,6 @@ public class FragLocationTracing extends Fragment implements OnMapReadyCallback 
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
         pd.show();
         SessionPref pref = SessionPref.getInstance(getActivity());
-//        Toast.makeText(this, ""+pref.getStringVal(SessionPref.LoginUsertoken), Toast.LENGTH_SHORT).show();
-
 
         Call<RestMain> call = service.restaurants("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<RestMain>() {
@@ -210,6 +173,7 @@ public class FragLocationTracing extends Fragment implements OnMapReadyCallback 
                     assert response.body() != null;
                     if (response.body().getStatus() == 1) {
                         rest_list = response.body().getLst();
+                        latLongsOfRestaurant();
                         if (rest_list == null) {
                             rest_list = new ArrayList<>();
                         }
@@ -234,12 +198,86 @@ public class FragLocationTracing extends Fragment implements OnMapReadyCallback 
 
     }
 
+    private void latLongsOfRestaurant() {
+        ArrayList<Double> difflist = new ArrayList<>();
+        String newLatti = null;
+        String newLongi = null;
+
+        for (int i = 0; i < rest_list.size(); i++) {
+
+            double difference = lattitude - Double.parseDouble(rest_list.get(i).getLat());
+
+            for (int j = i + 1; j < rest_list.size(); j++) {
+                double diffnew = lattitude - Double.parseDouble(rest_list.get(j).getLat());
+
+                if (difference < diffnew) {
+                    newLatti = rest_list.get(i).getLat();
+                    newLongi = rest_list.get(i).getLongi();
+                }
+            }
+
+            Double differenceNew = lattitude - Double.parseDouble(rest_list.get(i).getLat());
+            difflist.add(differenceNew);
+
+            Log.d("DiffList", "latLongsOfRestaurantDiff: " + difflist.get(i));
+        }
+        getRestaurantDetail(newLatti, newLongi);
+        Log.d("NewLog", "latLongsOfRestaurantnew: " + newLatti + " , " + newLongi);
+
+    }
+
+    private ArrayList<RestaurentData> lst_getRestaurantsDetail;
+
+    private void getRestaurantDetail(String newLatti, String newLongi) {
+        SessionPref pref = SessionPref.getInstance(getActivity());
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("lat", newLatti);
+        hashMap.put("long", newLongi);
+
+        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
+        pd.show();
+        Call<RestaurentModel> call = service.getRestaurantDetails("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new Callback<RestaurentModel>() {
+            @Override
+            public void onResponse(Call<RestaurentModel> call, Response<RestaurentModel> response) {
+                pd.cancel();
+                if (response.code() == 200) {
+                    if (response.body().getStatus() == 1) {
+                        lst_getRestaurantsDetail = (ArrayList<RestaurentData>) response.body().getData();
+                        if (lst_getRestaurantsDetail == null) {
+                            lst_getRestaurantsDetail = new ArrayList<>();
+                        }
+                    } else {
+                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
+                    }
+                } else {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
+                    } catch (Exception e) {
+                        Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RestaurentModel> call, Throwable t) {
+                t.printStackTrace();
+                pd.cancel();
+                Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+    }
+
     private void reDirect() {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
-                frag.ReplaceFrag(new FragLocationConfirmation(rest_list.get(0).getName(), rest_list.get(0).getImage(), rest_list.get(0).getAddress()));
+                frag.ReplaceFrag(new FragLocationConfirmation(lst_getRestaurantsDetail.get(0).getName(), lst_getRestaurantsDetail.get(0).getImage(), lst_getRestaurantsDetail.get(0).getAddress()));
             }
         }, 1500);
     }
@@ -248,6 +286,7 @@ public class FragLocationTracing extends Fragment implements OnMapReadyCallback 
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
         LatLng loc = new LatLng(lattitude, longitude);
+
         mMap.setMinZoomPreference(12);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
     }
