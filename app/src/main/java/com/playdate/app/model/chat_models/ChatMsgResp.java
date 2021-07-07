@@ -12,6 +12,9 @@ public class ChatMsgResp {
     @SerializedName("data")
     private ArrayList<ChatMessage> lstChatMsg;
 
+    @SerializedName("questions")
+    private ArrayList<PollingQuestion> lstPollingQuestion;
+
     public int getStatus() {
         return status;
     }
@@ -34,5 +37,13 @@ public class ChatMsgResp {
 
     public void setLstChatMsg(ArrayList<ChatMessage> lstChatMsg) {
         this.lstChatMsg = lstChatMsg;
+    }
+
+    public ArrayList<PollingQuestion> getLstPollingQuestion() {
+        return lstPollingQuestion;
+    }
+
+    public void setLstPollingQuestion(ArrayList<PollingQuestion> lstPollingQuestion) {
+        this.lstPollingQuestion = lstPollingQuestion;
     }
 }
