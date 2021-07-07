@@ -543,11 +543,13 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             Log.d("****ChatQuestionAnswer", data.toString());
             PollingResponse response = new PollingResponse();
             response.setIsRightAnswer(data.getString("isRightAnswer"));
-            response.setPoints(data.getString("points"));
+            response.setPoints(data.getInt("points"));
             response.setAnswerOrder(data.getInt("answerOrder"));
 
-            Toast.makeText(this, "isRightAnswer " + data.getString("isRightAnswer"), Toast.LENGTH_SHORT).show();
             Log.d("RightAnswer", "isRightAnswer: " + data.getString("isRightAnswer"));
+
+            new WinnerActivity(ChatMainActivity.this, data.get("answerOrder").toString(), data.get("points").toString()).show();
+
 
         } catch (Exception e) {
 

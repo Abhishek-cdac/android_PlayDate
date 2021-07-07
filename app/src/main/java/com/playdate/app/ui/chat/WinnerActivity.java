@@ -19,7 +19,7 @@ public class WinnerActivity extends Dialog {
 //    private TextView txt_level;
 //    private String rank;
 
-    public WinnerActivity(@NonNull Context context, String rank) {
+    public WinnerActivity(@NonNull Context context, String rank, String points) {
         super(context, R.style.My_Dialog);
 //        this.rank = rank;
         WindowManager.LayoutParams wlmp = getWindow().getAttributes();
@@ -44,18 +44,18 @@ public class WinnerActivity extends Dialog {
 
 
         if (rank.equals("1")) {
-            txt_points.setText("+100");
+            txt_points.setText("+" + points);
             center.setVisibility(View.VISIBLE);
             img_medal.setImageResource(R.drawable.medal);
             txt_winner.setText("Winner!");
             txt_ans.setText("You answered first!");
         } else if (rank.equals("2")) {
-            txt_points.setText("+50");
+            txt_points.setText("+" + points);
             img_medal.setImageResource(R.drawable.medal_second);
             txt_winner.setText("Not Bad!");
             txt_ans.setText("You answered second!");
         } else {
-            txt_points.setText("0");
+            txt_points.setText(points);
             img_medal.setImageResource(R.drawable.brokenheart);
             txt_winner.setText("Nice Try!");
             txt_ans.setText("You answered wrong!");

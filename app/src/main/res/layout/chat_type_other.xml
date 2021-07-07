@@ -29,7 +29,7 @@
             android:paddingHorizontal="@dimen/_12sdp"
             android:textAlignment="center"
             android:paddingTop="@dimen/_8sdp"
-            android:paddingBottom="@dimen/_25sdp"
+            android:paddingBottom="@dimen/_27sdp"
             android:text="Hey myron! how are you"
             android:textColor="@color/white"
             android:textSize="@dimen/_10sdp" />
