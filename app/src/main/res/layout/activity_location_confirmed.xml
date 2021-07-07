@@ -51,7 +51,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/image_restaurant"
         android:layout_marginVertical="@dimen/_15sdp"
-        android:lines="3"
         android:paddingHorizontal="@dimen/_20sdp"
         android:text="Center city, bounded by 8th,Front, Walnut and Lombard Streets"
         android:textColor="@android:color/white"
