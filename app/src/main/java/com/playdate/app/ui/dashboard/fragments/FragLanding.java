@@ -67,6 +67,11 @@ public class FragLanding extends Fragment {
                 if (value == 10) {
                     callAddFriendRequestApi(s);
                 }
+                else if(value == 12){
+
+                    callchatRequestApi(s);
+
+                }
             }
 
             @Override
@@ -108,6 +113,40 @@ public class FragLanding extends Fragment {
 
         callGetUserSuggestionAPI();
         return view;
+    }
+
+    private void callchatRequestApi(String s) {
+
+        SessionPref pref = SessionPref.getInstance(getActivity());
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
+        hashMap.put("toUserId", s);
+        Log.e("ChatRequestModel", "" + pref.getStringVal(SessionPref.LoginUsertoken));
+        Call<CommonModel> call = service.addChatRequest("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        Log.e("ChatRequestModel", "" + hashMap);
+        call.enqueue(new Callback<CommonModel>() {
+            @Override
+            public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
+                if (response.code() == 200) {
+                    assert response.body() != null;
+                    clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
+
+                } else {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
+                    } catch (Exception e) {
+                        Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CommonModel> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 
     private void callGetUserSuggestionAPI() {
@@ -174,6 +213,7 @@ public class FragLanding extends Fragment {
         call.enqueue(new Callback<CommonModel>() {
             @Override
             public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
+
             }
 
             @Override

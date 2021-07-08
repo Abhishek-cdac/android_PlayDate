@@ -19,8 +19,6 @@ public class ChatMessage {
     @SerializedName("messageType")
     @Expose
     private String type;
-
-
     private String message;
     private String entryDate;
     private String userId;

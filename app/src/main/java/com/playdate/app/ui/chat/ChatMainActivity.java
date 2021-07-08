@@ -51,6 +51,8 @@ import com.playdate.app.model.chat_models.PollingQuestion;
 import com.playdate.app.model.chat_models.PollingResponse;
 import com.playdate.app.service.GpsTracker;
 import com.playdate.app.ui.chat.request.Onclick;
+import com.playdate.app.ui.date.DateBaseActivity;
+import com.playdate.app.ui.date.fragments.FragSelectDate;
 import com.playdate.app.util.MyApplication;
 import com.playdate.app.util.common.AudioRecordProgressDialog;
 import com.playdate.app.util.common.BaseActivity;
@@ -584,11 +586,13 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             Log.d("****ChatQuestionAnswer", data.toString());
             PollingResponse response = new PollingResponse();
             response.setIsRightAnswer(data.getString("isRightAnswer"));
-            response.setPoints(data.getString("points"));
+            response.setPoints(data.getInt("points"));
             response.setAnswerOrder(data.getInt("answerOrder"));
 
-            Toast.makeText(this, "isRightAnswer " + data.getString("isRightAnswer"), Toast.LENGTH_SHORT).show();
             Log.d("RightAnswer", "isRightAnswer: " + data.getString("isRightAnswer"));
+
+            new WinnerActivity(ChatMainActivity.this, data.get("answerOrder").toString(), data.get("points").toString()).show();
+
 
         } catch (Exception e) {
 
@@ -652,22 +656,6 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             }
         }
     }
-
-
-//    String question = "According to Forbes,which entreprenour became first person in history to have net worth of $400 billion?";
-//
-//    private void addQuestions() {
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-////                adapter.addQuestion(question);
-//                scrollTOEnd();
-
-//
-//
-//            }
-//        }, 5000);
-//    }
 
     private void startRecording() {
         ActivityCompat.requestPermissions(this, permissions, REQUEST_AUDIO_PERMISSION_CODE);
@@ -1404,15 +1392,6 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 
 
     public void sharelocation() {
-//        String encodedString = pref.getStringVal("locationImg");
-//        try {
-//            byte[] encodeByte = Base64.decode(encoded, Base64.DEFAULT);
-//            locationBitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-//
-//        } catch (Exception e) {
-//            e.getMessage();
-//        }
-
         if (locationBitmap != null) {
             Log.d("locatinBitmap", "locatinBitmap not null");
             addToListImage(locationBitmap, true);
@@ -1420,6 +1399,13 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         } else {
             Log.d("locatinBitmap", "locatinBitmap null");
         }
+    }
+
+    public void createDate() {
+        Intent intent = new Intent(ChatMainActivity.this, DateBaseActivity.class);
+        FragSelectDate.userIdTo = userIDTo;
+        DateBaseActivity.fromChat = true;
+        startActivity(intent);
     }
 }
 

@@ -15,7 +15,7 @@ public class PollingResponse {
     String chatId;
     String isRightAnswer;
     String optionId;
-    String points;
+    int points;
     String profilePic;
     String questionId;
     String userId;
@@ -29,11 +29,11 @@ public class PollingResponse {
         this.isRightAnswer = isRightAnswer;
     }
 
-    public String getPoints() {
+    public int getPoints() {
         return points;
     }
 
-    public void setPoints(String points) {
+    public void setPoints(int points) {
         this.points = points;
     }
 }

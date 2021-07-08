@@ -29,14 +29,22 @@ public class ChatBottomSheet extends BottomSheetDialogFragment {
         if (text.equals("Extra")) {
             view = inflater.inflate(R.layout.frag_chat_bottom_sheet, container, false);
             LinearLayout ll_location;
+            LinearLayout ll_date;
 
             ll_location = view.findViewById(R.id.ll_location);
+            ll_date = view.findViewById(R.id.ll_date);
             ll_location.setOnClickListener(v -> {
                 ref.onLocationSelect();
                 dismiss();
             });
 
-
+            ll_date.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ref.createDate();
+                    dismiss();
+                }
+            });
 
 
         } else {

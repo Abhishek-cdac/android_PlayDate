@@ -36,6 +36,8 @@ import com.yuyakaido.android.cardstackview.StackFrom;
 import com.yuyakaido.android.cardstackview.SwipeableMethod;
 import com.yuyakaido.android.cardstackview.internal.CardStackState;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -54,6 +56,7 @@ public class FragCardSwipe extends Fragment {
     private Onclick itemClick;
     private CardStackView cardStackView;
 
+    private CommonClass clsCommon;
     public FragCardSwipe() {
     }
 
@@ -61,6 +64,7 @@ public class FragCardSwipe extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tinder_swipe, container, false);
+        clsCommon = CommonClass.getInstance();
         itemClick = new Onclick() {
             @Override
             public void onItemClick(View view, int position, int value) {
@@ -75,6 +79,10 @@ public class FragCardSwipe extends Fragment {
 
                     } else if (value == 14) {
                         callAddUserMatchRequestAPI(s, "Unlike");
+
+                    }
+                    else if (value == 15) {
+                        callchatRequestApi(s);
 
                     }
 //                cardStackView.smoothScrollToPosition(manager.getTopPosition()+1);
@@ -208,6 +216,41 @@ public class FragCardSwipe extends Fragment {
                 t.printStackTrace();
                 pd.cancel();
                 Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void callchatRequestApi(String s) {
+
+        SessionPref pref = SessionPref.getInstance(getActivity());
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
+        hashMap.put("toUserId", s);
+        Log.e("ChatRequestMatchScreen", "" + pref.getStringVal(SessionPref.LoginUsertoken));
+        Call<CommonModel> call = service.addChatRequest("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        Log.e("ChatRequestMatchScreen", "" + hashMap);
+        call.enqueue(new Callback<CommonModel>() {
+            @Override
+            public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
+                if (response.code() == 200) {
+                    assert response.body() != null;
+                    clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
+
+                } else {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
+                    } catch (Exception e) {
+                        Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<CommonModel> call, Throwable t) {
+                t.printStackTrace();
             }
         });
     }
