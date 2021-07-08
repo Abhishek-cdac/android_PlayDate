@@ -1,6 +1,8 @@
 package com.playdate.app.ui.date;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.playdate.app.R;
 import com.playdate.app.ui.date.fragments.FragIntroScreen;
+import com.playdate.app.ui.date.fragments.FragSelectDate;
 import com.playdate.app.ui.interfaces.OnBackPressed;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 
@@ -17,6 +20,7 @@ import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 public class DateBaseActivity extends AppCompatActivity implements OnInnerFragmentClicks, OnBackPressed {
     private FragmentManager fm;
     private FragmentTransaction ft;
+    public static boolean fromChat;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,8 +32,15 @@ public class DateBaseActivity extends AppCompatActivity implements OnInnerFragme
     }
 
     private void firstFrag() {
-        Fragment fragIntro = new FragIntroScreen();
-//        Fragment fragIntro = new FragGameLeaderBoard();
+        Log.d("FromChat", "firstFrag: " + fromChat);
+        Fragment fragIntro;
+        if (fromChat) {
+            fragIntro = new FragSelectDate(true);
+            fromChat = false;
+        } else {
+            fragIntro = new FragIntroScreen();
+
+        }
         ft.add(R.id.fl_fragment, fragIntro);
         ft.commit();
     }
@@ -40,11 +51,10 @@ public class DateBaseActivity extends AppCompatActivity implements OnInnerFragme
         ft.replace(R.id.fl_fragment, fragment, fragment.getClass().getSimpleName());
         ft.addToBackStack("tags");
         ft.setTransition(FragmentTransaction.TRANSIT_NONE);
-        ft.setCustomAnimations(R.anim.slide_in_left,R.anim.slide_out_right);
+        ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
         ft.commitAllowingStateLoss();
 
     }
-
 
 
     @Override
