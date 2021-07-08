@@ -36,7 +36,7 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
     private Context mContext;
     private Onclick itemClick;
     private final RequestChatFragment frag;
-    private int selectedToDelete = -1;
+//    private int selectedToDelete = -1;
 
 
     private LandingBottomSheet bottomSheet;
@@ -167,44 +167,56 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
             }
 
 
-            String timeFormat = lst_msgs.get(position).getLastMsg().get(0).getEntryDate();
-            timeFormat = timeFormat.replace("T", " ");
-
-
-            Date date = null;
             try {
-                date = df.parse(timeFormat);
-            } catch (ParseException e) {
+                String timeFormat = lst_msgs.get(position).getLastMsg().get(0).getEntryDate();
+                timeFormat = timeFormat.replace("T", " ");
+
+
+                Date date = null;
+                try {
+                    date = df.parse(timeFormat);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                df.setTimeZone(TimeZone.getDefault());
+                String formattedDate = df.format(date);
+
+                if (formattedDate.contains(todaysDate)) {
+
+                    try {
+                        date = format1.parse(formattedDate);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    holder.txt_time.setText(format2.format(date));
+
+                } else if (findDayDiff(formattedDate) == 1) {
+                    holder.txt_time.setText("Yesterday");
+                } else {
+
+
+                    try {
+                        date = format3.parse(formattedDate);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    holder.txt_time.setText(format4.format(date));
+                }
+            } catch (Exception e) {
                 e.printStackTrace();
-            }
-            df.setTimeZone(TimeZone.getDefault());
-            String formattedDate = df.format(date);
-
-            if (formattedDate.contains(todaysDate)) {
-
-                try {
-                    date = format1.parse(formattedDate);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                holder.txt_time.setText(format2.format(date));
-
-            } else if (findDayDiff(formattedDate) == 1) {
-                holder.txt_time.setText("Yesterday");
-            } else {
-
-
-                try {
-                    date = format3.parse(formattedDate);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                holder.txt_time.setText(format4.format(date));
             }
 
             holder.main_ll.setOnClickListener(v -> {
 
                 frag.onClickEvent(lst_msgs.get(position));
+            });
+
+
+            holder.main_ll.setOnLongClickListener(v -> {
+                String chatId = lst_msgs.get(position).getChatId();
+                showBottomSheet(position, lst_msgs.get(position).getToUserId(), chatId);
+                notifyDataSetChanged();
+                return false;
             });
 
 
@@ -250,7 +262,7 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView user_name, msg, txt_count, txt_time;
         public ImageView profile_image, img_more, img_active;
-        public RelativeLayout main_menu;
+        public RelativeLayout main_rl;
         public LinearLayout ll_chat_details;
         public LinearLayout main_ll;
 
@@ -260,20 +272,20 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
             user_name = itemView.findViewById(R.id.user_name);
             txt_count = itemView.findViewById(R.id.txt_count);
             msg = itemView.findViewById(R.id.txt_msg);
-            main_menu = itemView.findViewById(R.id.main_rl);
+            main_rl = itemView.findViewById(R.id.main_rl);
             img_more = itemView.findViewById(R.id.img_more);
             profile_image = itemView.findViewById(R.id.profile_image);
             ll_chat_details = itemView.findViewById(R.id.ll_chat_details);
             img_active = itemView.findViewById(R.id.img_active);
             main_ll = itemView.findViewById(R.id.main_ll);
 
-            itemView.setOnLongClickListener(v -> {
-                selectedToDelete = getAdapterPosition();
-                String chatId = lst_msgs.get(getAbsoluteAdapterPosition()).getChatId();
-                showBottomSheet(selectedToDelete, lst_msgs.get(getAbsoluteAdapterPosition()).getToUserId(), chatId);
-                notifyDataSetChanged();
-                return true;
-            });
+//            main_rl.setOnLongClickListener(v -> {
+//                selectedToDelete = getAdapterPosition();
+//                String chatId = lst_msgs.get(getAbsoluteAdapterPosition()).getChatId();
+//                showBottomSheet(selectedToDelete, lst_msgs.get(getAbsoluteAdapterPosition()).getToUserId(), chatId);
+//                notifyDataSetChanged();
+//                return true;
+//            });
 
         }
     }

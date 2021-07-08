@@ -52,7 +52,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     //    private final ArrayList<PollingQuestion> lst_pollingQuestion;
 //    private ArrayList<ChatTotalResponse> lst_chatResponse = new ArrayList<>();
     private MediaPlayer mediaPlayer;
-    private GoogleMap googleMap;
+//    private GoogleMap googleMap;
     private final Onclick itemClick;
     private final Picasso picasso;
     private final SessionPref pref;
@@ -566,6 +566,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             mv_location = view.findViewById(R.id.mv_location);
             rl_body = view.findViewById(R.id.rl_body);
             rl_maps = view.findViewById(R.id.rl_maps);
+
             tv_msg.setOnLongClickListener(this);
             chat_image.setOnLongClickListener(this);
             card_video.setOnLongClickListener(this);

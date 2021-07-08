@@ -38,7 +38,6 @@ import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.JsonObject;
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
@@ -86,7 +85,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -145,7 +147,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     private boolean isMoreData = true;
 
     // Video Calling
-
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     protected QBResRequestExecutor requestExecutor;
     protected SharedPrefsHelper sharedPrefsHelper;
 
@@ -247,7 +249,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                     last_text_edit = System.currentTimeMillis();
                     handler.postDelayed(input_finish_checker, delay);
                 } else {
-
+                    mSocket.emit("typing", objNotTyping);
                 }
             }
         });
@@ -256,7 +258,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         scrollview.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
 
             if (scrollY == 0) {
-                callAPI();
+//                callAPI();
 
             }
 
@@ -299,7 +301,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 
             }
         };
-
+        callAPI();
     }
 
     private void listen() {
@@ -308,7 +310,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             mSocket.on("typing", onTyping);
             mSocket.on("chat_room", ChatRoomCreated);
             mSocket.on("chat_question_answer", ChatQuestioAnswer);
-            Log.d("****mSocket", mSocket.id());
+//            Log.d("****mSocket", mSocket.id());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -364,7 +366,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
 
-        hashMap.put("limit", "50");
+        hashMap.put("limit", "10");
         hashMap.put("pageNo", "" + PageNumber);
         hashMap.put("chatId", chatId);
         hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
@@ -392,10 +394,49 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                             if (null != lstPollingQuestion) {
 
                                 for (int i = 0; i < lstPollingQuestion.size(); i++) {
-                                    ChatMessage msg = new ChatMessage();
-                                    msg.setPolling(lstPollingQuestion.get(i));
-                                    msg.setType("polling");
-                                    lstChat.add(msg);
+                                    Log.d("pollingDate", lstPollingQuestion.get(i).getEntryDate());
+
+                                    int j = 0;
+                                    boolean found=false;
+                                    int foundIndex=0;
+                                    String d1=lstPollingQuestion.get(i).getEntryDate().replace("T"," ");
+                                    for (; j < lstChat.size(); j++) {
+                                        if (null != lstChat.get(j).getEntryDate()) {
+
+                                            try {
+
+                                                String d2=lstChat.get(j).getEntryDate().replace("T"," ");
+                                                Date pollDate = sdf.parse(d1);
+                                                Date MsgDate = sdf.parse(d2);
+                                                long diff = pollDate.getTime() - MsgDate.getTime();
+                                                if (diff <0) {// minus diff
+                                                    System.out.println("Date1 is after Date2");
+                                                } else { // plus diff
+                                                    found=true;
+                                                    foundIndex=j;
+                                                    j = lstChat.size();
+
+                                                }
+                                            } catch (ParseException e) {
+                                                e.printStackTrace();
+                                            }
+
+                                        }
+                                    }
+                                    if(found){
+                                        ChatMessage msg = new ChatMessage();
+                                        msg.setPolling(lstPollingQuestion.get(i));
+                                        msg.setType("polling");
+                                        lstChat.add(foundIndex, msg);
+                                    }else{
+                                        ChatMessage msg = new ChatMessage();
+                                        msg.setPolling(lstPollingQuestion.get(i));
+                                        msg.setType("polling");
+                                        lstChat.add(j-1, msg);
+                                    }
+
+
+
                                 }
 
                             }// run and check
@@ -493,11 +534,11 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             Log.d("****typing", data.toString());
             String userIDFromIP = data.getString("userId");
             if (userIDFromIP.equals(userIDTo) || userIDFromIP.equals(UserID)) {
-                if (!UserID.equals(userIDFromIP)) {
+//                if (!UserID.equals(userIDFromIP)) {
                     if (!lstChat.get(0).getType().equals("typing")) {
 
                         ArrayList<MediaInfo> lstMedia = new ArrayList<>();
-
+                        lstMedia.get(0).setMediaType("typing");
                         UserInfo userInfo = new UserInfo();
                         ArrayList<UserInfo> info = new ArrayList<>();
 
@@ -518,7 +559,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 
 
                     }
-                }
+//                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -531,7 +572,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             JSONObject data = (JSONObject) args[0];
             Log.d("****ChatRoomCreated", data.toString());
             chatId = data.getString("chatId");
-            callAPI();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -576,7 +617,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 
                     mSocket.emit("chat_message_room", jsonObject);
                 } catch (Exception ignored) {
-
+                    Toast.makeText(this, "Emit chat excp", Toast.LENGTH_SHORT).show();
                 }
             }
             et_msg.setText("");
@@ -604,6 +645,8 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                     Log.d("sendResponse", "sendResponse: ");
 
                 } catch (Exception ignored) {
+                    Toast.makeText(this, "Emit ans excp", Toast.LENGTH_SHORT).show();
+
                 }
 
             }
@@ -1024,6 +1067,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             Toast.makeText(ChatMainActivity.this, "Empty message can't send", Toast.LENGTH_SHORT).show();
         } else {
             sendMessgae(msg, "text", null);
+            mSocket.emit("typing", objNotTyping);
         }
     }
 

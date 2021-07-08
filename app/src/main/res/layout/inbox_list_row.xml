@@ -89,7 +89,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:gravity="end"
-                android:text="yesterday"
                 android:textColor="@color/color_grey"
                 android:textSize="@dimen/_8sdp" />
 
