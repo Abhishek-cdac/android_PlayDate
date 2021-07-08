@@ -100,8 +100,8 @@ public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.
             item_premium = itemView.findViewById(R.id.item_premium);
             iv_maximise = itemView.findViewById(R.id.item_fullScreen);
             item_check.setOnClickListener(v -> itemClick.onItemClicks(v, getAdapterPosition(), 13, userId));
-
             item_cross.setOnClickListener(v -> itemClick.onItemClicks(v, getAdapterPosition(), 14, userId));
+            message.setOnClickListener(v -> itemClick.onItemClicks(v, getAdapterPosition(), 15, userId));
 
 
         }

@@ -89,13 +89,21 @@ public class FragNotification extends Fragment {
                 } else if (value == 31) {
                     callRelationStatusUpdate(s, "Rejected");
                 }
-             /*   else  if (value == 32) {
+                else  if (value == 32) {
+                    Log.e("Accept requestId",""+s);
                     callChatRequestStatusUpdate(s, "Active");
                 }
                 else  if(value == 33){
+                    Log.e("Reject requestId",""+s);
+
                     callChatRequestStatusUpdate(s, "Reject");
                 }
-*/
+
+                else if(value == 34){
+                    callMatchRequestStatusUpdateAPI(s, "Accepted");
+                }  else if(value == 35){
+                    callMatchRequestStatusUpdateAPI(s, "Rejected");
+                }
             }
 
             @Override
@@ -191,14 +199,14 @@ public class FragNotification extends Fragment {
     }
 
 
-   /* private void callChatRequestStatusUpdate(String chatRequestId, String status) {
+    private void callChatRequestStatusUpdate(String chatRequestId, String status) {
         SessionPref pref = SessionPref.getInstance(getActivity());
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
         String userId = pref.getStringVal(SessionPref.LoginUserID);
       //  pref.saveStringKeyVal(SessionPref.RelationRequestId, relatioRequestId);
         hashMap.put("userId", userId);
-        hashMap.put("requestId", chatRequestId);
+        hashMap.put("requestID", chatRequestId);
         hashMap.put("status", status);  //Active,Rejected
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
         pd.show();
@@ -211,7 +219,7 @@ public class FragNotification extends Fragment {
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
                         callGetNotificationAPI();
-                        Log.d("ChatRequestId....", ""+ chatRequestId);
+                        Log.e("ChatRequestId....", ""+ chatRequestId);
                         clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
                     } else {
                         clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
@@ -235,7 +243,6 @@ public class FragNotification extends Fragment {
             }
         });
     }
-*/
     private void callMatchRequestStatusUpdateAPI(String requestId, String status) {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
@@ -293,7 +300,6 @@ public class FragNotification extends Fragment {
                 if (response.code() == 200) {
                     assert response.body() != null;
                     if (response.body().getStatus() == 1) {
-
                         callGetNotificationAPI();
                         Toast.makeText(getActivity(), "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     }

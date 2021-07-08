@@ -118,20 +118,28 @@ public class FragLanding extends Fragment {
     private void callchatRequestApi(String s) {
 
         SessionPref pref = SessionPref.getInstance(getActivity());
-
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
-        hashMap.put("toUserID", s);
-
+        hashMap.put("toUserId", s);
         Log.e("ChatRequestModel", "" + pref.getStringVal(SessionPref.LoginUsertoken));
-
         Call<CommonModel> call = service.addChatRequest("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         Log.e("ChatRequestModel", "" + hashMap);
         call.enqueue(new Callback<CommonModel>() {
             @Override
             public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
-                //Toast.makeText(getActivity(), ""+response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                if (response.code() == 200) {
+                    assert response.body() != null;
+                    clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
+
+                } else {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
+                    } catch (Exception e) {
+                        Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
 
             @Override
