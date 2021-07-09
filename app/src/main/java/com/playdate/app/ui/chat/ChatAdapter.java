@@ -293,18 +293,22 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 Toast.makeText(mContext, lst_chat.get(position).getLattitude() + " , " + lst_chat.get(position).getLongitude(), Toast.LENGTH_SHORT).show();
             });
             viewHolderMe.chat_image.setOnClickListener(v -> {
+
                 if (lst_chat.get(position).getType().equals("location")) {
-
                     double lattitude = Double.parseDouble(lst_chat.get(position).getLattitude());
-                    double longitude = Double.parseDouble(lst_chat.get(position).getLongitude());
+                    double longitude = Double.parseDouble(lst_chat.get(0).getLongitude());
 
-                    Uri gmmIntentUri = Uri.parse("geo:" + lattitude + "," + longitude + "?z=17?q=restaurants");
-                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-                    mapIntent.setPackage("com.google.android.apps.maps");
-                    if (mapIntent.resolveActivity(mContext.getPackageManager()) != null) {
-                        mContext.startActivity(mapIntent);
+                    if (lattitude != 0.0 || longitude != 0.0) {
+                        Uri gmmIntentUri = Uri.parse("geo:" + lattitude + "," + longitude + "?z=17?q=restaurants");
+                        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                        mapIntent.setPackage("com.google.android.apps.maps");
+                        if (mapIntent.resolveActivity(mContext.getPackageManager()) != null) {
+                            mContext.startActivity(mapIntent);
+                        } else {
+                            Toast.makeText(mContext, "Can't load Maps", Toast.LENGTH_SHORT).show();
+                        }
                     } else {
-                        Toast.makeText(mContext, "Can't load Maps", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "Can't load Maps, Please try again later.", Toast.LENGTH_SHORT).show();
                     }
 
 
