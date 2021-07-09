@@ -525,4 +525,6 @@ Build version 4.0.3-java</string>
     <string name="chat">Chat</string>
     <string name="match">Match</string>
     <string name="social">Social</string>
+    <string name="str_unlike">Unlike</string>
+    <string name="share_location">Share Location</string>
 </resources>
