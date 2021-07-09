@@ -216,26 +216,26 @@
 
                     </RelativeLayout>
 
-                    <RelativeLayout
-                        android:id="@+id/rl_couple"
-                        android:layout_width="@dimen/_72sdp"
-                        android:layout_height="@dimen/_73sdp"
-                        android:padding="@dimen/_20sdp"
-                        android:visibility="visible">
+<!--                    <RelativeLayout-->
+<!--                        android:id="@+id/rl_couple"-->
+<!--                        android:layout_width="@dimen/_72sdp"-->
+<!--                        android:layout_height="@dimen/_73sdp"-->
+<!--                        android:padding="@dimen/_20sdp"-->
+<!--                        android:visibility="visible">-->
 
-                        <ImageView
-                            android:layout_width="@dimen/_72sdp"
-                            android:layout_height="@dimen/_73sdp"
-                            android:src="@drawable/ellipse" />
+<!--                        <ImageView-->
+<!--                            android:layout_width="@dimen/_72sdp"-->
+<!--                            android:layout_height="@dimen/_73sdp"-->
+<!--                            android:src="@drawable/ellipse" />-->
 
-                        <ImageView
-                            android:id="@+id/couple"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:src="@drawable/buainess_ic_business_and_trade" />
+<!--                        <ImageView-->
+<!--                            android:id="@+id/couple"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_centerInParent="true"-->
+<!--                            android:src="@drawable/buainess_ic_business_and_trade" />-->
 
-                    </RelativeLayout>
+<!--                    </RelativeLayout>-->
 
                 </LinearLayout>
 

@@ -121,7 +121,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     private RecyclerView rv_smileys;
     private ChatAdapter adapter;
     private ImageView iv_mic;
-    private EditText et_msg;
+    private EditText et_chat;
     private String sender_photo;
     private String sender_name;
     private String chatId;
@@ -176,7 +176,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         iv_mic = findViewById(R.id.iv_mic);
         ImageView iv_circle = findViewById(R.id.iv_circle);
         ImageView arrow_back = findViewById(R.id.arrow_back);
-        et_msg = findViewById(R.id.et_chat);
+        et_chat = findViewById(R.id.et_chat);
         ImageView iv_send = findViewById(R.id.iv_send);
         ImageView iv_camera = findViewById(R.id.iv_camera);
         ImageView iv_video = findViewById(R.id.iv_video);
@@ -238,7 +238,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         JSONObject objTyping = getJOBTyping(true);
         objNotTyping = getJOBTyping(false);
 
-        et_msg.addTextChangedListener(new TextWatcher() {
+        et_chat.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -545,6 +545,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                 adapter.addToListText(chat);
                 scrollTOEnd();
             }
+            et_chat.requestFocus();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -670,12 +671,13 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 
 
                     mSocket.emit("chat_message_room", jsonObject);
+
                 } catch (Exception ignored) {
                     Toast.makeText(this, "Emit chat excp", Toast.LENGTH_SHORT).show();
                 }
             }
-            et_msg.setText("");
-            et_msg.requestFocus();
+
+//            et_chat.requestFocus();
         }
     }
 
@@ -1100,13 +1102,14 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     }
 
     private void validateMsg() {
-        String msg = et_msg.getText().toString();
+        String msg = et_chat.getText().toString();
         if (msg.isEmpty()) {
             Toast.makeText(ChatMainActivity.this, "Empty message can't send", Toast.LENGTH_SHORT).show();
         } else {
             sendMessgae(msg, "text", null);
             mSocket.emit("typing", objNotTyping);
         }
+        et_chat.setText("");
     }
 
     private void smileyCode() {

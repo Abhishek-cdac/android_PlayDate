@@ -94,6 +94,11 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
         notifyDataSetChanged();
     }
 
+    public void updateList(int index) {
+        lst_msgs.remove(index);
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public ChattingAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

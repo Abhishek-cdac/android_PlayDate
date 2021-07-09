@@ -123,7 +123,9 @@
         <activity android:name=".ui.date.DateBaseActivity" />
         <activity
             android:name=".ui.anonymous_question.AnonymousQuestionActivity"
-            android:screenOrientation="portrait" />
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.login.LoginActivity"
             android:screenOrientation="portrait" />
@@ -181,15 +183,19 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.forgot_password.ForgotPasswordActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.onboarding.GetStarted"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+
+            />
+        <!--        <activity-->
+        <!--            android:name=".ui.onboarding.GetStarted"-->
+        <!--            android:screenOrientation="portrait" />-->
         <activity
             android:name=".util.image_crop.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Base.Theme.AppCompat" />
-        <activity android:name=".business.dashboard_business.DashboardBusiness"></activity>
+        <activity
+            android:name=".business.dashboard_business.DashboardBusiness"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.onboarding.OnBoardingActivity"
             android:screenOrientation="portrait"
@@ -200,15 +206,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.chat.MapActivity"/>
-        <activity android:name=".ui.chat.ImageViewActivity"/>
+        <activity
+            android:name=".ui.chat.MapActivity"
+
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.chat.ImageViewActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.coupons.ActivityCoupons"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.chat.request.ChatBaseActivity" /> <!-- <activity -->
+        <activity
+            android:name=".ui.chat.request.ChatBaseActivity"
+            android:screenOrientation="portrait" /> <!-- <activity -->
         <!-- android:name=".ui.chat.ChatActivity" -->
         <!-- android:screenOrientation="portrait" /> -->
-<!--        <activity android:name=".ui.SampleActivity" />-->
+        <!--        <activity android:name=".ui.SampleActivity" />-->
         <activity
             android:name=".util.customcamera.otalia.VideoPreviewActivity"
             android:screenOrientation="portrait" />
@@ -223,8 +236,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.social.upload_media.PostMediaActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|adjustPan" />
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.register.usertype.UserTypeSelectionActivity"
             android:screenOrientation="portrait" />
@@ -249,36 +263,38 @@
             android:screenOrientation="portrait" />
 
 
-        <activity android:name=".videocall.activities.LoginActivity">
+        <!--        <activity android:name=".videocall.activities.LoginActivity">-->
+
+        <!--        </activity>-->
+
+        <activity android:name=".videocall.activities.BaseActivity"
+            android:screenOrientation="portrait"
+            >
 
         </activity>
-
-        <activity android:name=".videocall.activities.BaseActivity">
-
-        </activity>
-        <activity
-            android:name=".videocall.activities.OpponentsActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-
-
-        <activity android:name=".videocall.activities.PermissionsActivity"
-            android:screenOrientation="portrait" />
+        <!--        <activity-->
+        <!--            android:name=".videocall.activities.OpponentsActivity"-->
+        <!--            android:configChanges="keyboardHidden|screenSize|orientation"-->
+        <!--            android:launchMode="singleTask"-->
+        <!--            android:screenOrientation="portrait" />-->
 
 
         <activity
-            android:name=".videocall.activities.SettingsActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:name=".videocall.activities.PermissionsActivity"
             android:screenOrientation="portrait" />
+
+
+        <!--        <activity-->
+        <!--            android:name=".videocall.activities.SettingsActivity"-->
+        <!--            android:configChanges="keyboardHidden|screenSize|orientation"-->
+        <!--            android:screenOrientation="portrait" />-->
 
         <activity
             android:name=".videocall.activities.CallActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:excludeFromRecents="true"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-             />
+            android:screenOrientation="portrait" />
 
         <service android:name=".videocall.services.LoginService" />
 

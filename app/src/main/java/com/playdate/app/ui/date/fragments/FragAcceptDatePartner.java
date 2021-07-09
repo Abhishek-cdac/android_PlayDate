@@ -24,6 +24,7 @@ import com.playdate.app.model.CreateDateGetMyPartnerReqData;
 import com.playdate.app.model.CreateDateGetMyPartnerReqModel;
 import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.ui.date.adapter.RequestDateAdapter;
+import com.playdate.app.ui.interfaces.OnBackPressed;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
@@ -58,6 +59,7 @@ public class FragAcceptDatePartner extends Fragment {
         recycler_view = view.findViewById(R.id.recycler_view);
         tv_placeholder = view.findViewById(R.id.tv_placeholder);
         ImageView iv_play_date_logo = view.findViewById(R.id.iv_play_date_logo);
+        ImageView iv_back = view.findViewById(R.id.iv_back);
 
         itemClick = new Onclick() {
             @Override
@@ -92,11 +94,9 @@ public class FragAcceptDatePartner extends Fragment {
 
         callCreateDateGetMyPartnerReqApi();
 
-        iv_play_date_logo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
+        iv_back.setOnClickListener(v -> {
+            OnBackPressed ref= (OnBackPressed) getActivity();
+            ref.onBack();
         });
         return view;
     }

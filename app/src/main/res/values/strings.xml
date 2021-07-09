@@ -141,6 +141,7 @@
     <string name="unblock_user">Unblock User</string>
     <string name="report">Report Comment</string>
     <string name="delete_message">Delete message</string>
+    <string name="delete_chat">Delete Chat</string>
     <string name="view_profile">View Profile</string>
     <string name="pin">Pin Comment</string>
     <string name="undo">Undo</string>
@@ -527,4 +528,5 @@ Build version 4.0.3-java</string>
     <string name="social">Social</string>
     <string name="str_unlike">Unlike</string>
     <string name="share_location">Share Location</string>
+    <string name="no_date_request_found">No date request found</string>
 </resources>

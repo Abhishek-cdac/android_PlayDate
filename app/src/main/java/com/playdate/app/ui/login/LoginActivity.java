@@ -123,6 +123,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         // Build a GoogleSignInClient with the options specified by gso.
 //        GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 //        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+
         googleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
@@ -133,10 +134,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         binding.setLifecycleOwner(this);
         binding.setLoginViewModel(loginViewModel);
         Button logout = binding.logout;
-        RelativeLayout rl_couple = findViewById(R.id.rl_couple);
+//        RelativeLayout rl_couple = findViewById(R.id.rl_couple);
         iv_show_password = findViewById(R.id.iv_show_password);
         login_Password = findViewById(R.id.login_Password);
-        rl_couple.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, DashboardBusiness.class)));
+//        rl_couple.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, DashboardBusiness.class)));
 
         loginViewModel.getUser().observe(this, loginUser -> {
 

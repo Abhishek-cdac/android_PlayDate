@@ -107,14 +107,14 @@
 
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:visibility="gone"
         android:id="@+id/txt_no_chat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginTop="@dimen/_15sdp"
+        android:gravity="center"
         android:text="No chat found"
-        android:layout_height="wrap_content">
+        android:visibility="gone">
 
     </TextView>
 
@@ -124,6 +124,7 @@
         android:layout_height="match_parent"
         android:background="@color/backgroundColour"
         android:paddingHorizontal="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_10sdp"
         android:paddingTop="@dimen/_10sdp">
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -135,7 +136,8 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/friend_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:overScrollMode="never" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </RelativeLayout>

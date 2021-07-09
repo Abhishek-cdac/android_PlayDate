@@ -31,7 +31,7 @@
 
     <ImageView
 
-        android:id="@+id/iv_plus"
+        android:id="@+id/iv_back"
         android:layout_width="@dimen/_15sdp"
         android:layout_height="@dimen/_15sdp"
         android:layout_marginLeft="@dimen/_20sdp"
@@ -61,7 +61,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/_15sdp"
         android:gravity="center"
-        android:text="No date request found"
+        android:text="@string/no_date_request_found"
         android:textColor="@color/textColour"
         android:textSize="@dimen/_14sdp"
         android:visibility="gone"
