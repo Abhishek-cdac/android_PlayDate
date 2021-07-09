@@ -52,6 +52,7 @@ import com.playdate.app.model.chat_models.PollingResponse;
 import com.playdate.app.service.GpsTracker;
 import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.ui.date.DateBaseActivity;
+import com.playdate.app.ui.date.fragments.FragSelectDates;
 import com.playdate.app.util.MyApplication;
 import com.playdate.app.util.common.AudioRecordProgressDialog;
 import com.playdate.app.util.common.BaseActivity;
@@ -1437,7 +1438,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 
     public void createDate() {
         Intent intent = new Intent(ChatMainActivity.this, DateBaseActivity.class);
-        FragSelectDate.userIdTo = userIDTo;
+        FragSelectDates.userIdTo = userIDTo;
         DateBaseActivity.fromChat = true;
         startActivity(intent);
     }
