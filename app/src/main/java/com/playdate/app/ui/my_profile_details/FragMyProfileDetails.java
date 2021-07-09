@@ -69,8 +69,6 @@ import static com.playdate.app.util.session.SessionPref.LoginVerified;
 public class FragMyProfileDetails extends Fragment implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
     public FragMyProfileDetails() {
     }
-
-    // private Switch iv_dark_mode;
     private ImageView iv_dark_mode;
     private ImageView profile_image;
     private TextView txt_bio;

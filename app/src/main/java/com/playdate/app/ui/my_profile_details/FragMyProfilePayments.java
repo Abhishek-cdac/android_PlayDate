@@ -34,33 +34,6 @@ public class FragMyProfilePayments extends Fragment implements View.OnClickListe
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        View view = inflater.inflate(R.layout.frag_my_details_payments, container, false);
-
-//        Button btn_add_payment = view.findViewById(R.id.btn_add_payment);
-//        ConstraintLayout cl_page = view.findViewById(R.id.cl_page);
-//
-//        int height = new CommonClass().getScreenHeight(getActivity());
-//
-//
-//        int m1= (int) getResources().getDimension(R.dimen._15sdp);
-//        int m2= (int) getResources().getDimension(R.dimen._10sdp);
-//        int m3= (int) getResources().getDimension(R.dimen._20sdp);
-//        int m4= (int) getResources().getDimension(R.dimen._20sdp);
-//        int m5= (int) getResources().getDimension(R.dimen._20sdp);
-//        int m6= (int) getResources().getDimension(R.dimen._75sdp);
-//
-//        cl_page.getLayoutParams().height=height-(m1+m2+m3+m4+m5+m6);
-
-
-//        btn_add_payment.setOnClickListener(v -> {
-//            OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
-//            frag.ReplaceFrag(new NewPaymentMethod());
-//        });
-
-//        PaymentsAdapter adapter = new PaymentsAdapter();
-//        RecyclerView recycler_payment = view.findViewById(R.id.recycler_payment);
-//        recycler_payment.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
-//        recycler_payment.setAdapter(adapter);
 
 
         View view = inflater.inflate(R.layout.frag_my_details_payments, container, false);

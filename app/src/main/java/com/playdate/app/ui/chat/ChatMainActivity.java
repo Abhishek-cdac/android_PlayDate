@@ -584,10 +584,15 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 
     Emitter.Listener ChatRoomCreated = args -> runOnUiThread(() -> {
 
+
         try {
             JSONObject data = (JSONObject) args[0];
             Log.d("****ChatRoomCreated", data.toString());
-            chatId = data.getString("chatId");
+            String userIDFromIP=data.getString("userId");
+            if (userIDFromIP.equals(userIDTo) || userIDFromIP.equals(UserID)) {
+                chatId = data.getString("chatId");
+            }
+
 
         } catch (Exception e) {
             e.printStackTrace();
