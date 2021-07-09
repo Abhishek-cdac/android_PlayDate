@@ -122,6 +122,8 @@ public class LandingBottomSheet extends BottomSheetDialogFragment {
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
                         chattingAdapter.deleteChat(index);
+                        chattingAdapter.Refresh();
+
                     } else {
 
                     }

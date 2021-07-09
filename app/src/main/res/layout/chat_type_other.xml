@@ -4,106 +4,121 @@
     android:layout_height="wrap_content"
     android:padding="@dimen/_8sdp">
 
-    <ImageView
-        android:id="@+id/diamond"
+    <TextView
+        android:id="@+id/tv_date_time"
+        android:textSize="@dimen/_10sdp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:foregroundGravity="center"
-        android:src="@drawable/ic_diamond_normal" />
+        android:layout_centerHorizontal="true"
+        android:padding="@dimen/_5sdp"
+        android:text="Yesterday"
+        android:textAlignment="center" />
 
-    <LinearLayout
-        android:orientation="vertical"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_5sdp"
-        android:layout_toEndOf="@+id/diamond"
-        android:background="@color/transparent"
-       >
+        android:layout_below="@+id/tv_date_time">
 
-        <TextView
-            android:id="@+id/tv_chat_other"
-            android:layout_width="match_parent"
+
+        <ImageView
+            android:id="@+id/diamond"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/_20sdp"
             android:layout_centerVertical="true"
-            android:background="@drawable/btn_blue_filled"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_10sdp" />
+            android:foregroundGravity="center"
+            android:src="@drawable/ic_diamond_normal" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_minus10sdp">
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_toEndOf="@+id/diamond"
+            android:background="@color/transparent"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/answer1"
-                android:layout_width="0dp"
+                android:id="@+id/tv_chat_other"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                android:gravity="center"
-                android:maxLines="4"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:layout_weight="1"
-                android:background="@drawable/pink_filled"
-                android:paddingHorizontal="@dimen/_18sdp"
-                android:paddingVertical="@dimen/_8sdp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/btn_blue_filled"
+                android:padding="@dimen/_20sdp"
+                android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_10sdp" />
 
-            <TextView
-                android:id="@+id/answer2"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                android:gravity="center"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:layout_marginEnd="@dimen/_20sdp"
-                android:layout_weight="1"
-                android:maxLines="4"
-                android:background="@drawable/pink_filled"
-                android:paddingHorizontal="@dimen/_18sdp"
-                android:paddingVertical="@dimen/_8sdp"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_10sdp" />
+                android:layout_marginTop="@dimen/_minus10sdp">
+
+                <TextView
+                    android:id="@+id/answer1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/pink_filled"
+                    android:gravity="center"
+                    android:maxLines="4"
+                    android:paddingHorizontal="@dimen/_18sdp"
+                    android:paddingVertical="@dimen/_8sdp"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_10sdp" />
+
+                <TextView
+                    android:id="@+id/answer2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/pink_filled"
+                    android:gravity="center"
+                    android:maxLines="4"
+                    android:paddingHorizontal="@dimen/_18sdp"
+                    android:paddingVertical="@dimen/_8sdp"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_10sdp" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
 
+        <!--    <TextView-->
+        <!--        android:id="@+id/answer1"-->
+        <!--        android:layout_width="wrap_content"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        android:layout_centerVertical="true"-->
+        <!--        android:layout_marginTop="80dp"-->
+        <!--        android:layout_marginRight="188dp"-->
+        <!--        android:background="@drawable/btn_pink_filled"-->
+        <!--        android:paddingHorizontal="@dimen/_18sdp"-->
+        <!--        android:paddingVertical="@dimen/_8sdp"-->
+        <!--        android:text="Elon Musk"-->
+        <!--        android:textColor="@color/white"-->
+        <!--        android:textSize="@dimen/_10sdp"-->
+        <!--        app:layout_constraintRight_toRightOf="parent"-->
+        <!--        app:layout_constraintTop_toTopOf="parent" />-->
 
-    <!--    <TextView-->
-    <!--        android:id="@+id/answer1"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_centerVertical="true"-->
-    <!--        android:layout_marginTop="80dp"-->
-    <!--        android:layout_marginRight="188dp"-->
-    <!--        android:background="@drawable/btn_pink_filled"-->
-    <!--        android:paddingHorizontal="@dimen/_18sdp"-->
-    <!--        android:paddingVertical="@dimen/_8sdp"-->
-    <!--        android:text="Elon Musk"-->
-    <!--        android:textColor="@color/white"-->
-    <!--        android:textSize="@dimen/_10sdp"-->
-    <!--        app:layout_constraintRight_toRightOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent" />-->
+        <!--    <TextView-->
+        <!--        android:id="@+id/answer2"-->
+        <!--        android:layout_width="wrap_content"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        android:layout_centerVertical="true"-->
+        <!--        android:layout_marginTop="80dp"-->
+        <!--        android:layout_marginRight="52dp"-->
+        <!--        android:background="@drawable/btn_pink_filled"-->
+        <!--        android:paddingHorizontal="@dimen/_18sdp"-->
+        <!--        android:paddingVertical="@dimen/_8sdp"-->
+        <!--        android:text="Jeff Beroz"-->
+        <!--        android:textColor="@color/white"-->
+        <!--        android:textSize="@dimen/_10sdp"-->
+        <!--        app:layout_constraintRight_toRightOf="parent"-->
+        <!--        app:layout_constraintTop_toTopOf="parent" />-->
 
-    <!--    <TextView-->
-    <!--        android:id="@+id/answer2"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_centerVertical="true"-->
-    <!--        android:layout_marginTop="80dp"-->
-    <!--        android:layout_marginRight="52dp"-->
-    <!--        android:background="@drawable/btn_pink_filled"-->
-    <!--        android:paddingHorizontal="@dimen/_18sdp"-->
-    <!--        android:paddingVertical="@dimen/_8sdp"-->
-    <!--        android:text="Jeff Beroz"-->
-    <!--        android:textColor="@color/white"-->
-    <!--        android:textSize="@dimen/_10sdp"-->
-    <!--        app:layout_constraintRight_toRightOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent" />-->
-
-
+    </RelativeLayout>
 </RelativeLayout>

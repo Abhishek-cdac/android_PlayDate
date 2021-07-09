@@ -65,12 +65,12 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final String LoginUserID;
 
     private String todaysDate;
-//    private final SimpleDateFormat format1;
-//    private final SimpleDateFormat format2;
-//    private final SimpleDateFormat format3;
-//    private final SimpleDateFormat format4;
-//    private final SimpleDateFormat df;
-//    private final SimpleDateFormat sdf;
+    private final SimpleDateFormat format1;
+    private final SimpleDateFormat format2;
+    private final SimpleDateFormat format3;
+    private final SimpleDateFormat format4;
+    private final SimpleDateFormat df;
+    private final SimpleDateFormat sdf;
 
     public ChatAdapter(ArrayList<ChatMessage> chatmsgList, Context mContext, Onclick itemClick) {
         this.lst_chat = chatmsgList;
@@ -80,22 +80,22 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         LoginUserID = pref.getStringVal(SessionPref.LoginUserID);
         this.mContext = mContext;
 
-//
-//        try {
-//            Date c = Calendar.getInstance().getTime();
-//            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-//            todaysDate = df.format(c);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        format2 = new SimpleDateFormat("hh:mm aa");
-//        format3 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        format4 = new SimpleDateFormat("dd/MM/yyyy");
-//        sdf = new SimpleDateFormat("yyyy-MM-dd");
-//        df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
-//        df.setTimeZone(TimeZone.getTimeZone("GTC"));
+
+        try {
+            Date c = Calendar.getInstance().getTime();
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            todaysDate = df.format(c);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        format2 = new SimpleDateFormat("hh:mm aa");
+        format3 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        format4 = new SimpleDateFormat("dd/MM/yyyy");
+        sdf = new SimpleDateFormat("yyyy-MM-dd");
+        df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+        df.setTimeZone(TimeZone.getTimeZone("GTC"));
     }
 
 
@@ -156,6 +156,8 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             ViewHolderMe viewHolderMe = (ViewHolderMe) holder;
             picasso.get().load(lst_chat.get(position).getUserInfo().get(0).getProfilePicPath())
                     .into(viewHolderMe.profile_image_me);
+
+            viewHolderMe.tv_date_time.setText(formattedDate(lst_chat.get(position).getEntryDate()));
 
             if (lst_chat.get(position).getType().equals("text") || lst_chat.get(position).getType().equals("emoji")) {
                 viewHolderMe.tv_msg.setVisibility(View.VISIBLE);
@@ -319,7 +321,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             ViewHolderOponent viewHolderOponent = (ViewHolderOponent) holder;
             Picasso.get().load(lst_chat.get(position).getUserInfo().get(0).getProfilePicPath())
                     .into(viewHolderOponent.iv_profile);
-
+            viewHolderOponent.tv_date_time.setText(formattedDate(lst_chat.get(position).getEntryDate()));
             switch (lst_chat.get(position).getType()) {
                 case "text":
                 case "emoji":
@@ -448,111 +450,120 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         } ///
         else if (holder.getItemViewType() == 2) {
-            ViewHolderOther viewHolderOther = (ViewHolderOther) holder;
-            viewHolderOther.tv_msg.setText(lst_chat.get(position).getPolling().getQuestion());
-            viewHolderOther.answer1.setText(lst_chat.get(position).getPolling().getPollingOption().get(0).getOption());
-            viewHolderOther.answer2.setText(lst_chat.get(position).getPolling().getPollingOption().get(1).getOption());
+            try {
+                ViewHolderOther viewHolderOther = (ViewHolderOther) holder;
+                viewHolderOther.tv_msg.setText(lst_chat.get(position).getPolling().getQuestion());
+                viewHolderOther.tv_date_time.setText(formattedDate(lst_chat.get(position).getPolling().getEntryDate()));
 
-            viewHolderOther.answer1.setOnClickListener(v -> {
-                itemClick.onItemClicks(v, position, 10, lst_chat.get(position).getPolling().getPollingOption().get(0).getQuestionId(),
-                        lst_chat.get(position).getPolling().getPollingOption().get(0).getOptionId());
+                viewHolderOther.answer1.setText(lst_chat.get(position).getPolling().getPollingOption().get(0).getOption());
+                viewHolderOther.answer2.setText(lst_chat.get(position).getPolling().getPollingOption().get(1).getOption());
 
-            });
-            viewHolderOther.answer2.setOnClickListener(v -> {
-                itemClick.onItemClicks(v, position, 10, lst_chat.get(position).getPolling().getPollingOption().get(1).getQuestionId(),
-                        lst_chat.get(position).getPolling().getPollingOption().get(1).getOptionId());
-            });
-        }  ///
+                viewHolderOther.answer1.setOnClickListener(v -> itemClick.onItemClicks(v, position, 10, lst_chat.get(position).getPolling().getPollingOption().get(0).getQuestionId(),
+                        lst_chat.get(position).getPolling().getPollingOption().get(0).getOptionId()));
+                viewHolderOther.answer2.setOnClickListener(v -> itemClick.onItemClicks(v, position, 10, lst_chat.get(position).getPolling().getPollingOption().get(1).getQuestionId(),
+                        lst_chat.get(position).getPolling().getPollingOption().get(1).getOptionId()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            }  ///
 
 
+    }
 
-//        try {
+    private String formattedDate(String entryDate) {
+        try {
 //            String timeFormat = lst_chat.get(position).getEntryDate();
-//            timeFormat = timeFormat.replace("T", " ");
-//
-//            Date date = null;
-//            try {
-//                date = df.parse(timeFormat);
-//            } catch (ParseException e) {
-//                e.printStackTrace();
-//            }
-//            df.setTimeZone(TimeZone.getDefault());
-//            String formattedDate = df.format(date);
-//
-//            if (formattedDate.contains(todaysDate)) {
-//
-//                try {
-//                    date = format1.parse(formattedDate);
-//                } catch (ParseException e) {
-//                    e.printStackTrace();
-//                }
-////                holder.txt_time.setText(format2.format(date));
-//
-//            } else if (findDayDiff(formattedDate) == 1) {
-////                holder.txt_time.setText("Yesterday");
-//            } else {
-//
-//
-//                try {
-//                    date = format3.parse(formattedDate);
-//                } catch (ParseException e) {
-//                    e.printStackTrace();
-//                }
-////                holder.txt_time.setText(format4.format(date));
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+            String timeFormat = entryDate;
+            timeFormat = timeFormat.replace("T", " ");
+
+            Date date = null;
+            try {
+                date = df.parse(timeFormat);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            df.setTimeZone(TimeZone.getDefault());
+            String formattedDate = df.format(date);
+
+            if (formattedDate.contains(todaysDate)) {
+
+                try {
+                    date = format1.parse(formattedDate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+//                holder.txt_time.setText(format2.format(date));
+                return format2.format(date);
+
+            } else if (findDayDiff(formattedDate) == 1) {
+//                holder.txt_time.setText("Yesterday");
+                return "Yesterday";
+
+            } else {
 
 
-    }
-
-//    private int findDayDiff(String formattedDate) {
-//        try {
-//            Date date = sdf.parse(formattedDate);
-//            Date date1 = sdf.parse(todaysDate);
-//            if (date == null || date1 == null)
-//                return 0;
-//
-//            return ((int) ((date.getTime() - date1.getTime()) / (1000 * 60 * 60 * 24))) * -1;
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return 0;
-//    }
-
-    private void showPhoto(String path) {
-        Intent mIntent = new Intent(mContext, PhotoViewActivity.class);
-        mIntent.putExtra("data", path);
-        mIntent.putExtra("isVideo", false);
-        mContext.startActivity(mIntent);
-    }
-
-    private void playVideo(String path) {
-        Intent mIntent = new Intent(mContext, ExoPlayerActivity.class);
-        mIntent.putExtra("video", path);
-        mContext.startActivity(mIntent);
-    }
-
-
-    private void stopPlaying() {
-        if (mediaPlayer != null) {
-            mediaPlayer.stop();
-            mediaPlayer.release();
+                try {
+                    date = format3.parse(formattedDate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+//                holder.txt_time.setText(format4.format(date));
+                return format4.format(date);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
-    }
 
-    public void addToListText(ChatMessage chat) {
-        lst_chat.add(0, chat);
-        notifyDataSetChanged();
     }
 
 
-    public void removeTyping() {
-        lst_chat.remove(0);
-        notifyDataSetChanged();
+    private int findDayDiff(String formattedDate) {
+        try {
+            Date date = sdf.parse(formattedDate);
+            Date date1 = sdf.parse(todaysDate);
+            if (date == null || date1 == null)
+                return 0;
+
+            return ((int) ((date.getTime() - date1.getTime()) / (1000 * 60 * 60 * 24))) * -1;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
     }
+
+        private void showPhoto (String path){
+            Intent mIntent = new Intent(mContext, PhotoViewActivity.class);
+            mIntent.putExtra("data", path);
+            mIntent.putExtra("isVideo", false);
+            mContext.startActivity(mIntent);
+        }
+
+        private void playVideo (String path){
+            Intent mIntent = new Intent(mContext, ExoPlayerActivity.class);
+            mIntent.putExtra("video", path);
+            mContext.startActivity(mIntent);
+        }
+
+
+        private void stopPlaying () {
+            if (mediaPlayer != null) {
+                mediaPlayer.stop();
+                mediaPlayer.release();
+            }
+        }
+
+        public void addToListText (ChatMessage chat){
+            lst_chat.add(0, chat);
+            notifyDataSetChanged();
+        }
+
+
+        public void removeTyping () {
+            lst_chat.remove(0);
+            notifyDataSetChanged();
+        }
 
 //    public void addQuestion(String question) {
 //        chatmsgList.add(new ChatMessage("text", polling, "jid_1109", question));
@@ -560,163 +571,169 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 //    }
 
 
-    public void removeFromList(int positiontoDelete) {
-        Log.d("positiontoDelete", "removeFromList: " + positiontoDelete);
-        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-        Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("userId", LoginUserID);
-        hashMap.put("chatId", lst_chat.get(positiontoDelete).getChatId());
-        hashMap.put("messageId", lst_chat.get(positiontoDelete).getMessageId());
-        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(mContext);
-        pd.show();
+        public void removeFromList ( int positiontoDelete){
+            Log.d("positiontoDelete", "removeFromList: " + positiontoDelete);
+            GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+            Map<String, String> hashMap = new HashMap<>();
+            hashMap.put("userId", LoginUserID);
+            hashMap.put("chatId", lst_chat.get(positiontoDelete).getChatId());
+            hashMap.put("messageId", lst_chat.get(positiontoDelete).getMessageId());
+            TransparentProgressDialog pd = TransparentProgressDialog.getInstance(mContext);
+            pd.show();
 
-        Call<CommonModel> call = service.deleteChatMessage("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
-        call.enqueue(new Callback<CommonModel>() {
-            @Override
-            public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
-                pd.cancel();
-                if (response.code() == 200) {
-                    if (response.body().getStatus() == 1) {
-                        lst_chat.remove(positiontoDelete);
-                        notifyDataSetChanged();
+            Call<CommonModel> call = service.deleteChatMessage("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+            call.enqueue(new Callback<CommonModel>() {
+                @Override
+                public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
+                    pd.cancel();
+                    if (response.code() == 200) {
+                        if (response.body().getStatus() == 1) {
+                            lst_chat.remove(positiontoDelete);
+                            notifyDataSetChanged();
+                        } else {
+                            Toast.makeText(mContext, "Unable to delete", Toast.LENGTH_SHORT).show();
+
+                        }
+                        bottomSheet.dismiss();
                     } else {
-                        Toast.makeText(mContext, "Unable to delete", Toast.LENGTH_SHORT).show();
 
                     }
-                    bottomSheet.dismiss();
-                } else {
-
                 }
+
+                @Override
+                public void onFailure(Call<CommonModel> call, Throwable t) {
+                    t.printStackTrace();
+                    pd.cancel();
+                }
+            });
+
+
+        }
+
+        public void dismissSheet () {
+            bottomSheet.dismiss();
+            notifyDataSetChanged();
+        }
+
+        public class ViewHolderOther extends RecyclerView.ViewHolder {
+            TextView tv_msg;
+            TextView answer1;
+            TextView answer2;
+        TextView tv_date_time;
+
+            public ViewHolderOther(@NonNull View itemView) {
+                super(itemView);
+                tv_msg = itemView.findViewById(R.id.tv_chat_other);
+                answer1 = itemView.findViewById(R.id.answer1);
+                answer2 = itemView.findViewById(R.id.answer2);
+            tv_date_time = itemView.findViewById(R.id.tv_date_time);
+
             }
+        }
+
+
+        public class ViewHolderMe extends RecyclerView.ViewHolder implements View.OnLongClickListener {
+            ImageView profile_image_me;
+            ImageView chat_image;
+            ImageView iv_thumb;
+            TextView tv_msg;
+            //        VideoView chat_video;
+            CardView card_video;
+            CardView cv_image;
+            RelativeLayout rl_audio;
+            RelativeLayout rl_body;
+            RelativeLayout rl_maps;
+            ImageView play_audio;
+            ImageView img_playback;
+            ImageView iv_mute_unmute;
+            CardView card_image;
+            ImageView mv_location;
+        TextView tv_date_time;
+            //        GoogleMap googleMap;
+
+            public ViewHolderMe(View view) {
+                super(view);
+                profile_image_me = view.findViewById(R.id.profile_image_me);
+                chat_image = view.findViewById(R.id.chat_image);
+                tv_msg = view.findViewById(R.id.tv_chat);
+                iv_thumb = view.findViewById(R.id.iv_thumb);
+                card_video = view.findViewById(R.id.card_video);
+                cv_image = view.findViewById(R.id.cv_image);
+                img_playback = view.findViewById(R.id.img_playback);
+                iv_mute_unmute = view.findViewById(R.id.iv_mute_unmute);
+                card_image = view.findViewById(R.id.card_image);
+                rl_audio = view.findViewById(R.id.rl_audio);
+                play_audio = view.findViewById(R.id.play_audio);
+                mv_location = view.findViewById(R.id.mv_location);
+                rl_body = view.findViewById(R.id.rl_body);
+                rl_maps = view.findViewById(R.id.rl_maps);
+            tv_date_time = view.findViewById(R.id.tv_date_time);
+
+                tv_msg.setOnLongClickListener(this);
+                chat_image.setOnLongClickListener(this);
+                card_video.setOnLongClickListener(this);
+                iv_thumb.setOnLongClickListener(this);
+                img_playback.setOnLongClickListener(this);
+                mv_location.setOnLongClickListener(this);
+                rl_audio.setOnLongClickListener(this);
+            }
+
 
             @Override
-            public void onFailure(Call<CommonModel> call, Throwable t) {
-                t.printStackTrace();
-                pd.cancel();
-            }
-        });
-
-
-    }
-
-    public void dismissSheet() {
-        bottomSheet.dismiss();
-        notifyDataSetChanged();
-    }
-
-    public class ViewHolderOther extends RecyclerView.ViewHolder {
-        TextView tv_msg;
-        TextView answer1;
-        TextView answer2;
-
-        public ViewHolderOther(@NonNull View itemView) {
-            super(itemView);
-            tv_msg = itemView.findViewById(R.id.tv_chat_other);
-            answer1 = itemView.findViewById(R.id.answer1);
-            answer2 = itemView.findViewById(R.id.answer2);
-
-        }
-    }
-
-
-    public class ViewHolderMe extends RecyclerView.ViewHolder implements View.OnLongClickListener {
-        ImageView profile_image_me;
-        ImageView chat_image;
-        ImageView iv_thumb;
-        TextView tv_msg;
-        //        VideoView chat_video;
-        CardView card_video;
-        CardView cv_image;
-        RelativeLayout rl_audio;
-        RelativeLayout rl_body;
-        RelativeLayout rl_maps;
-        ImageView play_audio;
-        ImageView img_playback;
-        ImageView iv_mute_unmute;
-        CardView card_image;
-        ImageView mv_location;
-        //        GoogleMap googleMap;
-
-        public ViewHolderMe(View view) {
-            super(view);
-            profile_image_me = view.findViewById(R.id.profile_image_me);
-            chat_image = view.findViewById(R.id.chat_image);
-            tv_msg = view.findViewById(R.id.tv_chat);
-            iv_thumb = view.findViewById(R.id.iv_thumb);
-            card_video = view.findViewById(R.id.card_video);
-            cv_image = view.findViewById(R.id.cv_image);
-            img_playback = view.findViewById(R.id.img_playback);
-            iv_mute_unmute = view.findViewById(R.id.iv_mute_unmute);
-            card_image = view.findViewById(R.id.card_image);
-            rl_audio = view.findViewById(R.id.rl_audio);
-            play_audio = view.findViewById(R.id.play_audio);
-            mv_location = view.findViewById(R.id.mv_location);
-            rl_body = view.findViewById(R.id.rl_body);
-            rl_maps = view.findViewById(R.id.rl_maps);
-
-            tv_msg.setOnLongClickListener(this);
-            chat_image.setOnLongClickListener(this);
-            card_video.setOnLongClickListener(this);
-            iv_thumb.setOnLongClickListener(this);
-            img_playback.setOnLongClickListener(this);
-            mv_location.setOnLongClickListener(this);
-            rl_audio.setOnLongClickListener(this);
-        }
-
-
-        @Override
-        public boolean onLongClick(View v) {
+            public boolean onLongClick(View v) {
 //            int id = v.getId();
-            callCommon(getAbsoluteAdapterPosition());
-            return false;
+                callCommon(getAbsoluteAdapterPosition());
+                return false;
+            }
         }
-    }
 
-    private void callCommon(int selectedPosition) {
-        try {
-            showBottomSheet(selectedPosition);
-            notifyDataSetChanged();
-        } catch (Exception e) {
-            e.printStackTrace();
+        private void callCommon ( int selectedPosition){
+            try {
+                showBottomSheet(selectedPosition);
+                notifyDataSetChanged();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-    }
 
-    LandingBottomSheet bottomSheet;
+        LandingBottomSheet bottomSheet;
 
-    private void showBottomSheet(int selectedPosition) {
-        Log.d("positiontoDelete", "removeFromListBottom: " + selectedPosition);
+        private void showBottomSheet ( int selectedPosition){
+            Log.d("positiontoDelete", "removeFromListBottom: " + selectedPosition);
 
-        FragmentManager fragmentManager = ((AppCompatActivity) mContext).getSupportFragmentManager();
-        bottomSheet = new LandingBottomSheet(this, selectedPosition, "chat");
-        bottomSheet.show(fragmentManager, "ModalBottomSheet");
-    }
+            FragmentManager fragmentManager = ((AppCompatActivity) mContext).getSupportFragmentManager();
+            bottomSheet = new LandingBottomSheet(this, selectedPosition, "chat");
+            bottomSheet.show(fragmentManager, "ModalBottomSheet");
+        }
 
-    public class ViewHolderOponent extends RecyclerView.ViewHolder {
-        ImageView iv_profile;
-        ImageView chat_image;
-        ImageView iv_thumb;
-        ImageView img_playback;
-        CardView card_img;
-        //        VideoView chat_video;
-        TextView tv_msg;
-        LottieAnimationView typing;
-        RelativeLayout rl_body;
-        RelativeLayout rl_audio;
-        ImageView play_audio;
+        public class ViewHolderOponent extends RecyclerView.ViewHolder {
+            ImageView iv_profile;
+            ImageView chat_image;
+            ImageView iv_thumb;
+            ImageView img_playback;
+            CardView card_img;
+            //        VideoView chat_video;
+            TextView tv_msg;
+            LottieAnimationView typing;
+            RelativeLayout rl_body;
+            RelativeLayout rl_audio;
+            ImageView play_audio;
+        TextView tv_date_time;
 
-        public ViewHolderOponent(View view) {
-            super(view);
-            iv_profile = view.findViewById(R.id.profile_image_oponent);
-            chat_image = view.findViewById(R.id.chat_image);
-            tv_msg = view.findViewById(R.id.tv_chat_oponent);
-            iv_thumb = view.findViewById(R.id.iv_thumb);
-            img_playback = view.findViewById(R.id.img_playback);
-            typing = view.findViewById(R.id.typing);
-            card_img = view.findViewById(R.id.card_img);
-            rl_body = view.findViewById(R.id.rl_body);
-            play_audio = view.findViewById(R.id.play_audio);
+            public ViewHolderOponent(View view) {
+                super(view);
+                iv_profile = view.findViewById(R.id.profile_image_oponent);
+                chat_image = view.findViewById(R.id.chat_image);
+                tv_msg = view.findViewById(R.id.tv_chat_oponent);
+                iv_thumb = view.findViewById(R.id.iv_thumb);
+                img_playback = view.findViewById(R.id.img_playback);
+                typing = view.findViewById(R.id.typing);
+                card_img = view.findViewById(R.id.card_img);
+                rl_body = view.findViewById(R.id.rl_body);
+                play_audio = view.findViewById(R.id.play_audio);
+            tv_date_time = view.findViewById(R.id.tv_date_time);
 
-            rl_audio = view.findViewById(R.id.rl_audio);
+                rl_audio = view.findViewById(R.id.rl_audio);
 
 //            tv_msg.setOnLongClickListener(new View.OnLongClickListener() {
 //                @Override
@@ -770,9 +787,9 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 //                }
 //            })
 
+            }
         }
     }
-}
 
 
 

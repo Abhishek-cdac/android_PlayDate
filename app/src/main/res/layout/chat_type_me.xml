@@ -6,164 +6,181 @@
     android:layout_height="wrap_content"
     android:padding="@dimen/_8sdp">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profile_image_me"
-        android:layout_width="@dimen/_30sdp"
-        android:layout_height="@dimen/_30sdp"
-        android:layout_alignParentEnd="true"
-        android:layout_centerInParent="true"
-
-        app:civ_border_color="@android:color/transparent" />
-
     <TextView
-        android:id="@+id/tv_chat"
+        android:id="@+id/tv_date_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="@dimen/_5sdp"
-        android:layout_toLeftOf="@+id/profile_image_me"
-        android:background="@drawable/btn_black_filled"
-        android:paddingHorizontal="@dimen/_12sdp"
-        android:paddingVertical="@dimen/_8sdp"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_10sdp"
-        android:visibility="visible" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cv_image"
-        android:layout_width="@dimen/_150sdp"
-        android:layout_height="@dimen/_150sdp"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="@dimen/_5sdp"
-        android:layout_toLeftOf="@+id/profile_image_me"
-        android:background="@color/color_grey_light_too"
-        android:foregroundGravity="center_horizontal"
-        android:gravity="center"
-        android:visibility="gone"
-        app:cardCornerRadius="@dimen/_5sdp">
+        android:layout_centerHorizontal="true"
+        android:padding="@dimen/_5sdp"
+        android:text="Yesterday"
+        android:textAlignment="center"
+        android:textSize="@dimen/_10sdp" />
 
-        <ImageView
-            android:id="@+id/chat_image"
-            android:layout_width="@dimen/_147sdp"
-            android:layout_height="@dimen/_147sdp"
-            android:scaleType="fitXY"
-            android:visibility="visible" />
-    </androidx.cardview.widget.CardView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_date_time">
 
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_video"
-        android:layout_width="@dimen/_150sdp"
-        android:layout_height="@dimen/_150sdp"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="@dimen/_5sdp"
-        android:layout_toLeftOf="@+id/profile_image_me"
-        android:visibility="gone"
-        app:cardBackgroundColor="@color/color_grey_light_very"
-        app:cardCornerRadius="@dimen/_5sdp">
-
-        <ImageView
-            android:id="@+id/iv_thumb"
-            android:layout_width="@dimen/_150sdp"
-            android:layout_height="match_parent">
-
-        </ImageView>
-
-        <ImageView
-            android:id="@+id/img_playback"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image_me"
             android:layout_width="@dimen/_30sdp"
             android:layout_height="@dimen/_30sdp"
-            android:layout_gravity="center"
-            android:src="@drawable/play" />
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
 
+            app:civ_border_color="@android:color/transparent" />
 
-    </androidx.cardview.widget.CardView>
-
-    <RelativeLayout
-        android:id="@+id/rl_audio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="@dimen/_5sdp"
-        android:layout_toLeftOf="@+id/profile_image_me"
-        android:background="@drawable/btn_black_filled"
-        android:paddingHorizontal="@dimen/_12sdp"
-        android:paddingVertical="@dimen/_8sdp"
-        android:visibility="gone">
-
-        <ImageView
-            android:id="@+id/play_audio"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:layout_alignParentStart="true"
-            android:src="@drawable/play" />
-
-        <ImageView
-            android:id="@+id/audio_more"
+        <TextView
+            android:id="@+id/tv_chat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/play_audio"
-            android:src="@drawable/horizontal_more" />
+            android:layout_marginRight="@dimen/_5sdp"
+            android:layout_toLeftOf="@+id/profile_image_me"
+            android:background="@drawable/btn_black_filled"
+            android:paddingHorizontal="@dimen/_12sdp"
+            android:paddingVertical="@dimen/_8sdp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_10sdp"
+            android:visibility="visible" />
 
-        <ImageView
-            android:id="@+id/audio_more2"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_image"
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_150sdp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:layout_toLeftOf="@+id/profile_image_me"
+            android:background="@color/color_grey_light_too"
+            android:foregroundGravity="center_horizontal"
+            android:gravity="center"
+            android:visibility="gone"
+            app:cardCornerRadius="@dimen/_5sdp">
+
+            <ImageView
+                android:id="@+id/chat_image"
+                android:layout_width="@dimen/_147sdp"
+                android:layout_height="@dimen/_147sdp"
+                android:scaleType="fitXY"
+                android:visibility="visible" />
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_video"
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_150sdp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:layout_toLeftOf="@+id/profile_image_me"
+            android:visibility="gone"
+            app:cardBackgroundColor="@color/color_grey_light_very"
+            app:cardCornerRadius="@dimen/_5sdp">
+
+            <ImageView
+                android:id="@+id/iv_thumb"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="match_parent">
+
+            </ImageView>
+
+            <ImageView
+                android:id="@+id/img_playback"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_gravity="center"
+                android:src="@drawable/play" />
+
+
+        </androidx.cardview.widget.CardView>
+
+        <RelativeLayout
+            android:id="@+id/rl_audio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/_2sdp"
-            android:layout_toRightOf="@+id/audio_more"
-            android:src="@drawable/horizontal_more" />
+            android:layout_marginRight="@dimen/_5sdp"
+            android:layout_toLeftOf="@+id/profile_image_me"
+            android:background="@drawable/btn_black_filled"
+            android:paddingHorizontal="@dimen/_12sdp"
+            android:paddingVertical="@dimen/_8sdp"
+            android:visibility="gone">
 
-        <ImageView
-            android:id="@+id/audio_more3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/_2sdp"
-            android:layout_toRightOf="@+id/audio_more2"
-            android:src="@drawable/horizontal_more" />
+            <ImageView
+                android:id="@+id/play_audio"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_alignParentStart="true"
+                android:src="@drawable/play" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/_2sdp"
-            android:layout_toRightOf="@+id/audio_more3"
-            android:src="@drawable/horizontal_more" />
+            <ImageView
+                android:id="@+id/audio_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/play_audio"
+                android:src="@drawable/horizontal_more" />
+
+            <ImageView
+                android:id="@+id/audio_more2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:layout_toRightOf="@+id/audio_more"
+                android:src="@drawable/horizontal_more" />
+
+            <ImageView
+                android:id="@+id/audio_more3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:layout_toRightOf="@+id/audio_more2"
+                android:src="@drawable/horizontal_more" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:layout_toRightOf="@+id/audio_more3"
+                android:src="@drawable/horizontal_more" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_maps"
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_150sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_toStartOf="@+id/profile_image_me"
+            android:background="@drawable/grey_filled"
+            android:paddingHorizontal="@dimen/_5sdp"
+            android:paddingBottom="@dimen/_10sdp"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/mv_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop" />
+            <!--        <com.google.android.gms.maps.MapView-->
+            <!--            android:id="@+id/mv_location"-->
+            <!--            android:layout_width="wrap_content"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:layout_centerVertical="true"-->
+            <!--            android:background="@drawable/location_bg"-->
+            <!--            android:visibility="visible" />-->
+
+            <!--        <ImageView-->
+            <!--            android:layout_width="wrap_content"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:layout_margin="@dimen/_35sdp"-->
+            <!--            android:src="@drawable/ic_pin_pink" />-->
+        </RelativeLayout>
     </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/rl_maps"
-        android:layout_width="@dimen/_150sdp"
-        android:layout_height="@dimen/_150sdp"
-        android:layout_marginEnd="@dimen/_5sdp"
-        android:layout_toStartOf="@+id/profile_image_me"
-        android:background="@drawable/grey_filled"
-        android:paddingHorizontal="@dimen/_5sdp"
-        android:paddingBottom="@dimen/_10sdp"
-        android:visibility="gone">
-
-        <ImageView
-            android:id="@+id/mv_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleType="centerCrop" />
-        <!--        <com.google.android.gms.maps.MapView-->
-        <!--            android:id="@+id/mv_location"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_centerVertical="true"-->
-        <!--            android:background="@drawable/location_bg"-->
-        <!--            android:visibility="visible" />-->
-
-        <!--        <ImageView-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_margin="@dimen/_35sdp"-->
-        <!--            android:src="@drawable/ic_pin_pink" />-->
-    </RelativeLayout>
-
 
 
 </RelativeLayout>

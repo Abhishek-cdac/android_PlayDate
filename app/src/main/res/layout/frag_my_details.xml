@@ -256,7 +256,7 @@
                 android:layout_gravity="start"
                 android:fontFamily="@font/lato_bold"
                 android:gravity="start|center"
-                android:text="Change bio"
+                android:text="Change Bio"
                 android:textColor="@color/textColour"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
