@@ -52,7 +52,6 @@ import com.playdate.app.model.chat_models.PollingResponse;
 import com.playdate.app.service.GpsTracker;
 import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.ui.date.DateBaseActivity;
-import com.playdate.app.ui.date.fragments.FragSelectDate;
 import com.playdate.app.util.MyApplication;
 import com.playdate.app.util.common.AudioRecordProgressDialog;
 import com.playdate.app.util.common.BaseActivity;
@@ -90,9 +89,11 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
@@ -438,7 +439,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                                         ChatMessage msg = new ChatMessage();
                                         msg.setPolling(lstPollingQuestion.get(i));
                                         msg.setType("polling");
-                                        if (j!=0)
+                                        if (j != 0)
                                             lstChat.add(j - 1, msg);
                                         else
                                             lstChat.add(0, msg);
@@ -489,6 +490,11 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             JSONObject data = (JSONObject) args[0];
             Log.d("****OnNewMsg", data.toString());
             String userIDFromIP = data.getString("userId");
+
+//            Date c = Calendar.getInstance().getTime();
+//            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+//            String todaysDate = df.format(c);
+
             if (userIDFromIP.equals(userIDTo) || userIDFromIP.equals(UserID)) {
 
 
@@ -526,6 +532,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                 chat.setLattitude(data.getString("long"));
                 chat.setUserInfo(info);
                 chat.setMediaInfo(lstMedia);
+                chat.setEntryDate(data.getString("todayDate"));
 
                 adapter.addToListText(chat);
                 scrollTOEnd();
@@ -622,6 +629,10 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     });
 
     private void sendMessgae(String msg, String Type, String mediaID) {
+        Date c = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        String todaysDate = df.format(c);
+
         if (null != mSocket) {
             if (mSocket.connected()) {
 
@@ -639,6 +650,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                     jsonObject.put("lat", lattitude);
                     jsonObject.put("long", longitude);
                     jsonObject.put("messageType", Type);
+                    jsonObject.put("todayDate", todaysDate);
 
 
                     mSocket.emit("chat_message_room", jsonObject);

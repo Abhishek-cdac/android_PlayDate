@@ -74,6 +74,8 @@ public class FragSelectDate extends Fragment {
 
         });
 
+
+
         rl_virtual.setOnClickListener(v -> {
             Log.d("FromChat", "onCreateView virtual: " + fromChat);
             if (fromChat) {
