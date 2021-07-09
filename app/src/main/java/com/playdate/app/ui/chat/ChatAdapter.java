@@ -35,10 +35,16 @@ import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.TimeZone;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -52,11 +58,19 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     //    private final ArrayList<PollingQuestion> lst_pollingQuestion;
 //    private ArrayList<ChatTotalResponse> lst_chatResponse = new ArrayList<>();
     private MediaPlayer mediaPlayer;
-//    private GoogleMap googleMap;
+    //    private GoogleMap googleMap;
     private final Onclick itemClick;
     private final Picasso picasso;
     private final SessionPref pref;
     private final String LoginUserID;
+
+    private String todaysDate;
+    private final SimpleDateFormat format1;
+    private final SimpleDateFormat format2;
+    private final SimpleDateFormat format3;
+    private final SimpleDateFormat format4;
+    private final SimpleDateFormat df;
+    private final SimpleDateFormat sdf;
 
     public ChatAdapter(ArrayList<ChatMessage> chatmsgList, Context mContext, Onclick itemClick) {
         this.lst_chat = chatmsgList;
@@ -66,6 +80,22 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         LoginUserID = pref.getStringVal(SessionPref.LoginUserID);
         this.mContext = mContext;
 
+
+        try {
+            Date c = Calendar.getInstance().getTime();
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            todaysDate = df.format(c);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        format2 = new SimpleDateFormat("hh:mm aa");
+        format3 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        format4 = new SimpleDateFormat("dd/MM/yyyy");
+        sdf = new SimpleDateFormat("yyyy-MM-dd");
+        df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+        df.setTimeZone(TimeZone.getTimeZone("GTC"));
     }
 
 
@@ -433,6 +463,63 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         lst_chat.get(position).getPolling().getPollingOption().get(1).getOptionId());
             });
         }
+
+
+
+        try {
+            String timeFormat = lst_chat.get(position).getEntryDate();
+            timeFormat = timeFormat.replace("T", " ");
+
+            Date date = null;
+            try {
+                date = df.parse(timeFormat);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            df.setTimeZone(TimeZone.getDefault());
+            String formattedDate = df.format(date);
+
+            if (formattedDate.contains(todaysDate)) {
+
+                try {
+                    date = format1.parse(formattedDate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+//                holder.txt_time.setText(format2.format(date));
+
+            } else if (findDayDiff(formattedDate) == 1) {
+//                holder.txt_time.setText("Yesterday");
+            } else {
+
+
+                try {
+                    date = format3.parse(formattedDate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+//                holder.txt_time.setText(format4.format(date));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    private int findDayDiff(String formattedDate) {
+        try {
+            Date date = sdf.parse(formattedDate);
+            Date date1 = sdf.parse(todaysDate);
+            if (date == null || date1 == null)
+                return 0;
+
+            return ((int) ((date.getTime() - date1.getTime()) / (1000 * 60 * 60 * 24))) * -1;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
     }
 
     private void showPhoto(String path) {
