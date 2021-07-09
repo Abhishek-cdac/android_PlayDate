@@ -3,6 +3,7 @@ package com.playdate.app.ui.card_swipe;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 import com.playdate.app.R;
+import com.playdate.app.model.ChatStatusFrom;
 import com.playdate.app.model.Interest;
 import com.playdate.app.model.MatchListUser;
 import com.playdate.app.ui.chat.request.Onclick;
@@ -101,7 +103,8 @@ public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.
             iv_maximise = itemView.findViewById(R.id.item_fullScreen);
             item_check.setOnClickListener(v -> itemClick.onItemClicks(v, getAdapterPosition(), 13, userId));
             item_cross.setOnClickListener(v -> itemClick.onItemClicks(v, getAdapterPosition(), 14, userId));
-            message.setOnClickListener(v -> itemClick.onItemClicks(v, getAdapterPosition(), 15, userId));
+          //  message.setOnClickListener(v -> itemClick.onItemClicks(v, getAdapterPosition(), 15, userId));
+
 
 
         }
@@ -202,6 +205,34 @@ public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.
                     pvMain.setVisibility(View.GONE);
                     iv_maximise.setVisibility(View.INVISIBLE);
                 });
+
+
+                if (user.getChatStatusFrom() != null) {
+                    if (user.getChatStatusFrom().size() > 0) {
+                        Log.e("getChatStatusFrom",""+ user.getChatStatusFrom().get(0).getActiveStatus());
+                        if (user.getChatStatusFrom().get(0).getActiveStatus().toLowerCase().equals("pending")) {
+                            message.setImageResource(R.drawable.chat_sel);
+                        } else {
+                            message.setImageResource(R.drawable.chat_black);
+                        }
+                    }
+                }
+                message.setOnClickListener(v -> {
+                    if (user.getChatStatusFrom() != null) {
+                        if (user.getChatStatusFrom().size() == 0) {
+                            List<ChatStatusFrom> lst = new ArrayList<>();
+                            ChatStatusFrom csf = new ChatStatusFrom();
+                            csf.setActiveStatus("Pending");
+                            lst.add(csf);
+                            user.setChatStatusFrom(lst);
+                            itemClick.onItemClicks(v, getAdapterPosition(), 15, userId);
+                            notifyDataSetChanged();
+                        }
+                    }
+
+                });
+
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -43,6 +43,29 @@ public class GetUserSuggestionData {
     @SerializedName("friendRequest")
     @Expose
     private List<FriendRequest> friendRequest = null;
+    @SerializedName("chatStatusFrom")
+    @Expose
+    private List<ChatStatusFrom> chatStatusFrom = null;
+
+    public List<ChatStatusFrom> getChatStatusFrom() {
+        return chatStatusFrom;
+    }
+
+    public void setChatStatusFrom(List<ChatStatusFrom> chatStatusFrom) {
+        this.chatStatusFrom = chatStatusFrom;
+    }
+
+    public List<ChatStatusTo> getChatStatusTo() {
+        return chatStatusTo;
+    }
+
+    public void setChatStatusTo(List<ChatStatusTo> chatStatusTo) {
+        this.chatStatusTo = chatStatusTo;
+    }
+
+    @SerializedName("chatStatusTo")
+    @Expose
+    private List<ChatStatusTo> chatStatusTo = null;
 
     public String getId() {
         return id;

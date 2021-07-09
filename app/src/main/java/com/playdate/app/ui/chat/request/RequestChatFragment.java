@@ -46,6 +46,7 @@ public class RequestChatFragment extends Fragment implements View.OnClickListene
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
     public RequestChatFragment() {
+
     }
 
 

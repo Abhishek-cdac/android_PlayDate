@@ -1,6 +1,10 @@
 package com.playdate.app.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class MatchListUser {
     private String profilePicPath;
@@ -67,6 +71,31 @@ public class MatchListUser {
     private String username;
 
     private String status;
+
+    @SerializedName("chatStatusFrom")
+    @Expose
+    private List<ChatStatusFrom> chatStatusFrom = null;
+
+    public List<ChatStatusFrom> getChatStatusFrom() {
+        return chatStatusFrom;
+    }
+
+    public void setChatStatusFrom(List<ChatStatusFrom> chatStatusFrom) {
+        this.chatStatusFrom = chatStatusFrom;
+    }
+
+
+    @SerializedName("chatStatusTo")
+    @Expose
+    private List<ChatStatusTo> chatStatusTo = null;
+
+    public List<ChatStatusTo> getChatStatusTo() {
+        return chatStatusTo;
+    }
+
+    public void setChatStatusTo(List<ChatStatusTo> chatStatusTo) {
+        this.chatStatusTo = chatStatusTo;
+    }
 
     public String getProfilePicPath() {
         return profilePicPath;

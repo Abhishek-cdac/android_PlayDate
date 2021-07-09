@@ -194,7 +194,6 @@ public class FragLanding extends Fragment {
             public void onFailure(Call<GetUserSuggestion> call, Throwable t) {
                 t.printStackTrace();
                 pd.cancel();
-                Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
     }

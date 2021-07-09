@@ -1,6 +1,7 @@
 package com.playdate.app.ui.dashboard.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.playdate.app.R;
+import com.playdate.app.model.ChatStatusFrom;
 import com.playdate.app.model.FriendRequest;
 import com.playdate.app.model.GetUserSuggestionData;
 import com.playdate.app.ui.chat.request.Onclick;
@@ -90,7 +92,16 @@ public class SuggestionAdapter extends PagerAdapter {
                 }
             }
         }
-
+        else if (suggestions_list.get(position).getChatStatusFrom() != null) {
+            if (suggestions_list.get(position).getChatStatusFrom().size() > 0) {
+                if (suggestions_list.get(position).getChatStatusFrom().get(0).getActiveStatus().toLowerCase().equals("pending")) {
+                    iv_chat_icon.setImageResource(R.drawable.chat_sel);
+                }
+                else {
+                    iv_chat_icon.setImageResource(R.drawable.chat_black);
+                }
+            }
+        }
 
         iv_send_request.setOnClickListener(v -> {
             if (suggestions_list.get(position).getFriendRequest() != null) {
@@ -109,7 +120,18 @@ public class SuggestionAdapter extends PagerAdapter {
         });
 
         iv_chat_icon.setOnClickListener(v -> {
-            itemClick.onItemClicks(v, position, 12, userId);
+         if (suggestions_list.get(position).getChatStatusFrom() != null) {
+                if (suggestions_list.get(position).getChatStatusFrom().size() == 0) {
+                    List<ChatStatusFrom> lst = new ArrayList<>();
+                    ChatStatusFrom csf = new ChatStatusFrom();
+                    csf.setActiveStatus("Pending");
+                    lst.add(csf);
+                    suggestions_list.get(position).setChatStatusFrom(lst);
+                    itemClick.onItemClicks(v, position, 12, userId);
+                    notifyDataSetChanged();
+                }
+            }
+          //  itemClick.onItemClicks(v, position, 12, userId);
         });
 
 
