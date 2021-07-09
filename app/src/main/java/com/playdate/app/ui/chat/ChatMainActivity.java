@@ -304,6 +304,8 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 
             }
         };
+        adapter = new ChatAdapter(new ArrayList<>(), ChatMainActivity.this, itemClick);
+        rv_chat.setAdapter(adapter);
         callAPI();
     }
 
@@ -436,7 +438,10 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                                         ChatMessage msg = new ChatMessage();
                                         msg.setPolling(lstPollingQuestion.get(i));
                                         msg.setType("polling");
-                                        lstChat.add(j - 1, msg);
+                                        if (j!=0)
+                                            lstChat.add(j - 1, msg);
+                                        else
+                                            lstChat.add(0, msg);
                                     }
 
 
@@ -604,12 +609,11 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         try {
             JSONObject data = (JSONObject) args[0];
             Log.d("****OnError", data.toString());
-            if(data.toString().contains("already answered")){
-                commonClass.showDialogMsg(ChatMainActivity.this,  "PlayDate", data.getString("message"), "Ok");
-            }else{
+            if (data.toString().contains("already answered")) {
+                commonClass.showDialogMsg(ChatMainActivity.this, "PlayDate", data.getString("message"), "Ok");
+            } else {
 
             }
-
 
 
         } catch (Exception e) {

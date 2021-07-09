@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -42,6 +43,7 @@ public class RequestChatFragment extends Fragment implements View.OnClickListene
     private ArrayList<ChatList> lst_chat_users;
     private ChattingAdapter adapter;
     private RecyclerView recyclerView;
+    private TextView txt_no_chat;
     private Onclick itemClick;
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
@@ -57,6 +59,7 @@ public class RequestChatFragment extends Fragment implements View.OnClickListene
         ImageView iv_chat_notification = view.findViewById(R.id.iv_chat_notification);
         EditText edt_search_chat = view.findViewById(R.id.edt_search_chat);
         recyclerView = view.findViewById(R.id.friend_list);
+        txt_no_chat = view.findViewById(R.id.txt_no_chat);
         mSwipeRefreshLayout = view.findViewById(R.id.swiperefresh);
 
 
@@ -121,7 +124,6 @@ public class RequestChatFragment extends Fragment implements View.OnClickListene
             @Override
             public void onResponse(Call<ChatResponse> call, Response<ChatResponse> response) {
                 try {
-                    assert response.body() != null;
                     if (response.body().getStatus() == 1) {
                         lst_chat_users = response.body().getLst();
 
@@ -130,10 +132,15 @@ public class RequestChatFragment extends Fragment implements View.OnClickListene
                         recyclerView.setLayoutManager(mLayoutManager);
                         recyclerView.setItemAnimator(new DefaultItemAnimator());
                         recyclerView.setAdapter(adapter);
+                        txt_no_chat.setVisibility(View.GONE);
+                    }else{
+                        txt_no_chat.setVisibility(View.VISIBLE);
                     }
                     pd.cancel();
                 } catch (Exception e) {
                     e.printStackTrace();
+                    pd.cancel();
+                    txt_no_chat.setVisibility(View.VISIBLE);
                 }
                 mSwipeRefreshLayout.setRefreshing(false);
             }
@@ -141,6 +148,7 @@ public class RequestChatFragment extends Fragment implements View.OnClickListene
             @Override
             public void onFailure(Call<ChatResponse> call, Throwable t) {
                 pd.cancel();
+                txt_no_chat.setVisibility(View.VISIBLE);
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         });

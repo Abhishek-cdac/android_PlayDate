@@ -448,20 +448,19 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         } ///
         else if (holder.getItemViewType() == 2) {
-            ViewHolderOther viewHolderOther = (ViewHolderOther) holder;
-            viewHolderOther.tv_msg.setText(lst_chat.get(position).getPolling().getQuestion());
-            viewHolderOther.answer1.setText(lst_chat.get(position).getPolling().getPollingOption().get(0).getOption());
-            viewHolderOther.answer2.setText(lst_chat.get(position).getPolling().getPollingOption().get(1).getOption());
+            try {
+                ViewHolderOther viewHolderOther = (ViewHolderOther) holder;
+                viewHolderOther.tv_msg.setText(lst_chat.get(position).getPolling().getQuestion());
+                viewHolderOther.answer1.setText(lst_chat.get(position).getPolling().getPollingOption().get(0).getOption());
+                viewHolderOther.answer2.setText(lst_chat.get(position).getPolling().getPollingOption().get(1).getOption());
 
-            viewHolderOther.answer1.setOnClickListener(v -> {
-                itemClick.onItemClicks(v, position, 10, lst_chat.get(position).getPolling().getPollingOption().get(0).getQuestionId(),
-                        lst_chat.get(position).getPolling().getPollingOption().get(0).getOptionId());
-
-            });
-            viewHolderOther.answer2.setOnClickListener(v -> {
-                itemClick.onItemClicks(v, position, 10, lst_chat.get(position).getPolling().getPollingOption().get(1).getQuestionId(),
-                        lst_chat.get(position).getPolling().getPollingOption().get(1).getOptionId());
-            });
+                viewHolderOther.answer1.setOnClickListener(v -> itemClick.onItemClicks(v, position, 10, lst_chat.get(position).getPolling().getPollingOption().get(0).getQuestionId(),
+                        lst_chat.get(position).getPolling().getPollingOption().get(0).getOptionId()));
+                viewHolderOther.answer2.setOnClickListener(v -> itemClick.onItemClicks(v, position, 10, lst_chat.get(position).getPolling().getPollingOption().get(1).getQuestionId(),
+                        lst_chat.get(position).getPolling().getPollingOption().get(1).getOptionId()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }  ///
 
 
