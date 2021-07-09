@@ -7,6 +7,19 @@ public class SavedPostData {
     @SerializedName("_id")
     @Expose
     private String id;
+
+    @SerializedName("postId")
+    @Expose
+    private String postId;
+
+    public String getPostId() {
+        return postId;
+    }
+
+    public void setPostId(String postId) {
+        this.postId = postId;
+    }
+
     @SerializedName("mediaFullPath")
     @Expose
     private String mediaFullPath;

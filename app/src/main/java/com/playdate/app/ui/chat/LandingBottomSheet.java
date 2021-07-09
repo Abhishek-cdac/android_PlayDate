@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -75,13 +76,16 @@ public class LandingBottomSheet extends BottomSheetDialogFragment {
 
 
         report_comment_rl.setOnClickListener(v -> {
-            Log.e("toUserId chat Report", "" + toUserId);
+            dismiss();
+            Toast.makeText(getActivity(), "User  reported  successfully!", Toast.LENGTH_SHORT).show();
             callBlockUser(toUserId, "Report");
         });
 
         rl_block.setOnClickListener(v -> {
-            Log.e("toUserId chat block", "" + toUserId);
+            dismiss();
+            Toast.makeText(getActivity(), "User  blocked  successfully!", Toast.LENGTH_SHORT).show();
             callBlockUser(toUserId, "Block");
+
         });
 
         rl_delete_msg.setOnClickListener(v -> {
@@ -90,7 +94,7 @@ public class LandingBottomSheet extends BottomSheetDialogFragment {
             } else {
                 callDeleteChatRoom(chatId);
             }
-
+            dismiss();
         });
 
         rl_viewProfile.setOnClickListener(v -> {
@@ -142,6 +146,7 @@ public class LandingBottomSheet extends BottomSheetDialogFragment {
     }
 
     private void callBlockUser(String toUserId, String action) {
+        chattingAdapter.updateList(index);
         SessionPref pref = SessionPref.getInstance(getActivity());
 
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
@@ -158,7 +163,7 @@ public class LandingBottomSheet extends BottomSheetDialogFragment {
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
                         Log.e("successful", "" + toUserId + " " + action);
-                        dismiss();
+
                     } else {
                     }
                 } else {

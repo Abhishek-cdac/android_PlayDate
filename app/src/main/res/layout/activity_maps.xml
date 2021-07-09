@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!--<fragment xmlns:android="http://schemas.android.com/apk/res/android"-->
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rl_chat"
     android:layout_width="match_parent"
@@ -16,14 +16,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:drawableStart="@drawable/ic_pin_pink"
-        android:drawablePadding="@dimen/_10sdp"
+        android:background="@color/color_pink"
+        android:drawableStart="@drawable/ic_pin_white"
+        android:drawablePadding="@dimen/_5sdp"
         android:paddingVertical="@dimen/_12sdp"
         android:paddingLeft="@dimen/_15sdp"
-        android:text="Share Location"
+        android:text="@string/share_location"
         android:textAllCaps="false"
-        android:textColor="@color/color_pink"
-        android:textSize="@dimen/_14sdp" />
+        android:textColor="@color/white"
+        android:textSize="@dimen/_15sdp" />
 
 
 </RelativeLayout>

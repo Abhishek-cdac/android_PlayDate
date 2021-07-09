@@ -50,8 +50,8 @@ public class FragSelectDates extends Fragment {
     String points;
     String id;
     String image;
-    ImageView iv_back;
-    ImageView cancel;
+//    ImageView iv_back;
+//    ImageView cancel;
 
 
     public FragSelectDates(boolean fromChat) {
@@ -78,9 +78,9 @@ public class FragSelectDates extends Fragment {
 
         });
 
-        iv_back.setOnClickListener(v -> goBack());
+//        iv_back.setOnClickListener(v -> goBack());
 
-        cancel.setOnClickListener(v -> goBack());
+//        cancel.setOnClickListener(v -> goBack());
 
         rl_virtual.setOnClickListener(v -> {
             Log.d("FromChat", "onCreateView virtual: " + fromChat);
