@@ -105,6 +105,19 @@
         android:textColor="@color/white"
         android:textColorHint="@color/white" />
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:visibility="gone"
+        android:id="@+id/txt_no_chat"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:text="No chat found"
+        android:layout_height="wrap_content">
+
+    </TextView>
+
     <RelativeLayout
         android:id="@+id/rl_c"
         android:layout_width="match_parent"

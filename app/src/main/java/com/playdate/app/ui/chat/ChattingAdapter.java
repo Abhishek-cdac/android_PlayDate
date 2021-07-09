@@ -77,6 +77,9 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
     }
 
 
+    public void Refresh(){
+        frag.onResume();
+    }
     public void deleteChat(int index) {
         if (null != lst_msgs) {
             lst_msgs.remove(index);
