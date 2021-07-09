@@ -15,7 +15,7 @@
         android:padding="@dimen/_5sdp"
         android:text="Yesterday"
         android:textAlignment="center"
-        android:textSize="@dimen/_10sdp" />
+        android:textSize="@dimen/_8sdp" />
 
     <RelativeLayout
         android:layout_width="match_parent"

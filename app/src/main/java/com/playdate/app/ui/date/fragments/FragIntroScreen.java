@@ -34,7 +34,7 @@ public class FragIntroScreen extends Fragment {
         tv_create_date.setOnClickListener(v -> {
             OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
             assert frag != null;
-            frag.ReplaceFrag(new FragSelectDate(false));
+            frag.ReplaceFrag(new FragSelectDates(false));
         });
 
         tv_accept_date.setOnClickListener(v -> {

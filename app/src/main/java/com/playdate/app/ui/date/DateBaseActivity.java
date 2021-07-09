@@ -12,7 +12,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.playdate.app.R;
 import com.playdate.app.ui.date.fragments.FragIntroScreen;
-import com.playdate.app.ui.date.fragments.FragSelectDate;
+
+import com.playdate.app.ui.date.fragments.FragSelectDates;
 import com.playdate.app.ui.interfaces.OnBackPressed;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 
@@ -35,7 +36,7 @@ public class DateBaseActivity extends AppCompatActivity implements OnInnerFragme
         Log.d("FromChat", "firstFrag: " + fromChat);
         Fragment fragIntro;
         if (fromChat) {
-            fragIntro = new FragSelectDate(true);
+            fragIntro = new FragSelectDates(true);
             fromChat = false;
         } else {
             fragIntro = new FragIntroScreen();

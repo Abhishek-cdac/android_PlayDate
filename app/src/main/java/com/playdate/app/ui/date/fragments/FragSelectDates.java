@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.CreateDateGetPartnerData;
 import com.playdate.app.model.CreateDateGetPartnerModel;
 import com.playdate.app.service.GpsTracker;
+import com.playdate.app.ui.interfaces.OnBackPressed;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
@@ -35,7 +37,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FragSelectDate extends Fragment {
+public class FragSelectDates extends Fragment {
 
     private double lattitude;
     private double longitude;
@@ -48,9 +50,11 @@ public class FragSelectDate extends Fragment {
     String points;
     String id;
     String image;
+    ImageView iv_back;
+    ImageView cancel;
 
 
-    public FragSelectDate(boolean fromChat) {
+    public FragSelectDates(boolean fromChat) {
         this.fromChat = fromChat;
         Log.d("FragSelectDate", "FragSelectDate: " + fromChat);
     }
@@ -73,6 +77,10 @@ public class FragSelectDate extends Fragment {
             locationFetch();
 
         });
+
+        iv_back.setOnClickListener(v -> goBack());
+
+        cancel.setOnClickListener(v -> goBack());
 
         rl_virtual.setOnClickListener(v -> {
             Log.d("FromChat", "onCreateView virtual: " + fromChat);
@@ -99,6 +107,15 @@ public class FragSelectDate extends Fragment {
         });
 
         return view;
+    }
+
+    private void goBack() {
+        try {
+            OnBackPressed ref = (OnBackPressed) getActivity();
+            ref.onBack();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void checkforChat() {

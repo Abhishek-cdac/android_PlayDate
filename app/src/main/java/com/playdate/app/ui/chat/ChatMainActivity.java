@@ -52,7 +52,7 @@ import com.playdate.app.model.chat_models.PollingResponse;
 import com.playdate.app.service.GpsTracker;
 import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.ui.date.DateBaseActivity;
-import com.playdate.app.ui.date.fragments.FragSelectDate;
+import com.playdate.app.ui.date.fragments.FragSelectDates;
 import com.playdate.app.util.MyApplication;
 import com.playdate.app.util.common.AudioRecordProgressDialog;
 import com.playdate.app.util.common.BaseActivity;
@@ -89,10 +89,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
@@ -438,7 +442,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                                         ChatMessage msg = new ChatMessage();
                                         msg.setPolling(lstPollingQuestion.get(i));
                                         msg.setType("polling");
-                                        if (j!=0)
+                                        if (j != 0)
                                             lstChat.add(j - 1, msg);
                                         else
                                             lstChat.add(0, msg);
@@ -485,10 +489,19 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 
     Emitter.Listener onNewMessage = args -> runOnUiThread(() -> {
 
+        Date c = Calendar.getInstance().getTime();
+
+        DateTimeFormatter dtfInput = DateTimeFormatter.ofPattern("E MMM d H:m:s O u", Locale.ENGLISH);
+        OffsetDateTime odt = OffsetDateTime.parse(c.toString(), dtfInput);
+
+        Log.d("FormattedDAte", "Formatted DAte: " + odt);
+
+
         try {
             JSONObject data = (JSONObject) args[0];
             Log.d("****OnNewMsg", data.toString());
             String userIDFromIP = data.getString("userId");
+
             if (userIDFromIP.equals(userIDTo) || userIDFromIP.equals(UserID)) {
 
 
@@ -523,9 +536,11 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                 chat.setUserID(userIDFromIP);
                 chat.setMessage(data.getString("message"));
                 chat.setLattitude(data.getString("lat"));
-                chat.setLattitude(data.getString("long"));
+                chat.setLongitude(data.getString("long"));
                 chat.setUserInfo(info);
                 chat.setMediaInfo(lstMedia);
+                chat.setEntryDate(odt.toString());
+
 
                 adapter.addToListText(chat);
                 scrollTOEnd();
@@ -536,6 +551,13 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     });
 
     Emitter.Listener onTyping = args -> runOnUiThread(() -> {
+        Date c = Calendar.getInstance().getTime();
+
+        DateTimeFormatter dtfInput = DateTimeFormatter.ofPattern("E MMM d H:m:s O u", Locale.ENGLISH);
+        OffsetDateTime odt = OffsetDateTime.parse(c.toString(), dtfInput);
+
+        Log.d("FormattedDAte", "Formatted DAte Typing: " + odt.toString());
+
 
         try {
             JSONObject data = (JSONObject) args[0];
@@ -558,9 +580,10 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                     chat.setUserID(userIDFromIP);
                     chat.setMessage("");
                     chat.setLattitude("0");
-                    chat.setLattitude("");
+                    chat.setLongitude("0");
                     chat.setUserInfo(info);
                     chat.setMediaInfo(lstMedia);
+                    chat.setEntryDate(odt.toString());
 
                     adapter.addToListText(chat);
                     scrollTOEnd();
@@ -580,7 +603,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         try {
             JSONObject data = (JSONObject) args[0];
             Log.d("****ChatRoomCreated", data.toString());
-            String userIDFromIP=data.getString("userId");
+            String userIDFromIP = data.getString("userId");
             if (userIDFromIP.equals(userIDTo) || userIDFromIP.equals(UserID)) {
                 chatId = data.getString("chatId");
             }
@@ -1430,7 +1453,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 
     public void createDate() {
         Intent intent = new Intent(ChatMainActivity.this, DateBaseActivity.class);
-        FragSelectDate.userIdTo = userIDTo;
+        FragSelectDates.userIdTo = userIDTo;
         DateBaseActivity.fromChat = true;
         startActivity(intent);
     }
