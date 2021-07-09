@@ -6,6 +6,23 @@
     android:layout_height="wrap_content"
     android:padding="@dimen/_8sdp">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/_10sdp"
+
+        android:padding="@dimen/_5sdp"
+        android:id="@+id/tv_date_time"
+        android:layout_centerHorizontal="true"
+        android:text="Yesterday"
+        android:textAlignment="center"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_below="@+id/tv_date_time"
+        android:layout_height="wrap_content">
+
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image_oponent"
         android:layout_width="@dimen/_30sdp"
@@ -141,6 +158,6 @@
             android:layout_toRightOf="@+id/audio_more3"
             android:src="@drawable/horizontal_more" />
     </RelativeLayout>
-
+    </RelativeLayout>
 
 </RelativeLayout>

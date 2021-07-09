@@ -65,12 +65,12 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final String LoginUserID;
 
     private String todaysDate;
-//    private final SimpleDateFormat format1;
-//    private final SimpleDateFormat format2;
-//    private final SimpleDateFormat format3;
-//    private final SimpleDateFormat format4;
-//    private final SimpleDateFormat df;
-//    private final SimpleDateFormat sdf;
+    private final SimpleDateFormat format1;
+    private final SimpleDateFormat format2;
+    private final SimpleDateFormat format3;
+    private final SimpleDateFormat format4;
+    private final SimpleDateFormat df;
+    private final SimpleDateFormat sdf;
 
     public ChatAdapter(ArrayList<ChatMessage> chatmsgList, Context mContext, Onclick itemClick) {
         this.lst_chat = chatmsgList;
@@ -80,22 +80,22 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         LoginUserID = pref.getStringVal(SessionPref.LoginUserID);
         this.mContext = mContext;
 
-//
-//        try {
-//            Date c = Calendar.getInstance().getTime();
-//            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-//            todaysDate = df.format(c);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        format2 = new SimpleDateFormat("hh:mm aa");
-//        format3 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        format4 = new SimpleDateFormat("dd/MM/yyyy");
-//        sdf = new SimpleDateFormat("yyyy-MM-dd");
-//        df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
-//        df.setTimeZone(TimeZone.getTimeZone("GTC"));
+
+        try {
+            Date c = Calendar.getInstance().getTime();
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            todaysDate = df.format(c);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        format2 = new SimpleDateFormat("hh:mm aa");
+        format3 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        format4 = new SimpleDateFormat("dd/MM/yyyy");
+        sdf = new SimpleDateFormat("yyyy-MM-dd");
+        df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+        df.setTimeZone(TimeZone.getTimeZone("GTC"));
     }
 
 
@@ -156,6 +156,8 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             ViewHolderMe viewHolderMe = (ViewHolderMe) holder;
             picasso.get().load(lst_chat.get(position).getUserInfo().get(0).getProfilePicPath())
                     .into(viewHolderMe.profile_image_me);
+
+            viewHolderMe.tv_date_time.setText(formattedDate(lst_chat.get(position).getEntryDate()));
 
             if (lst_chat.get(position).getType().equals("text") || lst_chat.get(position).getType().equals("emoji")) {
                 viewHolderMe.tv_msg.setVisibility(View.VISIBLE);
@@ -319,7 +321,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             ViewHolderOponent viewHolderOponent = (ViewHolderOponent) holder;
             Picasso.get().load(lst_chat.get(position).getUserInfo().get(0).getProfilePicPath())
                     .into(viewHolderOponent.iv_profile);
-
+            viewHolderOponent.tv_date_time.setText(formattedDate(lst_chat.get(position).getEntryDate()));
             switch (lst_chat.get(position).getType()) {
                 case "text":
                 case "emoji":
@@ -449,6 +451,8 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         } ///
         else if (holder.getItemViewType() == 2) {
             ViewHolderOther viewHolderOther = (ViewHolderOther) holder;
+            Log.d("Entry Date", "onBindViewHolder: " + lst_chat.get(position).getPolling().getEntryDate());
+            viewHolderOther.tv_date_time.setText(formattedDate(lst_chat.get(position).getPolling().getEntryDate()));
             viewHolderOther.tv_msg.setText(lst_chat.get(position).getPolling().getQuestion());
             viewHolderOther.answer1.setText(lst_chat.get(position).getPolling().getPollingOption().get(0).getOption());
             viewHolderOther.answer2.setText(lst_chat.get(position).getPolling().getPollingOption().get(1).getOption());
@@ -465,62 +469,70 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }  ///
 
 
+    }
 
-//        try {
+    private String formattedDate(String entryDate) {
+        try {
 //            String timeFormat = lst_chat.get(position).getEntryDate();
-//            timeFormat = timeFormat.replace("T", " ");
-//
-//            Date date = null;
-//            try {
-//                date = df.parse(timeFormat);
-//            } catch (ParseException e) {
-//                e.printStackTrace();
-//            }
-//            df.setTimeZone(TimeZone.getDefault());
-//            String formattedDate = df.format(date);
-//
-//            if (formattedDate.contains(todaysDate)) {
-//
-//                try {
-//                    date = format1.parse(formattedDate);
-//                } catch (ParseException e) {
-//                    e.printStackTrace();
-//                }
-////                holder.txt_time.setText(format2.format(date));
-//
-//            } else if (findDayDiff(formattedDate) == 1) {
-////                holder.txt_time.setText("Yesterday");
-//            } else {
-//
-//
-//                try {
-//                    date = format3.parse(formattedDate);
-//                } catch (ParseException e) {
-//                    e.printStackTrace();
-//                }
-////                holder.txt_time.setText(format4.format(date));
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+            String timeFormat = entryDate;
+            timeFormat = timeFormat.replace("T", " ");
 
+            Date date = null;
+            try {
+                date = df.parse(timeFormat);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            df.setTimeZone(TimeZone.getDefault());
+            String formattedDate = df.format(date);
+
+            if (formattedDate.contains(todaysDate)) {
+
+                try {
+                    date = format1.parse(formattedDate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+//                holder.txt_time.setText(format2.format(date));
+                return format2.format(date);
+
+            } else if (findDayDiff(formattedDate) == 1) {
+//                holder.txt_time.setText("Yesterday");
+                return "Yesterday";
+
+            } else {
+
+
+                try {
+                    date = format3.parse(formattedDate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+//                holder.txt_time.setText(format4.format(date));
+                return format4.format(date);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
 
     }
 
-//    private int findDayDiff(String formattedDate) {
-//        try {
-//            Date date = sdf.parse(formattedDate);
-//            Date date1 = sdf.parse(todaysDate);
-//            if (date == null || date1 == null)
-//                return 0;
-//
-//            return ((int) ((date.getTime() - date1.getTime()) / (1000 * 60 * 60 * 24))) * -1;
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return 0;
-//    }
+
+    private int findDayDiff(String formattedDate) {
+        try {
+            Date date = sdf.parse(formattedDate);
+            Date date1 = sdf.parse(todaysDate);
+            if (date == null || date1 == null)
+                return 0;
+
+            return ((int) ((date.getTime() - date1.getTime()) / (1000 * 60 * 60 * 24))) * -1;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
 
     private void showPhoto(String path) {
         Intent mIntent = new Intent(mContext, PhotoViewActivity.class);
@@ -608,12 +620,14 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         TextView tv_msg;
         TextView answer1;
         TextView answer2;
+        TextView tv_date_time;
 
         public ViewHolderOther(@NonNull View itemView) {
             super(itemView);
             tv_msg = itemView.findViewById(R.id.tv_chat_other);
             answer1 = itemView.findViewById(R.id.answer1);
             answer2 = itemView.findViewById(R.id.answer2);
+            tv_date_time = itemView.findViewById(R.id.tv_date_time);
 
         }
     }
@@ -635,6 +649,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         ImageView iv_mute_unmute;
         CardView card_image;
         ImageView mv_location;
+        TextView tv_date_time;
         //        GoogleMap googleMap;
 
         public ViewHolderMe(View view) {
@@ -653,6 +668,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             mv_location = view.findViewById(R.id.mv_location);
             rl_body = view.findViewById(R.id.rl_body);
             rl_maps = view.findViewById(R.id.rl_maps);
+            tv_date_time = view.findViewById(R.id.tv_date_time);
 
             tv_msg.setOnLongClickListener(this);
             chat_image.setOnLongClickListener(this);
@@ -703,6 +719,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         RelativeLayout rl_body;
         RelativeLayout rl_audio;
         ImageView play_audio;
+        TextView tv_date_time;
 
         public ViewHolderOponent(View view) {
             super(view);
@@ -715,6 +732,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             card_img = view.findViewById(R.id.card_img);
             rl_body = view.findViewById(R.id.rl_body);
             play_audio = view.findViewById(R.id.play_audio);
+            tv_date_time = view.findViewById(R.id.tv_date_time);
 
             rl_audio = view.findViewById(R.id.rl_audio);
 

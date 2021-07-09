@@ -66,7 +66,10 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         });
         viewModel.onChangeFinalClick().observe(this, val -> {
 
-            if (viewModel.newPass.getValue() == null) {
+            if (viewModel.old_password.getValue() == null) {
+                clsCommon.showDialogMsg(ForgotPasswordActivity.this, "PlayDate", "Enter old password", "Ok");
+
+            } else if (viewModel.newPass.getValue() == null) {
                 clsCommon.showDialogMsg(ForgotPasswordActivity.this, "PlayDate", "Enter new password", "Ok");
 
             } else if (viewModel.newPassConfirm.getValue() == null) {
