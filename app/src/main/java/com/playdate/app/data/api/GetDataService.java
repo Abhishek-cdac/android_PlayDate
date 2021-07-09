@@ -181,6 +181,7 @@ public interface GetDataService {
     Call<GetProfileDetails> getProfileDetails(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
     @FormUrlEncoded
+
     @POST("user/add-post-comment")
     Call<CommonModel> addPostComment(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
@@ -322,6 +323,10 @@ public interface GetDataService {
     @FormUrlEncoded
     @POST("user/chat-request-status-update")
     Call<CommonModel> chatRequestStatusUpdate(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
+    @FormUrlEncoded
+    @POST("user/get-notifications-count")
+    Call<CommonModel> getNotificationCount(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
 
 }

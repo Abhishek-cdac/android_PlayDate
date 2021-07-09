@@ -216,7 +216,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
             }
             callAPIFriends();
 
-            callNotification();
+//            callNotification();
         });
 
         iv_cancel.setOnClickListener(this);
