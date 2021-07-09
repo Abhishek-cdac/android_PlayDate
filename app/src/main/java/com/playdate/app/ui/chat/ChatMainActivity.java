@@ -134,6 +134,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     private double lattitude;
     private double longitude;
     private Onclick itemClick;
+    private CommonClass commonClass;
 
 
     private final int REQUEST_AUDIO_PERMISSION_CODE = 1;
@@ -158,7 +159,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_screen);
-
+        commonClass = new CommonClass();
         pref = SessionPref.getInstance(ChatMainActivity.this);
         requestExecutor = MyApplication.getInstance().getQbResRequestExecutor();
         LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
@@ -312,6 +313,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             mSocket.on("typing", onTyping);
             mSocket.on("chat_room", ChatRoomCreated);
             mSocket.on("chat_question_answer", ChatQuestioAnswer);
+            mSocket.on("Data", OnError);
 //            Log.d("****mSocket", mSocket.id());
 
         } catch (Exception e) {
@@ -399,23 +401,23 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                                     Log.d("pollingDate", lstPollingQuestion.get(i).getEntryDate());
 
                                     int j = 0;
-                                    boolean found=false;
-                                    int foundIndex=0;
-                                    String d1=lstPollingQuestion.get(i).getEntryDate().replace("T"," ");
+                                    boolean found = false;
+                                    int foundIndex = 0;
+                                    String d1 = lstPollingQuestion.get(i).getEntryDate().replace("T", " ");
                                     for (; j < lstChat.size(); j++) {
                                         if (null != lstChat.get(j).getEntryDate()) {
 
                                             try {
 
-                                                String d2=lstChat.get(j).getEntryDate().replace("T"," ");
+                                                String d2 = lstChat.get(j).getEntryDate().replace("T", " ");
                                                 Date pollDate = sdf.parse(d1);
                                                 Date MsgDate = sdf.parse(d2);
                                                 long diff = pollDate.getTime() - MsgDate.getTime();
-                                                if (diff <0) {// minus diff
+                                                if (diff < 0) {// minus diff
                                                     System.out.println("Date1 is after Date2");
                                                 } else { // plus diff
-                                                    found=true;
-                                                    foundIndex=j;
+                                                    found = true;
+                                                    foundIndex = j;
                                                     j = lstChat.size();
 
                                                 }
@@ -425,18 +427,17 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 
                                         }
                                     }
-                                    if(found){
+                                    if (found) {
                                         ChatMessage msg = new ChatMessage();
                                         msg.setPolling(lstPollingQuestion.get(i));
                                         msg.setType("polling");
                                         lstChat.add(foundIndex, msg);
-                                    }else{
+                                    } else {
                                         ChatMessage msg = new ChatMessage();
                                         msg.setPolling(lstPollingQuestion.get(i));
                                         msg.setType("polling");
-                                        lstChat.add(j-1, msg);
+                                        lstChat.add(j - 1, msg);
                                     }
-
 
 
                                 }
@@ -537,30 +538,30 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             String userIDFromIP = data.getString("userId");
             if (userIDFromIP.equals(userIDTo) || userIDFromIP.equals(UserID)) {
 //                if (!UserID.equals(userIDFromIP)) {
-                    if (!lstChat.get(0).getType().equals("typing")) {
+                if (!lstChat.get(0).getType().equals("typing")) {
 
-                        ArrayList<MediaInfo> lstMedia = new ArrayList<>();
-                        lstMedia.get(0).setMediaType("typing");
-                        UserInfo userInfo = new UserInfo();
-                        ArrayList<UserInfo> info = new ArrayList<>();
+                    ArrayList<MediaInfo> lstMedia = new ArrayList<>();
+                    lstMedia.get(0).setMediaType("typing");
+                    UserInfo userInfo = new UserInfo();
+                    ArrayList<UserInfo> info = new ArrayList<>();
 
-                        userInfo.setProfilePicPath(data.getString("profilePic"));
-                        info.add(userInfo);
-                        ChatMessage chat = new ChatMessage();
-                        chat.setType("typing");
-                        chat.setUserName(data.getString("username"));
-                        chat.setUserID(userIDFromIP);
-                        chat.setMessage("");
-                        chat.setLattitude("0");
-                        chat.setLattitude("");
-                        chat.setUserInfo(info);
-                        chat.setMediaInfo(lstMedia);
+                    userInfo.setProfilePicPath(data.getString("profilePic"));
+                    info.add(userInfo);
+                    ChatMessage chat = new ChatMessage();
+                    chat.setType("typing");
+                    chat.setUserName(data.getString("username"));
+                    chat.setUserID(userIDFromIP);
+                    chat.setMessage("");
+                    chat.setLattitude("0");
+                    chat.setLattitude("");
+                    chat.setUserInfo(info);
+                    chat.setMediaInfo(lstMedia);
 
-                        adapter.addToListText(chat);
-                        scrollTOEnd();
+                    adapter.addToListText(chat);
+                    scrollTOEnd();
 
 
-                    }
+                }
 //                }
             }
         } catch (Exception e) {
@@ -592,6 +593,23 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             Log.d("RightAnswer", "isRightAnswer: " + data.getString("isRightAnswer"));
 
             new WinnerActivity(ChatMainActivity.this, data.get("answerOrder").toString(), data.get("points").toString()).show();
+
+
+        } catch (Exception e) {
+
+        }
+    });
+
+    Emitter.Listener OnError = args -> runOnUiThread(() -> {
+        try {
+            JSONObject data = (JSONObject) args[0];
+            Log.d("****OnError", data.toString());
+            if(data.toString().contains("already answered")){
+                commonClass.showDialogMsg(ChatMainActivity.this,  "PlayDate", data.getString("message"), "Ok");
+            }else{
+
+            }
+
 
 
         } catch (Exception e) {

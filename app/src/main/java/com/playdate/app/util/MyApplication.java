@@ -21,11 +21,6 @@ public class MyApplication extends Application {
     private static final String ACCOUNT_KEY = "96V86ZgFvqge8yQcsvNv";
     public static final String USER_DEFAULT_PASSWORD = "quickblox";
 
-
-
-
-
-
     private static MyApplication instance;
     private QBResRequestExecutor qbResRequestExecutor;
 
