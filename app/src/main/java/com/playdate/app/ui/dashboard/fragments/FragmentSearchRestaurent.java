@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,7 +54,7 @@ public class FragmentSearchRestaurent extends Fragment implements RestaurentAdap
     private Onclick itemClick;
     private RestaurentAdapter adapter;
     private SessionPref pref;
-
+    TextView txt_cancel;
     public FragmentSearchRestaurent() {
     }
 
@@ -74,9 +75,10 @@ public class FragmentSearchRestaurent extends Fragment implements RestaurentAdap
         clsCommon = CommonClass.getInstance();
         pref = SessionPref.getInstance(getContext());
         edt_search = view.findViewById(R.id.edt_search);
-        TextView txt_cancel = view.findViewById(R.id.txt_cancel);
+        txt_cancel = view.findViewById(R.id.txt_cancel);
         recyclerView = view.findViewById(R.id.recycler_view);
         txt_suggestion = view.findViewById(R.id.txt_suggestion);
+
         txt_suggestion.setVisibility(View.GONE);
         itemClick = new Onclick() {
             @Override
@@ -107,6 +109,7 @@ public class FragmentSearchRestaurent extends Fragment implements RestaurentAdap
 
         txt_cancel.setOnClickListener(v -> {
             edt_search.setText("");
+
         });
 
 

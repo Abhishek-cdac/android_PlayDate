@@ -536,7 +536,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                 chat.setUserID(userIDFromIP);
                 chat.setMessage(data.getString("message"));
                 chat.setLattitude(data.getString("lat"));
-                chat.setLattitude(data.getString("long"));
+                chat.setLongitude(data.getString("long"));
                 chat.setUserInfo(info);
                 chat.setMediaInfo(lstMedia);
                 chat.setEntryDate(odt.toString());
@@ -580,7 +580,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                     chat.setUserID(userIDFromIP);
                     chat.setMessage("");
                     chat.setLattitude("0");
-                    chat.setLattitude("");
+                    chat.setLongitude("0");
                     chat.setUserInfo(info);
                     chat.setMediaInfo(lstMedia);
                     chat.setEntryDate(odt.toString());
