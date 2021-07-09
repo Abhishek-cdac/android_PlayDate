@@ -89,6 +89,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -487,14 +489,18 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 
     Emitter.Listener onNewMessage = args -> runOnUiThread(() -> {
 
+        Date c = Calendar.getInstance().getTime();
+
+        DateTimeFormatter dtfInput = DateTimeFormatter.ofPattern("E MMM d H:m:s O u", Locale.ENGLISH);
+        OffsetDateTime odt = OffsetDateTime.parse(c.toString(), dtfInput);
+
+        Log.d("FormattedDAte", "Formatted DAte: " + odt);
+
+
         try {
             JSONObject data = (JSONObject) args[0];
             Log.d("****OnNewMsg", data.toString());
             String userIDFromIP = data.getString("userId");
-
-//            Date c = Calendar.getInstance().getTime();
-//            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-//            String todaysDate = df.format(c);
 
             if (userIDFromIP.equals(userIDTo) || userIDFromIP.equals(UserID)) {
 
@@ -533,7 +539,8 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                 chat.setLattitude(data.getString("long"));
                 chat.setUserInfo(info);
                 chat.setMediaInfo(lstMedia);
-                chat.setEntryDate(data.getString("todayDate"));
+                chat.setEntryDate(odt.toString());
+
 
                 adapter.addToListText(chat);
                 scrollTOEnd();
@@ -544,6 +551,13 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     });
 
     Emitter.Listener onTyping = args -> runOnUiThread(() -> {
+        Date c = Calendar.getInstance().getTime();
+
+        DateTimeFormatter dtfInput = DateTimeFormatter.ofPattern("E MMM d H:m:s O u", Locale.ENGLISH);
+        OffsetDateTime odt = OffsetDateTime.parse(c.toString(), dtfInput);
+
+        Log.d("FormattedDAte", "Formatted DAte Typing: " + odt.toString());
+
 
         try {
             JSONObject data = (JSONObject) args[0];
@@ -569,6 +583,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                     chat.setLattitude("");
                     chat.setUserInfo(info);
                     chat.setMediaInfo(lstMedia);
+                    chat.setEntryDate(odt.toString());
 
                     adapter.addToListText(chat);
                     scrollTOEnd();
@@ -588,7 +603,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         try {
             JSONObject data = (JSONObject) args[0];
             Log.d("****ChatRoomCreated", data.toString());
-            String userIDFromIP=data.getString("userId");
+            String userIDFromIP = data.getString("userId");
             if (userIDFromIP.equals(userIDTo) || userIDFromIP.equals(UserID)) {
                 chatId = data.getString("chatId");
             }
@@ -635,10 +650,6 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     });
 
     private void sendMessgae(String msg, String Type, String mediaID) {
-        Date c = Calendar.getInstance().getTime();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        String todaysDate = df.format(c);
-
         if (null != mSocket) {
             if (mSocket.connected()) {
 
@@ -656,7 +667,6 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                     jsonObject.put("lat", lattitude);
                     jsonObject.put("long", longitude);
                     jsonObject.put("messageType", Type);
-                    jsonObject.put("todayDate", todaysDate);
 
 
                     mSocket.emit("chat_message_room", jsonObject);
