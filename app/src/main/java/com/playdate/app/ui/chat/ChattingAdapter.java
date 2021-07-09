@@ -55,6 +55,8 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
         this.itemClick = itemClick;
         this.frag = frag;
         picasso = Picasso.get();
+
+
         SessionPref pref = SessionPref.getInstance(frag.getActivity());
         MyID = pref.getStringVal(SessionPref.LoginUserID);
         try {
@@ -64,6 +66,7 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         format2 = new SimpleDateFormat("hh:mm aa");
         format3 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
