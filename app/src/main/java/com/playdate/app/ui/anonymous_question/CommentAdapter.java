@@ -153,14 +153,13 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         holder.delete.setOnClickListener(v -> {
             try {
                 selected_index = position;
-                commentList.get(selected_index).setDeleted(true);
-                callDeleteCommentApi();
+               // commentList.get(selected_index).setDeleted(true);
+                callDeleteCommentApi(commentList.get(selected_index).getComments().getCommentId());
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
         });
-
     }
 
     @Override
@@ -185,9 +184,10 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             relativeLayout = itemView.findViewById(R.id.card_comment);
         }
 
+
     }
 
-    private void callDeleteCommentApi() {
+    private void callDeleteCommentApi(String commentId) {
         SessionPref pref = SessionPref.getInstance(mContext);
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
@@ -201,15 +201,13 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         call.enqueue(new retrofit2.Callback<GetCommentModel>() {
             @Override
             public void onResponse(Call<GetCommentModel> call, Response<GetCommentModel> response) {
+
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
                         commentDeleted(selected_index);
                         callGetCommentApi();
-
                     }
                 }
-
-
             }
 
             @Override

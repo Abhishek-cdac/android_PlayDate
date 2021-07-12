@@ -40,14 +40,14 @@ import retrofit2.Response;
 
 public class ActivityCoupons extends AppCompatActivity implements View.OnClickListener {
     private String CouponCode;
-//    private int CurrentPoints;
+    //    private int CurrentPoints;
     private RelativeLayout rl_getcode;
     private RelativeLayout rl_code;
     private String inviteLink;
     private TextView share_coupans;
     private TextView share_coupans1;
     private ArrayList<FaqData> faq_list;
-//    private TextView tv_Get_code;
+    //    private TextView tv_Get_code;
     private RecyclerView rv_frequently;
 
     @Override
@@ -55,17 +55,14 @@ public class ActivityCoupons extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.frag_coupan_code);
         String inviteCode = getIntent().getStringExtra("inviteCode");
-        inviteLink = getIntent().getStringExtra("inviteLink");
-//        Log.e("inviteCode...", "" + inviteCode);
-//        Log.e("inviteLink...", "" + inviteLink);
-
+        //  inviteLink = getIntent().getStringExtra("inviteLink");
         RelativeLayout copy_code = findViewById(R.id.copy_code);
 
-//        ImageView whatsup_coupan = findViewById(R.id.whatsup_coupan);
+        ImageView whatsup_coupan = findViewById(R.id.whatsup_coupan);
         ImageView iv_back = findViewById(R.id.iv_back);
-//        ImageView message_coupan = findViewById(R.id.message_coupan);
-//        ImageView instagram_coupan = findViewById(R.id.instagram_coupan);
-//        ImageView facebook_coupan = findViewById(R.id.facebook_coupan);
+        ImageView message_coupan = findViewById(R.id.message_coupan);
+        ImageView instagram_coupan = findViewById(R.id.instagram_coupan);
+        ImageView facebook_coupan = findViewById(R.id.facebook_coupan);
 
         TextView tv_code = findViewById(R.id.tv_code);
         share_coupans = findViewById(R.id.share_coupans);
@@ -89,6 +86,8 @@ public class ActivityCoupons extends AppCompatActivity implements View.OnClickLi
         boolean isFromCoupon = mIntent.getBooleanExtra("isFromCoupon", false);
         boolean isnoBalance = mIntent.getBooleanExtra("No Balance", false);
         txt_points.setText(couponPoints + " Points");
+        inviteLink = "Hey, I'm on PlayDate. Join me! Download it here: http://139.59.0.106:3000/3310 and use my coupon code " + CouponCode + " and get discount on restaurants.";
+
         if (isFromCoupon) {
             if (isnoBalance) {
                 txt_refer.setText(R.string.something_went_wrong);
@@ -127,10 +126,10 @@ public class ActivityCoupons extends AppCompatActivity implements View.OnClickLi
 
         });
         iv_back.setOnClickListener(v -> finish());
-//        facebook_coupan.setOnClickListener(this);
-//        instagram_coupan.setOnClickListener(this);
-//        whatsup_coupan.setOnClickListener(this);
-//        message_coupan.setOnClickListener(this);
+        facebook_coupan.setOnClickListener(this);
+        instagram_coupan.setOnClickListener(this);
+        whatsup_coupan.setOnClickListener(this);
+        message_coupan.setOnClickListener(this);
         copy_code.setOnClickListener(this);
 
 
@@ -263,12 +262,6 @@ public class ActivityCoupons extends AppCompatActivity implements View.OnClickLi
         if (id == R.id.message_coupan) {
 
             shareTextUrl();
-//            Intent intent = new Intent(Intent.ACTION_MAIN);
-//            intent.addCategory(Intent.CATEGORY_DEFAULT);
-//          //  intent.setType(Telephony.Sms.getDefaultSmsPackage(this));
-//            intent.setType("vnd.android-dir/mms-sms");
-//            intent.putExtra(Intent.EXTRA_TEXT, inviteLink);
-//            startActivity(intent);
 
 
         } else if (id == R.id.instagram_coupan) {
@@ -284,7 +277,7 @@ public class ActivityCoupons extends AppCompatActivity implements View.OnClickLi
 
             }
 
-        } else if (id == R.id.whtasapp_coupan) {
+        } else if (id == R.id.whatsup_coupan) {
             Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
             whatsappIntent.setType("text/plain");
             whatsappIntent.setPackage("com.whatsapp");
