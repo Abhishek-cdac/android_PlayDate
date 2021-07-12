@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -33,6 +34,7 @@ import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.FriendsListModel;
 import com.playdate.app.model.MatchListUser;
+import com.playdate.app.model.NotificationCountModel;
 import com.playdate.app.service.LocationService;
 import com.playdate.app.ui.anonymous_question.AnonymousQuestionActivity;
 import com.playdate.app.ui.card_swipe.FragCardSwipe;
@@ -166,6 +168,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
                 txt_match.setVisibility(View.GONE);
             }
         }
+        CallNotificationCount();
         boolean isFirstTime = checkFirstFrag();
         Fragment fragOne;
         if (!isFirstTime) {
@@ -246,6 +249,50 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
         ll_coupon.setOnClickListener(this);
         iv_dashboard_notification.setOnClickListener(this);
         txt_social.setOnClickListener(this);
+    }
+
+    private void CallNotificationCount() {
+
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        Call<NotificationCountModel> call = service.getNotificationCount("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new Callback<NotificationCountModel>() {
+            @Override
+            public void onResponse(Call<NotificationCountModel> call, Response<NotificationCountModel> response) {
+                try {
+
+                    if (response.code() == 200) {
+                        assert response.body() != null;
+                        if (response.body().getStatus() == 1) {
+                            int countNotification = response.body().getData().get(0).getTotalUnreadNotification();
+                            Log.e("countNotification", "" + countNotification);
+
+                            if (countNotification > 0 && countNotification <= 99) {
+                                txt_count.setVisibility(View.VISIBLE);
+                                txt_count.setText("" + countNotification);
+                            } else if (countNotification > 99) {
+                                txt_count.setVisibility(View.VISIBLE);
+                                txt_count.setText("99+");
+                            } else {
+                                txt_count.setVisibility(View.GONE);
+                                txt_count.setText("");
+
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+//                mSwipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onFailure(Call<NotificationCountModel> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
     }
 
     private boolean checkFirstFrag() {
@@ -883,13 +930,13 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
 
     @Override
     public void setNotiCount(int count) {
-        if (count > 0) {
+       /* if (count > 0) {
             txt_count.setVisibility(View.VISIBLE);
             txt_count.setText("" + count);
         } else {
             txt_count.setVisibility(View.GONE);
             txt_count.setText("");
-        }
+        }*/
     }
 
 

@@ -66,20 +66,25 @@ public class FragMyCoupons extends Fragment {
         call.enqueue(new Callback<MyCouponsModel>() {
             @Override
             public void onResponse(Call<MyCouponsModel> call, Response<MyCouponsModel> response) {
-                if (response.code() == 200) {
-                    assert response.body() != null;
-                    if (response.body().getStatus() == 1) {
-                        MyCouponsWrap wrap = response.body().getData();
-                        List<MyCoupons> lst = wrap.getLst();
-                        if (lst == null) {
-                            lst = new ArrayList<>();
-                        }
-                        txt_points.setText("" + wrap.getAccount().getCurrentPoints());
-                        MyCouponAdapter adapter = new MyCouponAdapter(lst);
-                        rv_coupons_list.setAdapter(adapter);
+              try {
+                  if (response.code() == 200) {
+                      assert response.body() != null;
+                      if (response.body().getStatus() == 1) {
+                          MyCouponsWrap wrap = response.body().getData();
+                          List<MyCoupons> lst = wrap.getLst();
+                          if (lst == null) {
+                              lst = new ArrayList<>();
+                          }
+                          txt_points.setText("" + wrap.getAccount().getCurrentPoints());
+                          MyCouponAdapter adapter = new MyCouponAdapter(lst);
+                          rv_coupons_list.setAdapter(adapter);
 
-                    }
-                }
+                      }
+                  }
+              } catch (Exception ex){
+
+              }
+
             }
 
             @Override

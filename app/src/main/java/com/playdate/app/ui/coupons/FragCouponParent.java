@@ -1,6 +1,7 @@
 package com.playdate.app.ui.coupons;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,8 @@ import androidx.viewpager.widget.ViewPager;
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
+import com.playdate.app.model.CommonModel;
+import com.playdate.app.model.NotificationCountModel;
 import com.playdate.app.model.RestMain;
 import com.playdate.app.ui.dashboard.OnAPIResponce;
 import com.playdate.app.ui.dashboard.adapter.RestaurentListAdapter;
@@ -41,7 +44,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FragCouponParent extends Fragment implements OnSizeDecided, View.OnClickListener, OnInnerFragmentClicks, OnAPIResponce {
+public class FragCouponParent extends Fragment implements OnSizeDecided, View.OnClickListener, OnInnerFragmentClicks {
+    //, OnAPIResponce {
     private WrapContentViewPager viewpager;
     private RecyclerView rv_restaurant;
     private RestaurentListAdapter adapterRestaurent;
@@ -70,6 +74,7 @@ public class FragCouponParent extends Fragment implements OnSizeDecided, View.On
         adapterRestaurent = new RestaurentListAdapter(new ArrayList<>());
         rv_restaurant.setAdapter(adapterRestaurent);
         rv_restaurant.setLayoutManager(manager1);
+        CallNotificationCount();
         callAPIRestaurant();
 
         txt_store.setOnClickListener(this);
@@ -105,6 +110,53 @@ public class FragCouponParent extends Fragment implements OnSizeDecided, View.On
             }
         });
         return view;
+    }
+
+    private void CallNotificationCount() {
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+//        hashMap.put("limit", "100");
+//        hashMap.put("pageNo", "1");
+
+        //  Call<RestMain> call = service.restaurants("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        Call<NotificationCountModel> call = service.getNotificationCount("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new Callback<NotificationCountModel>() {
+            @Override
+            public void onResponse(Call<NotificationCountModel> call, Response<NotificationCountModel> response) {
+                try {
+
+                    if (response.code() == 200) {
+                        assert response.body() != null;
+                        if (response.body().getStatus() == 1) {
+                            int countNotification = response.body().getData().get(0).getTotalUnreadNotification();
+                            Log.e("countNotification", "" + countNotification);
+
+                            if (countNotification > 0 && countNotification <= 99) {
+                                txt_count.setVisibility(View.VISIBLE);
+                                txt_count.setText("" + countNotification);
+                            } else if (countNotification > 99) {
+                                txt_count.setVisibility(View.VISIBLE);
+                                txt_count.setText("99+");
+                            } else {
+                                txt_count.setVisibility(View.GONE);
+                                txt_count.setText("");
+
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+//                mSwipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onFailure(Call<NotificationCountModel> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
     }
 
     @Override
@@ -158,7 +210,12 @@ public class FragCouponParent extends Fragment implements OnSizeDecided, View.On
         if (v.getId() == R.id.txt_store) {
             viewpager.setCurrentItem(0);
         } else if (v.getId() == R.id.iv_dashboard_notification) {
-            ReplaceFrag(new FragNotification("Coupons"));
+            try {
+                ReplaceFrag(new FragNotification("Coupons"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         } else {
             viewpager.setCurrentItem(1);
         }
@@ -225,16 +282,18 @@ public class FragCouponParent extends Fragment implements OnSizeDecided, View.On
 
     }
 
-    @Override
+   /* @Override
     public void setNotiCount(int count) {
-        if (count > 0) {
+       */
+    /* if (count > 0) {
             txt_count.setVisibility(View.VISIBLE);
             txt_count.setText("" + count);
         } else {
             txt_count.setVisibility(View.GONE);
             txt_count.setText("");
-        }
-    }
+        }*/
+    /*
+    }*/
 
     @Override
     public void onResume() {
