@@ -16,6 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,9 +28,11 @@ import com.playdate.app.model.GetUserSuggestion;
 import com.playdate.app.model.GetUserSuggestionData;
 import com.playdate.app.model.RestMain;
 import com.playdate.app.ui.chat.request.Onclick;
+import com.playdate.app.ui.coupons.FragCouponParent;
 import com.playdate.app.ui.dashboard.OnFriendSelected;
 import com.playdate.app.ui.dashboard.adapter.RestaurentAdapter;
 import com.playdate.app.ui.dashboard.adapter.SuggestedFriendAdapter;
+import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.ui.restaurant.adapter.Restaurant;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
@@ -55,6 +58,7 @@ public class FragmentSearchRestaurent extends Fragment implements RestaurentAdap
     private RestaurentAdapter adapter;
     private SessionPref pref;
     TextView txt_cancel;
+
     public FragmentSearchRestaurent() {
     }
 
@@ -109,6 +113,9 @@ public class FragmentSearchRestaurent extends Fragment implements RestaurentAdap
 
         txt_cancel.setOnClickListener(v -> {
             edt_search.setText("");
+            OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
+            Objects.requireNonNull(frag).ReplaceFrag(new FragCouponParent());
+//            getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
         });
 
@@ -181,7 +188,6 @@ public class FragmentSearchRestaurent extends Fragment implements RestaurentAdap
         });
 
     }
-
 
 
     @Override
