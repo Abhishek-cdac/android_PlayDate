@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
+import com.playdate.app.model.NotificationCountModel;
 import com.playdate.app.model.chat_models.ChatList;
 import com.playdate.app.model.chat_models.ChatResponse;
 import com.playdate.app.ui.chat.ChatMainActivity;
@@ -46,6 +48,8 @@ public class RequestChatFragment extends Fragment implements View.OnClickListene
     private TextView txt_no_chat;
     private Onclick itemClick;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+private  TextView txt_count;
+    private SessionPref pref;
 
     public RequestChatFragment() {
 
@@ -60,9 +64,12 @@ public class RequestChatFragment extends Fragment implements View.OnClickListene
         ImageView iv_chat_notification = view.findViewById(R.id.iv_chat_notification);
         EditText edt_search_chat = view.findViewById(R.id.edt_search_chat);
         recyclerView = view.findViewById(R.id.friend_list);
+        txt_count = view.findViewById(R.id.txt_count);
         txt_no_chat = view.findViewById(R.id.txt_no_chat);
         mSwipeRefreshLayout = view.findViewById(R.id.swiperefresh);
+        pref = SessionPref.getInstance(getActivity());
 
+        CallNotificationCount();
 
         edt_search_chat.addTextChangedListener(new TextWatcher() {
             @Override
@@ -91,6 +98,52 @@ public class RequestChatFragment extends Fragment implements View.OnClickListene
         iv_chat_notification.setOnClickListener(this);
 
         return view;
+    }
+
+    private void CallNotificationCount() {
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+//        hashMap.put("limit", "100");
+//        hashMap.put("pageNo", "1");
+
+        //  Call<RestMain> call = service.restaurants("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        Call<NotificationCountModel> call = service.getNotificationCount("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new Callback<NotificationCountModel>() {
+            @Override
+            public void onResponse(Call<NotificationCountModel> call, Response<NotificationCountModel> response) {
+                try {
+
+                    if (response.code() == 200) {
+                        assert response.body() != null;
+                        if (response.body().getStatus() == 1) {
+                            int countNotification = response.body().getData().get(0).getTotalUnreadNotification();
+                            Log.e("countNotification", "" + countNotification);
+
+                            if (countNotification > 0 && countNotification <= 99) {
+                                txt_count.setVisibility(View.VISIBLE);
+                                txt_count.setText("" + countNotification);
+                            } else if (countNotification > 99) {
+                                txt_count.setVisibility(View.VISIBLE);
+                                txt_count.setText("99+");
+                            } else {
+                                txt_count.setVisibility(View.GONE);
+                                txt_count.setText("");
+
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+//                mSwipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onFailure(Call<NotificationCountModel> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 
 

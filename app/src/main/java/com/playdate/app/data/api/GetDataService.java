@@ -17,6 +17,7 @@ import com.playdate.app.model.LoginResponse;
 import com.playdate.app.model.MatchListModel;
 import com.playdate.app.model.MyCouponsModel;
 import com.playdate.app.model.MyCouponsModelStore;
+import com.playdate.app.model.NotificationCountModel;
 import com.playdate.app.model.NotificationModel;
 import com.playdate.app.model.RegisterResult;
 import com.playdate.app.model.RestMain;
@@ -326,7 +327,7 @@ public interface GetDataService {
 
     @FormUrlEncoded
     @POST("user/get-notifications-count")
-    Call<CommonModel> getNotificationCount(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+    Call<NotificationCountModel> getNotificationCount(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
 
 }

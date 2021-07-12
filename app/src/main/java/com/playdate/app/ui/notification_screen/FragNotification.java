@@ -61,6 +61,8 @@ public class FragNotification extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag_notification, container, false);
+
+
         rv_notification = view.findViewById(R.id.rv_notification);
         ll_no_notify = view.findViewById(R.id.txt_no_notification);
         ImageView back_anonymous = view.findViewById(R.id.back_anonymous);
@@ -88,20 +90,16 @@ public class FragNotification extends Fragment {
                     callRelationStatusUpdate(s, "Verified");
                 } else if (value == 31) {
                     callRelationStatusUpdate(s, "Rejected");
-                }
-                else  if (value == 32) {
-                    Log.e("Accept requestId",""+s);
+                } else if (value == 32) {
+                    Log.e("Accept requestId", "" + s);
                     callChatRequestStatusUpdate(s, "Active");
-                }
-                else  if(value == 33){
-                    Log.e("Reject requestId",""+s);
+                } else if (value == 33) {
+                    Log.e("Reject requestId", "" + s);
 
                     callChatRequestStatusUpdate(s, "Reject");
-                }
-
-                else if(value == 34){
+                } else if (value == 34) {
                     callMatchRequestStatusUpdateAPI(s, "Accepted");
-                }  else if(value == 35){
+                } else if (value == 35) {
                     callMatchRequestStatusUpdateAPI(s, "Rejected");
                 }
             }
@@ -110,7 +108,8 @@ public class FragNotification extends Fragment {
             public void onItemClicks(View v, int adapterPosition, int i, String notifiationId, String userId) {
                 if (i == 22) {
                     callUpdateNotificationStatusAPI(notifiationId, userId, "read");
-                } else if (i == 11) {
+                }
+                else if (i == 11) {
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     NotificationBottomSheet sheet = new NotificationBottomSheet(FragNotification.this);
                     bundle = new Bundle();
@@ -131,6 +130,7 @@ public class FragNotification extends Fragment {
 
             }
         };
+
         back_anonymous.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -204,7 +204,7 @@ public class FragNotification extends Fragment {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
         String userId = pref.getStringVal(SessionPref.LoginUserID);
-      //  pref.saveStringKeyVal(SessionPref.RelationRequestId, relatioRequestId);
+        //  pref.saveStringKeyVal(SessionPref.RelationRequestId, relatioRequestId);
         hashMap.put("userId", userId);
         hashMap.put("requestID", chatRequestId);
         hashMap.put("status", status);  //Active,Rejected
@@ -219,7 +219,7 @@ public class FragNotification extends Fragment {
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
                         callGetNotificationAPI();
-                        Log.e("ChatRequestId....", ""+ chatRequestId);
+                        Log.e("ChatRequestId....", "" + chatRequestId);
                         clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
                     } else {
                         clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
@@ -243,6 +243,7 @@ public class FragNotification extends Fragment {
             }
         });
     }
+
     private void callMatchRequestStatusUpdateAPI(String requestId, String status) {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
@@ -385,27 +386,29 @@ public class FragNotification extends Fragment {
             @Override
             public void onResponse(Call<NotificationModel> call, Response<NotificationModel> response) {
                 pd.cancel();
+
                 if (response.code() == 200) {
-                    assert response.body() != null;
-                    if (response.body().getStatus() == 1) {
-                        lst_notifications = response.body().getData();
-                        if (lst_notifications == null) {
-                            lst_notifications = new ArrayList<>();
-                        }
+                    try {
+                        assert response.body() != null;
+                        if (response.body().getStatus() == 1) {
+                            lst_notifications = response.body().getData();
+                            if (lst_notifications == null) {
+                                lst_notifications = new ArrayList<>();
+                            }
 
-                        if (lst_notifications.size() == 0) {
-                            ll_no_notify.setVisibility(View.VISIBLE);
-                            rv_notification.setVisibility(View.GONE);
-                        } else {
-                            ll_no_notify.setVisibility(View.GONE);
-                            rv_notification.setVisibility(View.VISIBLE);
+                            if (lst_notifications.size() == 0) {
+                                ll_no_notify.setVisibility(View.VISIBLE);
+                                rv_notification.setVisibility(View.GONE);
+                            } else {
+                                ll_no_notify.setVisibility(View.GONE);
+                                rv_notification.setVisibility(View.VISIBLE);
 
-                            Log.e("lst_notifications", "" + lst_notifications.size());
-                            RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
-                            rv_notification.setLayoutManager(manager);
-                            FragNotificationTypeAdapter adapter = new FragNotificationTypeAdapter(getActivity(), (ArrayList<NotificationData>) lst_notifications, itemClick);
-                            rv_notification.setAdapter(adapter);
-                        }
+                                Log.e("lst_notifications", "" + lst_notifications.size());
+                                RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
+                                rv_notification.setLayoutManager(manager);
+                                FragNotificationTypeAdapter adapter = new FragNotificationTypeAdapter(getActivity(), (ArrayList<NotificationData>) lst_notifications, itemClick);
+                                rv_notification.setAdapter(adapter);
+                            }
 
 
 //                        Log.e("lst_notifications", "" + lst_notifications.size());
@@ -414,7 +417,13 @@ public class FragNotification extends Fragment {
 //                        FragNewNotificationAdapter adapter = new FragNewNotificationAdapter(getActivity(), (ArrayList<NotificationData>) lst_notifications, itemClick);
 //                        rv_notification.setAdapter(adapter);
 
+                        }
                     }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
