@@ -50,8 +50,8 @@ public class FragSelectDates extends Fragment {
     String points;
     String id;
     String image;
-//    ImageView iv_back;
-//    ImageView cancel;
+    ImageView iv_back;
+    ImageView cancel;
 
 
     public FragSelectDates(boolean fromChat) {
@@ -67,6 +67,8 @@ public class FragSelectDates extends Fragment {
         RelativeLayout rl_virtual = view.findViewById(R.id.virtual);
         frag = (OnInnerFragmentClicks) getActivity();
         clsCommon = CommonClass.getInstance();
+        iv_back = view.findViewById(R.id.iv_back);
+        cancel = view.findViewById(R.id.cancel);
 
 
         if (fromChat) {
@@ -78,9 +80,9 @@ public class FragSelectDates extends Fragment {
 
         });
 
-//        iv_back.setOnClickListener(v -> goBack());
+        iv_back.setOnClickListener(v -> goBack());
 
-//        cancel.setOnClickListener(v -> goBack());
+        cancel.setOnClickListener(v -> goBack());
 
         rl_virtual.setOnClickListener(v -> {
             Log.d("FromChat", "onCreateView virtual: " + fromChat);

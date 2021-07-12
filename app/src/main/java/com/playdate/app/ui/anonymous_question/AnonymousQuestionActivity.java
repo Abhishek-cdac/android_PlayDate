@@ -239,22 +239,6 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
 
     }
 
-    public void ChangeCount(int number) {
-        if (anonymous) {
-            if (number == 0) {
-                text_count.setText("No Answer");
-            } else {
-                text_count.setText(number + " Answer");
-            }
-        } else {
-            if (number == 0) {
-                text_count.setText("No Comments");
-            } else {
-                text_count.setText(number + " Comments");
-            }
-        }
-
-    }
 
     @Override
     public void onClick(View v) {
@@ -356,6 +340,23 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
             bottomSheet.show(getSupportFragmentManager(), "ModalBottomSheet");
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void ChangeCount(int number) {
+        if (anonymous) {
+            if (number == 0) {
+                text_count.setText("No Answer");
+            } else {
+                text_count.setText(number + " Answer");
+            }
+        } else {
+            if (number == 0) {
+                text_count.setText("No Comments");
+            } else {
+                text_count.setText(number + " Comments");
+            }
         }
     }
 }
