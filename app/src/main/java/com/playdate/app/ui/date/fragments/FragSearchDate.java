@@ -25,6 +25,7 @@ import com.playdate.app.model.CreateDateGetPartnerModel;
 import com.playdate.app.model.GetUserSuggestionData;
 import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.ui.date.adapter.SuggestedDateAdapter;
+import com.playdate.app.ui.interfaces.OnBackPressed;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.session.SessionPref;
@@ -39,14 +40,20 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FragSearchDate  extends Fragment implements SuggestedDateAdapter.SuggestionsAdapterListner  {
+public class FragSearchDate extends Fragment implements SuggestedDateAdapter.SuggestionsAdapterListner {
     private EditText edt_search;
     private RecyclerView recyclerView;
-//    private ArrayList<GetUserSuggestionData> lst_getUserSuggestions;
+    //    private ArrayList<GetUserSuggestionData> lst_getUserSuggestions;
     private CommonClass clsCommon;
     private Onclick itemClick;
     private SuggestedDateAdapter adapter;
     private ArrayList<CreateDateGetPartnerData> lst_CreateDateGetPartner;
+    String from;
+
+    public FragSearchDate(String from) {
+        this.from = from;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -81,22 +88,23 @@ public class FragSearchDate  extends Fragment implements SuggestedDateAdapter.Su
 
             @Override
             public void onItemClicks(View v, int position, int i, String username, String totalPoints, String id, String profilePicPath) {
-          /*      if (i == 22) {
+                if (i == 22) {
                     OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
 
-                    Fragment fragment = new FragPartnerSelected();
+                    Fragment fragment = new FragPartnerSelected(from);
                     Bundle bundle = new Bundle();
 
-                    bundle.putString("profile_name", lst_CreateDateGetPartner.get(position).getUsername());
-                    bundle.putString("profile_points", lst_CreateDateGetPartner.get(position).getTotalPoints());
-                    bundle.putString("profile_userId", lst_CreateDateGetPartner.get(position).getId());
-                    bundle.putString("profile_image", lst_CreateDateGetPartner.get(position).getProfilePicPath());
+                    bundle.putString("profile_name", username);
+                    bundle.putString("profile_points", totalPoints);
+                    bundle.putString("profile_userId", id);
+                    bundle.putString("profile_image", profilePicPath);
 
-                    Log.e("SearchDate_toUserID..", "" + lst_CreateDateGetPartner.get(position).getId());
+                    Log.e("SearchDate_toUserID..", "From" + from + " - " + username + " , " + totalPoints + " , " + id + " , " + profilePicPath);
 
                     fragment.setArguments(bundle);
+                    assert frag != null;
                     frag.ReplaceFrag(fragment);
-                }*/
+                }
             }
         };
 
@@ -104,15 +112,13 @@ public class FragSearchDate  extends Fragment implements SuggestedDateAdapter.Su
             @Override
             public void onClick(View v) {
                 edt_search.setText("");
+                goBack();
 //                OnFriendSelected inf = (OnFriendSelected) getApplicationContext();
 //                inf.OnSuggestionClosed();
 
 
             }
         });
-
-
-
 
 
         edt_search.addTextChangedListener(new TextWatcher() {
@@ -149,8 +155,17 @@ public class FragSearchDate  extends Fragment implements SuggestedDateAdapter.Su
 //            }
 //        });
 
-        return  view;
+        return view;
 
+    }
+
+    private void goBack() {
+        try {
+            OnBackPressed ref = (OnBackPressed) getActivity();
+            ref.onBack();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void callCreateDateGetPartnerListAPI() {

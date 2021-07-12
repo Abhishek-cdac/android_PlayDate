@@ -1,6 +1,7 @@
 package com.playdate.app.ui.date.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,8 +58,8 @@ public class SuggestedDateAdapter extends RecyclerView.Adapter<SuggestedDateAdap
         if (suggestionsListFiltered.get(position).getProfilePicPath() == null) {
             holder.image.setBackgroundColor(mcontext.getResources().getColor(R.color.color_grey_light));
         }
-        holder.name.setOnClickListener(v -> OnUserClick(position));
-        holder.image.setOnClickListener(v -> OnUserClick(position));
+//        holder.name.setOnClickListener(v -> OnUserClick(position));
+//        holder.image.setOnClickListener(v -> OnUserClick(position));
 
         picasso.load(suggestionsListFiltered.get(position).getProfilePicPath()).placeholder(R.drawable.ic_baseline_person_24)
                 .fit()
@@ -67,17 +68,18 @@ public class SuggestedDateAdapter extends RecyclerView.Adapter<SuggestedDateAdap
                 .into(holder.image);
 
 
-        holder.ll_searchDate.setOnClickListener(v -> {
-
-
-        });
+        holder.ll_searchDate.setOnClickListener(v -> OnUserClick(position, v));
 
 
     }
 
-    private void OnUserClick(int pos) {
+    private void OnUserClick(int pos, View v) {
         try {
-            userFrag.OnUserProfileSelected(false, suggestions_list.get(pos).getId());
+            Log.d("Username", "OnUserClick: " + suggestionsListFiltered.get(pos).getUsername());
+
+            itemClick.onItemClicks(v, pos, 22, suggestionsListFiltered.get(pos).getUsername(), suggestionsListFiltered.get(pos).getTotalPoints(), suggestionsListFiltered.get(pos).getId(), suggestionsListFiltered.get(pos).getProfilePicPath());
+
+//            userFrag.OnUserProfileSelected(false, suggestions_list.get(pos).getId());
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,31 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="?attr/selectableItemBackground"
-    android:foreground="?attr/selectableItemBackground"
-    app:cardBackgroundColor="@android:color/white"
-    app:cardCornerRadius="@dimen/_15sdp"
-    app:cardPreventCornerOverlap="false"
-    app:cardUseCompatPadding="true">
+    android:background="@color/white"
+
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/item_image"
+        android:padding="@dimen/_15sdp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop" />
-
-
-    <com.google.android.exoplayer2.ui.PlayerView
-        android:id="@+id/ep_video_view"
-        android:layout_width="match_parent"
-        android:visibility="gone"
-        app:resize_mode="fill"
-        android:layout_height="match_parent" />
-
-
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,9 +23,9 @@
             android:id="@+id/item_fullScreen"
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
-            android:visibility="visible"
             android:layout_weight="0.1"
-            android:src="@drawable/ic_maximize" />
+            android:src="@drawable/ic_maximize"
+            android:visibility="visible" />
 
         <ImageView
             android:id="@+id/item_premium"
@@ -62,6 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
         android:background="@drawable/gradation_black"
         android:orientation="vertical"
         android:padding="16dp">
@@ -162,63 +148,4 @@
         </LinearLayout>
 
     </LinearLayout>
-
-
-    <FrameLayout
-        android:id="@+id/left_overlay"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/overlay_black">
-
-        <ImageView
-            android:layout_width="@dimen/_70sdp"
-            android:layout_height="@dimen/_70sdp"
-            android:layout_gravity="center"
-            android:src="@drawable/cross" />
-
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/right_overlay"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/overlay_black">
-
-        <ImageView
-            android:layout_width="@dimen/_70sdp"
-            android:layout_height="@dimen/_70sdp"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_check_circle" />
-
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/top_overlay"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/overlay_black">
-
-        <ImageView
-            android:layout_width="@dimen/_70sdp"
-            android:layout_height="@dimen/_70sdp"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_check_circle" />
-
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/bottom_overlay"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/overlay_black">
-
-        <ImageView
-            android:layout_width="@dimen/_70sdp"
-            android:layout_height="@dimen/_70sdp"
-            android:layout_gravity="center"
-            android:src="@drawable/cross" />
-    </FrameLayout>
-
-
-
-</androidx.cardview.widget.CardView>
+</RelativeLayout>

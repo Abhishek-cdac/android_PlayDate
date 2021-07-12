@@ -64,7 +64,7 @@ public class FragSelectPartner extends Fragment implements SuggestedDateAdapter.
         Button btn_search_partner = view.findViewById(R.id.btn_search_partner);
         btn_search_partner.setOnClickListener(v -> {
             OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
-            Fragment fragment = new FragSearchDate();
+            Fragment fragment = new FragSearchDate(from);
             frag.ReplaceFrag(fragment);
         });
         iv_back.setOnClickListener(v -> {

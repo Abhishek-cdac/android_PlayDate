@@ -1,5 +1,6 @@
 package com.playdate.app.ui.card_swipe;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DiffUtil;
 
@@ -25,6 +28,7 @@ import com.playdate.app.model.InterestsMain;
 import com.playdate.app.model.MatchListModel;
 import com.playdate.app.model.MatchListUser;
 import com.playdate.app.ui.chat.request.Onclick;
+import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
@@ -55,8 +59,11 @@ public class FragCardSwipe extends Fragment {
     public ArrayList<Interest> lst_interest;
     private Onclick itemClick;
     private CardStackView cardStackView;
+    ConstraintLayout cl_page;
+
 
     private CommonClass clsCommon;
+
     public FragCardSwipe() {
     }
 
@@ -65,10 +72,12 @@ public class FragCardSwipe extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tinder_swipe, container, false);
         clsCommon = CommonClass.getInstance();
+        cardStackView = view.findViewById(R.id.card_stack_view);
+        cl_page = view.findViewById(R.id.cl_page);
+
         itemClick = new Onclick() {
             @Override
             public void onItemClick(View view, int position, int value) {
-
             }
 
             @Override
@@ -80,8 +89,7 @@ public class FragCardSwipe extends Fragment {
                     } else if (value == 14) {
                         callAddUserMatchRequestAPI(s, "Unlike");
 
-                    }
-                    else if (value == 15) {
+                    } else if (value == 15) {
                         callchatRequestApi(s);
 
                     }
@@ -108,8 +116,7 @@ public class FragCardSwipe extends Fragment {
 
             }
         };
-        cardStackView = view.findViewById(R.id.card_stack_view);
-        ConstraintLayout cl_page = view.findViewById(R.id.cl_page);
+
 
 
         int height = new CommonClass().getScreenHeight(getActivity());
@@ -293,9 +300,10 @@ public class FragCardSwipe extends Fragment {
         });
     }
 
-    ArrayList<MatchListUser> lstUsers=new ArrayList<>();
+    ArrayList<MatchListUser> lstUsers = new ArrayList<>();
+
     private void setPages(ArrayList<MatchListUser> lstUsers) {
-        this.lstUsers=lstUsers;
+        this.lstUsers = lstUsers;
         manager = new CardStackLayoutManager(getActivity(), new CardStackListener() {
             @Override
             public void onCardDragging(Direction direction, float ratio) {
@@ -381,4 +389,5 @@ public class FragCardSwipe extends Fragment {
         adapter.setList(newList);
         hasil.dispatchUpdatesTo(adapter);
     }
+
 }

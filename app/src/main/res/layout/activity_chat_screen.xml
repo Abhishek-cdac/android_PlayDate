@@ -165,6 +165,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:backgroundTint="@android:color/transparent"
+
+                android:focusedByDefault="true"
                 android:hint="@string/text_here"
                 android:textColor="@color/textColour"
                 android:textColorHint="@color/color_grey"

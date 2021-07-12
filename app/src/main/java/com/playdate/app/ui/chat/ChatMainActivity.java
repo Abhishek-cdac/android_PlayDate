@@ -24,6 +24,8 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -186,9 +188,10 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         ImageView iv_smiley = findViewById(R.id.iv_smiley);
         ImageView iv_delete_msg = findViewById(R.id.iv_delete_msg);
         ImageView iv_video_call = findViewById(R.id.iv_video_call);
-
         lstSmiley = new ArrayList<>();
-
+        et_chat.setFocusable(true);
+        et_chat.setFocusableInTouchMode(true);
+        et_chat.requestFocus();
 
         RecyclerView.LayoutManager manager = new LinearLayoutManager(this, RecyclerView.VERTICAL, true);
         rv_chat.setLayoutManager(manager);
@@ -488,7 +491,6 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     }
 
     Emitter.Listener onNewMessage = args -> runOnUiThread(() -> {
-
         Date c = Calendar.getInstance().getTime();
 
         DateTimeFormatter dtfInput = DateTimeFormatter.ofPattern("E MMM d H:m:s O u", Locale.ENGLISH);
@@ -1109,6 +1111,12 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             sendMessgae(msg, "text", null);
             mSocket.emit("typing", objNotTyping);
         }
+
+        et_chat.setFocusable(true);
+        et_chat.setFocusableInTouchMode(true);
+        et_chat.requestFocus();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+
         et_chat.setText("");
     }
 

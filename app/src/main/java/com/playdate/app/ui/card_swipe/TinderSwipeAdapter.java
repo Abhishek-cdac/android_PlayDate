@@ -1,8 +1,10 @@
 package com.playdate.app.ui.card_swipe;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.exoplayer2.ExoPlayer;
@@ -29,12 +35,16 @@ import com.playdate.app.model.ChatStatusFrom;
 import com.playdate.app.model.Interest;
 import com.playdate.app.model.MatchListUser;
 import com.playdate.app.ui.chat.request.Onclick;
+import com.playdate.app.ui.dashboard.fragments.FragmentSearchRestaurent;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.ui.playvideo.ExoPlayerActivity;
 import com.squareup.picasso.Picasso;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 
@@ -77,6 +87,7 @@ public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.
         return tinder_list.size();
     }
 
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView image, iv_maximise, item_cross, item_check;
         TextView name, age, hobby;
@@ -103,8 +114,7 @@ public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.
             iv_maximise = itemView.findViewById(R.id.item_fullScreen);
             item_check.setOnClickListener(v -> itemClick.onItemClicks(v, getAdapterPosition(), 13, userId));
             item_cross.setOnClickListener(v -> itemClick.onItemClicks(v, getAdapterPosition(), 14, userId));
-          //  message.setOnClickListener(v -> itemClick.onItemClicks(v, getAdapterPosition(), 15, userId));
-
+            //  message.setOnClickListener(v -> itemClick.onItemClicks(v, getAdapterPosition(), 15, userId));
 
 
         }
@@ -186,30 +196,49 @@ public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.
 
 
                 iv_maximise.setOnClickListener(v -> {
-                    Intent mIntent = new Intent(mContext, ExoPlayerActivity.class);
-                    String videopath = user.getProfileVideoPath();
+                    if (playing) {
+                        Intent mIntent = new Intent(mContext, ExoPlayerActivity.class);
+                        String videopath = user.getProfileVideoPath();
 
-                    if (!videopath.contains("http")) {
-                        videopath = BASE_URL_IMAGE + videopath;
+                        if (!videopath.contains("http")) {
+                            videopath = BASE_URL_IMAGE + videopath;
+                        }
+
+                        mIntent.putExtra("video", videopath);
+                        mIntent.putExtra("time", absPlayerInternal.getCurrentPosition());
+                        mContext.startActivity(mIntent);
+                        pvMain.setPlayer(null);
+                        absPlayerInternal.release();
+                        absPlayerInternal = null;
+
+                        iv_video_play.setImageResource(R.drawable.play_circle);
+                        image.setVisibility(View.VISIBLE);
+                        pvMain.setVisibility(View.GONE);
+                        iv_maximise.setVisibility(View.INVISIBLE);
+                    } else {
+//                        itemClick.onItemClick(v, getAbsoluteAdapterPosition(), 22);
+
+                        Intent mIntent = new Intent(mContext, FullScreenView.class);
+                        String name = user.getUsername();
+                        String image = user.getProfilePicPath();
+                        int age = user.getAge();
+                        String videopath = user.getProfileVideoPath();
+
+                        mIntent.putExtra("video", videopath);
+                        mIntent.putExtra("image", image);
+                        mIntent.putExtra("name", name);
+                        mIntent.putExtra("age", age);
+
+                        mContext.startActivity(mIntent);
                     }
 
-                    mIntent.putExtra("video", videopath);
-                    mIntent.putExtra("time", absPlayerInternal.getCurrentPosition());
-                    mContext.startActivity(mIntent);
-                    pvMain.setPlayer(null);
-                    absPlayerInternal.release();
-                    absPlayerInternal = null;
 
-                    iv_video_play.setImageResource(R.drawable.play_circle);
-                    image.setVisibility(View.VISIBLE);
-                    pvMain.setVisibility(View.GONE);
-                    iv_maximise.setVisibility(View.INVISIBLE);
                 });
 
 
                 if (user.getChatStatusFrom() != null) {
                     if (user.getChatStatusFrom().size() > 0) {
-                        Log.e("getChatStatusFrom",""+ user.getChatStatusFrom().get(0).getActiveStatus());
+                        Log.e("getChatStatusFrom", "" + user.getChatStatusFrom().get(0).getActiveStatus());
                         if (user.getChatStatusFrom().get(0).getActiveStatus().toLowerCase().equals("pending")) {
                             message.setImageResource(R.drawable.chat_sel);
                         } else {
