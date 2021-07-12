@@ -24,6 +24,7 @@ import com.playdate.app.model.CreateDateGetMyPartnerReqData;
 import com.playdate.app.model.CreateDateGetMyPartnerReqModel;
 import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.ui.date.adapter.RequestDateAdapter;
+import com.playdate.app.ui.interfaces.OnBackPressed;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
@@ -40,13 +41,11 @@ import retrofit2.Response;
 
 public class FragAcceptDatePartner extends Fragment {
     private CommonClass clsCommon;
-    RecyclerView recycler_view;
-    ImageView partner_image;
-    Button tv_reject_date, tv_accept_date;
-    TextView tv_username;
-
-    Onclick itemClick;
-    TextView tv_placeholder;
+    private RecyclerView recycler_view;
+//    private Button tv_reject_date, tv_accept_date;
+//    private TextView tv_username;
+    private Onclick itemClick;
+    private TextView tv_placeholder;
 
 
     private ArrayList<CreateDateGetMyPartnerReqData> lst_getReqPartnerDetail;
@@ -59,6 +58,8 @@ public class FragAcceptDatePartner extends Fragment {
         clsCommon = CommonClass.getInstance();
         recycler_view = view.findViewById(R.id.recycler_view);
         tv_placeholder = view.findViewById(R.id.tv_placeholder);
+        ImageView iv_play_date_logo = view.findViewById(R.id.iv_play_date_logo);
+        ImageView iv_back = view.findViewById(R.id.iv_back);
 
         itemClick = new Onclick() {
             @Override
@@ -93,31 +94,10 @@ public class FragAcceptDatePartner extends Fragment {
 
         callCreateDateGetMyPartnerReqApi();
 
-
-      /*  partner_image = view.findViewById(R.id.partner_image);
-        tv_reject_date = view.findViewById(R.id.tv_reject_date);
-        tv_accept_date = view.findViewById(R.id.tv_accept_date);
-        tv_username = view.findViewById(R.id.tv_username);
-
-        callCreateDateGetMyPartnerReqApi();
-
-
-        tv_accept_date.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                callCreateDateStatusUpdateRequestPartnerApi("Accepted");
-            }
+        iv_back.setOnClickListener(v -> {
+            OnBackPressed ref= (OnBackPressed) getActivity();
+            ref.onBack();
         });
-
-        tv_reject_date.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                callCreateDateStatusUpdateRequestPartnerApi("Rejected");
-            }
-        });
-*/
-
         return view;
     }
 
@@ -128,7 +108,6 @@ public class FragAcceptDatePartner extends Fragment {
         hashMap.put("requestId", requestId);
         hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
         hashMap.put("status", status);
-        Log.e("requestId_acceptDate", "" + requestId);
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
         pd.show();
         Call<CommonModel> call = service.createDateStatusUpdateRequestPartner("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
@@ -189,11 +168,10 @@ public class FragAcceptDatePartner extends Fragment {
                             lst_getReqPartnerDetail = new ArrayList<>();
                         }
 
-                        if (lst_getReqPartnerDetail.size()==0){
+                        if (lst_getReqPartnerDetail.size() == 0) {
                             tv_placeholder.setVisibility(View.VISIBLE);
                             recycler_view.setVisibility(View.GONE);
-                        }
-                        else {
+                        } else {
                             tv_placeholder.setVisibility(View.GONE);
                             recycler_view.setVisibility(View.VISIBLE);
 

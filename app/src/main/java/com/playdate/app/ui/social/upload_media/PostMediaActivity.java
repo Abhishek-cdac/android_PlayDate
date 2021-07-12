@@ -303,9 +303,9 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
                 for (int i = 0; i < lstUserSuggestions.size(); i++) {
                     if (lstUserSuggestions.get(i).isSelected()) {
                         if (tagFriends.isEmpty()) {
-                            tagFriends = lstUserSuggestions.get(i).get_id();
+                            tagFriends = lstUserSuggestions.get(i).getUserId();
                         } else {
-                            tagFriends = tagFriends + "," + lstUserSuggestions.get(i).get_id();
+                            tagFriends = tagFriends + "," + lstUserSuggestions.get(i).getUserId();
                         }
                     }
                 }
@@ -337,6 +337,7 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
                         DashboardActivity.bitmap = null;
+                        DashboardActivity.refreshFlag = 1;
                         finish();
                     } else {
 //                        clsCommon.showDialogMsg(BioActivity.this, "PlayDate", response.body().getMessage(), "Ok");

@@ -59,6 +59,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 //    private ArrayList<ChatTotalResponse> lst_chatResponse = new ArrayList<>();
     private MediaPlayer mediaPlayer;
     //    private GoogleMap googleMap;
+
     private final Onclick itemClick;
     private final Picasso picasso;
     private final SessionPref pref;
@@ -295,20 +296,24 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             viewHolderMe.chat_image.setOnClickListener(v -> {
 
                 if (lst_chat.get(position).getType().equals("location")) {
-                    double lattitude = Double.parseDouble(lst_chat.get(position).getLattitude());
-                    double longitude = Double.parseDouble(lst_chat.get(0).getLongitude());
+                    try {
+                        double lattitude = Double.parseDouble(lst_chat.get(position).getLattitude());
+                        double longitude = Double.parseDouble(lst_chat.get(position).getLongitude());
 
-                    if (lattitude != 0.0 || longitude != 0.0) {
-                        Uri gmmIntentUri = Uri.parse("geo:" + lattitude + "," + longitude + "?z=17?q=restaurants");
-                        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-                        mapIntent.setPackage("com.google.android.apps.maps");
-                        if (mapIntent.resolveActivity(mContext.getPackageManager()) != null) {
-                            mContext.startActivity(mapIntent);
+                        if (lattitude != 0.0 || longitude != 0.0) {
+                            Uri gmmIntentUri = Uri.parse("geo:" + lattitude + "," + longitude + "?z=17?q=restaurants");
+                            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                            mapIntent.setPackage("com.google.android.apps.maps");
+                            if (mapIntent.resolveActivity(mContext.getPackageManager()) != null) {
+                                mContext.startActivity(mapIntent);
+                            } else {
+                                Toast.makeText(mContext, "Can't load Maps", Toast.LENGTH_SHORT).show();
+                            }
                         } else {
-                            Toast.makeText(mContext, "Can't load Maps", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, "Can't load Maps, Please try again later.", Toast.LENGTH_SHORT).show();
                         }
-                    } else {
-                        Toast.makeText(mContext, "Can't load Maps, Please try again later.", Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
 
 

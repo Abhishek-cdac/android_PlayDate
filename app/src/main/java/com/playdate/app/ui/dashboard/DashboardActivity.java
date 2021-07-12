@@ -104,10 +104,12 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
     private int count = 0;
     private int OPTION_CLICK = 0;
     private final int CAMERA = 2;
+    private boolean isAtTop =true;
 
     public static Bitmap bitmap = null;
+    public static int refreshFlag =0;
     ImageView iv_date;
-
+    LinearLayout ll_love_bottom;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,7 +126,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
         ll_her = findViewById(R.id.ll_her);
         ll_mainMenu = findViewById(R.id.ll_mainMenu);
         ll_friends = findViewById(R.id.ll_friends);
-        LinearLayout ll_love_bottom = findViewById(R.id.ll_love_bottom);
+         ll_love_bottom = findViewById(R.id.ll_love_bottom);
         LinearLayout ll_coupon = findViewById(R.id.ll_coupon);
         LinearLayout ll_profile_support = findViewById(R.id.ll_profile_support);
         ll_option_love = findViewById(R.id.ll_option_love);
@@ -189,7 +191,13 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
                         setNormal();
                     }
                 }
+                isAtTop=false;
             }
+            if (scrollY == 0) {
+                isAtTop=true;
+            }
+
+
 
             if (scrollY == (v.getMeasuredHeight() - v.getChildAt(0).getMeasuredHeight()) * -1) {
                 if (null != CurrentFrag) {
@@ -216,7 +224,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
             }
             callAPIFriends();
 
-            callNotification();
+//            callNotification();
         });
 
         iv_cancel.setOnClickListener(this);
@@ -757,7 +765,17 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
     @Override
     public void onBackPressed() {
 
-        if (CurrentFrag.getClass().getSimpleName().equals("FragInstaLikeProfile")) {
+        if (CurrentFrag.getClass().getSimpleName().equals("FragSocialFeed")) {
+            if(isAtTop){
+                super.onBackPressed();
+            }else{
+                isAtTop=true;
+                nsv.smoothScrollTo(0,0);
+            }
+
+        }else if (CurrentFrag.getClass().getSimpleName().equals("FragNotification")) {
+            ll_love_bottom.performClick();
+        }else if (CurrentFrag.getClass().getSimpleName().equals("FragInstaLikeProfile")) {
             if (iv_plus.getVisibility() == View.GONE) {
                 setNormal();
             } else {
@@ -835,6 +853,11 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
     @Override
     protected void onResume() {
         super.onResume();
+        if(refreshFlag==1){
+            refreshFlag=0;
+            ll_love_bottom.performClick();
+        }
+
         callNotification();
         if (pref.getBoolVal(SessionPref.isBusiness)) {
             txt_match.setVisibility(View.GONE);
@@ -868,6 +891,8 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
             txt_count.setText("");
         }
     }
+
+
 
     public void redirectToLeaderBoard() {
         ReplaceFragWithStack(new FragGameLeaderBoard());
