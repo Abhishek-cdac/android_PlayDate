@@ -182,6 +182,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             relativeLayout = itemView.findViewById(R.id.card_comment);
         }
 
+
     }
 
     private void callDeleteCommentApi(String commentId) {
