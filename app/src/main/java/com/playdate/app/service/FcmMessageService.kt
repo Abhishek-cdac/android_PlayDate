@@ -21,7 +21,7 @@ class FcmMessageService : FirebaseMessagingService() {
 
 
     override fun onNewToken(token: String) {
-        Log.d(TAG, "Refreshed token: $token")
+        Log.d(TAG, "****Refreshed token: $token")
 
         var pref = SessionPref.getInstance(this)
         pref.saveStringKeyVal(LoginUserFCMID, token)
