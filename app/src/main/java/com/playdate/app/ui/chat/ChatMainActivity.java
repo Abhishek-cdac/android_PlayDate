@@ -251,6 +251,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 handler.removeCallbacks(input_finish_checker);
                 mSocket.emit("typing", objTyping);
+                et_chat.setFocusable(true);
             }
 
             @Override
@@ -261,6 +262,8 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                 } else {
                     mSocket.emit("typing", objNotTyping);
                 }
+
+                et_chat.requestFocus();
             }
         });
 
@@ -678,7 +681,6 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                     Toast.makeText(this, "Emit chat excp", Toast.LENGTH_SHORT).show();
                 }
             }
-
 //            et_chat.requestFocus();
         }
     }

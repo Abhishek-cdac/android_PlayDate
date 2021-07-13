@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.playdate.app.R;
+import com.playdate.app.ui.date.fragments.FragAcceptDatePartner;
 import com.playdate.app.ui.date.fragments.FragIntroScreen;
 
 import com.playdate.app.ui.date.fragments.FragSelectDates;
@@ -22,6 +23,7 @@ public class DateBaseActivity extends AppCompatActivity implements OnInnerFragme
     private FragmentManager fm;
     private FragmentTransaction ft;
     public static boolean fromChat;
+    public static boolean fromNotification;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,6 +40,9 @@ public class DateBaseActivity extends AppCompatActivity implements OnInnerFragme
         if (fromChat) {
             fragIntro = new FragSelectDates(true);
             fromChat = false;
+        } else if (fromNotification) {
+            fragIntro = new FragAcceptDatePartner();
+            fromNotification = false;
         } else {
             fragIntro = new FragIntroScreen();
 
