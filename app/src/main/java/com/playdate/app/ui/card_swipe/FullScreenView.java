@@ -18,6 +18,8 @@ import com.google.android.exoplayer2.ui.PlayerView;
 import com.playdate.app.R;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
 public class FullScreenView extends AppCompatActivity {
 
     ImageView image, iv_maximise, item_cross, item_check;
@@ -31,31 +33,6 @@ public class FullScreenView extends AppCompatActivity {
     PlayerView pvMain;
     String name1;
     String image1;
-
-
-//    public FullScreenView(String name, String image) {
-//        this.image1 = image;
-//        this.name1 = name;
-//    }
-//
-//    @Nullable
-//    @Override
-//    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        View view = inflater.inflate(R.layout.full_screen_card, container, false);
-//        name = view.findViewById(R.id.item_name);
-//        image = view.findViewById(R.id.item_image);
-//        item_check = view.findViewById(R.id.item_check);
-//        item_cross = view.findViewById(R.id.item_cross);
-//        age = view.findViewById(R.id.item_age);
-//        hobby = view.findViewById(R.id.item_hobby);
-//
-//        Picasso.get().load(image1).fit().centerCrop().into(image);
-//        name.setText(name1);
-//
-//
-//        return view;
-//
-//    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,18 +53,30 @@ public class FullScreenView extends AppCompatActivity {
 //        item_premium = findViewById(R.id.item_premium);
         iv_maximise = findViewById(R.id.item_fullScreen);
 
-//        item_check.setOnClickListener(v -> itemClick.onItemClicks(v, getAdapterPosition(), 13, userId));
-//        item_cross.setOnClickListener(v -> itemClick.onItemClicks(v, getAdapterPosition(), 14, userId));
-
 
         String name1 = getIntent().getStringExtra("name");
         String image1 = getIntent().getStringExtra("image");
-        String age1 = String.valueOf(getIntent().getIntExtra("age",0));
+        String age1 = String.valueOf(getIntent().getIntExtra("age", 0));
+        String arr_interest = getIntent().getStringExtra("interestedArray");
+        StringBuilder ints = new StringBuilder();
+
         Log.d("Image11----", "onCreate: " + image1);
 
         Picasso.get().load(image1).fit().centerCrop().into(image);
         name.setText(name1);
         age.setText(age1);
+//        for (int i = 0; i < arr_interest.size(); i++) {
+//            String str = arr_interest.get(i);
+//            String output = str.substring(0, 1).toUpperCase() + str.substring(1);
+//            if (ints.length() == 0) {
+//
+//                ints = new StringBuilder(output);
+//            } else {
+//                ints.append(" , ").append(output);
+//            }
+//        }
+
+        hobby.setText(arr_interest);
 
         iv_maximise.setOnClickListener(v -> finish());
     }
