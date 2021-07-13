@@ -529,4 +529,6 @@ Build version 4.0.3-java</string>
     <string name="str_unlike">Unlike</string>
     <string name="share_location">Share Location</string>
     <string name="no_date_request_found">No date request found</string>
+
+    <string name="default_notification_channel_id">Channel ID</string>
 </resources>

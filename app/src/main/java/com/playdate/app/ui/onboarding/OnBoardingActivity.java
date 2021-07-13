@@ -4,19 +4,28 @@ import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.playdate.app.R;
+import com.playdate.app.service.FcmMessageService;
 import com.playdate.app.ui.dashboard.DashboardActivity;
+import com.playdate.app.ui.interfaces.OnBackPressed;
 import com.playdate.app.ui.login.LoginActivity;
 import com.playdate.app.util.session.SessionPref;
 
 import static com.playdate.app.util.session.SessionPref.CompleteProfile;
+import static com.playdate.app.util.session.SessionPref.LoginUserFCMID;
 
 public class OnBoardingActivity extends AppCompatActivity {
 
@@ -55,6 +64,29 @@ public class OnBoardingActivity extends AppCompatActivity {
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
+
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w("******", "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+
+                        // Get new FCM registration token
+                        String token = task.getResult();
+
+                        // Log and toast
+//                        String msg = getString(R.string.msg_token_fmt, token);
+                        Log.d("******", token);
+                        SessionPref pref= SessionPref.getInstance(OnBoardingActivity.this);
+                        pref.saveStringKeyVal(LoginUserFCMID, token);
+                        Toast.makeText(OnBoardingActivity.this, token, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        startService(new Intent(this,FcmMessageService.class));
 
     }
 
