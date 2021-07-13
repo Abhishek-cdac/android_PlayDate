@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.playdate.app.R;
 import com.playdate.app.business.couponsGenerate.FragCouponParentBusiness;
 import com.playdate.app.data.api.GetDataService;
@@ -35,6 +36,7 @@ import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.FriendsListModel;
 import com.playdate.app.model.MatchListUser;
 import com.playdate.app.model.NotificationCountModel;
+import com.playdate.app.service.FcmMessageService;
 import com.playdate.app.service.LocationService;
 import com.playdate.app.ui.anonymous_question.AnonymousQuestionActivity;
 import com.playdate.app.ui.card_swipe.FragCardSwipe;
@@ -54,6 +56,7 @@ import com.playdate.app.ui.my_profile_details.FragInstaLikeProfileFriends;
 import com.playdate.app.ui.my_profile_details.FragSavedPost;
 import com.playdate.app.ui.my_profile_details.FragSettingsParent;
 import com.playdate.app.ui.notification_screen.FragNotification;
+import com.playdate.app.ui.onboarding.OnBoardingActivity;
 import com.playdate.app.ui.social.FragSocialFeed;
 import com.playdate.app.ui.social.upload_media.PostMediaActivity;
 import com.playdate.app.util.common.BaseActivity;
@@ -77,6 +80,7 @@ import static com.playdate.app.ui.register.profile.UploadProfileActivity.PICK_PH
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.REQUEST_TAKE_GALLERY_VIDEO;
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.TAKE_PHOTO_CODE;
 import static com.playdate.app.util.session.SessionPref.CompleteProfile;
+import static com.playdate.app.util.session.SessionPref.LoginUserFCMID;
 
 public class DashboardActivity extends BaseActivity implements OnInnerFragmentClicks, View.OnClickListener, OnProfilePhotoChageListerner, OnFriendSelected, OnAPIResponce {
 
@@ -230,6 +234,8 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
 //            callNotification();
         });
 
+        updateToken();
+
         iv_cancel.setOnClickListener(this);
         iv_gallery.setOnClickListener(this);
         ll_profile_insta.setOnClickListener(this);
@@ -249,6 +255,22 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
         ll_coupon.setOnClickListener(this);
         iv_dashboard_notification.setOnClickListener(this);
         txt_social.setOnClickListener(this);
+    }
+
+    private void updateToken() {
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        Log.w("******", "Fetching FCM registration token failed", task.getException());
+                        return;
+                    }
+                    String token = task.getResult();
+                    Log.d("******", token);
+                    SessionPref pref1 = SessionPref.getInstance(DashboardActivity.this);
+                    pref1.saveStringKeyVal(LoginUserFCMID, token);
+                });
+
+        startService(new Intent(this, FcmMessageService.class));
     }
 
     private void CallNotificationCount() {

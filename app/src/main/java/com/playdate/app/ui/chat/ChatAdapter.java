@@ -21,7 +21,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.google.android.gms.maps.GoogleMap;
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
@@ -29,7 +28,6 @@ import com.playdate.app.model.CommonModel;
 import com.playdate.app.model.chat_models.ChatMessage;
 import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.ui.playvideo.ExoPlayerActivity;
-import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.photoview.PhotoViewActivity;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
@@ -57,8 +55,9 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final ArrayList<ChatMessage> lst_chat;
     //    private final ArrayList<PollingQuestion> lst_pollingQuestion;
 //    private ArrayList<ChatTotalResponse> lst_chatResponse = new ArrayList<>();
-    private MediaPlayer mediaPlayer;
-    //    private GoogleMap googleMap;
+    private boolean isPlaying;
+    private int lastAudiPlayPos = -1;
+    private boolean isPause;
 
     private final Onclick itemClick;
     private final Picasso picasso;
@@ -97,6 +96,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         sdf = new SimpleDateFormat("yyyy-MM-dd");
         df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
         df.setTimeZone(TimeZone.getTimeZone("GTC"));
+
     }
 
 
@@ -148,7 +148,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         return Objects.requireNonNull(viewHolder);
     }
-
+    MediaPlayer mediaPlayer = null;
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
@@ -248,21 +248,43 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
                         viewHolderMe.play_audio.setOnClickListener(v -> {
-                            mediaPlayer = new MediaPlayer();
 
-                            if (mediaPlayer.isPlaying()) {
+
+                            if (lastAudiPlayPos != -1) {
+                                if (position != lastAudiPlayPos) {
+                                    stopPlaying(mediaPlayer);
+                                    mediaPlayer = new MediaPlayer();
+                                    isPlaying = false;
+                                    isPause = false;
+                                }else{
+
+                                }
+                            }
+
+
+                            if (isPlaying) {
+                                isPlaying = false;
+                                isPause = true;
                                 mediaPlayer.pause();
                                 viewHolderMe.play_audio.setImageResource(R.drawable.play);
 
 
+                            } else if (isPause) {
+                                mediaPlayer.start();
+                                isPause = false;
+                                isPlaying = true;
+                                viewHolderMe.play_audio.setImageResource(R.drawable.exo_icon_pause);
                             } else {
+                                isPlaying = true;
+                                isPause = false;
+                                lastAudiPlayPos = position;
                                 viewHolderMe.play_audio.setImageResource(R.drawable.exo_icon_pause);
                                 try {
                                     mediaPlayer.setDataSource(lst_chat.get(position).getMediaInfo().get(0).getMediaFullPath());
                                     mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                                         @Override
                                         public void onCompletion(MediaPlayer mediaPlayer) {
-                                            stopPlaying();
+                                            stopPlaying(mediaPlayer);
                                             viewHolderMe.play_audio.setImageResource(R.drawable.play);
 
 
@@ -416,32 +438,32 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             viewHolderOponent.img_playback.setVisibility(View.GONE);
 
 
-                            viewHolderOponent.play_audio.setOnClickListener(v -> {
-                                mediaPlayer = new MediaPlayer();
-
-                                if (mediaPlayer.isPlaying()) {
-                                    mediaPlayer.pause();
-                                    viewHolderOponent.play_audio.setImageResource(R.drawable.play);
-
-
-                                } else {
-                                    viewHolderOponent.play_audio.setImageResource(R.drawable.exo_icon_pause);
-                                    try {
-                                        mediaPlayer.setDataSource(lst_chat.get(position).getMediaInfo().get(0).getMediaFullPath());
-                                        mediaPlayer.setOnCompletionListener(mediaPlayer -> {
-                                            stopPlaying();
-                                            viewHolderOponent.play_audio.setImageResource(R.drawable.play);
-
-
-                                        });
-                                        mediaPlayer.prepare();
-                                        mediaPlayer.start();
-                                    } catch (IOException e) {
-                                        Log.d(":playRecording()", e.toString());
-                                    }
-                                }
-
-                            });
+//                            viewHolderOponent.play_audio.setOnClickListener(v -> {
+//                                mediaPlayer = new MediaPlayer();
+//
+//                                if (mediaPlayer.isPlaying()) {
+//                                    mediaPlayer.pause();
+//                                    viewHolderOponent.play_audio.setImageResource(R.drawable.play);
+//
+//
+//                                } else {
+//                                    viewHolderOponent.play_audio.setImageResource(R.drawable.exo_icon_pause);
+//                                    try {
+//                                        mediaPlayer.setDataSource(lst_chat.get(position).getMediaInfo().get(0).getMediaFullPath());
+//                                        mediaPlayer.setOnCompletionListener(mediaPlayer -> {
+//                                            stopPlaying();
+//                                            viewHolderOponent.play_audio.setImageResource(R.drawable.play);
+//
+//
+//                                        });
+//                                        mediaPlayer.prepare();
+//                                        mediaPlayer.start();
+//                                    } catch (IOException e) {
+//                                        Log.d(":playRecording()", e.toString());
+//                                    }
+//                                }
+//
+//                            });
                             break;
 
 
@@ -557,10 +579,12 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
 
-    private void stopPlaying() {
+    private void stopPlaying(MediaPlayer mediaPlayer) {
         if (mediaPlayer != null) {
+            isPlaying = false;
             mediaPlayer.stop();
             mediaPlayer.release();
+            isPause = false;
         }
     }
 
@@ -590,23 +614,26 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         hashMap.put("userId", LoginUserID);
         hashMap.put("chatId", lst_chat.get(positiontoDelete).getChatId());
         hashMap.put("messageId", lst_chat.get(positiontoDelete).getMessageId());
-        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(mContext);
-        pd.show();
+        lst_chat.remove(positiontoDelete);
+        bottomSheet.dismiss();
+        notifyDataSetChanged();
+//        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(mContext);
+//        pd.show();
 
         Call<CommonModel> call = service.deleteChatMessage("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<CommonModel>() {
             @Override
             public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
-                pd.cancel();
+//                pd.cancel();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
-                        lst_chat.remove(positiontoDelete);
-                        notifyDataSetChanged();
+//                        lst_chat.remove(positiontoDelete);
+//                        notifyDataSetChanged();
                     } else {
-                        Toast.makeText(mContext, "Unable to delete", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(mContext, "Unable to delete", Toast.LENGTH_SHORT).show();
 
                     }
-                    bottomSheet.dismiss();
+
                 } else {
 
                 }
@@ -615,7 +642,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             @Override
             public void onFailure(Call<CommonModel> call, Throwable t) {
                 t.printStackTrace();
-                pd.cancel();
+//                pd.cancel();
             }
         });
 
