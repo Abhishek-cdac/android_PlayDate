@@ -14,7 +14,6 @@ import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
@@ -25,7 +24,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -33,7 +31,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.widget.NestedScrollView;
@@ -133,7 +130,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     private SessionPref pref;
     private boolean isVisible = false;
     private MediaRecorder mRecorder;
-    private String mFileName = null;
+
     private static final String[] permissions = {Manifest.permission.RECORD_AUDIO};
     private AudioRecordProgressDialog apd;
     private String UserID = "";
@@ -156,11 +153,11 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     private boolean isMoreData = true;
 
     // Video Calling
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     protected QBResRequestExecutor requestExecutor;
     protected SharedPrefsHelper sharedPrefsHelper;
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -324,7 +321,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             mSocket.on("chat_message_room", onNewMessage);
             mSocket.on("typing", onTyping);
             mSocket.on("chat_room", ChatRoomCreated);
-            mSocket.on("chat_question_answer", ChatQuestioAnswer);
+            mSocket.on("chat_question_answer", ChatQuestionAnswer);
             mSocket.on("Data", OnError);
 //            Log.d("****mSocket", mSocket.id());
 
@@ -544,6 +541,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                 chat.setLongitude(data.getString("long"));
                 chat.setUserInfo(info);
                 chat.setMediaInfo(lstMedia);
+                chat.setChatId(chatId);
                 chat.setEntryDate(odt.toString());
 
 
@@ -620,7 +618,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         }
     });
 
-    Emitter.Listener ChatQuestioAnswer = args -> runOnUiThread(() -> {
+    Emitter.Listener ChatQuestionAnswer = args -> runOnUiThread(() -> {
         try {
             JSONObject data = (JSONObject) args[0];
             Log.d("****ChatQuestionAnswer", data.toString());
@@ -655,7 +653,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         }
     });
 
-    private void sendMessgae(String msg, String Type, String mediaID) {
+    private void sendMessage(String msg, String Type, String mediaID) {
         if (null != mSocket) {
             if (mSocket.connected()) {
 
@@ -714,51 +712,40 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     }
 
     private void startRecording() {
+        String mFileName;
         ActivityCompat.requestPermissions(this, permissions, REQUEST_AUDIO_PERMISSION_CODE);
-        mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
-        mFileName += "/AudioRecording.3gp";
 
         String uuid = UUID.randomUUID().toString();
         mFileName = this.getExternalCacheDir().getAbsolutePath() + "/" + uuid + ".mp3";
-        Log.d("FILENAME...", mFileName);
         iv_mic.setEnabled(true);
-        apd = AudioRecordProgressDialog.getInstance(this);
-
+        if (null == apd)
+            apd = AudioRecordProgressDialog.getInstance(this);
 
         apd.show();
 
-        mRecorder = new MediaRecorder();
-        mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        mRecorder.setOutputFile(mFileName);
-        mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-
+//        if (mRecorder == null) {
+            mRecorder = new MediaRecorder();
+            mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+            mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+            mRecorder.setOutputFile(mFileName);
+            mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+//        }
         try {
             mRecorder.prepare();
 
         } catch (IOException e) {
             e.printStackTrace();
-            Log.d("ERROR WHILE RECORDING ", e.toString());
         }
         mRecorder.start();
-        stopRecordingAfter();
+        apd.setOnDismissListener(dialog -> stopRecordingAfter(mFileName));
+
     }
 
-    private void stopRecordingAfter() {
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                mRecorder.stop();
-                apd.cancel();
-                Log.d("Recording STopped", "Recording Stop");
-                Toast.makeText(getApplicationContext(), "Recording Stop", Toast.LENGTH_SHORT).show();
-                addToListAudio(mFileName);
-
-//                adapter.addToListAudio(mFileName);
-                scrollTOEnd();
-
-
-            }
-        }, 3000);
+    private void stopRecordingAfter(String mFileName) {
+        mRecorder.stop();
+        apd.cancel();
+        addToListAudio(mFileName);
+        scrollTOEnd();
     }
 
 
@@ -845,7 +832,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
                         ChatFile media = response.body().getChatFile();
-                        sendMessgae("", "media", media.getMediaId());
+                        sendMessage("", "media", media.getMediaId());
                         Log.d("AUDIO ADDED", "ADded audio");
 
                     } else {
@@ -877,7 +864,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
                         ChatFile media = response.body().getChatFile();
-                        sendMessgae("", "media", media.getMediaId());
+                        sendMessage("", "media", media.getMediaId());
 
                     } else {
                     }
@@ -924,9 +911,9 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                     if (response.body().getStatus() == 1) {
                         ChatFile media = response.body().getChatFile();
                         if (isLocation) {
-                            sendMessgae("", "location", media.getMediaId());
+                            sendMessage("", "location", media.getMediaId());
                         } else {
-                            sendMessgae("", "media", media.getMediaId());
+                            sendMessage("", "media", media.getMediaId());
                         }
                     } else {
                     }
@@ -988,7 +975,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     @Override
     public void onSmileyChange(int position) {
         int smiley = lstSmiley.get(position);
-        sendMessgae("" + smiley, "emoji", null);
+        sendMessage("" + smiley, "emoji", null);
 
     }
 
@@ -1110,7 +1097,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         if (msg.isEmpty()) {
             Toast.makeText(ChatMainActivity.this, "Empty message can't send", Toast.LENGTH_SHORT).show();
         } else {
-            sendMessgae(msg, "text", null);
+            sendMessage(msg, "text", null);
             mSocket.emit("typing", objNotTyping);
         }
 
