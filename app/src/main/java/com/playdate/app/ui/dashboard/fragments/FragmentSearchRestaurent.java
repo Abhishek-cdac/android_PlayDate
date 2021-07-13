@@ -144,8 +144,11 @@ public class FragmentSearchRestaurent extends Fragment implements RestaurentAdap
         view.requestFocus();
         view.setOnKeyListener((v, keyCode, event) -> {
             if (keyCode == KeyEvent.KEYCODE_BACK) {
-                OnFriendSelected inf = (OnFriendSelected) getActivity();
-                Objects.requireNonNull(inf).OnSuggestionClosed();
+                edt_search.setText("");
+                OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
+                Objects.requireNonNull(frag).ReplaceFrag(new FragCouponParent());
+//                OnFriendSelected inf = (OnFriendSelected) getActivity();
+//                Objects.requireNonNull(inf).OnSuggestionClosed();
                 return true;
             }
             return false;
@@ -194,4 +197,6 @@ public class FragmentSearchRestaurent extends Fragment implements RestaurentAdap
     public void onSuggestionSelected(Restaurant restaurant) {
         Log.e("filter restaurant", "" + restaurant);
     }
+
+
 }

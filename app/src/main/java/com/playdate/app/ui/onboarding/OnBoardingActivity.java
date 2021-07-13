@@ -66,24 +66,15 @@ public class OnBoardingActivity extends AppCompatActivity {
         }
 
         FirebaseMessaging.getInstance().getToken()
-                .addOnCompleteListener(new OnCompleteListener<String>() {
-                    @Override
-                    public void onComplete(@NonNull Task<String> task) {
-                        if (!task.isSuccessful()) {
-                            Log.w("******", "Fetching FCM registration token failed", task.getException());
-                            return;
-                        }
-
-                        // Get new FCM registration token
-                        String token = task.getResult();
-
-                        // Log and toast
-//                        String msg = getString(R.string.msg_token_fmt, token);
-                        Log.d("******", token);
-                        SessionPref pref= SessionPref.getInstance(OnBoardingActivity.this);
-                        pref.saveStringKeyVal(LoginUserFCMID, token);
-                        Toast.makeText(OnBoardingActivity.this, token, Toast.LENGTH_SHORT).show();
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        Log.w("******", "Fetching FCM registration token failed", task.getException());
+                        return;
                     }
+                    String token = task.getResult();
+                    Log.d("******", token);
+                    SessionPref pref1 = SessionPref.getInstance(OnBoardingActivity.this);
+                    pref1.saveStringKeyVal(LoginUserFCMID, token);
                 });
 
         startService(new Intent(this,FcmMessageService.class));
