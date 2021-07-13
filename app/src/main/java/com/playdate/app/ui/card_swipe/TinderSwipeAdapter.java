@@ -227,6 +227,7 @@ public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.
                         mIntent.putExtra("image", image);
                         mIntent.putExtra("name", name);
                         mIntent.putExtra("age", age);
+                        mIntent.putExtra("userId", user.get_id());
                         mIntent.putExtra("interestedArray", ints.toString());
 
                         mContext.startActivity(mIntent);
