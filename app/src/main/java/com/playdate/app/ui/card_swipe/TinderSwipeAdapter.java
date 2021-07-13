@@ -118,6 +118,7 @@ public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.
 
 
         }
+        StringBuilder ints = new StringBuilder();
 
         void setData(MatchListUser user) {
             try {
@@ -162,7 +163,6 @@ public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.
 
                 age.setText("" + user.getAge());
 
-                StringBuilder ints = new StringBuilder();
                 if (null != lst_interest) {
                     for (int i = 0; i < lst_interest.size(); i++) {
                         for (int j = 0; j < user.getInterested().size(); j++) {
@@ -214,7 +214,8 @@ public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.
                         iv_video_play.setImageResource(R.drawable.play_circle);
                         image.setVisibility(View.VISIBLE);
                         pvMain.setVisibility(View.GONE);
-                        iv_maximise.setVisibility(View.INVISIBLE);
+                        iv_maximise.setVisibility(View.VISIBLE);
+                        playing = false;
                     } else {
 //                        itemClick.onItemClick(v, getAbsoluteAdapterPosition(), 22);
 
@@ -222,14 +223,15 @@ public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.
                         String name = user.getUsername();
                         String image = user.getProfilePicPath();
                         int age = user.getAge();
-                        String videopath = user.getProfileVideoPath();
 
-                        mIntent.putExtra("video", videopath);
                         mIntent.putExtra("image", image);
                         mIntent.putExtra("name", name);
                         mIntent.putExtra("age", age);
+                        mIntent.putExtra("userId", user.get_id());
+                        mIntent.putExtra("interestedArray", ints.toString());
 
                         mContext.startActivity(mIntent);
+
                     }
 
 
@@ -311,7 +313,7 @@ public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.
                                 iv_video_play.setImageResource(R.drawable.play_circle);
                                 image.setVisibility(View.VISIBLE);
                                 pvMain.setVisibility(View.GONE);
-                                iv_maximise.setVisibility(View.INVISIBLE);
+                                iv_maximise.setVisibility(View.VISIBLE);
                                 break;
 
                         }

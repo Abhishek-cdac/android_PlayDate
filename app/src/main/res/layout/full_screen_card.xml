@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+
+    android:background="@color/white">
 
     <ImageView
         android:id="@+id/item_image"
-        android:padding="@dimen/_15sdp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingHorizontal="@dimen/_15sdp"
         android:scaleType="centerCrop" />
 
     <LinearLayout
-        android:layout_marginTop="@dimen/_5sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
+        android:layout_marginTop="@dimen/_5sdp"
         android:orientation="horizontal"
         android:padding="@dimen/_8sdp">
 
@@ -22,8 +24,8 @@
             android:id="@+id/item_fullScreen"
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
-            android:layout_weight="0.1"
             android:layout_gravity="center"
+            android:layout_weight="0.1"
             android:src="@drawable/icon_compress"
             android:visibility="visible" />
 
@@ -32,24 +34,25 @@
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
             android:layout_weight="0.8"
-            android:src="@drawable/ic_diamond_normal" />
+            android:src="@drawable/ic_diamond_normal"
+            android:visibility="invisible" />
 
         <ImageView
             android:id="@+id/iv_video_play"
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
-            android:layout_weight="0.1"
-
             android:layout_gravity="center"
-            android:src="@drawable/play_circle" />
+            android:layout_weight="0.1"
+            android:src="@drawable/play_circle"
+            android:visibility="invisible" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
         android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
         android:background="@drawable/gradation_black"
         android:orientation="vertical"
         android:padding="16dp">
@@ -63,12 +66,12 @@
             <TextView
                 android:id="@+id/item_name"
                 android:layout_width="0dp"
-                android:layout_weight="5"
                 android:layout_height="wrap_content"
+                android:layout_weight="5"
                 android:fontFamily="@font/lato_bold"
-                android:singleLine="true"
                 android:maxLines="1"
                 android:minLines="1"
+                android:singleLine="true"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/_26sdp"
                 android:textStyle="bold" />
@@ -77,11 +80,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lato_bold"
-                android:padding="@dimen/_5sdp"
-                android:text=","
-                android:singleLine="true"
                 android:maxLines="1"
                 android:minLines="1"
+                android:padding="@dimen/_5sdp"
+                android:singleLine="true"
+                android:text=","
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/_26sdp"
                 android:textStyle="bold" />
@@ -89,10 +92,10 @@
             <TextView
                 android:id="@+id/item_age"
                 android:layout_width="0dp"
-                android:layout_weight="2"
-                android:maxLines="1"
                 android:layout_height="wrap_content"
+                android:layout_weight="2"
                 android:fontFamily="@font/lato_bold"
+                android:maxLines="1"
                 android:paddingHorizontal="@dimen/_5sdp"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_26sdp"
@@ -103,8 +106,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_online" />
-
-
         </LinearLayout>
 
         <TextView
@@ -123,11 +124,12 @@
             android:orientation="horizontal"
             android:padding="@dimen/_5sdp"
             android:weightSum="1">
+
             <ImageView
                 android:id="@+id/item_check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.4"
+                android:layout_weight="0.5"
                 android:src="@drawable/ic_check_tinder" />
 
 
@@ -137,14 +139,14 @@
                 android:layout_height="@dimen/_40sdp"
                 android:layout_weight="0.2"
                 android:src="@drawable/chat"
-                android:visibility="visible" />
+                android:visibility="gone" />
+
             <ImageView
                 android:id="@+id/item_cross"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"
                 android:src="@drawable/ic_cross_tinder" />
-
 
 
         </LinearLayout>
