@@ -1014,5 +1014,19 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
     public void redirectToLeaderBoard() {
         ReplaceFragWithStack(new FragGameLeaderBoard());
     }
+
+   /*
+   @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (intent != null) {
+            String data = intent.getStringExtra("data");
+            if (data != null) {
+                Fragment fragment = new FragNotification("dashboard");
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
+            }
+        }
+    }
+    */
 }
 
