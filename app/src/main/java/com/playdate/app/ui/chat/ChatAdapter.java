@@ -148,6 +148,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         return Objects.requireNonNull(viewHolder);
     }
+
     MediaPlayer mediaPlayer = null;
 
     @Override
@@ -256,7 +257,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                                     mediaPlayer = new MediaPlayer();
                                     isPlaying = false;
                                     isPause = false;
-                                }else{
+                                } else {
 
                                 }
                             }
@@ -653,6 +654,23 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         bottomSheet.dismiss();
         notifyDataSetChanged();
     }
+
+    public void shareChat(int index) {
+        String inviteLink;
+        if (lst_chat.get(index).getType().equals("text")) {
+            inviteLink = lst_chat.get(index).getMessage();
+        } else {
+            inviteLink = lst_chat.get(index).getMediaInfo().get(0).getMediaFullPath();
+        }
+
+        Intent share = new Intent(android.content.Intent.ACTION_SEND);
+        share.setType("text/plain");
+        share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+        share.putExtra(Intent.EXTRA_TEXT, inviteLink);
+        mContext.startActivity(Intent.createChooser(share, "Share ChatMessage!"));
+        bottomSheet.dismiss();
+    }
+
 
     public class ViewHolderOther extends RecyclerView.ViewHolder {
         TextView tv_msg;

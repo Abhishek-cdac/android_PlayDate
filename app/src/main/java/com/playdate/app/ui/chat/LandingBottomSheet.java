@@ -99,7 +99,8 @@ public class LandingBottomSheet extends BottomSheetDialogFragment {
 
         rl_viewProfile.setOnClickListener(v -> {
             if (from.equals("chat")) {
-                shareTextUrl();
+                chatAdapter.shareChat(index);
+//                shareTextUrl();
             } else {
                 OnInnerFragmentClicks ref = (OnInnerFragmentClicks) getActivity();
                 ref.ReplaceFragWithStack(new FragInstaLikeProfile());
@@ -169,9 +170,8 @@ public class LandingBottomSheet extends BottomSheetDialogFragment {
                 } else {
 
                 }
-
-
             }
+
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
@@ -180,7 +180,6 @@ public class LandingBottomSheet extends BottomSheetDialogFragment {
         });
 
     }
-
 
     private void shareTextUrl() {
         Intent share = new Intent(android.content.Intent.ACTION_SEND);
