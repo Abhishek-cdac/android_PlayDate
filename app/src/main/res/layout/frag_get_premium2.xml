@@ -68,179 +68,20 @@
                 android:textSize="@dimen/_17sdp" />
 
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:id="@+id/recy_premiun"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="@dimen/_10sdp"
-                    android:layout_height="@dimen/_10sdp"
-                    android:src="@drawable/premium_circle_red">
-
-                </ImageView>
-
-                <View
-                    android:layout_width="@dimen/_10sdp"
-                    android:layout_height="@dimen/_10sdp">
-
-                </View>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:elevation="@dimen/_15sdp"
-                    android:fontFamily="@font/lato_bold"
-                    android:text="5 Play Coins Every Month"
-                    android:textColor="@color/textColour"
-                    android:textSize="@dimen/_10sdp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="@dimen/_10sdp"
-                    android:layout_height="@dimen/_10sdp"
-                    android:src="@drawable/premium_circle_red">
-
-                </ImageView>
-
-                <View
-                    android:layout_width="@dimen/_10sdp"
-                    android:layout_height="@dimen/_10sdp">
-
-                </View>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-
-                    android:elevation="@dimen/_15sdp"
-                    android:fontFamily="@font/lato_bold"
-                    android:text="5 DM Power Ups Every Month"
-                    android:textColor="@color/textColour"
-                    android:textSize="@dimen/_10sdp" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="@dimen/_10sdp"
-                    android:layout_height="@dimen/_10sdp"
-
-                    android:src="@drawable/premium_circle_red">
-
-                </ImageView>
-
-                <View
-                    android:layout_width="@dimen/_10sdp"
-                    android:layout_height="@dimen/_10sdp">
-
-                </View>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-
-                    android:elevation="@dimen/_15sdp"
-                    android:fontFamily="@font/lato_bold"
-                    android:text="1 Point Multiplier Unlocked"
-                    android:textColor="@color/textColour"
-                    android:textSize="@dimen/_10sdp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="@dimen/_10sdp"
-                    android:layout_height="@dimen/_10sdp"
-                    android:src="@drawable/premium_circle_red">
-
-                </ImageView>
-
-                <View
-                    android:layout_width="@dimen/_10sdp"
-                    android:layout_height="@dimen/_10sdp">
-
-                </View>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:elevation="@dimen/_15sdp"
-                    android:fontFamily="@font/lato_bold"
-                    android:text="Exclusive Discounts to Events and Location"
-                    android:textColor="@color/textColour"
-                    android:textSize="@dimen/_10sdp" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="@dimen/_10sdp"
-                    android:layout_height="@dimen/_10sdp"
-
-                    android:src="@drawable/premium_circle_red">
-
-                </ImageView>
-
-                <View
-                    android:layout_width="@dimen/_10sdp"
-                    android:layout_height="@dimen/_10sdp">
-
-                </View>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:elevation="@dimen/_15sdp"
-                    android:fontFamily="@font/lato_bold"
-                    android:text="Access To All The Games"
-                    android:textColor="@color/textColour"
-                    android:textSize="@dimen/_10sdp" />
-            </LinearLayout>
-
+                android:layout_margin="@dimen/_5sdp"
+                android:foregroundGravity="center"
+                android:layout_height="wrap_content" />
 
             <Button
                 android:id="@+id/login_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:background="@drawable/premium_border_red"
                 android:elevation="@dimen/_15sdp"
                 android:fontFamily="@font/lato_bold"

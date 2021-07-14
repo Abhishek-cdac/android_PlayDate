@@ -49,14 +49,11 @@ public class FragLocationConfirmation extends Fragment {
         String nameAdd = "<b>" + name + "</b>" + " , " + address;
         Picasso.get().load(image).placeholder(R.drawable.cupertino_activity_indicator).into(image_restaurant);
         tv_details.setText(Html.fromHtml(nameAdd));
-        btn_proceed.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
-                frag.ReplaceFrag(new FragGameMenu());
+        btn_proceed.setOnClickListener(v -> {
+            OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
+            frag.ReplaceFrag(new FragGameMenu());
 
 
-            }
         });
 
         return view;

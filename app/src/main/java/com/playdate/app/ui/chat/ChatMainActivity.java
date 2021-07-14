@@ -543,6 +543,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                 chat.setMediaInfo(lstMedia);
                 chat.setChatId(chatId);
                 chat.setEntryDate(odt.toString());
+                chat.setMessageId(data.getString("messageId"));
 
 
                 adapter.addToListText(chat);

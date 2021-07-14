@@ -19,6 +19,7 @@ import com.playdate.app.model.MyCouponsModel;
 import com.playdate.app.model.MyCouponsModelStore;
 import com.playdate.app.model.NotificationCountModel;
 import com.playdate.app.model.NotificationModel;
+import com.playdate.app.model.Premium;
 import com.playdate.app.model.RegisterResult;
 import com.playdate.app.model.RestMain;
 import com.playdate.app.model.RestaurentModel;
@@ -326,8 +327,13 @@ public interface GetDataService {
     Call<CommonModel> chatRequestStatusUpdate(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
     @FormUrlEncoded
-    @POST("user/get-notifications-count")
+    @POST("user/get-packages")
     Call<NotificationCountModel> getNotificationCount(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
+
+    @FormUrlEncoded
+    @POST("user/get-packages")
+    Call<Premium> getPackages(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
 
 }

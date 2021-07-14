@@ -12,7 +12,6 @@ import android.os.Looper;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -36,6 +35,8 @@ import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.FriendsListModel;
 import com.playdate.app.model.MatchListUser;
 import com.playdate.app.model.NotificationCountModel;
+import com.playdate.app.model.Premium;
+import com.playdate.app.model.PremiumPlans;
 import com.playdate.app.service.FcmMessageService;
 import com.playdate.app.service.LocationService;
 import com.playdate.app.ui.anonymous_question.AnonymousQuestionActivity;
@@ -56,7 +57,6 @@ import com.playdate.app.ui.my_profile_details.FragInstaLikeProfileFriends;
 import com.playdate.app.ui.my_profile_details.FragSavedPost;
 import com.playdate.app.ui.my_profile_details.FragSettingsParent;
 import com.playdate.app.ui.notification_screen.FragNotification;
-import com.playdate.app.ui.onboarding.OnBoardingActivity;
 import com.playdate.app.ui.social.FragSocialFeed;
 import com.playdate.app.ui.social.upload_media.PostMediaActivity;
 import com.playdate.app.util.common.BaseActivity;
@@ -110,12 +110,13 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
     private int count = 0;
     private int OPTION_CLICK = 0;
     private final int CAMERA = 2;
-    private boolean isAtTop =true;
+    private boolean isAtTop = true;
 
     public static Bitmap bitmap = null;
-    public static int refreshFlag =0;
+    public static int refreshFlag = 0;
     ImageView iv_date;
     LinearLayout ll_love_bottom;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,7 +133,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
         ll_her = findViewById(R.id.ll_her);
         ll_mainMenu = findViewById(R.id.ll_mainMenu);
         ll_friends = findViewById(R.id.ll_friends);
-         ll_love_bottom = findViewById(R.id.ll_love_bottom);
+        ll_love_bottom = findViewById(R.id.ll_love_bottom);
         LinearLayout ll_coupon = findViewById(R.id.ll_coupon);
         LinearLayout ll_profile_support = findViewById(R.id.ll_profile_support);
         ll_option_love = findViewById(R.id.ll_option_love);
@@ -183,10 +184,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
         }
         ReplaceFrag(fragOne);
 
-        try {
-            showPremium();
-        } catch (WindowManager.BadTokenException ignored) {
-        }
+        callAPIShowPremium();
         setValue();
         callAPIFriends();
 
@@ -198,12 +196,11 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
                         setNormal();
                     }
                 }
-                isAtTop=false;
+                isAtTop = false;
             }
             if (scrollY == 0) {
-                isAtTop=true;
+                isAtTop = true;
             }
-
 
 
             if (scrollY == (v.getMeasuredHeight() - v.getChildAt(0).getMeasuredHeight()) * -1) {
@@ -255,6 +252,42 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
         ll_coupon.setOnClickListener(this);
         iv_dashboard_notification.setOnClickListener(this);
         txt_social.setOnClickListener(this);
+    }
+
+    ArrayList<PremiumPlans> lstPremium;
+
+    private void callAPIShowPremium() {
+        //showPremium();
+
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        Call<Premium> call = service.getPackages("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new Callback<Premium>() {
+            @Override
+            public void onResponse(Call<Premium> call, Response<Premium> response) {
+                try {
+
+                    if (response.code() == 200) {
+                        if (response.body().getStatus() == 1) {
+                            lstPremium = response.body().getLstPremiumPlan();
+                            showPremium(lstPremium.get(0));
+                        }
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+//                mSwipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onFailure(Call<Premium> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+
     }
 
     private void updateToken() {
@@ -378,9 +411,9 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
 
     private Handler mHandler;
 
-    private void showPremium() {
+    private void showPremium(PremiumPlans premiumPlans) {
         mHandler = new Handler(Looper.getMainLooper());
-        mHandler.postDelayed(() -> new FullScreenDialog(DashboardActivity.this).show(), 5 * 30000);
+        mHandler.postDelayed(() -> new FullScreenDialog(DashboardActivity.this, premiumPlans.getLst_packageDescription()).show(), 2 * 300);
     }
 
 
@@ -573,9 +606,9 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
             iv_profile_sett.setBackground(null);
             iv_profile_sett.setImageResource(R.drawable.tech_support);
             ll_friends.setVisibility(View.GONE);
-            if(pref.getBoolVal(SessionPref.isBusiness)){
+            if (pref.getBoolVal(SessionPref.isBusiness)) {
                 ReplaceFrag(new FragCouponParentBusiness());
-            }else{
+            } else {
                 ReplaceFrag(new FragCouponParent());
             }
 
@@ -835,16 +868,16 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
     public void onBackPressed() {
 
         if (CurrentFrag.getClass().getSimpleName().equals("FragSocialFeed")) {
-            if(isAtTop){
+            if (isAtTop) {
                 super.onBackPressed();
-            }else{
-                isAtTop=true;
-                nsv.smoothScrollTo(0,0);
+            } else {
+                isAtTop = true;
+                nsv.smoothScrollTo(0, 0);
             }
 
-        }else if (CurrentFrag.getClass().getSimpleName().equals("FragNotification")) {
+        } else if (CurrentFrag.getClass().getSimpleName().equals("FragNotification")) {
             ll_love_bottom.performClick();
-        }else if (CurrentFrag.getClass().getSimpleName().equals("FragInstaLikeProfile")) {
+        } else if (CurrentFrag.getClass().getSimpleName().equals("FragInstaLikeProfile")) {
             if (iv_plus.getVisibility() == View.GONE) {
                 setNormal();
             } else {
@@ -922,8 +955,8 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
     @Override
     protected void onResume() {
         super.onResume();
-        if(refreshFlag==1){
-            refreshFlag=0;
+        if (refreshFlag == 1) {
+            refreshFlag = 0;
             ll_love_bottom.performClick();
         }
 
@@ -960,7 +993,6 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
             txt_count.setText("");
         }*/
     }
-
 
 
     public void redirectToLeaderBoard() {
