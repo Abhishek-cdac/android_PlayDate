@@ -288,7 +288,6 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                                             stopPlaying(mediaPlayer);
                                             viewHolderMe.play_audio.setImageResource(R.drawable.play);
 
-
                                         }
                                     });
                                     mediaPlayer.prepare();
