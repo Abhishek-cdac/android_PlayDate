@@ -131,12 +131,22 @@ public class FragCouponParent extends Fragment implements OnSizeDecided, View.On
                             int countNotification = response.body().getData().get(0).getTotalUnreadNotification();
                             Log.e("countNotification", "" + countNotification);
 
-                            if (countNotification > 0 && countNotification <= 99) {
+                            if (countNotification > 0 && countNotification <= 9) {
                                 txt_count.setVisibility(View.VISIBLE);
+                                txt_count.setPadding(10, 0, 10, 0); //1-9
                                 txt_count.setText("" + countNotification);
+
+                            } else if (countNotification > 9 && countNotification <= 99) {
+                                txt_count.setVisibility(View.VISIBLE);
+                                txt_count.setPadding(6, 2, 7, 2);  ///10-99
+                                txt_count.setText("" + countNotification);
+
                             } else if (countNotification > 99) {
                                 txt_count.setVisibility(View.VISIBLE);
+                                txt_count.setTextSize(8);
+                                txt_count.setPadding(5, 3, 5, 3);  ///99+
                                 txt_count.setText("99+");
+
                             } else {
                                 txt_count.setVisibility(View.GONE);
                                 txt_count.setText("");
