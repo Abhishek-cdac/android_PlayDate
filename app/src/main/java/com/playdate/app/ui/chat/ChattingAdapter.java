@@ -2,6 +2,7 @@ package com.playdate.app.ui.chat;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.github.marlonlom.utilities.timeago.TimeAgo;
 import com.playdate.app.R;
 import com.playdate.app.model.chat_models.ChatList;
 import com.playdate.app.ui.chat.request.Onclick;
@@ -77,9 +79,10 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
     }
 
 
-    public void Refresh(){
+    public void Refresh() {
         frag.onResume();
     }
+
     public void deleteChat(int index) {
         if (null != lst_msgs) {
             lst_msgs.remove(index);
@@ -177,45 +180,68 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
 
             }
 
+            String timeFormat = lst_msgs.get(position).getLastMsg().get(0).getEntryDate();
 
+            timeFormat = timeFormat.replace("T", " ");
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+            df.setTimeZone(TimeZone.getTimeZone("GTC"));
+            Date date = null;
             try {
-                String timeFormat = lst_msgs.get(position).getLastMsg().get(0).getEntryDate();
-                timeFormat = timeFormat.replace("T", " ");
-
-
-                Date date = null;
-                try {
-                    date = df.parse(timeFormat);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                df.setTimeZone(TimeZone.getDefault());
-                String formattedDate = df.format(date);
-
-                if (formattedDate.contains(todaysDate)) {
-
-                    try {
-                        date = format1.parse(formattedDate);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    holder.txt_time.setText(format2.format(date));
-
-                } else if (findDayDiff(formattedDate) == 1) {
-                    holder.txt_time.setText("Yesterday");
-                } else {
-
-
-                    try {
-                        date = format3.parse(formattedDate);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    holder.txt_time.setText(format4.format(date));
-                }
-            } catch (Exception e) {
+                date = df.parse(timeFormat);
+            } catch (ParseException e) {
                 e.printStackTrace();
             }
+            df.setTimeZone(TimeZone.getDefault());
+            String formattedDate = df.format(date);
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date ddd = null;
+            try {
+                ddd = sdf.parse(formattedDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            long millis = ddd.getTime();
+            String text = TimeAgo.using(millis);
+            holder.txt_time.setText(text.toLowerCase());
+
+
+//            try {
+//                String timeFormat = lst_msgs.get(position).getLastMsg().get(0).getEntryDate();
+//                timeFormat = timeFormat.replace("T", " ");
+//
+//
+//                Date date = null;
+//                try {
+//                    date = df.parse(timeFormat);
+//                } catch (ParseException e) {
+//                    e.printStackTrace();
+//                }
+//                df.setTimeZone(TimeZone.getDefault());
+//                String formattedDate = df.format(date);
+//
+////                if (formattedDate.contains(todaysDate)) {
+////
+////                    try {
+////                        date = format1.parse(formattedDate);
+////                    } catch (ParseException e) {
+////                        e.printStackTrace();
+////                    }
+////                    holder.txt_time.setText(format2.format(date));
+////
+////                } else if (findDayDiff(formattedDate) == 1) {
+////                    holder.txt_time.setText("Yesterday");
+////                } else {
+////                    try {
+////                        date = format3.parse(formattedDate);
+////                    } catch (ParseException e) {
+////                        e.printStackTrace();
+////                    }
+////                    holder.txt_time.setText(format4.format(date));
+////                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
 
             holder.main_ll.setOnClickListener(v -> {
 
@@ -225,8 +251,9 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
 
             holder.main_ll.setOnLongClickListener(v -> {
                 String chatId = lst_msgs.get(position).getChatId();
+//                Log.d("DAte", "onBindViewHolder: " + lst_msgs.get(position).getLastMsg().get(0).getEntryDate());
                 showBottomSheet(position, lst_msgs.get(position).getToUserId(), chatId);
-                notifyDataSetChanged();
+                notifyItemChanged(position);
                 return false;
             });
 
