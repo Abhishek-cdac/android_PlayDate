@@ -327,7 +327,7 @@ public interface GetDataService {
     Call<CommonModel> chatRequestStatusUpdate(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
     @FormUrlEncoded
-    @POST("user/get-packages")
+    @POST("user/get-notifications-count")
     Call<NotificationCountModel> getNotificationCount(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
 

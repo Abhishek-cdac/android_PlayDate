@@ -42,6 +42,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.playdate.app.R;
 import com.playdate.app.business.businessbio.BusinessBioActivity;
 import com.playdate.app.business.businessphoto.BusinessUploadPhotoActivity;
@@ -54,8 +55,10 @@ import com.playdate.app.model.Interest;
 import com.playdate.app.model.LoginResponse;
 import com.playdate.app.model.LoginUser;
 import com.playdate.app.model.LoginUserDetails;
+import com.playdate.app.service.FcmMessageService;
 import com.playdate.app.ui.dashboard.DashboardActivity;
 import com.playdate.app.ui.forgot_password.ForgotPasswordActivity;
+import com.playdate.app.ui.onboarding.OnBoardingActivity;
 import com.playdate.app.ui.register.age_verification.AgeVerifiationActivity;
 import com.playdate.app.ui.register.bio.BioActivity;
 import com.playdate.app.ui.register.gender.GenderSelActivity;
@@ -85,6 +88,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.playdate.app.data.api.RetrofitClientInstance.DEVICE_TYPE;
+import static com.playdate.app.util.session.SessionPref.LoginUserFCMID;
 import static com.playdate.app.util.session.SessionPref.LoginUserInterestsIDS;
 import static com.playdate.app.util.session.SessionPref.LoginVerified;
 
@@ -227,6 +231,21 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
             }
         });
+
+
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        Log.w("******", "Fetching FCM registration token failed", task.getException());
+                        return;
+                    }
+                    String token = task.getResult();
+                    Log.d("******", token);
+                    SessionPref pref1 = SessionPref.getInstance(LoginActivity.this);
+                    pref1.saveStringKeyVal(LoginUserFCMID, token);
+                });
+
+        startService(new Intent(this, FcmMessageService.class));
     }
 
 

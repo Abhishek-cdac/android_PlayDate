@@ -413,7 +413,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
 
     private void showPremium(PremiumPlans premiumPlans) {
         mHandler = new Handler(Looper.getMainLooper());
-        mHandler.postDelayed(() -> new FullScreenDialog(DashboardActivity.this, premiumPlans.getLst_packageDescription()).show(), 2 * 300);
+        mHandler.postDelayed(() -> new FullScreenDialog(DashboardActivity.this, premiumPlans.getLst_packageDescription()).show(), 2 * 30000);
     }
 
 
