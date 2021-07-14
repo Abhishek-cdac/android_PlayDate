@@ -139,7 +139,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     private Onclick itemClick;
     private CommonClass commonClass;
 
-
+    OffsetDateTime odt;
     private final int REQUEST_AUDIO_PERMISSION_CODE = 1;
 
 
@@ -493,8 +493,14 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     Emitter.Listener onNewMessage = args -> runOnUiThread(() -> {
         Date c = Calendar.getInstance().getTime();
 
-        DateTimeFormatter dtfInput = DateTimeFormatter.ofPattern("E MMM d H:m:s O u", Locale.ENGLISH);
-        OffsetDateTime odt = OffsetDateTime.parse(c.toString(), dtfInput);
+        DateTimeFormatter dtfInput = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            dtfInput = DateTimeFormatter.ofPattern("E MMM d H:m:s O u", Locale.ENGLISH);
+        }
+        OffsetDateTime odt = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            odt = OffsetDateTime.parse(c.toString(), dtfInput);
+        }
 
         Log.d("FormattedDAte", "Formatted DAte: " + odt);
 
@@ -558,10 +564,14 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     Emitter.Listener onTyping = args -> runOnUiThread(() -> {
         Date c = Calendar.getInstance().getTime();
 
-        DateTimeFormatter dtfInput = DateTimeFormatter.ofPattern("E MMM d H:m:s O u", Locale.ENGLISH);
-        OffsetDateTime odt = OffsetDateTime.parse(c.toString(), dtfInput);
+        DateTimeFormatter dtfInput = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            dtfInput = DateTimeFormatter.ofPattern("E MMM d H:m:s O u", Locale.ENGLISH);
+             odt = OffsetDateTime.parse(c.toString(), dtfInput);
 
-        Log.d("FormattedDAte", "Formatted DAte Typing: " + odt.toString());
+        }
+
+      //  Log.d("FormattedDAte", "Formatted DAte Typing: " + odt.toString());
 
 
         try {
@@ -1100,12 +1110,17 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         } else {
             sendMessage(msg, "text", null);
             mSocket.emit("typing", objNotTyping);
+            et_chat.requestFocus();
+            et_chat.setFocusableInTouchMode(true);
+            et_chat.requestFocus();
+
+
         }
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 
         et_chat.setFocusable(true);
         et_chat.setFocusableInTouchMode(true);
         et_chat.requestFocus();
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 
         et_chat.setText("");
     }
@@ -1439,6 +1454,21 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         CallActivity.start(this, false);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        et_chat.setFocusable(true);
+        et_chat.setFocusableInTouchMode(true);
+        et_chat.requestFocus();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        et_chat.setFocusable(true);
+        et_chat.setFocusableInTouchMode(true);
+        et_chat.requestFocus();
+    }
     public static Bitmap locationBitmap = null;
 
 
@@ -1472,5 +1502,6 @@ interface onImageSelectListener {
 
     void onGallerySelect();
 }
+
 
 
