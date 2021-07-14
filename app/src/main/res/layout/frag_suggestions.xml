@@ -45,7 +45,6 @@
             android:paddingTop="@dimen/_2sdp"
             android:paddingRight="@dimen/_10sdp"
             android:paddingBottom="@dimen/_2sdp"
-            android:text="Maria Gomes"
             android:textColor="@color/textColour"
             android:textSize="@dimen/_16sdp"
             android:textStyle="bold" />

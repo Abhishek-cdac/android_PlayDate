@@ -19,9 +19,11 @@ import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.GetProfileDetails;
 import com.playdate.app.model.GetProileDetailData;
+import com.playdate.app.model.Premium;
+import com.playdate.app.model.PremiumPlans;
 import com.playdate.app.ui.dashboard.OnClosePremium;
 import com.playdate.app.ui.dashboard.adapter.InviteAdapter;
-import com.playdate.app.ui.dashboard.premium.PremiunAdapter;
+import com.playdate.app.ui.dashboard.premium.PremiumAdapter;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
@@ -41,6 +43,7 @@ public class FragInvite extends Fragment implements OnClosePremium {
 
     private RecyclerView recyclerView;
     private ViewPager vp_premium;
+    public SessionPref pref;
 
     @Nullable
     @Override
@@ -48,17 +51,54 @@ public class FragInvite extends Fragment implements OnClosePremium {
         View view = inflater.inflate(R.layout.frag_invite, container, false);
         recyclerView = view.findViewById(R.id.invite_listView);
         vp_premium = view.findViewById(R.id.vp_premium);
-
+        pref = SessionPref.getInstance(getActivity());
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(manager);
         CommonClass commonClass = CommonClass.getInstance();
         vp_premium.getLayoutParams().height = (int) (commonClass.getScreenHeight(getActivity()) - getActivity().getResources().getDimension(R.dimen._250sdp));
-        PremiunAdapter adapter = new PremiunAdapter(getFragmentManager(), FragInvite.this);
-        vp_premium.setAdapter(adapter);
-        setFun();
+
 
         callAPI();
+        callAPIShowPremium();
         return view;
+    }
+
+    ArrayList<PremiumPlans> lstPremium;
+
+    private void callAPIShowPremium() {
+        //showPremium();
+
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        Call<Premium> call = service.getPackages("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new Callback<Premium>() {
+            @Override
+            public void onResponse(Call<Premium> call, Response<Premium> response) {
+                try {
+
+                    if (response.code() == 200) {
+                        if (response.body().getStatus() == 1) {
+                            lstPremium = response.body().getLstPremiumPlan();
+                            PremiumAdapter adapter = new PremiumAdapter(getFragmentManager(), FragInvite.this,lstPremium);
+                            vp_premium.setAdapter(adapter);
+                            setFun();
+                        }
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+//                mSwipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onFailure(Call<Premium> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+
     }
 
     int page = 0;
