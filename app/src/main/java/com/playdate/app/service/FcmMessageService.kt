@@ -28,10 +28,10 @@ class FcmMessageService : FirebaseMessagingService() {
     }
 
 
+
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
         Log.d(TAG, "From: ${remoteMessage.from}")
-
         //Use this condition to validation login
 //        if (checkLoginNeeded()) {
 //            return
@@ -40,8 +40,8 @@ class FcmMessageService : FirebaseMessagingService() {
         for ((key, value) in remoteMessage.data) {
             extras.putString(key, value)
         }
-        if (extras.containsKey("message") && !extras.getString("message").isNullOrBlank()) {
-            sendNotification(extras.getString("message")!!)
+        if (extras.containsKey("userMessage") && !extras.getString("userMessage").isNullOrBlank()) {
+            sendNotification(extras.getString("userMessage")!!)
         }
 //        }
     }

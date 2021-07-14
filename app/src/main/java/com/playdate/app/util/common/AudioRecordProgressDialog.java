@@ -7,6 +7,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 
@@ -39,6 +40,10 @@ public class AudioRecordProgressDialog extends Dialog {
                 R.layout.audio_record_dialog, null);
         getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         setContentView(view);
+        Button btn_stop=view.findViewById(R.id.btn_stop);
 
+        btn_stop.setOnClickListener(v -> {
+            dismiss();
+        });
     }
 }

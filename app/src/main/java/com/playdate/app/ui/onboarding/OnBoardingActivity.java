@@ -43,11 +43,6 @@ public class OnBoardingActivity extends AppCompatActivity {
             startActivity(new Intent(OnBoardingActivity.this, LoginActivity.class));
             finish();
         });
-        SessionPref pref = SessionPref.getInstance(this);
-        if (pref.getBoolVal(CompleteProfile)) {
-            startActivity(new Intent(OnBoardingActivity.this, DashboardActivity.class));
-            finish();
-        }
 
         ObjectAnimator scaleDown = ObjectAnimator.ofPropertyValuesHolder(
                 binding.btnLogin,
@@ -59,11 +54,7 @@ public class OnBoardingActivity extends AppCompatActivity {
 
         scaleDown.start();
 
-        if (pref.getBoolVal(SessionPref.DARKMODE)) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
+
 
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(task -> {
@@ -78,6 +69,17 @@ public class OnBoardingActivity extends AppCompatActivity {
                 });
 
         startService(new Intent(this,FcmMessageService.class));
+        SessionPref pref = SessionPref.getInstance(this);
+        if (pref.getBoolVal(SessionPref.DARKMODE)) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+        if (pref.getBoolVal(CompleteProfile)) {
+            startActivity(new Intent(OnBoardingActivity.this, DashboardActivity.class));
+            finish();
+        }
+
 
     }
 
