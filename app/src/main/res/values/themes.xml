@@ -20,6 +20,9 @@
 
 
     </style>
+
+
+
     <style name="Spinner" parent="Widget.AppCompat.Light.DropDownItem.Spinner">
         <item name="android:paddingStart">0dp</item>
         <item name="android:paddingEnd">0dp</item>
@@ -29,10 +32,7 @@
     </style>
     <style name="mySpinnerItemStyle" parent="@android:style/Widget.Holo.DropDownItem.Spinner">
         <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">@dimen/_13sdp</item>
-        <item name="android:layout_gravity">center</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textAlignment">center</item>
+
     </style>
 
     <style name="CustomActivityAnimation" parent="@android:style/Animation.Activity">

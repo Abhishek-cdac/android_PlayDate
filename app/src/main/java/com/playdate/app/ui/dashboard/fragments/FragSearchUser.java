@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,10 +53,10 @@ public class FragSearchUser extends Fragment implements SuggestedFriendAdapter.S
     public FragSearchUser() {
     }
 
-    public void OnUserProfileSelected(boolean isFriend,String id){
+    public void OnUserProfileSelected(boolean isFriend, String id) {
         try {
             OnFriendSelected inf = (OnFriendSelected) getActivity();
-            Objects.requireNonNull(inf).OnSuggestionClosed(isFriend,id);
+            Objects.requireNonNull(inf).OnSuggestionClosed(isFriend, id);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -118,12 +117,27 @@ public class FragSearchUser extends Fragment implements SuggestedFriendAdapter.S
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                adapter.getFilter().filter(s);
+
+                if (s.length() > 0) {
+                    ArrayList<GetUserSuggestionData> lst = new ArrayList<>();
+                    for (int i = 0; i < lst_getUserSuggestions.size(); i++) {
+                        if (lst_getUserSuggestions.get(i).getUsername().toLowerCase().contains(s.toString().toLowerCase())) {
+                            lst.add(lst_getUserSuggestions.get(i));
+                        }
+                    }
+                    adapter = new SuggestedFriendAdapter(lst, itemClick, FragSearchUser.this);
+                    recyclerView.setAdapter(adapter);
+
+                } else {
+                    adapter = new SuggestedFriendAdapter(lst_getUserSuggestions, itemClick, FragSearchUser.this);
+                    recyclerView.setAdapter(adapter);
+                }
+
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                adapter.getFilter().filter(s);
+//                adapter.getFilter().filter(s);
             }
         });
 
@@ -169,7 +183,7 @@ public class FragSearchUser extends Fragment implements SuggestedFriendAdapter.S
                         }
                         RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
                         recyclerView.setLayoutManager(manager);
-                        adapter = new SuggestedFriendAdapter(lst_getUserSuggestions, itemClick,FragSearchUser.this);
+                        adapter = new SuggestedFriendAdapter(lst_getUserSuggestions, itemClick, FragSearchUser.this);
                         recyclerView.setAdapter(adapter);
                     }
                 } else {

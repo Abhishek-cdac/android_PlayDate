@@ -1,11 +1,11 @@
 package com.playdate.app.model;
 
 public class UserInformation {
-    String fullName;
-    String username;
-    String id;
-    String profilePicPath;
-    String profileVideoPath;
+    private String fullName;
+    private String username;
+    private String id;
+    private String profilePicPath;
+    private String profileVideoPath;
 
     public String getFullName() {
         return fullName;

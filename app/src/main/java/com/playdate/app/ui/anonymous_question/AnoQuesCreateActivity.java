@@ -3,7 +3,6 @@ package com.playdate.app.ui.anonymous_question;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -36,50 +35,35 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorCodeSelect, View.OnClickListener {
-    LinearLayout ll_ques;
-    LinearLayout ll_smiley;
-    Intent mIntent;
-    EditText add_comment;
-    RecyclerView rec_view_colors;
-    TextView txt_ques;
-    //    TextView emojitxt;
-    TextView txt_smiley;
-    TextView txt_post_comment;
-    ImageView back_anonymous;
-    ImageView more_option;
-    ArrayList<String> lst = new ArrayList<>();
-    ArrayList<Integer> lstSmiley = new ArrayList<>();
-//  private ArrayList<MatchListUser> lstUserSuggestions = new ArrayList<>();
 
-
-
-    String ques;
+    private LinearLayout ll_ques;
+    //    private LinearLayout ll_smiley;
+    private RecyclerView rec_view_colors;
+    private TextView txt_smiley;
+    private final ArrayList<String> lst = new ArrayList<>();
+    private ArrayList<Integer> lstSmiley = new ArrayList<>();
+    private String ques;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_ano_ques);
         rec_view_colors = findViewById(R.id.rec_view_colors);
-        add_comment = findViewById(R.id.add_comment);
-        txt_ques = findViewById(R.id.txt_ques);
+        EditText add_comment = findViewById(R.id.add_comment);
+        TextView txt_ques = findViewById(R.id.txt_ques);
         add_comment.setEnabled(false);
-        txt_post_comment = findViewById(R.id.txt_post_comments);
-        back_anonymous = findViewById(R.id.back_anonymous);
-        more_option = findViewById(R.id.more_option);
+        TextView txt_post_comment = findViewById(R.id.txt_post_comments);
+        ImageView back_anonymous = findViewById(R.id.back_anonymous);
+        ImageView more_option = findViewById(R.id.more_option);
         ll_ques = findViewById(R.id.ll_ques);
-        ll_smiley = findViewById(R.id.ll_smily);
+//        ll_smiley = findViewById(R.id.ll_smily);
         txt_smiley = findViewById(R.id.txt_smiley);
-        mIntent = getIntent();
+        Intent mIntent = getIntent();
         ques = mIntent.getStringExtra("question");
 
         txt_ques.setText(ques);
 
-        int originalUnicode = 0x1F601;
-        //textView.setText(getEmoticon(originalUnicode));
-        Log.e("", "" + getEmoticon(originalUnicode));
         CreateList();
-
-//      CreateSmilyList();
         getEmoticon();
         OnColorChange(0);
         ColorAdapter adapter = new ColorAdapter(lst, this);
@@ -92,7 +76,7 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
     }
 
     private void getEmoticon() {
-        lstSmiley=new CommonClass().getEmojiArr();
+        lstSmiley = new CommonClass().getEmojiArr();
 
     }
 
@@ -153,10 +137,10 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
         }
     }
 
-    private void postQues() {
-        setResult(100, null);
-        finish();
-    }
+//    private void postQues() {
+//        setResult(100, null);
+//        finish();
+//    }
 
     private void showModel() {
         try {

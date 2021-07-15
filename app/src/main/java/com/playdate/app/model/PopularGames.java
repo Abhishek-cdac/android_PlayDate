@@ -2,8 +2,8 @@ package com.playdate.app.model;
 
 public class PopularGames {
 
-    String names;
-    int game_image;
+    private String names;
+    private int game_image;
 
     public String getNames() {
         return names;

@@ -1,10 +1,10 @@
 
 package com.playdate.app.model;
 
-import java.util.List;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 
 public class GetUserSuggestionData {
@@ -55,17 +55,6 @@ public class GetUserSuggestionData {
         this.chatStatusFrom = chatStatusFrom;
     }
 
-    public List<ChatStatusTo> getChatStatusTo() {
-        return chatStatusTo;
-    }
-
-    public void setChatStatusTo(List<ChatStatusTo> chatStatusTo) {
-        this.chatStatusTo = chatStatusTo;
-    }
-
-    @SerializedName("chatStatusTo")
-    @Expose
-    private List<ChatStatusTo> chatStatusTo = null;
 
     public String getId() {
         return id;

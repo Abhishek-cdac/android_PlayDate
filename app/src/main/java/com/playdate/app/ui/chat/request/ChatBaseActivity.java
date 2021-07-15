@@ -1,7 +1,6 @@
 package com.playdate.app.ui.chat.request;
 
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,17 +9,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.playdate.app.R;
-import com.playdate.app.ui.date.fragments.FragIntroScreen;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
-import com.playdate.app.util.common.BaseActivity;
-
-import org.json.JSONObject;
-
-import io.socket.emitter.Emitter;
 
 public class ChatBaseActivity extends AppCompatActivity implements OnInnerFragmentClicks {
-    FragmentManager fm;
-    FragmentTransaction ft;
+    private FragmentManager fm;
+    private FragmentTransaction ft;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,7 +27,6 @@ public class ChatBaseActivity extends AppCompatActivity implements OnInnerFragme
         ft.add(R.id.fl_fragment, first);
         ft.commit();
     }
-
 
 
     @Override

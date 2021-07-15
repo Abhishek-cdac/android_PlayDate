@@ -2,19 +2,14 @@
 package com.playdate.app.model;
 
 import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
-import java.util.List;
 
 public class GetCouponsModel {
-
 
 
     @Expose
     private String message;
     @Expose
     private Long status;
-
 
 
     public String getMessage() {

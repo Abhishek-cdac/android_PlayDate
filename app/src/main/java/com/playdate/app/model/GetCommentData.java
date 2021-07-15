@@ -6,7 +6,7 @@ import com.google.gson.annotations.Expose;
 
 public class GetCommentData {
     public boolean isSelected = false;
-    public  boolean isDeleted = false;
+    public boolean isDeleted = false;
 
     public boolean isSelected() {
         return isSelected;

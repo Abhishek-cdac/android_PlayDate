@@ -1,11 +1,11 @@
 package com.playdate.app.model;
 
 public class PartnerImage {
-    String image;
-    String name;
-    String points;
-    String position;
-    boolean isIncreased;
+    private String image;
+    private String name;
+    private String points;
+    private String position;
+    private boolean isIncreased;
 
     public PartnerImage(String image, String name, String points, String position, boolean isIncreased) {
         this.image = image;

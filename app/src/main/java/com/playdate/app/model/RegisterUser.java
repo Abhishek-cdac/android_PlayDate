@@ -1,15 +1,13 @@
 package com.playdate.app.model;
 
-import android.util.Patterns;
-
 public class RegisterUser {
 
-    String Fullname;
-    String address;
-    String phoneNo;
-    String email;
-    String password;
-    String deviceType;
+    private String Fullname;
+    private String address;
+    private String phoneNo;
+    private String email;
+    private String password;
+    private String deviceType;
 
     public RegisterUser(String fullname, String address, String phoneNo, String email, String password, String deviceType) {
         Fullname = fullname;

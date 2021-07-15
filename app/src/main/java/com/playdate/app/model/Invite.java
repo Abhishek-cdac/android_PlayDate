@@ -1,10 +1,8 @@
 package com.playdate.app.model;
 
-import android.graphics.drawable.Drawable;
-
 public class Invite {
-    int image;
-    String title;
+    private int image;
+    private String title;
 
     public Invite(int image, String title) {
         this.image = image;

@@ -4,13 +4,11 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
@@ -23,10 +21,10 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriendAdapter.ViewHolder> implements Filterable {
+public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriendAdapter.ViewHolder> {
 
     private final List<GetUserSuggestionData> suggestions_list;
-    private List<GetUserSuggestionData> suggestionsListFiltered;
+    private final List<GetUserSuggestionData> suggestionsListFiltered;
     private final Onclick itemClick;
     private final FragSearchUser userFrag;
     private final Picasso picasso;
@@ -77,6 +75,23 @@ public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriend
             }
         }
 
+        holder. request.setOnClickListener(v -> {
+            if (null != suggestions_list.get(position).getFriendRequest()) {
+                if (suggestions_list.get(position).getFriendRequest().size() == 0) {
+                    ArrayList<FriendRequest> lst = new ArrayList<>();
+                    FriendRequest fr = new FriendRequest();
+                    fr.setStatus("pending");
+                    lst.add(fr);
+                    suggestions_list.get(position).setFriendRequest(lst);
+                    notifyDataSetChanged();
+                    itemClick.onItemClicks(v, position, 10, suggestions_list.get(position).getId());
+
+                } else {
+
+                }
+            }
+        });
+
 
     }
 
@@ -86,48 +101,9 @@ public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriend
 
     @Override
     public int getItemCount() {
+        if (suggestionsListFiltered == null)
+            return 0;
         return suggestionsListFiltered.size();
-    }
-
-    @Override
-    public Filter getFilter() {
-        return new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence charSequence) {
-                String charString = charSequence.toString();
-                if (charString.isEmpty()) {
-                    suggestionsListFiltered = suggestions_list;
-                } else {
-                    List<GetUserSuggestionData> filteredList = new ArrayList<>();
-                    try {
-                        for (GetUserSuggestionData row : suggestions_list) {
-
-                            // name match condition. this might differ depending on your requirement
-                            // here we are looking for name or phone number match
-                            if (row.getUsername() != null) {
-                                if (row.getUsername().toLowerCase().contains(charString.toLowerCase()) || row.getFullName().contains(charSequence)) {
-                                    filteredList.add(row);
-                                }
-                            }
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    suggestionsListFiltered = filteredList;
-                }
-
-                FilterResults filterResults = new FilterResults();
-                filterResults.values = suggestionsListFiltered;
-                return filterResults;
-            }
-
-            @Override
-            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                suggestionsListFiltered = (ArrayList<GetUserSuggestionData>) filterResults.values;
-                notifyDataSetChanged();
-            }
-
-        };
     }
 
     public interface SuggestionsAdapterListner {
@@ -138,39 +114,15 @@ public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriend
         private final TextView name;
         private final ImageView image;
         private final ImageView request;
+        private final RelativeLayout rl_suggestion;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.name_friend);
             image = itemView.findViewById(R.id.image_friend);
             request = itemView.findViewById(R.id.friend_request);
-//            ImageView diamond = itemView.findViewById(R.id.diamond);
-//            CardView card = itemView.findViewById(R.id.card);
+            rl_suggestion = itemView.findViewById(R.id.rl_suggestion);
 
-            request.setOnClickListener(v -> {
-                int position = getAdapterPosition();
-//                String userId = suggestions_list.get(position).getId();
-//                Log.e("request_sent_userID", "" + userId);
-
-                if (null != suggestions_list.get(position).getFriendRequest()) {
-                    if (suggestions_list.get(position).getFriendRequest().size() == 0) {
-                        ArrayList<FriendRequest> lst = new ArrayList<>();
-                        FriendRequest fr = new FriendRequest();
-                        fr.setStatus("pending");
-                        lst.add(fr);
-                        suggestions_list.get(position).setFriendRequest(lst);
-                        notifyDataSetChanged();
-                        itemClick.onItemClicks(v, position, 10, suggestions_list.get(position).getId());
-
-                    } else {
-
-                    }
-                }
-
-
-                //    suggestions_list.get(getPosition()).setRequestSent(true);
-//                    SuggestedFriendAdapter.this.notifyDataSetChanged();
-            });
 
 
         }
