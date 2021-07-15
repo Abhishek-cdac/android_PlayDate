@@ -252,6 +252,16 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
         ll_coupon.setOnClickListener(this);
         iv_dashboard_notification.setOnClickListener(this);
         txt_social.setOnClickListener(this);
+
+
+        Intent mIntent=getIntent();
+        if(null!=mIntent){
+            boolean isToNotiPage=mIntent.getBooleanExtra("noti",false);
+            if(isToNotiPage){
+                iv_dashboard_notification.performClick();
+            }
+        }
+
     }
 
     ArrayList<PremiumPlans> lstPremium;

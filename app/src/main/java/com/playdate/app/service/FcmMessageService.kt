@@ -17,6 +17,9 @@ import com.playdate.app.ui.dashboard.DashboardActivity
 import com.playdate.app.ui.date.DateBaseActivity
 import com.playdate.app.util.session.SessionPref
 import com.playdate.app.util.session.SessionPref.LoginUserFCMID
+import java.lang.Math.random
+import kotlin.random.Random
+import kotlin.random.nextInt
 
 
 class FcmMessageService : FirebaseMessagingService() {
@@ -53,17 +56,20 @@ class FcmMessageService : FirebaseMessagingService() {
 
 
     }
-
+    fun rand(s: Int, e: Int) = Random.nextInt(s, e + 1)
     private fun sendNotification(messageBody: String, messageType: String) {
 
 
         Log.e("messageBody", "" + messageBody);
         Log.e("messageType", "" + messageType);
 
+
+        val rand=rand(1, 3000)
         when (messageType) {
             "FRIEND_REQUEST" -> {
                 val intent = Intent(this, DashboardActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                intent.putExtra("noti",true)
                 val pendingIntent = PendingIntent.getActivity(
                     this, 0 /* Request code */, intent,
                     PendingIntent.FLAG_ONE_SHOT
@@ -99,13 +105,14 @@ class FcmMessageService : FirebaseMessagingService() {
                     .setSound(defaultSoundUri)
                     .setContentIntent(pendingIntent)
 
-                notificationManager.notify(0 /* ID of notification */, notificationBuilder.build())
+                notificationManager.notify(rand /* ID of notification */, notificationBuilder.build())
 
 
             }
             "MATCH_REQUEST" -> {
                 val intent = Intent(this, DashboardActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                intent.putExtra("noti",true)
                 val pendingIntent = PendingIntent.getActivity(
                     this, 0  /*Request code*/, intent,
                     PendingIntent.FLAG_ONE_SHOT
@@ -141,13 +148,14 @@ class FcmMessageService : FirebaseMessagingService() {
                     .setSound(defaultSoundUri)
                     .setContentIntent(pendingIntent)
 
-                notificationManager.notify(0  /*ID of notification */, notificationBuilder.build())
+                notificationManager.notify(rand  /*ID of notification */, notificationBuilder.build())
 
 
             }
             "DATE_REQUEST" -> {
                 val intent = Intent(this, DateBaseActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                intent.putExtra("noti",true)
                 val pendingIntent = PendingIntent.getActivity(
                     this, 0  /*Request code */, intent,
                     PendingIntent.FLAG_ONE_SHOT
@@ -183,13 +191,14 @@ class FcmMessageService : FirebaseMessagingService() {
                     .setSound(defaultSoundUri)
                     .setContentIntent(pendingIntent)
 
-                notificationManager.notify(0 /* ID of notification*/, notificationBuilder.build())
+                notificationManager.notify(rand /* ID of notification*/, notificationBuilder.build())
 
 
             }
             "RELATIONSHIP_REQUEST" -> {
                 val intent = Intent(this, DashboardActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                intent.putExtra("noti",true)
                 val pendingIntent = PendingIntent.getActivity(
                     this, 0 /* Request code*/, intent,
                     PendingIntent.FLAG_ONE_SHOT
@@ -225,7 +234,7 @@ class FcmMessageService : FirebaseMessagingService() {
                     .setSound(defaultSoundUri)
                     .setContentIntent(pendingIntent)
 
-                notificationManager.notify(0  /*ID of notification */, notificationBuilder.build())
+                notificationManager.notify(rand  /*ID of notification */, notificationBuilder.build())
 
 
             }
@@ -233,6 +242,7 @@ class FcmMessageService : FirebaseMessagingService() {
 
                 val intent = Intent(this, DashboardActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                intent.putExtra("noti",true)
                 val pendingIntent = PendingIntent.getActivity(
                     this, 0  /*Request code*/, intent,
                     PendingIntent.FLAG_ONE_SHOT
@@ -268,13 +278,14 @@ class FcmMessageService : FirebaseMessagingService() {
                     .setSound(defaultSoundUri)
                     .setContentIntent(pendingIntent)
 
-                notificationManager.notify(0  /*ID of notification*/, notificationBuilder.build())
+                notificationManager.notify(rand  /*ID of notification*/, notificationBuilder.build())
 
             }
             "POST_LIKED" -> {
                 Log.e("messageTypeElse", "" + messageType);
                 val intent = Intent(this, DashboardActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                intent.putExtra("noti",true)
                 val pendingIntent = PendingIntent.getActivity(
                     this, 0  /*Request code*/, intent,
                     PendingIntent.FLAG_ONE_SHOT
@@ -310,12 +321,13 @@ class FcmMessageService : FirebaseMessagingService() {
                     .setSound(defaultSoundUri)
                     .setContentIntent(pendingIntent)
 
-                notificationManager.notify(0 /* ID of notification*/, notificationBuilder.build())
+                notificationManager.notify(rand /* ID of notification*/, notificationBuilder.build())
 
             }
             "POST_COMMENT" -> {
                 val intent = Intent(this, DashboardActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                intent.putExtra("noti",true)
                 /*   intent.putExtra("data", "fromoutside");  //new Intent in dashbord*/
                 val pendingIntent = PendingIntent.getActivity(
                     this, 0  /*Request code*/, intent,
@@ -352,13 +364,14 @@ class FcmMessageService : FirebaseMessagingService() {
                     .setSound(defaultSoundUri)
                     .setContentIntent(pendingIntent)
 
-                notificationManager.notify(0 /* ID of notification*/, notificationBuilder.build())
+                notificationManager.notify(rand /* ID of notification*/, notificationBuilder.build())
 
 
             }
             "CHAT_REQUEST" -> {
                 val intent = Intent(this, DashboardActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                intent.putExtra("noti",true)
                 val pendingIntent = PendingIntent.getActivity(
                     this, 0 /* Request code*/, intent,
                     PendingIntent.FLAG_ONE_SHOT
@@ -394,7 +407,7 @@ class FcmMessageService : FirebaseMessagingService() {
                     .setSound(defaultSoundUri)
                     .setContentIntent(pendingIntent)
 
-                notificationManager.notify(0  /*ID of notification*/, notificationBuilder.build())
+                notificationManager.notify(rand  /*ID of notification*/, notificationBuilder.build())
 
 
             }
