@@ -38,9 +38,6 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
     private Context mContext;
     private Onclick itemClick;
     private final RequestChatFragment frag;
-//    private int selectedToDelete = -1;
-
-
     private LandingBottomSheet bottomSheet;
     private final Picasso picasso;
     private String todaysDate;

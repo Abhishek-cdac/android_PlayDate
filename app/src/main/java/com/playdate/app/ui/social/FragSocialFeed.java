@@ -42,6 +42,8 @@ public class FragSocialFeed extends Fragment implements OnRefreshPage {
     private boolean NoMorePages = false;
     private AAH_CustomRecyclerView recycler_view_feed;
     private boolean boolApiCalling = false;
+    private ArrayList<PostDetails> lst = new ArrayList<>();
+    private SocialFeedAdapter adapter;
 
     @Nullable
     @Override
@@ -86,8 +88,7 @@ public class FragSocialFeed extends Fragment implements OnRefreshPage {
 
     }
 
-    ArrayList<PostDetails> lst = new ArrayList<>();
-    SocialFeedAdapter adapter;
+
 
     private void callAPI() {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);

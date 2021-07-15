@@ -7,11 +7,9 @@ import android.widget.ImageView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.concurrent.Callable;
-
 
 public class AAH_CustomViewHolder extends RecyclerView.ViewHolder {
-    private AAH_VideoImage aah_vi;
+    private final AAH_VideoImage aah_vi;
     private String imageUrl;
     private String videoUrl;
     private boolean isLooping = true;
@@ -42,20 +40,15 @@ public class AAH_CustomViewHolder extends RecyclerView.ViewHolder {
         this.aah_vi.getCustomVideoView().setSource(uri);
         this.aah_vi.getCustomVideoView().setLooping(isLooping);
         this.aah_vi.getCustomVideoView().set_act(_act);
-        this.aah_vi.getCustomVideoView().setMyFuncIn(new Callable<Integer>() {
-            @Override
-            public Integer call() throws Exception {
-                videoStarted();
-                return null;
-            }
+        this.aah_vi.getCustomVideoView().setMyFuncIn(() -> {
+            videoStarted();
+            return null;
         });
 
-        this.aah_vi.getCustomVideoView().setShowThumb(new Callable<Integer>() {
-            @Override
-            public Integer call() throws Exception {
-                showThumb();
-                return null;
-            }
+
+        this.aah_vi.getCustomVideoView().setShowThumb(() -> {
+            showThumb();
+            return null;
         });
     }
 
@@ -80,23 +73,6 @@ public class AAH_CustomViewHolder extends RecyclerView.ViewHolder {
         return aah_vi;
     }
 
-    public ImageView getAAH_ImageView() {
-        return aah_vi.getImageView();
-    }
-
-    public String getImageUrl() {
-        return imageUrl + "";
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-        this.aah_vi.getImageView().setVisibility(View.VISIBLE);
-        this.aah_vi.getCustomVideoView().setVisibility(View.GONE);
-    }
-
-    public void setAah_vi(AAH_VideoImage aah_vi) {
-        this.aah_vi = aah_vi;
-    }
 
     public String getVideoUrl() {
         return videoUrl + "";

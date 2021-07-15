@@ -58,13 +58,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+    public void onSaveInstanceState(Bundle bundle) {
+        super.onSaveInstanceState(bundle);
 
-        Bundle mapViewBundle = outState.getBundle(MAP_VIEW_BUNDLE_KEY);
+        Bundle mapViewBundle = bundle.getBundle(MAP_VIEW_BUNDLE_KEY);
         if (mapViewBundle == null) {
             mapViewBundle = new Bundle();
-            outState.putBundle(MAP_VIEW_BUNDLE_KEY, mapViewBundle);
+            bundle.putBundle(MAP_VIEW_BUNDLE_KEY, mapViewBundle);
         }
 
         mapView.onSaveInstanceState(mapViewBundle);

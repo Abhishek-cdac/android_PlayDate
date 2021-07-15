@@ -37,7 +37,6 @@ import retrofit2.Response;
 public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorCodeSelect, View.OnClickListener {
 
     private LinearLayout ll_ques;
-    //    private LinearLayout ll_smiley;
     private RecyclerView rec_view_colors;
     private TextView txt_smiley;
     private final ArrayList<String> lst = new ArrayList<>();

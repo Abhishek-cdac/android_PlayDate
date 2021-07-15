@@ -16,12 +16,8 @@ import com.playdate.app.R;
 
 public class WinnerActivity extends Dialog {
 
-//    private TextView txt_level;
-//    private String rank;
-
     public WinnerActivity(@NonNull Context context, String rank, String points) {
         super(context, R.style.My_Dialog);
-//        this.rank = rank;
         WindowManager.LayoutParams wlmp = getWindow().getAttributes();
 
         wlmp.gravity = Gravity.CENTER_HORIZONTAL;
@@ -37,7 +33,6 @@ public class WinnerActivity extends Dialog {
         ImageView img_medal = view.findViewById(R.id.img_medal);
         TextView txt_winner = view.findViewById(R.id.text_winner);
         TextView txt_ans = view.findViewById(R.id.text_ans);
-//        txt_level = view.findViewById(R.id.text_level);
         TextView txt_points = view.findViewById(R.id.txt_points);
         ImageView iv_close = view.findViewById(R.id.iv_close);
         ImageView center = view.findViewById(R.id.center);

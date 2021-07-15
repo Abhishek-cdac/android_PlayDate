@@ -23,6 +23,7 @@ import retrofit2.Response
 import java.util.*
 
 class AnonymousBottomSheet : BottomSheetDialogFragment() {
+
     private var postId: String? = null
     private var userId: String? = null
     private var postIdA: String? = null
