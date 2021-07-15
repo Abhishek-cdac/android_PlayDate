@@ -7,29 +7,25 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
 import com.playdate.app.model.GameCoin;
+import com.playdate.app.model.StoreItems;
+import com.playdate.app.ui.chat.request.Onclick;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class StoreMultiplierAdapter extends RecyclerView.Adapter<StoreMultiplierAdapter.ViewHolder> {
 
-    ArrayList<GameCoin> game_list = new ArrayList<>();
-    ArrayList<GameCoin> date_list = new ArrayList<>();
-    ArrayList<GameCoin> multiplier_list = new ArrayList<>();
-    ArrayList<GameCoin> dm_list = new ArrayList<>();
+    List<StoreItems> multiplier_items;
+    Onclick itemclick;
 
-    public StoreMultiplierAdapter() {
-        game_list.add(new GameCoin("1", "$0.99"));
-        game_list.add(new GameCoin("3", "$0.99"));
-        game_list.add(new GameCoin("10", "$0.99"));
-        game_list.add(new GameCoin("20", "$0.99"));
-        game_list.add(new GameCoin("50", "$0.99"));
-        game_list.add(new GameCoin("100", "$0.99"));
-
-
+    public StoreMultiplierAdapter(ArrayList<StoreItems> game_items, Onclick itemclick) {
+        this.multiplier_items = game_items;
+        this.itemclick = itemclick;
     }
 
     @NonNull
@@ -41,31 +37,33 @@ public class StoreMultiplierAdapter extends RecyclerView.Adapter<StoreMultiplier
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.tv_amount.setText(game_list.get(position).getAmount());
-        if (holder.tv_amount.getText() == "1") {
+
+        holder.tv_amount.setText(multiplier_items.get(position).getValue());
+        holder.tv_total_dollar.setText("$" + multiplier_items.get(position).getAmount());
+        if (holder.tv_amount.getText().equals("1")) {
             holder.iv_coins.setImageResource(R.drawable.multi_coin);
-        } else {
+        } else{
             holder.iv_coins.setImageResource(R.drawable.multiplier3);
         }
-
     }
-
 
     @Override
     public int getItemCount() {
-        return 6;
+        return multiplier_items.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView iv_coins;
         TextView tv_amount;
         TextView tv_total_dollar;
+        ConstraintLayout cl_store;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             iv_coins = itemView.findViewById(R.id.iv_coins);
             tv_amount = itemView.findViewById(R.id.tv_amount);
             tv_total_dollar = itemView.findViewById(R.id.tv_total_dollar);
+            cl_store = itemView.findViewById(R.id.cl_store);
         }
     }
 }
