@@ -9,24 +9,17 @@ public class RelationRequest {
     private String mAction;
     @SerializedName("requestId")
     private String mRequestId;
-    @SerializedName("status")//
+    @SerializedName("status")
     private String mStatus;
-    @SerializedName("toUserID")//
+    @SerializedName("toUserID")
     private String mToUserID;
-    @SerializedName("userID")//
+    @SerializedName("userID")
     private List<UserInfo> mUserInfo;
-    @SerializedName("_id")//
+    @SerializedName("_id")
     private String m_id;
-    @SerializedName("UserInfo")//
+    @SerializedName("UserInfo")
     private List<UserInformation> mUserInformation;
 
-    public String getmAction() {
-        return mAction;
-    }
-
-    public void setmAction(String mAction) {
-        this.mAction = mAction;
-    }
 
     public String getmRequestId() {
         return mRequestId;
@@ -52,13 +45,6 @@ public class RelationRequest {
         this.mToUserID = mToUserID;
     }
 
-    public List<UserInfo> getmUserInfo() {
-        return mUserInfo;
-    }
-
-    public void setmUserInfo(List<UserInfo> mUserInfo) {
-        this.mUserInfo = mUserInfo;
-    }
 
     public String getM_id() {
         return m_id;
@@ -72,7 +58,4 @@ public class RelationRequest {
         return mUserInformation;
     }
 
-    public void setmUserInformation(List<UserInformation> mUserInformation) {
-        this.mUserInformation = mUserInformation;
-    }
 }

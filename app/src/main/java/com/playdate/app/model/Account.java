@@ -3,15 +3,15 @@ package com.playdate.app.model;
 public class Account {
 
 
-    int totalPoints;
-    int currentPoints;
-    int gameCoins;
-    int dateCoins;
-    int dmBooster;
-    int multiplayer;
-    String exclusiveDiscounts;
-    String accessAllGames;
-    String userId;
+    private int totalPoints;
+    private int currentPoints;
+    private int gameCoins;
+    private int dateCoins;
+    private int dmBooster;
+    private int multiplayer;
+    private String exclusiveDiscounts;
+    private String accessAllGames;
+    private String userId;
 
     public int getTotalPoints() {
         return totalPoints;

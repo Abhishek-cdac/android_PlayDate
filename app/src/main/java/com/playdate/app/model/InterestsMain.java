@@ -9,9 +9,9 @@ public class InterestsMain {
 
     @SerializedName("data")
     @Expose
-    ArrayList<Interest> lst;
-    int status;
-    String message;
+    private ArrayList<Interest> lst;
+    private int status;
+    private String message;
 
     public ArrayList<Interest> getLst() {
         return lst;

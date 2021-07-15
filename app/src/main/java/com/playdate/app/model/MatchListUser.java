@@ -85,18 +85,6 @@ public class MatchListUser {
     }
 
 
-    @SerializedName("chatStatusTo")
-    @Expose
-    private List<ChatStatusTo> chatStatusTo = null;
-
-    public List<ChatStatusTo> getChatStatusTo() {
-        return chatStatusTo;
-    }
-
-    public void setChatStatusTo(List<ChatStatusTo> chatStatusTo) {
-        this.chatStatusTo = chatStatusTo;
-    }
-
     public String getProfilePicPath() {
         return profilePicPath;
     }

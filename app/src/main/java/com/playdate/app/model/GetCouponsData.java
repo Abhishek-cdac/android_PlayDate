@@ -1,10 +1,10 @@
 
 package com.playdate.app.model;
 
-import java.util.List;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 public class GetCouponsData {
 
@@ -31,6 +31,7 @@ public class GetCouponsData {
     public void setCouponDescription(String couponDescription) {
         this.couponDescription = couponDescription;
     }
+
     @SerializedName("purchased")
     private List<Purchased> purchased;
 
@@ -41,6 +42,7 @@ public class GetCouponsData {
     public void setPurchased(List<Purchased> purchased) {
         this.purchased = purchased;
     }
+
     @Expose
     private String couponTitle;
     @Expose

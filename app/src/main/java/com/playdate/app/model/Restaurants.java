@@ -1,9 +1,9 @@
 package com.playdate.app.model;
 
 public class Restaurants {
-    String _id;
-    String name;
-    int image;
+    private String _id;
+    private String name;
+    private int image;
 
     public Restaurants(String name, int image) {
         this.name = name;

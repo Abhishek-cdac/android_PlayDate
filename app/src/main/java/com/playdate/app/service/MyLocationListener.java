@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Locale;
 
 class MyLocationListener implements LocationListener {
-    Context mContext;
+    private final Context mContext;
 
     public MyLocationListener(Context ctx) {
         this.mContext = ctx;

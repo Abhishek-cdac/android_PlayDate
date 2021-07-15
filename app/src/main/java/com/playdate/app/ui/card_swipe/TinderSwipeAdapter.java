@@ -1,10 +1,8 @@
 package com.playdate.app.ui.card_swipe;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.exoplayer2.ExoPlayer;
@@ -35,16 +29,12 @@ import com.playdate.app.model.ChatStatusFrom;
 import com.playdate.app.model.Interest;
 import com.playdate.app.model.MatchListUser;
 import com.playdate.app.ui.chat.request.Onclick;
-import com.playdate.app.ui.dashboard.fragments.FragmentSearchRestaurent;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.ui.playvideo.ExoPlayerActivity;
 import com.squareup.picasso.Picasso;
 
-import org.jetbrains.annotations.Nullable;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 
@@ -114,10 +104,10 @@ public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.
             iv_maximise = itemView.findViewById(R.id.item_fullScreen);
             item_check.setOnClickListener(v -> itemClick.onItemClicks(v, getAdapterPosition(), 13, userId));
             item_cross.setOnClickListener(v -> itemClick.onItemClicks(v, getAdapterPosition(), 14, userId));
-            //  message.setOnClickListener(v -> itemClick.onItemClicks(v, getAdapterPosition(), 15, userId));
 
 
         }
+
         StringBuilder ints = new StringBuilder();
 
         void setData(MatchListUser user) {

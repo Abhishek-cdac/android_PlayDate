@@ -1,10 +1,10 @@
 package com.playdate.app.model;
 
 public class Purchased {
-    String userId;
-    String couponId;
-    String status;
-    String purchaseId;
+    private String userId;
+    private String couponId;
+    private String status;
+    private String purchaseId;
 
     public String getUserId() {
         return userId;

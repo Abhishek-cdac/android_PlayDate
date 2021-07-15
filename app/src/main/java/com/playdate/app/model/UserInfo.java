@@ -16,7 +16,7 @@ public class UserInfo {
     private String m_id;
 
     @SerializedName("userId")
-    private String userId ;
+    private String userId;
 
     public String getUserId() {
         return userId;
