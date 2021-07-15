@@ -7,9 +7,21 @@
     android:orientation="horizontal"
     android:id="@+id/rl_notification"
     android:padding="@dimen/_5sdp">
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Yesterday"
+        android:paddingTop="@dimen/_5sdp"
+        android:paddingBottom="@dimen/_5sdp"
+        android:fontFamily="@font/lato_bold"
+        android:layout_gravity="center_vertical"
+        android:textAllCaps="false"
+        android:textColor="@color/textColour" />
     <LinearLayout
         android:background="@color/backgroundColour"
         android:id="@+id/main_ll"
+        android:layout_below="@+id/tv_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

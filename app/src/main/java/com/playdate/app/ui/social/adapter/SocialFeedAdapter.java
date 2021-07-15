@@ -253,13 +253,13 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                     if (null != lst.get(position).getComments_list()) {
                         ArrayList<CommentList> lstComm = lst.get(position).getComments_list();
 
-                        StringBuilder temp = new StringBuilder();
+                        String temp = "";
                         for (int i = 0; i < lstComm.size(); i++) {
                             String s = "<b>" + lstComm.get(i).getCommentBy().get(0).getUsername() + "</b> " + lstComm.get(i).getComment();
                             if (temp.length() == 0) {
-                                temp = new StringBuilder(s);
+                                temp = s;
                             } else {
-                                temp.append("<br>").append(s);
+                                temp = temp + "<br>" + s;
                             }
                         }
                         if (temp.length() == 0) {
@@ -415,13 +415,13 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                     if (null != lst.get(position).getComments_list()) {
                         ArrayList<CommentList> lstComm = lst.get(position).getComments_list();
 
-                        StringBuilder temp = new StringBuilder();
+                        String temp = "";
                         for (int i = 0; i < lstComm.size(); i++) {
                             String s = "<b>" + lstComm.get(i).getCommentBy().get(0).getUsername() + "</b> " + lstComm.get(i).getComment();
                             if (temp.length() == 0) {
-                                temp = new StringBuilder(s);
+                                temp = s;
                             } else {
-                                temp.append("<br>").append(s);
+                                temp = temp + "<br>" + s;
                             }
                         }
 
