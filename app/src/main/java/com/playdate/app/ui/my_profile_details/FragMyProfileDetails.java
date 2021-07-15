@@ -69,6 +69,7 @@ import static com.playdate.app.util.session.SessionPref.LoginVerified;
 public class FragMyProfileDetails extends Fragment implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
     public FragMyProfileDetails() {
     }
+
     private ImageView iv_dark_mode;
     private ImageView profile_image;
     private TextView txt_bio;
@@ -135,6 +136,8 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
                         if (lst_getCoupleDetail == null) {
                             lst_getCoupleDetail = new ArrayList<>();
                         }
+                        pref.saveStringKeyVal("LoginUserCoupleBio", lst_getCoupleDetail.get(0).getBio());
+                        txt_HowWeMet_detail.setText(pref.getStringVal("LoginUserCoupleBio"));
 
                     } else {
 //                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
@@ -241,6 +244,8 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
         try {
             txt_user_name.setText(pref.getStringVal(SessionPref.LoginUserusername));
             txt_bio.setText(pref.getStringVal(SessionPref.LoginUserpersonalBio));
+            txt_HowWeMet_detail.setText(pref.getStringVal("LoginUserCoupleBio"));
+
 
             String img = pref.getStringVal(SessionPref.LoginUserprofilePic);
             if (img.contains("http")) {
@@ -285,9 +290,15 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
             mIntent.putExtra("fromProfile", true);
             startActivityForResult(mIntent, 409);
         } else if (id == R.id.iv_edit_couple_bio) {
-            Intent mIntent = new Intent(getActivity(), CoupleBioActivity.class);
-            mIntent.putExtra("fromProfile", true);
-            startActivityForResult(mIntent, 410);
+            if (lst_getCoupleDetail == null) {
+                callCoupleAPI();
+            } else {
+                Intent mIntent = new Intent(getActivity(), CoupleBioActivity.class);
+                mIntent.putExtra("fromProfile", true);
+                mIntent.putExtra("coupleId", lst_getCoupleDetail.get(0).getCoupleId());
+                startActivityForResult(mIntent, 410);
+            }
+
         } else if (id == R.id.iv_dark_mode) {
 
 
