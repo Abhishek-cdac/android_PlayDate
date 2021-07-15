@@ -18,14 +18,9 @@ import com.playdate.app.util.MyApplication;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.URISyntaxException;
-
-import io.socket.client.IO;
 import io.socket.client.Socket;
-import io.socket.emitter.Emitter;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -56,16 +51,21 @@ public class BaseActivity extends AppCompatActivity {
             }
 
             if (intent.getAction().equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
-                NetworkInfo networkInfo = intent.getParcelableExtra(ConnectivityManager.EXTRA_NETWORK_INFO);
-                if (networkInfo != null && networkInfo.getDetailedState() == NetworkInfo.DetailedState.CONNECTED) {
+//                NetworkInfo networkInfo = intent.getParcelableExtra(ConnectivityManager.EXTRA_NETWORK_INFO);
+                if (checkInternet(context)) {
                     if (dialog.isShowing()) {
                         dialog.dismiss();
                     }
-                } else if (networkInfo != null && networkInfo.getDetailedState() == NetworkInfo.DetailedState.DISCONNECTED) {
+                } else {
                     dialog.show();
                 }
             }
         }
+    }
+
+    boolean checkInternet(Context context) {
+        ServiceManager serviceManager = new ServiceManager(context);
+        return serviceManager.isNetworkAvailable();
     }
 
     public Socket mSocket;
@@ -75,8 +75,8 @@ public class BaseActivity extends AppCompatActivity {
 
         {
             try {
-                MyApplication application= (MyApplication) getApplication();
-                mSocket=application.getmSocket();
+                MyApplication application = (MyApplication) getApplication();
+                mSocket = application.getmSocket();
                 checkConnect();
                 //  mSocket.on("chat_message", onNewMessage);
                 //   mSocket.on("Data", onNewMessage);
@@ -95,7 +95,7 @@ public class BaseActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         try {
-            if(null!=mHandler){
+            if (null != mHandler) {
                 mHandler.removeCallbacksAndMessages(null);
             }
         } catch (Exception e) {
@@ -103,14 +103,15 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    boolean isConnectedToSocket=false;
+    boolean isConnectedToSocket = false;
+
     void checkConnect() {
         if (!isConnectedToSocket) {
             mHandler = new Handler();
             mHandler.postDelayed(() -> {
                 if (mSocket.connected()) {
                     try {
-                        isConnectedToSocket=true;
+                        isConnectedToSocket = true;
                         //Toast.makeText(BaseActivity.this, "Connected to socket", Toast.LENGTH_SHORT).show();
                         JSONObject jsonObject = new JSONObject();
                         SessionPref pref = SessionPref.getInstance(BaseActivity.this);
@@ -124,11 +125,25 @@ public class BaseActivity extends AppCompatActivity {
                     }
 
 
-
                 }
             }, 1500);
         }
     }
 
 
+}
+
+class ServiceManager {
+
+    Context context;
+
+    public ServiceManager(Context base) {
+        context = base;
+    }
+
+    public boolean isNetworkAvailable() {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnected();
+    }
 }

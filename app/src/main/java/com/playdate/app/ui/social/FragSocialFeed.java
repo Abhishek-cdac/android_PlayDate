@@ -42,13 +42,13 @@ public class FragSocialFeed extends Fragment implements OnRefreshPage {
     private boolean NoMorePages = false;
     private AAH_CustomRecyclerView recycler_view_feed;
     private boolean boolApiCalling = false;
-    private LinearLayoutManager manager;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.row_social_feed, container, false);
         recycler_view_feed = view.findViewById(R.id.recycler_view_feed);
-        manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
+        LinearLayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         recycler_view_feed.setLayoutManager(manager);
         callAPI();
         return view;

@@ -39,11 +39,12 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder> {
+
     private ArrayList<GetCommentData> commentList;
     private int selected_index = -1;
     private final Onclick itemClick;
     private Context mContext;
-    private onCommentDelete ref;
+    //    private onCommentDelete ref;
     private String postId;
     private String commentId;
 
@@ -52,7 +53,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         this.mContext = applicationContext;
         this.itemClick = itemClick;
     }
-
 
 
     @NonNull
@@ -232,10 +232,10 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                 deleted.show(fragmentManager, "comment deleted");
                 commentList.remove(selected_index);
                 notifyDataSetChanged();
-                ref.ChangeCount(commentList.size());
+//                ref.ChangeCount(commentList.size());
             } catch (Exception e) {
                 e.printStackTrace();
-                ref.ChangeCount(0);
+//                ref.ChangeCount(0);
             }
         }
 

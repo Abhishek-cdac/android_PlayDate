@@ -1,8 +1,8 @@
 package com.playdate.app.model;
 
 public class DateRequestData {
-    String requestId;
-    String status;
+    private String requestId;
+    private String status;
 
     public String getStatus() {
         return status;

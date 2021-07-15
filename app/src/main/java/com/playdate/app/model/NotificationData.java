@@ -1,9 +1,9 @@
 
 package com.playdate.app.model;
 
-import java.util.List;
-
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 public class NotificationData {
     public int getNoti_type() {
@@ -14,7 +14,8 @@ public class NotificationData {
         this.noti_type = noti_type;
     }
 
-    int noti_type;
+    private int noti_type;
+
     public boolean isSelected() {
         return isSelected;
     }

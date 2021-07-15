@@ -1,8 +1,9 @@
 package com.playdate.app.model;
 
 public class Interest {
-    String id;
-    String name;
+    private String id;
+    private String name;
+    private boolean selected;
 
     public String get_id() {
         return id;
@@ -19,8 +20,6 @@ public class Interest {
     public void setName(String name) {
         this.name = name;
     }
-
-    boolean selected;
 
 
     public boolean isSelected() {

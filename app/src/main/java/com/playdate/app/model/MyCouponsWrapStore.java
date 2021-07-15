@@ -6,10 +6,8 @@ import java.util.ArrayList;
 
 public class MyCouponsWrapStore {
 
-
-
     @SerializedName("account")
-    Account account;
+    private Account account;
 
     public Account getAccount() {
         return account;

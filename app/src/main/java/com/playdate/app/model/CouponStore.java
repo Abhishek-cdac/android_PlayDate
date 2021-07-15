@@ -1,8 +1,8 @@
 package com.playdate.app.model;
 
 public class CouponStore {
-    String rest_name, discount_desc, points;
-    String image;
+    private String rest_name, discount_desc, points;
+    private String image;
 
     public String getRest_name() {
         return rest_name;

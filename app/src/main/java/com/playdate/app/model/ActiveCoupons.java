@@ -1,10 +1,8 @@
 package com.playdate.app.model;
 
-import android.graphics.drawable.Drawable;
-
 public class ActiveCoupons {
-    String name, desc, expiryDate;
-    int image;
+    private String name, desc, expiryDate;
+    private int image;
 
     public int getImage() {
         return image;
@@ -38,10 +36,10 @@ public class ActiveCoupons {
         this.expiryDate = expiryDate;
     }
 
-    public ActiveCoupons(String name, String desc, String expiryDate,int image) {
+    public ActiveCoupons(String name, String desc, String expiryDate, int image) {
         this.name = name;
         this.desc = desc;
         this.expiryDate = expiryDate;
-        this.image=image;
+        this.image = image;
     }
 }

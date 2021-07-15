@@ -5,11 +5,11 @@ import com.google.gson.annotations.SerializedName;
 
 public class LoginResponse {
 
-    int status;
-    String message;
+    private int status;
+    private String message;
     @SerializedName("data")
     @Expose
-    LoginUserDetails objdata;
+    private LoginUserDetails objdata;
 
     public LoginUserDetails getUserData() {
         return objdata;
@@ -40,8 +40,6 @@ public class LoginResponse {
     public void setMessage(String message) {
         this.message = message;
     }
-
-
 
 
 }

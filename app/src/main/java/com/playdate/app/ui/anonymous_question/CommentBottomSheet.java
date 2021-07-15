@@ -1,7 +1,6 @@
 package com.playdate.app.ui.anonymous_question;
 
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,35 +12,28 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SwitchCompat;
-import androidx.recyclerview.widget.DefaultItemAnimator;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.LoginResponse;
-import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
-import com.playdate.app.ui.social.FragSocialFeed;
 import com.playdate.app.ui.social.adapter.SocialFeedAdapter;
 import com.playdate.app.ui.social.model.PostDetails;
-import com.playdate.app.ui.social.model.PostHistory;
 import com.playdate.app.util.session.SessionPref;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 public class CommentBottomSheet extends BottomSheetDialogFragment {
-    boolean notification;
-    PostDetails postDetails;
-    SocialFeedAdapter socialFeedAdapter;
-    int index;
+
+    private final boolean notification;
+    private final PostDetails postDetails;
+    private final SocialFeedAdapter socialFeedAdapter;
+    private final int index;
 
     public CommentBottomSheet(boolean notification, PostDetails postDetails, SocialFeedAdapter socialFeedAdapter, int adapterPosition) {
         this.notification = notification;
@@ -72,7 +64,7 @@ public class CommentBottomSheet extends BottomSheetDialogFragment {
         if (postDetails.getUserId().equals(pref.getStringVal(SessionPref.LoginUserID))) {
             rl_delete.setVisibility(View.VISIBLE);
             rl_block.setVisibility(View.GONE);
-        }else{
+        } else {
             rl_block.setVisibility(View.VISIBLE);
         }
 
@@ -110,7 +102,6 @@ public class CommentBottomSheet extends BottomSheetDialogFragment {
 //                pd.cancel();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
-
 
 
                     } else {
@@ -173,7 +164,6 @@ public class CommentBottomSheet extends BottomSheetDialogFragment {
         });
 
     }
-
 
 
     private void callAPI(String postId, String Status) {

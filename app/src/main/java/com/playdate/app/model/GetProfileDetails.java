@@ -1,9 +1,9 @@
 
 package com.playdate.app.model;
 
-import java.util.List;
-
 import com.google.gson.annotations.Expose;
+
+import java.util.List;
 
 public class GetProfileDetails {
 

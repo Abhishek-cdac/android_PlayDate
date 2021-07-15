@@ -1,14 +1,8 @@
 package com.playdate.app.model;
 
 public class GameCoin {
-    String amount, totalDollar;
-    int image;
-
-    public GameCoin(String amount, String totalDollar, int image) {
-        this.amount = amount;
-        this.totalDollar = totalDollar;
-        this.image = image;
-    }
+    private String amount, totalDollar;
+    private int image;
 
     public GameCoin(String amount, String totalDollar) {
         this.amount = amount;

@@ -59,7 +59,7 @@ public class FragCardSwipe extends Fragment {
     public ArrayList<Interest> lst_interest;
     private Onclick itemClick;
     private CardStackView cardStackView;
-    ConstraintLayout cl_page;
+    private ConstraintLayout cl_page;
 
 
     private CommonClass clsCommon;

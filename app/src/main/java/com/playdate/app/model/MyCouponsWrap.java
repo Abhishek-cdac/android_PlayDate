@@ -3,7 +3,6 @@ package com.playdate.app.model;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MyCouponsWrap {
     @SerializedName("coupondata")
@@ -28,14 +27,4 @@ public class MyCouponsWrap {
         this.account = account;
     }
 
-//    @SerializedName("coupondata")
-//    private ArrayList<GetCouponsData> getAllCoupons;
-//
-//    public ArrayList<GetCouponsData> getGetAllCoupons() {
-//        return getAllCoupons;
-//    }
-//
-//    public void setData(ArrayList<GetCouponsData> getAllCoupons) {
-//        this.getAllCoupons = getAllCoupons;
-//    }
 }
