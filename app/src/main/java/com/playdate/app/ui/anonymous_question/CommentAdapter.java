@@ -151,7 +151,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         holder.delete.setOnClickListener(v -> {
             try {
                 selected_index = position;
-                // commentList.get(selected_index).setDeleted(true);
+                commentList.get(selected_index).setDeleted(true);
                 callDeleteCommentApi(commentList.get(selected_index).getComments().getCommentId());
             } catch (Exception e) {
                 e.printStackTrace();
@@ -200,12 +200,18 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             @Override
             public void onResponse(Call<GetCommentModel> call, Response<GetCommentModel> response) {
 
-                if (response.code() == 200) {
-                    if (response.body().getStatus() == 1) {
-                        commentDeleted(selected_index);
-                        callGetCommentApi();
+                try{
+                    if (response.code() == 200) {
+                        if (response.body().getStatus() == 1) {
+                            commentDeleted(selected_index);
+                            callGetCommentApi();
+                        }
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+
+
             }
 
             @Override
@@ -244,19 +250,25 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         call.enqueue(new retrofit2.Callback<GetCommentModel>() {
             @Override
             public void onResponse(Call<GetCommentModel> call, Response<GetCommentModel> response) {
+
                 if (response.code() == 200) {
-                    if (response.body().getStatus() == 1) {
-                        commentList = (ArrayList<GetCommentData>) response.body().getData();
-                        if (commentList == null) {
-                            commentList = new ArrayList<>();
+
+                    try
+                    {
+                        if (response.body().getStatus() == 1) {
+                            commentList = (ArrayList<GetCommentData>) response.body().getData();
+                            if (commentList == null) {
+                                commentList = new ArrayList<>();
+                            }
+
+                            notifyDataSetChanged();
+
                         }
-
-                        notifyDataSetChanged();
-
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
+
                 }
-
-
             }
 
             @Override
