@@ -243,9 +243,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                         owner = "";
                     } else {
                         owner = "<b>" + lst.get(position).getLstpostby().get(0).getUsername() + "</b> " + lst.get(position).getTag();
-                        userViewHolder.txt_chat.setText(Html.fromHtml(owner));
-//                        userViewHolder.txt_chat.setText(Html.fromHtml("<b>" + owner + "</b>"));
-
+                        userViewHolder.txt_chat.setText(Html.fromHtml("<b>" + owner + "</b>"));
                     }
                 }
 
@@ -267,7 +265,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                                 userViewHolder.txt_chat.setVisibility(View.GONE);
                         } else {
                             userViewHolder.txt_chat.setText(Html.fromHtml(owner + "<br>" + temp));
-//                            userViewHolder.txt_chat.setText(Html.fromHtml("<b>" + owner + "</b>" + "<br>" + temp));
+//                            userViewHolder.txt_chat.setText(Html.fromHtml("<b> " + owner + "</b>" + "<br>" + temp));
                             Log.e("CommentsTextChat", "onBindViewHolder: " + userViewHolder.txt_chat.getText());
                         }
 

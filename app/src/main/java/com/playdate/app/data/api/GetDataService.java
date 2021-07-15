@@ -339,6 +339,10 @@ public interface GetDataService {
     @FormUrlEncoded
     @POST("user/get-stores")
     Call<StoreModel> getStore(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
+    @FormUrlEncoded
+    @POST("user/update-couple-profile")
+    Call<CommonModel> updateCoupleDetail(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 }
 
 

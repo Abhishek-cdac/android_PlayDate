@@ -10,6 +10,17 @@ public class GetCoupleProfileData {
 
     @Expose
     private String action;
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    @Expose
+    private String bio;
     @Expose
     private String coupleId;
     @SerializedName("Profile1")
