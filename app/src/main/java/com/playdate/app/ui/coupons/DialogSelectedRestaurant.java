@@ -171,14 +171,13 @@ public class DialogSelectedRestaurant extends Dialog {
                             ArrayList<GetCouponsData> lst = new ArrayList<>();
 
                             try {
-                                for (int i = 0; i < lst_getCoupons.size(); i++) {
-                                    GetCouponsData data = lst_getCoupons.get(i);
-
+                                for (GetCouponsData data : lst_getCoupons) {
+//                                    GetCouponsData data = lst_getCoupons.get(i);
                                     if (data.getRestaurants().get(0).getName().equals(rest_name)) {
 
                                         lst.add(data);
 
-                                        Log.d("Filtered Lst", "onResponse: " + rest_name + " --- " + lst.get(i).getRestaurants().get(0).getName());
+//                                        Log.d("Filtered Lst", "onResponse: " + rest_name + " --- " + lst.get(1).getRestaurants().get(0).getName());
                                     }
                                 }
                             } catch (Exception e) {
