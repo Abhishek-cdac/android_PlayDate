@@ -167,7 +167,7 @@
 
                                 android:singleLine="true"
 
-                                android:text="5"
+                                android:text=""
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_8sdp"
                                 android:textStyle="bold"

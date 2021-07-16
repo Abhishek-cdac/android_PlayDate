@@ -176,7 +176,6 @@ public class DialogSelectedRestaurant extends Dialog {
                                     if (data.getRestaurants().get(0).getName().equals(rest_name)) {
 
                                         lst.add(data);
-
 //                                        Log.d("Filtered Lst", "onResponse: " + rest_name + " --- " + lst.get(1).getRestaurants().get(0).getName());
                                     }
                                 }
