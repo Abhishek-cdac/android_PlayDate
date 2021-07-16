@@ -46,7 +46,6 @@ import retrofit2.Response;
 
 public class FragStore extends Dialog {
 
-
     ImageView cancel;
     ImageView iv_leaderboard;
     DashboardActivity ref;

@@ -52,6 +52,9 @@ public class FragCouponParent extends Fragment implements OnSizeDecided, View.On
     private SessionPref pref;
     private TextView txt_store;
     private TextView txt_my_coupon;
+
+
+
     private TextView txt_count;
 
     @Nullable
