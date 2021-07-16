@@ -114,8 +114,8 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
 
     public static Bitmap bitmap = null;
     public static int refreshFlag = 0;
-    ImageView iv_date;
-    LinearLayout ll_love_bottom;
+    private ImageView iv_date;
+    private LinearLayout ll_love_bottom;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -227,7 +227,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
                 e.printStackTrace();
             }
             callAPIFriends();
-
+            CallNotificationCount();
 //            callNotification();
         });
 
@@ -254,10 +254,10 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
         txt_social.setOnClickListener(this);
 
 
-        Intent mIntent=getIntent();
-        if(null!=mIntent){
-            boolean isToNotiPage=mIntent.getBooleanExtra("noti",false);
-            if(isToNotiPage){
+        Intent mIntent = getIntent();
+        if (null != mIntent) {
+            boolean isToNotiPage = mIntent.getBooleanExtra("noti", false);
+            if (isToNotiPage) {
                 iv_dashboard_notification.performClick();
             }
         }
@@ -615,6 +615,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
 
             ReplaceFrag(frag);
             callAPIFriends();
+            CallNotificationCount();
         } else if (id == R.id.ll_coupon) {
             if (OPTION_CLICK == 1) {
                 return;

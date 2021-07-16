@@ -1,6 +1,5 @@
 package com.playdate.app.ui.date;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -13,7 +12,6 @@ import androidx.fragment.app.FragmentTransaction;
 import com.playdate.app.R;
 import com.playdate.app.ui.date.fragments.FragAcceptDatePartner;
 import com.playdate.app.ui.date.fragments.FragIntroScreen;
-
 import com.playdate.app.ui.date.fragments.FragSelectDates;
 import com.playdate.app.ui.interfaces.OnBackPressed;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;

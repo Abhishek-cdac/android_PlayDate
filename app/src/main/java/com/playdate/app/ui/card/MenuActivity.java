@@ -28,12 +28,7 @@ public class MenuActivity extends Activity {
         super.onCreate(bundle);
         setContentView(R.layout.scan_temp);
         Button btn=findViewById(R.id.btn);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startScanning();
-            }
-        });
+        btn.setOnClickListener(v -> startScanning());
 
     }
 final  int REQUEST_SCAN=100;

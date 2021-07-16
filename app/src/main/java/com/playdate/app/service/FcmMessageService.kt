@@ -33,7 +33,7 @@ class FcmMessageService : FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
-        Log.d(TAG, "From: ${remoteMessage.from}")
+        Log.d(TAG, "remoteMessage: ${remoteMessage.data.toString()}")
 
         val extras = Bundle()
         for ((key, value) in remoteMessage.data) {

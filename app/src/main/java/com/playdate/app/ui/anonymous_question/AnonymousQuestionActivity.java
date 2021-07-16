@@ -34,6 +34,7 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 public class AnonymousQuestionActivity extends AppCompatActivity implements onCommentDelete, View.OnClickListener {
+
     private ArrayList<GetCommentData> lst_getComment;
     private CommentAdapter adapter;
     private TextView text_count, txt_post_comment;

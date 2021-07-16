@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,9 +50,7 @@ import java.util.Map;
 import retrofit2.Call;
 import retrofit2.Response;
 
-
 public class SocialFeedAdapter extends AAH_VideosAdapter {
-
 
     private final ArrayList<PostDetails> lst;
     private final Picasso picasso;
@@ -246,26 +245,28 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                         owner = "<b>" + lst.get(position).getLstpostby().get(0).getUsername() + "</b> " + lst.get(position).getTag();
                         userViewHolder.txt_chat.setText(Html.fromHtml("<b>" + owner + "</b>"));
                     }
-
                 }
+
                 if (lst.get(position).isCommentStatus()) {
                     if (null != lst.get(position).getComments_list()) {
                         ArrayList<CommentList> lstComm = lst.get(position).getComments_list();
 
-                        StringBuilder temp = new StringBuilder();
+                        String temp = "";
                         for (int i = 0; i < lstComm.size(); i++) {
                             String s = "<b>" + lstComm.get(i).getCommentBy().get(0).getUsername() + "</b> " + lstComm.get(i).getComment();
                             if (temp.length() == 0) {
-                                temp = new StringBuilder(s);
+                                temp = s;
                             } else {
-                                temp.append("<br>").append(s);
+                                temp = temp + "<br>" + s;
                             }
                         }
                         if (temp.length() == 0) {
                             if (userViewHolder.txt_chat.getText().toString().isEmpty())
                                 userViewHolder.txt_chat.setVisibility(View.GONE);
                         } else {
-                            userViewHolder.txt_chat.setText(Html.fromHtml("<b>" + owner + "</b>" + "<br>" + temp));
+                            userViewHolder.txt_chat.setText(Html.fromHtml(owner + "<br>" + temp));
+//                            userViewHolder.txt_chat.setText(Html.fromHtml("<b> " + owner + "</b>" + "<br>" + temp));
+                            Log.e("CommentsTextChat", "onBindViewHolder: " + userViewHolder.txt_chat.getText());
                         }
 
 
@@ -412,13 +413,13 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
                     if (null != lst.get(position).getComments_list()) {
                         ArrayList<CommentList> lstComm = lst.get(position).getComments_list();
 
-                        StringBuilder temp = new StringBuilder();
+                        String temp = "";
                         for (int i = 0; i < lstComm.size(); i++) {
                             String s = "<b>" + lstComm.get(i).getCommentBy().get(0).getUsername() + "</b> " + lstComm.get(i).getComment();
                             if (temp.length() == 0) {
-                                temp = new StringBuilder(s);
+                                temp = s;
                             } else {
-                                temp.append("<br>").append(s);
+                                temp = temp + "<br>" + s;
                             }
                         }
 
@@ -807,7 +808,6 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
         CommentBottomSheet sheet = new CommentBottomSheet(notification, lst.get(adapterPosition), this, adapterPosition);
         sheet.show(fragmentManager, "comment bootom sheet");
     }
-
 
 
 //    public class ViewHolderAdds extends RecyclerView.ViewHolder {

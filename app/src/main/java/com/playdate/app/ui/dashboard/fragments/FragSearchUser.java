@@ -49,9 +49,12 @@ public class FragSearchUser extends Fragment implements SuggestedFriendAdapter.S
     private CommonClass clsCommon;
     private Onclick itemClick;
     private SuggestedFriendAdapter adapter;
+    private int PageNumber=1;
 
     public FragSearchUser() {
     }
+    
+
 
     public void OnUserProfileSelected(boolean isFriend, String id) {
         try {
@@ -159,17 +162,19 @@ public class FragSearchUser extends Fragment implements SuggestedFriendAdapter.S
 
     private void callGetUserSuggestionAPI() {
 
+        if(PageNumber==-1){
+            return;
+        }
+
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
         // hashMap.put("filter", "");
-        hashMap.put("limit", "300");
-        hashMap.put("pageNo", "1");//Hardcode
+        hashMap.put("limit", "20");
+        hashMap.put("pageNo", ""+PageNumber);//Hardcode
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
         pd.show();
         SessionPref pref = SessionPref.getInstance(getActivity());
-        Log.e("GetUserSuggestionData", "" + pref.getStringVal(SessionPref.LoginUsertoken));
         Call<GetUserSuggestion> call = service.getUserSuggestion("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
-        Log.e("GetUserSuggestionData", "" + hashMap);
         call.enqueue(new Callback<GetUserSuggestion>() {
             @Override
             public void onResponse(Call<GetUserSuggestion> call, Response<GetUserSuggestion> response) {
@@ -177,16 +182,36 @@ public class FragSearchUser extends Fragment implements SuggestedFriendAdapter.S
                 if (response.code() == 200) {
                     assert response.body() != null;
                     if (response.body().getStatus() == 1) {
-                        lst_getUserSuggestions = (ArrayList<GetUserSuggestionData>) response.body().getData();
-                        if (lst_getUserSuggestions == null) {
-                            lst_getUserSuggestions = new ArrayList<>();
+                        ArrayList<GetUserSuggestionData> lst = (ArrayList<GetUserSuggestionData>) response.body().getData();
+                        if (lst == null) {
+                            lst = new ArrayList<>();
                         }
-                        RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
-                        recyclerView.setLayoutManager(manager);
-                        adapter = new SuggestedFriendAdapter(lst_getUserSuggestions, itemClick, FragSearchUser.this);
-                        recyclerView.setAdapter(adapter);
+
+                        if(lst.isEmpty()){
+                            PageNumber=-1;
+                            adapter.setHideShowMore();
+                            adapter.notifyItemChanged(lst_getUserSuggestions.size()-1);
+                            return;
+                        }
+                        if(PageNumber==1){
+                            PageNumber=PageNumber+1;
+                            lst_getUserSuggestions = new ArrayList<>();
+                            lst_getUserSuggestions.addAll(lst);
+                            RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
+                            recyclerView.setLayoutManager(manager);
+                            adapter = new SuggestedFriendAdapter(lst_getUserSuggestions, itemClick, FragSearchUser.this);
+                            recyclerView.setAdapter(adapter);
+                        }else{
+                            PageNumber=PageNumber+1;
+                            lst_getUserSuggestions.addAll(lst);
+                            adapter.notifyDataSetChanged();
+
+                        }
+
+
                     }
                 } else {
+                    PageNumber=-1;
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
                         clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
@@ -201,6 +226,7 @@ public class FragSearchUser extends Fragment implements SuggestedFriendAdapter.S
             public void onFailure(Call<GetUserSuggestion> call, Throwable t) {
                 t.printStackTrace();
                 pd.cancel();
+                PageNumber=-1;
                 Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
@@ -242,5 +268,9 @@ public class FragSearchUser extends Fragment implements SuggestedFriendAdapter.S
                 Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void loadMore() {
+        callGetUserSuggestionAPI();
     }
 }

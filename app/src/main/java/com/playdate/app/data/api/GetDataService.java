@@ -24,6 +24,7 @@ import com.playdate.app.model.RegisterResult;
 import com.playdate.app.model.RestMain;
 import com.playdate.app.model.RestaurentModel;
 import com.playdate.app.model.SavedPostModel;
+import com.playdate.app.model.StoreModel;
 import com.playdate.app.model.chat_models.ChatFileUpload;
 import com.playdate.app.model.chat_models.ChatMsgResp;
 import com.playdate.app.model.chat_models.ChatResponse;
@@ -335,7 +336,13 @@ public interface GetDataService {
     @POST("user/get-packages")
     Call<Premium> getPackages(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
+    @FormUrlEncoded
+    @POST("user/get-stores")
+    Call<StoreModel> getStore(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
+    @FormUrlEncoded
+    @POST("user/update-couple-profile")
+    Call<CommonModel> updateCoupleDetail(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 }
 
 

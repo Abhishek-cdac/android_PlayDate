@@ -139,7 +139,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     private Onclick itemClick;
     private CommonClass commonClass;
 
-    OffsetDateTime odt;
+    private OffsetDateTime odt;
     private final int REQUEST_AUDIO_PERMISSION_CODE = 1;
 
 
@@ -152,8 +152,12 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 
     private boolean isMoreData = true;
 
+    private ImageView img_active;
+    private TextView txt_active_now;
+
+
     // Video Calling
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     protected QBResRequestExecutor requestExecutor;
     protected SharedPrefsHelper sharedPrefsHelper;
 
@@ -171,6 +175,8 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         sharedPrefsHelper = SharedPrefsHelper.getInstance();
         scrollview = findViewById(R.id.scrollview);
 //        rl_chat = findViewById(R.id.rl_chat);
+        img_active = findViewById(R.id.img_active);
+        txt_active_now = findViewById(R.id.txt_active_now);
         rv_smileys = findViewById(R.id.rv_smileys);
         iv_mic = findViewById(R.id.iv_mic);
         ImageView iv_circle = findViewById(R.id.iv_circle);
@@ -323,6 +329,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             mSocket.on("chat_room", ChatRoomCreated);
             mSocket.on("chat_question_answer", ChatQuestionAnswer);
             mSocket.on("Data", OnError);
+            mSocket.on("user_status", UserStatus);
 //            Log.d("****mSocket", mSocket.id());
 
         } catch (Exception e) {
@@ -333,11 +340,14 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     private void readMsgEmit() {
         try {
             JSONObject readMsg = new JSONObject();
-
-            readMsg.put("userId", pref.getStringVal(SessionPref.LoginUserID));
+            String userId = pref.getStringVal(SessionPref.LoginUserID);
+            readMsg.put("userId", userId);
             readMsg.put("chatId", chatId);
 
             mSocket.emit("chat_message_read", readMsg);
+            JSONObject online = new JSONObject();
+            online.put("userId", userId);
+            mSocket.emit("user_status", online);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -567,11 +577,11 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         DateTimeFormatter dtfInput = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             dtfInput = DateTimeFormatter.ofPattern("E MMM d H:m:s O u", Locale.ENGLISH);
-             odt = OffsetDateTime.parse(c.toString(), dtfInput);
+            odt = OffsetDateTime.parse(c.toString(), dtfInput);
 
         }
 
-      //  Log.d("FormattedDAte", "Formatted DAte Typing: " + odt.toString());
+        //  Log.d("FormattedDAte", "Formatted DAte Typing: " + odt.toString());
 
 
         try {
@@ -663,6 +673,27 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 
         }
     });
+    Emitter.Listener UserStatus = args -> runOnUiThread(() -> {
+        try {
+            JSONObject data = (JSONObject) args[0];
+            Log.d("****UserStatus", data.toString());
+            String userIDFromIP = data.getString("userId");
+            if (userIDFromIP.equals(userIDTo)) {
+                if(data.getString("status").equals("Online")){
+                    txt_active_now.setVisibility(View.VISIBLE);
+                    img_active.setVisibility(View.VISIBLE);
+                }else{
+                    txt_active_now.setVisibility(View.GONE);
+                    img_active.setVisibility(View.GONE);
+                }
+
+            }
+
+
+        } catch (Exception e) {
+
+        }
+    });
 
     private void sendMessage(String msg, String Type, String mediaID) {
         if (null != mSocket) {
@@ -735,11 +766,11 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         apd.show();
 
 //        if (mRecorder == null) {
-            mRecorder = new MediaRecorder();
-            mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-            mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-            mRecorder.setOutputFile(mFileName);
-            mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+        mRecorder = new MediaRecorder();
+        mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        mRecorder.setOutputFile(mFileName);
+        mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 //        }
         try {
             mRecorder.prepare();
@@ -1344,7 +1375,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             @Override
             public void onError(QBResponseException e) {
 //                hideProgressDialog();
-                ToastUtils.longToast(R.string.update_user_error);
+//                ToastUtils.longToast(R.string.update_user_error);
             }
         });
     }
@@ -1469,6 +1500,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         et_chat.setFocusableInTouchMode(true);
         et_chat.requestFocus();
     }
+
     public static Bitmap locationBitmap = null;
 
 

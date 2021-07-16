@@ -1,6 +1,5 @@
 package com.playdate.app.ui.card_swipe;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,8 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DiffUtil;
 
@@ -28,7 +25,6 @@ import com.playdate.app.model.InterestsMain;
 import com.playdate.app.model.MatchListModel;
 import com.playdate.app.model.MatchListUser;
 import com.playdate.app.ui.chat.request.Onclick;
-import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
@@ -38,7 +34,6 @@ import com.yuyakaido.android.cardstackview.CardStackView;
 import com.yuyakaido.android.cardstackview.Direction;
 import com.yuyakaido.android.cardstackview.StackFrom;
 import com.yuyakaido.android.cardstackview.SwipeableMethod;
-import com.yuyakaido.android.cardstackview.internal.CardStackState;
 
 import org.json.JSONObject;
 
@@ -59,7 +54,6 @@ public class FragCardSwipe extends Fragment {
     public ArrayList<Interest> lst_interest;
     private Onclick itemClick;
     private CardStackView cardStackView;
-    private ConstraintLayout cl_page;
 
 
     private CommonClass clsCommon;
@@ -73,7 +67,7 @@ public class FragCardSwipe extends Fragment {
         View view = inflater.inflate(R.layout.tinder_swipe, container, false);
         clsCommon = CommonClass.getInstance();
         cardStackView = view.findViewById(R.id.card_stack_view);
-        cl_page = view.findViewById(R.id.cl_page);
+        ConstraintLayout cl_page = view.findViewById(R.id.cl_page);
 
         itemClick = new Onclick() {
             @Override
@@ -118,7 +112,6 @@ public class FragCardSwipe extends Fragment {
         };
 
 
-
         int height = new CommonClass().getScreenHeight(getActivity());
 
         int m1 = (int) getResources().getDimension(R.dimen._15sdp);
@@ -135,6 +128,8 @@ public class FragCardSwipe extends Fragment {
         return view;
     }
 
+    private int PageNumber = 1;
+
     private void getInterest() {
 
 
@@ -142,15 +137,15 @@ public class FragCardSwipe extends Fragment {
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("limit", "100");
         hashMap.put("pageNo", "1");
-        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
-        pd.show();
+//        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
+//        pd.show();
         SessionPref pref = SessionPref.getInstance(getActivity());
 
         Call<InterestsMain> call = service.interested("Bareer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<InterestsMain>() {
             @Override
             public void onResponse(Call<InterestsMain> call, Response<InterestsMain> response) {
-                pd.cancel();
+//                pd.cancel();
                 if (response.code() == 200) {
                     assert response.body() != null;
                     if (response.body().getStatus() == 1) {
@@ -179,7 +174,7 @@ public class FragCardSwipe extends Fragment {
             @Override
             public void onFailure(Call<InterestsMain> call, Throwable t) {
                 t.printStackTrace();
-                pd.cancel();
+//                pd.cancel();
 //                Toast.makeText(InterestActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
@@ -188,12 +183,14 @@ public class FragCardSwipe extends Fragment {
     }
 
     private void callAPI() {
-
+        if (PageNumber == -1) {
+            return;
+        }
 
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("limit", "100");
-        hashMap.put("pageNo", "1");
+        hashMap.put("limit", "10");
+        hashMap.put("pageNo", "" + PageNumber);
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
         pd.show();
         SessionPref pref = SessionPref.getInstance(getActivity());
@@ -302,91 +299,108 @@ public class FragCardSwipe extends Fragment {
 
     ArrayList<MatchListUser> lstUsers = new ArrayList<>();
 
-    private void setPages(ArrayList<MatchListUser> lstUsers) {
-        this.lstUsers = lstUsers;
-        manager = new CardStackLayoutManager(getActivity(), new CardStackListener() {
-            @Override
-            public void onCardDragging(Direction direction, float ratio) {
-                Log.d("OnCardDragging: ", "onCardDragging: d=" + direction.name() + " ratio=" + ratio);
+    private void setPages(ArrayList<MatchListUser> lst) {
+        if (PageNumber == 1) {
+            PageNumber = PageNumber + 1;
+            lstUsers.addAll(lst);
 
-            }
 
-            @Override
-            public void onCardSwiped(Direction direction) {
-                try {
-                    Log.d("OnCardSwiped: ", "onCardSwiped: p=" + manager.getTopPosition() + " d=" + direction);
-                    String userID = lstUsers.get(manager.getTopPosition()).get_id();
-                    String liekDisLike = "Like";
-                    if (direction == Direction.Right) {
-                        Log.e("Right", "Right");
-                        liekDisLike = "Like";
-                    }
-                    if (direction == Direction.Top) {
-                        Log.e("Top", "Top");
-                        liekDisLike = "Like";
-                    }
-                    if (direction == Direction.Left) {
-                        Log.e("Left", "Left");
-                        liekDisLike = "Unlike";
-                    }
-                    if (direction == Direction.Bottom) {
-                        Log.e("Bottom", "Bottom");
-                        liekDisLike = "Unlike";
-                    }
-                    callAddUserMatchRequestAPI(userID, liekDisLike);
-                } catch (Exception e) {
-                    e.printStackTrace();
+            manager = new CardStackLayoutManager(getActivity(), new CardStackListener() {
+                @Override
+                public void onCardDragging(Direction direction, float ratio) {
+
                 }
 
-            }
+                @Override
+                public void onCardSwiped(Direction direction) {
+                    try {
+                        String userID = lstUsers.get(manager.getTopPosition()).get_id();
 
-            @Override
-            public void onCardRewound() {
-                Log.d("OnCardRewoundTAG", "onCardRewound: " + manager.getTopPosition());
-            }
+                        String liekDisLike = "Like";
+                        if (direction == Direction.Right) {
+//                            Log.e("Right", "Right");
+                            liekDisLike = "Like";
+                        }
+                        if (direction == Direction.Top) {
+//                            Log.e("Top", "Top");
+                            liekDisLike = "Like";
+                        }
+                        if (direction == Direction.Left) {
+//                            Log.e("Left", "Left");
+                            liekDisLike = "Unlike";
+                        }
+                        if (direction == Direction.Bottom) {
+//                            Log.e("Bottom", "Bottom");
+                            liekDisLike = "Unlike";
+                        }
+                        callAddUserMatchRequestAPI(userID, liekDisLike);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
-            @Override
-            public void onCardCanceled() {
-                Log.d("onCardCanceledTAG", "onCardRewound: " + manager.getTopPosition());
+                }
 
-            }
+                @Override
+                public void onCardRewound() {
+//                    Log.d("OnCardRewoundTAG", "onCardRewound: " + manager.getTopPosition());
+                }
 
-            @Override
-            public void onCardAppeared(View view, int position) {
-                TextView name = view.findViewById(R.id.item_name);
-                Log.d("onCardAppearedTAG", "onCardAppeared: " + position + ", nama: " + name.getText());
-            }
+                @Override
+                public void onCardCanceled() {
+//                    Log.d("onCardCanceledTAG", "onCardRewound: " + manager.getTopPosition());
 
-            @Override
-            public void onCardDisappeared(View view, int position) {
-                TextView name = view.findViewById(R.id.item_name);
-                Log.d("onCardDisappearedTAG", "onCardAppeared: " + position + ", nama: " + name.getText());
-            }
-        });
+                }
 
-        manager.setStackFrom(StackFrom.None);
-        manager.setVisibleCount(5);
-        manager.setTranslationInterval(8.0f);
-        manager.setScaleInterval(0.95f);
-        manager.setSwipeThreshold(0.3f);
-        manager.setMaxDegree(20.0f);
-        manager.setDirections(Direction.FREEDOM);
-        manager.setCanScrollHorizontal(true);
+                @Override
+                public void onCardAppeared(View view, int position) {
+                    TextView name = view.findViewById(R.id.item_name);
+//                    Log.d("onCardAppearedTAG", "onCardAppeared: " + position + ", nama: " + name.getText());
+                }
+
+                @Override
+                public void onCardDisappeared(View view, int position) {
+//                    TextView name = view.findViewById(R.id.item_name);
+                    if (adapter.getItemCount()-1 == position) {
+                        callAPI();
+                    }
+//                    Log.d("onCardDisappearedTAG", "onCardAppeared: " + position + ", nama: " + name.getText());
+                }
+            });
+
+            manager.setStackFrom(StackFrom.None);
+            manager.setVisibleCount(5);
+            manager.setTranslationInterval(8.0f);
+            manager.setScaleInterval(0.95f);
+            manager.setSwipeThreshold(0.3f);
+            manager.setMaxDegree(20.0f);
+            manager.setDirections(Direction.FREEDOM);
+            manager.setCanScrollHorizontal(true);
 //        manager.setCanScrollVertical(false);
-        manager.setSwipeableMethod(SwipeableMethod.Manual);
-        manager.setOverlayInterpolator(new LinearInterpolator());
-        adapter = new TinderSwipeAdapter(lstUsers, lst_interest, itemClick);
-        cardStackView.setLayoutManager(manager);
-        cardStackView.setAdapter(adapter);
-        cardStackView.setItemAnimator(new DefaultItemAnimator());
+            manager.setSwipeableMethod(SwipeableMethod.Manual);
+            manager.setOverlayInterpolator(new LinearInterpolator());
+            adapter = new TinderSwipeAdapter(lstUsers, lst_interest, itemClick);
+            cardStackView.setLayoutManager(manager);
+            cardStackView.setAdapter(adapter);
+            cardStackView.setItemAnimator(new DefaultItemAnimator());
+        } else {
+            if (lst.isEmpty()) {
+                PageNumber = -1;
+                return;
+            }
+            paginate(lst);
+//            lstUsers.addAll(lst);
+            PageNumber = PageNumber + 1;
+//            adapter.notifyDataSetChanged();
+        }
     }
 
-    private void paginate() {
+    private void paginate(ArrayList<MatchListUser> lst) {
         List<MatchListUser> oldList = adapter.getList();
-        List<MatchListUser> newList = new ArrayList<>(adapter.tinder_list);
-        TinderSwipeCallback callback = new TinderSwipeCallback(oldList, newList);
+//        List<MatchListUser> newList = new ArrayList<>(adapter.tinder_list);
+
+        TinderSwipeCallback callback = new TinderSwipeCallback(oldList, lst);
         DiffUtil.DiffResult hasil = DiffUtil.calculateDiff(callback);
-        adapter.setList(newList);
+        adapter.setList(lst);
         hasil.dispatchUpdatesTo(adapter);
     }
 

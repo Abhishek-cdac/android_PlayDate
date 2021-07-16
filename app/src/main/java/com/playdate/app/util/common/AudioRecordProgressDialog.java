@@ -42,8 +42,6 @@ public class AudioRecordProgressDialog extends Dialog {
         setContentView(view);
         Button btn_stop=view.findViewById(R.id.btn_stop);
 
-        btn_stop.setOnClickListener(v -> {
-            dismiss();
-        });
+        btn_stop.setOnClickListener(v -> dismiss());
     }
 }

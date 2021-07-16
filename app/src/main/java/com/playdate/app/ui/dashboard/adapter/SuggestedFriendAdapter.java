@@ -29,6 +29,12 @@ public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriend
     private final FragSearchUser userFrag;
     private final Picasso picasso;
 
+    public boolean hideShowMore = false;
+
+    public void setHideShowMore() {
+        hideShowMore = true;
+    }
+
     public SuggestedFriendAdapter(ArrayList<GetUserSuggestionData> lst_getUserSuggestions, Onclick itemClick, FragSearchUser userFrag) {
         this.suggestions_list = lst_getUserSuggestions;
         this.suggestionsListFiltered = lst_getUserSuggestions;
@@ -75,7 +81,7 @@ public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriend
             }
         }
 
-        holder. request.setOnClickListener(v -> {
+        holder.request.setOnClickListener(v -> {
             if (null != suggestions_list.get(position).getFriendRequest()) {
                 if (suggestions_list.get(position).getFriendRequest().size() == 0) {
                     ArrayList<FriendRequest> lst = new ArrayList<>();
@@ -92,7 +98,17 @@ public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriend
             }
         });
 
+        if (position == suggestionsListFiltered.size() - 1) {
+            if (hideShowMore) {
+                holder.txt_show.setVisibility(View.GONE);
 
+            } else {
+                holder.txt_show.setVisibility(View.VISIBLE);
+            }
+        } else {
+            holder.txt_show.setVisibility(View.GONE);
+        }
+        holder.txt_show.setOnClickListener(v -> userFrag.loadMore());
     }
 
     private void OnUserClick(int pos) {
@@ -113,6 +129,7 @@ public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriend
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView name;
         private final ImageView image;
+        private final TextView txt_show;
         private final ImageView request;
         private final RelativeLayout rl_suggestion;
 
@@ -121,8 +138,8 @@ public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriend
             name = itemView.findViewById(R.id.name_friend);
             image = itemView.findViewById(R.id.image_friend);
             request = itemView.findViewById(R.id.friend_request);
+            txt_show = itemView.findViewById(R.id.txt_show);
             rl_suggestion = itemView.findViewById(R.id.rl_suggestion);
-
 
 
         }

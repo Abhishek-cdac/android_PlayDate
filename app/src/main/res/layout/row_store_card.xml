@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="@dimen/_7sdp"
     android:layout_marginVertical="@dimen/_5sdp"
+    android:id="@+id/cl_store"
     android:background="@drawable/store_bg_card">
 
     <RelativeLayout

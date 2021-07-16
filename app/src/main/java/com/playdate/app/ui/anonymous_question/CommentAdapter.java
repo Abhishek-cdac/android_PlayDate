@@ -44,7 +44,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     private int selected_index = -1;
     private final Onclick itemClick;
     private Context mContext;
-    //    private onCommentDelete ref;
     private String postId;
     private String commentId;
 

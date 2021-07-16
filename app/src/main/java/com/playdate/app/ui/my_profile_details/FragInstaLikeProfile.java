@@ -12,11 +12,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.playdate.app.R;
+import com.playdate.app.couple.ui.register.couplebio.CoupleBioActivity;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
+import com.playdate.app.model.CommonModel;
 import com.playdate.app.model.GetCoupleProfileData;
 import com.playdate.app.model.GetCoupleProfileModel;
 import com.playdate.app.model.GetProfileDetails;
@@ -164,6 +167,14 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
                         picasso.load(lst_getCoupleDetail.get(0).getProfile2().get(0).getProfilePicPath())
                                 .placeholder(R.drawable.profile)
                                 .into(girl_profile_image);
+
+
+                        if (lst_getCoupleDetail.get(0).getBio() == null) {
+                            setBioDialog();
+                        } else {
+                            pref.saveStringKeyVal("LoginUserCoupleBio", lst_getCoupleDetail.get(0).getBio());
+                        }
+
                     } else {
                         clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
                     }
@@ -189,6 +200,26 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
         });
     }
 
+    private void setBioDialog() {
+        new AlertDialog.Builder(getActivity())
+
+                .setInverseBackgroundForced(true)
+                .setMessage("Would you like to fill the couple bio and express how you met? ")
+                .setCancelable(false)
+                .setPositiveButton("Yes", (dialog, id) -> callUpdateBio())
+                .setNegativeButton("No", null)
+                .show();
+
+    }
+
+    private void callUpdateBio() {
+
+        Intent mIntent = new Intent(getActivity(), CoupleBioActivity.class);
+        mIntent.putExtra("fromProfile", true);
+        mIntent.putExtra("coupleId", lst_getCoupleDetail.get(0).getCoupleId());
+        startActivityForResult(mIntent, 410);
+    }
+
     private void setValue() {
         String img = pref.getStringVal(SessionPref.LoginUserprofilePic);
         if (img.contains("http")) {
@@ -199,7 +230,11 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
                     .into(profile_image);
         }
         txt_login_user.setText(pref.getStringVal(SessionPref.LoginUserusername));
-        txt_bio.setText(pref.getStringVal(SessionPref.LoginUserpersonalBio));
+        if (pref.getStringVal(SessionPref.LoginUserrelationship).equals("Single")) {
+            txt_bio.setText(pref.getStringVal(SessionPref.LoginUserpersonalBio));
+        } else {
+            txt_bio.setText(pref.getStringVal("LoginUserCoupleBio"));
+        }
 
 
     }
