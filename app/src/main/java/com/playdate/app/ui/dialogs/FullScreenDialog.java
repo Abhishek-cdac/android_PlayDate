@@ -7,6 +7,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -16,8 +17,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.playdate.app.R;
 import com.playdate.app.model.PackageDescription;
 import com.playdate.app.ui.dashboard.adapter.PremiumAdapter;
+import com.playdate.app.ui.dashboard.fragments.FragmentSearchRestaurent;
+import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
+import com.playdate.app.ui.my_profile_details.FragMyProfilePayments;
+import com.playdate.app.ui.my_profile_details.NewPaymentMethod;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class FullScreenDialog extends Dialog {
 
@@ -36,12 +42,19 @@ public class FullScreenDialog extends Dialog {
         getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         setContentView(view);
         ImageView iv_close = view.findViewById(R.id.iv_close);
+        Button getNowButton = view.findViewById(R.id.login_button);
         RecyclerView recy_premiun=view.findViewById(R.id.recy_premiun);
         PremiumAdapter adapter=new PremiumAdapter(lst_packageDescription,0);
         LinearLayoutManager maLinearLayout=new LinearLayoutManager(context,RecyclerView.VERTICAL,false);
         recy_premiun.setLayoutManager(maLinearLayout);
         recy_premiun.setAdapter(adapter);
+        getNowButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
 
+            }
+        });
         iv_close.setOnClickListener(view1 -> dismiss());
     }
 

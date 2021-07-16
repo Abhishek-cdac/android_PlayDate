@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -37,6 +38,8 @@ public class FragPremium3 extends Fragment {
         View view = inflater.inflate(R.layout.frag_get_premium3, container, false);
         ImageView iv_close = view.findViewById(R.id.iv_close);
         iv_close.setOnClickListener(v -> fragInvite.closePremium());
+        Button getNowButton=view.findViewById(R.id.login_button);
+        getNowButton.setOnClickListener(v -> fragInvite.closePremium());
         RecyclerView recy_premiun = view.findViewById(R.id.recy_premiun);
         PremiumAdapter adapter = new PremiumAdapter(premiumPlans.getLst_packageDescription(),3);
         LinearLayoutManager maLinearLayout = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
