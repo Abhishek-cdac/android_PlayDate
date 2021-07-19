@@ -15,6 +15,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.playdate.app.R;
 import com.playdate.app.model.GetCouponsData;
 import com.playdate.app.ui.chat.request.Onclick;
+import com.playdate.app.ui.coupons.DialogSelectedRestaurant;
 import com.playdate.app.ui.coupons.FragCouponStore;
 import com.squareup.picasso.Picasso;
 
@@ -25,17 +26,24 @@ public class CouponStoreAdapter extends RecyclerView.Adapter<CouponStoreAdapter.
     private final Onclick itemClick;
     private final Picasso picasso;
     private FragCouponStore ref;
+    private DialogSelectedRestaurant reff;
     private int currentPoints;
+    boolean fromDialog;
 
 
-    public CouponStoreAdapter(ArrayList<GetCouponsData> lst_getCoupons, Onclick itemClick) {
+    public CouponStoreAdapter(ArrayList<GetCouponsData> lst_getCoupons, Onclick itemClick, boolean fromDialog) {
         this.coupon_list = lst_getCoupons;
         this.itemClick = itemClick;
         picasso = Picasso.get();
+        this.fromDialog = fromDialog;
     }
 
     public void setListerner(FragCouponStore ref) {
         this.ref = ref;
+    }
+
+    public void setListerner(DialogSelectedRestaurant ref) {
+        this.reff = ref;
     }
 
     Context mContext;
@@ -75,7 +83,11 @@ public class CouponStoreAdapter extends RecyclerView.Adapter<CouponStoreAdapter.
         holder.rl_coupons.setOnClickListener(v -> {
             if (coupon_list.get(position).getPurchased() != null) {
                 if (coupon_list.get(position).getPurchased().size() > 0) {
-                    ref.showMsg();
+                    if (fromDialog) {
+                        reff.showMsg();
+                    } else {
+                        ref.showMsg();
+                    }
                 } else {
                     if (currentPoints >= coupon_list.get(position).getCouponPurchasePoint()) {
                         itemClick.onItemClicks(v, position, 11, coupon_list.get(position).getCouponId(), coupon_list.get(position).getCouponCode(), "" + coupon_list.get(position).getCouponPurchasePoint());

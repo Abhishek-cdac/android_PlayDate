@@ -103,16 +103,15 @@ public class LandingBottomSheet extends BottomSheetDialogFragment {
 //                shareTextUrl();
             } else {
                 OnInnerFragmentClicks ref = (OnInnerFragmentClicks) getActivity();
-                ref.ReplaceFragWithStack(new FragInstaLikeProfile());
+                ref.ReplaceFrag(new FragInstaLikeProfile());
+//                ref.loadProfile(toUserId);
                 chattingAdapter.dismissSheet();
-
             }
         });
 
 
         return view;
     }
-
     private void callDeleteChatRoom(String chatId) {
         SessionPref pref = SessionPref.getInstance(getActivity());
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);

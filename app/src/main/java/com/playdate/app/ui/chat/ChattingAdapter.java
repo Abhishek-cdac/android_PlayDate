@@ -21,6 +21,7 @@ import com.playdate.app.R;
 import com.playdate.app.model.chat_models.ChatList;
 import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.ui.chat.request.RequestChatFragment;
+import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
 
@@ -292,7 +293,6 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
         notifyDataSetChanged();
 
     }
-
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView user_name, msg, txt_count, txt_time;

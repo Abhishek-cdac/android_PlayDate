@@ -53,6 +53,8 @@ public class RestaurentListAdapter extends RecyclerView.Adapter<RestaurentListAd
                 .into(holder.profile_image);
 
         holder.txt_friend_name.setText(lst.get(position).getName());
+
+
     }
 
     @Override
