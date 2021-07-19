@@ -380,6 +380,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 
     private ArrayList<ChatMessage> lstChat;
     private ArrayList<PollingQuestion> lstPollingQuestion;
+  private ArrayList<String> lstPromotions;
 
     private void callAPI() {
 
@@ -411,6 +412,9 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                         if (PageNumber == 1) {
                             lstChat = resp.getLstChatMsg();
                             lstPollingQuestion = resp.getLstPollingQuestion();
+                            lstPromotions = resp.getLstPromotions();
+                            Log.e("lstPromotions",""+lstPromotions.size());
+                            Log.e("lstPromotions",""+lstPromotions);
 //                            lst_chatResponse.add(new ChatTotalResponse(lstChat, lstPollingQuestion));
 
 
@@ -450,18 +454,24 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                                         ChatMessage msg = new ChatMessage();
                                         msg.setPolling(lstPollingQuestion.get(i));
                                         msg.setType("polling");
+                                        Log.e("ifMsg",""+msg.getType());
                                         lstChat.add(foundIndex, msg);
                                     } else {
                                         ChatMessage msg = new ChatMessage();
                                         msg.setPolling(lstPollingQuestion.get(i));
                                         msg.setType("polling");
-                                        if (j != 0)
+
+                                        if (j != 0){
+                                            Log.e("elseMsg",""+msg.getType());
                                             lstChat.add(j - 1, msg);
+                                        }
                                         else
+                                        {
+                                            Log.e("elseMsg1",""+msg);
                                             lstChat.add(0, msg);
+                                        }
+
                                     }
-
-
                                 }
 
                             }// run and check

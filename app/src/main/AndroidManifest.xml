@@ -25,7 +25,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.STORAGE" />
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
-
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.ACTION_MANAGE_OVERLAY_PERMISSION" />
@@ -46,7 +45,6 @@
     <uses-feature
         android:name="android.hardware.camera.flash"
         android:required="false" />
-
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" />
@@ -62,9 +60,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PlayDate"
         android:usesCleartextTraffic="true">
-        <!--  <activity android:name=".business.couponsGenerate.dialogs.DialogCouponCreated" />-->
-        <activity android:name=".business.chooselevel.ChooseLevelActivity" />
-        <!-- <activity android:name=".business.couponsGenerate.DialogCouponsGenerater" />-->
+        <activity android:name=".FacebookbookLogin">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+
+        </activity>
+        <!-- <activity android:name=".business.couponsGenerate.dialogs.DialogCouponCreated" /> -->
+        <activity android:name=".business.chooselevel.ChooseLevelActivity" /> <!-- <activity android:name=".business.couponsGenerate.DialogCouponsGenerater" /> -->
         <activity android:name=".business.businessphoto.BusinessUploadPhotoActivity" />
         <activity android:name=".business.businessbio.BusinessBioActivity" />
         <activity android:name=".business.startdate.BusinessStartingDateActivity" />
@@ -126,7 +131,7 @@
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".ui.card_swipe.FullScreenView"/>
+        <activity android:name=".ui.card_swipe.FullScreenView" />
         <activity
             android:name=".ui.login.LoginActivity"
             android:screenOrientation="portrait" />
@@ -184,12 +189,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.forgot_password.ForgotPasswordActivity"
-            android:screenOrientation="portrait"
-
-            />
-        <!--        <activity-->
-        <!--            android:name=".ui.onboarding.GetStarted"-->
-        <!--            android:screenOrientation="portrait" />-->
+            android:screenOrientation="portrait" /> <!-- <activity -->
+        <!-- android:name=".ui.onboarding.GetStarted" -->
+        <!-- android:screenOrientation="portrait" /> -->
         <activity
             android:name=".util.image_crop.MainActivity"
             android:screenOrientation="portrait"
@@ -209,7 +211,6 @@
         </activity>
         <activity
             android:name=".ui.chat.MapActivity"
-
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.chat.ImageViewActivity"
@@ -222,7 +223,7 @@
             android:screenOrientation="portrait" /> <!-- <activity -->
         <!-- android:name=".ui.chat.ChatActivity" -->
         <!-- android:screenOrientation="portrait" /> -->
-        <!--        <activity android:name=".ui.SampleActivity" />-->
+        <!-- <activity android:name=".ui.SampleActivity" /> -->
         <activity
             android:name=".util.customcamera.otalia.VideoPreviewActivity"
             android:screenOrientation="portrait" />
@@ -261,35 +262,21 @@
         <activity android:name=".util.common.BaseActivity" />
         <activity
             android:name=".ui.chat.ChatMainActivity"
-            android:screenOrientation="portrait" />
-
-
-        <!--        <activity android:name=".videocall.activities.LoginActivity">-->
-
-        <!--        </activity>-->
-
-        <activity android:name=".videocall.activities.BaseActivity"
-            android:screenOrientation="portrait"
-            >
-
-        </activity>
-        <!--        <activity-->
-        <!--            android:name=".videocall.activities.OpponentsActivity"-->
-        <!--            android:configChanges="keyboardHidden|screenSize|orientation"-->
-        <!--            android:launchMode="singleTask"-->
-        <!--            android:screenOrientation="portrait" />-->
-
-
+            android:screenOrientation="portrait" /> <!-- <activity android:name=".videocall.activities.LoginActivity"> -->
+        <!-- </activity> -->
+        <activity
+            android:name=".videocall.activities.BaseActivity"
+            android:screenOrientation="portrait"></activity> <!-- <activity -->
+        <!-- android:name=".videocall.activities.OpponentsActivity" -->
+        <!-- android:configChanges="keyboardHidden|screenSize|orientation" -->
+        <!-- android:launchMode="singleTask" -->
+        <!-- android:screenOrientation="portrait" /> -->
         <activity
             android:name=".videocall.activities.PermissionsActivity"
-            android:screenOrientation="portrait" />
-
-
-        <!--        <activity-->
-        <!--            android:name=".videocall.activities.SettingsActivity"-->
-        <!--            android:configChanges="keyboardHidden|screenSize|orientation"-->
-        <!--            android:screenOrientation="portrait" />-->
-
+            android:screenOrientation="portrait" /> <!-- <activity -->
+        <!-- android:name=".videocall.activities.SettingsActivity" -->
+        <!-- android:configChanges="keyboardHidden|screenSize|orientation" -->
+        <!-- android:screenOrientation="portrait" /> -->
         <activity
             android:name=".videocall.activities.CallActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
@@ -298,9 +285,7 @@
             android:screenOrientation="portrait" />
 
         <service android:name=".videocall.services.LoginService" />
-
         <service android:name=".videocall.services.CallService" />
-
         <service android:name=".service.LocationService" /> <!-- <receiver android:name=".broadcast.ConnectionBroadcastReceiver"> -->
         <!-- <intent-filter> -->
         <!-- <action android:name="android.net.conn.CONNECTIVITY_CHANGE" /> -->
@@ -326,25 +311,18 @@
         -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/colorAccent" />
-
-
-<!--        <meta-data-->
-<!--            android:name="com.google.firebase.messaging.default_notification_channel_id"-->
-<!--            android:value="@string/default_notification_channel_id" />-->
-
+            android:resource="@color/colorAccent" /> <!-- <meta-data -->
+        <!-- android:name="com.google.firebase.messaging.default_notification_channel_id" -->
+        <!-- android:value="@string/default_notification_channel_id" /> -->
         <meta-data
             android:name="com.quickblox.messages.QB_ENVIRONMENT"
             android:value="DEVELOPMENT" />
-
         <meta-data
             android:name="com.quickblox.messages.TYPE"
             android:value="GCM" />
-
         <meta-data
             android:name="com.quickblox.messages.SENDER_ID"
             android:value="@string/sender_id" />
-
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />

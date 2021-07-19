@@ -17,13 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.playdate.app.R;
 import com.playdate.app.model.PackageDescription;
 import com.playdate.app.ui.dashboard.adapter.PremiumAdapter;
-import com.playdate.app.ui.dashboard.fragments.FragmentSearchRestaurent;
-import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
-import com.playdate.app.ui.my_profile_details.FragMyProfilePayments;
-import com.playdate.app.ui.my_profile_details.NewPaymentMethod;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class FullScreenDialog extends Dialog {
 
@@ -52,7 +47,6 @@ public class FullScreenDialog extends Dialog {
             @Override
             public void onClick(View v) {
                 dismiss();
-
             }
         });
         iv_close.setOnClickListener(view1 -> dismiss());

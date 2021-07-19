@@ -333,22 +333,6 @@
     <string name="chooseLevel">Choose Level</string>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <string name="sender_id"></string>
 
     <string name="versionName" translatable="false">QuickBlox Video Chat Java
@@ -367,11 +351,11 @@ Build version 4.0.3-java</string>
 
     <!-- Errors strings -->
     <string name="error">Error</string>
-<!--    <string name="error_credentials_empty">Credentials are wrong or empty. You have to set:-->
-<!--        Application ID, Authentification Key, Authentification Secret, Account Key in constants in App.java-->
-<!--        and you have to set Sender ID in the string resources to launch application.-->
-<!--        If you haven\'t them you can register new account and application at https://admin.quickblox.com-->
-<!--        then put Application credentials from Overview page + Account key from https://admin.quickblox.com/account/settings</string>-->
+    <!--    <string name="error_credentials_empty">Credentials are wrong or empty. You have to set:-->
+    <!--        Application ID, Authentification Key, Authentification Secret, Account Key in constants in App.java-->
+    <!--        and you have to set Sender ID in the string resources to launch application.-->
+    <!--        If you haven\'t them you can register new account and application at https://admin.quickblox.com-->
+    <!--        then put Application credentials from Overview page + Account key from https://admin.quickblox.com/account/settings</string>-->
     <string name="error_max_opponents_count">You can select up to %d opponents</string>
     <string name="sign_up_error">Error creating new user, please try again</string>
     <string name="sign_in_error">Error SignIn user, please try again</string>
@@ -382,9 +366,9 @@ Build version 4.0.3-java</string>
     <string name="error_permission_video">You should allow Camera permission</string>
     <string name="error_permission_audio">You should allow Microphone permission</string>
 
-<!--    <string name="login_chat_login_error">Login Chat error. Please relogin. Error</string>-->
+    <!--    <string name="login_chat_login_error">Login Chat error. Please relogin. Error</string>-->
     <string name="update_user_error">Update user error. Error</string>
-<!--    <string name="loading_users_error">Loading users error. Error</string>-->
+    <!--    <string name="loading_users_error">Loading users error. Error</string>-->
 
     <string name="permission_unavailable">%s is not available now!</string>
 

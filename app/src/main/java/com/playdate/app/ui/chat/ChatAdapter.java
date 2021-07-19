@@ -198,7 +198,9 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 viewHolderMe.rl_maps.setVisibility(View.GONE);
                 viewHolderMe.mv_location.setVisibility(View.GONE);
                 try {
-                    picasso.load(lst_chat.get(position).getMediaInfo().get(0).getMediaFullPath()).into(viewHolderMe.chat_image);
+                    picasso.load(lst_chat.get(position).getMediaInfo().get(0).getMediaFullPath())
+                            .fit()
+                            .into(viewHolderMe.chat_image);
                 } catch (Exception e) {
                     e.printStackTrace(); //working ok , Take a data from that object now
                 }
@@ -218,7 +220,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         viewHolderMe.card_video.setVisibility(View.GONE);
                         viewHolderMe.rl_maps.setVisibility(View.GONE);
                         viewHolderMe.mv_location.setVisibility(View.GONE);
-                        picasso.load(lst_chat.get(position).getMediaInfo().get(0).getMediaFullPath()).into(viewHolderMe.chat_image);
+                        picasso.load(lst_chat.get(position).getMediaInfo().get(0).getMediaFullPath()).centerCrop().fit().into(viewHolderMe.chat_image);
                         //image
                         break;
                     case "video":
@@ -416,7 +418,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             viewHolderOponent.tv_msg.setVisibility(View.GONE);
                             viewHolderOponent.card_img.setVisibility(View.VISIBLE);
 
-                            picasso.get().load(lst_chat.get(position).getMediaInfo().get(0).getMediaFullPath())
+                            picasso.get().load(lst_chat.get(position).getMediaInfo().get(0).getMediaFullPath()).fit().centerCrop()
                                     .into(viewHolderOponent.chat_image);
                             viewHolderOponent.chat_image.setOnClickListener(v -> showPhoto(lst_chat.get(position).getMediaInfo().get(0).getMediaFullPath()));
                             break;
