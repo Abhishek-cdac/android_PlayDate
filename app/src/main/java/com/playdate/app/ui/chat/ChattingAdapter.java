@@ -253,7 +253,7 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
             holder.main_ll.setOnLongClickListener(v -> {
                 String chatId = lst_msgs.get(position).getChatId();
 //                Log.d("DAte", "onBindViewHolder: " + lst_msgs.get(position).getLastMsg().get(0).getEntryDate());
-                showBottomSheet(position, lst_msgs.get(position).getToUserId(), chatId);
+                showBottomSheet(position, lst_msgs.get(position).getLstFrom().get(0).getUserId(), chatId);
                 notifyItemChanged(position);
                 return false;
             });
@@ -296,6 +296,15 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
         notifyDataSetChanged();
 
     }
+
+//    public void loadProfile(int index) {
+//        try {
+//            OnInnerFragmentClicks ref = (OnInnerFragmentClicks) this;
+//            ref.ReplaceFragWithStack(new FragInstaLikeProfileFriends(true, lst_msgs.get(index).getLstFrom().get(0).getUserId(), true));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView user_name, msg, txt_count, txt_time;

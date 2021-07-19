@@ -109,7 +109,7 @@ public class LandingBottomSheet extends BottomSheetDialogFragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-//                chattingAdapter.loadProfile(toUserId);
+//                chattingAdapter.loadProfile(index);
                 chattingAdapter.dismissSheet();
             }
         });
