@@ -23,6 +23,7 @@ import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.ui.chat.request.RequestChatFragment;
 import com.playdate.app.ui.dashboard.OnFriendSelected;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
+import com.playdate.app.ui.my_profile_details.FragInstaLikeProfileFriends;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
 
@@ -294,11 +295,6 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
         lst_msgs = filteredList;
         notifyDataSetChanged();
 
-    }
-
-    public void loadProfile(String toUserId) {
-        OnFriendSelected inf = (OnFriendSelected) this;
-        Objects.requireNonNull(inf).OnSuggestionClosed(true, toUserId);
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

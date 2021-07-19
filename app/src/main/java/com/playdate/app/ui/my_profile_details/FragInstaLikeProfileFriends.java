@@ -2,6 +2,7 @@ package com.playdate.app.ui.my_profile_details;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,7 +46,7 @@ import retrofit2.Response;
 
 import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 
-public class FragInstaLikeProfileFriends extends Fragment implements onPhotoClick, View.OnClickListener {
+public class FragInstaLikeProfileFriends extends Fragment implements View.OnClickListener {
 
     private ImageView iv_send_request;
     private ImageView iv_chat;
@@ -55,6 +56,7 @@ public class FragInstaLikeProfileFriends extends Fragment implements onPhotoClic
     private CommonClass clsCommon;
     private TextView txtTotalFriend, txtTotalPost;
     private ArrayList<GetProileDetailData> lst_getPostDetail;
+    private boolean fromChat;
 
     public FragInstaLikeProfileFriends() {
     }
@@ -64,9 +66,11 @@ public class FragInstaLikeProfileFriends extends Fragment implements onPhotoClic
     private String LoginId;
     private String friendID;
 
-    public FragInstaLikeProfileFriends(boolean isFriend, String LoginId) {
+    public FragInstaLikeProfileFriends(boolean isFriend, String LoginId, boolean fromChat) {
         this.isFriend = isFriend;
         this.LoginId = LoginId;
+        this.fromChat = fromChat;
+
     }
 
 
@@ -124,8 +128,14 @@ public class FragInstaLikeProfileFriends extends Fragment implements onPhotoClic
         view.requestFocus();
         view.setOnKeyListener((v, keyCode, event) -> {
             if (keyCode == KeyEvent.KEYCODE_BACK) {
-                OnFriendSelected inf = (OnFriendSelected) getActivity();
-                inf.OnFrinedDataClosed();
+                if (fromChat) {
+                    getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+                } else {
+                    OnFriendSelected inf = (OnFriendSelected) getActivity();
+                    inf.OnFrinedDataClosed();
+                }
+
                 return true;
             }
             return false;
@@ -208,11 +218,9 @@ public class FragInstaLikeProfileFriends extends Fragment implements onPhotoClic
     }
 
 
-    @Override
-    public void onTypeChange(int type) {
-
-
-    }
+//    @Override
+//    public void onTypeChange(int type) {
+//    }
 
     String videopath = "";
 
