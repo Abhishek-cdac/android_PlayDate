@@ -380,7 +380,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 
     private ArrayList<ChatMessage> lstChat;
     private ArrayList<PollingQuestion> lstPollingQuestion;
-  private ArrayList<String> lstPromotions;
+    private ArrayList<String> lstPromotions;
 
     private void callAPI() {
 
@@ -413,10 +413,9 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                             lstChat = resp.getLstChatMsg();
                             lstPollingQuestion = resp.getLstPollingQuestion();
                             lstPromotions = resp.getLstPromotions();
-                            Log.e("lstPromotions",""+lstPromotions.size());
-                            Log.e("lstPromotions",""+lstPromotions);
+                            Log.e("lstPromotions", "" + lstPromotions.size());
+                            Log.e("lstPromotions", "" + lstPromotions);
 //                            lst_chatResponse.add(new ChatTotalResponse(lstChat, lstPollingQuestion));
-
 
                             if (null != lstPollingQuestion) {
 
@@ -453,21 +452,21 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                                     if (found) {
                                         ChatMessage msg = new ChatMessage();
                                         msg.setPolling(lstPollingQuestion.get(i));
+                                        msg.setPromotionText(lstPromotions);
                                         msg.setType("polling");
-                                        Log.e("ifMsg",""+msg.getType());
+                                        Log.e("ifMsg", "" + msg.getType());
                                         lstChat.add(foundIndex, msg);
                                     } else {
                                         ChatMessage msg = new ChatMessage();
                                         msg.setPolling(lstPollingQuestion.get(i));
+                                        msg.setPromotionText(lstPromotions);
                                         msg.setType("polling");
 
-                                        if (j != 0){
-                                            Log.e("elseMsg",""+msg.getType());
+                                        if (j != 0) {
+                                            Log.e("elseMsg", "" + msg.getType());
                                             lstChat.add(j - 1, msg);
-                                        }
-                                        else
-                                        {
-                                            Log.e("elseMsg1",""+msg);
+                                        } else {
+                                            Log.e("elseMsg1", "" + msg);
                                             lstChat.add(0, msg);
                                         }
 
@@ -475,6 +474,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                                 }
 
                             }// run and check
+
 
                             adapter = new ChatAdapter(lstChat, ChatMainActivity.this, itemClick);
                             rv_chat.setAdapter(adapter);
@@ -689,10 +689,10 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             Log.d("****UserStatus", data.toString());
             String userIDFromIP = data.getString("userId");
             if (userIDFromIP.equals(userIDTo)) {
-                if(data.getString("status").equals("Online")){
+                if (data.getString("status").equals("Online")) {
                     txt_active_now.setVisibility(View.VISIBLE);
                     img_active.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     txt_active_now.setVisibility(View.GONE);
                     img_active.setVisibility(View.GONE);
                 }

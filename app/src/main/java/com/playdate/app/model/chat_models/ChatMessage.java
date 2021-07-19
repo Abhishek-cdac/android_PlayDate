@@ -15,6 +15,15 @@ public class ChatMessage {
     @SerializedName("long")
     String longitude;
 
+    ArrayList<String> promotionText;
+
+    public ArrayList<String> getPromotionText() {
+        return promotionText;
+    }
+
+    public void setPromotionText(ArrayList<String> promotionText) {
+        this.promotionText = promotionText;
+    }
 
     @SerializedName("messageType")
     @Expose
