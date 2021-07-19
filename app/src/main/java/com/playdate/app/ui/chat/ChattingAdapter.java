@@ -21,6 +21,7 @@ import com.playdate.app.R;
 import com.playdate.app.model.chat_models.ChatList;
 import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.ui.chat.request.RequestChatFragment;
+import com.playdate.app.ui.dashboard.OnFriendSelected;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
@@ -31,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.TimeZone;
 
 public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyViewHolder> {
@@ -292,6 +294,11 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
         lst_msgs = filteredList;
         notifyDataSetChanged();
 
+    }
+
+    public void loadProfile(String toUserId) {
+        OnFriendSelected inf = (OnFriendSelected) this;
+        Objects.requireNonNull(inf).OnSuggestionClosed(true, toUserId);
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

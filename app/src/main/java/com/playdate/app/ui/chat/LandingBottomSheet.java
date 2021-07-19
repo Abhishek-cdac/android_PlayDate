@@ -105,6 +105,7 @@ public class LandingBottomSheet extends BottomSheetDialogFragment {
                 OnInnerFragmentClicks ref = (OnInnerFragmentClicks) getActivity();
                 ref.ReplaceFrag(new FragInstaLikeProfile());
 //                ref.loadProfile(toUserId);
+//                chattingAdapter.loadProfile(toUserId);
                 chattingAdapter.dismissSheet();
             }
         });
