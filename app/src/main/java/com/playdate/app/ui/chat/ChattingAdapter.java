@@ -297,15 +297,6 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
 
     }
 
-//    public void loadProfile(int index) {
-//        try {
-//            OnInnerFragmentClicks ref = (OnInnerFragmentClicks) this;
-//            ref.ReplaceFragWithStack(new FragInstaLikeProfileFriends(true, lst_msgs.get(index).getLstFrom().get(0).getUserId(), true));
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView user_name, msg, txt_count, txt_time;
         public ImageView profile_image, img_more, img_active;
