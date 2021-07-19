@@ -99,6 +99,7 @@
     <string name="add_payment_method">Add Payment Method</string>
     <string name="premiun_upgrade">Premiun Plan Upgrade</string>
     <string name="post">Post</string>
+    <string name="coupon_unavailable">No Coupons available \nfor this Restaurant</string>
     <string name="scan_card">Scan Card</string>
     <string name="send_invite">Send Invite</string>
     <string name="keep_looking1">Keep Looking</string>

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,8 +17,10 @@ import com.playdate.app.R;
 import com.playdate.app.model.FriendRequest;
 import com.playdate.app.model.GetUserSuggestionData;
 import com.playdate.app.ui.chat.request.Onclick;
+import com.playdate.app.ui.coupons.DialogSelectedRestaurant;
 import com.playdate.app.ui.dashboard.fragments.FragSearchUser;
 import com.playdate.app.ui.dashboard.fragments.FragmentSearchRestaurent;
+import com.playdate.app.ui.date.games.FragStore;
 import com.playdate.app.ui.restaurant.adapter.Restaurant;
 import com.squareup.picasso.Picasso;
 
@@ -66,8 +69,14 @@ public class RestaurentAdapter extends RecyclerView.Adapter<RestaurentAdapter.Vi
                 .centerCrop()
                 .into(holder.image);
 
+        holder.ll_parent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DialogSelectedRestaurant(mcontext, restaurantListFiltered.get(position).getName(),
+                        restaurantListFiltered.get(position).getImage()).show();
 
-
+            }
+        });
 
 
     }
@@ -130,6 +139,7 @@ public class RestaurentAdapter extends RecyclerView.Adapter<RestaurentAdapter.Vi
         private final TextView name;
         private final ImageView image;
         private final ImageView request;
+        private final LinearLayout ll_parent;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -137,6 +147,7 @@ public class RestaurentAdapter extends RecyclerView.Adapter<RestaurentAdapter.Vi
             name = itemView.findViewById(R.id.name_friend);
             image = itemView.findViewById(R.id.image_friend);
             request = itemView.findViewById(R.id.friend_request);
+            ll_parent = itemView.findViewById(R.id.ll_parent);
 //            ImageView diamond = itemView.findViewById(R.id.diamond);
 //            CardView card = itemView.findViewById(R.id.card);
 
