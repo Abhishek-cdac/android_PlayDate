@@ -508,7 +508,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
             socialOnMatchOffNotiOff();
             ll_friends.setVisibility(View.GONE);
             ll_option_love.setVisibility(View.GONE);
-            ReplaceFragWithStack(new FragInstaLikeProfileFriends(true, UserID));
+            ReplaceFragWithStack(new FragInstaLikeProfileFriends(true, UserID,false));
         }
 
 
@@ -538,7 +538,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
 
             ll_friends.setVisibility(View.GONE);
             ll_option_love.setVisibility(View.GONE);
-            ReplaceFragWithStack(new FragInstaLikeProfileFriends(false, UserID));
+            ReplaceFragWithStack(new FragInstaLikeProfileFriends(false, UserID,false));
         }
 
 
@@ -965,7 +965,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
         ll_option_love.setVisibility(View.GONE);
         ll_her.setVisibility(View.VISIBLE);
 
-        ReplaceFragWithStack(new FragInstaLikeProfileFriends(isFriend, id));
+        ReplaceFragWithStack(new FragInstaLikeProfileFriends(isFriend, id,false));
     }
 
     CallAPI apiCall;
