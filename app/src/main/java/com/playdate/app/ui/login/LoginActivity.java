@@ -423,9 +423,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         loginManager.logInWithReadPermissions(
                 LoginActivity.this,
                 Arrays.asList(
-                        "email",
-                        "public_profile",
-                        "user_birthday"));
+                        "email"
+//                        ,
+//                        "public_profile",
+//                        "user_birthday"
+
+// commented for now will remove later
+                )
+        );
 
 
     }
@@ -550,8 +555,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                                 String name = object.getString("name");
                                                 String email = object.getString("email");
                                                 String fbUserID = object.getString("id");
-                                                String birthday = object.getString("birthday");
+                                              //  String birthday = object.getString("birthday");
                                                 Log.d("Name of user ", name);
+                                                Log.d("email of user ", email);
+                                                Log.d("id of user ", fbUserID);
+                                                //Log.d("birthday of user ", birthday);
                                                 callSocialLoginAPI(email, fbUserID, accessToken);
 
                                                 disconnectFromFacebook();
@@ -568,7 +576,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         Bundle parameters = new Bundle();
                         parameters.putString(
                                 "fields",
-                                "id, name, email, gender, birthday");
+                                "id, name, email, gender");
+//                        parameters.putString(
+//                                "fields",
+//                                "id, name, email, gender, birthday");
                         request.setParameters(parameters);
                         request.executeAsync();
                     }
