@@ -44,8 +44,9 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
     public static final int CHAT_REQUEST = 9;
     public static final int CHATACCEPTED = 10;
     public static final int POSTTAGGED = 11;
+    public static final int VIEWMORE = 100;
 
-
+    public boolean showLoadmore = true;
     private final Onclick itemClick;
     private String requestId;
     private String relationRequestId;
@@ -55,12 +56,14 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
 
     private final ArrayList<NotificationData> notification_list;
 
+    private FragNotification fragNotification;
 
-    public FragNotificationTypeAdapter(FragmentActivity activity, ArrayList<NotificationData> lst_notifications, Onclick itemClick) {
+    public FragNotificationTypeAdapter(FragmentActivity activity, ArrayList<NotificationData> lst_notifications, Onclick itemClick, FragNotification fragNotification) {
         this.mcontext = activity;
         this.notification_list = lst_notifications;
         this.itemClick = itemClick;
         picasso = Picasso.get();
+        this.fragNotification = fragNotification;
 
     }
 
@@ -97,6 +100,8 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
                 return CHATACCEPTED;
             case "Post": // post tagged you
                 return POSTTAGGED;
+            case "ViewMore": // post tagged you
+                return VIEWMORE;
             default:
                 return -1;
         }
@@ -144,50 +149,59 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
         } else if (viewType == POSTTAGGED) {
             view = inflater.inflate(R.layout.row_notification_type_2, parent, false);
             viewHolder = new ViewHolderTagged(view);
+        } else if (viewType == VIEWMORE) {
+            view = inflater.inflate(R.layout.row_view_more, parent, false);
+            viewHolder = new ViewHolderMore(view);
         }
 
         return viewHolder;
 
     }
-    String timeToSetOld="";
+
+    String timeToSetOld = "";
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
-        String timeFormat = notification_list.get(position).getEntryDate();
-
-
-        timeFormat = timeFormat.replace("T", " ");
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
-        df.setTimeZone(TimeZone.getTimeZone("GTC"));
-        Date date = null;
+        String text = null;
+        String timeToSet = null;
         try {
-            date = df.parse(timeFormat);
-        } catch (ParseException e) {
+            String timeFormat = notification_list.get(position).getEntryDate();
+
+
+            timeFormat = timeFormat.replace("T", " ");
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+            df.setTimeZone(TimeZone.getTimeZone("GTC"));
+            Date date = null;
+            try {
+                date = df.parse(timeFormat);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            df.setTimeZone(TimeZone.getDefault());
+            String formattedDate = df.format(date);
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date ddd = null;
+            try {
+                ddd = sdf.parse(formattedDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            long millis = ddd.getTime();
+            text = TimeAgo.using(millis);
+            timeToSet = text.toLowerCase();
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        df.setTimeZone(TimeZone.getDefault());
-        String formattedDate = df.format(date);
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date ddd = null;
-        try {
-            ddd = sdf.parse(formattedDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        long millis = ddd.getTime();
-        String text = TimeAgo.using(millis);
-        String timeToSet = text.toLowerCase();
-
 
 
         if (holder.getItemViewType() == MATCHED) {
             ViewHolder viewHolderMatched = (ViewHolder) holder;
             viewHolderMatched.tv_date.setText(timeToSet);
-            if(timeToSet.equals(timeToSetOld)){
+            if (timeToSet.equals(timeToSetOld)) {
                 viewHolderMatched.tv_date.setVisibility(View.GONE);
-            }else{
+            } else {
                 viewHolderMatched.tv_date.setVisibility(View.VISIBLE);
 
             }
@@ -283,9 +297,9 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
             viewHolderLiked.tv_date.setText(timeToSet);
             picasso.load(notification_list.get(position).getmUserInformation().get(0).getProfilePicPath()).placeholder(R.drawable.profile)
                     .into(viewHolderLiked.profile_image_3);
-            if(timeToSet.equals(timeToSetOld)){
+            if (timeToSet.equals(timeToSetOld)) {
                 viewHolderLiked.tv_date.setVisibility(View.GONE);
-            }else{
+            } else {
                 viewHolderLiked.tv_date.setVisibility(View.VISIBLE);
 
             }
@@ -344,9 +358,9 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
         } else if (holder.getItemViewType() == COMMENT) {
             ViewHolderComment viewHolderComment = (ViewHolderComment) holder;
             viewHolderComment.tv_date.setText(timeToSet);
-            if(timeToSet.equals(timeToSetOld)){
+            if (timeToSet.equals(timeToSetOld)) {
                 viewHolderComment.tv_date.setVisibility(View.GONE);
-            }else{
+            } else {
                 viewHolderComment.tv_date.setVisibility(View.VISIBLE);
 
             }
@@ -397,9 +411,9 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
             ViewHolder viewHolderMatched = (ViewHolder) holder;
             viewHolderMatched.tv_date.setText(timeToSet);
 
-            if(timeToSet.equals(timeToSetOld)){
+            if (timeToSet.equals(timeToSetOld)) {
                 viewHolderMatched.tv_date.setVisibility(View.GONE);
-            }else{
+            } else {
                 viewHolderMatched.tv_date.setVisibility(View.VISIBLE);
 
             }
@@ -497,9 +511,9 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
             ViewHolderMatchRequest viewHolderMatchRequest = (ViewHolderMatchRequest) holder;
             viewHolderMatchRequest.tv_date.setText(timeToSet);
 
-            if(timeToSet.equals(timeToSetOld)){
+            if (timeToSet.equals(timeToSetOld)) {
                 viewHolderMatchRequest.tv_date.setVisibility(View.GONE);
-            }else{
+            } else {
                 viewHolderMatchRequest.tv_date.setVisibility(View.VISIBLE);
 
             }
@@ -572,9 +586,9 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
             ViewHolderMatchRequest viewHolderMatchRequest = (ViewHolderMatchRequest) holder;
             viewHolderMatchRequest.tv_date.setText(timeToSet);
 
-            if(timeToSet.equals(timeToSetOld)){
+            if (timeToSet.equals(timeToSetOld)) {
                 viewHolderMatchRequest.tv_date.setVisibility(View.GONE);
-            }else{
+            } else {
                 viewHolderMatchRequest.tv_date.setVisibility(View.VISIBLE);
 
             }
@@ -656,9 +670,9 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
             viewHolderLiked.tv_date.setText(timeToSet);
 
 
-            if(timeToSet.equals(timeToSetOld)){
+            if (timeToSet.equals(timeToSetOld)) {
                 viewHolderLiked.tv_date.setVisibility(View.GONE);
-            }else{
+            } else {
                 viewHolderLiked.tv_date.setVisibility(View.VISIBLE);
 
             }
@@ -706,9 +720,9 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
             ViewHolderLiked viewHolderLiked = (ViewHolderLiked) holder;
             viewHolderLiked.tv_date.setText(timeToSet);
 
-            if(timeToSet.equals(timeToSetOld)){
+            if (timeToSet.equals(timeToSetOld)) {
                 viewHolderLiked.tv_date.setVisibility(View.GONE);
-            }else{
+            } else {
                 viewHolderLiked.tv_date.setVisibility(View.VISIBLE);
 
             }
@@ -758,9 +772,9 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
             ViewHolderRelationRequest viewHolderRelationRequest = (ViewHolderRelationRequest) holder;
             viewHolderRelationRequest.tv_date.setText(timeToSet);
 
-            if(timeToSet.equals(timeToSetOld)){
+            if (timeToSet.equals(timeToSetOld)) {
                 viewHolderRelationRequest.tv_date.setVisibility(View.GONE);
-            }else{
+            } else {
                 viewHolderRelationRequest.tv_date.setVisibility(View.VISIBLE);
 
             }
@@ -801,10 +815,10 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
             ViewHolderChatRequest viewHolderChatRequest = (ViewHolderChatRequest) holder;
             viewHolderChatRequest.tv_date.setText(timeToSet);
 
-             if(timeToSet.equals(timeToSetOld)){
-                 viewHolderChatRequest.tv_date.setVisibility(View.GONE);
-            }else{
-                 viewHolderChatRequest.tv_date.setVisibility(View.VISIBLE);
+            if (timeToSet.equals(timeToSetOld)) {
+                viewHolderChatRequest.tv_date.setVisibility(View.GONE);
+            } else {
+                viewHolderChatRequest.tv_date.setVisibility(View.VISIBLE);
 
             }
             timeToSetOld = text.toLowerCase();
@@ -899,9 +913,9 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
             ViewHolderLiked viewHolderLiked = (ViewHolderLiked) holder;
             viewHolderLiked.tv_date.setText(timeToSet);
 
-            if(timeToSet.equals(timeToSetOld)){
+            if (timeToSet.equals(timeToSetOld)) {
                 viewHolderLiked.tv_date.setVisibility(View.GONE);
-            }else{
+            } else {
                 viewHolderLiked.tv_date.setVisibility(View.VISIBLE);
 
             }
@@ -951,9 +965,9 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
             viewHolderTagged.tv_date.setText(timeToSet);
 
 
-            if(timeToSet.equals(timeToSetOld)){
+            if (timeToSet.equals(timeToSetOld)) {
                 viewHolderTagged.tv_date.setVisibility(View.GONE);
-            }else{
+            } else {
                 viewHolderTagged.tv_date.setVisibility(View.VISIBLE);
 
             }
@@ -1012,6 +1026,20 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
                 }
                 return true;
             });
+        } else if (holder.getItemViewType() == VIEWMORE) {
+            ViewHolderMore viewHolderMore = (ViewHolderMore) holder;
+            if (notification_list.size() > 8) {
+                if (showLoadmore) {
+                    viewHolderMore.txt_view_more.setVisibility(View.VISIBLE);
+                } else {
+                    viewHolderMore.txt_view_more.setVisibility(View.GONE);
+                }
+            } else {
+                viewHolderMore.txt_view_more.setVisibility(View.GONE);
+            }
+            viewHolderMore.txt_view_more.setOnClickListener(view -> fragNotification.loadMore());
+
+
         }
     }
 
@@ -1094,6 +1122,7 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
 
         RelativeLayout rl_notification;
         TextView tv_date;
+
         public ViewHolderLiked(View view) {
             super(view);
             profile_image_3 = itemView.findViewById(R.id.profile_image_3);
@@ -1155,6 +1184,7 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
         LinearLayout main_ll;
 
         TextView tv_date;
+
         public ViewHolderMatchRequest(@NonNull View itemView) {
             super(itemView);
             main_ll = itemView.findViewById(R.id.main_ll);
