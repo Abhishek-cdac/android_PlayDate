@@ -276,12 +276,13 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
                 //  removeAt(getAdapterPosition());
             });
 
-///// FriendRequest
+// FriendRequest
         } else if (holder.getItemViewType() == LIKED) {
 
             ViewHolderLiked viewHolderLiked = (ViewHolderLiked) holder;
             viewHolderLiked.tv_date.setText(timeToSet);
-            picasso.load(notification_list.get(position).getmUserInformation().get(0).getProfilePicPath()).placeholder(R.drawable.profile)
+            picasso.load(notification_list.get(position).getmUserInformation().get(0).getProfilePicPath())
+                    .placeholder(R.drawable.profile)
                     .into(viewHolderLiked.profile_image_3);
             if(timeToSet.equals(timeToSetOld)){
                 viewHolderLiked.tv_date.setVisibility(View.GONE);
@@ -959,7 +960,8 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
             }
             timeToSetOld = text.toLowerCase();
 
-            picasso.load(notification_list.get(position).getmUserInformation().get(0).getProfilePicPath()).placeholder(R.drawable.profile)
+            picasso.load(notification_list.get(position).getmUserInformation().get(0).getProfilePicPath())
+                    .placeholder(R.drawable.profile)
                     .into(viewHolderTagged.profile_image_3);
 
 

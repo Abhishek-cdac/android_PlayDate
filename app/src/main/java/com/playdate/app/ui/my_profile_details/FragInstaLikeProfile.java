@@ -223,10 +223,10 @@ public class FragInstaLikeProfile extends Fragment implements onPhotoClick, View
     private void setValue() {
         String img = pref.getStringVal(SessionPref.LoginUserprofilePic);
         if (img.contains("http")) {
-            picasso.load(img)
+            picasso.load(img).placeholder(R.drawable.profile)
                     .into(profile_image);
         } else {
-            picasso.load(BASE_URL_IMAGE + img)
+            picasso.load(BASE_URL_IMAGE + img).placeholder(R.drawable.profile)
                     .into(profile_image);
         }
         txt_login_user.setText(pref.getStringVal(SessionPref.LoginUserusername));

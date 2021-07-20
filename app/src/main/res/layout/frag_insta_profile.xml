@@ -10,6 +10,7 @@
     android:paddingRight="@dimen/_10sdp">
 
     <RelativeLayout
+        android:background="@color/backgroundColour"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -18,7 +19,6 @@
             android:layout_width="@dimen/_30sdp"
             android:layout_height="@dimen/_30sdp"
             android:layout_centerVertical="true"
-            android:background="@color/backgroundColour"
             android:src="@drawable/booster" />
 
         <TextView

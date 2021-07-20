@@ -13,7 +13,6 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -46,7 +45,6 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.playdate.app.R;
 import com.playdate.app.business.businessbio.BusinessBioActivity;
 import com.playdate.app.business.businessphoto.BusinessUploadPhotoActivity;
-import com.playdate.app.business.dashboard_business.DashboardBusiness;
 import com.playdate.app.business.startdate.BusinessStartingDateActivity;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
@@ -58,7 +56,6 @@ import com.playdate.app.model.LoginUserDetails;
 import com.playdate.app.service.FcmMessageService;
 import com.playdate.app.ui.dashboard.DashboardActivity;
 import com.playdate.app.ui.forgot_password.ForgotPasswordActivity;
-import com.playdate.app.ui.onboarding.OnBoardingActivity;
 import com.playdate.app.ui.register.age_verification.AgeVerifiationActivity;
 import com.playdate.app.ui.register.bio.BioActivity;
 import com.playdate.app.ui.register.gender.GenderSelActivity;
@@ -74,6 +71,7 @@ import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.customcamera.otalia.CameraActivity;
 import com.playdate.app.util.session.SessionPref;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -86,6 +84,7 @@ import java.util.Objects;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import timber.log.Timber;
 
 import static com.playdate.app.data.api.RetrofitClientInstance.DEVICE_TYPE;
 import static com.playdate.app.util.session.SessionPref.LoginUserFCMID;
@@ -104,7 +103,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private ActivityLoginBinding binding;
     private static final int RC_SIGN_IN = 1;
     private CommonClass clsCommon;
-
+    boolean isBusiness = false;
     private SessionPref pref;
 
     @Override
@@ -116,7 +115,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         callbackManager = CallbackManager.Factory.create();
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
-//        boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
+//      boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestId()
@@ -186,8 +185,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         loginViewModel.getForgotClick().observe(this, forgot -> {
             if (forgot) {
                 startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class));
-            } else {
-                /////   
             }
         });
 
@@ -236,11 +233,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(task -> {
                     if (!task.isSuccessful()) {
-                        Log.w("******", "Fetching FCM registration token failed", task.getException());
+                        Timber.tag("******").w(task.getException(), "Fetching FCM registration token failed");
                         return;
                     }
                     String token = task.getResult();
-                    Log.d("******", token);
+                    Timber.d(token);
                     SessionPref pref1 = SessionPref.getInstance(LoginActivity.this);
                     pref1.saveStringKeyVal(LoginUserFCMID, token);
                 });
@@ -276,6 +273,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     }
                 } else {
                     try {
+                        assert response.errorBody() != null;
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
                         clsCommon.showDialogMsg(LoginActivity.this, "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
@@ -287,7 +285,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
 
             @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
+            public void onFailure(@NotNull Call<LoginResponse> call, Throwable t) {
                 t.printStackTrace();
                 pd.cancel();
                 Toast.makeText(LoginActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
@@ -312,7 +310,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private void checkForTheLastActivity(LoginResponse body) {
         try {
             LoginUserDetails user = body.getUserData();
-            boolean isBusiness = user.getUserType().toLowerCase().equals("business");
+            if (user.getUserType() != null)
+                isBusiness = user.getUserType().toLowerCase().equals("business");
 
             SessionPref.getInstance(LoginActivity.this).saveLoginUser(
                     user.getId(),
@@ -340,7 +339,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     isBusiness
             );
 
-            Intent mIntent = null;
+            Intent mIntent;
             Context mContext = LoginActivity.this;
             if (isBusiness) {
                 if (user.getBirthDate() == null) {
@@ -507,10 +506,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 pd.cancel();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
-
                         checkForTheLastActivity(response.body());
-
-                    } else {
+                    }
+                    else {
                         clsCommon.showDialogMsg(LoginActivity.this, "PlayDate", response.body().getMessage(), "Ok");
                     }
                 } else {
@@ -555,7 +553,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                                 String name = object.getString("name");
                                                 String email = object.getString("email");
                                                 String fbUserID = object.getString("id");
-                                              //  String birthday = object.getString("birthday");
+                                                //  String birthday = object.getString("birthday");
                                                 Log.d("Name of user ", name);
                                                 Log.d("email of user ", email);
                                                 Log.d("id of user ", fbUserID);
@@ -621,6 +619,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         // startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
                         //finish();
                         checkForTheLastActivity(response.body());
+
 
                     } else {
                         clsCommon.showDialogMsg(LoginActivity.this, "PlayDate", response.body().getMessage(), "Ok");

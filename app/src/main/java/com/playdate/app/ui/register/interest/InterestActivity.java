@@ -212,11 +212,7 @@ public class InterestActivity extends AppCompatActivity implements InterestAdapt
                                     }
                                 }
                             }
-
-
                         }
-
-
                         binding.ivNext.setVisibility(View.VISIBLE);
                         adapter = new InterestAdapter(lst_interest);
                         recyclerView.setAdapter(adapter);
