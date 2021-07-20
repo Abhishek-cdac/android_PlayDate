@@ -13,7 +13,6 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -35,9 +34,9 @@ import com.facebook.login.LoginResult;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
@@ -46,7 +45,6 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.playdate.app.R;
 import com.playdate.app.business.businessbio.BusinessBioActivity;
 import com.playdate.app.business.businessphoto.BusinessUploadPhotoActivity;
-import com.playdate.app.business.dashboard_business.DashboardBusiness;
 import com.playdate.app.business.startdate.BusinessStartingDateActivity;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
@@ -58,7 +56,6 @@ import com.playdate.app.model.LoginUserDetails;
 import com.playdate.app.service.FcmMessageService;
 import com.playdate.app.ui.dashboard.DashboardActivity;
 import com.playdate.app.ui.forgot_password.ForgotPasswordActivity;
-import com.playdate.app.ui.onboarding.OnBoardingActivity;
 import com.playdate.app.ui.register.age_verification.AgeVerifiationActivity;
 import com.playdate.app.ui.register.bio.BioActivity;
 import com.playdate.app.ui.register.gender.GenderSelActivity;
@@ -97,16 +94,15 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private CallbackManager callbackManager;
     private LoginManager loginManager;
     private final String ServerAuthCode = null;
-    private GoogleApiClient googleApiClient;
+//    private GoogleApiClient googleApiClient;
     private ImageView iv_show_password;
     private EditText login_Password;
-
+    GoogleSignInClient mGoogleSignInClient;
     private ActivityLoginBinding binding;
     private static final int RC_SIGN_IN = 1;
     private CommonClass clsCommon;
 
     private SessionPref pref;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,23 +111,31 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         FacebookSdk.sdkInitialize(this);
 
         callbackManager = CallbackManager.Factory.create();
-        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+//        AccessToken accessToken = AccessToken.getCurrentAccessToken();
 //        boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
 
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestId()
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
+//        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                .requestId()
+//                .requestIdToken(getString(R.string.default_web_client_id))
+//                .requestEmail()
+//                .build();
 
         // Build a GoogleSignInClient with the options specified by gso.
 //        GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 //        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
 
-        googleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this, this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+//        googleApiClient = new GoogleApiClient.Builder(this)
+//                .enableAutoManage(this, this)
+//                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+//                .build();
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
                 .build();
+
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+//        mGoogleSignInClient.signOut();
 
         LoginViewModel loginViewModel = new LoginViewModel();
         binding = DataBindingUtil.setContentView(LoginActivity.this, R.layout.activity_login);
@@ -193,28 +197,28 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         loginViewModel.fbClick().observe(this, register -> {
 
-            calltoFB();// or you can put this in viewmodel or simply complete
+            callToFB();// or you can put this in viewmodel or simply complete
 
         });
 
 
         loginViewModel.GoogleClick().observe(this, register -> {
 
-            calltoGoogle();// or you can put this in viewmodel or simply complete
+            callToGoogle();// or you can put this in viewmodel or simply complete
 
         });
 
-        logout.setOnClickListener(v -> Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(
-                new ResultCallback<Status>() {
-                    @Override
-                    public void onResult(Status status) {
-                        if (status.isSuccess()) {
-                            Toast.makeText(getApplicationContext(), "LogOut", Toast.LENGTH_LONG).show();
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Session not close", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                }));
+//        logout.setOnClickListener(v -> Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(
+//                new ResultCallback<Status>() {
+//                    @Override
+//                    public void onResult(Status status) {
+//                        if (status.isSuccess()) {
+//                            Toast.makeText(getApplicationContext(), "LogOut", Toast.LENGTH_LONG).show();
+//                        } else {
+//                            Toast.makeText(getApplicationContext(), "Session not close", Toast.LENGTH_LONG).show();
+//                        }
+//                    }
+//                }));
 
         iv_show_password.setOnClickListener(v -> {
 
@@ -312,7 +316,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private void checkForTheLastActivity(LoginResponse body) {
         try {
             LoginUserDetails user = body.getUserData();
-            boolean isBusiness = user.getUserType().toLowerCase().equals("business");
+            boolean isBusiness = false;
+            try {
+                isBusiness = user.getUserType().toLowerCase().equals("business");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
             SessionPref.getInstance(LoginActivity.this).saveLoginUser(
                     user.getId(),
@@ -410,12 +419,19 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
 
-    private void calltoGoogle() {
-        Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
-        startActivityForResult(intent, RC_SIGN_IN);
+    private void callToGoogle() {
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        if(null==account){
+            Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+            startActivityForResult(signInIntent, RC_SIGN_IN);
+        }else{
+            loginCode(account);
+        }
+
+
     }
 
-    private void calltoFB() {
+    private void callToFB() {
         FacebookSdk.sdkInitialize(LoginActivity.this);
         callbackManager = CallbackManager.Factory.create();
         facebookLogin();
@@ -455,35 +471,37 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private void handleSignInResult(Task<GoogleSignInAccount> task) {
 
         if (task.isSuccessful()) {
-            try {
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
-                if (acct != null) {
-                    String personName = acct.getDisplayName();
-                    String personGivenName = acct.getGivenName();
-                    //  String ServerAuthCode = acct.getIdToken();
-
-                    String personEmail = acct.getEmail();
-                    String personId = acct.getId();
-                    Uri personPhoto = acct.getPhotoUrl();
-
-                    Log.e("personEmail", "" + personEmail);
-                    // Log.e("ServerAuthCode", "" + ServerAuthCode);
-                    Log.e("personId", "" + personId);
-                    Log.e("personPhoto", "" + personPhoto);
-                    Log.e("personName", "" + personName);
-                    callGmailSocialLoginAPI(personEmail, personId, ServerAuthCode);
-                }
+            GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
+           loginCode(acct);
 
 
-            } catch (ApiException e) {
-                Log.e("EXCEPTION", e.toString());
-                Log.e("EXCEPTION", "signInResult:failed code=" + e.getStatusCode());
-            }
         } else {
             Toast.makeText(getApplicationContext(), "Sign in cancel", Toast.LENGTH_LONG).show();
         }
 
+    }
+
+    private void loginCode(GoogleSignInAccount acct) {
+        try {
+            if (acct != null) {
+                String personName = acct.getDisplayName();
+                String personGivenName = acct.getGivenName();
+                //  String ServerAuthCode = acct.getIdToken();
+
+                String personEmail = acct.getEmail();
+                String personId = acct.getId();
+                Uri personPhoto = acct.getPhotoUrl();
+
+                Log.e("personEmail", "" + personEmail);
+                // Log.e("ServerAuthCode", "" + ServerAuthCode);
+                Log.e("personId", "" + personId);
+                Log.e("personPhoto", "" + personPhoto);
+                Log.e("personName", "" + personName);
+                callGmailSocialLoginAPI(personEmail, personId, ServerAuthCode);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void callGmailSocialLoginAPI(String personEmail, String personId, String serverAuthCode) {
@@ -497,6 +515,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         hashMap.put("deviceID", getDeviceID());//Hardcode
         hashMap.put("deviceType", DEVICE_TYPE);
         hashMap.put("inviteCode", "");
+        hashMap.put("userType", "person");
         //   hashMap.put("deviceToken", "12345");//Hardc
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
         pd.show();

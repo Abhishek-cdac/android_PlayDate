@@ -82,7 +82,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerInParent="true"
             android:src="@drawable/ic_video_call"
-            android:visibility="invisible" />
+            android:visibility="visible" />
 
         <ImageView
             android:id="@+id/iv_delete_msg"

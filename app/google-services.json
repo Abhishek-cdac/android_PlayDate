@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "91277596407-mqi22sa71eb1o7pkgr968se5pk5ddgbl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.playdate.app",
+            "certificate_hash": "a8ac37e56c3e23b9713da8d5fb320cf2c21f3653"
+          }
+        },
+        {
           "client_id": "91277596407-7hu6ncse62dal92pm0fqs29r9sh3ihla.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -37,6 +45,13 @@
             {
               "client_id": "91277596407-7hu6ncse62dal92pm0fqs29r9sh3ihla.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "91277596407-794g1tf4bnfofldcgup7o5odcd246db4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.nectar.PlayDate"
+              }
             }
           ]
         }

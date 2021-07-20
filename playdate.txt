@@ -1,0 +1,5 @@
+Playdate Credentials:
+
+alias: playdate
+alias password:playdate8086
+password:playdate8086

@@ -318,8 +318,8 @@ public class FragNotification extends Fragment {
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("notificationId", notifiationId);
         hashMap.put("status", "1");
-        hashMap.put("action", action); //Hardcode
-        hashMap.put("userId", userId);//Hardcode
+        hashMap.put("action", action);
+        hashMap.put("userId", userId);
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
         pd.show();
         SessionPref pref = SessionPref.getInstance(getActivity());
