@@ -69,7 +69,6 @@ public class InviteAdapter extends RecyclerView.Adapter<InviteAdapter.ViewHolder
                 case 1:
                     facebook();
                     break;
-
                 case 2:
                     shareTextUrl();
                     break;
@@ -98,7 +97,7 @@ public class InviteAdapter extends RecyclerView.Adapter<InviteAdapter.ViewHolder
         Intent fbIntent = new Intent(Intent.ACTION_SEND);
         fbIntent.setType("text/plain");
         fbIntent.setPackage("com.facebook.katana");
-        fbIntent.putExtra(Intent.EXTRA_STREAM, inviteLink);
+        fbIntent.putExtra(Intent.EXTRA_TEXT, inviteLink);
         try {
             mContext.startActivity(fbIntent);
         } catch (android.content.ActivityNotFoundException ex) {

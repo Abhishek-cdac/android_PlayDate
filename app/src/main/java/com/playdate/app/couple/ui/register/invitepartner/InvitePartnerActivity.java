@@ -1,20 +1,17 @@
 package com.playdate.app.couple.ui.register.invitepartner;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
-
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
 
 import com.playdate.app.R;
-import com.playdate.app.couple.ui.register.connect.ConnectYourPartner;
 import com.playdate.app.couple.ui.register.invitesent.InviteSentActivity;
 import com.playdate.app.databinding.ActivityInvitePartnerBinding;
 import com.playdate.app.model.LoginUserDetails;
@@ -65,7 +62,7 @@ public class InvitePartnerActivity extends AppCompatActivity {
                 Intent fbIntent = new Intent(Intent.ACTION_SEND);
                 fbIntent.setType("text/plain");
                 fbIntent.setPackage("com.facebook.katana");
-                fbIntent.putExtra(Intent.EXTRA_STREAM, inviteLink);
+                fbIntent.putExtra(Intent.EXTRA_TEXT, inviteLink);
                 try {
                     startActivity(fbIntent);
                 } catch (android.content.ActivityNotFoundException ex) {

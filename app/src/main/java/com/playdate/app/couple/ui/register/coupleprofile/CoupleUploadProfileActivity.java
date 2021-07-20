@@ -12,13 +12,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
 
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.databinding.ActivityUploadCoupleProfileBinding;
-import com.playdate.app.databinding.ActivityUploadProfileBinding;
 import com.playdate.app.model.LoginResponse;
 import com.playdate.app.model.LoginUserDetails;
 import com.playdate.app.ui.register.interest.InterestActivity;

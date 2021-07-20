@@ -2,7 +2,6 @@ package com.playdate.app.couple.ui.register.couplebio;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -14,11 +13,7 @@ import com.playdate.app.R;
 import com.playdate.app.couple.ui.register.coupleprofile.CoupleUploadProfileActivity;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
-import com.playdate.app.databinding.ActivityBioBinding;
-import com.playdate.app.databinding.ActivityCoupleBioBinding;
 import com.playdate.app.model.CommonModel;
-import com.playdate.app.model.LoginResponse;
-import com.playdate.app.ui.register.profile.UploadProfileActivity;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
@@ -31,8 +26,6 @@ import java.util.Map;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.playdate.app.util.session.SessionPref.LoginUserpersonalBio;
 
 
 public class CoupleBioActivity extends AppCompatActivity {

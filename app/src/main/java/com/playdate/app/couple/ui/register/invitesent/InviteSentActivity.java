@@ -1,16 +1,13 @@
 package com.playdate.app.couple.ui.register.invitesent;
 
+import android.content.Intent;
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 
-import android.content.Intent;
-import android.os.Bundle;
-
 import com.playdate.app.R;
-import com.playdate.app.couple.ui.register.invitepartner.InvitePartnerActivity;
-import com.playdate.app.couple.ui.register.invitepartner.InvitepartnerViewModel;
-import com.playdate.app.databinding.ActivityInvitePartnerBinding;
 import com.playdate.app.databinding.ActivityInviteSentBinding;
 import com.playdate.app.ui.register.interestin.InterestActivity;
 import com.playdate.app.util.common.CommonClass;
