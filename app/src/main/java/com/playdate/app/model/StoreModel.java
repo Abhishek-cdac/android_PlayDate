@@ -8,6 +8,17 @@ public class StoreModel {
     @SerializedName("data")
     private List<StoreData> mData;
 
+    @SerializedName("accountDetails")
+    private List<StoreAccountDetails> accountDetails;
+
+    public List<StoreAccountDetails> getAccountDetails() {
+        return accountDetails;
+    }
+
+    public void setAccountDetails(List<StoreAccountDetails> accountDetails) {
+        this.accountDetails = accountDetails;
+    }
+
     @SerializedName("message")
     private String mMessage;
 
