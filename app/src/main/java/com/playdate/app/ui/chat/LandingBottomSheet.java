@@ -21,6 +21,7 @@ import com.playdate.app.model.CommonModel;
 import com.playdate.app.model.LoginResponse;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.ui.my_profile_details.FragInstaLikeProfile;
+import com.playdate.app.ui.my_profile_details.FragInstaLikeProfileFriends;
 import com.playdate.app.util.session.SessionPref;
 
 import java.util.HashMap;
@@ -102,16 +103,19 @@ public class LandingBottomSheet extends BottomSheetDialogFragment {
                 chatAdapter.shareChat(index);
 //                shareTextUrl();
             } else {
-                OnInnerFragmentClicks ref = (OnInnerFragmentClicks) getActivity();
-                ref.ReplaceFrag(new FragInstaLikeProfile());
-//                ref.loadProfile(toUserId);
+                try {
+                    OnInnerFragmentClicks ref = (OnInnerFragmentClicks) getActivity();
+                    ref.ReplaceFragWithStack(new FragInstaLikeProfileFriends(true, toUserId, true));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
                 chattingAdapter.dismissSheet();
             }
         });
-
-
         return view;
     }
+
     private void callDeleteChatRoom(String chatId) {
         SessionPref pref = SessionPref.getInstance(getActivity());
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);

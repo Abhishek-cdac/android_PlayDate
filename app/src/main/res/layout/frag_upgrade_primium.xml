@@ -286,7 +286,7 @@
 
                 <LinearLayout
                     android:layout_width="@dimen/_80sdp"
-                    android:layout_height="@dimen/_70sdp"
+                    android:layout_height="@dimen/_80sdp"
                     android:layout_marginTop="@dimen/_24sdp"
                     android:background="@drawable/pink_rect_filled"
                     android:orientation="vertical"

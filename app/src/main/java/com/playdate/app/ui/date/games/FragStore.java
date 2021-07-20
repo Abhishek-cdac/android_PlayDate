@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
+import com.playdate.app.model.StoreAccountDetails;
 import com.playdate.app.model.StoreData;
 import com.playdate.app.model.StoreItems;
 import com.playdate.app.model.StoreModel;
@@ -50,6 +52,7 @@ public class FragStore extends Dialog {
     ImageView iv_leaderboard;
     DashboardActivity ref;
     List<StoreData> lst_store_data;
+    List<StoreAccountDetails> lst_store_account_detail;
     List<StoreItems> game_items;
     List<StoreItems> date_items;
     List<StoreItems> multiplier_items;
@@ -60,6 +63,8 @@ public class FragStore extends Dialog {
     RecyclerView rv_multiplier;
     RecyclerView rv_dm_booster;
     private Onclick itemClick;
+
+    TextView totalPoints, date_coin, multi_coin, booster, date_coin1;
 
 
     public FragStore(@NonNull Context context) {
@@ -86,6 +91,11 @@ public class FragStore extends Dialog {
         rv_multiplier = view.findViewById(R.id.rv_multiplier);
         rv_dm_booster = view.findViewById(R.id.rv_dm_booster);
         cancel = view.findViewById(R.id.cancel);
+        totalPoints = view.findViewById(R.id.tv_position);
+        multi_coin = view.findViewById(R.id.multi_coin);
+        date_coin = view.findViewById(R.id.date_coin);
+        booster = view.findViewById(R.id.booster);
+        date_coin1 = view.findViewById(R.id.date_coin1);
         iv_leaderboard = view.findViewById(R.id.iv_leaderboard);
 
 
@@ -141,7 +151,7 @@ public class FragStore extends Dialog {
 
     }
 
-    private void callgetStore(Context context) {
+    public void callgetStore(Context context) {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("limit", "10");
@@ -163,6 +173,18 @@ public class FragStore extends Dialog {
                             if (lst_store_data == null) {
                                 lst_store_data = new ArrayList<>();
                             }
+
+                            lst_store_account_detail = response.body().getAccountDetails();
+                            if (lst_store_account_detail == null) {
+                                lst_store_account_detail = new ArrayList<>();
+                            }
+
+                            totalPoints.setText(new StringBuilder().append(lst_store_account_detail.get(0).getCurrentPoints()).append(" points").toString());
+                            Log.e("CurrentPoints",""+ lst_store_account_detail.get(0).getCurrentPoints());
+                            multi_coin.setText(lst_store_account_detail.get(0).getMultiplayer() + " Multi's");
+                            date_coin.setText(lst_store_account_detail.get(0).getDateCoins() + " Coins");
+                            booster.setText(lst_store_account_detail.get(0).getDmBooster() + " DM's");
+                            date_coin1.setText(lst_store_account_detail.get(0).getDateCoins() + " Coins");
 
                             for (int i = 0; i < lst_store_data.size(); i++) {
                                 switch (lst_store_data.get(i).getStoreType()) {
@@ -208,8 +230,7 @@ public class FragStore extends Dialog {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
                         Toast.makeText(context, jObjError.getString("message"), Toast.LENGTH_SHORT).show();
-//                        clsCommon.showDialogMsgfrag((FragmentActivity) context, "PlayDate", jObjError.getString("message"), "Ok");
-                    } catch (Exception e) {
+                        } catch (Exception e) {
                         Toast.makeText(context, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                     }
                 }

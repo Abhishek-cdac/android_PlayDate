@@ -47,7 +47,12 @@ public class InviteFriendActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.facebook_coupan) {
-            // SharingToSocialMedia("com.facebook.katana");
+            Intent share=new Intent(Intent.ACTION_SEND);
+            share.setType("text/plain");
+            share.putExtra(Intent.EXTRA_TEXT, inviteLink);
+            share.setPackage("com.facebook.katana"); //Facebook App package
+            startActivity(Intent.createChooser(share, "Playdate"));
+   /*         // SharingToSocialMedia("com.facebook.katana");
             Intent fbIntent = new Intent(Intent.ACTION_SEND);
             fbIntent.setType("text/plain");
             fbIntent.setPackage("com.facebook.katana");
@@ -58,17 +63,11 @@ public class InviteFriendActivity extends AppCompatActivity implements View.OnCl
                 Toast.makeText(getApplicationContext(),
                         "Facebook have not been installed.", Toast.LENGTH_SHORT).show();
 
-            }
+            }*/
         }
         if (id == R.id.message_coupan) {
 
             shareTextUrl();
-//            Intent intent = new Intent(Intent.ACTION_MAIN);
-//            intent.addCategory(Intent.CATEGORY_DEFAULT);
-//          //  intent.setType(Telephony.Sms.getDefaultSmsPackage(this));
-//            intent.setType("vnd.android-dir/mms-sms");
-//            intent.putExtra(Intent.EXTRA_TEXT, inviteLink);
-//            startActivity(intent);
 
 
         } else if (id == R.id.instagram_coupan) {
@@ -113,20 +112,5 @@ public class InviteFriendActivity extends AppCompatActivity implements View.OnCl
     }
 
 
-//    @Nullable
-//    public String getDefaultSmsAppPackageName(@NonNull final Context context) {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
-//            try {
-//                return Telephony.Sms.getDefaultSmsPackage(context);
-//            } catch (final Throwable e) {
-//            }
-//        final Intent intent = new Intent(Intent.ACTION_VIEW)
-//                .addCategory(Intent.CATEGORY_DEFAULT).setType("vnd.android-dir/mms-sms");
-//        intent.putExtra(Intent.EXTRA_TEXT, inviteLink);
-//        final List<ResolveInfo> resolveInfoList = context.getPackageManager().queryIntentActivities(intent, 0);
-//        if (!resolveInfoList.isEmpty())
-//            return resolveInfoList.get(0).activityInfo.packageName;
-//        return null;
-//    }
 
 }

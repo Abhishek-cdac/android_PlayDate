@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -71,6 +72,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final SimpleDateFormat format4;
     private final SimpleDateFormat df;
     private final SimpleDateFormat sdf;
+    PromotionAdapter adapter;
 
     public ChatAdapter(ArrayList<ChatMessage> chatmsgList, Context mContext, Onclick itemClick) {
         this.lst_chat = chatmsgList;
@@ -198,7 +200,9 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 viewHolderMe.rl_maps.setVisibility(View.GONE);
                 viewHolderMe.mv_location.setVisibility(View.GONE);
                 try {
-                    picasso.load(lst_chat.get(position).getMediaInfo().get(0).getMediaFullPath()).into(viewHolderMe.chat_image);
+                    picasso.load(lst_chat.get(position).getMediaInfo().get(0).getMediaFullPath())
+                            .fit()
+                            .into(viewHolderMe.chat_image);
                 } catch (Exception e) {
                     e.printStackTrace(); //working ok , Take a data from that object now
                 }
@@ -218,7 +222,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         viewHolderMe.card_video.setVisibility(View.GONE);
                         viewHolderMe.rl_maps.setVisibility(View.GONE);
                         viewHolderMe.mv_location.setVisibility(View.GONE);
-                        picasso.load(lst_chat.get(position).getMediaInfo().get(0).getMediaFullPath()).into(viewHolderMe.chat_image);
+                        picasso.load(lst_chat.get(position).getMediaInfo().get(0).getMediaFullPath()).centerCrop().fit().into(viewHolderMe.chat_image);
                         //image
                         break;
                     case "video":
@@ -416,7 +420,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             viewHolderOponent.tv_msg.setVisibility(View.GONE);
                             viewHolderOponent.card_img.setVisibility(View.VISIBLE);
 
-                            picasso.get().load(lst_chat.get(position).getMediaInfo().get(0).getMediaFullPath())
+                            picasso.get().load(lst_chat.get(position).getMediaInfo().get(0).getMediaFullPath()).fit().centerCrop()
                                     .into(viewHolderOponent.chat_image);
                             viewHolderOponent.chat_image.setOnClickListener(v -> showPhoto(lst_chat.get(position).getMediaInfo().get(0).getMediaFullPath()));
                             break;
@@ -490,6 +494,9 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 viewHolderOther.answer1.setText(lst_chat.get(position).getPolling().getPollingOption().get(0).getOption());
                 viewHolderOther.answer2.setText(lst_chat.get(position).getPolling().getPollingOption().get(1).getOption());
 
+                adapter = new PromotionAdapter(lst_chat.get(position).getPromotionText());
+                viewHolderOther.rv_promotions.setAdapter(adapter);
+
                 viewHolderOther.answer1.setOnClickListener(v -> itemClick.onItemClicks(v, position, 10, lst_chat.get(position).getPolling().getPollingOption().get(0).getQuestionId(),
                         lst_chat.get(position).getPolling().getPollingOption().get(0).getOptionId()));
                 viewHolderOther.answer2.setOnClickListener(v -> itemClick.onItemClicks(v, position, 10, lst_chat.get(position).getPolling().getPollingOption().get(1).getQuestionId(),
@@ -498,8 +505,6 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 e.printStackTrace();
             }
         }  ///
-
-
     }
 
     private String formattedDate(String entryDate) {
@@ -549,7 +554,6 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     }
 
-
     private int findDayDiff(String formattedDate) {
         try {
             Date date = sdf.parse(formattedDate);
@@ -578,7 +582,6 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         mContext.startActivity(mIntent);
     }
 
-
     private void stopPlaying(MediaPlayer mediaPlayer) {
         if (mediaPlayer != null) {
             isPlaying = false;
@@ -595,7 +598,6 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         notifyDataSetChanged();
     }
 
-
     public void removeTyping() {
         lst_chat.remove(0);
         notifyDataSetChanged();
@@ -605,7 +607,6 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 //        chatmsgList.add(new ChatMessage("text", polling, "jid_1109", question));
 //        notifyDataSetChanged();
 //    }
-
 
     public void removeFromList(int positiontoDelete) {
         Log.d("positiontoDelete", "removeFromList: " + positiontoDelete);
@@ -670,12 +671,13 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         bottomSheet.dismiss();
     }
 
-
     public class ViewHolderOther extends RecyclerView.ViewHolder {
         TextView tv_msg;
+        RecyclerView rv_promotions;
         TextView answer1;
         TextView answer2;
         TextView tv_date_time;
+
 
         public ViewHolderOther(@NonNull View itemView) {
             super(itemView);
@@ -683,8 +685,12 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             answer1 = itemView.findViewById(R.id.answer1);
             answer2 = itemView.findViewById(R.id.answer2);
             tv_date_time = itemView.findViewById(R.id.tv_date_time);
+            rv_promotions = itemView.findViewById(R.id.rv_promotions);
 
+            RecyclerView.LayoutManager manager = new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false);
+            rv_promotions.setLayoutManager(manager);
         }
+
     }
 
 

@@ -6,7 +6,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.playdate.app.ui.my_profile_details.FragMyProfileDetails;
-import com.playdate.app.ui.my_profile_details.FragMyProfilePayments;
 import com.playdate.app.ui.my_profile_details.FragMyProfilePersonal;
 
 import org.jetbrains.annotations.NotNull;

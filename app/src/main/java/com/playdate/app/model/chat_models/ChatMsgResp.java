@@ -15,6 +15,17 @@ public class ChatMsgResp {
     @SerializedName("questions")
     private ArrayList<PollingQuestion> lstPollingQuestion;
 
+    public ArrayList<String> getLstPromotions() {
+        return lstPromotions;
+    }
+
+    public void setLstPromotions(ArrayList<String> lstPromotions) {
+        this.lstPromotions = lstPromotions;
+    }
+
+    @SerializedName("promotions")
+    private ArrayList<String> lstPromotions;
+
     public int getStatus() {
         return status;
     }
