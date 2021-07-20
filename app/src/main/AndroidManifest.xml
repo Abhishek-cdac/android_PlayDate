@@ -60,7 +60,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PlayDate"
         android:usesCleartextTraffic="true">
-        <activity android:name=".FacebookbookLogin">
+        <activity android:name=".FacebookbookLogin"
+            android:exported="true"
+            >
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
 
@@ -69,10 +71,14 @@
 
         </activity>
         <!-- <activity android:name=".business.couponsGenerate.dialogs.DialogCouponCreated" /> -->
-        <activity android:name=".business.chooselevel.ChooseLevelActivity" /> <!-- <activity android:name=".business.couponsGenerate.DialogCouponsGenerater" /> -->
-        <activity android:name=".business.businessphoto.BusinessUploadPhotoActivity" />
-        <activity android:name=".business.businessbio.BusinessBioActivity" />
-        <activity android:name=".business.startdate.BusinessStartingDateActivity" />
+        <activity  android:exported="true"
+            android:name=".business.chooselevel.ChooseLevelActivity" /> <!-- <activity android:name=".business.couponsGenerate.DialogCouponsGenerater" /> -->
+        <activity  android:exported="true"
+            android:name=".business.businessphoto.BusinessUploadPhotoActivity" />
+        <activity  android:exported="true"
+            android:name=".business.businessbio.BusinessBioActivity" />
+        <activity  android:exported="true"
+            android:name=".business.startdate.BusinessStartingDateActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -123,83 +129,113 @@
         </provider>
 
         <activity
+            android:exported="true"
             android:name=".ui.dashboard.DashboardActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.date.DateBaseActivity" />
         <activity
+            android:exported="true"
+            android:name=".ui.date.DateBaseActivity" />
+        <activity
+            android:exported="true"
             android:name=".ui.anonymous_question.AnonymousQuestionActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".ui.card_swipe.FullScreenView" />
         <activity
+            android:exported="true"
+            android:name=".ui.card_swipe.FullScreenView" />
+        <activity
+            android:exported="true"
             android:name=".ui.login.LoginActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".util.customcamera.otalia.GameCamera" />
         <activity
+            android:exported="true"
+            android:name=".util.customcamera.otalia.GameCamera" />
+        <activity
+            android:exported="true"
             android:name=".ui.register.RegisterActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="true"
             android:name=".couple.ui.register.coupleusername.CoupleUserNameActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="true"
             android:name=".couple.ui.register.couplebio.CoupleBioActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="true"
             android:name=".couple.ui.register.coupleprofile.CoupleUploadProfileActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="true"
             android:name=".couple.ui.register.connect.ConnectYourPartner"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="true"
             android:name=".couple.ui.register.invitecode.InviteCodeActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="true"
             android:name=".couple.ui.register.invitepartner.InvitePartnerActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="true"
             android:name=".couple.ui.register.invitesent.InviteSentActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="true"
             android:name=".ui.register.otp.OTPActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="true"
             android:name=".ui.register.relationship.RelationActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="true"
             android:name=".ui.register.age_verification.AgeVerifiationActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="true"
             android:name=".ui.register.interestin.InterestActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="true"
             android:name=".ui.register.username.UserNameActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="true"
             android:name=".ui.register.bio.BioActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="true"
             android:name=".ui.register.interest.InterestActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="true"
             android:name=".ui.playvideo.ExoPlayerActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="true"
             android:name=".ui.register.profile.UploadProfileActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="true"
             android:name=".ui.forgot_password.ForgotPasswordActivity"
             android:screenOrientation="portrait" /> <!-- <activity -->
         <!-- android:name=".ui.onboarding.GetStarted" -->
         <!-- android:screenOrientation="portrait" /> -->
         <activity
+            android:exported="true"
             android:name=".util.image_crop.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Base.Theme.AppCompat" />
         <activity
+            android:exported="true"
             android:name=".business.dashboard_business.DashboardBusiness"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="true"
             android:name=".ui.onboarding.OnBoardingActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing">
@@ -210,61 +246,80 @@
             </intent-filter>
         </activity>
         <activity
+            android:exported="true"
             android:name=".ui.chat.MapActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="true"
             android:name=".ui.chat.ImageViewActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="true"
             android:name=".ui.coupons.ActivityCoupons"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="true"
             android:name=".ui.chat.request.ChatBaseActivity"
             android:screenOrientation="portrait" /> <!-- <activity -->
         <!-- android:name=".ui.chat.ChatActivity" -->
         <!-- android:screenOrientation="portrait" /> -->
         <!-- <activity android:name=".ui.SampleActivity" /> -->
         <activity
+            android:exported="true"
             android:name=".util.customcamera.otalia.VideoPreviewActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="true"
             android:name=".util.customcamera.otalia.CameraActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="true"
             android:name=".ui.restaurant.RestaurantActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="true"
             android:name=".ui.anonymous_question.AnoQuesCreateActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="true"
             android:name=".ui.social.upload_media.PostMediaActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
+            android:exported="true"
             android:name=".ui.register.usertype.UserTypeSelectionActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="true"
             android:name=".ui.register.gender.GenderSelActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="true"
             android:name=".ui.invite.InviteFriendActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="true"
             android:name=".ui.blockuser.BlockUserActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="true"
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
         <activity
+            android:exported="true"
             android:name=".util.photoview.PhotoViewActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".util.common.BaseActivity" />
+        <activity android:name=".util.common.BaseActivity"
+            android:exported="true"
+            />
         <activity
+            android:exported="true"
             android:name=".ui.chat.ChatMainActivity"
             android:screenOrientation="portrait" /> <!-- <activity android:name=".videocall.activities.LoginActivity"> -->
         <!-- </activity> -->
         <activity
+            android:exported="true"
             android:name=".videocall.activities.BaseActivity"
             android:screenOrientation="portrait"></activity> <!-- <activity -->
         <!-- android:name=".videocall.activities.OpponentsActivity" -->
@@ -272,6 +327,7 @@
         <!-- android:launchMode="singleTask" -->
         <!-- android:screenOrientation="portrait" /> -->
         <activity
+            android:exported="true"
             android:name=".videocall.activities.PermissionsActivity"
             android:screenOrientation="portrait" /> <!-- <activity -->
         <!-- android:name=".videocall.activities.SettingsActivity" -->
@@ -281,6 +337,7 @@
             android:name=".videocall.activities.CallActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:excludeFromRecents="true"
+            android:exported="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
