@@ -18,7 +18,6 @@ import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.MyCoupons;
 import com.playdate.app.model.MyCouponsModel;
 import com.playdate.app.model.MyCouponsWrap;
-import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.ui.coupons.adapters.MyCouponAdapter;
 import com.playdate.app.util.session.SessionPref;
 
@@ -34,8 +33,8 @@ import retrofit2.Response;
 public class FragMyCoupons extends Fragment {
 
     private RecyclerView rv_coupons_list;
-    private Onclick itemClick;
     private TextView txt_points;
+
     public FragMyCoupons() {
     }
 
@@ -66,24 +65,24 @@ public class FragMyCoupons extends Fragment {
         call.enqueue(new Callback<MyCouponsModel>() {
             @Override
             public void onResponse(Call<MyCouponsModel> call, Response<MyCouponsModel> response) {
-              try {
-                  if (response.code() == 200) {
-                      assert response.body() != null;
-                      if (response.body().getStatus() == 1) {
-                          MyCouponsWrap wrap = response.body().getData();
-                          List<MyCoupons> lst = wrap.getLst();
-                          if (lst == null) {
-                              lst = new ArrayList<>();
-                          }
-                          txt_points.setText("" + wrap.getAccount().getCurrentPoints());
-                          MyCouponAdapter adapter = new MyCouponAdapter(lst);
-                          rv_coupons_list.setAdapter(adapter);
+                try {
+                    if (response.code() == 200) {
+                        assert response.body() != null;
+                        if (response.body().getStatus() == 1) {
+                            MyCouponsWrap wrap = response.body().getData();
+                            List<MyCoupons> lst = wrap.getLst();
+                            if (lst == null) {
+                                lst = new ArrayList<>();
+                            }
+                            txt_points.setText("" + wrap.getAccount().getCurrentPoints());
+                            MyCouponAdapter adapter = new MyCouponAdapter(lst);
+                            rv_coupons_list.setAdapter(adapter);
 
-                      }
-                  }
-              } catch (Exception ex){
+                        }
+                    }
+                } catch (Exception ignored) {
 
-              }
+                }
 
             }
 

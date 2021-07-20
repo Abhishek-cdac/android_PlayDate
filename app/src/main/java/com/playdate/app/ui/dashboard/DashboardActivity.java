@@ -586,6 +586,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
 //            }
             nsv.scrollTo(0, 0);
             OPTION_CLICK = 0;
+            ll_her.setVisibility(View.VISIBLE);
             iv_play_date_logo.setVisibility(View.VISIBLE);
             ll_profile_drop_menu.setVisibility(View.GONE);
             iv_plus.setVisibility(View.GONE);
@@ -625,6 +626,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
             OPTION_CLICK = 1;
             iv_love.setImageResource(R.drawable.love);
             iv_love.setBackground(null);
+            ll_her.setVisibility(View.VISIBLE);
             iv_coupons.setImageResource(R.drawable.badge_sel);
             iv_coupons.setBackground(getDrawable(R.drawable.rectangle_back));
             ll_option_love.setVisibility(View.GONE);
@@ -647,6 +649,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
             }
             nsv.scrollTo(0, 0);
             OPTION_CLICK = 2;
+            ll_her.setVisibility(View.VISIBLE);
             iv_play_date_logo.setVisibility(View.VISIBLE);
             ll_profile_drop_menu.setVisibility(View.GONE);
             iv_plus.setVisibility(View.GONE);
@@ -668,6 +671,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
             }
             nsv.scrollTo(0, 0);
             OPTION_CLICK = 3;
+            ll_her.setVisibility(View.VISIBLE);
             iv_play_date_logo.setVisibility(View.VISIBLE);
             ll_profile_drop_menu.setVisibility(View.GONE);
             iv_plus.setVisibility(View.VISIBLE);

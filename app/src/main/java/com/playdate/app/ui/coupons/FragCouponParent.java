@@ -21,11 +21,9 @@ import androidx.viewpager.widget.ViewPager;
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
-import com.playdate.app.model.CommonModel;
 import com.playdate.app.model.NotificationCountModel;
 import com.playdate.app.model.RestMain;
-import com.playdate.app.ui.dashboard.OnAPIResponce;
-import com.playdate.app.ui.dashboard.adapter.RestaurentListAdapter;
+import com.playdate.app.ui.dashboard.adapter.RestaurantListAdapter;
 import com.playdate.app.ui.dashboard.data.CallAPI;
 import com.playdate.app.ui.dashboard.fragments.FragmentSearchRestaurent;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
@@ -48,7 +46,7 @@ public class FragCouponParent extends Fragment implements OnSizeDecided, View.On
     //, OnAPIResponce {
     private WrapContentViewPager viewpager;
     private RecyclerView rv_restaurant;
-    private RestaurentListAdapter adapterRestaurent;
+    private RestaurantListAdapter adapterRestaurent;
     private SessionPref pref;
     private TextView txt_store;
     private TextView txt_my_coupon;
@@ -74,7 +72,7 @@ public class FragCouponParent extends Fragment implements OnSizeDecided, View.On
         CoupounPageAdapter adapter = new CoupounPageAdapter(getChildFragmentManager());
         viewpager.setAdapter(adapter);
         RecyclerView.LayoutManager manager1 = new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false);
-        adapterRestaurent = new RestaurentListAdapter(new ArrayList<>());
+        adapterRestaurent = new RestaurantListAdapter(new ArrayList<>());
         rv_restaurant.setAdapter(adapterRestaurent);
         rv_restaurant.setLayoutManager(manager1);
         CallNotificationCount();

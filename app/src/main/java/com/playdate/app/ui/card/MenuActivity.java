@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import io.card.payment.CardIOActivity;
 
 public class MenuActivity extends Activity {
+    final  int REQUEST_SCAN=100;
 
     @Override
     protected void onCreate(Bundle bundle) {
@@ -31,7 +32,7 @@ public class MenuActivity extends Activity {
         btn.setOnClickListener(v -> startScanning());
 
     }
-final  int REQUEST_SCAN=100;
+
     // method within MyActivity from previous step
     public void startScanning() {
         Intent intent = new Intent(this, CardIOActivity.class)
