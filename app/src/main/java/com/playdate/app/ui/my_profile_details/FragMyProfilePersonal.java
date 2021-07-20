@@ -49,6 +49,7 @@ public class FragMyProfilePersonal extends Fragment implements View.OnClickListe
     private CircleImageView profile_image;
     private SessionPref pref;
     private ArrayList<GetProileDetailData> lst_getPostDetail;
+    String mobile;
 
     public FragMyProfilePersonal() {
     }
@@ -109,7 +110,9 @@ public class FragMyProfilePersonal extends Fragment implements View.OnClickListe
                         if (lst_getPostDetail == null) {
                             lst_getPostDetail = new ArrayList<>();
                         }
+
                         try {
+
                             pref.saveStringKeyVal(SessionPref.LoginUserrelationship, lst_getPostDetail.get(0).getRelationship());
                             if (pref.getStringVal(SessionPref.LoginUserrelationship).equals("Single")) {
                                 txt_relationship.setText("Single");
@@ -137,10 +140,14 @@ public class FragMyProfilePersonal extends Fragment implements View.OnClickListe
         try {
             SessionPref pref = SessionPref.getInstance(getActivity());
             email.setText(pref.getStringVal(SessionPref.LoginUseremail));
-            String mobile = pref.getStringVal(SessionPref.LoginUserphoneNo);
-            String temp = mobile.substring(0, 3);
-            String temp1 = mobile.substring(3, 6);
-            String temp2 = mobile.substring(6, 10);
+            if (mobile != null) ;
+            mobile = pref.getStringVal(SessionPref.LoginUserphoneNo);
+            String temp;
+            temp = mobile.substring(0, 3);
+            String temp1;
+            temp1 = mobile.substring(3, 6);
+            String temp2;
+            temp2 = mobile.substring(6, 10);
             txt_phone.setText(temp + "-" + temp1 + "-" + temp2);
             txt_gender.setText(pref.getStringVal(SessionPref.LoginUsergender));
             String[] s = pref.getStringVal(SessionPref.LoginUserbirthDate).split("T");
