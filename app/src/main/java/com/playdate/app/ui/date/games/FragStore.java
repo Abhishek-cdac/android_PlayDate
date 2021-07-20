@@ -13,7 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,7 +29,6 @@ import com.playdate.app.ui.date.adapter.StoreDMAdapter;
 import com.playdate.app.ui.date.adapter.StoreDateCoinAdpter;
 import com.playdate.app.ui.date.adapter.StoreGameCoinAdapter;
 import com.playdate.app.ui.date.adapter.StoreMultiplierAdapter;
-import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
