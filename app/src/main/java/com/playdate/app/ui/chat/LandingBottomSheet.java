@@ -113,8 +113,6 @@ public class LandingBottomSheet extends BottomSheetDialogFragment {
                 chattingAdapter.dismissSheet();
             }
         });
-
-
         return view;
     }
 
