@@ -42,9 +42,6 @@ import static com.playdate.app.util.session.SessionPref.LoginUserprofilePic;
 public class BusinessUploadPhotoActivity extends AppCompatActivity {
 
     private ActivityUploadBusinessPhotoBinding binding;
-//    private ArrayList permissionsToRequest;
-//    private final ArrayList permissionsRejected = new ArrayList();
-//    private final ArrayList permissions = new ArrayList();
     public final static int ALL_PERMISSIONS_RESULT = 107;
     public final static int PICK_PHOTO_FOR_AVATAR = 150;
     public final static int TAKE_PHOTO_CODE = 0;
@@ -61,10 +58,8 @@ public class BusinessUploadPhotoActivity extends AppCompatActivity {
 
 
         viewModel.OnNextClick().observe(this, click -> {
-            //    uploadImage();
-            startActivity(new Intent(BusinessUploadPhotoActivity.this, DashboardActivity
-                    .class));
-            finish();
+                uploadImage();
+
         });
 
         viewModel.onBackClick().observe(this, click -> finish());
@@ -113,7 +108,7 @@ public class BusinessUploadPhotoActivity extends AppCompatActivity {
 
 
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 40, bos);
             byte[] bitmapdata = bos.toByteArray();
 
 //write the bytes in file
@@ -131,9 +126,9 @@ public class BusinessUploadPhotoActivity extends AppCompatActivity {
         }
 
         SessionPref pref = SessionPref.getInstance(this);
-        MultipartBody.Part filePart = MultipartBody.Part.createFormData("userProfilePic", f.getName(), RequestBody.create(MediaType.parse("image/png"), f));
+        MultipartBody.Part filePart = MultipartBody.Part.createFormData("userBusinessImage", f.getName(), RequestBody.create(MediaType.parse("image/png"), f));
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-        Call<LoginResponse> call = service.uploadImage("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), filePart);
+        Call<LoginResponse> call = service.addBusinessImage("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), filePart);
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
@@ -141,17 +136,17 @@ public class BusinessUploadPhotoActivity extends AppCompatActivity {
                 if (response.code() == 200) {
 
                     LoginUserDetails user = response.body().getUserData();
-                    pref.saveStringKeyVal(LoginUserprofilePic, user.getProfilePicPath());
+                   // pref.saveStringKeyVal(LoginUserprofilePic, user.getProfilePicPath());
 
                     if (mIntent.getBooleanExtra("fromProfile", false)) {
                         Intent mIntent = new Intent();
                         setResult(407, mIntent);
-                        finish();
+
                     } else {
-                        startActivity(new Intent(BusinessUploadPhotoActivity.this, InterestActivity
+                        startActivity(new Intent(BusinessUploadPhotoActivity.this, DashboardActivity
                                 .class));
                     }
-
+                    finish();
 
                 } else {
                     new CommonClass().showDialogMsg(BusinessUploadPhotoActivity.this, "PlayDate", "An error occurred!", "Ok");

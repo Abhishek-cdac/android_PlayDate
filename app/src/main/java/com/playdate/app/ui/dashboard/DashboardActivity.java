@@ -30,6 +30,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.playdate.app.R;
 import com.playdate.app.business.couponsGenerate.FragCouponParentBusiness;
+import com.playdate.app.business.profile.FragBusinessProfile;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.FriendsListModel;
@@ -663,7 +664,13 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
             iv_profile_sett.setBackground(getDrawable(R.drawable.rectangle_back));
             iv_profile_sett.setImageResource(R.drawable.tech_support_red);
 
-            ReplaceFrag(new FragSettingsParent());
+            if(pref.getBoolVal(SessionPref.isBusiness)){
+                ReplaceFrag(new FragBusinessProfile());
+            }else{
+                ReplaceFrag(new FragSettingsParent());
+            }
+
+
 
         } else if (id == R.id.ll_profile_insta) {
             if (OPTION_CLICK == 3) {
@@ -684,8 +691,13 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
             ll_mainMenu2.setVisibility(View.GONE);
             iv_profile_sett.setBackground(null);
             iv_profile_sett.setImageResource(R.drawable.tech_support);
-            profile = new FragInstaLikeProfile(true);
-            ReplaceFrag(profile);
+            if(pref.getBoolVal(SessionPref.isBusiness)){
+                ReplaceFrag(new FragInstaLikeProfileBusiness());
+            }else{
+                profile = new FragInstaLikeProfile(true);
+                ReplaceFrag(profile);
+            }
+
         } else if (id == R.id.iv_plus) {
             ll_profile_drop_menu.setVisibility(View.VISIBLE);
             iv_plus.setVisibility(View.GONE);

@@ -87,6 +87,10 @@ public interface GetDataService {
     Call<LoginResponse> uploadImage(@Header("Authorization") String token, @Part MultipartBody.Part filePart);
 
     @Multipart
+    @POST("user/add-business-image")
+    Call<LoginResponse> addBusinessImage(@Header("Authorization") String token, @Part MultipartBody.Part filePart);
+
+    @Multipart
     @POST("user/update-profile-video")
     Call<LoginResponse> uploadProfileVideo(@Header("Authorization") String token, @Part MultipartBody.Part filePart);
 
