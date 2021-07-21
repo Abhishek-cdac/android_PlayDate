@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.playdate.app.R;
+import com.playdate.app.business.businessbio.BusinessBioActivity;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.databinding.ActivityUsernameBinding;
@@ -117,8 +118,13 @@ public class UserNameActivity extends AppCompatActivity {
                             setResult(408, mIntent);
                             finish();
                         } else {
+                            if(pref.getBoolVal(SessionPref.isBusiness)){
+                                startActivity(new Intent(UserNameActivity.this, BusinessBioActivity.class));
+                            }else{
+                                startActivity(new Intent(UserNameActivity.this, BioActivity.class));
+                            }
 
-                            startActivity(new Intent(UserNameActivity.this, BioActivity.class));
+
 
 
                         }

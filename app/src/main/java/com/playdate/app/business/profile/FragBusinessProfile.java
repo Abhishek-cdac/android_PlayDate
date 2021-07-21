@@ -7,12 +7,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 
+import com.facebook.login.LoginManager;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.playdate.app.R;
 import com.playdate.app.business.businessbio.BusinessBioActivity;
 import com.playdate.app.data.api.GetDataService;
@@ -21,6 +27,7 @@ import com.playdate.app.model.GetProfileDetails;
 import com.playdate.app.model.GetProileDetailData;
 import com.playdate.app.ui.dashboard.OnProfilePhotoChageListerner;
 import com.playdate.app.ui.forgot_password.ForgotPasswordActivity;
+import com.playdate.app.ui.login.LoginActivity;
 import com.playdate.app.ui.register.age_verification.AgeVerifiationActivity;
 import com.playdate.app.ui.register.bio.BioActivity;
 import com.playdate.app.ui.register.gender.GenderSelActivity;
@@ -43,6 +50,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
+import static com.playdate.app.util.session.SessionPref.LoginVerified;
 
 public class FragBusinessProfile extends Fragment implements View.OnClickListener {
     public FragBusinessProfile() {
@@ -53,7 +61,7 @@ public class FragBusinessProfile extends Fragment implements View.OnClickListene
     private TextView txt_phone;
 //    private TextView txt_gender;
     private TextView DOB;
-//    private TextView txt_relationship;
+    private TextView txt_user_name;
 //    private TextView interestin;
     private CircleImageView profile_image;
     private SessionPref pref;
@@ -61,7 +69,7 @@ public class FragBusinessProfile extends Fragment implements View.OnClickListene
     String mobile;
     private ImageView iv_dark_mode;
     boolean state = false;
-
+    private GoogleSignInClient mGoogleSignInClient;
 
     @Nullable
     @org.jetbrains.annotations.Nullable
@@ -73,6 +81,7 @@ public class FragBusinessProfile extends Fragment implements View.OnClickListene
         txt_phone = view.findViewById(R.id.txt_phone);
 //        txt_gender = view.findViewById(R.id.txt_gender);
         DOB = view.findViewById(R.id.DOB);
+        txt_user_name = view.findViewById(R.id.txt_user_name);
 //        txt_relationship = view.findViewById(R.id.txt_relationship);
 //        interestin = view.findViewById(R.id.interestin);
         profile_image = view.findViewById(R.id.profile_image);
@@ -81,7 +90,9 @@ public class FragBusinessProfile extends Fragment implements View.OnClickListene
         ImageView iv_dob = view.findViewById(R.id.iv_dob);
         ImageView iv_reset_pass = view.findViewById(R.id.iv_reset_pass);
         ImageView iv_edit_bio = view.findViewById(R.id.iv_edit_bio);
+        TextView logout = view.findViewById(R.id.logout);
         iv_edit_bio.setOnClickListener(this);
+        logout.setOnClickListener(this);
 //        ImageView iv_relationship = view.findViewById(R.id.iv_relationship);
 //        ImageView iv_sex_orientation = view.findViewById(R.id.iv_sex_orientation);
         TextView txt_change_photo = view.findViewById(R.id.txt_change_photo);
@@ -160,6 +171,7 @@ public class FragBusinessProfile extends Fragment implements View.OnClickListene
         try {
             SessionPref pref = SessionPref.getInstance(getActivity());
             email.setText(pref.getStringVal(SessionPref.LoginUseremail));
+            txt_user_name.setText(pref.getStringVal(SessionPref.LoginUserusername));
             if (mobile != null) ;
             mobile = pref.getStringVal(SessionPref.LoginUserphoneNo);
             String temp;
@@ -183,6 +195,14 @@ public class FragBusinessProfile extends Fragment implements View.OnClickListene
                 picasso.load(BASE_URL_IMAGE + img)
                         .into(profile_image);
             }
+
+
+            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestId()
+                    .requestIdToken(getString(R.string.default_web_client_id))
+                    .requestEmail()
+                    .build();
+            mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -224,9 +244,61 @@ public class FragBusinessProfile extends Fragment implements View.OnClickListene
             Intent mIntent = new Intent(getActivity(), BusinessBioActivity.class);
             mIntent.putExtra("fromProfile", true);
             startActivityForResult(mIntent, 409);
+        } else if (id == R.id.logout) {
+            showYesNoDialog();
         }
     }
 
+    private void outFromApp() {
+        switch (pref.getStringVal(SessionPref.LoginUserSourceType)) {
+            case "Direct": {
+                SessionPref.logout(getActivity());
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+                break;
+            }
+            case "Facebook": {
+
+                LoginManager.getInstance().logOut();
+                pref.saveBoolKeyVal(LoginVerified, false);
+                SessionPref.logout(getActivity());
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+                break;
+            }
+            case "Google":
+
+                signOut();
+                break;
+        }
+    }
+    private void signOut() {
+
+
+        mGoogleSignInClient.signOut()
+                .addOnCompleteListener(getActivity(), task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(getActivity(), "LogOut", Toast.LENGTH_LONG).show();
+                        pref.saveBoolKeyVal(LoginVerified, false);
+                        SessionPref.logout(getActivity());
+                        Intent intent = new Intent(getActivity(), LoginActivity.class);
+                        startActivity(intent);
+                        getActivity().finish();
+                    }
+                });
+    }
+    private void showYesNoDialog() {
+        new AlertDialog.Builder(getActivity())
+
+                .setInverseBackgroundForced(true)
+                .setMessage("Are you sure you want to logout from PlayDate?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", (dialog, id) -> outFromApp())
+                .setNegativeButton("No", null)
+                .show();
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

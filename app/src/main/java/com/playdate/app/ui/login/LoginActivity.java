@@ -344,6 +344,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             if (isBusiness) {
                 if (user.getBirthDate() == null) {
                     mIntent = new Intent(mContext, BusinessStartingDateActivity.class);
+                }else if (user.getUsername() == null) {
+                    mIntent = new Intent(mContext, UserNameActivity.class);
                 } else if (user.getPersonalBio() == null) {
                     mIntent = new Intent(mContext, BusinessBioActivity.class);
                 } else if (user.getProfilePicPath() == null) {

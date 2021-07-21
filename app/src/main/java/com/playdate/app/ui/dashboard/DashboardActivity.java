@@ -117,7 +117,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
     public static int refreshFlag = 0;
     private ImageView iv_date;
     private LinearLayout ll_love_bottom;
-
+    private ImageView iv_gallery;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -147,7 +147,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
         ll_profile_drop_menu = findViewById(R.id.ll_profile_drop_menu);
         ImageView iv_cart = findViewById(R.id.iv_cart);
         ImageView iv_cancel = findViewById(R.id.iv_cancel);
-        ImageView iv_gallery = findViewById(R.id.iv_gallery);
+        iv_gallery = findViewById(R.id.iv_gallery);
         ImageView iv_create_ano_ques = findViewById(R.id.iv_create_ano_ques);
         ImageView iv_dashboard_notification = findViewById(R.id.iv_dashboard_notification);
         iv_coupons = findViewById(R.id.iv_coupons);
@@ -557,11 +557,13 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
 
         int id = view.getId();
         if (id == R.id.iv_date) {
-            startActivity(new Intent(DashboardActivity.this, DateBaseActivity.class));
-           /* ll_her.setVisibility(View.GONE);
-            ll_mainMenu2.setVisibility(View.GONE);
-            ll_mainMenu.setVisibility(View.GONE);
-            ReplaceFrag(new FragSelectDate());*/
+            if(pref.getBoolVal(SessionPref.isBusiness)){
+                ll_profile_insta.performClick();
+                iv_gallery.performClick();
+            }else{
+                startActivity(new Intent(DashboardActivity.this, DateBaseActivity.class));
+            }
+
 
         } else if (id == R.id.txt_social) {
             socialOnMatchOffNotiOff();
@@ -681,7 +683,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
             ll_her.setVisibility(View.VISIBLE);
             iv_play_date_logo.setVisibility(View.VISIBLE);
             ll_profile_drop_menu.setVisibility(View.GONE);
-            iv_plus.setVisibility(View.VISIBLE);
+
             ll_option_love.setVisibility(View.GONE);
             ll_friends.setVisibility(View.GONE);
             iv_coupons.setBackground(null);
@@ -692,8 +694,10 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
             iv_profile_sett.setBackground(null);
             iv_profile_sett.setImageResource(R.drawable.tech_support);
             if(pref.getBoolVal(SessionPref.isBusiness)){
+                iv_plus.setVisibility(View.GONE);
                 ReplaceFrag(new FragInstaLikeProfileBusiness());
             }else{
+                iv_plus.setVisibility(View.VISIBLE);
                 profile = new FragInstaLikeProfile(true);
                 ReplaceFrag(profile);
             }
