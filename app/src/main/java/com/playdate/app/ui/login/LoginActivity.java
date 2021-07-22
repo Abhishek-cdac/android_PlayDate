@@ -55,6 +55,7 @@ import com.playdate.app.model.LoginUser;
 import com.playdate.app.model.LoginUserDetails;
 import com.playdate.app.service.FcmMessageService;
 import com.playdate.app.ui.dashboard.DashboardActivity;
+import com.playdate.app.ui.dialogs.UserTypeDialog;
 import com.playdate.app.ui.forgot_password.ForgotPasswordActivity;
 import com.playdate.app.ui.register.age_verification.AgeVerifiationActivity;
 import com.playdate.app.ui.register.bio.BioActivity;
@@ -89,9 +90,10 @@ import timber.log.Timber;
 import static com.playdate.app.data.api.RetrofitClientInstance.DEVICE_TYPE;
 import static com.playdate.app.util.session.SessionPref.LoginUserFCMID;
 import static com.playdate.app.util.session.SessionPref.LoginUserInterestsIDS;
+import static com.playdate.app.util.session.SessionPref.LoginUserSourceType;
 import static com.playdate.app.util.session.SessionPref.LoginVerified;
 
-public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
+public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, OnUserTypeSelected {
 
     private CallbackManager callbackManager;
     private LoginManager loginManager;
@@ -310,86 +312,156 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private void checkForTheLastActivity(LoginResponse body) {
         try {
             LoginUserDetails user = body.getUserData();
-            if (user.getUserType() != null)
-                isBusiness = user.getUserType().toLowerCase().equals("business");
+            if (user.getUserType() == null) {
 
-            SessionPref.getInstance(LoginActivity.this).saveLoginUser(
-                    user.getId(),
-                    user.getFullName(),
-                    user.getEmail(),
-                    user.getUsername(),
-                    user.getPhoneNo(),
-                    user.getStatus(),
-                    user.getToken(),
-                    user.getGender(),
-                    user.getBirthDate(),
-                    user.getAge(),
-                    user.getProfilePicPath(),
-                    user.getProfileVideoPath(),
-                    user.getRelationship(),
-                    user.getPersonalBio(),
-                    getData(user.getInterested()),
-                    user.getInterestedIn(),
-                    "",
-                    user.getSourceType(),
-                    user.getSourceSocialId(),
-                    user.getInviteCode(),
-                    user.getPaymentMode(),
-                    user.getInviteLink(),
-                    isBusiness
-            );
+                showTypeDialog(user);
 
-            Intent mIntent;
-            Context mContext = LoginActivity.this;
-            if (isBusiness) {
-                if (user.getBirthDate() == null) {
-                    mIntent = new Intent(mContext, BusinessStartingDateActivity.class);
-                }else if (user.getUsername() == null) {
-                    mIntent = new Intent(mContext, UserNameActivity.class);
-                } else if (user.getPersonalBio() == null) {
-                    mIntent = new Intent(mContext, BusinessBioActivity.class);
-                } else if (user.getProfilePicPath() == null) {
-                    mIntent = new Intent(mContext, UploadProfileActivity.class);
-                } else {
-                    mIntent = new Intent(mContext, BusinessUploadPhotoActivity.class);
-                }
             } else {
-                if (user.getStatus().equals("false")) {
-                    mIntent = new Intent(mContext, OTPActivity.class);
-                    mIntent.putExtra("Phone", user.getPhoneNo());
-                    mIntent.putExtra("resendOTP", true);
-                    mIntent.putExtra("Forgot", false);
-
-                } else if (user.getBirthDate() == null) {
-                    mIntent = new Intent(mContext, AgeVerifiationActivity.class);
-
-                } else if (user.getGender() == null) {
-                    mIntent = new Intent(mContext, GenderSelActivity.class);
-                } else if (user.getRelationship() == null) {
-                    mIntent = new Intent(mContext, RelationActivity.class);
-                } else if (user.getUsername() == null) {
-                    mIntent = new Intent(mContext, UserNameActivity.class);
-                } else if (user.getPersonalBio() == null) {
-                    mIntent = new Intent(mContext, BioActivity.class);
-                } else if (user.getProfilePicPath() == null) {
-                    mIntent = new Intent(mContext, UploadProfileActivity.class);
-                } else if (user.getInterested() == null) {
-                    mIntent = new Intent(mContext, InterestActivity.class);
-                } else if (user.getRestaurants() == null) {
-                    mIntent = new Intent(mContext, RestaurantActivity.class);
-                } else if (user.getProfileVideoPath() == null) {
-                    mIntent = new Intent(mContext, CameraActivity.class);
-                } else {
-                    mIntent = new Intent(mContext, DashboardActivity.class);
-                    SessionPref.getInstance(mContext).saveBoolKeyVal(LoginVerified, true);
-                }
+                logicAfterUserType(user);
             }
-            startActivity(mIntent);
-            finish();
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+    }
+
+
+    private void logicAfterUserType(LoginUserDetails user) {
+        isBusiness = user.getUserType().toLowerCase().equals("business");
+        SessionPref.getInstance(LoginActivity.this).saveLoginUser(
+                user.getId(),
+                user.getFullName(),
+                user.getEmail(),
+                user.getUsername(),
+                user.getPhoneNo(),
+                user.getStatus(),
+                user.getToken(),
+                user.getGender(),
+                user.getBirthDate(),
+                user.getAge(),
+                user.getProfilePicPath(),
+                user.getProfileVideoPath(),
+                user.getRelationship(),
+                user.getPersonalBio(),
+                getData(user.getInterested()),
+                user.getInterestedIn(),
+                "",
+                user.getSourceType(),
+                user.getSourceSocialId(),
+                user.getInviteCode(),
+                user.getPaymentMode(),
+                user.getInviteLink(),
+                isBusiness
+        );
+
+        Intent mIntent;
+        Context mContext = LoginActivity.this;
+        if (isBusiness) {
+            if (user.getBirthDate() == null) {
+                mIntent = new Intent(mContext, BusinessStartingDateActivity.class);
+            } else if (user.getUsername() == null) {
+                mIntent = new Intent(mContext, UserNameActivity.class);
+            } else if (user.getPersonalBio() == null) {
+                mIntent = new Intent(mContext, BusinessBioActivity.class);
+            } else if (user.getProfilePicPath() == null) {
+                mIntent = new Intent(mContext, UploadProfileActivity.class);
+            } else if (user.getBusinessImage() == null){
+                mIntent = new Intent(mContext, BusinessUploadPhotoActivity.class);
+            }else{
+                mIntent = new Intent(mContext, DashboardActivity.class);
+            }
+        } else {
+            if (user.getStatus().equals("false")) {
+                mIntent = new Intent(mContext, OTPActivity.class);
+                mIntent.putExtra("Phone", user.getPhoneNo());
+                mIntent.putExtra("resendOTP", true);
+                mIntent.putExtra("Forgot", false);
+
+            } else if (user.getBirthDate() == null) {
+                mIntent = new Intent(mContext, AgeVerifiationActivity.class);
+
+            } else if (user.getGender() == null) {
+                mIntent = new Intent(mContext, GenderSelActivity.class);
+            } else if (user.getRelationship() == null) {
+                mIntent = new Intent(mContext, RelationActivity.class);
+            } else if (user.getUsername() == null) {
+                mIntent = new Intent(mContext, UserNameActivity.class);
+            } else if (user.getPersonalBio() == null) {
+                mIntent = new Intent(mContext, BioActivity.class);
+            } else if (user.getProfilePicPath() == null) {
+                mIntent = new Intent(mContext, UploadProfileActivity.class);
+            } else if (user.getInterested() == null) {
+                mIntent = new Intent(mContext, InterestActivity.class);
+            } else if (user.getRestaurants() == null) {
+                mIntent = new Intent(mContext, RestaurantActivity.class);
+            } else if (user.getProfileVideoPath() == null) {
+                mIntent = new Intent(mContext, CameraActivity.class);
+            } else {
+                mIntent = new Intent(mContext, DashboardActivity.class);
+                SessionPref.getInstance(mContext).saveBoolKeyVal(LoginVerified, true);
+            }
+        }
+        startActivity(mIntent);
+        finish();
+    }
+
+    public void nextCheck(int userType) {
+
+        callAPIUpdateUserType(userType);
+    }
+
+    private void callAPIUpdateUserType(int userType) {
+
+        SessionPref pref = SessionPref.getInstance(this);
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
+
+        hashMap.put("userType", userType == 0 ? "Person" : "Business");
+        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
+        pd.show();
+
+
+        Call<LoginResponse> call = service.updateProfile("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                pd.cancel();
+                if (response.code() == 200) {
+                    if (response.body().getStatus() == 1) {
+                        pref.saveBoolKeyVal(SessionPref.isBusiness, userType != 0);
+                        if (null != user){
+                            user.setUserType(userType == 0 ? "Person" : "Business");
+                            logicAfterUserType(user);
+                        }
+
+                    } else {
+
+                    }
+                } else {
+
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                t.printStackTrace();
+                pd.cancel();
+                //Toast.makeText(RelationActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private LoginUserDetails user;
+
+    private void showTypeDialog(LoginUserDetails user) {
+        new UserTypeDialog(this).show();
+        this.user = user;
     }
 
     private String getData(ArrayList<Interest> interested) {
@@ -457,7 +529,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         if (task.isSuccessful()) {
             try {
-                GoogleSignInAccount account = task.getResult(ApiException.class);
+//                GoogleSignInAccount account = task.getResult(ApiException.class);
                 GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
                 if (acct != null) {
                     String personName = acct.getDisplayName();
@@ -473,18 +545,23 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     Log.e("personId", "" + personId);
                     Log.e("personPhoto", "" + personPhoto);
                     Log.e("personName", "" + personName);
+                    pref.saveStringKeyVal(LoginUserSourceType,"Google");
                     callGmailSocialLoginAPI(personEmail, personId, ServerAuthCode);
                 }
 
 
-            } catch (ApiException e) {
+            } catch (Exception e) {
                 Log.e("EXCEPTION", e.toString());
-                Log.e("EXCEPTION", "signInResult:failed code=" + e.getStatusCode());
             }
         } else {
+//            bypass();// remove when no use
             Toast.makeText(getApplicationContext(), "Sign in cancel", Toast.LENGTH_LONG).show();
         }
 
+    }
+
+    private void bypass() {
+        callGmailSocialLoginAPI("ajit.jadhav80868086@gmail.com", "0000000000", ServerAuthCode);
     }
 
     private void callGmailSocialLoginAPI(String personEmail, String personId, String serverAuthCode) {
@@ -509,8 +586,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
                         checkForTheLastActivity(response.body());
-                    }
-                    else {
+                    } else {
                         clsCommon.showDialogMsg(LoginActivity.this, "PlayDate", response.body().getMessage(), "Ok");
                     }
                 } else {
@@ -560,6 +636,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                                 Log.d("email of user ", email);
                                                 Log.d("id of user ", fbUserID);
                                                 //Log.d("birthday of user ", birthday);
+                                                pref.saveStringKeyVal(LoginUserSourceType,"Facebook");
                                                 callSocialLoginAPI(email, fbUserID, accessToken);
 
                                                 disconnectFromFacebook();
@@ -620,6 +697,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     if (response.body().getStatus() == 1) {
                         // startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
                         //finish();
+
                         checkForTheLastActivity(response.body());
 
 
