@@ -221,7 +221,6 @@ public class FragCouponGenerator extends Fragment implements AdapterView.OnItemS
                     callCreateCouponApi(couponTitlestr, percentageOffStr, amountOffStr, newPriceStr, freeItemStr, pointsValueStr);
                 }
 
-
             }
 
 
@@ -285,8 +284,7 @@ public class FragCouponGenerator extends Fragment implements AdapterView.OnItemS
 //        if (position==0){
 //            new DialogLevelSelector(getActivity()).show();
 //        }
-        //  Toast.makeText(getActivity(), "awardedBy: " + awardedBy[position], Toast.LENGTH_SHORT).show();
-    }
+          }
 
     @Override
     public void onNothingSelected(AdapterView<?> arg0) {
