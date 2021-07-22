@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,7 +46,7 @@ public class FragInstaLikeProfileBusiness extends Fragment implements onPhotoCli
     private TextView txt_login_user;
     private CommonClass clsCommon;
     private TextView txtTotalFriend, txtTotalPost;
-    private TextView txt_points;
+//    private TextView txt_points;
     private ArrayList<GetProileDetailData> lst_getPostDetail;
     private Picasso picasso;
     private SessionPref pref;
@@ -68,8 +67,7 @@ public class FragInstaLikeProfileBusiness extends Fragment implements onPhotoCli
         profile_image = view.findViewById(R.id.profile_image);
         txt_bio = view.findViewById(R.id.txt_bio);
         txt_login_user = view.findViewById(R.id.txt_login_user);
-        txt_points = view.findViewById(R.id.txt_points);
-
+//        txt_points = view.findViewById(R.id.txt_points);
 
 
         callAPI();
@@ -79,8 +77,6 @@ public class FragInstaLikeProfileBusiness extends Fragment implements onPhotoCli
 
         return view;
     }
-
-
 
 
     private void setValue() {
@@ -121,7 +117,7 @@ public class FragInstaLikeProfileBusiness extends Fragment implements onPhotoCli
                             txtTotalPost.setText(String.valueOf(lst_getPostDetail.get(0).getTotalPosts()));
 
 
-                            txt_points.setText(lst_getPostDetail.get(0).getAccount().get(0).getCurrentPoints() + " Points");
+                            txt_bio.setText(lst_getPostDetail.get(0).getPersonalBio());
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

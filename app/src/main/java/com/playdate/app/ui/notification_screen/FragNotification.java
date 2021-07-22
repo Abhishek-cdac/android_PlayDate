@@ -164,6 +164,7 @@ public class FragNotification extends Fragment {
                 pd.cancel();
                 if (response.code() == 200) {
                     if (Objects.requireNonNull(response.body()).getStatus() == 1) {
+                        PageNumber=1;
                         callGetNotificationAPI();
                         clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
                     } else {
@@ -208,6 +209,7 @@ public class FragNotification extends Fragment {
                 pd.cancel();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
+                        PageNumber=1;
                         callGetNotificationAPI();
                         clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
                     } else {
@@ -289,6 +291,7 @@ public class FragNotification extends Fragment {
                 if (response.code() == 200) {
                     assert response.body() != null;
                     if (response.body().getStatus() == 1) {
+                        PageNumber=1;
                         callGetNotificationAPI();
                         Toast.makeText(getActivity(), "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     }
@@ -392,6 +395,7 @@ public class FragNotification extends Fragment {
                             }
 
                             if (PageNumber == 1) {
+                                lst_notifications.clear();
                                 lst_notifications.addAll(lst);
                                 NotificationData data = new NotificationData();
                                 data.setPatternID("ViewMore");

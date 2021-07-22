@@ -118,6 +118,8 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
     private ImageView iv_date;
     private LinearLayout ll_love_bottom;
     private ImageView iv_gallery;
+    private boolean isBusiness = false;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -164,8 +166,8 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
         adapterfriend = new FriendAdapter(new ArrayList<>(), DashboardActivity.this);
         rv_friends.setAdapter(adapterfriend);
         rv_friends.setLayoutManager(manager);
-
-        if (pref.getBoolVal(SessionPref.isBusiness)) {
+        isBusiness = pref.getBoolVal(SessionPref.isBusiness);
+        if (isBusiness) {
             txt_match.setVisibility(View.GONE);
         } else {
             if (pref.getStringVal(SessionPref.LoginUserrelationship).equals("Single")) {
@@ -185,7 +187,10 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
         }
         ReplaceFrag(fragOne);
 
-        callAPIShowPremium();
+        if (!isBusiness) {
+            callAPIShowPremium();
+        }
+
         setValue();
         callAPIFriends();
 
@@ -509,7 +514,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
             socialOnMatchOffNotiOff();
             ll_friends.setVisibility(View.GONE);
             ll_option_love.setVisibility(View.GONE);
-            ReplaceFragWithStack(new FragInstaLikeProfileFriends(true, UserID,false));
+            ReplaceFragWithStack(new FragInstaLikeProfileFriends(true, UserID, false));
         }
 
 
@@ -539,7 +544,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
 
             ll_friends.setVisibility(View.GONE);
             ll_option_love.setVisibility(View.GONE);
-            ReplaceFragWithStack(new FragInstaLikeProfileFriends(false, UserID,false));
+            ReplaceFragWithStack(new FragInstaLikeProfileFriends(false, UserID, false));
         }
 
 
@@ -557,10 +562,10 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
 
         int id = view.getId();
         if (id == R.id.iv_date) {
-            if(pref.getBoolVal(SessionPref.isBusiness)){
+            if (isBusiness) {
                 ll_profile_insta.performClick();
                 iv_gallery.performClick();
-            }else{
+            } else {
                 startActivity(new Intent(DashboardActivity.this, DateBaseActivity.class));
             }
 
@@ -638,7 +643,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
             iv_profile_sett.setBackground(null);
             iv_profile_sett.setImageResource(R.drawable.tech_support);
             ll_friends.setVisibility(View.GONE);
-            if (pref.getBoolVal(SessionPref.isBusiness)) {
+            if (isBusiness) {
                 ReplaceFrag(new FragCouponParentBusiness());
             } else {
                 ReplaceFrag(new FragCouponParent());
@@ -666,12 +671,11 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
             iv_profile_sett.setBackground(getDrawable(R.drawable.rectangle_back));
             iv_profile_sett.setImageResource(R.drawable.tech_support_red);
 
-            if(pref.getBoolVal(SessionPref.isBusiness)){
+            if (isBusiness) {
                 ReplaceFrag(new FragBusinessProfile());
-            }else{
+            } else {
                 ReplaceFrag(new FragSettingsParent());
             }
-
 
 
         } else if (id == R.id.ll_profile_insta) {
@@ -693,10 +697,10 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
             ll_mainMenu2.setVisibility(View.GONE);
             iv_profile_sett.setBackground(null);
             iv_profile_sett.setImageResource(R.drawable.tech_support);
-            if(pref.getBoolVal(SessionPref.isBusiness)){
+            if (isBusiness) {
                 iv_plus.setVisibility(View.GONE);
                 ReplaceFrag(new FragInstaLikeProfileBusiness());
-            }else{
+            } else {
                 iv_plus.setVisibility(View.VISIBLE);
                 profile = new FragInstaLikeProfile(true);
                 ReplaceFrag(profile);
@@ -938,7 +942,10 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
                 super.onBackPressed();
             }
 
+        } else if (CurrentFrag.getClass().getSimpleName().equals("FragInstaLikeProfileBusiness")) {
+            setNormalBusiness();
         } else {
+
             super.onBackPressed();
         }
 
@@ -947,6 +954,14 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
 
     void setNormal() {
         iv_plus.setVisibility(View.VISIBLE);
+        iv_play_date_logo.setVisibility(View.VISIBLE);
+        ll_profile_drop_menu.setVisibility(View.GONE);
+        ll_camera_option.setVisibility(View.GONE);
+        bottomNavigationView.setVisibility(View.VISIBLE);
+    }
+
+    void setNormalBusiness() {
+        iv_plus.setVisibility(View.GONE);
         iv_play_date_logo.setVisibility(View.VISIBLE);
         ll_profile_drop_menu.setVisibility(View.GONE);
         ll_camera_option.setVisibility(View.GONE);
@@ -985,7 +1000,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
         ll_option_love.setVisibility(View.GONE);
         ll_her.setVisibility(View.VISIBLE);
 
-        ReplaceFragWithStack(new FragInstaLikeProfileFriends(isFriend, id,false));
+        ReplaceFragWithStack(new FragInstaLikeProfileFriends(isFriend, id, false));
     }
 
     CallAPI apiCall;
@@ -1008,7 +1023,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
         }
 
         callNotification();
-        if (pref.getBoolVal(SessionPref.isBusiness)) {
+        if (isBusiness) {
             txt_match.setVisibility(View.GONE);
             iv_date.setImageResource(R.drawable.ic_white_add_circle);
         } else {
