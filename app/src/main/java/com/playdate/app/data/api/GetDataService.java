@@ -7,6 +7,7 @@ import com.playdate.app.model.DatingRequest;
 import com.playdate.app.model.DatingRequestStatus;
 import com.playdate.app.model.FaqModel;
 import com.playdate.app.model.FriendsListModel;
+import com.playdate.app.model.GetBusinessCouponModel;
 import com.playdate.app.model.GetCommentModel;
 import com.playdate.app.model.GetCoupleProfileModel;
 import com.playdate.app.model.GetCouponsModel;
@@ -42,6 +43,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 
 public interface GetDataService {
 
@@ -347,6 +349,16 @@ public interface GetDataService {
     @FormUrlEncoded
     @POST("user/update-couple-profile")
     Call<CommonModel> updateCoupleDetail(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
+
+    /* Business */
+    @Multipart
+    @POST("user/add-business-coupon")
+    Call<CommonModel> addBusinessCoupon(@Header("Authorization") String token, @Part MultipartBody.Part filePart, @PartMap Map<String, String> param);
+
+    @FormUrlEncoded
+    @POST("user/get-business-coupons")
+    Call<GetBusinessCouponModel> getBusinessCoupon(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 }
 
 

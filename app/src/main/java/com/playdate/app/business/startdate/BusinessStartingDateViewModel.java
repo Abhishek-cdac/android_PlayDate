@@ -73,7 +73,7 @@ public class BusinessStartingDateViewModel extends ViewModel {
     public List<String> fetchCountriesCode() {
         yearlist.clear();
         int year = Calendar.getInstance().get(Calendar.YEAR);
-        year = year - 18;
+       // year = year - 18;
         yearlist.add("Year");
         for (int i = 0; i < 50; i++) {
             yearlist.add("" + year);

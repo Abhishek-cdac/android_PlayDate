@@ -53,7 +53,7 @@ public class DialogLevelSelector extends Dialog {
         btn_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DialogCouponCreated(context).show();
+               // new DialogCouponCreated(context).show();
                 dismiss();
             }
         });

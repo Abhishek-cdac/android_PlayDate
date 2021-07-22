@@ -81,10 +81,7 @@ public class BusinessStartingDateActivity extends AppCompatActivity {
                     business_Starting_Date_ViewModel.setDates(CurrentYYYY, CurrentMM, CurrentDDD);
                 }
             }, 200);
-
-
         }
-
     }
 
     private void callAPI() {
@@ -112,10 +109,8 @@ public class BusinessStartingDateActivity extends AppCompatActivity {
         hashMap.put("birthDate", BusinessStartDate);// format 1990-08-12
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
         pd.show();
-        //  SessionPref pref = SessionPref.getInstance(this);
+//        SessionPref pref = SessionPref.getInstance(this);
 //        Toast.makeText(this, ""+pref.getStringVal(SessionPref.LoginUsertoken), Toast.LENGTH_SHORT).show();
-
-
         Call<LoginResponse> call = service.updateProfile("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<LoginResponse>() {
             @Override
@@ -130,8 +125,6 @@ public class BusinessStartingDateActivity extends AppCompatActivity {
                             startActivity(new Intent(BusinessStartingDateActivity.this, BusinessBioActivity.class));
                             finish();
                         }
-
-
                     } else {
                         Log.e("PlayDateBSD", "" + response.body().getMessage());
                         clsCommon.showDialogMsg(BusinessStartingDateActivity.this, "PlayDate", response.body().getMessage(), "Ok");
@@ -140,15 +133,11 @@ public class BusinessStartingDateActivity extends AppCompatActivity {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
                         Log.e("PlayDateBSD", "" + response.body().getMessage());
-
                         clsCommon.showDialogMsg(BusinessStartingDateActivity.this, "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(BusinessStartingDateActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                     }
-
                 }
-
-
             }
 
             @Override

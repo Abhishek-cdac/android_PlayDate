@@ -56,7 +56,6 @@ public class BusinessUploadPhotoActivity extends AppCompatActivity {
         binding.setLifecycleOwner(this);
         binding.setBusinessUploadPhotoViewModel(viewModel);
 
-
         viewModel.OnNextClick().observe(this, click -> {
                 uploadImage();
 
