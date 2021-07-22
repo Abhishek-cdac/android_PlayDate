@@ -21,6 +21,7 @@ public class LoginUserDetails {
     String age;
     String profilePic;
     String profilePicPath;
+    String businessImage;
     String profileVideo;
     String profileVideoPath;
     String interestedIn;
@@ -33,6 +34,14 @@ public class LoginUserDetails {
     String inviteLink;
     String userType;
     String businessImage;
+
+    public String getBusinessImage() {
+        return businessImage;
+    }
+
+    public void setBusinessImage(String businessImage) {
+        this.businessImage = businessImage;
+    }
 
     public String getBusinessImage() {
         return businessImage;

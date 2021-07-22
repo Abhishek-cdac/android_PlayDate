@@ -103,28 +103,25 @@ public class FacebookbookLogin extends AppCompatActivity {
     private void getUserProfile(AccessToken currentAccessToken) {
         Log.e("getUserProfile","inside");
         GraphRequest request = GraphRequest.newMeRequest(
-                currentAccessToken, new GraphRequest.GraphJSONObjectCallback() {
-                    @Override
-                    public void onCompleted(JSONObject object, GraphResponse response) {
-                        Log.e("TAG", object.toString());
-                        try {
-                            String first_name = object.getString("first_name");
-                            Log.e("first_name","inside"+first_name);
-                            String last_name = object.getString("last_name");
-                            String email = object.getString("email");
-                            String id = object.getString("id");
-                            String image_url = "https://graph.facebook.com/" + id + "/picture?type=normal";
-                            callSocialLoginAPI(email, id, String.valueOf(currentAccessToken));
+                currentAccessToken, (object, response) -> {
+                    Log.e("TAG", object.toString());
+                    try {
+                        String first_name = object.getString("first_name");
+                        Log.e("first_name","inside"+first_name);
+                        String last_name = object.getString("last_name");
+                        String email = object.getString("email");
+                        String id = object.getString("id");
+                        String image_url = "https://graph.facebook.com/" + id + "/picture?type=normal";
+                        callSocialLoginAPI(email, id, String.valueOf(currentAccessToken));
 
-                            txtUsername.setText("First Name: " + first_name + "\nLast Name: " + last_name);
-                            txtEmail.setText(email);
-                            Picasso.get().load(Uri.parse(image_url)).into(imageView);
+                        txtUsername.setText("First Name: " + first_name + "\nLast Name: " + last_name);
+                        txtEmail.setText(email);
+                        Picasso.get().load(Uri.parse(image_url)).into(imageView);
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
+
                 });
 
         Bundle parameters = new Bundle();

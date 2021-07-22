@@ -119,7 +119,6 @@ public class FragBusinessProfile extends Fragment implements View.OnClickListene
 
         return view;
     }
-
     private void callAPI() {
 
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
@@ -157,7 +156,6 @@ public class FragBusinessProfile extends Fragment implements View.OnClickListene
             }
         });
     }
-
     private void imageChange(boolean state) {
         if (state) {
 
@@ -174,34 +172,45 @@ public class FragBusinessProfile extends Fragment implements View.OnClickListene
 
         }
     }
-
     private void setValues() {
         try {
             SessionPref pref = SessionPref.getInstance(getActivity());
             email.setText(pref.getStringVal(SessionPref.LoginUseremail));
             txt_user_name.setText(pref.getStringVal(SessionPref.LoginUserusername));
-            if (mobile != null) ;
-            mobile = pref.getStringVal(SessionPref.LoginUserphoneNo);
-            String temp;
-            temp = mobile.substring(0, 3);
-            String temp1;
-            temp1 = mobile.substring(3, 6);
-            String temp2;
-            temp2 = mobile.substring(6, 10);
-            txt_phone.setText(temp + "-" + temp1 + "-" + temp2);
-            //txt_gender.setText(pref.getStringVal(SessionPref.LoginUsergender));
-            String[] s = pref.getStringVal(SessionPref.LoginUserbirthDate).split("T");
-            DOB.setText(s[0]);
+            try {
+                if (mobile != null) ;
+                mobile = pref.getStringVal(SessionPref.LoginUserphoneNo);
+                String temp;
+                temp = mobile.substring(0, 3);
+                String temp1;
+                temp1 = mobile.substring(3, 6);
+                String temp2;
+                temp2 = mobile.substring(6, 10);
+                txt_phone.setText(temp + "-" + temp1 + "-" + temp2);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            try {
+                //txt_gender.setText(pref.getStringVal(SessionPref.LoginUsergender));
+                String[] s = pref.getStringVal(SessionPref.LoginUserbirthDate).split("T");
+                DOB.setText(s[0]);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 //            txt_relationship.setText(pref.getStringVal(SessionPref.LoginUserrelationship));
 //            interestin.setText(pref.getStringVal(SessionPref.LoginUserinterestedIn));
-            Picasso picasso = Picasso.get();
-            String img = pref.getStringVal(SessionPref.LoginUserBusinessImage);
-            if (img.contains("http")) {
-                picasso.load(img)
-                        .into(profile_image);
-            } else {
-                picasso.load(BASE_URL_IMAGE + img)
-                        .into(profile_image);
+            try {
+                Picasso picasso = Picasso.get();
+                String img = pref.getStringVal(SessionPref.LoginUserprofilePic);
+                if (img.contains("http")) {
+                    picasso.load(img)
+                            .into(profile_image);
+                } else {
+                    picasso.load(BASE_URL_IMAGE + img)
+                            .into(profile_image);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
 
@@ -286,7 +295,6 @@ public class FragBusinessProfile extends Fragment implements View.OnClickListene
                 break;
         }
     }
-
     private void signOut() {
 
 
@@ -302,7 +310,6 @@ public class FragBusinessProfile extends Fragment implements View.OnClickListene
                     }
                 });
     }
-
     private void showYesNoDialog() {
         new AlertDialog.Builder(getActivity())
 
@@ -313,7 +320,6 @@ public class FragBusinessProfile extends Fragment implements View.OnClickListene
                 .setNegativeButton("No", null)
                 .show();
     }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
