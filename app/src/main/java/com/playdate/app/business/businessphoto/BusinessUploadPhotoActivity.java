@@ -37,6 +37,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
+import static com.playdate.app.util.session.SessionPref.LoginUserBusinessImage;
 import static com.playdate.app.util.session.SessionPref.LoginUserprofilePic;
 
 public class BusinessUploadPhotoActivity extends AppCompatActivity {
@@ -57,7 +59,7 @@ public class BusinessUploadPhotoActivity extends AppCompatActivity {
         binding.setBusinessUploadPhotoViewModel(viewModel);
 
         viewModel.OnNextClick().observe(this, click -> {
-                uploadImage();
+            uploadImage();
 
         });
 
@@ -135,15 +137,17 @@ public class BusinessUploadPhotoActivity extends AppCompatActivity {
                 if (response.code() == 200) {
 
                     LoginUserDetails user = response.body().getUserData();
-                   // pref.saveStringKeyVal(LoginUserprofilePic, user.getProfilePicPath());
+                    pref.saveStringKeyVal(LoginUserBusinessImage, user.getBusinessImage());
 
                     if (mIntent.getBooleanExtra("fromProfile", false)) {
                         Intent mIntent = new Intent();
-                        setResult(407, mIntent);
+                        setResult(408, mIntent);
 
                     } else {
-                        startActivity(new Intent(BusinessUploadPhotoActivity.this, DashboardActivity
-                                .class));
+                        Intent intent1 = new Intent(BusinessUploadPhotoActivity.this, DashboardActivity
+                                .class);
+                        intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent1);
                     }
                     finish();
 

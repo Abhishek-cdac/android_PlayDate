@@ -109,6 +109,7 @@ public class SessionPref {
     public static String LoginUserinviteCode = "inviteCode";
     public static String LoginUserpaymentMode = "paymentMode";
     public static String LoginUserInviteLink = "inviteLink";
+    public static String LoginUserBusinessImage = "businessImage";
 
     public static String LoginUserSuggestionShown = "LoginUserSuggestionShown";
     public static String DARKMODE = "DARKMODE";
@@ -126,6 +127,7 @@ public class SessionPref {
                               String birthDate,
                               String age,
                               String profilePic,
+                              String businessImage,
                               String profileVideo,
                               String relationship,
                               String personalBio,
@@ -162,6 +164,7 @@ public class SessionPref {
         editor.putString(LoginUserinviteCode, inviteCode);
         editor.putString(LoginUserpaymentMode, paymentMode);
         editor.putString(LoginUserInviteLink, inviteLink);
+        editor.putString(LoginUserBusinessImage, businessImage);
         editor.putBoolean(isBusiness, userType);
         editor.commit();
     }

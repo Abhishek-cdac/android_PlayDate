@@ -31,7 +31,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-
 public class BusinessBioActivity extends AppCompatActivity {
 
     private BusinessBioViewModel businessBioViewModel;
@@ -49,7 +48,7 @@ public class BusinessBioActivity extends AppCompatActivity {
         bioBinding.setBusinessBioViewModel(businessBioViewModel);
         if (mIntent.getBooleanExtra("fromProfile", false)) {
             SessionPref pref = SessionPref.getInstance(this);
-           // businessBioViewModel.BioText.setValue(pref.getStringVal(LoginUserpersonalBio));
+            // businessBioViewModel.BioText.setValue(pref.getStringVal(LoginUserpersonalBio));
         } else {
 
 
@@ -70,7 +69,7 @@ public class BusinessBioActivity extends AppCompatActivity {
                     } else {
                         callAPI();
                     }
-                  //
+                    //
                 }
 
 
@@ -105,18 +104,16 @@ public class BusinessBioActivity extends AppCompatActivity {
                 pd.cancel();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
-                   //     pref.saveStringKeyVal(LoginUserbusinessBio, bio);
+                        //     pref.saveStringKeyVal(LoginUserbusinessBio, bio);
 
                         if (mIntent.getBooleanExtra("fromProfile", false)) {
                             Intent mIntent = new Intent();
                             setResult(410, mIntent);
                             finish();
                         } else {
-
                             startActivity(new Intent(BusinessBioActivity.this, UploadProfileActivity.class));
 
                         }
-
 
 
                     } else {
