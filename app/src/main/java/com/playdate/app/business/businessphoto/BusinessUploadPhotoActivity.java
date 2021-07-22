@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,6 +48,8 @@ public class BusinessUploadPhotoActivity extends AppCompatActivity {
     public final static int TAKE_PHOTO_CODE = 0;
     public final static int REQUEST_TAKE_GALLERY_VIDEO = 200;
     private Intent mIntent;
+    ImageView dummyimage;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,6 +63,8 @@ public class BusinessUploadPhotoActivity extends AppCompatActivity {
                 uploadImage();
 
         });
+
+        dummyimage = findViewById(R.id.dummyimage);
 
         viewModel.onBackClick().observe(this, click -> finish());
         viewModel.onGalleryClick().observe(this, click -> {
@@ -223,6 +228,7 @@ public class BusinessUploadPhotoActivity extends AppCompatActivity {
 
                 if (null != bitmap) {
                     binding.profileImage.setImageBitmap(bitmap);
+                    dummyimage.setVisibility(View.GONE);
                     showChange();
                 }
 
@@ -242,6 +248,7 @@ public class BusinessUploadPhotoActivity extends AppCompatActivity {
 
                 if (null != bitmap) {
                     binding.profileImage.setImageBitmap(bitmap);
+                    dummyimage.setVisibility(View.GONE);
                     showChange();
                 }
 
