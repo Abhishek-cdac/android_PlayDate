@@ -120,7 +120,16 @@
     </RelativeLayout>
 
 
-
+    <RatingBar
+        android:layout_gravity="center"
+        android:id="@+id/ratingBar"
+        style="@style/StarRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:numStars="5"
+        android:rating="0"
+        android:stepSize="1" />
 
 
     <TextView
@@ -128,7 +137,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="@dimen/_25sdp"
+        android:layout_marginTop="@dimen/_20sdp"
         android:fontFamily="@font/lato_bold"
         android:gravity="center"
         android:text="@string/about_us"

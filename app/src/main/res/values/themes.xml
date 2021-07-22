@@ -21,7 +21,11 @@
 
     </style>
 
-
+    <style name="StarRating" parent="@android:style/Widget.RatingBar">
+        <item name="android:minHeight">32dip</item>
+        <item name="android:minWidth">36dip</item>
+        <item name="android:progressDrawable">@drawable/rating_bar_bg</item>
+    </style>
 
     <style name="Spinner" parent="Widget.AppCompat.Light.DropDownItem.Spinner">
         <item name="android:paddingStart">0dp</item>

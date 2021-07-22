@@ -1,9 +1,13 @@
 package com.playdate.app.business.couponsGenerate;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ActionMenuView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,11 +22,27 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.playdate.app.R;
+import com.playdate.app.business.couponsGenerate.adapter.ActiveCouponsAdapter;
 import com.playdate.app.business.couponsGenerate.adapter.CoupounPageBusinessAdapter;
+import com.playdate.app.data.api.GetDataService;
+import com.playdate.app.data.api.RetrofitClientInstance;
+import com.playdate.app.model.GetBusinessCouponData;
+import com.playdate.app.model.GetUserSuggestionData;
+import com.playdate.app.model.NotificationCountModel;
 import com.playdate.app.ui.coupons.OnSizeDecided;
 import com.playdate.app.ui.coupons.WrapContentViewPager;
+import com.playdate.app.ui.dashboard.adapter.SuggestedFriendAdapter;
+import com.playdate.app.ui.dashboard.fragments.FragSearchUser;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.util.session.SessionPref;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class FragCouponParentBusiness extends Fragment implements OnInnerFragmentClicks , OnSizeDecided {
 
@@ -37,8 +57,6 @@ public class FragCouponParentBusiness extends Fragment implements OnInnerFragmen
     EditText edt_search;
     TabLayout tabLayout;
     private Fragment CurrentFrag;
-
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -51,10 +69,26 @@ public class FragCouponParentBusiness extends Fragment implements OnInnerFragmen
         edt_search = view.findViewById(R.id.edt_search);
         pref = SessionPref.getInstance(getActivity());
         tabLayout = view.findViewById(R.id.tab);
-
+        CallNotificationCount();
         tabLayout.addTab(tabLayout.newTab().setText(" Active "));
         tabLayout.addTab(tabLayout.newTab().setText("   Expired   "));
+        edt_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+//                adapter.getFilter().filter(s);
+            }
+        });
 
         generator.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,7 +125,6 @@ public class FragCouponParentBusiness extends Fragment implements OnInnerFragmen
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
             }
-
             @Override
             public void onPageSelected(int position) {
                 viewpager.reMeasureCurrentPage(position);
@@ -99,14 +132,11 @@ public class FragCouponParentBusiness extends Fragment implements OnInnerFragmen
                 } else {
                 }
             }
-
             @Override
             public void onPageScrollStateChanged(int state) {
 
             }
         });
-
-
         return view;
     }
 
@@ -176,6 +206,61 @@ public class FragCouponParentBusiness extends Fragment implements OnInnerFragmen
     public void setSize(double size) {
 
     }
+    private void CallNotificationCount() {
+
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        Call<NotificationCountModel> call = service.getNotificationCount("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new Callback<NotificationCountModel>() {
+            @Override
+            public void onResponse(Call<NotificationCountModel> call, Response<NotificationCountModel> response) {
+                try {
+
+                    if (response.code() == 200) {
+                        assert response.body() != null;
+                        if (response.body().getStatus() == 1) {
+                            int countNotification = response.body().getData().get(0).getTotalUnreadNotification();
+                            Log.e("countNotification", "" + countNotification);
+
+                            if (countNotification > 0 && countNotification <= 9) {
+                                txt_count.setVisibility(View.VISIBLE);
+                                txt_count.setPadding(10, 0, 10, 0); //1-9
+                                txt_count.setText("" + countNotification);
+
+                            } else if (countNotification > 9 && countNotification <= 99) {
+                                txt_count.setVisibility(View.VISIBLE);
+                                txt_count.setPadding(6, 2, 7, 2);  ///10-99
+                                txt_count.setText("" + countNotification);
+
+                            } else if (countNotification > 99) {
+                                txt_count.setVisibility(View.VISIBLE);
+                                txt_count.setTextSize(8);
+                                txt_count.setPadding(5, 3, 5, 3);  ///99+
+                                txt_count.setText("99+");
+
+                            } else {
+                                txt_count.setVisibility(View.GONE);
+                                txt_count.setText("");
+
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+//                mSwipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onFailure(Call<NotificationCountModel> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+    }
+
+
 }
 
 //        CoupounPageBusinessAdapter adapter = new CoupounPageBusinessAdapter(getChildFragmentManager());

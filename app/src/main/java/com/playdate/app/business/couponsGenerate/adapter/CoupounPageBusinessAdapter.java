@@ -24,7 +24,6 @@ public class CoupounPageBusinessAdapter extends FragmentPagerAdapter {
                 return new FragActiveCoupons();
             case 1:
                 return new FragExpiredCoupon();
-
         }
         return null;
     }
