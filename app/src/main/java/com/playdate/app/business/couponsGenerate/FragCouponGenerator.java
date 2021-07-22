@@ -2,12 +2,10 @@ package com.playdate.app.business.couponsGenerate;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,30 +21,19 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
-import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.playdate.app.R;
 import com.playdate.app.business.couponsGenerate.dialogs.DialogCouponCreated;
-import com.playdate.app.business.couponsGenerate.dialogs.DialogLevelSelector;
-import com.playdate.app.business.startdate.BusinessStartingDateActivity;
-import com.playdate.app.business.startdate.BusinessStartingDateViewModel;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
-import com.playdate.app.databinding.ActivityBusinessStartDateBinding;
 import com.playdate.app.model.CommonModel;
-import com.playdate.app.model.LoginResponse;
-import com.playdate.app.model.LoginUser;
-import com.playdate.app.ui.dashboard.DashboardActivity;
-import com.playdate.app.ui.login.LoginActivity;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
@@ -58,11 +45,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -70,7 +55,6 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import timber.log.Timber;
 
 import static android.app.Activity.RESULT_OK;
 import static com.facebook.FacebookSdk.getCacheDir;
@@ -204,7 +188,7 @@ public class FragCouponGenerator extends Fragment implements AdapterView.OnItemS
                 String newPriceStr = NewPrice.getText().toString();
                 String freeItemStr = freeItem.getText().toString();
                 String pointsValueStr = pointsValue.getText().toString();
-                String availbilityDaysStr =  availbilityDays.getText().toString();
+                String availbilityDaysStr = availbilityDays.getText().toString();
                 if (couponTitlestr.matches("")) {
                     couponTitle.requestFocus();
                     new CommonClass().showDialogMsgfrag(getActivity(), "PlayDate", "Enter a couponTitle", "Ok");
@@ -217,25 +201,24 @@ public class FragCouponGenerator extends Fragment implements AdapterView.OnItemS
                     availbilityDays.requestFocus();
                     new CommonClass().showDialogMsgfrag(getActivity(), "PlayDate", "Enter a amount off", "Ok");
 
-                }else if (amountOffStr.matches("")) {
+                } else if (amountOffStr.matches("")) {
                     amountOff.requestFocus();
                     new CommonClass().showDialogMsgfrag(getActivity(), "PlayDate", "Enter a amount off", "Ok");
 
-                }else if (newPriceStr.matches("")) {
+                } else if (newPriceStr.matches("")) {
                     NewPrice.requestFocus();
                     new CommonClass().showDialogMsgfrag(getActivity(), "PlayDate", "Enter a new price", "Ok");
 
-                }else if (freeItemStr.matches("")) {
+                } else if (freeItemStr.matches("")) {
                     freeItem.requestFocus();
                     new CommonClass().showDialogMsgfrag(getActivity(), "PlayDate", "Enter a free item", "Ok");
 
-                }else if (pointsValueStr.matches("")) {
+                } else if (pointsValueStr.matches("")) {
                     pointsValue.requestFocus();
                     new CommonClass().showDialogMsgfrag(getActivity(), "PlayDate", "Enter a points Vlaue", "Ok");
 
-                }
-                else {
-                    callCreateCouponApi(couponTitlestr, percentageOffStr, amountOffStr, newPriceStr,freeItemStr, pointsValueStr);
+                } else {
+                    callCreateCouponApi(couponTitlestr, percentageOffStr, amountOffStr, newPriceStr, freeItemStr, pointsValueStr);
                 }
 
 
@@ -289,7 +272,7 @@ public class FragCouponGenerator extends Fragment implements AdapterView.OnItemS
                     @Override
                     public void onDateSet(DatePicker view, int year,
                                           int monthOfYear, int dayOfMonth) {
-                         availbilityDays.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+                        availbilityDays.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
                     }
                 }, mYear, mMonth, mDay);
         datePickerDialog.show();
@@ -376,6 +359,7 @@ public class FragCouponGenerator extends Fragment implements AdapterView.OnItemS
                     }
                 }
             }
+
             @Override
             public void onFailure(@NotNull Call<CommonModel> call, Throwable t) {
                 t.printStackTrace();
