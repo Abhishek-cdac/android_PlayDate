@@ -17,6 +17,7 @@ import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.databinding.ActivityBusinessStartDateBinding;
 import com.playdate.app.model.LoginResponse;
 import com.playdate.app.ui.register.otp.OTPActivity;
+import com.playdate.app.ui.register.username.UserNameActivity;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
@@ -122,7 +123,7 @@ public class BusinessStartingDateActivity extends AppCompatActivity {
                         if (mIntent.getBooleanExtra("fromProfile", false)) {
                             finish();
                         } else {
-                            startActivity(new Intent(BusinessStartingDateActivity.this, BusinessBioActivity.class));
+                            startActivity(new Intent(BusinessStartingDateActivity.this, UserNameActivity.class));
                             finish();
                         }
                     } else {
