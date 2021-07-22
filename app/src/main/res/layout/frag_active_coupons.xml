@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_coupons_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:nestedScrollingEnabled="false"
         android:layout_marginHorizontal="@dimen/_8sdp"
         android:layout_marginTop="@dimen/_12sdp"
-        android:layoutAnimation="@anim/layout_animation" />
+        android:layoutAnimation="@anim/layout_animation"
+        android:nestedScrollingEnabled="false" />
 
 </RelativeLayout>

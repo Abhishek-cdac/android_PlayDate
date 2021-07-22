@@ -12,7 +12,7 @@ public class
 RetrofitClientInstance {
 
     private static Retrofit retrofit;
-    private static final String BASE_URL = "http://139.59.0.106:3000/api/";
+    public static final String BASE_URL = "http://139.59.0.106:3000/api/";
     public static final String BASE_URL_IMAGE = "http://139.59.0.106:3000";
     public static final String SOCKET_URL = "http://139.59.0.106:3000";
     public static final String DEVICE_TYPE = "Android";
@@ -38,4 +38,5 @@ RetrofitClientInstance {
         }
         return retrofit;
     }
+
 }

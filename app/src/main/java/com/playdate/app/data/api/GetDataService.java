@@ -44,6 +44,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
+import retrofit2.http.Url;
 
 public interface GetDataService {
 
@@ -353,8 +354,8 @@ public interface GetDataService {
 
     /* Business */
     @Multipart
-    @POST("user/add-business-coupon")
-    Call<CommonModel> addBusinessCoupon(@Header("Authorization") String token, @Part MultipartBody.Part filePart, @PartMap Map<String, String> param);
+    @POST
+    Call<CommonModel> addBusinessCoupon(@Header("Authorization") String token, @Part MultipartBody.Part filePart, @PartMap Map<String, String> param, @Url String url);
 
     @FormUrlEncoded
     @POST("user/get-business-coupons")
