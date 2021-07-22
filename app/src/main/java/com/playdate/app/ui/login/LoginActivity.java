@@ -342,6 +342,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 user.getBirthDate(),
                 user.getAge(),
                 user.getProfilePicPath(),
+                user.getBusinessImage(),
                 user.getProfileVideoPath(),
                 user.getRelationship(),
                 user.getPersonalBio(),

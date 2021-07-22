@@ -438,6 +438,7 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
                 user.getBirthDate(),
                 user.getAge(),
                 user.getProfilePicPath(),
+                user.getBusinessImage(),
                 user.getProfileVideoPath(),
                 user.getRelationship(),
                 user.getPersonalBio(),
