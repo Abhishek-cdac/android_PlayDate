@@ -325,6 +325,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     user.getBirthDate(),
                     user.getAge(),
                     user.getProfilePicPath(),
+                    user.getBusinessImage(),
                     user.getProfileVideoPath(),
                     user.getRelationship(),
                     user.getPersonalBio(),
@@ -350,8 +351,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     mIntent = new Intent(mContext, BusinessBioActivity.class);
                 } else if (user.getProfilePicPath() == null) {
                     mIntent = new Intent(mContext, UploadProfileActivity.class);
-                } else {
+                } else if(user.getBusinessImage() == null) {
                     mIntent = new Intent(mContext, BusinessUploadPhotoActivity.class);
+                }else {
+                    mIntent = new Intent(mContext, DashboardActivity.class);
+                    SessionPref.getInstance(mContext).saveBoolKeyVal(LoginVerified, true);
                 }
             } else {
                 if (user.getStatus().equals("false")) {

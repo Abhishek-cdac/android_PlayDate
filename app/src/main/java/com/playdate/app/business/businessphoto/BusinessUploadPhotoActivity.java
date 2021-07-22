@@ -136,7 +136,7 @@ public class BusinessUploadPhotoActivity extends AppCompatActivity {
                 if (response.code() == 200) {
 
                     LoginUserDetails user = response.body().getUserData();
-                   // pref.saveStringKeyVal(LoginUserprofilePic, user.getProfilePicPath());
+                    pref.saveStringKeyVal("BusinessImage", user.getBusinessImage());
 
                     if (mIntent.getBooleanExtra("fromProfile", false)) {
                         Intent mIntent = new Intent();

@@ -32,6 +32,15 @@ public class LoginUserDetails {
     String fullPath;
     String inviteLink;
     String userType;
+    String businessImage;
+
+    public String getBusinessImage() {
+        return businessImage;
+    }
+
+    public void setBusinessImage(String businessImage) {
+        this.businessImage = businessImage;
+    }
 
     public String getUserType() {
         return userType;
@@ -59,6 +68,7 @@ public class LoginUserDetails {
     public void setInviteLink(String inviteLink) {
         this.inviteLink = inviteLink;
     }
+
     public String getFullPath() {
         return fullPath;
     }
@@ -98,7 +108,6 @@ public class LoginUserDetails {
     public void setProfileVideoPath(String profileVideoPath) {
         this.profileVideoPath = profileVideoPath;
     }
-
 
 
     public String getSourceType() {
@@ -260,4 +269,5 @@ public class LoginUserDetails {
 
     public void setRestaurants(ArrayList<Restaurants> restaurants) {
         this.restaurants = restaurants;
-    }}
+    }
+}

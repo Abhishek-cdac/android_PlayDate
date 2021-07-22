@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.playdate.app.R;
 import com.playdate.app.business.businessbio.BusinessBioActivity;
+import com.playdate.app.business.businessphoto.BusinessUploadPhotoActivity;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.GetProfileDetails;
@@ -59,10 +61,11 @@ public class FragBusinessProfile extends Fragment implements View.OnClickListene
 
     private TextView email;
     private TextView txt_phone;
-//    private TextView txt_gender;
+    //    private TextView txt_gender;
     private TextView DOB;
     private TextView txt_user_name;
-//    private TextView interestin;
+    private RelativeLayout rl_change_business_image;
+    //    private TextView interestin;
     private CircleImageView profile_image;
     private SessionPref pref;
     private ArrayList<GetProileDetailData> lst_getPostDetail;
@@ -86,6 +89,7 @@ public class FragBusinessProfile extends Fragment implements View.OnClickListene
 //        interestin = view.findViewById(R.id.interestin);
         profile_image = view.findViewById(R.id.profile_image);
         iv_dark_mode = view.findViewById(R.id.iv_dark_mode);
+        rl_change_business_image = view.findViewById(R.id.rl_change_business_image);
         ImageView iv_edit_mail = view.findViewById(R.id.iv_edit_mail);
         ImageView iv_dob = view.findViewById(R.id.iv_dob);
         ImageView iv_reset_pass = view.findViewById(R.id.iv_reset_pass);
@@ -108,12 +112,14 @@ public class FragBusinessProfile extends Fragment implements View.OnClickListene
 
         iv_dark_mode.setOnClickListener(this);
         iv_reset_pass.setOnClickListener(this);
+        rl_change_business_image.setOnClickListener(this);
         setValues();
         callAPI();
 
 
         return view;
     }
+
     private void callAPI() {
 
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
@@ -151,6 +157,7 @@ public class FragBusinessProfile extends Fragment implements View.OnClickListene
             }
         });
     }
+
     private void imageChange(boolean state) {
         if (state) {
 
@@ -167,6 +174,7 @@ public class FragBusinessProfile extends Fragment implements View.OnClickListene
 
         }
     }
+
     private void setValues() {
         try {
             SessionPref pref = SessionPref.getInstance(getActivity());
@@ -187,7 +195,7 @@ public class FragBusinessProfile extends Fragment implements View.OnClickListene
 //            txt_relationship.setText(pref.getStringVal(SessionPref.LoginUserrelationship));
 //            interestin.setText(pref.getStringVal(SessionPref.LoginUserinterestedIn));
             Picasso picasso = Picasso.get();
-            String img = pref.getStringVal(SessionPref.LoginUserprofilePic);
+            String img = pref.getStringVal(SessionPref.LoginUserBusinessImage);
             if (img.contains("http")) {
                 picasso.load(img)
                         .into(profile_image);
@@ -220,7 +228,7 @@ public class FragBusinessProfile extends Fragment implements View.OnClickListene
             mIntent.putExtra("CurrentDOB", DOB.getText().toString());
             mIntent.putExtra("fromProfile", true);
             startActivityForResult(mIntent, 408);
-        }  else if (id == R.id.iv_edit_mail) {
+        } else if (id == R.id.iv_edit_mail) {
             Intent mIntent = new Intent(getActivity(), ForgotPasswordActivity.class);
             mIntent.putExtra("fromProfile", true);
             startActivityForResult(mIntent, 408);
@@ -244,6 +252,10 @@ public class FragBusinessProfile extends Fragment implements View.OnClickListene
             Intent mIntent = new Intent(getActivity(), BusinessBioActivity.class);
             mIntent.putExtra("fromProfile", true);
             startActivityForResult(mIntent, 409);
+        } else if (id == R.id.rl_change_business_image) {
+            Intent mIntent = new Intent(getActivity(), BusinessUploadPhotoActivity.class);
+            mIntent.putExtra("fromProfile", true);
+            startActivityForResult(mIntent, 407);
         } else if (id == R.id.logout) {
             showYesNoDialog();
         }
@@ -274,6 +286,7 @@ public class FragBusinessProfile extends Fragment implements View.OnClickListene
                 break;
         }
     }
+
     private void signOut() {
 
 
@@ -289,6 +302,7 @@ public class FragBusinessProfile extends Fragment implements View.OnClickListene
                     }
                 });
     }
+
     private void showYesNoDialog() {
         new AlertDialog.Builder(getActivity())
 
@@ -299,6 +313,7 @@ public class FragBusinessProfile extends Fragment implements View.OnClickListene
                 .setNegativeButton("No", null)
                 .show();
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
