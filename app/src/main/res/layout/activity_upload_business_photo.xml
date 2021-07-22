@@ -59,35 +59,49 @@
                 android:textSize="@dimen/_10sdp" />
         </LinearLayout>
 
-        <androidx.cardview.widget.CardView
+        <FrameLayout
             android:id="@+id/card"
-            android:layout_width="@dimen/_250sdp"
-            android:layout_height="@dimen/_250sdp"
-            android:layout_below="@+id/ll_header"
             android:layout_centerHorizontal="true"
-            android:background="@color/white"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="30dp"
-            app:cardElevation="0dp">
+            android:layout_below="@+id/ll_header"
+            android:layout_width="@dimen/_250sdp"
+            android:layout_height="@dimen/_250sdp">
+
+
+<!--            <androidx.cardview.widget.CardView-->
+<!--               -->
+<!--                android:layout_width="@dimen/_250sdp"-->
+<!--                android:layout_height="@dimen/_250sdp"-->
+<!--                android:background="@color/white"-->
+<!--                app:cardBackgroundColor="@color/white"-->
+<!--                app:cardCornerRadius="30dp"-->
+<!--                app:cardElevation="0dp">-->
+
+                <ImageView
+                    android:id="@+id/profile_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/color_grey_light"
+                    android:scaleType="fitXY"
+                  />
+
 
             <ImageView
-                android:id="@+id/profile_image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/color_grey_light"
-                android:padding="@dimen/_35sdp"
-                android:scaleType="fitXY"
+                android:id="@+id/dummyimage"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:src="@drawable/business_ic_placeholder_restaurent"
+                android:layout_height="wrap_content">
 
-                android:src="@drawable/business_ic_placeholder_restaurent" />
+            </ImageView>
+          <!--  </androidx.cardview.widget.CardView>-->
 
-        </androidx.cardview.widget.CardView>
 
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/card"
-
             android:layout_marginTop="@dimen/_30sdp"
             android:orientation="vertical">
 

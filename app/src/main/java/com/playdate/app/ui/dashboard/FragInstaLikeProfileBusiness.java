@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,11 +47,12 @@ public class FragInstaLikeProfileBusiness extends Fragment implements onPhotoCli
     private TextView txt_login_user;
     private CommonClass clsCommon;
     private TextView txtTotalFriend, txtTotalPost;
-//    private TextView txt_points;
+    //    private TextView txt_points;
     private ArrayList<GetProileDetailData> lst_getPostDetail;
     private Picasso picasso;
     private SessionPref pref;
 
+    RatingBar ratingbar;
 
     public FragInstaLikeProfileBusiness() {
     }
@@ -62,6 +64,22 @@ public class FragInstaLikeProfileBusiness extends Fragment implements onPhotoCli
         clsCommon = CommonClass.getInstance();
         pref = SessionPref.getInstance(getActivity());
         picasso = Picasso.get();
+        ratingbar = view.findViewById(R.id.ratingBar);
+        ratingbar.setOnRatingBarChangeListener(new
+                                                       RatingBar.OnRatingBarChangeListener() {
+                                                           @Override
+                                                           public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                                                               Toast.makeText(getActivity(), "Rating: " +
+                                                                       (int) rating, Toast.LENGTH_SHORT).show();
+                                                           }
+                                                       });
+//        ratingbar.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String rating=String.valueOf(ratingbar.getRating());
+//                Toast.makeText(getActivity(), rating, Toast.LENGTH_LONG).show();
+//            }
+//        });
         txtTotalFriend = view.findViewById(R.id.friend_count);
         txtTotalPost = view.findViewById(R.id.post_count);
         profile_image = view.findViewById(R.id.profile_image);
