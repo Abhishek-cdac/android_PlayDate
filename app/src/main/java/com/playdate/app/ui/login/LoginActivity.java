@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -144,12 +146,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         login_Password = findViewById(R.id.login_Password);
 //        rl_couple.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, DashboardBusiness.class)));
 
+        binding.loginEmail.setFilters(new InputFilter[]{ignoreFirstWhiteSpace()});
+
         loginViewModel.getUser().observe(this, loginUser -> {
 
             if (TextUtils.isEmpty(Objects.requireNonNull(loginUser).getStrEmailAddress())) {
 //                binding.loginEmail.setError("Enter an E-Mail Address");
                 binding.loginEmail.requestFocus();
-                new CommonClass().showDialogMsg(LoginActivity.this, "PlayDate", "Enter a username", "Ok");
+                new CommonClass().showDialogMsg(LoginActivity.this, "PlayDate", "Enter Email/Mobile number", "Ok");
 
             }
 //            else if (!loginUser.isEmailValid()) {
@@ -245,6 +249,22 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 });
 
         startService(new Intent(this, FcmMessageService.class));
+    }
+
+    private InputFilter ignoreFirstWhiteSpace() {
+        return new InputFilter() {
+            public CharSequence filter(CharSequence source, int start, int end,
+                                       Spanned dest, int dstart, int dend) {
+                end = 50;
+                for (int i = start; i < end; i++) {
+                    if (Character.isWhitespace(source.charAt(i))) {
+                        if (dstart == 0)
+                            return "";
+                    }
+                }
+                return null;
+            }
+        };
     }
 
 
@@ -368,9 +388,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 mIntent = new Intent(mContext, BusinessBioActivity.class);
             } else if (user.getProfilePicPath() == null) {
                 mIntent = new Intent(mContext, UploadProfileActivity.class);
-            } else if (user.getBusinessImage() == null){
+            } else if (user.getBusinessImage() == null) {
                 mIntent = new Intent(mContext, BusinessUploadPhotoActivity.class);
-            }else{
+            } else {
                 mIntent = new Intent(mContext, DashboardActivity.class);
             }
         } else {
@@ -433,7 +453,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
                         pref.saveBoolKeyVal(SessionPref.isBusiness, userType != 0);
-                        if (null != user){
+                        if (null != user) {
                             user.setUserType(userType == 0 ? "Person" : "Business");
                             logicAfterUserType(user);
                         }
@@ -546,7 +566,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     Log.e("personId", "" + personId);
                     Log.e("personPhoto", "" + personPhoto);
                     Log.e("personName", "" + personName);
-                    pref.saveStringKeyVal(LoginUserSourceType,"Google");
+                    pref.saveStringKeyVal(LoginUserSourceType, "Google");
                     callGmailSocialLoginAPI(personEmail, personId, ServerAuthCode);
                 }
 
@@ -637,7 +657,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                                 Log.d("email of user ", email);
                                                 Log.d("id of user ", fbUserID);
                                                 //Log.d("birthday of user ", birthday);
-                                                pref.saveStringKeyVal(LoginUserSourceType,"Facebook");
+                                                pref.saveStringKeyVal(LoginUserSourceType, "Facebook");
                                                 callSocialLoginAPI(email, fbUserID, accessToken);
 
                                                 disconnectFromFacebook();

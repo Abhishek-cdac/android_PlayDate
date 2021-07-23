@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -126,6 +128,46 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
             pref.saveBoolKeyVal(SessionPref.isBusiness, isBusiness);
         }
 
+
+        final EditText editText = binding.edtFullname;
+
+        InputFilter filter = new InputFilter() {
+            boolean canEnterSpace = false;
+
+            @Override
+            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+                if(editText.getText().toString().equals(""))
+                {
+                    canEnterSpace = false;
+                }
+
+                StringBuilder builder = new StringBuilder();
+
+                for (int i = start; i < end; i++) {
+                    char currentChar = source.charAt(i);
+
+                    if (Character.isLetterOrDigit(currentChar) || currentChar == '_') {
+                        builder.append(currentChar);
+                        canEnterSpace = true;
+                    }
+
+                    if(Character.isWhitespace(currentChar) && canEnterSpace) {
+                        builder.append(currentChar);
+
+                    }
+
+
+                }
+
+                return builder.toString();
+            }
+        };
+
+
+
+//        binding.edtFullname.setFilters(new InputFilter[]{ignoreFirstWhiteSpace()});
+        editText.setFilters(new InputFilter[]{filter});
+
         registerViewModel.getFinish().observe(this, aBoolean -> finish());
 
         registerViewModel.getRegisterUser().observe(this, registerUser -> {
@@ -174,6 +216,22 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
         registerViewModel.getOnGoogleClick().observe(this, aBoolean -> callToGoogle());
 
 
+    }
+
+    private InputFilter ignoreFirstWhiteSpace() {
+        return new InputFilter() {
+            public CharSequence filter(CharSequence source, int start, int end,
+                                       Spanned dest, int dstart, int dend) {
+
+                for (int i = start; i < end; i++) {
+                    if (Character.isWhitespace(source.charAt(i))) {
+                        if (dstart == 0)
+                            return "";
+                    }
+                }
+                return null;
+            }
+        };
     }
 
     private String getFCM() {
