@@ -44,11 +44,13 @@ public class FragSocialFeed extends Fragment implements OnRefreshPage {
     private boolean boolApiCalling = false;
     private ArrayList<PostDetails> lst = new ArrayList<>();
     private SocialFeedAdapter adapter;
+    private OnInnerFragmentClicks ref;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.row_social_feed, container, false);
+        ref = (OnInnerFragmentClicks) getActivity();
         recycler_view_feed = view.findViewById(R.id.recycler_view_feed);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         recycler_view_feed.setLayoutManager(manager);
@@ -89,7 +91,6 @@ public class FragSocialFeed extends Fragment implements OnRefreshPage {
     }
 
 
-
     private void callAPI() {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
@@ -108,13 +109,11 @@ public class FragSocialFeed extends Fragment implements OnRefreshPage {
                     if (lstData == null) {
                         lstData = new ArrayList<>();
                         if (PageNo == 1) {
-                            OnInnerFragmentClicks ref = (OnInnerFragmentClicks) getActivity();
                             Objects.requireNonNull(ref).NoFriends();
                             return;
                         }
                     } else if (PageNo == 1) {
                         if (lstData.isEmpty()) {
-                            OnInnerFragmentClicks ref = (OnInnerFragmentClicks) getActivity();
                             Objects.requireNonNull(ref).NoFriends();
                             return;
                         }
@@ -175,11 +174,7 @@ public class FragSocialFeed extends Fragment implements OnRefreshPage {
                     }
 
                     if (PageNo == 1) {
-
-                        OnInnerFragmentClicks ref = (OnInnerFragmentClicks) getActivity();
                         Objects.requireNonNull(ref).NoFriends();
-
-
                     }
 
                 }
@@ -215,8 +210,6 @@ public class FragSocialFeed extends Fragment implements OnRefreshPage {
         adapter.notifyDataSetChanged();
         callAPI();
     }
-
-
 
 
 }

@@ -119,13 +119,15 @@ public class BusinessStartingDateActivity extends AppCompatActivity {
                 pd.cancel();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
-                        //  pref.saveStringKeyVal(SessionPref.LoginUserBusinessStartDate, BusinessStartDate);
+                          pref.saveStringKeyVal(SessionPref.LoginUserbirthDate, BusinessStartDate);
                         if (mIntent.getBooleanExtra("fromProfile", false)) {
                             finish();
                         } else {
                             startActivity(new Intent(BusinessStartingDateActivity.this, UserNameActivity.class));
                             finish();
                         }
+
+
                     } else {
                         Log.e("PlayDateBSD", "" + response.body().getMessage());
                         clsCommon.showDialogMsg(BusinessStartingDateActivity.this, "PlayDate", response.body().getMessage(), "Ok");
