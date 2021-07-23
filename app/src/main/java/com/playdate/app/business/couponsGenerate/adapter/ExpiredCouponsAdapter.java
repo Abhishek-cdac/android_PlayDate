@@ -10,25 +10,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
-import com.playdate.app.model.ActiveCoupons;
+import com.playdate.app.model.GetBusinessCouponData;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class ExpiredCouponsAdapter extends RecyclerView.Adapter<ExpiredCouponsAdapter.ViewHolder> {
-    ArrayList<ActiveCoupons> list = new ArrayList<>();
+    private final ArrayList<GetBusinessCouponData> list;
+    private final Picasso picasso;
 
-
-    public ExpiredCouponsAdapter() {
-        list.add(new ActiveCoupons("Retro Dinner", "Enjoy 15% off on our special meals and drinks", "24/09", R.drawable.rest_1));
-        list.add(new ActiveCoupons("Retro Dinner", "Enjoy 15% off on our special meals and drinks", "18/09", R.drawable.rest_1));
-        list.add(new ActiveCoupons("Retro Dinner", "Enjoy 15% off on our special meals and drinks", "16/09", R.drawable.rest_1));
-        list.add(new ActiveCoupons("Retro Dinner", "Enjoy 15% off on our special meals and drinks", "14/09", R.drawable.rest_1));
-        list.add(new ActiveCoupons("Retro Dinner", "Enjoy 15% off on our special meals and drinks", "10/09", R.drawable.rest_1));
-        list.add(new ActiveCoupons("Retro Dinner", "Enjoy 15% off on our special meals and drinks", "08/09", R.drawable.rest_1));
-        list.add(new ActiveCoupons("Retro Dinner", "Enjoy 15% off on our special meals and drinks", "06/09", R.drawable.rest_1));
-        list.add(new ActiveCoupons("Retro Dinner", "Enjoy 15% off on our special meals and drinks", "04/09", R.drawable.rest_1));
-        list.add(new ActiveCoupons("Retro Dinner", "Enjoy 15% off on our special meals and drinks", "02/09", R.drawable.rest_1));
+    public ExpiredCouponsAdapter(ArrayList<GetBusinessCouponData> lst) {
+        this.list = lst;
+        picasso = Picasso.get();
     }
+
 
     @NonNull
     @Override
@@ -39,21 +34,27 @@ public class ExpiredCouponsAdapter extends RecyclerView.Adapter<ExpiredCouponsAd
 
     @Override
     public void onBindViewHolder(@NonNull ExpiredCouponsAdapter.ViewHolder holder, int position) {
-        holder.iv_image.setImageResource(list.get(position).getImage());
-        holder.rest_name.setText(list.get(position).getName());
-        holder.discount_desc.setText(list.get(position).getDesc());
+
+        picasso.load(list.get(position).getCouponImage())
+                .fit()
+                .centerCrop()
+                .into(holder.iv_image);
+        holder.rest_name.setText(list.get(position).getUser().get(0).getFullName());
+        holder.discount_desc.setText(list.get(position).getCouponTitle());
     }
 
     @Override
     public int getItemCount() {
+        if (list == null)
+            return 0;
+
         return list.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView iv_image;
-        TextView rest_name;
-        TextView discount_desc;
-        TextView tv_date;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        private final ImageView iv_image;
+        private final TextView rest_name;
+        private final TextView discount_desc;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

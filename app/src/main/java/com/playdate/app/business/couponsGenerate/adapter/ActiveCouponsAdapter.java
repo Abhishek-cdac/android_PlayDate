@@ -1,6 +1,5 @@
 package com.playdate.app.business.couponsGenerate.adapter;
 
-import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,16 +7,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
 import com.playdate.app.business.couponsGenerate.FragActiveCoupons;
-import com.playdate.app.model.ActiveCoupons;
 import com.playdate.app.model.GetBusinessCouponData;
-import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
@@ -28,16 +24,16 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class ActiveCouponsAdapter extends RecyclerView.Adapter<ActiveCouponsAdapter.ViewHolder> {
-    //  ArrayList<ActiveCoupons> list = new ArrayList<>();
-    ArrayList<GetBusinessCouponData> list = new ArrayList<>();
-    FragActiveCoupons fragActiveCoupons;
-    Context mcontext;
+    private final ArrayList<GetBusinessCouponData> list;
 
     private final Picasso picasso;
+    String inputPattern = "yyyy-MM-dd";
+    String outputPattern = "dd/MM";
+    SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
+    SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern);
 
     public ActiveCouponsAdapter(ArrayList<GetBusinessCouponData> getBusinessCouponLst, FragActiveCoupons fragActiveCoupons) {
         this.list = getBusinessCouponLst;
-        this.fragActiveCoupons = fragActiveCoupons;
         picasso = Picasso.get();
     }
 
@@ -45,26 +41,46 @@ public class ActiveCouponsAdapter extends RecyclerView.Adapter<ActiveCouponsAdap
     @Override
     public ActiveCouponsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_active_coupon, parent, false);
-        mcontext = parent.getContext();
+//        Context mcontext = parent.getContext();
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ActiveCouponsAdapter.ViewHolder holder, int position) {
-        if (list.get(position).getCouponValidTillDate() != null) {
-            String[] s = list.get(position).getCouponValidTillDate().split("T");
-            Log.e("getCouponValidTillDate", "" + s[0]);
-            holder.tv_date.setText(s[0]);
+
+        String[] s = list.get(position).getCouponValidTillDate().split("T");
+
+//        Log.d("*******",list.get(position).getCouponValidTillDate());
+//        DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+        //readDate = null;
+        try {
+
+
+            Date date = null;
+            String str = null;
+
+            try {
+                date = inputFormat.parse(s[0]);
+                str = outputFormat.format(date);
+                holder.tv_date.setText(str);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        picasso.load(list.get(position).getCouponImage()).placeholder(R.drawable.rest_1)
+
+
+        picasso.load(list.get(position).getCouponImage())
                 .fit()
                 .centerCrop()
                 .into(holder.iv_image);
-        //  holder.tv_date.setText(list.get(position).getCouponValidTillDate());
         holder.rest_name.setText(list.get(position).getUser().get(0).getFullName());
         holder.discount_desc.setText(list.get(position).getCouponTitle());
-        holder.status.setText(list.get(position).getStatus());
+        if(list.get(position).getStatus().equals("Active"))
+        holder.status.setText("\u2022 LIVE");
     }
 
     @Override
@@ -72,13 +88,14 @@ public class ActiveCouponsAdapter extends RecyclerView.Adapter<ActiveCouponsAdap
         return list.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView iv_image;
-        TextView rest_name;
-        TextView discount_desc;
-        TextView tv_date;
-        TextView status;
-        RelativeLayout rl_coupons;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+
+        private final ImageView iv_image;
+        private final TextView rest_name;
+        private final TextView discount_desc;
+        private final TextView tv_date;
+        private final TextView status;
+        private RelativeLayout rl_coupons;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

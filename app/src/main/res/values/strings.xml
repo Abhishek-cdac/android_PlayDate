@@ -328,7 +328,7 @@
     <string name="coupon_awarded_by">Awarded By</string>
     <string name="coupon_availability">Availability Days</string>
     <string name="coupon_new_price">New Price</string>
-    <string name="coupon_amount_off"> Amount Off</string>
+    <string name="coupon_amount_off">Amount Off</string>
     <string name="coupon_free_item">Free Item</string>
     <string name="coupon_percent_off">Percentage Off</string>
     <string name="chooseLevel">Choose Level</string>

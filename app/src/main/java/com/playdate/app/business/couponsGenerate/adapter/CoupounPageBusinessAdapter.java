@@ -7,13 +7,20 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.playdate.app.business.couponsGenerate.FragActiveCoupons;
 import com.playdate.app.business.couponsGenerate.FragExpiredCoupon;
+import com.playdate.app.model.GetBusinessCouponData;
+
+import java.util.ArrayList;
 
 public class CoupounPageBusinessAdapter extends FragmentPagerAdapter {
     int totalTabs;
 
-    public CoupounPageBusinessAdapter(@NonNull FragmentManager fm, int totalTabs) {
+
+
+    private ArrayList<GetBusinessCouponData> lst;
+    public CoupounPageBusinessAdapter(@NonNull FragmentManager fm, int totalTabs, ArrayList<GetBusinessCouponData> lst) {
         super(fm);
         this.totalTabs = totalTabs;
+        this.lst=lst;
     }
 
     @NonNull
@@ -21,10 +28,9 @@ public class CoupounPageBusinessAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new FragActiveCoupons();
+                return new FragActiveCoupons(lst);
             case 1:
-                return new FragExpiredCoupon();
-
+                return new FragExpiredCoupon(lst);
         }
         return null;
     }
