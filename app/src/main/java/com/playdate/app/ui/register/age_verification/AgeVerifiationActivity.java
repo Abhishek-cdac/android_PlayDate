@@ -1,10 +1,16 @@
 package com.playdate.app.ui.register.age_verification;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -32,6 +38,7 @@ import java.util.Map;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import timber.log.Timber;
 
 public class AgeVerifiationActivity extends AppCompatActivity {
     private AgeVerificationViewModel age_verify_viewmodel;
@@ -48,7 +55,6 @@ public class AgeVerifiationActivity extends AppCompatActivity {
         com.playdate.app.databinding.ActivityAgeVerificationBinding binding = DataBindingUtil.setContentView(AgeVerifiationActivity.this, R.layout.activity_age_verification);
         binding.setLifecycleOwner(this);
         binding.setAgeVerificationViewModel(age_verify_viewmodel);
-
 
         age_verify_viewmodel.onRegisterUser().observe(this, loginUser -> AgeVerifiationActivity.this.startActivity(new Intent(AgeVerifiationActivity.this, OTPActivity.class)));
         age_verify_viewmodel.iv_backClick.observe(this, loginUser -> finish());
@@ -71,7 +77,6 @@ public class AgeVerifiationActivity extends AppCompatActivity {
 
         });
 
-
         if (mIntent.getBooleanExtra("fromProfile", false)) {
             new Handler().postDelayed(new Runnable() {
                 public void run() {
@@ -85,9 +90,7 @@ public class AgeVerifiationActivity extends AppCompatActivity {
                 }
             }, 200);
 
-
         }
-
     }
 
     private void callAPI() {

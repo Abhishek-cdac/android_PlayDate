@@ -146,6 +146,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         login_Password = findViewById(R.id.login_Password);
 //        rl_couple.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, DashboardBusiness.class)));
 
+        binding.loginEmail.setFilters(new InputFilter[]{ignoreFirstWhiteSpace(), new InputFilter.LengthFilter(50)});
+
         loginViewModel.getUser().observe(this, loginUser -> {
 
             if (TextUtils.isEmpty(Objects.requireNonNull(loginUser).getStrEmailAddress())) {
@@ -249,6 +251,21 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         startService(new Intent(this, FcmMessageService.class));
     }
 
+    private InputFilter ignoreFirstWhiteSpace() {
+        return new InputFilter() {
+            public CharSequence filter(CharSequence source, int start, int end,
+                                       Spanned dest, int dstart, int dend) {
+
+                for (int i = start; i < end; i++) {
+                    if (Character.isWhitespace(source.charAt(i))) {
+                        if (dstart == 0)
+                            return "";
+                    }
+                }
+                return null;
+            }
+        };
+    }
 
     private void callLoginAPI(LoginUser loginUser) {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);

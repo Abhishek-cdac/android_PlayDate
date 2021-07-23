@@ -128,45 +128,9 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
             pref.saveBoolKeyVal(SessionPref.isBusiness, isBusiness);
         }
 
-
-        final EditText editText = binding.edtFullname;
-
-        InputFilter filter = new InputFilter() {
-            boolean canEnterSpace = false;
-
-            @Override
-            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-                if(editText.getText().toString().equals(""))
-                {
-                    canEnterSpace = false;
-                }
-
-                StringBuilder builder = new StringBuilder();
-
-                for (int i = start; i < end; i++) {
-                    char currentChar = source.charAt(i);
-
-                    if (Character.isLetterOrDigit(currentChar) || currentChar == '_') {
-                        builder.append(currentChar);
-                        canEnterSpace = true;
-                    }
-
-                    if(Character.isWhitespace(currentChar) && canEnterSpace) {
-                        builder.append(currentChar);
-
-                    }
-
-
-                }
-
-                return builder.toString();
-            }
-        };
-
-
-
-//        binding.edtFullname.setFilters(new InputFilter[]{ignoreFirstWhiteSpace()});
-        editText.setFilters(new InputFilter[]{filter});
+        binding.edtFullname.setFilters(new InputFilter[]{ignoreFirstWhiteSpace(), new InputFilter.LengthFilter(50)});
+        binding.edtAddress.setFilters(new InputFilter[]{ignoreFirstWhiteSpace(), new InputFilter.LengthFilter(50)});
+        binding.edtEmail.setFilters(new InputFilter[]{ignoreFirstWhiteSpace(), new InputFilter.LengthFilter(50)});
 
         registerViewModel.getFinish().observe(this, aBoolean -> finish());
 
@@ -222,7 +186,7 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
         return new InputFilter() {
             public CharSequence filter(CharSequence source, int start, int end,
                                        Spanned dest, int dstart, int dend) {
-end =50;
+
                 for (int i = start; i < end; i++) {
                     if (Character.isWhitespace(source.charAt(i))) {
                         if (dstart == 0)
@@ -394,7 +358,7 @@ end =50;
                     Log.e("personId", "" + personId);
                     Log.e("personPhoto", "" + personPhoto);
                     Log.e("personName", "" + personName);
-                    pref.saveStringKeyVal(LoginUserSourceType,"Google");
+                    pref.saveStringKeyVal(LoginUserSourceType, "Google");
                     callGmailSocialLoginAPI(personEmail, personId, "");
                 }
 
@@ -456,7 +420,9 @@ end =50;
             }
         });
     }
+
     LoginUserDetails user;
+
     private void checkForTheLastActivity(LoginResponse body) {
         try {
             LoginUserDetails user = body.getUserData();
@@ -468,7 +434,7 @@ end =50;
                 } else {
                     val = "Person";
                 }
-                this.user=user;
+                this.user = user;
                 callAPIUpdateUserType(val);
 
             } else {

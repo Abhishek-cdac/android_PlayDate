@@ -34,6 +34,15 @@
 
         <item name="android:textSize">13sp</item>
     </style>
+
+    <style name="Spinner112" parent="Widget.AppCompat.Light.DropDownItem.Spinner">
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">0dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:backgroundTint">@color/red</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
     <style name="mySpinnerItemStyle" parent="@android:style/Widget.Holo.DropDownItem.Spinner">
         <item name="android:textColor">@color/black</item>
 
