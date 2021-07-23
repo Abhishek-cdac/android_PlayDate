@@ -222,7 +222,7 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
         return new InputFilter() {
             public CharSequence filter(CharSequence source, int start, int end,
                                        Spanned dest, int dstart, int dend) {
-
+end =50;
                 for (int i = start; i < end; i++) {
                     if (Character.isWhitespace(source.charAt(i))) {
                         if (dstart == 0)
