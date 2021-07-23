@@ -74,11 +74,12 @@
             android:orientation="horizontal">
 
             <Spinner
+                android:id="@+id/spinner11"
+                style="@style/Spinner"
                 android:layout_width="70dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/normal_btn_back"
@@ -87,6 +88,7 @@
                 android:scrollbarAlwaysDrawVerticalTrack="true"
                 android:selectedItemPosition="@={AgeVerificationViewModel.MonthSelectedPosition}"
                 android:textAlignment="center"
+                android:theme="@style/Spinner"
                 android:verticalScrollbarPosition="defaultPosition"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -103,6 +105,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
+                android:theme="@style/Spinner"
                 android:background="@drawable/normal_btn_back"
                 android:entries="@{AgeVerificationViewModel.fetchDays()}"
                 android:popupBackground="@drawable/normal_btn_back"
@@ -123,6 +126,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:theme="@style/Spinner"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/normal_btn_back"
@@ -138,6 +142,12 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.498" />
 
+<!--            <Spinner-->
+            <!--                android:id="@+id/coloredSpinner"-->
+            <!--                android:layout_width="70dp"-->
+            <!--                android:theme="@style/Spinner112"-->
+            <!--                android:layout_height="40dp"-->
+            <!--                android:entries="@{AgeVerificationViewModel.fetchMonths()}" />-->
         </LinearLayout>
 
         <ImageView
