@@ -6,7 +6,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -44,16 +46,23 @@ public class RestaurantActivity extends AppCompatActivity {
     private RestaurantAdapter adapter;
     private CommonClass clsCommon;
     private RecyclerView recyclerView;
+    private ImageView profileImage;
+    private TextView txt_more_rest;
 
+    SessionPref pref;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         RestaurantViewModel viewModel = new RestaurantViewModel();
         clsCommon = CommonClass.getInstance();
+        pref = SessionPref.getInstance(this);
+
         binding = DataBindingUtil.setContentView(RestaurantActivity.this, R.layout.activity_restaurant);
         binding.setLifecycleOwner(this);
         binding.setRestaurantViewModel(viewModel);
         RelativeLayout rl_rest_bg = findViewById(R.id.rl_rest_bg);
+        profileImage = findViewById(R.id.profile_image);
+        txt_more_rest = findViewById(R.id.txt_more_rest);
 
         getRest();
 
@@ -61,7 +70,7 @@ public class RestaurantActivity extends AppCompatActivity {
         recyclerView = binding.recyclerviewInterest;
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerView.setHasFixedSize(true);
-//        recyclerView.addItemDecoration(new SpacesItemDecoration(15));
+//      recyclerView.addItemDecoration(new SpacesItemDecoration(15));
 
 
         binding.edtSearch.addTextChangedListener(new TextWatcher() {
@@ -120,7 +129,6 @@ public class RestaurantActivity extends AppCompatActivity {
             return;
         }
 
-        SessionPref pref = SessionPref.getInstance(this);
 
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();

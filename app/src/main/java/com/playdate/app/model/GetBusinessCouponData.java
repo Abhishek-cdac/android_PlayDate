@@ -2,12 +2,15 @@
 package com.playdate.app.model;
 
 import java.util.List;
+
 import com.google.gson.annotations.Expose;
 
 public class GetBusinessCouponData {
 
     @Expose
     private String awardedBy;
+    @Expose
+    private String couponCode;
     @Expose
     private Object awardlevelValue;
     @Expose
@@ -147,4 +150,11 @@ public class GetBusinessCouponData {
         this.userId = userId;
     }
 
+    public String getCouponCode() {
+        return couponCode;
+    }
+
+    public void setCouponCode(String couponCode) {
+        this.couponCode = couponCode;
+    }
 }

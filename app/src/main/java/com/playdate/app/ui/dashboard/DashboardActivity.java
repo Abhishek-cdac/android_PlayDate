@@ -119,6 +119,8 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
     private LinearLayout ll_love_bottom;
     private ImageView iv_gallery;
     private boolean isBusiness = false;
+    private  TextView txt_serachfriend;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -160,12 +162,17 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
         LinearLayout ll_upload_video = findViewById(R.id.ll_upload_video);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         ll_camera_option = findViewById(R.id.ll_camera_option);
+        txt_serachfriend = findViewById(R.id.txt_serachfriend);
 
         rv_friends = findViewById(R.id.rv_friends);
+
+
         RecyclerView.LayoutManager manager = new LinearLayoutManager(DashboardActivity.this, RecyclerView.HORIZONTAL, false);
         adapterfriend = new FriendAdapter(new ArrayList<>(), DashboardActivity.this);
         rv_friends.setAdapter(adapterfriend);
         rv_friends.setLayoutManager(manager);
+
+
         isBusiness = pref.getBoolVal(SessionPref.isBusiness);
         if (isBusiness) {
             txt_match.setVisibility(View.GONE);
@@ -403,9 +410,16 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
                         if (lst == null) {
                             lst = new ArrayList<>();
                         }
+                        Log.e("friend list size",""+lst.size());
                         if (lst.size() > 0) {
                             rv_friends.setVisibility(View.VISIBLE);
+                            txt_serachfriend.setVisibility(View.GONE);
                             adapterfriend.updateList(lst);
+                        }
+                        else
+                        {
+                            rv_friends.setVisibility(View.GONE);
+                            txt_serachfriend.setVisibility(View.VISIBLE);
                         }
                     }
                 }
@@ -643,6 +657,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
             iv_profile_sett.setBackground(null);
             iv_profile_sett.setImageResource(R.drawable.tech_support);
             ll_friends.setVisibility(View.GONE);
+            iv_plus.setVisibility(View.GONE);
             if (isBusiness) {
                 ReplaceFrag(new FragCouponParentBusiness());
             } else {

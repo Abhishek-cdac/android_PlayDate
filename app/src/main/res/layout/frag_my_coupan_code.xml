@@ -53,6 +53,19 @@
             app:lottie_url="REPLACE_JSON_URL" />
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/tv_placeholder"
+        android:textColor="@color/textColour"
+        android:gravity="center"
+        android:visibility="visible"
+        android:padding="@dimen/_40sdp"
+        android:layout_below="@+id/bg"
+        android:textSize="@dimen/_16sdp"
+        android:fontFamily="@font/lato_bold"
+        android:text="@string/no_coupon_available"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_coupons_list"
         android:layout_width="match_parent"

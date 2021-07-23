@@ -1,6 +1,7 @@
 package com.playdate.app.ui.notification_screen;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -394,41 +395,45 @@ public class FragNotification extends Fragment {
                                 lst_notifications = new ArrayList<>();
                             }
 
-                            if (PageNumber == 1) {
-                                lst_notifications.clear();
-                                lst_notifications.addAll(lst);
-                                NotificationData data = new NotificationData();
-                                data.setPatternID("ViewMore");
-                                lst_notifications.add(data);
-                                if (lst_notifications.size() == 0) {
-                                    ll_no_notify.setVisibility(View.VISIBLE);
-                                    rv_notification.setVisibility(View.GONE);
-                                } else {
-                                    ll_no_notify.setVisibility(View.GONE);
-                                    rv_notification.setVisibility(View.VISIBLE);
+                                if (PageNumber == 1) {
+                                    lst_notifications.clear();
+                                    lst_notifications.addAll(lst);
+                                    NotificationData data = new NotificationData();
+                                    data.setPatternID("ViewMore");
+                                    lst_notifications.add(data);
+                                    if (lst_notifications.size() == 0) {
+                                        ll_no_notify.setVisibility(View.VISIBLE);
+                                        rv_notification.setVisibility(View.GONE);
+                                    } else {
+                                        ll_no_notify.setVisibility(View.GONE);
+                                        rv_notification.setVisibility(View.VISIBLE);
 
-                                    RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
-                                    rv_notification.setLayoutManager(manager);
-                                    adapter = new FragNotificationTypeAdapter(getActivity(), (ArrayList<NotificationData>) lst_notifications, itemClick, FragNotification.this);
-                                    rv_notification.setAdapter(adapter);
+                                        RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
+                                        rv_notification.setLayoutManager(manager);
+                                        adapter = new FragNotificationTypeAdapter(getActivity(), (ArrayList<NotificationData>) lst_notifications, itemClick, FragNotification.this);
+                                        rv_notification.setAdapter(adapter);
+                                    }
                                 }
-                            } else {
-                                if (lst_notifications.get(lst_notifications.size() - 1).getPatternID().equals("ViewMore")) {
-                                    lst_notifications.remove(lst_notifications.size() - 1);
-                                }
-                                if (lst.isEmpty()) {
-                                    PageNumber = -1;
-                                    adapter.showLoadmore = false;
+                                else {
+                                    if (lst_notifications.get(lst_notifications.size() - 1).getPatternID().equals("ViewMore")) {
+                                        lst_notifications.remove(lst_notifications.size() - 1);
+                                    }
+                                    if (lst.isEmpty()) {
+                                        PageNumber = -1;
+                                        adapter.showLoadmore = false;
+                                        adapter.notifyDataSetChanged();
+                                        return;
+                                    }
+                                    lst_notifications.addAll(lst);
+                                    NotificationData data = new NotificationData();
+                                    data.setPatternID("ViewMore");
+                                    lst_notifications.add(data);
                                     adapter.notifyDataSetChanged();
-                                    return;
                                 }
-                                lst_notifications.addAll(lst);
-                                NotificationData data = new NotificationData();
-                                data.setPatternID("ViewMore");
-                                lst_notifications.add(data);
-                                adapter.notifyDataSetChanged();
-                            }
-                            PageNumber = PageNumber + 1;
+                                PageNumber = PageNumber + 1;
+
+
+
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
