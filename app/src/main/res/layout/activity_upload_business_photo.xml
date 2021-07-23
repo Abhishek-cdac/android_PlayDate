@@ -76,6 +76,12 @@
 <!--                app:cardCornerRadius="30dp"-->
 <!--                app:cardElevation="0dp">-->
 
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:id="@+id/card1"
+                app:cardCornerRadius="@dimen/_10sdp"
+                android:layout_height="match_parent">
                 <ImageView
                     android:id="@+id/profile_image"
                     android:layout_width="match_parent"
@@ -95,6 +101,7 @@
             </ImageView>
           <!--  </androidx.cardview.widget.CardView>-->
 
+            </androidx.cardview.widget.CardView>
 
         </FrameLayout>
 
