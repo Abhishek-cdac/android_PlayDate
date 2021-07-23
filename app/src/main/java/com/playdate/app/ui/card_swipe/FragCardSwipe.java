@@ -189,7 +189,7 @@ public class FragCardSwipe extends Fragment {
 
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("limit", "10");
+        hashMap.put("limit", "100");
         hashMap.put("pageNo", "" + PageNumber);
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
         pd.show();
