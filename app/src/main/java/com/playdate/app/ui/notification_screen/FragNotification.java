@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
+import com.playdate.app.business.couponsGenerate.FragCouponParentBusiness;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.CommonModel;
@@ -43,7 +44,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FragNotification extends Fragment {
-    private  String extra;
+    private String extra;
 
     public FragNotification(String extra) {
         this.extra = extra;
@@ -135,8 +136,10 @@ public class FragNotification extends Fragment {
                     ref.Reset();
                 } else if (extra.equals("Coupons")) {
                     ref.ReplaceFrag(new FragCouponParent());
-                } else {
+                } else if (extra.equals("chat")) {
                     ref.ReplaceFrag(new RequestChatFragment());
+                } else {
+                    ref.ReplaceFrag(new FragCouponParentBusiness());
                 }
             }
         });
@@ -165,7 +168,7 @@ public class FragNotification extends Fragment {
                 pd.cancel();
                 if (response.code() == 200) {
                     if (Objects.requireNonNull(response.body()).getStatus() == 1) {
-                        PageNumber=1;
+                        PageNumber = 1;
                         callGetNotificationAPI();
                         clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
                     } else {
@@ -210,7 +213,7 @@ public class FragNotification extends Fragment {
                 pd.cancel();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
-                        PageNumber=1;
+                        PageNumber = 1;
                         callGetNotificationAPI();
                         clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
                     } else {
@@ -292,7 +295,7 @@ public class FragNotification extends Fragment {
                 if (response.code() == 200) {
                     assert response.body() != null;
                     if (response.body().getStatus() == 1) {
-                        PageNumber=1;
+                        PageNumber = 1;
                         callGetNotificationAPI();
                         Toast.makeText(getActivity(), "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     }
@@ -361,7 +364,6 @@ public class FragNotification extends Fragment {
     }
 
 
-
     public void loadMore() {
         callGetNotificationAPI();
     }
@@ -395,43 +397,41 @@ public class FragNotification extends Fragment {
                                 lst_notifications = new ArrayList<>();
                             }
 
-                                if (PageNumber == 1) {
-                                    lst_notifications.clear();
-                                    lst_notifications.addAll(lst);
-                                    NotificationData data = new NotificationData();
-                                    data.setPatternID("ViewMore");
-                                    lst_notifications.add(data);
-                                    if (lst_notifications.size() == 0) {
-                                        ll_no_notify.setVisibility(View.VISIBLE);
-                                        rv_notification.setVisibility(View.GONE);
-                                    } else {
-                                        ll_no_notify.setVisibility(View.GONE);
-                                        rv_notification.setVisibility(View.VISIBLE);
+                            if (PageNumber == 1) {
+                                lst_notifications.clear();
+                                lst_notifications.addAll(lst);
+                                NotificationData data = new NotificationData();
+                                data.setPatternID("ViewMore");
+                                lst_notifications.add(data);
+                                if (lst_notifications.size() == 0) {
+                                    ll_no_notify.setVisibility(View.VISIBLE);
+                                    rv_notification.setVisibility(View.GONE);
+                                } else {
+                                    ll_no_notify.setVisibility(View.GONE);
+                                    rv_notification.setVisibility(View.VISIBLE);
 
-                                        RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
-                                        rv_notification.setLayoutManager(manager);
-                                        adapter = new FragNotificationTypeAdapter(getActivity(), (ArrayList<NotificationData>) lst_notifications, itemClick, FragNotification.this);
-                                        rv_notification.setAdapter(adapter);
-                                    }
+                                    RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
+                                    rv_notification.setLayoutManager(manager);
+                                    adapter = new FragNotificationTypeAdapter(getActivity(), (ArrayList<NotificationData>) lst_notifications, itemClick, FragNotification.this);
+                                    rv_notification.setAdapter(adapter);
                                 }
-                                else {
-                                    if (lst_notifications.get(lst_notifications.size() - 1).getPatternID().equals("ViewMore")) {
-                                        lst_notifications.remove(lst_notifications.size() - 1);
-                                    }
-                                    if (lst.isEmpty()) {
-                                        PageNumber = -1;
-                                        adapter.showLoadmore = false;
-                                        adapter.notifyDataSetChanged();
-                                        return;
-                                    }
-                                    lst_notifications.addAll(lst);
-                                    NotificationData data = new NotificationData();
-                                    data.setPatternID("ViewMore");
-                                    lst_notifications.add(data);
+                            } else {
+                                if (lst_notifications.get(lst_notifications.size() - 1).getPatternID().equals("ViewMore")) {
+                                    lst_notifications.remove(lst_notifications.size() - 1);
+                                }
+                                if (lst.isEmpty()) {
+                                    PageNumber = -1;
+                                    adapter.showLoadmore = false;
                                     adapter.notifyDataSetChanged();
+                                    return;
                                 }
-                                PageNumber = PageNumber + 1;
-
+                                lst_notifications.addAll(lst);
+                                NotificationData data = new NotificationData();
+                                data.setPatternID("ViewMore");
+                                lst_notifications.add(data);
+                                adapter.notifyDataSetChanged();
+                            }
+                            PageNumber = PageNumber + 1;
 
 
                         }

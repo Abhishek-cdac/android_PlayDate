@@ -12,7 +12,7 @@ public class GetBusinessCouponData {
     @Expose
     private String couponCode;
     @Expose
-    private Object awardlevelValue;
+    private String awardlevelValue;
     @Expose
     private String couponAmountOf;
     @Expose
@@ -20,9 +20,9 @@ public class GetBusinessCouponData {
     @Expose
     private String couponImage;
     @Expose
-    private Long couponPercentageValue;
+    private String couponPercentageValue;
     @Expose
-    private Long couponPurchasePoint;
+    private String couponPurchasePoint;
     @Expose
     private String couponTitle;
     @Expose
@@ -46,11 +46,11 @@ public class GetBusinessCouponData {
         this.awardedBy = awardedBy;
     }
 
-    public Object getAwardlevelValue() {
+    public String getAwardlevelValue() {
         return awardlevelValue;
     }
 
-    public void setAwardlevelValue(Object awardlevelValue) {
+    public void setAwardlevelValue(String awardlevelValue) {
         this.awardlevelValue = awardlevelValue;
     }
 
@@ -78,19 +78,19 @@ public class GetBusinessCouponData {
         this.couponImage = couponImage;
     }
 
-    public Long getCouponPercentageValue() {
+    public String getCouponPercentageValue() {
         return couponPercentageValue;
     }
 
-    public void setCouponPercentageValue(Long couponPercentageValue) {
+    public void setCouponPercentageValue(String couponPercentageValue) {
         this.couponPercentageValue = couponPercentageValue;
     }
 
-    public Long getCouponPurchasePoint() {
+    public String getCouponPurchasePoint() {
         return couponPurchasePoint;
     }
 
-    public void setCouponPurchasePoint(Long couponPurchasePoint) {
+    public void setCouponPurchasePoint(String couponPurchasePoint) {
         this.couponPurchasePoint = couponPurchasePoint;
     }
 

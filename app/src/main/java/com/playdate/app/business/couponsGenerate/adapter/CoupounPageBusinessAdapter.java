@@ -17,20 +17,24 @@ public class CoupounPageBusinessAdapter extends FragmentPagerAdapter {
 
 
     private ArrayList<GetBusinessCouponData> lst;
-    public CoupounPageBusinessAdapter(@NonNull FragmentManager fm, int totalTabs, ArrayList<GetBusinessCouponData> lst) {
+    public CoupounPageBusinessAdapter(@NonNull FragmentManager fm, int totalTabs) {
+        super(fm);
+        this.totalTabs = totalTabs;
+
+    }/* public CoupounPageBusinessAdapter(@NonNull FragmentManager fm, int totalTabs, ArrayList<GetBusinessCouponData> lst) {
         super(fm);
         this.totalTabs = totalTabs;
         this.lst=lst;
-    }
+    }*/
 
     @NonNull
     @Override
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new FragActiveCoupons(lst);
+                return new FragActiveCoupons();
             case 1:
-                return new FragExpiredCoupon(lst);
+                return new FragExpiredCoupon();
         }
         return null;
     }

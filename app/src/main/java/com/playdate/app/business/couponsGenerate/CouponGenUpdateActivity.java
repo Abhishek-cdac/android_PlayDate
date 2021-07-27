@@ -2,12 +2,10 @@ package com.playdate.app.business.couponsGenerate;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,13 +24,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.playdate.app.R;
-import com.playdate.app.business.couponsGenerate.dialogs.DialogCouponCreated;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.CommonModel;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
+import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
@@ -41,7 +39,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,34 +54,44 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CouponGenActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
+public class CouponGenUpdateActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     private CommonClass clsCommon;
-    private RelativeLayout rl_body;
-    private LinearLayout ll_dropdown;
-    private TextView availbilityDays, tv_awarded;
-    private TextView tv_level;
-    private RelativeLayout rl_awarded;
+    private TextView availbilityDays;
     public final static int PICK_PHOTO_FOR_BUSINESS = 150;
     public final static int ALL_PERMISSIONS_RESULT = 107;
     public final static int TAKE_PHOTO_CODE = 0;
-    private ImageView iv_drop;
     private EditText couponTitle, percentageOff, freeItem, pointsValue, amountOff, NewPrice;
-    private boolean isDropdownVisible = false;
+    private final boolean isDropdownVisible = false;
     private TextView addImage;
     private String awardedByStr;
     private final String[] awardedBy = {"Level", "Game Winner", "Game Loser"};
-    private Calendar date;
-    private String formateDate;
     private LinearLayout ll_camera_option;
     private ImageView camera;
     private ImageView restaurent_img;
-    String couponId , couponTitleUpdate;
+    String couponId, couponTitleUpdate, availbilityDaysUpdate, CouponImageUpdate, awardedByUpdate,
+            couponAwardlevelUpdate, percentageOffUpdate, freeItemUpdate, pointsValueUpdate, amountOffUpdate, NewPriceUpdate;
+
     @Override
     protected void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coupons_generater);
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
 
+            couponId = extras.getString("couponId");
+            couponTitleUpdate = extras.getString("couponTitle");
+            percentageOffUpdate = extras.getString("couponPercentageOff");
+            availbilityDaysUpdate = extras.getString("couponAvailableDays");
+            NewPriceUpdate = extras.getString("couponNewPrice");
+            freeItemUpdate = extras.getString("couponFreeItem");
+            pointsValueUpdate = extras.getString("couponPointsValue");
+            couponAwardlevelUpdate = extras.getString("couponAwardlevelValue");
+            amountOffUpdate = extras.getString("couponAmountOff");
+            CouponImageUpdate = extras.getString("CouponImage");
+            awardedByUpdate = extras.getString("awardedByUpdate");
+
+        }
 
 
         FrameLayout ll_image = findViewById(R.id.ll_image);
@@ -97,14 +109,35 @@ public class CouponGenActivity extends AppCompatActivity implements AdapterView.
         NewPrice = findViewById(R.id.NewPrice);
         Spinner spinner1 = findViewById(R.id.spinner1);
         Button btnCreateCoupons = findViewById(R.id.btnCreateCoupons);
+        btnCreateCoupons.setText("Update Coupon");
+
+        couponTitle.setText(couponTitleUpdate);
+        percentageOff.setText(percentageOffUpdate);
+        freeItem.setText(freeItemUpdate);
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date d = (Date) formatter.parse(availbilityDaysUpdate);
+            String formateDate = new SimpleDateFormat("yyyy-MM-dd").format(d);
+            availbilityDays.setText(formateDate);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        amountOff.setText(amountOffUpdate);
+        NewPrice.setText(NewPriceUpdate);
+        pointsValue.setText(pointsValueUpdate);
+        Picasso.get().load(CouponImageUpdate)
+                .fit()
+                .into(restaurent_img);
         clsCommon = CommonClass.getInstance();
         ImageView iv_back_generator = findViewById(R.id.iv_back_generator);
-        rl_body = findViewById(R.id.rl_body);
-        ll_dropdown = findViewById(R.id.ll_dropdown);
-        tv_awarded = findViewById(R.id.tv_awarded);
-        rl_awarded = findViewById(R.id.rl_awarded);
-        tv_level = findViewById(R.id.tv_level);
-        iv_drop = findViewById(R.id.iv_drop);
+        RelativeLayout rl_body = findViewById(R.id.rl_body);
+        LinearLayout ll_dropdown = findViewById(R.id.ll_dropdown);
+        TextView tv_awarded = findViewById(R.id.tv_awarded);
+        RelativeLayout rl_awarded = findViewById(R.id.rl_awarded);
+        TextView tv_level = findViewById(R.id.tv_level);
+        ImageView iv_drop = findViewById(R.id.iv_drop);
         LinearLayout ll_take_photo = findViewById(R.id.ll_take_photo);
         LinearLayout ll_upload_photo = findViewById(R.id.ll_upload_photo);
         ll_take_photo.setOnClickListener(this);
@@ -112,10 +145,16 @@ public class CouponGenActivity extends AppCompatActivity implements AdapterView.
         availbilityDays.setOnClickListener(this);
         btnCreateCoupons.setOnClickListener(this);
         iv_back_generator.setOnClickListener(this);
+        camera.setVisibility(View.GONE);
+        addImage.setVisibility(View.GONE);
         ll_image.setOnClickListener(this);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, awardedBy);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner1.setAdapter(adapter);
+        int spinnerPosition = adapter.getPosition(awardedByUpdate);
+
+//set the default according to value
+        spinner1.setSelection(spinnerPosition);
         spinner1.setOnItemSelectedListener(this);
     }
 
@@ -147,7 +186,6 @@ public class CouponGenActivity extends AppCompatActivity implements AdapterView.
         DatePickerDialog datePickerDialog = new DatePickerDialog(this,
 
                 (view, year, monthOfYear, dayOfMonth) -> availbilityDays.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth), mYear, mMonth, mDay);
-
         datePickerDialog.getDatePicker().setMinDate(c.getTimeInMillis());
         datePickerDialog.show();
     }
@@ -165,8 +203,9 @@ public class CouponGenActivity extends AppCompatActivity implements AdapterView.
 
     Bitmap bitmap = null;
 
-    private void callCreateCouponApi(String couponTitlestr, String percentageOffStr, String amountOffStr, String newPriceStr, String freeItemStr, String pointsValueStr) {
-        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(CouponGenActivity.this);
+
+    private void callUpdateBusinessCouponApi(String couponTitlestr, String percentageOffStr, String amountOffStr, String newPriceStr, String freeItemStr, String pointsValueStr) {
+        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(CouponGenUpdateActivity.this);
         pd.show();
         //create a file to write bitmap data
         File f = new File(getCacheDir(), "profile");
@@ -197,6 +236,7 @@ public class CouponGenActivity extends AppCompatActivity implements AdapterView.
         hashMap.put("couponPurchasePoint", pointsValueStr);
         hashMap.put("awardlevelValue", "1");
         hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
+        hashMap.put("couponId", couponId);
 
         String url = "";
         for (Map.Entry<String, String> entry : hashMap.entrySet()) {
@@ -212,8 +252,8 @@ public class CouponGenActivity extends AppCompatActivity implements AdapterView.
 
         MultipartBody.Part filePart = MultipartBody.Part.createFormData("couponImage", f.getName(), RequestBody.create(MediaType.parse("image/png"), f));
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-        url = "user/add-business-coupon?" + url;
-        Call<CommonModel> call = service.addBusinessCoupon("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), filePart, hashMap, url);
+        url = "user/update-business-coupon?" + url;
+        Call<CommonModel> call = service.updateBusinessCoupon("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), filePart, hashMap, url);
         call.enqueue(new Callback<CommonModel>() {
             @Override
             public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
@@ -222,17 +262,11 @@ public class CouponGenActivity extends AppCompatActivity implements AdapterView.
                     try {
                         assert response.body() != null;
                         if (response.body().getStatus() == 1) {
-//                            finish();
-                            DialogCouponCreated dialog=new DialogCouponCreated(CouponGenActivity.this);
-                            dialog.show();
-                            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                                @Override
-                                public void onDismiss(DialogInterface dialogInterface) {
-                                    finish();
-                                }
-                            });
+
+                            clsCommon.showDialogMsgfrag(CouponGenUpdateActivity.this, "PlayDate", response.body().getMessage(), "Ok");
+                            finish();
                         } else {
-                            clsCommon.showDialogMsgfrag(CouponGenActivity.this, "PlayDate", response.body().getMessage(), "Ok");
+                            clsCommon.showDialogMsgfrag(CouponGenUpdateActivity.this, "PlayDate", response.body().getMessage(), "Ok");
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -242,9 +276,9 @@ public class CouponGenActivity extends AppCompatActivity implements AdapterView.
                     try {
                         assert response.errorBody() != null;
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        clsCommon.showDialogMsgfrag(CouponGenActivity.this, "PlayDate", jObjError.getString("message"), "Ok");
+                        clsCommon.showDialogMsgfrag(CouponGenUpdateActivity.this, "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
-                        Toast.makeText(CouponGenActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CouponGenUpdateActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -253,11 +287,10 @@ public class CouponGenActivity extends AppCompatActivity implements AdapterView.
             public void onFailure(@NotNull Call<CommonModel> call, Throwable t) {
                 t.printStackTrace();
                 pd.cancel();
-                Toast.makeText(CouponGenActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CouponGenUpdateActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
     }
-
 
 
     @Override
@@ -272,7 +305,7 @@ public class CouponGenActivity extends AppCompatActivity implements AdapterView.
                     bitmap = (Bitmap) data.getExtras().get("data");
                 } else {
                     try {
-                        bitmap = MediaStore.Images.Media.getBitmap(CouponGenActivity.this.getContentResolver(), data.getData());
+                        bitmap = MediaStore.Images.Media.getBitmap(CouponGenUpdateActivity.this.getContentResolver(), data.getData());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -289,7 +322,7 @@ public class CouponGenActivity extends AppCompatActivity implements AdapterView.
                     bitmap = (Bitmap) data.getExtras().get("data");
                 } else {
                     try {
-                        bitmap = MediaStore.Images.Media.getBitmap(CouponGenActivity.this.getContentResolver(), data.getData());
+                        bitmap = MediaStore.Images.Media.getBitmap(CouponGenUpdateActivity.this.getContentResolver(), data.getData());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -315,7 +348,7 @@ public class CouponGenActivity extends AppCompatActivity implements AdapterView.
             String[] PERMISSIONS = {
                     Manifest.permission.CAMERA,
             };
-            ActivityCompat.requestPermissions(CouponGenActivity.this,
+            ActivityCompat.requestPermissions(CouponGenUpdateActivity.this,
                     PERMISSIONS,
                     ALL_PERMISSIONS_RESULT);
 
@@ -326,7 +359,7 @@ public class CouponGenActivity extends AppCompatActivity implements AdapterView.
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.READ_EXTERNAL_STORAGE
             };
-            ActivityCompat.requestPermissions(CouponGenActivity.this,
+            ActivityCompat.requestPermissions(CouponGenUpdateActivity.this,
                     PERMISSIONS,
                     ALL_PERMISSIONS_RESULT);
 
@@ -341,7 +374,7 @@ public class CouponGenActivity extends AppCompatActivity implements AdapterView.
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.READ_EXTERNAL_STORAGE
             };
-            ActivityCompat.requestPermissions(CouponGenActivity.this,
+            ActivityCompat.requestPermissions(CouponGenUpdateActivity.this,
                     PERMISSIONS,
                     ALL_PERMISSIONS_RESULT);
 
@@ -367,23 +400,23 @@ public class CouponGenActivity extends AppCompatActivity implements AdapterView.
         String availbilityDaysStr = availbilityDays.getText().toString();
         if (couponTitlestr.matches("")) {
             couponTitle.requestFocus();
-            new CommonClass().showDialogMsgfrag(CouponGenActivity.this, "PlayDate", "Enter a couponTitle", "Ok");
+            new CommonClass().showDialogMsgfrag(CouponGenUpdateActivity.this, "PlayDate", "Enter a couponTitle", "Ok");
 
         } else if (percentageOffStr.matches("")) {
             percentageOff.requestFocus();
-            new CommonClass().showDialogMsgfrag(CouponGenActivity.this, "PlayDate", "Enter a percentageOff", "Ok");
+            new CommonClass().showDialogMsgfrag(CouponGenUpdateActivity.this, "PlayDate", "Enter a percentageOff", "Ok");
 
         } else if (availbilityDaysStr.matches("")) {
             availbilityDays.requestFocus();
-            new CommonClass().showDialogMsgfrag(CouponGenActivity.this, "PlayDate", "Enter a amount off", "Ok");
+            new CommonClass().showDialogMsgfrag(CouponGenUpdateActivity.this, "PlayDate", "Enter a amount off", "Ok");
 
         } else if (amountOffStr.matches("")) {
             amountOff.requestFocus();
-            new CommonClass().showDialogMsgfrag(CouponGenActivity.this, "PlayDate", "Enter a amount off", "Ok");
+            new CommonClass().showDialogMsgfrag(CouponGenUpdateActivity.this, "PlayDate", "Enter a amount off", "Ok");
 
         } else if (newPriceStr.matches("")) {
             NewPrice.requestFocus();
-            new CommonClass().showDialogMsgfrag(CouponGenActivity.this, "PlayDate", "Enter a new price", "Ok");
+            new CommonClass().showDialogMsgfrag(CouponGenUpdateActivity.this, "PlayDate", "Enter a new price", "Ok");
 
         }
 //        else if (freeItemStr.matches("")) {
@@ -393,10 +426,10 @@ public class CouponGenActivity extends AppCompatActivity implements AdapterView.
 //        }
         else if (pointsValueStr.matches("")) {
             pointsValue.requestFocus();
-            new CommonClass().showDialogMsgfrag(CouponGenActivity.this, "PlayDate", "Enter a points Vlaue", "Ok");
+            new CommonClass().showDialogMsgfrag(CouponGenUpdateActivity.this, "PlayDate", "Enter a points Vlaue", "Ok");
 
         } else {
-            callCreateCouponApi(couponTitlestr, percentageOffStr, amountOffStr, newPriceStr, freeItemStr, pointsValueStr);
+            callUpdateBusinessCouponApi(couponTitlestr, percentageOffStr, amountOffStr, newPriceStr, freeItemStr, pointsValueStr);
         }
 
     }
