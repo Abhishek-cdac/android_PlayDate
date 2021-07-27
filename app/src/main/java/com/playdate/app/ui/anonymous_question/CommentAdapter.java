@@ -189,9 +189,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         SessionPref pref = SessionPref.getInstance(mContext);
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
-        Log.e("deleteCommentPostId", "" + postId);
-        Log.e("commentId", "" + commentId);
-        Log.e("deleteCommentUId", "" + pref.getStringVal(SessionPref.LoginUserID));
         hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
         hashMap.put("postId", postId);
         hashMap.put("commentId", commentId);

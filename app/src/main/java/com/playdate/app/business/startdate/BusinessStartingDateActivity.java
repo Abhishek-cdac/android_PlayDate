@@ -129,13 +129,11 @@ public class BusinessStartingDateActivity extends AppCompatActivity {
 
 
                     } else {
-                        Log.e("PlayDateBSD", "" + response.body().getMessage());
                         clsCommon.showDialogMsg(BusinessStartingDateActivity.this, "PlayDate", response.body().getMessage(), "Ok");
                     }
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        Log.e("PlayDateBSD", "" + response.body().getMessage());
                         clsCommon.showDialogMsg(BusinessStartingDateActivity.this, "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(BusinessStartingDateActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();

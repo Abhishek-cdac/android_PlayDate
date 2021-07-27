@@ -35,6 +35,7 @@ import com.yuyakaido.android.cardstackview.Direction;
 import com.yuyakaido.android.cardstackview.StackFrom;
 import com.yuyakaido.android.cardstackview.SwipeableMethod;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -144,7 +145,7 @@ public class FragCardSwipe extends Fragment {
         Call<InterestsMain> call = service.interested("Bareer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<InterestsMain>() {
             @Override
-            public void onResponse(Call<InterestsMain> call, Response<InterestsMain> response) {
+            public void onResponse(@NotNull Call<InterestsMain> call, @NotNull Response<InterestsMain> response) {
 //                pd.cancel();
                 if (response.code() == 200) {
                     assert response.body() != null;
@@ -155,28 +156,13 @@ public class FragCardSwipe extends Fragment {
                         }
                         callAPI();
 
-                    } else {
-//                        clsCommon.showDialogMsg(InterestActivity.this, "PlayDate", response.body().getMessage(), "Ok");
                     }
-                } else {
-//                    try {
-//                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-//                        clsCommon.showDialogMsg(InterestActivity.this, "PlayDate", jObjError.getString("message").toString(), "Ok");
-//                    } catch (Exception e) {
-//                        Toast.makeText(InterestActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-//                    }
-
                 }
-
-
             }
 
             @Override
-            public void onFailure(Call<InterestsMain> call, Throwable t) {
-                t.printStackTrace();
-//                pd.cancel();
-//                Toast.makeText(InterestActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-            }
+            public void onFailure(@NotNull Call<InterestsMain> call, @NotNull Throwable t) {
+                t.printStackTrace();       }
         });
 
 
@@ -197,20 +183,13 @@ public class FragCardSwipe extends Fragment {
         Call<MatchListModel> call = service.getUserMatchList("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<MatchListModel>() {
             @Override
-            public void onResponse(Call<MatchListModel> call, Response<MatchListModel> response) {
+            public void onResponse(@NotNull Call<MatchListModel> call, @NotNull Response<MatchListModel> response) {
                 pd.cancel();
                 if (response.code() == 200) {
                     if (Objects.requireNonNull(response.body()).getStatus() == 1) {
 
                         setPages(response.body().getUsers());
                     }
-                } else {
-//                    try {
-//                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-//                    } catch (Exception e) {
-//                        Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-//                    }
-
                 }
 
             }
@@ -231,9 +210,7 @@ public class FragCardSwipe extends Fragment {
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
         hashMap.put("toUserId", s);
-        Log.e("ChatRequestMatchScreen", "" + pref.getStringVal(SessionPref.LoginUsertoken));
         Call<CommonModel> call = service.addChatRequest("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
-        Log.e("ChatRequestMatchScreen", "" + hashMap);
         call.enqueue(new Callback<CommonModel>() {
             @Override
             public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
@@ -318,19 +295,15 @@ public class FragCardSwipe extends Fragment {
 
                         String liekDisLike = "Like";
                         if (direction == Direction.Right) {
-//                            Log.e("Right", "Right");
                             liekDisLike = "Like";
                         }
                         if (direction == Direction.Top) {
-//                            Log.e("Top", "Top");
                             liekDisLike = "Like";
                         }
                         if (direction == Direction.Left) {
-//                            Log.e("Left", "Left");
                             liekDisLike = "Unlike";
                         }
                         if (direction == Direction.Bottom) {
-//                            Log.e("Bottom", "Bottom");
                             liekDisLike = "Unlike";
                         }
                         callAddUserMatchRequestAPI(userID, liekDisLike);
@@ -354,16 +327,15 @@ public class FragCardSwipe extends Fragment {
                 @Override
                 public void onCardAppeared(View view, int position) {
                     TextView name = view.findViewById(R.id.item_name);
-//                    Log.d("onCardAppearedTAG", "onCardAppeared: " + position + ", nama: " + name.getText());
-                }
+   }
 
                 @Override
                 public void onCardDisappeared(View view, int position) {
-//                    TextView name = view.findViewById(R.id.item_name);
+
                     if (adapter.getItemCount()-1 == position) {
                         callAPI();
                     }
-//                    Log.d("onCardDisappearedTAG", "onCardAppeared: " + position + ", nama: " + name.getText());
+
                 }
             });
 

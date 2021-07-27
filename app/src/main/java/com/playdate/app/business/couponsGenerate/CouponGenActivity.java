@@ -195,7 +195,7 @@ public class CouponGenActivity extends AppCompatActivity implements AdapterView.
         hashMap.put("newPrice", newPriceStr);
         hashMap.put("awardedBy", awardedByStr);
         hashMap.put("couponPurchasePoint", pointsValueStr);
-        hashMap.put("awardlevelValue", "1");
+        hashMap.put("awardlevelValue", "1"); //Hardcode
         hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
 
         String url = "";

@@ -234,7 +234,7 @@ public class CouponGenUpdateActivity extends AppCompatActivity implements Adapte
         hashMap.put("newPrice", newPriceStr);
         hashMap.put("awardedBy", awardedByStr);
         hashMap.put("couponPurchasePoint", pointsValueStr);
-        hashMap.put("awardlevelValue", "1");
+        hashMap.put("awardlevelValue", "1"); //Hardcode
         hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
         hashMap.put("couponId", couponId);
 

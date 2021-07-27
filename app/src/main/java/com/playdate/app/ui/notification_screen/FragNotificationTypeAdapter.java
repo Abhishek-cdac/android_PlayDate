@@ -222,7 +222,6 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
                         viewHolderMatched.tv_name.setText(Html.fromHtml(sourceString));
 
                         requestId = notification_list.get(position).getFriendRequest().get(0).getRequestId();
-                        Log.e("requestId", "" + requestId);
                         picasso.load(notification_list.get(position).getFriendRequest().get(0).getUserInfo().get(0).getProfilePicPath())
                                 .placeholder(R.drawable.profile)
                                 .fit()

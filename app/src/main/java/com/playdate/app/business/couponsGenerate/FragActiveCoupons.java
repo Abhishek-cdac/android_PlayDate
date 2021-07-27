@@ -51,9 +51,6 @@ public class FragActiveCoupons extends Fragment implements OnInnerFragmentClicks
     CommonClass clsCommon;
     private ArrayList<GetBusinessCouponData> GetBusinessCouponLst = new ArrayList<>();
 
-
-
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

@@ -124,6 +124,7 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
         } else {
             isBusiness = true;
             binding.edtFullname.setHint("Business Name");
+            binding.edtFullname.setCompoundDrawablesWithIntrinsicBounds(R.drawable.buainess_ic_business_and_trade, 0, 0, 0);
             SessionPref pref = SessionPref.getInstance(this);
             pref.saveBoolKeyVal(SessionPref.isBusiness, isBusiness);
         }
