@@ -183,7 +183,7 @@ public class CouponGenUpdateActivity extends AppCompatActivity implements Adapte
         int mMonth = c.get(Calendar.MONTH);
         int mDay = c.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this,R.style.TimePickerTheme,
 
                 (view, year, monthOfYear, dayOfMonth) -> availbilityDays.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth), mYear, mMonth, mDay);
         datePickerDialog.getDatePicker().setMinDate(c.getTimeInMillis());

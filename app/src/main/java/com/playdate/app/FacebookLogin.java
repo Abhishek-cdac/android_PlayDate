@@ -15,19 +15,16 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.LoginResponse;
-import com.playdate.app.ui.login.LoginActivity;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -39,7 +36,7 @@ import retrofit2.Response;
 
 import static com.playdate.app.data.api.RetrofitClientInstance.DEVICE_TYPE;
 
-public class FacebookbookLogin extends AppCompatActivity {
+public class FacebookLogin extends AppCompatActivity {
     LoginButton loginButton;
     CallbackManager callbackManager;
     ImageView imageView;
@@ -47,7 +44,7 @@ public class FacebookbookLogin extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_facebookbook_login);
+        setContentView(R.layout.activity_facebook_login);
 
         loginButton = findViewById(R.id.login_button);
         imageView = findViewById(R.id.imageView);
@@ -151,7 +148,7 @@ public class FacebookbookLogin extends AppCompatActivity {
                 pd.cancel();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
-                        Toast.makeText(FacebookbookLogin.this, "LOGGED IN!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(FacebookLogin.this, "LOGGED IN!", Toast.LENGTH_SHORT).show();
                     } else {
                     }
                 } else {
@@ -163,7 +160,7 @@ public class FacebookbookLogin extends AppCompatActivity {
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 t.printStackTrace();
                 pd.cancel();
-                Toast.makeText(FacebookbookLogin.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(FacebookLogin.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
     }

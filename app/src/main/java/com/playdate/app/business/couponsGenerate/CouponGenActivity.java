@@ -144,7 +144,7 @@ public class CouponGenActivity extends AppCompatActivity implements AdapterView.
         int mMonth = c.get(Calendar.MONTH);
         int mDay = c.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this,R.style.TimePickerTheme,
 
                 (view, year, monthOfYear, dayOfMonth) -> availbilityDays.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth), mYear, mMonth, mDay);
 

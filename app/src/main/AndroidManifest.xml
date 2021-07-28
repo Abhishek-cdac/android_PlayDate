@@ -55,7 +55,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PlayDate"
         android:usesCleartextTraffic="true">
-        <activity android:name=".FacebookbookLogin"
+        <activity android:name=".FacebookLogin"
             android:exported="true"
             >
 <!--            <intent-filter>-->
