@@ -23,6 +23,7 @@ import com.playdate.app.business.couponsGenerate.adapter.ActiveCouponsAdapter;
 import com.playdate.app.business.couponsGenerate.adapter.CoupounPageBusinessAdapter;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
+import com.playdate.app.model.CommonModel;
 import com.playdate.app.model.GetBusinessCouponData;
 import com.playdate.app.model.GetBusinessCouponModel;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
@@ -126,19 +127,62 @@ public class FragActiveCoupons extends Fragment implements OnInnerFragmentClicks
     }
 
 
-
     private void enableSwipeToDeleteAndUndo() {
         SwipeToDeleteCallback swipeToDeleteCallback = new SwipeToDeleteCallback(getActivity()) {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 final int position = viewHolder.getAdapterPosition();
-
-                adapter.removeItem(position);
+                String couponId = GetBusinessCouponLst.get(position).getCouponId();
+                callDeleteBusinessCouponAPI(couponId);
+                // adapter.removeItem(position);
             }
         };
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeToDeleteCallback);
         itemTouchHelper.attachToRecyclerView(rv_coupons_list);
+    }
+
+    private void callDeleteBusinessCouponAPI(String couponId) {
+        Log.e("DeletedCouponId", "" + couponId);
+
+        SessionPref pref = SessionPref.getInstance(getActivity());
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("couponId", couponId);
+        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
+        pd.show();
+        Call<CommonModel> call = service.deleteBusinessCoupon("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+        call.enqueue(new Callback<CommonModel>() {
+            @Override
+            public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
+                pd.cancel();
+                if (response.code() == 200) {
+                    if (Objects.requireNonNull(response.body()).getStatus() == 1) {
+                        try {
+                            assert response.body() != null;
+                            if (response.body().getStatus() == 1) {
+                                callGetBusinessCouponAPI();
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
+                    }
+                } else {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CommonModel> call, Throwable t) {
+                t.printStackTrace();
+                pd.cancel();
+                Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     @Override
@@ -214,10 +258,10 @@ public class FragActiveCoupons extends Fragment implements OnInnerFragmentClicks
                                 GetBusinessCouponLst = (ArrayList<GetBusinessCouponData>) response.body().getData();
 
 
-                                if(GetBusinessCouponLst.size()==0){
+                                if (GetBusinessCouponLst.size() == 0) {
                                     no_coupon.setVisibility(View.VISIBLE);
                                     rv_coupons_list.setVisibility(View.GONE);
-                                }else {
+                                } else {
                                     no_coupon.setVisibility(View.GONE);
                                     rv_coupons_list.setVisibility(View.VISIBLE);
                                     RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);

@@ -519,4 +519,7 @@ Build version 4.0.3-java</string>
     <string name="default_notification_channel_id">Channel ID</string>
     <string name="load_more"><u>Load more</u></string>
     <string name="no_coupon_available">No coupons available</string>
+
+    <string name="get_premium">GET PREMIUM</string>
+    <string name="get_now">Get Now</string>
 </resources>

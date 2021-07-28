@@ -361,6 +361,10 @@ public interface GetDataService {
     @POST("user/get-business-coupons")
     Call<GetBusinessCouponModel> getBusinessCoupon(@Header("Authorization") String token, @FieldMap Map<String, String> param);
 
+    @FormUrlEncoded
+    @POST("user/delete-business-coupon")
+    Call<CommonModel> deleteBusinessCoupon(@Header("Authorization") String token, @FieldMap Map<String, String> param);
+
     @Multipart
     @POST
     Call<CommonModel> updateBusinessCoupon(@Header("Authorization") String token, @Part MultipartBody.Part filePart, @PartMap Map<String, String> param, @Url String url);

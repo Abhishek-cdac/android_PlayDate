@@ -27,6 +27,7 @@ import androidx.core.app.ActivityCompat;
 
 import com.playdate.app.R;
 import com.playdate.app.business.couponsGenerate.dialogs.DialogCouponCreated;
+import com.playdate.app.business.couponsGenerate.dialogs.DialogLevelSelector;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.CommonModel;
@@ -68,18 +69,20 @@ public class CouponGenActivity extends AppCompatActivity implements AdapterView.
     private boolean isDropdownVisible = false;
     private TextView addImage;
     private String awardedByStr;
-    private final String[] awardedBy = {"Level", "Game Winner", "Game Loser"};
+    private final String[] awardedBy = {"Game Winner", "Game Loser","Level"};
     private Calendar date;
     private String formateDate;
     private LinearLayout ll_camera_option;
     private ImageView camera;
     private ImageView restaurent_img;
-    String couponId , couponTitleUpdate;
+    String couponId, couponTitleUpdate;
+    Bundle bundle;
+    String level;
+
     @Override
     protected void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coupons_generater);
-
 
 
         FrameLayout ll_image = findViewById(R.id.ll_image);
@@ -144,7 +147,7 @@ public class CouponGenActivity extends AppCompatActivity implements AdapterView.
         int mMonth = c.get(Calendar.MONTH);
         int mDay = c.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this,R.style.TimePickerTheme,
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, R.style.TimePickerTheme,
 
                 (view, year, monthOfYear, dayOfMonth) -> availbilityDays.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth), mYear, mMonth, mDay);
 
@@ -156,6 +159,9 @@ public class CouponGenActivity extends AppCompatActivity implements AdapterView.
     @Override
     public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long id) {
         awardedByStr = awardedBy[position];
+       /* if (position == 2) {
+          new DialogLevelSelector(CouponGenActivity.this).show();
+        }*/
     }
 
     @Override
@@ -223,7 +229,7 @@ public class CouponGenActivity extends AppCompatActivity implements AdapterView.
                         assert response.body() != null;
                         if (response.body().getStatus() == 1) {
 //                            finish();
-                            DialogCouponCreated dialog=new DialogCouponCreated(CouponGenActivity.this);
+                            DialogCouponCreated dialog = new DialogCouponCreated(CouponGenActivity.this);
                             dialog.show();
                             dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                                 @Override
@@ -257,7 +263,6 @@ public class CouponGenActivity extends AppCompatActivity implements AdapterView.
             }
         });
     }
-
 
 
     @Override
