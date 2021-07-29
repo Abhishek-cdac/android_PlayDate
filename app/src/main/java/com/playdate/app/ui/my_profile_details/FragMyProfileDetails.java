@@ -1,5 +1,8 @@
 package com.playdate.app.ui.my_profile_details;
 
+import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
+import static com.playdate.app.util.session.SessionPref.LoginVerified;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -62,9 +65,6 @@ import java.util.Objects;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
-import static com.playdate.app.util.session.SessionPref.LoginVerified;
 
 public class FragMyProfileDetails extends Fragment implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
     public FragMyProfileDetails() {
@@ -217,7 +217,7 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
 
         setValues();
         iv_edit_couple_bio.setOnClickListener(this);
-        txt_change_photo.setText("Change profile photo");
+        txt_change_photo.setText(R.string.str_change_profile_photo);
         txt_username.setText("Username");
 
     }
@@ -334,7 +334,7 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
 
                 } else {
                     try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        JSONObject jObjError = new JSONObject(Objects.requireNonNull(response.errorBody()).string());
                         clsCommon.showDialogMsgFrag(mContext, "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(mContext, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();

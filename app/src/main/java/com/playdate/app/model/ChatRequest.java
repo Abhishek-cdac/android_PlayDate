@@ -38,9 +38,9 @@ public class ChatRequest {
         return activeStatus;
     }
 
-    public void setActiveStatus(String activeStatus) {
-        this.activeStatus = activeStatus;
-    }
+//    public void setActiveStatus(String activeStatus) {
+//        this.activeStatus = activeStatus;
+//    }
 
     public String getUserId() {
         return userId;

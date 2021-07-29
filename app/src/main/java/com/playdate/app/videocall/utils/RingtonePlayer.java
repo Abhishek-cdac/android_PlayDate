@@ -2,36 +2,27 @@ package com.playdate.app.videocall.utils;
 
 import android.content.Context;
 import android.media.AudioAttributes;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.util.Log;
 
 import java.io.IOException;
 
-/**
- * QuickBlox team
- */
 public class RingtonePlayer {
 
-    private static final String TAG = RingtonePlayer.class.getSimpleName();
+    //    private static final String TAG = RingtonePlayer.class.getSimpleName();
     private MediaPlayer mediaPlayer;
-    private final Context context;
+//    private final Context context;
 
     public RingtonePlayer(Context context, int resource) {
-        this.context = context;
+//        this.context = context;
         Uri beepUri = Uri.parse("android.resource://" + context.getPackageName() + "/" + resource);
         mediaPlayer = new MediaPlayer();
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            AudioAttributes.Builder audioAttributesBuilder = new AudioAttributes.Builder()
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
-                    .setUsage(AudioAttributes.USAGE_VOICE_COMMUNICATION_SIGNALLING);
+        AudioAttributes.Builder audioAttributesBuilder = new AudioAttributes.Builder()
+                .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
+                .setUsage(AudioAttributes.USAGE_VOICE_COMMUNICATION_SIGNALLING);
 
-            mediaPlayer.setAudioAttributes(audioAttributesBuilder.build());
-        } else {
-            mediaPlayer.setAudioStreamType(AudioManager.STREAM_VOICE_CALL);
-        }
+        mediaPlayer.setAudioAttributes(audioAttributesBuilder.build());
 
         try {
             mediaPlayer.setDataSource(context, beepUri);
@@ -42,20 +33,16 @@ public class RingtonePlayer {
     }
 
     public RingtonePlayer(Context context) {
-        this.context = context;
+//        this.context = context;
         Uri notification = getNotification();
         if (notification != null) {
             mediaPlayer = new MediaPlayer();
 
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                AudioAttributes.Builder audioAttributesBuilder = new AudioAttributes.Builder()
-                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                        .setUsage(AudioAttributes.USAGE_NOTIFICATION_RINGTONE);
+            AudioAttributes.Builder audioAttributesBuilder = new AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .setUsage(AudioAttributes.USAGE_NOTIFICATION_RINGTONE);
 
-                mediaPlayer.setAudioAttributes(audioAttributesBuilder.build());
-            } else {
-                mediaPlayer.setAudioStreamType(AudioManager.STREAM_RING);
-            }
+            mediaPlayer.setAudioAttributes(audioAttributesBuilder.build());
 
             try {
                 mediaPlayer.setDataSource(context, notification);
@@ -84,9 +71,9 @@ public class RingtonePlayer {
     }
 
     public void play(boolean looping) {
-        Log.i(TAG, "play");
+//        Log.i(TAG, "play");
         if (mediaPlayer == null) {
-            Log.i(TAG, "mediaPlayer isn't created ");
+//            Log.i(TAG, "mediaPlayer isn't created ");
             return;
         }
         mediaPlayer.setLooping(looping);

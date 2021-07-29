@@ -1,5 +1,7 @@
 package com.playdate.app.ui.my_profile_details;
 
+import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -38,9 +40,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
-
 public class FragMyProfilePersonal extends Fragment implements View.OnClickListener {
+
     private TextView email;
     private TextView txt_phone;
     private TextView txt_gender;
@@ -50,7 +51,7 @@ public class FragMyProfilePersonal extends Fragment implements View.OnClickListe
     private CircleImageView profile_image;
     private SessionPref pref;
     private ArrayList<GetProileDetailData> lst_getPostDetail;
-    String mobile;
+    private String mobile;
 
     public FragMyProfilePersonal() {
     }
@@ -118,7 +119,7 @@ public class FragMyProfilePersonal extends Fragment implements View.OnClickListe
                             if (pref.getStringVal(SessionPref.LoginUserrelationship).equals("Single")) {
                                 txt_relationship.setText("Single");
                             } else {
-                                txt_relationship.setText("In a relationship");
+                                txt_relationship.setText(R.string.str_in_a_relation);
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -141,15 +142,18 @@ public class FragMyProfilePersonal extends Fragment implements View.OnClickListe
         try {
             SessionPref pref = SessionPref.getInstance(getActivity());
             email.setText(pref.getStringVal(SessionPref.LoginUseremail));
-            if (mobile != null) ;
-            mobile = pref.getStringVal(SessionPref.LoginUserphoneNo);
-            String temp;
-            temp = mobile.substring(0, 3);
-            String temp1;
-            temp1 = mobile.substring(3, 6);
-            String temp2;
-            temp2 = mobile.substring(6, 10);
-            txt_phone.setText(temp + "-" + temp1 + "-" + temp2);
+            if (mobile != null) {
+                mobile = pref.getStringVal(SessionPref.LoginUserphoneNo);
+                String temp;
+                temp = mobile.substring(0, 3);
+                String temp1;
+                temp1 = mobile.substring(3, 6);
+                String temp2;
+                temp2 = mobile.substring(6, 10);
+                String text = temp + "-" + temp1 + "-" + temp2;
+                txt_phone.setText(text);
+            }
+
             txt_gender.setText(pref.getStringVal(SessionPref.LoginUsergender));
             String[] s = pref.getStringVal(SessionPref.LoginUserbirthDate).split("T");
             DOB.setText(s[0]);
@@ -209,7 +213,7 @@ public class FragMyProfilePersonal extends Fragment implements View.OnClickListe
         try {
             setValues();
             OnProfilePhotoChageListerner inf = (OnProfilePhotoChageListerner) getActivity();
-            inf.updateImage();
+            Objects.requireNonNull(inf).updateImage();
         } catch (Exception e) {
             e.printStackTrace();
         }

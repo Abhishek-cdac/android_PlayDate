@@ -11,12 +11,10 @@ import com.quickblox.videochat.webrtc.QBRTCMediaConfig;
 
 import java.util.List;
 
-/**
- * QuickBlox team
- */
+
 public class SettingsUtil {
 
-    private static final String TAG = SettingsUtil.class.getSimpleName();
+//    private static final String TAG = SettingsUtil.class.getSimpleName();
 
     private static void setSettingsForMultiCall(List<Integer> users) {
         if (users.size() <= 4) {
@@ -45,67 +43,66 @@ public class SettingsUtil {
         QBRTCMediaConfig.AudioCodec audioCodec = QBRTCMediaConfig.AudioCodec.ISAC.getDescription()
                 .equals(audioCodecDescription) ?
                 QBRTCMediaConfig.AudioCodec.ISAC : QBRTCMediaConfig.AudioCodec.OPUS;
-        Log.e(TAG, "audioCodec =: " + audioCodec.getDescription());
+//        Log.e(TAG, "audioCodec =: " + audioCodec.getDescription());
         QBRTCMediaConfig.setAudioCodec(audioCodec);
-        Log.v(TAG, "audioCodec = " + QBRTCMediaConfig.getAudioCodec());
+//        Log.v(TAG, "audioCodec = " + QBRTCMediaConfig.getAudioCodec());
         // Check Disable built-in AEC flag.
         boolean disableBuiltInAEC = getPreferenceBoolean(sharedPref, context,
                 R.string.pref_disable_built_in_aec_key,
                 R.string.pref_disable_built_in_aec_default);
 
         QBRTCMediaConfig.setUseBuildInAEC(!disableBuiltInAEC);
-        Log.v(TAG, "setUseBuildInAEC = " + QBRTCMediaConfig.isUseBuildInAEC());
+//        Log.v(TAG, "setUseBuildInAEC = " + QBRTCMediaConfig.isUseBuildInAEC());
         // Check Disable Audio Processing flag.
         boolean noAudioProcessing = getPreferenceBoolean(sharedPref, context,
                 R.string.pref_noaudioprocessing_key,
                 R.string.pref_noaudioprocessing_default);
         QBRTCMediaConfig.setAudioProcessingEnabled(!noAudioProcessing);
-        Log.v(TAG, "isAudioProcessingEnabled = " + QBRTCMediaConfig.isAudioProcessingEnabled());
+//        Log.v(TAG, "isAudioProcessingEnabled = " + QBRTCMediaConfig.isAudioProcessingEnabled());
         // Check OpenSL ES enabled flag.
         boolean useOpenSLES = getPreferenceBoolean(sharedPref, context,
                 R.string.pref_opensles_key,
                 R.string.pref_opensles_default);
         QBRTCMediaConfig.setUseOpenSLES(useOpenSLES);
-        Log.v(TAG, "isUseOpenSLES = " + QBRTCMediaConfig.isUseOpenSLES());
+//        Log.v(TAG, "isUseOpenSLES = " + QBRTCMediaConfig.isUseOpenSLES());
     }
 
     private static void setSettingsFromPreferences(SharedPreferences sharedPref, Context context) {
 
         // Check HW codec flag.
-        boolean hwCodec = sharedPref.getBoolean(context.getString(R.string.pref_hwcodec_key),
-                Boolean.valueOf(context.getString(R.string.pref_hwcodec_default)));
+        boolean hwCodec = sharedPref.getBoolean(context.getString(R.string.pref_hwcodec_key), Boolean.valueOf(context.getString(R.string.pref_hwcodec_default)));
 
         QBRTCMediaConfig.setVideoHWAcceleration(hwCodec);
 
         // Get video resolution from settings.
         int resolutionItem = Integer.parseInt(sharedPref.getString(context.getString(R.string.pref_resolution_key),
                 "0"));
-        Log.e(TAG, "resolutionItem =: " + resolutionItem);
+//        Log.e(TAG, "resolutionItem =: " + resolutionItem);
         setVideoQuality(resolutionItem);
-        Log.v(TAG, "resolution = " + QBRTCMediaConfig.getVideoHeight() + "x" + QBRTCMediaConfig.getVideoWidth());
+//        Log.v(TAG, "resolution = " + QBRTCMediaConfig.getVideoHeight() + "x" + QBRTCMediaConfig.getVideoWidth());
 
         // Get start bitrate.
         int startBitrate = getPreferenceInt(sharedPref, context,
                 R.string.pref_startbitratevalue_key,
                 R.string.pref_startbitratevalue_default);
-        Log.e(TAG, "videoStartBitrate =: " + startBitrate);
+//        Log.e(TAG, "videoStartBitrate =: " + startBitrate);
         QBRTCMediaConfig.setVideoStartBitrate(startBitrate);
-        Log.v(TAG, "videoStartBitrate = " + QBRTCMediaConfig.getVideoStartBitrate());
+//        Log.v(TAG, "videoStartBitrate = " + QBRTCMediaConfig.getVideoStartBitrate());
 
         int videoCodecItem = Integer.parseInt(getPreferenceString(sharedPref, context, R.string.pref_videocodec_key, "0"));
         for (QBRTCMediaConfig.VideoCodec codec : QBRTCMediaConfig.VideoCodec.values()) {
             if (codec.ordinal() == videoCodecItem) {
-                Log.e(TAG, "videoCodecItem =: " + codec.getDescription());
+//                Log.e(TAG, "videoCodecItem =: " + codec.getDescription());
                 QBRTCMediaConfig.setVideoCodec(codec);
-                Log.v(TAG, "videoCodecItem = " + QBRTCMediaConfig.getVideoCodec());
+//                Log.v(TAG, "videoCodecItem = " + QBRTCMediaConfig.getVideoCodec());
                 break;
             }
         }
         // Get camera fps from settings.
         int cameraFps = getPreferenceInt(sharedPref, context, R.string.pref_frame_rate_key, R.string.pref_frame_rate_default);
-        Log.e(TAG, "cameraFps = " + cameraFps);
+//        Log.e(TAG, "cameraFps = " + cameraFps);
         QBRTCMediaConfig.setVideoFps(cameraFps);
-        Log.v(TAG, "cameraFps = " + QBRTCMediaConfig.getVideoFps());
+//        Log.v(TAG, "cameraFps = " + QBRTCMediaConfig.getVideoFps());
     }
 
     public static void configRTCTimers(Context context) {
@@ -115,19 +112,19 @@ public class SettingsUtil {
                 R.string.pref_answer_time_interval_key,
                 R.string.pref_answer_time_interval_default_value);
         QBRTCConfig.setAnswerTimeInterval(answerTimeInterval);
-        Log.e(TAG, "answerTimeInterval = " + answerTimeInterval);
+//        Log.e(TAG, "answerTimeInterval = " + answerTimeInterval);
 
         int disconnectTimeInterval = getPreferenceInt(sharedPref, context,
                 R.string.pref_disconnect_time_interval_key,
                 R.string.pref_disconnect_time_interval_default_value);
         QBRTCConfig.setDisconnectTime(disconnectTimeInterval);
-        Log.e(TAG, "disconnectTimeInterval = " + disconnectTimeInterval);
+//        Log.e(TAG, "disconnectTimeInterval = " + disconnectTimeInterval);
 
         long dialingTimeInterval = getPreferenceInt(sharedPref, context,
                 R.string.pref_dialing_time_interval_key,
                 R.string.pref_dialing_time_interval_default_value);
         QBRTCConfig.setDialingTimeInterval(dialingTimeInterval);
-        Log.e(TAG, "dialingTimeInterval = " + dialingTimeInterval);
+//        Log.e(TAG, "dialingTimeInterval = " + dialingTimeInterval);
     }
 
     public static boolean isManageSpeakerPhoneByProximity(Context context) {
@@ -154,7 +151,7 @@ public class SettingsUtil {
     private static void setVideoFromLibraryPreferences(int resolutionItem) {
         for (QBRTCMediaConfig.VideoQuality quality : QBRTCMediaConfig.VideoQuality.values()) {
             if (quality.ordinal() == resolutionItem) {
-                Log.e(TAG, "resolution =: " + quality.height + ":" + quality.width);
+//                Log.e(TAG, "resolution =: " + quality.height + ":" + quality.width);
                 QBRTCMediaConfig.setVideoHeight(quality.height);
                 QBRTCMediaConfig.setVideoWidth(quality.width);
             }

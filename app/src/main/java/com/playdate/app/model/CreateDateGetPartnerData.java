@@ -35,13 +35,13 @@ public class CreateDateGetPartnerData {
         this._id = _id;
     }
 
-    public Long getCurrentPoints() {
-        return currentPoints;
-    }
+//    public Long getCurrentPoints() {
+//        return currentPoints;
+//    }
 
-    public void setCurrentPoints(Long currentPoints) {
-        this.currentPoints = currentPoints;
-    }
+//    public void setCurrentPoints(Long currentPoints) {
+//        this.currentPoints = currentPoints;
+//    }
 
     public String getFullName() {
         return fullName;
@@ -79,9 +79,9 @@ public class CreateDateGetPartnerData {
         return profileVideoPath;
     }
 
-    public void setProfileVideoPath(Object profileVideoPath) {
-        this.profileVideoPath = profileVideoPath;
-    }
+//    public void setProfileVideoPath(Object profileVideoPath) {
+//        this.profileVideoPath = profileVideoPath;
+//    }
 
     public Boolean getStatus() {
         return status;

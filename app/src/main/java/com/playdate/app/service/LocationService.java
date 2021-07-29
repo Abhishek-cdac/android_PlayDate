@@ -70,8 +70,8 @@ public class LocationService extends Service implements LocationListener {
                 addresses = gcd.getFromLocation(location.getLatitude(),
                         location.getLongitude(), 1);
                 if (addresses.size() > 0) {
-                    Log.d("LOCALITY..............", addresses.get(0).getLocality());
-                    System.out.println(addresses.get(0).getLocality());
+//                    Log.d("LOCALITY..............", addresses.get(0).getLocality());
+//                    System.out.println(addresses.get(0).getLocality());
                     cityName = addresses.get(0).getLocality();
                 }
             } catch (IOException e) {

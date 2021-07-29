@@ -9,21 +9,21 @@ public class GameCoin {
         this.totalDollar = totalDollar;
     }
 
-    public String getAmount() {
-        return amount;
-    }
-
-    public void setAmount(String amount) {
-        this.amount = amount;
-    }
-
-    public String getTotalDollar() {
-        return totalDollar;
-    }
-
-    public void setTotalDollar(String totalDollar) {
-        this.totalDollar = totalDollar;
-    }
+//    public String getAmount() {
+//        return amount;
+//    }
+//
+//    public void setAmount(String amount) {
+//        this.amount = amount;
+//    }
+//
+//    public String getTotalDollar() {
+//        return totalDollar;
+//    }
+//
+//    public void setTotalDollar(String totalDollar) {
+//        this.totalDollar = totalDollar;
+//    }
 
     public int getImage() {
         return image;

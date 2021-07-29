@@ -48,9 +48,9 @@ public class BusinessUploadPhotoActivity extends AppCompatActivity {
     public final static int ALL_PERMISSIONS_RESULT = 107;
     public final static int PICK_PHOTO_FOR_AVATAR = 150;
     public final static int TAKE_PHOTO_CODE = 0;
-    public final static int REQUEST_TAKE_GALLERY_VIDEO = 200;
+//    public final static int REQUEST_TAKE_GALLERY_VIDEO = 200;
     private Intent mIntent;
-    ImageView dummyimage;
+    private ImageView dummyimage;
 
 
     @Override

@@ -1,5 +1,8 @@
 package com.playdate.app.business.profile;
 
+import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
+import static com.playdate.app.util.session.SessionPref.LoginVerified;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -32,11 +35,7 @@ import com.playdate.app.ui.dashboard.OnProfilePhotoChageListerner;
 import com.playdate.app.ui.forgot_password.ForgotPasswordActivity;
 import com.playdate.app.ui.login.LoginActivity;
 import com.playdate.app.ui.register.age_verification.AgeVerifiationActivity;
-import com.playdate.app.ui.register.bio.BioActivity;
-import com.playdate.app.ui.register.gender.GenderSelActivity;
-import com.playdate.app.ui.register.interestin.InterestActivity;
 import com.playdate.app.ui.register.profile.UploadProfileActivity;
-import com.playdate.app.ui.register.relationship.RelationActivity;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
@@ -46,31 +45,25 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
-import static com.playdate.app.util.session.SessionPref.LoginVerified;
-
 public class FragBusinessProfile extends Fragment implements View.OnClickListener {
     public FragBusinessProfile() {
     }
 
-
     private TextView email;
     private TextView txt_phone;
-    //    private TextView txt_gender;
     private TextView DOB;
     private TextView txt_user_name;
-    private RelativeLayout rl_change_business_image;
-    //    private TextView interestin;
     private CircleImageView profile_image;
     private SessionPref pref;
     private ArrayList<GetProileDetailData> lst_getPostDetail;
-    String mobile;
+    private String mobile;
     private ImageView iv_dark_mode;
     boolean state = false;
     private GoogleSignInClient mGoogleSignInClient;
@@ -83,14 +76,11 @@ public class FragBusinessProfile extends Fragment implements View.OnClickListene
         pref = SessionPref.getInstance(getActivity());
         email = view.findViewById(R.id.email);
         txt_phone = view.findViewById(R.id.txt_phone);
-//        txt_gender = view.findViewById(R.id.txt_gender);
         DOB = view.findViewById(R.id.DOB);
         txt_user_name = view.findViewById(R.id.txt_user_name);
-//        txt_relationship = view.findViewById(R.id.txt_relationship);
-//        interestin = view.findViewById(R.id.interestin);
         profile_image = view.findViewById(R.id.profile_image);
         iv_dark_mode = view.findViewById(R.id.iv_dark_mode);
-        rl_change_business_image = view.findViewById(R.id.rl_change_business_image);
+        RelativeLayout rl_change_business_image = view.findViewById(R.id.rl_change_business_image);
         ImageView iv_edit_mail = view.findViewById(R.id.iv_edit_mail);
         ImageView iv_dob = view.findViewById(R.id.iv_dob);
         ImageView iv_reset_pass = view.findViewById(R.id.iv_reset_pass);
@@ -110,7 +100,7 @@ public class FragBusinessProfile extends Fragment implements View.OnClickListene
         iv_edit_mail.setOnClickListener(this);
 //        iv_relationship.setOnClickListener(this);
         txt_change_photo.setOnClickListener(this);
-        txt_change_photo.setText("Change profile photo");
+        txt_change_photo.setText(R.string.str_change_profile_photo);
 
         iv_dark_mode.setOnClickListener(this);
         iv_reset_pass.setOnClickListener(this);
@@ -140,7 +130,7 @@ public class FragBusinessProfile extends Fragment implements View.OnClickListene
             public void onResponse(Call<GetProfileDetails> call, Response<GetProfileDetails> response) {
                 pd.cancel();
                 if (response.code() == 200) {
-                    if (response.body().getStatus() == 1) {
+                    if (Objects.requireNonNull(response.body()).getStatus() == 1) {
                         lst_getPostDetail = (ArrayList<GetProileDetailData>) response.body().getData();
                         if (lst_getPostDetail == null) {
                             lst_getPostDetail = new ArrayList<>();
@@ -181,27 +171,27 @@ public class FragBusinessProfile extends Fragment implements View.OnClickListene
             email.setText(pref.getStringVal(SessionPref.LoginUseremail));
             txt_user_name.setText(pref.getStringVal(SessionPref.LoginUserusername));
             try {
-                if (mobile != null) ;
-                mobile = pref.getStringVal(SessionPref.LoginUserphoneNo);
-                String temp;
-                temp = mobile.substring(0, 3);
-                String temp1;
-                temp1 = mobile.substring(3, 6);
-                String temp2;
-                temp2 = mobile.substring(6, 10);
-                txt_phone.setText(temp + "-" + temp1 + "-" + temp2);
+                if (mobile != null) {
+                    mobile = pref.getStringVal(SessionPref.LoginUserphoneNo);
+                    String temp;
+                    temp = mobile.substring(0, 3);
+                    String temp1;
+                    temp1 = mobile.substring(3, 6);
+                    String temp2;
+                    temp2 = mobile.substring(6, 10);
+                    String text = temp + "-" + temp1 + "-" + temp2;
+                    txt_phone.setText(text);
+                }
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
             try {
-                //txt_gender.setText(pref.getStringVal(SessionPref.LoginUsergender));
                 String[] s = pref.getStringVal(SessionPref.LoginUserbirthDate).split("T");
                 DOB.setText(s[0]);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-//            txt_relationship.setText(pref.getStringVal(SessionPref.LoginUserrelationship));
-//            interestin.setText(pref.getStringVal(SessionPref.LoginUserinterestedIn));
             try {
                 Picasso picasso = Picasso.get();
                 String img = pref.getStringVal(SessionPref.LoginUserprofilePic);

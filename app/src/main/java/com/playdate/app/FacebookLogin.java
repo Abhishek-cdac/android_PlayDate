@@ -1,14 +1,15 @@
 package com.playdate.app;
 
-import androidx.appcompat.app.AppCompatActivity;
+import static com.playdate.app.data.api.RetrofitClientInstance.DEVICE_TYPE;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -29,24 +30,24 @@ import org.json.JSONException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.playdate.app.data.api.RetrofitClientInstance.DEVICE_TYPE;
-
 public class FacebookLogin extends AppCompatActivity {
-    LoginButton loginButton;
-    CallbackManager callbackManager;
-    ImageView imageView;
-    TextView txtUsername, txtEmail;
+
+    private CallbackManager callbackManager;
+    private ImageView imageView;
+    private TextView txtUsername, txtEmail;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_facebook_login);
 
-        loginButton = findViewById(R.id.login_button);
+        LoginButton loginButton = findViewById(R.id.login_button);
         imageView = findViewById(R.id.imageView);
         txtUsername = findViewById(R.id.txtUsername);
         txtEmail = findViewById(R.id.txtEmail);
@@ -55,7 +56,7 @@ public class FacebookLogin extends AppCompatActivity {
 
         if (!loggedOut) {
             Picasso.get().load(Profile.getCurrentProfile().getProfilePictureUri(200, 200)).into(imageView);
-            Log.e("TAG", "Username is: " + Profile.getCurrentProfile().getName());
+//            Log.e("TAG", "Username is: " + Profile.getCurrentProfile().getName());
 
             //Using Graph API
             getUserProfile(AccessToken.getCurrentAccessToken());
@@ -71,10 +72,10 @@ public class FacebookLogin extends AppCompatActivity {
                 //loginResult.getAccessToken();
                 //loginResult.getRecentlyDeniedPermissions()
                 //loginResult.getRecentlyGrantedPermissions()
-                boolean loggedIn = AccessToken.getCurrentAccessToken() == null;
+//                boolean loggedIn = AccessToken.getCurrentAccessToken() == null;
 
                 getUserProfile(AccessToken.getCurrentAccessToken());
-                Log.e("API123", loggedIn + " ??");
+//                Log.e("API123", loggedIn + " ??");
 
             }
 
@@ -98,20 +99,21 @@ public class FacebookLogin extends AppCompatActivity {
     }
 
     private void getUserProfile(AccessToken currentAccessToken) {
-        Log.e("getUserProfile","inside");
+//        Log.e("getUserProfile", "inside");
         GraphRequest request = GraphRequest.newMeRequest(
                 currentAccessToken, (object, response) -> {
-                    Log.e("TAG", object.toString());
+//                    Log.e("TAG", object.toString());
                     try {
                         String first_name = object.getString("first_name");
-                        Log.e("first_name","inside"+first_name);
+//                        Log.e("first_name", "inside" + first_name);
                         String last_name = object.getString("last_name");
                         String email = object.getString("email");
                         String id = object.getString("id");
                         String image_url = "https://graph.facebook.com/" + id + "/picture?type=normal";
                         callSocialLoginAPI(email, id, String.valueOf(currentAccessToken));
 
-                        txtUsername.setText("First Name: " + first_name + "\nLast Name: " + last_name);
+                        String text = "First Name: " + first_name + "\nLast Name: " + last_name;
+                        txtUsername.setText(text);
                         txtEmail.setText(email);
                         Picasso.get().load(Uri.parse(image_url)).into(imageView);
 
@@ -147,12 +149,9 @@ public class FacebookLogin extends AppCompatActivity {
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 pd.cancel();
                 if (response.code() == 200) {
-                    if (response.body().getStatus() == 1) {
+                    if (Objects.requireNonNull(response.body()).getStatus() == 1) {
                         Toast.makeText(FacebookLogin.this, "LOGGED IN!", Toast.LENGTH_SHORT).show();
-                    } else {
                     }
-                } else {
-
                 }
             }
 

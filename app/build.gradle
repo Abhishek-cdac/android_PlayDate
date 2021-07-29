@@ -36,6 +36,9 @@ android {
         checkReleaseBuilds false
         abortOnError false
     }
+    packagingOptions {
+        exclude "lib/armeabi/**"
+    }
 }
 
 apply plugin: 'com.android.application'

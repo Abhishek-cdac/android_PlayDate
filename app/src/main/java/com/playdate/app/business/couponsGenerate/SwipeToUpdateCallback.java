@@ -17,9 +17,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
 
+import java.util.Objects;
+
 abstract public class SwipeToUpdateCallback extends ItemTouchHelper.Callback {
 
-    Context mContext;
     private final Paint mClearPaint;
     private final ColorDrawable mBackground;
     private final int backgroundColor;
@@ -28,14 +29,13 @@ abstract public class SwipeToUpdateCallback extends ItemTouchHelper.Callback {
     private final int intrinsicHeight;
 
     SwipeToUpdateCallback(Context context) {
-        mContext = context;
         mBackground = new ColorDrawable();
 //        backgroundColor = R.color.color_pink;
         backgroundColor = Color.parseColor("#D13A6F");
         mClearPaint = new Paint();
         mClearPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
-        deleteDrawable = ContextCompat.getDrawable(mContext, R.drawable.draw);
-        intrinsicWidth = deleteDrawable.getIntrinsicWidth();
+        deleteDrawable = ContextCompat.getDrawable(context, R.drawable.draw);
+        intrinsicWidth = Objects.requireNonNull(deleteDrawable).getIntrinsicWidth();
         intrinsicHeight = deleteDrawable.getIntrinsicHeight();
 
     }
@@ -56,7 +56,7 @@ abstract public class SwipeToUpdateCallback extends ItemTouchHelper.Callback {
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
 
         View itemView = viewHolder.itemView;
-        int backgroundCornerOffset = 20;
+//        int backgroundCornerOffset = 20;
         int itemHeight = itemView.getHeight();
 
         boolean isCancelled = dX == 0 && !isCurrentlyActive;

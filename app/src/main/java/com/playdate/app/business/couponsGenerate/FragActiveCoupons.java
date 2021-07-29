@@ -2,7 +2,6 @@ package com.playdate.app.business.couponsGenerate;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -137,7 +136,6 @@ public class FragActiveCoupons extends Fragment implements OnInnerFragmentClicks
     }
 
     private void callDeleteBusinessCouponAPI(String couponId) {
-        Log.e("DeletedCouponId", "" + couponId);
 
         SessionPref pref = SessionPref.getInstance(getActivity());
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
@@ -164,8 +162,6 @@ public class FragActiveCoupons extends Fragment implements OnInnerFragmentClicks
                     } else {
                         clsCommon.showDialogMsgFrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
                     }
-                } else {
-
                 }
             }
 
@@ -187,7 +183,7 @@ public class FragActiveCoupons extends Fragment implements OnInnerFragmentClicks
     @Override
     public void ReplaceFragWithStack(Fragment fragment) {
         try {
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
             FragmentTransaction ft = fragmentManager.beginTransaction();
             if (fragmentManager.getFragments().size() > 0) {
                 ft.replace(R.id.flFragment, fragment, fragment.getClass().getSimpleName());
@@ -273,8 +269,6 @@ public class FragActiveCoupons extends Fragment implements OnInnerFragmentClicks
                     } else {
                         clsCommon.showDialogMsgFrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
                     }
-                } else {
-
                 }
             }
 

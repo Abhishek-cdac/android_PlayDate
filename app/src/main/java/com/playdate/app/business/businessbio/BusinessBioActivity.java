@@ -10,11 +10,9 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 
 import com.playdate.app.R;
-import com.playdate.app.business.businessphoto.BusinessUploadPhotoActivity;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.databinding.ActivityBusinessBioBinding;
-
 import com.playdate.app.model.LoginResponse;
 import com.playdate.app.ui.register.profile.UploadProfileActivity;
 import com.playdate.app.util.common.CommonClass;
@@ -25,6 +23,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,13 +45,13 @@ public class BusinessBioActivity extends AppCompatActivity {
         bioBinding.setLifecycleOwner(this);
         mIntent = getIntent();
         bioBinding.setBusinessBioViewModel(businessBioViewModel);
-        if (mIntent.getBooleanExtra("fromProfile", false)) {
-            SessionPref pref = SessionPref.getInstance(this);
-            // businessBioViewModel.BioText.setValue(pref.getStringVal(LoginUserpersonalBio));
-        } else {
-
-
-        }
+//        if (mIntent.getBooleanExtra("fromProfile", false)) {
+//            SessionPref pref = SessionPref.getInstance(this);
+//            // businessBioViewModel.BioText.setValue(pref.getStringVal(LoginUserpersonalBio));
+//        } else {
+//
+//
+//        }
         businessBioViewModel.OnNextClick().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean click) {
@@ -103,7 +102,7 @@ public class BusinessBioActivity extends AppCompatActivity {
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 pd.cancel();
                 if (response.code() == 200) {
-                    if (response.body().getStatus() == 1) {
+                    if (Objects.requireNonNull(response.body()).getStatus() == 1) {
                         //     pref.saveStringKeyVal(LoginUserbusinessBio, bio);
 
                         if (mIntent.getBooleanExtra("fromProfile", false)) {
@@ -121,7 +120,7 @@ public class BusinessBioActivity extends AppCompatActivity {
                     }
                 } else {
                     try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        JSONObject jObjError = new JSONObject(Objects.requireNonNull(response.errorBody()).string());
                         clsCommon.showDialogMsg(BusinessBioActivity.this, "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(BusinessBioActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();

@@ -14,7 +14,6 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -132,12 +131,12 @@ public class CouponGenUpdateActivity extends AppCompatActivity implements Adapte
                 .into(restaurent_img);
         clsCommon = CommonClass.getInstance();
         ImageView iv_back_generator = findViewById(R.id.iv_back_generator);
-        RelativeLayout rl_body = findViewById(R.id.rl_body);
-        LinearLayout ll_dropdown = findViewById(R.id.ll_dropdown);
-        TextView tv_awarded = findViewById(R.id.tv_awarded);
-        RelativeLayout rl_awarded = findViewById(R.id.rl_awarded);
-        TextView tv_level = findViewById(R.id.tv_level);
-        ImageView iv_drop = findViewById(R.id.iv_drop);
+//        RelativeLayout rl_body = findViewById(R.id.rl_body);
+//        LinearLayout ll_dropdown = findViewById(R.id.ll_dropdown);
+//        TextView tv_awarded = findViewById(R.id.tv_awarded);
+//        RelativeLayout rl_awarded = findViewById(R.id.rl_awarded);
+//        TextView tv_level = findViewById(R.id.tv_level);
+//        ImageView iv_drop = findViewById(R.id.iv_drop);
         LinearLayout ll_take_photo = findViewById(R.id.ll_take_photo);
         LinearLayout ll_upload_photo = findViewById(R.id.ll_upload_photo);
         ll_take_photo.setOnClickListener(this);
@@ -148,7 +147,7 @@ public class CouponGenUpdateActivity extends AppCompatActivity implements Adapte
         camera.setVisibility(View.GONE);
         addImage.setVisibility(View.GONE);
         ll_image.setOnClickListener(this);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, awardedBy);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, awardedBy);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner1.setAdapter(adapter);
         int spinnerPosition = adapter.getPosition(awardedByUpdate);
@@ -183,9 +182,12 @@ public class CouponGenUpdateActivity extends AppCompatActivity implements Adapte
         int mMonth = c.get(Calendar.MONTH);
         int mDay = c.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this,R.style.TimePickerTheme,
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, R.style.TimePickerTheme,
 
-                (view, year, monthOfYear, dayOfMonth) -> availbilityDays.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth), mYear, mMonth, mDay);
+                (view, year, monthOfYear, dayOfMonth) -> {
+                    String text = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
+                    availbilityDays.setText(text);
+                }, mYear, mMonth, mDay);
         datePickerDialog.getDatePicker().setMinDate(c.getTimeInMillis());
         datePickerDialog.show();
     }
@@ -198,7 +200,6 @@ public class CouponGenUpdateActivity extends AppCompatActivity implements Adapte
 
     @Override
     public void onNothingSelected(AdapterView<?> arg0) {
-        // TODO - Custom Code
     }
 
     Bitmap bitmap = null;

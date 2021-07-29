@@ -1,7 +1,6 @@
 package com.playdate.app.videocall.utils;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.playdate.app.videocall.activities.CallActivity;
 import com.quickblox.videochat.webrtc.QBRTCSession;
@@ -38,7 +37,7 @@ public class WebRtcSessionManager extends QBRTCClientSessionCallbacksImpl {
 
     @Override
     public void onReceiveNewSession(QBRTCSession session) {
-        Log.d(TAG, "onReceiveNewSession to WebRtcSessionManager");
+//        Log.d(TAG, "onReceiveNewSession to WebRtcSessionManager");
 
         if (currentSession == null && session != null) {
             setCurrentSession(session);
@@ -48,7 +47,7 @@ public class WebRtcSessionManager extends QBRTCClientSessionCallbacksImpl {
 
     @Override
     public void onSessionClosed(QBRTCSession session) {
-        Log.d(TAG, "onSessionClosed WebRtcSessionManager");
+//        Log.d(TAG, "onSessionClosed WebRtcSessionManager");
 
         if (session.equals(getCurrentSession())) {
             setCurrentSession(null);

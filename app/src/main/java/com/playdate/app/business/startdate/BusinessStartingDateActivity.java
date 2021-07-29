@@ -3,7 +3,6 @@ package com.playdate.app.business.startdate;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -11,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.playdate.app.R;
-import com.playdate.app.business.businessbio.BusinessBioActivity;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.databinding.ActivityBusinessStartDateBinding;
@@ -26,6 +24,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -71,16 +70,14 @@ public class BusinessStartingDateActivity extends AppCompatActivity {
 
 
         if (mIntent.getBooleanExtra("fromProfile", false)) {
-            new Handler().postDelayed(new Runnable() {
-                public void run() {
+            new Handler().postDelayed(() -> {
 
-                    String CurrentDOB = mIntent.getStringExtra("CurrentDOB");
-                    String[] ar = CurrentDOB.split("-");
-                    String CurrentYYYY = ar[0];
-                    String CurrentMM = ar[1];
-                    String CurrentDDD = ar[2];
-                    business_Starting_Date_ViewModel.setDates(CurrentYYYY, CurrentMM, CurrentDDD);
-                }
+                String CurrentDOB = mIntent.getStringExtra("CurrentDOB");
+                String[] ar = CurrentDOB.split("-");
+                String CurrentYYYY = ar[0];
+                String CurrentMM = ar[1];
+                String CurrentDDD = ar[2];
+                business_Starting_Date_ViewModel.setDates(CurrentYYYY, CurrentMM, CurrentDDD);
             }, 200);
         }
     }
@@ -110,15 +107,13 @@ public class BusinessStartingDateActivity extends AppCompatActivity {
         hashMap.put("birthDate", BusinessStartDate);// format 1990-08-12
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(this);
         pd.show();
-//        SessionPref pref = SessionPref.getInstance(this);
-//        Toast.makeText(this, ""+pref.getStringVal(SessionPref.LoginUsertoken), Toast.LENGTH_SHORT).show();
         Call<LoginResponse> call = service.updateProfile("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 pd.cancel();
                 if (response.code() == 200) {
-                    if (response.body().getStatus() == 1) {
+                    if (Objects.requireNonNull(response.body()).getStatus() == 1) {
                           pref.saveStringKeyVal(SessionPref.LoginUserbirthDate, BusinessStartDate);
                         if (mIntent.getBooleanExtra("fromProfile", false)) {
                             finish();

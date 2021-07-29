@@ -11,6 +11,7 @@ import java.util.Calendar;
 import java.util.List;
 
 public class BusinessStartingDateViewModel extends ViewModel {
+
     public MutableLiveData<Boolean> RegisterClick = new MutableLiveData<>();
     public MutableLiveData<Boolean> iv_backClick = new MutableLiveData<>();
     public MutableLiveData<Boolean> NextClick = new MutableLiveData<>();
@@ -19,8 +20,6 @@ public class BusinessStartingDateViewModel extends ViewModel {
     public MutableLiveData<Integer> YearSelectedPosition = new MutableLiveData<>();
     public MutableLiveData<List<String>> daysList = new MutableLiveData<>();
 
-//    private MutableLiveData<Boolean> userMutableLiveData;
-//    private MutableLiveData<Boolean> Register;
 
     public String getYearSelected() {
         return yearlist.get(YearSelectedPosition.getValue());
@@ -114,7 +113,7 @@ public class BusinessStartingDateViewModel extends ViewModel {
 
     public MutableLiveData<List<String>> fetchDays() {
         if (daysList == null) {
-            return new MutableLiveData<List<String>>();
+            return new MutableLiveData<>();
         }
         DayList.clear();
         DayList.add("Day");

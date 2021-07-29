@@ -1,7 +1,6 @@
 package com.playdate.app.business.dashboard_business;
 
 import android.os.Bundle;
-import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,7 +10,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.playdate.app.R;
 import com.playdate.app.business.couponsGenerate.FragCouponParentBusiness;
-import com.playdate.app.ui.dashboard.fragments.FragLanding;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 
 public class DashboardBusiness extends AppCompatActivity implements OnInnerFragmentClicks {
@@ -22,7 +20,7 @@ public class DashboardBusiness extends AppCompatActivity implements OnInnerFragm
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard_business);
-        LinearLayout ll_coupon = findViewById(R.id.ll_coupon);
+//        LinearLayout ll_coupon = findViewById(R.id.ll_coupon);
 
         Fragment fragOne;
         fragOne = new FragCouponParentBusiness();

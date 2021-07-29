@@ -14,18 +14,18 @@ public class ListPreferenceCompat extends ListPreference {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public ListPreferenceCompat(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-    }
-
-    public ListPreferenceCompat(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
-
-    public ListPreferenceCompat(Context context) {
-        super(context);
-    }
+//    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+//    public ListPreferenceCompat(Context context, AttributeSet attrs, int defStyleAttr) {
+//        super(context, attrs, defStyleAttr);
+//    }
+//
+//    public ListPreferenceCompat(Context context, AttributeSet attrs) {
+//        super(context, attrs);
+//    }
+//
+//    public ListPreferenceCompat(Context context) {
+//        super(context);
+//    }
 
     @Override
     public void setValue(String value) {

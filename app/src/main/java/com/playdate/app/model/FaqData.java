@@ -14,9 +14,9 @@ public class FaqData {
         return answer;
     }
 
-    public void setAnswer(String answer) {
-        this.answer = answer;
-    }
+//    public void setAnswer(String answer) {
+//        this.answer = answer;
+//    }
 
     public String getQuestion() {
         return question;
