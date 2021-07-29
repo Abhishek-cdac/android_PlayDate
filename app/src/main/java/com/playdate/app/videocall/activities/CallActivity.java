@@ -65,9 +65,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * QuickBlox team
- */
 public class CallActivity extends BaseActivity implements IncomeCallFragmentCallbackListener,
         QBRTCSessionStateCallback<QBRTCSession>, QBRTCClientSessionCallbacks,
         ConversationFragmentCallback {

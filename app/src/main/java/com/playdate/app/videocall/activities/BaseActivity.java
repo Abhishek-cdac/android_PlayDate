@@ -9,6 +9,7 @@ import com.playdate.app.videocall.util.QBResRequestExecutor;
 import com.playdate.app.videocall.utils.SharedPrefsHelper;
 
 public abstract class BaseActivity extends AppCompatActivity {
+
     protected SharedPrefsHelper sharedPrefsHelper;
     protected QBResRequestExecutor requestExecutor;
 
