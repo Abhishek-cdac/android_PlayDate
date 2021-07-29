@@ -2,6 +2,7 @@
 package com.playdate.app.model;
 
 import java.util.List;
+
 import com.google.gson.annotations.Expose;
 
 public class GetBusinessCouponData {
@@ -9,7 +10,9 @@ public class GetBusinessCouponData {
     @Expose
     private String awardedBy;
     @Expose
-    private Object awardlevelValue;
+    private String couponCode;
+    @Expose
+    private String awardlevelValue;
     @Expose
     private String couponAmountOf;
     @Expose
@@ -17,9 +20,9 @@ public class GetBusinessCouponData {
     @Expose
     private String couponImage;
     @Expose
-    private Long couponPercentageValue;
+    private String couponPercentageValue;
     @Expose
-    private Long couponPurchasePoint;
+    private String couponPurchasePoint;
     @Expose
     private String couponTitle;
     @Expose
@@ -43,11 +46,11 @@ public class GetBusinessCouponData {
         this.awardedBy = awardedBy;
     }
 
-    public Object getAwardlevelValue() {
+    public String getAwardlevelValue() {
         return awardlevelValue;
     }
 
-    public void setAwardlevelValue(Object awardlevelValue) {
+    public void setAwardlevelValue(String awardlevelValue) {
         this.awardlevelValue = awardlevelValue;
     }
 
@@ -75,19 +78,19 @@ public class GetBusinessCouponData {
         this.couponImage = couponImage;
     }
 
-    public Long getCouponPercentageValue() {
+    public String getCouponPercentageValue() {
         return couponPercentageValue;
     }
 
-    public void setCouponPercentageValue(Long couponPercentageValue) {
+    public void setCouponPercentageValue(String couponPercentageValue) {
         this.couponPercentageValue = couponPercentageValue;
     }
 
-    public Long getCouponPurchasePoint() {
+    public String getCouponPurchasePoint() {
         return couponPurchasePoint;
     }
 
-    public void setCouponPurchasePoint(Long couponPurchasePoint) {
+    public void setCouponPurchasePoint(String couponPurchasePoint) {
         this.couponPurchasePoint = couponPurchasePoint;
     }
 
@@ -147,4 +150,11 @@ public class GetBusinessCouponData {
         this.userId = userId;
     }
 
+    public String getCouponCode() {
+        return couponCode;
+    }
+
+    public void setCouponCode(String couponCode) {
+        this.couponCode = couponCode;
+    }
 }

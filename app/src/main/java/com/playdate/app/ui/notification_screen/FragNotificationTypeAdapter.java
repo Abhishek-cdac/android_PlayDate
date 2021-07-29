@@ -166,31 +166,32 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
         String text = null;
         String timeToSet = null;
         try {
-            String timeFormat = notification_list.get(position).getEntryDate();
+            if (notification_list.get(position).getEntryDate() != null) {
+                String timeFormat = notification_list.get(position).getEntryDate();
+                timeFormat = timeFormat.replace("T", " ");
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+                df.setTimeZone(TimeZone.getTimeZone("GTC"));
+                Date date = null;
+                try {
+                    date = df.parse(timeFormat);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                df.setTimeZone(TimeZone.getDefault());
+                String formattedDate = df.format(date);
 
-
-            timeFormat = timeFormat.replace("T", " ");
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
-            df.setTimeZone(TimeZone.getTimeZone("GTC"));
-            Date date = null;
-            try {
-                date = df.parse(timeFormat);
-            } catch (ParseException e) {
-                e.printStackTrace();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Date ddd = null;
+                try {
+                    ddd = sdf.parse(formattedDate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                long millis = ddd.getTime();
+                text = TimeAgo.using(millis);
+                timeToSet = text.toLowerCase();
             }
-            df.setTimeZone(TimeZone.getDefault());
-            String formattedDate = df.format(date);
 
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Date ddd = null;
-            try {
-                ddd = sdf.parse(formattedDate);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            long millis = ddd.getTime();
-            text = TimeAgo.using(millis);
-            timeToSet = text.toLowerCase();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -221,7 +222,6 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
                         viewHolderMatched.tv_name.setText(Html.fromHtml(sourceString));
 
                         requestId = notification_list.get(position).getFriendRequest().get(0).getRequestId();
-                        Log.e("requestId", "" + requestId);
                         picasso.load(notification_list.get(position).getFriendRequest().get(0).getUserInfo().get(0).getProfilePicPath())
                                 .placeholder(R.drawable.profile)
                                 .fit()

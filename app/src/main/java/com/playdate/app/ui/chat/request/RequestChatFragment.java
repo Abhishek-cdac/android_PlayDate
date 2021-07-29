@@ -117,7 +117,6 @@ private  TextView txt_count;
                         assert response.body() != null;
                         if (response.body().getStatus() == 1) {
                             int countNotification = response.body().getData().get(0).getTotalUnreadNotification();
-                            Log.e("countNotification", "" + countNotification);
 
                             if (countNotification > 0 && countNotification <= 9) {
                                 txt_count.setVisibility(View.VISIBLE);

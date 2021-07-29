@@ -51,6 +51,7 @@
                         android:drawablePadding="@dimen/_10sdp"
                         android:hint="@string/Username"
                         android:inputType="textEmailAddress"
+                        android:maxLength="50"
                         android:padding="@dimen/_15sdp"
                         android:text="@={LoginViewModel.EmailAddress}"
                         android:textColor="@android:color/white"

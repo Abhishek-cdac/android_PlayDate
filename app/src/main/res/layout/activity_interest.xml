@@ -72,12 +72,12 @@
             android:layout_marginRight="@dimen/_25sdp"
             android:layout_marginBottom="@dimen/_5sdp"
             android:background="@drawable/circle_corner"
-            android:drawableStart="@drawable/ic_search"
+            android:drawableStart="@drawable/ic_search_purple"
             android:drawablePadding="@dimen/_8sdp"
             android:hint="@string/search_here"
             android:padding="@dimen/_10sdp"
-            android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white"
+            android:textColor="#533E56"
+            android:textColorHint="#533E56"
             android:textSize="@dimen/_12sdp">
 
 

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,12 +32,13 @@ public class FragSavedPost extends Fragment {
 
     private RecyclerView recyclerView;
     private List<SavedPostData> savedPostDataList;
-
+    private TextView txt_no_media;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_saved_post, container, false);
         recyclerView = view.findViewById(R.id.recycler_photos);
+        txt_no_media = view.findViewById(R.id.txt_no_media);
         callGetSavedPOstApi();
         return view;
     }
@@ -61,12 +63,25 @@ public class FragSavedPost extends Fragment {
                         if (savedPostDataList == null) {
                             savedPostDataList = new ArrayList<>();
                         }
-                        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-                        SavedPostAdapter adapter = new SavedPostAdapter(getActivity(), (ArrayList<SavedPostData>) savedPostDataList);
-                        recyclerView.setAdapter(adapter);
+
+
+                        if (savedPostDataList.size() == 0) {
+                            txt_no_media.setVisibility(View.VISIBLE);
+
+                            recyclerView.setVisibility(View.GONE);
+                        } else {
+                            txt_no_media.setVisibility(View.GONE);
+                            recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+                            SavedPostAdapter adapter = new SavedPostAdapter(getActivity(), (ArrayList<SavedPostData>) savedPostDataList);
+                            recyclerView.setAdapter(adapter);
+                        }
+
+
+
                     }
                 } else {
-
+                    txt_no_media.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
                 }
             }
 

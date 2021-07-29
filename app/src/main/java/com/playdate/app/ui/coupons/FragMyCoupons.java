@@ -33,7 +33,7 @@ import retrofit2.Response;
 public class FragMyCoupons extends Fragment {
 
     private RecyclerView rv_coupons_list;
-    private TextView txt_points;
+    private TextView txt_points, tv_placeholder;
 
     public FragMyCoupons() {
     }
@@ -45,6 +45,7 @@ public class FragMyCoupons extends Fragment {
         View view = inflater.inflate(R.layout.frag_my_coupan_code, container, false);
         rv_coupons_list = view.findViewById(R.id.rv_coupons_list);
         txt_points = view.findViewById(R.id.txt_points);
+        tv_placeholder = view.findViewById(R.id.tv_placeholder);
 
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         rv_coupons_list.setLayoutManager(manager);
@@ -75,8 +76,18 @@ public class FragMyCoupons extends Fragment {
                                 lst = new ArrayList<>();
                             }
                             txt_points.setText("" + wrap.getAccount().getCurrentPoints());
-                            MyCouponAdapter adapter = new MyCouponAdapter(lst);
-                            rv_coupons_list.setAdapter(adapter);
+
+                            if (lst.size()==0){
+                                tv_placeholder.setVisibility(View.VISIBLE);
+                                rv_coupons_list.setVisibility(View.GONE);
+                            }else
+                            {
+                                tv_placeholder.setVisibility(View.GONE);
+                                rv_coupons_list.setVisibility(View.VISIBLE);
+                                MyCouponAdapter adapter = new MyCouponAdapter(lst);
+                                rv_coupons_list.setAdapter(adapter);
+                            }
+
 
                         }
                     }

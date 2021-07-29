@@ -24,6 +24,7 @@ import com.playdate.app.model.MyCouponsModelStore;
 import com.playdate.app.model.MyCouponsWrapStore;
 import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.ui.coupons.adapters.CouponStoreAdapter;
+import com.playdate.app.ui.coupons.adapters.MyCouponAdapter;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
@@ -46,7 +47,7 @@ public class FragCouponStore extends Fragment implements OnCouponSelected {
     private CommonClass clsCommon;
     private Onclick itemClick;
     private Account account;
-    private TextView txt_points;
+    private TextView txt_points, tv_placeholder;
 
     public FragCouponStore() {
     }
@@ -58,6 +59,7 @@ public class FragCouponStore extends Fragment implements OnCouponSelected {
         clsCommon = CommonClass.getInstance();
         rv_coupons_list = view.findViewById(R.id.rv_coupons_list);
         txt_points = view.findViewById(R.id.txt_points);
+        tv_placeholder = view.findViewById(R.id.tv_placeholder);
         rv_coupons_list.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
         itemClick = new Onclick() {
             @Override
@@ -149,12 +151,23 @@ public class FragCouponStore extends Fragment implements OnCouponSelected {
                                 lst_getCoupons = new ArrayList<>();
                             }
 
-                            CouponStoreAdapter adapter = new CouponStoreAdapter(lst_getCoupons, itemClick,false);
-                            rv_coupons_list.setAdapter(adapter);
-                            adapter.setListerner(FragCouponStore.this);
-                            account = wrap.getAccount();
                             txt_points.setText("" + wrap.getAccount().getCurrentPoints());
-                            adapter.setCurrentPoints(wrap.getAccount().getCurrentPoints());
+
+                            if (lst_getCoupons.size()==0){
+                                tv_placeholder.setVisibility(View.VISIBLE);
+                                rv_coupons_list.setVisibility(View.GONE);
+                            }else
+                            {
+                                tv_placeholder.setVisibility(View.GONE);
+                                rv_coupons_list.setVisibility(View.VISIBLE);
+                                CouponStoreAdapter adapter = new CouponStoreAdapter(lst_getCoupons, itemClick,false);
+                                rv_coupons_list.setAdapter(adapter);
+                                adapter.setListerner(FragCouponStore.this);
+                                account = wrap.getAccount();
+
+                                adapter.setCurrentPoints(wrap.getAccount().getCurrentPoints());
+                            }
+
 
 
                         } catch (Exception e) {

@@ -97,11 +97,11 @@
                             android:layout_gravity="center"
 
                             android:layout_margin="@dimen/_5sdp"
+                            android:background="@drawable/menu_button"
                             android:paddingLeft="@dimen/_10sdp"
                             android:paddingTop="@dimen/_5sdp"
                             android:paddingRight="@dimen/_10sdp"
                             android:paddingBottom="@dimen/_5sdp"
-                            android:background="@drawable/menu_button"
 
                             android:text="@string/social"
                             android:textColor="@android:color/white"
@@ -171,7 +171,7 @@
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_8sdp"
                                 android:textStyle="bold"
-                                android:visibility="visible"/>
+                                android:visibility="visible" />
 
                             <!--  <TextView
                                   android:id="@+id/txt_count"
@@ -228,25 +228,30 @@
                                 android:src="@drawable/ic_search" />
                         </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/txt_serachfriend"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:gravity="start|center"
-                            android:paddingLeft="@dimen/_10sdp"
-                            android:text="@string/sarchfriendhere"
-                            android:textColor="@color/color_grey"
-                            android:textSize="@dimen/_10sdp"
-                            android:visibility="gone" />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rv_friends"
+                        <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_height="@dimen/_60sdp"
-                            android:layout_weight="7"
-                            android:layoutAnimation="@anim/layout_anim_slide" />
+                            android:layout_height="wrap_content"
+                            android:layout_weight="7">
+
+                            <TextView
+                                android:id="@+id/txt_serachfriend"
+                                android:layout_width="wrap_content"
+                                android:layout_height="60dp"
+                                android:gravity="center"
+                                android:text="@string/sarchfriendhere"
+                                android:textColor="@color/color_grey"
+                                android:textSize="@dimen/_10sdp"
+                                android:visibility="visible" />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rv_friends"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_60sdp"
+                                android:layoutAnimation="@anim/layout_anim_slide" />
+
+
+                        </LinearLayout>
+
 
                     </LinearLayout>
 

@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -122,9 +124,14 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
         } else {
             isBusiness = true;
             binding.edtFullname.setHint("Business Name");
+            binding.edtFullname.setCompoundDrawablesWithIntrinsicBounds(R.drawable.buainess_ic_business_and_trade, 0, 0, 0);
             SessionPref pref = SessionPref.getInstance(this);
             pref.saveBoolKeyVal(SessionPref.isBusiness, isBusiness);
         }
+
+        binding.edtFullname.setFilters(new InputFilter[]{ignoreFirstWhiteSpace(), new InputFilter.LengthFilter(50)});
+        binding.edtAddress.setFilters(new InputFilter[]{ignoreFirstWhiteSpace(), new InputFilter.LengthFilter(50)});
+        binding.edtEmail.setFilters(new InputFilter[]{ignoreFirstWhiteSpace(), new InputFilter.LengthFilter(50)});
 
         registerViewModel.getFinish().observe(this, aBoolean -> finish());
 
@@ -174,6 +181,22 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
         registerViewModel.getOnGoogleClick().observe(this, aBoolean -> callToGoogle());
 
 
+    }
+
+    private InputFilter ignoreFirstWhiteSpace() {
+        return new InputFilter() {
+            public CharSequence filter(CharSequence source, int start, int end,
+                                       Spanned dest, int dstart, int dend) {
+
+                for (int i = start; i < end; i++) {
+                    if (Character.isWhitespace(source.charAt(i))) {
+                        if (dstart == 0)
+                            return "";
+                    }
+                }
+                return null;
+            }
+        };
     }
 
     private String getFCM() {
@@ -336,7 +359,7 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
                     Log.e("personId", "" + personId);
                     Log.e("personPhoto", "" + personPhoto);
                     Log.e("personName", "" + personName);
-                    pref.saveStringKeyVal(LoginUserSourceType,"Google");
+                    pref.saveStringKeyVal(LoginUserSourceType, "Google");
                     callGmailSocialLoginAPI(personEmail, personId, "");
                 }
 
@@ -398,7 +421,9 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
             }
         });
     }
+
     LoginUserDetails user;
+
     private void checkForTheLastActivity(LoginResponse body) {
         try {
             LoginUserDetails user = body.getUserData();
@@ -410,7 +435,7 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
                 } else {
                     val = "Person";
                 }
-                this.user=user;
+                this.user = user;
                 callAPIUpdateUserType(val);
 
             } else {

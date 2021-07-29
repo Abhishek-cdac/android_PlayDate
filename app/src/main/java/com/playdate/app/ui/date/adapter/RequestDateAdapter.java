@@ -61,7 +61,6 @@ public class RequestDateAdapter extends RecyclerView.Adapter<RequestDateAdapter.
         holder.title.setText(example.getUsername());
         Picasso.get().load(example.getProfilePicPath()).into(holder.profile_image);
         requestId = example.getRequestId();
-        Log.e("requestId",""+requestId);
 
         holder.img_accept.setOnClickListener(new View.OnClickListener() {
             @Override

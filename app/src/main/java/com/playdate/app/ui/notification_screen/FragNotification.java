@@ -1,6 +1,7 @@
 package com.playdate.app.ui.notification_screen;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
+import com.playdate.app.business.couponsGenerate.FragCouponParentBusiness;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.CommonModel;
@@ -42,7 +44,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FragNotification extends Fragment {
-    private  String extra;
+    private String extra;
 
     public FragNotification(String extra) {
         this.extra = extra;
@@ -134,8 +136,10 @@ public class FragNotification extends Fragment {
                     ref.Reset();
                 } else if (extra.equals("Coupons")) {
                     ref.ReplaceFrag(new FragCouponParent());
-                } else {
+                } else if (extra.equals("chat")) {
                     ref.ReplaceFrag(new RequestChatFragment());
+                } else {
+                    ref.ReplaceFrag(new FragCouponParentBusiness());
                 }
             }
         });
@@ -164,7 +168,7 @@ public class FragNotification extends Fragment {
                 pd.cancel();
                 if (response.code() == 200) {
                     if (Objects.requireNonNull(response.body()).getStatus() == 1) {
-                        PageNumber=1;
+                        PageNumber = 1;
                         callGetNotificationAPI();
                         clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
                     } else {
@@ -209,7 +213,7 @@ public class FragNotification extends Fragment {
                 pd.cancel();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
-                        PageNumber=1;
+                        PageNumber = 1;
                         callGetNotificationAPI();
                         clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
                     } else {
@@ -291,7 +295,7 @@ public class FragNotification extends Fragment {
                 if (response.code() == 200) {
                     assert response.body() != null;
                     if (response.body().getStatus() == 1) {
-                        PageNumber=1;
+                        PageNumber = 1;
                         callGetNotificationAPI();
                         Toast.makeText(getActivity(), "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     }
@@ -358,7 +362,6 @@ public class FragNotification extends Fragment {
             }
         });
     }
-
 
 
     public void loadMore() {
@@ -429,6 +432,8 @@ public class FragNotification extends Fragment {
                                 adapter.notifyDataSetChanged();
                             }
                             PageNumber = PageNumber + 1;
+
+
                         }
                     } catch (Exception e) {
                         e.printStackTrace();

@@ -2,7 +2,9 @@ package com.playdate.app.business.couponsGenerate.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.playdate.app.R;
+import com.playdate.app.business.couponsGenerate.CouponGenActivity;
 
 public class DialogLevelSelector extends Dialog {
     ImageView iv_minus;
@@ -53,8 +56,7 @@ public class DialogLevelSelector extends Dialog {
         btn_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // new DialogCouponCreated(context).show();
-                dismiss();
+                  dismiss();
             }
         });
 
@@ -62,7 +64,9 @@ public class DialogLevelSelector extends Dialog {
         iv_minus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                coin = coin - 1;
+                if (coin>0){
+                    coin = coin - 1;
+                }
                 tv_coins.setText(String.valueOf(coin));
             }
         });
