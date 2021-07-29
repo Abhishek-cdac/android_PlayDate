@@ -1,8 +1,6 @@
 package com.playdate.app.ui.dashboard.data;
 
 import android.content.Context;
-import android.util.Log;
-import android.view.View;
 
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
@@ -28,10 +26,10 @@ public class CallAPI {
         hashMap.put("limit", "100");
         hashMap.put("pageNo", "1");//Hardcode
         SessionPref pref = SessionPref.getInstance(mContext);
-        Timber.tag("GetUserSuggestionData").e("" + pref.getStringVal(SessionPref.LoginUsertoken));
-        OnAPIResponce ref= (OnAPIResponce) mContext;
+//        Timber.tag("GetUserSuggestionData").e("" + pref.getStringVal(SessionPref.LoginUsertoken));
+        OnAPIResponce ref = (OnAPIResponce) mContext;
         Call<NotificationModel> call = service.getNotification("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
-        Timber.e("" + hashMap);
+//        Timber.e("" + hashMap);
         call.enqueue(new Callback<NotificationModel>() {
             @Override
             public void onResponse(Call<NotificationModel> call, Response<NotificationModel> response) {
@@ -40,13 +38,7 @@ public class CallAPI {
                     try {
                         if (response.body().getStatus() == 1) {
                             List<NotificationData> lst_notifications = response.body().getData();
-                            if (lst_notifications.size() > 0) {
-
-                                ref.setNotiCount(lst_notifications.size());
-
-                            } else {
-                                ref.setNotiCount(0);
-                            }
+                            ref.setNotiCount(lst_notifications.size());
 
 
                         } else {

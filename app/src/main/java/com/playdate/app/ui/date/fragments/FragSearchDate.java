@@ -22,7 +22,6 @@ import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.CreateDateGetPartnerData;
 import com.playdate.app.model.CreateDateGetPartnerModel;
-import com.playdate.app.model.GetUserSuggestionData;
 import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.ui.date.adapter.SuggestedDateAdapter;
 import com.playdate.app.ui.interfaces.OnBackPressed;
@@ -208,7 +207,7 @@ public class FragSearchDate extends Fragment implements SuggestedDateAdapter.Sug
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
+                        clsCommon.showDialogMsgFrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                     }

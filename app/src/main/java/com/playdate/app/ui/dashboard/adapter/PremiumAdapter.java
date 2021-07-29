@@ -1,5 +1,6 @@
 package com.playdate.app.ui.dashboard.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,15 +30,16 @@ public class PremiumAdapter extends RecyclerView.Adapter<PremiumAdapter.ViewHold
     @Override
     public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         View view = null;
+        Context mContext = parent.getContext();
         if (version == 0) {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_premuim, null);
+            view = LayoutInflater.from(mContext).inflate(R.layout.row_premuim, parent, false);
         } else if (version == 1) {
 
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_premuim1, null);
+            view = LayoutInflater.from(mContext).inflate(R.layout.row_premuim1, parent, false);
         } else if (version == 2) {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_premuim2, null);
-        }else if (version == 3) {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_premuim3, null);
+            view = LayoutInflater.from(mContext).inflate(R.layout.row_premuim2, parent, false);
+        } else if (version == 3) {
+            view = LayoutInflater.from(mContext).inflate(R.layout.row_premuim3, parent, false);
         }
 
         return new ViewHolder(view);
@@ -55,7 +57,7 @@ public class PremiumAdapter extends RecyclerView.Adapter<PremiumAdapter.ViewHold
         return lst_packageDescription.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView txt_prem;
 
         public ViewHolder(@NonNull @NotNull View itemView) {

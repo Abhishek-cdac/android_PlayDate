@@ -20,7 +20,7 @@ import com.playdate.app.ui.dashboard.more_suggestion.FragInvite;
 
 public class FragPremium1 extends Fragment {
     private final FragInvite fragInvite;
-    private PremiumPlans premiumPlans;
+    private final PremiumPlans premiumPlans;
 
 
     public FragPremium1(FragInvite fragInvite, PremiumPlans premiumPlans) {
@@ -32,13 +32,13 @@ public class FragPremium1 extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag_get_premium1, container, false);
-        ImageView iv_close=view.findViewById(R.id.iv_close);
+        ImageView iv_close = view.findViewById(R.id.iv_close);
         iv_close.setOnClickListener(v -> fragInvite.closePremium());
-        Button getNowButton=view.findViewById(R.id.login_button);
+        Button getNowButton = view.findViewById(R.id.login_button);
         getNowButton.setOnClickListener(v -> fragInvite.closePremium());
-        RecyclerView recy_premiun=view.findViewById(R.id.recy_premiun);
-        PremiumAdapter adapter=new PremiumAdapter(premiumPlans.getLst_packageDescription(),1);
-        LinearLayoutManager maLinearLayout=new LinearLayoutManager(getActivity(),RecyclerView.VERTICAL,false);
+        RecyclerView recy_premiun = view.findViewById(R.id.recy_premiun);
+        PremiumAdapter adapter = new PremiumAdapter(premiumPlans.getLst_packageDescription(), 1);
+        LinearLayoutManager maLinearLayout = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         recy_premiun.setLayoutManager(maLinearLayout);
         recy_premiun.setAdapter(adapter);
         return view;

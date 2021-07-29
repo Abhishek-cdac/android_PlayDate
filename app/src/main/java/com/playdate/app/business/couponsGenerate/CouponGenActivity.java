@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -27,7 +26,6 @@ import androidx.core.app.ActivityCompat;
 
 import com.playdate.app.R;
 import com.playdate.app.business.couponsGenerate.dialogs.DialogCouponCreated;
-import com.playdate.app.business.couponsGenerate.dialogs.DialogLevelSelector;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.CommonModel;
@@ -238,7 +236,7 @@ public class CouponGenActivity extends AppCompatActivity implements AdapterView.
                                 }
                             });
                         } else {
-                            clsCommon.showDialogMsgfrag(CouponGenActivity.this, "PlayDate", response.body().getMessage(), "Ok");
+                            clsCommon.showDialogMsgFrag(CouponGenActivity.this, "PlayDate", response.body().getMessage(), "Ok");
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -248,7 +246,7 @@ public class CouponGenActivity extends AppCompatActivity implements AdapterView.
                     try {
                         assert response.errorBody() != null;
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        clsCommon.showDialogMsgfrag(CouponGenActivity.this, "PlayDate", jObjError.getString("message"), "Ok");
+                        clsCommon.showDialogMsgFrag(CouponGenActivity.this, "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(CouponGenActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                     }
@@ -372,23 +370,23 @@ public class CouponGenActivity extends AppCompatActivity implements AdapterView.
         String availbilityDaysStr = availbilityDays.getText().toString();
         if (couponTitlestr.matches("")) {
             couponTitle.requestFocus();
-            new CommonClass().showDialogMsgfrag(CouponGenActivity.this, "PlayDate", "Enter a couponTitle", "Ok");
+            new CommonClass().showDialogMsgFrag(CouponGenActivity.this, "PlayDate", "Enter a couponTitle", "Ok");
 
         } else if (percentageOffStr.matches("")) {
             percentageOff.requestFocus();
-            new CommonClass().showDialogMsgfrag(CouponGenActivity.this, "PlayDate", "Enter a percentageOff", "Ok");
+            new CommonClass().showDialogMsgFrag(CouponGenActivity.this, "PlayDate", "Enter a percentageOff", "Ok");
 
         } else if (availbilityDaysStr.matches("")) {
             availbilityDays.requestFocus();
-            new CommonClass().showDialogMsgfrag(CouponGenActivity.this, "PlayDate", "Enter a amount off", "Ok");
+            new CommonClass().showDialogMsgFrag(CouponGenActivity.this, "PlayDate", "Enter a amount off", "Ok");
 
         } else if (amountOffStr.matches("")) {
             amountOff.requestFocus();
-            new CommonClass().showDialogMsgfrag(CouponGenActivity.this, "PlayDate", "Enter a amount off", "Ok");
+            new CommonClass().showDialogMsgFrag(CouponGenActivity.this, "PlayDate", "Enter a amount off", "Ok");
 
         } else if (newPriceStr.matches("")) {
             NewPrice.requestFocus();
-            new CommonClass().showDialogMsgfrag(CouponGenActivity.this, "PlayDate", "Enter a new price", "Ok");
+            new CommonClass().showDialogMsgFrag(CouponGenActivity.this, "PlayDate", "Enter a new price", "Ok");
 
         }
 //        else if (freeItemStr.matches("")) {
@@ -398,7 +396,7 @@ public class CouponGenActivity extends AppCompatActivity implements AdapterView.
 //        }
         else if (pointsValueStr.matches("")) {
             pointsValue.requestFocus();
-            new CommonClass().showDialogMsgfrag(CouponGenActivity.this, "PlayDate", "Enter a points Vlaue", "Ok");
+            new CommonClass().showDialogMsgFrag(CouponGenActivity.this, "PlayDate", "Enter a points Vlaue", "Ok");
 
         } else {
             callCreateCouponApi(couponTitlestr, percentageOffStr, amountOffStr, newPriceStr, freeItemStr, pointsValueStr);

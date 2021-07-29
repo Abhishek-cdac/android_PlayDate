@@ -31,6 +31,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
@@ -80,7 +81,7 @@ public class FragMyProfilePersonal extends Fragment implements View.OnClickListe
         iv_edit_mail.setOnClickListener(this);
         iv_relationship.setOnClickListener(this);
         txt_change_photo.setOnClickListener(this);
-        txt_change_photo.setText("Change profile photo");
+        txt_change_photo.setText(R.string.str_change_profile_photo);
 
         setValues();
         callAPI();
@@ -105,7 +106,7 @@ public class FragMyProfilePersonal extends Fragment implements View.OnClickListe
             public void onResponse(Call<GetProfileDetails> call, Response<GetProfileDetails> response) {
                 pd.cancel();
                 if (response.code() == 200) {
-                    if (response.body().getStatus() == 1) {
+                    if (Objects.requireNonNull(response.body()).getStatus() == 1) {
                         lst_getPostDetail = (ArrayList<GetProileDetailData>) response.body().getData();
                         if (lst_getPostDetail == null) {
                             lst_getPostDetail = new ArrayList<>();

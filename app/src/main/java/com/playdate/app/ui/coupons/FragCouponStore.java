@@ -24,7 +24,6 @@ import com.playdate.app.model.MyCouponsModelStore;
 import com.playdate.app.model.MyCouponsWrapStore;
 import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.ui.coupons.adapters.CouponStoreAdapter;
-import com.playdate.app.ui.coupons.adapters.MyCouponAdapter;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
@@ -176,12 +175,12 @@ public class FragCouponStore extends Fragment implements OnCouponSelected {
 
 
                     } else {
-                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
+                        clsCommon.showDialogMsgFrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
                     }
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
+                        clsCommon.showDialogMsgFrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                     }
@@ -202,11 +201,11 @@ public class FragCouponStore extends Fragment implements OnCouponSelected {
 
     @Override
     public void showMsg() {
-        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", "This coupon is already purchased!", "Ok");
+        clsCommon.showDialogMsgFrag(getActivity(), "PlayDate", "This coupon is already purchased!", "Ok");
     }
 
     @Override
     public void showMsgNoBal() {
-        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", "Insufficient wallet points to purchase!", "Ok");
+        clsCommon.showDialogMsgFrag(getActivity(), "PlayDate", "Insufficient wallet points to purchase!", "Ok");
     }
 }

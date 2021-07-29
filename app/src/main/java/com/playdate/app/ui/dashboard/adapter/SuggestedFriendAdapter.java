@@ -28,7 +28,7 @@ public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriend
     private final Onclick itemClick;
     private final FragSearchUser userFrag;
     private final Picasso picasso;
-
+    private Context mcontext;
     public boolean hideShowMore = false;
 
     public void setHideShowMore() {
@@ -43,7 +43,7 @@ public class SuggestedFriendAdapter extends RecyclerView.Adapter<SuggestedFriend
         picasso = Picasso.get();
     }
 
-    Context mcontext;
+
 
     @NonNull
     @Override

@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder> {
 
-    private  ArrayList<MatchListUser> lst;
+    private ArrayList<MatchListUser> lst;
     private final DashboardActivity dashboardActivity;
 
     public FriendAdapter(ArrayList<MatchListUser> lst, DashboardActivity dashboardActivity) {
@@ -28,7 +28,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         picasso = Picasso.get();
     }
 
-    public void updateList(ArrayList<MatchListUser> lst){
+    public void updateList(ArrayList<MatchListUser> lst) {
         this.lst = lst;
         notifyDataSetChanged();
     }
@@ -38,9 +38,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_friends, parent, false);
-
-        return new ViewHolder(view);
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.row_friends, parent, false));
     }
 
     @Override
@@ -60,8 +58,8 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView profile_image;
-        TextView txt_friend_name;
+        private final ImageView profile_image;
+        private final TextView txt_friend_name;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

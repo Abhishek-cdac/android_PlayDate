@@ -2,7 +2,6 @@ package com.playdate.app.ui.my_profile_details;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -133,7 +132,7 @@ public class FragInstaLikeProfileFriends extends Fragment implements View.OnClic
 
                 } else {
                     OnFriendSelected inf = (OnFriendSelected) getActivity();
-                    inf.OnFrinedDataClosed();
+                    Objects.requireNonNull(inf).OnFrinedDataClosed();
                 }
 
                 return true;
@@ -193,12 +192,12 @@ public class FragInstaLikeProfileFriends extends Fragment implements View.OnClic
 
 
                     } else {
-                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
+                        clsCommon.showDialogMsgFrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
                     }
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
+                        clsCommon.showDialogMsgFrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                     }
@@ -246,7 +245,7 @@ public class FragInstaLikeProfileFriends extends Fragment implements View.OnClic
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
+                        clsCommon.showDialogMsgFrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                     }
@@ -287,7 +286,7 @@ public class FragInstaLikeProfileFriends extends Fragment implements View.OnClic
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
+                        clsCommon.showDialogMsgFrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                     }

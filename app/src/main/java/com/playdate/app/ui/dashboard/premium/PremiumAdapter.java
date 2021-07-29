@@ -15,14 +15,17 @@ import java.util.ArrayList;
 public class PremiumAdapter extends FragmentPagerAdapter {
     private final FragInvite fragInvite;
     ArrayList<PremiumPlans> lstPremium;
+
     public PremiumAdapter(@NonNull @NotNull FragmentManager fm, FragInvite fragInvite, ArrayList<PremiumPlans> lstPremium) {
         super(fm);
-        this.fragInvite=fragInvite;
-        this.lstPremium=lstPremium;
+        this.fragInvite = fragInvite;
+        this.lstPremium = lstPremium;
     }
 
     @Override
     public int getCount() {
+        if(lstPremium==null)
+            return 0;
         return 3;
     }
 
@@ -33,11 +36,11 @@ public class PremiumAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new FragPremium1(fragInvite,lstPremium.get(0));
+                return new FragPremium1(fragInvite, lstPremium.get(0));
             case 1:
-                return new FragPremium2(fragInvite,lstPremium.get(1));
+                return new FragPremium2(fragInvite, lstPremium.get(1));
             case 2:
-                return new FragPremium3(fragInvite,lstPremium.get(2));
+                return new FragPremium3(fragInvite, lstPremium.get(2));
         }
         return new Fragment();
     }

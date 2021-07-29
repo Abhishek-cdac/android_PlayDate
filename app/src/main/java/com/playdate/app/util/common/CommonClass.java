@@ -51,12 +51,7 @@ public class CommonClass {
         deleteDialog.setView(view);
         TextView txt_msg = view.findViewById(R.id.txt_msg);
         txt_msg.setText(body);
-        view.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                deleteDialog.dismiss();
-            }
-        });
+        view.findViewById(R.id.btn_ok).setOnClickListener(view1 -> deleteDialog.dismiss());
 
         deleteDialog.show();
 
@@ -81,7 +76,7 @@ public class CommonClass {
     }
 
 
-    public void showDialogMsgfrag(FragmentActivity activity, String header, String body, String btnOk) {
+    public void showDialogMsgFrag(FragmentActivity activity, String header, String body, String btnOk) {
 
         LayoutInflater factory = LayoutInflater.from(activity);
         View view = factory.inflate(R.layout.custom_dialog_yes, null);

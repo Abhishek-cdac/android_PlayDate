@@ -145,12 +145,12 @@ public class FragPartnerSelected extends Fragment {
                         DateRequestID = data.getRequestId();
                         checkForRequestStatus();
                     } else {
-                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
+                        clsCommon.showDialogMsgFrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
                     }
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
+                        clsCommon.showDialogMsgFrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                     }
@@ -177,7 +177,7 @@ public class FragPartnerSelected extends Fragment {
         if (accepted) {
             return;
         } else if (count == 5) {
-            clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", "Partner not responding", "Ok");
+            clsCommon.showDialogMsgFrag(getActivity(), "PlayDate", "Partner not responding", "Ok");
             goBack();
             return;
         }
@@ -246,7 +246,7 @@ public class FragPartnerSelected extends Fragment {
                         if (data.get(0).getStatus().toLowerCase().equals("accepted")) {
                             NextPage();
                         } else if (data.get(0).getStatus().toLowerCase().equals("rejected")) {
-                            clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", "Partner not responding", "Ok");
+                            clsCommon.showDialogMsgFrag(getActivity(), "PlayDate", "Partner not responding", "Ok");
                             goBack();
                         }
 
@@ -301,7 +301,7 @@ public class FragPartnerSelected extends Fragment {
                     if (Objects.requireNonNull(response.body()).getStatus() == 1) {
 
                     } else {
-                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
+                        clsCommon.showDialogMsgFrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
                     }
                 } else {
 

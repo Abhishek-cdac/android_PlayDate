@@ -23,6 +23,7 @@ import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 public class FragMyProfilePayments extends Fragment implements View.OnClickListener {
     public FragMyProfilePayments() {
     }
+
     private TextView email;
     private TextView txt_phone;
     private TextView txt_gender;
@@ -61,11 +62,11 @@ public class FragMyProfilePayments extends Fragment implements View.OnClickListe
         txt_change_photo.setOnClickListener(this);
         if (pref.getStringVal(SessionPref.LoginUserrelationship).equals("Single")) {
 
-            txt_change_photo.setText("Change profile photo");
-            txt_relationship.setText("Single");
+            txt_change_photo.setText(R.string.str_change_profile_photo);
+            txt_relationship.setText(R.string.str_single);
         } else {
-            txt_change_photo.setText("Change couple profile photo");
-            txt_relationship.setText("In a relationship");
+            txt_change_photo.setText(R.string.str_change_couple_profile);
+            txt_relationship.setText(R.string.str_in_a_relation);
 
         }
 
@@ -83,7 +84,8 @@ public class FragMyProfilePayments extends Fragment implements View.OnClickListe
         String temp = mobile.substring(0, 3);
         String temp1 = mobile.substring(3, 6);
         String temp2 = mobile.substring(6, 10);
-        txt_phone.setText(temp + "-" + temp1 + "-" + temp2);
+        String text = temp + "-" + temp1 + "-" + temp2;
+        txt_phone.setText(text);
         txt_gender.setText(pref.getStringVal(SessionPref.LoginUsergender));
         String[] s = pref.getStringVal(SessionPref.LoginUserbirthDate).split("T");
         DOB.setText(s[0]);
@@ -104,8 +106,6 @@ public class FragMyProfilePayments extends Fragment implements View.OnClickListe
     public void onClick(View v) {
 
     }
-
-
 
 
 }

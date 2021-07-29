@@ -14,13 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
-import com.playdate.app.model.FriendRequest;
-import com.playdate.app.model.GetUserSuggestionData;
 import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.ui.coupons.DialogSelectedRestaurant;
-import com.playdate.app.ui.dashboard.fragments.FragSearchUser;
 import com.playdate.app.ui.dashboard.fragments.FragmentSearchRestaurent;
-import com.playdate.app.ui.date.games.FragStore;
 import com.playdate.app.ui.restaurant.adapter.Restaurant;
 import com.squareup.picasso.Picasso;
 
@@ -50,7 +46,7 @@ public class RestaurentAdapter extends RecyclerView.Adapter<RestaurentAdapter.Vi
     public RestaurentAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_suggested, parent, false);
         mcontext = parent.getContext();
-        return new RestaurentAdapter.ViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
@@ -61,32 +57,23 @@ public class RestaurentAdapter extends RecyclerView.Adapter<RestaurentAdapter.Vi
         if (restaurantListFiltered.get(position).getImage() == null) {
             holder.image.setBackgroundColor(mcontext.getResources().getColor(R.color.color_grey_light));
         }
-//        holder.name.setOnClickListener(v -> OnUserClick(position));
-//        holder.image.setOnClickListener(v -> OnUserClick(position));
 
         picasso.load(restaurantListFiltered.get(position).getImage()).placeholder(R.drawable.ic_baseline_person_24)
                 .fit()
                 .centerCrop()
                 .into(holder.image);
 
-        holder.ll_parent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new DialogSelectedRestaurant(mcontext, restaurantListFiltered.get(position).getName(),
-                        restaurantListFiltered.get(position).getImage()).show();
-
-            }
-        });
+        holder.ll_parent.setOnClickListener(v -> new DialogSelectedRestaurant(mcontext, restaurantListFiltered.get(position).getName(),
+                restaurantListFiltered.get(position).getImage()).show());
 
 
     }
 
-  /*  private void OnUserClick(int pos) {
-        userFrag.OnUserProfileSelected(false, restaurant_list.get(pos).getId());
-    }*/
 
     @Override
     public int getItemCount() {
+        if (restaurantListFiltered == null)
+            return 0;
         return restaurantListFiltered.size();
     }
 
@@ -135,7 +122,7 @@ public class RestaurentAdapter extends RecyclerView.Adapter<RestaurentAdapter.Vi
         void onSuggestionSelected(Restaurant restaurant);
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView name;
         private final ImageView image;
         private final ImageView request;

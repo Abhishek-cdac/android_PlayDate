@@ -20,7 +20,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
 import com.playdate.app.business.couponsGenerate.adapter.ActiveCouponsAdapter;
-import com.playdate.app.business.couponsGenerate.adapter.CoupounPageBusinessAdapter;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.CommonModel;
@@ -31,13 +30,8 @@ import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -168,7 +162,7 @@ public class FragActiveCoupons extends Fragment implements OnInnerFragmentClicks
                             e.printStackTrace();
                         }
                     } else {
-                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
+                        clsCommon.showDialogMsgFrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
                     }
                 } else {
 
@@ -277,7 +271,7 @@ public class FragActiveCoupons extends Fragment implements OnInnerFragmentClicks
                             e.printStackTrace();
                         }
                     } else {
-                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
+                        clsCommon.showDialogMsgFrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
                     }
                 } else {
 

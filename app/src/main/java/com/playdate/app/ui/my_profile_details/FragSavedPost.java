@@ -33,6 +33,7 @@ public class FragSavedPost extends Fragment {
     private RecyclerView recyclerView;
     private List<SavedPostData> savedPostDataList;
     private TextView txt_no_media;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

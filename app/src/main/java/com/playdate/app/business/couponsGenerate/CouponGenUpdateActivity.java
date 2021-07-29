@@ -263,10 +263,10 @@ public class CouponGenUpdateActivity extends AppCompatActivity implements Adapte
                         assert response.body() != null;
                         if (response.body().getStatus() == 1) {
 
-                            clsCommon.showDialogMsgfrag(CouponGenUpdateActivity.this, "PlayDate", response.body().getMessage(), "Ok");
+                            clsCommon.showDialogMsgFrag(CouponGenUpdateActivity.this, "PlayDate", response.body().getMessage(), "Ok");
                             finish();
                         } else {
-                            clsCommon.showDialogMsgfrag(CouponGenUpdateActivity.this, "PlayDate", response.body().getMessage(), "Ok");
+                            clsCommon.showDialogMsgFrag(CouponGenUpdateActivity.this, "PlayDate", response.body().getMessage(), "Ok");
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -276,7 +276,7 @@ public class CouponGenUpdateActivity extends AppCompatActivity implements Adapte
                     try {
                         assert response.errorBody() != null;
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        clsCommon.showDialogMsgfrag(CouponGenUpdateActivity.this, "PlayDate", jObjError.getString("message"), "Ok");
+                        clsCommon.showDialogMsgFrag(CouponGenUpdateActivity.this, "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(CouponGenUpdateActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                     }
@@ -400,23 +400,23 @@ public class CouponGenUpdateActivity extends AppCompatActivity implements Adapte
         String availbilityDaysStr = availbilityDays.getText().toString();
         if (couponTitlestr.matches("")) {
             couponTitle.requestFocus();
-            new CommonClass().showDialogMsgfrag(CouponGenUpdateActivity.this, "PlayDate", "Enter a couponTitle", "Ok");
+            new CommonClass().showDialogMsgFrag(CouponGenUpdateActivity.this, "PlayDate", "Enter a couponTitle", "Ok");
 
         } else if (percentageOffStr.matches("")) {
             percentageOff.requestFocus();
-            new CommonClass().showDialogMsgfrag(CouponGenUpdateActivity.this, "PlayDate", "Enter a percentageOff", "Ok");
+            new CommonClass().showDialogMsgFrag(CouponGenUpdateActivity.this, "PlayDate", "Enter a percentageOff", "Ok");
 
         } else if (availbilityDaysStr.matches("")) {
             availbilityDays.requestFocus();
-            new CommonClass().showDialogMsgfrag(CouponGenUpdateActivity.this, "PlayDate", "Enter a amount off", "Ok");
+            new CommonClass().showDialogMsgFrag(CouponGenUpdateActivity.this, "PlayDate", "Enter a amount off", "Ok");
 
         } else if (amountOffStr.matches("")) {
             amountOff.requestFocus();
-            new CommonClass().showDialogMsgfrag(CouponGenUpdateActivity.this, "PlayDate", "Enter a amount off", "Ok");
+            new CommonClass().showDialogMsgFrag(CouponGenUpdateActivity.this, "PlayDate", "Enter a amount off", "Ok");
 
         } else if (newPriceStr.matches("")) {
             NewPrice.requestFocus();
-            new CommonClass().showDialogMsgfrag(CouponGenUpdateActivity.this, "PlayDate", "Enter a new price", "Ok");
+            new CommonClass().showDialogMsgFrag(CouponGenUpdateActivity.this, "PlayDate", "Enter a new price", "Ok");
 
         }
 //        else if (freeItemStr.matches("")) {
@@ -426,7 +426,7 @@ public class CouponGenUpdateActivity extends AppCompatActivity implements Adapte
 //        }
         else if (pointsValueStr.matches("")) {
             pointsValue.requestFocus();
-            new CommonClass().showDialogMsgfrag(CouponGenUpdateActivity.this, "PlayDate", "Enter a points Vlaue", "Ok");
+            new CommonClass().showDialogMsgFrag(CouponGenUpdateActivity.this, "PlayDate", "Enter a points Vlaue", "Ok");
 
         } else {
             callUpdateBusinessCouponApi(couponTitlestr, percentageOffStr, amountOffStr, newPriceStr, freeItemStr, pointsValueStr);

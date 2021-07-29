@@ -522,4 +522,8 @@ Build version 4.0.3-java</string>
 
     <string name="get_premium">GET PREMIUM</string>
     <string name="get_now">Get Now</string>
+    <string name="str_change_profile_photo">Change profile photo</string>
+    <string name="str_single">Single</string>
+    <string name="str_change_couple_profile">Change couple profile photo</string>
+    <string name="str_in_a_relation">In a relationship</string>
 </resources>

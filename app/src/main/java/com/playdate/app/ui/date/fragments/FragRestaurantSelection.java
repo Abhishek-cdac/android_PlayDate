@@ -19,18 +19,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
-import com.playdate.app.model.GetCoupleProfileData;
-import com.playdate.app.model.GetCoupleProfileModel;
 import com.playdate.app.model.RestaurentData;
 import com.playdate.app.model.RestaurentModel;
 import com.playdate.app.service.GpsTracker;
 import com.playdate.app.ui.date.adapter.RestaurantSelectionAdapter;
-import com.playdate.app.ui.date.games.FragTimesUp2;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
@@ -41,8 +37,6 @@ import java.util.Map;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 
 public class FragRestaurantSelection extends Fragment implements restaurantSelecteListener {
     private RecyclerView rv_restaurant;
@@ -117,12 +111,12 @@ public class FragRestaurantSelection extends Fragment implements restaurantSelec
 
 
                     } else {
-                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
+                        clsCommon.showDialogMsgFrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
                     }
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
+                        clsCommon.showDialogMsgFrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                     }

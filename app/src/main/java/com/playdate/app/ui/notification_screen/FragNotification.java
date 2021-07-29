@@ -1,7 +1,6 @@
 package com.playdate.app.ui.notification_screen;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +43,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FragNotification extends Fragment {
+
     private String extra;
 
     public FragNotification(String extra) {
@@ -108,13 +108,17 @@ public class FragNotification extends Fragment {
                 if (i == 22) {
                     callUpdateNotificationStatusAPI(notifiationId, userId, "read");
                 } else if (i == 11) {
-                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                    NotificationBottomSheet sheet = new NotificationBottomSheet(FragNotification.this);
-                    bundle = new Bundle();
-                    bundle.putString("notifiationId", notifiationId);
-                    bundle.putString("userId", userId);
-                    sheet.setArguments(bundle);
-                    sheet.show(fragmentManager, "notification bottom sheet");
+                    try {
+                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                        NotificationBottomSheet sheet = new NotificationBottomSheet(FragNotification.this);
+                        bundle = new Bundle();
+                        bundle.putString("notifiationId", notifiationId);
+                        bundle.putString("userId", userId);
+                        sheet.setArguments(bundle);
+                        sheet.show(fragmentManager, "notification bottom sheet");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
@@ -132,14 +136,19 @@ public class FragNotification extends Fragment {
         back_anonymous.setOnClickListener(v -> {
             OnInnerFragmentClicks ref = (OnInnerFragmentClicks) getActivity();
             if (null != ref) {
-                if (extra.equals("dashboard")) {
-                    ref.Reset();
-                } else if (extra.equals("Coupons")) {
-                    ref.ReplaceFrag(new FragCouponParent());
-                } else if (extra.equals("chat")) {
-                    ref.ReplaceFrag(new RequestChatFragment());
-                } else {
-                    ref.ReplaceFrag(new FragCouponParentBusiness());
+                switch (extra) {
+                    case "dashboard":
+                        ref.Reset();
+                        break;
+                    case "Coupons":
+                        ref.ReplaceFrag(new FragCouponParent());
+                        break;
+                    case "chat":
+                        ref.ReplaceFrag(new RequestChatFragment());
+                        break;
+                    default:
+                        ref.ReplaceFrag(new FragCouponParentBusiness());
+                        break;
                 }
             }
         });
@@ -170,14 +179,14 @@ public class FragNotification extends Fragment {
                     if (Objects.requireNonNull(response.body()).getStatus() == 1) {
                         PageNumber = 1;
                         callGetNotificationAPI();
-                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
+                        clsCommon.showDialogMsgFrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
                     } else {
-                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
+                        clsCommon.showDialogMsgFrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
                     }
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
+                        clsCommon.showDialogMsgFrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
 
                         Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
@@ -212,17 +221,17 @@ public class FragNotification extends Fragment {
             public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
                 pd.cancel();
                 if (response.code() == 200) {
-                    if (response.body().getStatus() == 1) {
+                    if (Objects.requireNonNull(response.body()).getStatus() == 1) {
                         PageNumber = 1;
                         callGetNotificationAPI();
-                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
+                        clsCommon.showDialogMsgFrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
                     } else {
-                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
+                        clsCommon.showDialogMsgFrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
                     }
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
+                        clsCommon.showDialogMsgFrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
 
                         Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
@@ -254,12 +263,12 @@ public class FragNotification extends Fragment {
                 pd.cancel();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 1) {
-                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
+                        clsCommon.showDialogMsgFrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
                     }
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
+                        clsCommon.showDialogMsgFrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
 
                         Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
@@ -302,7 +311,7 @@ public class FragNotification extends Fragment {
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
+                        clsCommon.showDialogMsgFrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                     }
@@ -346,7 +355,7 @@ public class FragNotification extends Fragment {
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
+                        clsCommon.showDialogMsgFrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                     }
@@ -446,8 +455,8 @@ public class FragNotification extends Fragment {
                     PageNumber = -1;
                     adapter.showLoadmore = false;
                     try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        clsCommon.showDialogMsgfrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
+                        JSONObject jObjError = new JSONObject(Objects.requireNonNull(response.errorBody()).string());
+                        clsCommon.showDialogMsgFrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                     }

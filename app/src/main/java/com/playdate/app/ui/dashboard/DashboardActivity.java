@@ -119,7 +119,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
     private LinearLayout ll_love_bottom;
     private ImageView iv_gallery;
     private boolean isBusiness = false;
-    private  TextView txt_serachfriend;
+    private TextView txt_serachfriend;
 
 
     @Override
@@ -241,7 +241,6 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
             }
             callAPIFriends();
             CallNotificationCount();
-//            callNotification();
         });
 
         updateToken();
@@ -301,7 +300,6 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
                     e.printStackTrace();
                 }
 
-//                mSwipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
@@ -343,13 +341,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
                         assert response.body() != null;
                         if (response.body().getStatus() == 1) {
                             int countNotification = response.body().getData().get(0).getTotalUnreadNotification();
-                            Log.e("countNotification", "" + countNotification);
 
-//                            txt_count.setText("99+");
-//                            txt_count.setTextSize(8);
-//                            txt_count.setPadding(5, 3, 5, 3);  ///99+
-//                            txt_count.setPadding(6, 2, 7, 2);  ///10-99
-//                            txt_count.setPadding(10, 0, 10, 0); //1-9
 
                             if (countNotification > 0 && countNotification <= 9) {
                                 txt_count.setVisibility(View.VISIBLE);
@@ -378,7 +370,6 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
                     e.printStackTrace();
                 }
 
-//                mSwipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
@@ -410,14 +401,11 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
                         if (lst == null) {
                             lst = new ArrayList<>();
                         }
-                        Log.e("friend list size",""+lst.size());
                         if (lst.size() > 0) {
                             rv_friends.setVisibility(View.VISIBLE);
                             txt_serachfriend.setVisibility(View.GONE);
                             adapterfriend.updateList(lst);
-                        }
-                        else
-                        {
+                        } else {
                             rv_friends.setVisibility(View.GONE);
                             txt_serachfriend.setVisibility(View.VISIBLE);
                         }
