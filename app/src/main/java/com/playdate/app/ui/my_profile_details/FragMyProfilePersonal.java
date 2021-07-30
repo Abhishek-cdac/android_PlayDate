@@ -142,8 +142,9 @@ public class FragMyProfilePersonal extends Fragment implements View.OnClickListe
         try {
             SessionPref pref = SessionPref.getInstance(getActivity());
             email.setText(pref.getStringVal(SessionPref.LoginUseremail));
+            mobile = pref.getStringVal(SessionPref.LoginUserphoneNo);
             if (mobile != null) {
-                mobile = pref.getStringVal(SessionPref.LoginUserphoneNo);
+
                 String temp;
                 temp = mobile.substring(0, 3);
                 String temp1;

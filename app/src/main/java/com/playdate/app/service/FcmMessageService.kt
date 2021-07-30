@@ -25,7 +25,7 @@ import kotlin.random.nextInt
 class FcmMessageService : FirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
-        Log.e(TAG, "****Refreshed token: $token")
+       // Log.e(TAG, "****Refreshed token: $token")
         val pref = SessionPref.getInstance(this)
         pref.saveStringKeyVal(LoginUserFCMID, token)
     }
@@ -56,8 +56,8 @@ class FcmMessageService : FirebaseMessagingService() {
     fun rand(s: Int, e: Int) = Random.nextInt(s, e + 1)
     private fun sendNotification(messageBody: String, messageType: String) {
 
-        Log.e("messageBody", "" + messageBody);
-        Log.e("messageType", "" + messageType);
+//        Log.e("messageBody", "" + messageBody);
+//        Log.e("messageType", "" + messageType);
 
         val rand = rand(1, 3000)
 

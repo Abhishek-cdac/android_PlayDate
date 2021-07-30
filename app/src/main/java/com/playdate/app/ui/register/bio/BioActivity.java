@@ -1,25 +1,22 @@
 package com.playdate.app.ui.register.bio;
 
+import static com.playdate.app.util.session.SessionPref.LoginUserpersonalBio;
+
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
 
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
-import com.playdate.app.databinding.ActivityBioBinding;
 import com.playdate.app.model.LoginResponse;
-import com.playdate.app.ui.register.age_verification.AgeVerifiationActivity;
 import com.playdate.app.ui.register.profile.UploadProfileActivity;
-import com.playdate.app.ui.register.username.UserNameActivity;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
@@ -28,12 +25,11 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.playdate.app.util.session.SessionPref.LoginUserpersonalBio;
 
 
 public class BioActivity extends AppCompatActivity {
@@ -56,37 +52,24 @@ public class BioActivity extends AppCompatActivity {
             SessionPref pref = SessionPref.getInstance(this);
             viewModel.BioText.setValue(pref.getStringVal(LoginUserpersonalBio));
         }
-        viewModel.OnNextClick().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean click) {
-                if (null == viewModel.BioText.getValue()) {
-                    clsCommon.showDialogMsg(BioActivity.this, "PlayDate", "Enter your personal bio.", "Ok");
-                } else if (viewModel.BioText.getValue().trim().equals("")) {
-                    clsCommon.showDialogMsg(BioActivity.this, "PlayDate", "Enter your personal bio.", "Ok");
-                } else {
-//                    startActivity(new Intent(BioActivity.this, UploadProfileActivity
-//                            .class));
-                    callAPI();
-                }
-
-
+        viewModel.OnNextClick().observe(this, click -> {
+            if (null == viewModel.BioText.getValue()) {
+                clsCommon.showDialogMsg(BioActivity.this, "PlayDate", "Enter your personal bio.", "Ok");
+            } else if (viewModel.BioText.getValue().trim().equals("")) {
+                clsCommon.showDialogMsg(BioActivity.this, "PlayDate", "Enter your personal bio.", "Ok");
+            } else {
+                callAPI();
             }
+
+
         });
 
-        viewModel.onBackClick().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean click) {
-                finish();
-            }
-        });
+        viewModel.onBackClick().observe(this, click -> finish());
 
 
-        ll_bio_bg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("linear", "onClick:");
-                clsCommon.hideKeyboard(v,BioActivity.this);
-            }
+        ll_bio_bg.setOnClickListener(v -> {
+//                Log.d("linear", "onClick:");
+            clsCommon.hideKeyboard(v, BioActivity.this);
         });
     }
 
@@ -106,10 +89,10 @@ public class BioActivity extends AppCompatActivity {
         Call<LoginResponse> call = service.updateProfile("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<LoginResponse>() {
             @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+            public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
                 pd.cancel();
                 if (response.code() == 200) {
-                    if (response.body().getStatus() == 1) {
+                    if (Objects.requireNonNull(response.body()).getStatus() == 1) {
                         pref.saveStringKeyVal(LoginUserpersonalBio, bio);
 
                         if (mIntent.getBooleanExtra("fromProfile", false)) {
@@ -124,13 +107,12 @@ public class BioActivity extends AppCompatActivity {
                         }
 
 
-
                     } else {
                         clsCommon.showDialogMsg(BioActivity.this, "PlayDate", response.body().getMessage(), "Ok");
                     }
                 } else {
                     try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        JSONObject jObjError = new JSONObject(Objects.requireNonNull(response.errorBody()).string());
                         clsCommon.showDialogMsg(BioActivity.this, "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(BioActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
@@ -142,7 +124,7 @@ public class BioActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<LoginResponse> call, @NonNull Throwable t) {
                 t.printStackTrace();
                 pd.cancel();
                 Toast.makeText(BioActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();

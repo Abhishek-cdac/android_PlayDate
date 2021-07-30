@@ -33,7 +33,7 @@ public class DateBaseActivity extends AppCompatActivity implements OnInnerFragme
     }
 
     private void firstFrag() {
-        Log.d("FromChat", "firstFrag: " + fromChat);
+//        Log.d("FromChat", "firstFrag: " + fromChat);
         Fragment fragIntro;
         if (fromChat) {
             fragIntro = new FragSelectDates(true);

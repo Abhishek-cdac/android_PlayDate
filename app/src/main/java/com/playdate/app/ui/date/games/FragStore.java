@@ -3,7 +3,6 @@ package com.playdate.app.ui.date.games;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +28,6 @@ import com.playdate.app.ui.date.adapter.StoreDMAdapter;
 import com.playdate.app.ui.date.adapter.StoreDateCoinAdpter;
 import com.playdate.app.ui.date.adapter.StoreGameCoinAdapter;
 import com.playdate.app.ui.date.adapter.StoreMultiplierAdapter;
-import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
 
@@ -39,6 +37,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,21 +45,19 @@ import retrofit2.Response;
 
 public class FragStore extends Dialog {
 
-    ImageView cancel;
-    ImageView iv_leaderboard;
-    DashboardActivity ref;
-    List<StoreData> lst_store_data;
-    List<StoreAccountDetails> lst_store_account_detail;
-    List<StoreItems> game_items;
-    List<StoreItems> date_items;
-    List<StoreItems> multiplier_items;
-    List<StoreItems> dm_items;
-    private CommonClass clsCommon;
-    RecyclerView rv_game_coin;
-    RecyclerView rv_date_coin;
-    RecyclerView rv_multiplier;
-    RecyclerView rv_dm_booster;
-    private Onclick itemClick;
+    private final DashboardActivity ref;
+    private List<StoreData> lst_store_data;
+    private List<StoreAccountDetails> lst_store_account_detail;
+    private List<StoreItems> game_items;
+    private List<StoreItems> date_items;
+    private List<StoreItems> multiplier_items;
+    private List<StoreItems> dm_items;
+    //    private CommonClass clsCommon;
+    private final RecyclerView rv_game_coin;
+    private final RecyclerView rv_date_coin;
+    private final RecyclerView rv_multiplier;
+    private final RecyclerView rv_dm_booster;
+    private final Onclick itemClick;
 
     TextView totalPoints, date_coin, multi_coin, booster, date_coin1;
 
@@ -81,20 +78,20 @@ public class FragStore extends Dialog {
         setContentView(view);
         callgetStore(context);
 
-        clsCommon = CommonClass.getInstance();
+//        clsCommon = CommonClass.getInstance();
 
         ref = new DashboardActivity();
         rv_game_coin = view.findViewById(R.id.rv_game_coin);
         rv_date_coin = view.findViewById(R.id.rv_date_coin);
         rv_multiplier = view.findViewById(R.id.rv_multiplier);
         rv_dm_booster = view.findViewById(R.id.rv_dm_booster);
-        cancel = view.findViewById(R.id.cancel);
+        ImageView cancel = view.findViewById(R.id.cancel);
         totalPoints = view.findViewById(R.id.tv_position);
         multi_coin = view.findViewById(R.id.multi_coin);
         date_coin = view.findViewById(R.id.date_coin);
         booster = view.findViewById(R.id.booster);
         date_coin1 = view.findViewById(R.id.date_coin1);
-        iv_leaderboard = view.findViewById(R.id.iv_leaderboard);
+        ImageView iv_leaderboard = view.findViewById(R.id.iv_leaderboard);
 
 
         itemClick = new Onclick() {
@@ -124,27 +121,21 @@ public class FragStore extends Dialog {
             }
         };
 
-        iv_leaderboard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        iv_leaderboard.setOnClickListener(v -> {
 
-                ref.redirectToLeaderBoard();
+            ref.redirectToLeaderBoard();
 //                ref.ReplaceFragWithStack(new FragGameLeaderBoard());
 //                dismiss();
 
 //                OnInnerFragmentClicks frag = (OnInnerFragmentClicks) context;
 //                frag.ReplaceFrag(new FragGameLeaderBoard());
-                dismiss();
-            }
+            dismiss();
         });
 
 
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("CANCEL", "onClick: ");
-                dismiss();
-            }
+        cancel.setOnClickListener(v -> {
+//                Log.d("CANCEL", "onClick: ");
+            dismiss();
         });
 
     }
@@ -162,11 +153,11 @@ public class FragStore extends Dialog {
 
         call.enqueue(new Callback<StoreModel>() {
             @Override
-            public void onResponse(Call<StoreModel> call, Response<StoreModel> response) {
+            public void onResponse(@NonNull Call<StoreModel> call, @NonNull Response<StoreModel> response) {
                 pd.cancel();
                 if (response.code() == 200) {
                     try {
-                        if (response.body().getmStatus() == 1) {
+                        if (Objects.requireNonNull(response.body()).getmStatus() == 1) {
                             lst_store_data = response.body().getmData();
                             if (lst_store_data == null) {
                                 lst_store_data = new ArrayList<>();
@@ -177,12 +168,12 @@ public class FragStore extends Dialog {
                                 lst_store_account_detail = new ArrayList<>();
                             }
 
-                            totalPoints.setText(new StringBuilder().append(lst_store_account_detail.get(0).getCurrentPoints()).append(" points").toString());
-                            Log.e("CurrentPoints",""+ lst_store_account_detail.get(0).getCurrentPoints());
-                            multi_coin.setText(lst_store_account_detail.get(0).getMultiplayer() + " Multi's");
-                            date_coin.setText(lst_store_account_detail.get(0).getDateCoins() + " Coins");
-                            booster.setText(lst_store_account_detail.get(0).getDmBooster() + " DM's");
-                            date_coin1.setText(lst_store_account_detail.get(0).getDateCoins() + " Coins");
+                            totalPoints.setText((lst_store_account_detail.get(0).getCurrentPoints() + " points"));
+//                            Log.e("CurrentPoints", "" + lst_store_account_detail.get(0).getCurrentPoints());
+                            multi_coin.setText((lst_store_account_detail.get(0).getMultiplayer() + " Multi's"));
+                            date_coin.setText((lst_store_account_detail.get(0).getDateCoins() + " Coins"));
+                            booster.setText((lst_store_account_detail.get(0).getDmBooster() + " DM's"));
+                            date_coin1.setText((lst_store_account_detail.get(0).getDateCoins() + " Coins"));
 
                             for (int i = 0; i < lst_store_data.size(); i++) {
                                 switch (lst_store_data.get(i).getStoreType()) {
@@ -226,16 +217,16 @@ public class FragStore extends Dialog {
                     }
                 } else {
                     try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        JSONObject jObjError = new JSONObject(Objects.requireNonNull(response.errorBody()).string());
                         Toast.makeText(context, jObjError.getString("message"), Toast.LENGTH_SHORT).show();
-                        } catch (Exception e) {
+                    } catch (Exception e) {
                         Toast.makeText(context, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
 
             @Override
-            public void onFailure(Call<StoreModel> call, Throwable t) {
+            public void onFailure(@NonNull Call<StoreModel> call, @NonNull Throwable t) {
                 pd.cancel();
                 t.printStackTrace();
                 Toast.makeText(context, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
