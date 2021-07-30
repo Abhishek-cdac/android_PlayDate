@@ -1,5 +1,13 @@
 package com.playdate.app.ui.dashboard;
 
+import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
+import static com.playdate.app.ui.register.profile.UploadProfileActivity.ALL_PERMISSIONS_RESULT;
+import static com.playdate.app.ui.register.profile.UploadProfileActivity.PICK_PHOTO_FOR_AVATAR;
+import static com.playdate.app.ui.register.profile.UploadProfileActivity.REQUEST_TAKE_GALLERY_VIDEO;
+import static com.playdate.app.ui.register.profile.UploadProfileActivity.TAKE_PHOTO_CODE;
+import static com.playdate.app.util.session.SessionPref.CompleteProfile;
+import static com.playdate.app.util.session.SessionPref.LoginUserFCMID;
+
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -68,20 +76,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import io.card.payment.CardIOActivity;
 import io.card.payment.CreditCard;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
-import static com.playdate.app.ui.register.profile.UploadProfileActivity.ALL_PERMISSIONS_RESULT;
-import static com.playdate.app.ui.register.profile.UploadProfileActivity.PICK_PHOTO_FOR_AVATAR;
-import static com.playdate.app.ui.register.profile.UploadProfileActivity.REQUEST_TAKE_GALLERY_VIDEO;
-import static com.playdate.app.ui.register.profile.UploadProfileActivity.TAKE_PHOTO_CODE;
-import static com.playdate.app.util.session.SessionPref.CompleteProfile;
-import static com.playdate.app.util.session.SessionPref.LoginUserFCMID;
 
 public class DashboardActivity extends BaseActivity implements OnInnerFragmentClicks, View.OnClickListener, OnProfilePhotoChageListerner, OnFriendSelected, OnAPIResponce {
 
@@ -290,7 +291,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
                 try {
 
                     if (response.code() == 200) {
-                        if (response.body().getStatus() == 1) {
+                        if (Objects.requireNonNull(response.body()).getStatus() == 1) {
                             lstPremium = response.body().getLstPremiumPlan();
                             showPremium(lstPremium.get(0));
                         }
@@ -341,20 +342,20 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
                         assert response.body() != null;
                         if (response.body().getStatus() == 1) {
                             int countNotification = response.body().getData().get(0).getTotalUnreadNotification();
-
+                            txt_count.setVisibility(View.VISIBLE);
 
                             if (countNotification > 0 && countNotification <= 9) {
-                                txt_count.setVisibility(View.VISIBLE);
+//                                txt_count.setVisibility(View.VISIBLE);
                                 txt_count.setPadding(10, 0, 10, 0); //1-9
-                                txt_count.setText("" + countNotification);
+                                txt_count.setText(("" + countNotification));
 
                             } else if (countNotification > 9 && countNotification <= 99) {
-                                txt_count.setVisibility(View.VISIBLE);
+//                                txt_count.setVisibility(View.VISIBLE);
                                 txt_count.setPadding(6, 2, 7, 2);  ///10-99
-                                txt_count.setText("" + countNotification);
+                                txt_count.setText(("" + countNotification));
 
                             } else if (countNotification > 99) {
-                                txt_count.setVisibility(View.VISIBLE);
+//                                txt_count.setVisibility(View.VISIBLE);
                                 txt_count.setTextSize(8);
                                 txt_count.setPadding(5, 3, 5, 3);  ///99+
                                 txt_count.setText("99+");

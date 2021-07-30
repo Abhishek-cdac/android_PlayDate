@@ -1,5 +1,7 @@
 package com.playdate.app.ui.dashboard;
 
+import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -38,8 +40,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
-
 public class FragInstaLikeProfileBusiness extends Fragment implements onPhotoClick, View.OnClickListener {
 
     private ImageView profile_image;
@@ -65,14 +65,8 @@ public class FragInstaLikeProfileBusiness extends Fragment implements onPhotoCli
         pref = SessionPref.getInstance(getActivity());
         picasso = Picasso.get();
         ratingbar = view.findViewById(R.id.ratingBar);
-        ratingbar.setOnRatingBarChangeListener(new
-                                                       RatingBar.OnRatingBarChangeListener() {
-                                                           @Override
-                                                           public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                                                               Toast.makeText(getActivity(), "Rating: " +
-                                                                       (int) rating, Toast.LENGTH_SHORT).show();
-                                                           }
-                                                       });
+        ratingbar.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> Toast.makeText(getActivity(), "Rating: " +
+                (int) rating, Toast.LENGTH_SHORT).show());
 //        ratingbar.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
