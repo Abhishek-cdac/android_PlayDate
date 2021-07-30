@@ -14,23 +14,16 @@ import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 
 public class DashboardBusiness extends AppCompatActivity implements OnInnerFragmentClicks {
 
-    Fragment CurrentFrag;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard_business);
-//        LinearLayout ll_coupon = findViewById(R.id.ll_coupon);
-
-        Fragment fragOne;
-        fragOne = new FragCouponParentBusiness();
-        ReplaceFrag(fragOne);
+        ReplaceFrag(new FragCouponParentBusiness());
     }
 
     @Override
     public void ReplaceFrag(Fragment fragment) {
         try {
-            CurrentFrag = fragment;
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction ft = fragmentManager.beginTransaction();
             if (fragmentManager.getFragments().size() > 0) {

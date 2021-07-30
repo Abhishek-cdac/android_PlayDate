@@ -27,7 +27,7 @@ public class TinderSwipeCallback extends DiffUtil.Callback {
 
     @Override
     public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-        return old.get(oldItemPosition).getProfilePicPath() == newList.get(newItemPosition).getProfilePicPath();
+        return old.get(oldItemPosition).getProfilePicPath().equals(newList.get(newItemPosition).getProfilePicPath());
     }
 
     @Override

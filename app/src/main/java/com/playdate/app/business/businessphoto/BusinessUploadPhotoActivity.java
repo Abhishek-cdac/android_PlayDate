@@ -1,14 +1,16 @@
 package com.playdate.app.business.businessphoto;
 
+import static com.playdate.app.util.session.SessionPref.LoginUserBusinessImage;
+
 import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -21,7 +23,6 @@ import com.playdate.app.databinding.ActivityUploadBusinessPhotoBinding;
 import com.playdate.app.model.LoginResponse;
 import com.playdate.app.model.LoginUserDetails;
 import com.playdate.app.ui.dashboard.DashboardActivity;
-import com.playdate.app.ui.register.interest.InterestActivity;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
@@ -30,6 +31,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Objects;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -38,19 +40,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
-import static com.playdate.app.util.session.SessionPref.LoginUserBusinessImage;
-import static com.playdate.app.util.session.SessionPref.LoginUserprofilePic;
-
 public class BusinessUploadPhotoActivity extends AppCompatActivity {
 
     private ActivityUploadBusinessPhotoBinding binding;
     public final static int ALL_PERMISSIONS_RESULT = 107;
     public final static int PICK_PHOTO_FOR_AVATAR = 150;
     public final static int TAKE_PHOTO_CODE = 0;
-//    public final static int REQUEST_TAKE_GALLERY_VIDEO = 200;
     private Intent mIntent;
-    private ImageView dummyimage;
+    private ImageView dummyImage;
 
 
     @Override
@@ -61,12 +58,9 @@ public class BusinessUploadPhotoActivity extends AppCompatActivity {
         binding.setLifecycleOwner(this);
         binding.setBusinessUploadPhotoViewModel(viewModel);
 
-        viewModel.OnNextClick().observe(this, click -> {
-            uploadImage();
+        viewModel.OnNextClick().observe(this, click -> uploadImage());
 
-        });
-
-        dummyimage = findViewById(R.id.dummyimage);
+        dummyImage = findViewById(R.id.dummyimage);
 
         viewModel.onBackClick().observe(this, click -> finish());
         viewModel.onGalleryClick().observe(this, click -> {
@@ -118,7 +112,7 @@ public class BusinessUploadPhotoActivity extends AppCompatActivity {
             byte[] bitmapdata = bos.toByteArray();
 
 //write the bytes in file
-            FileOutputStream fos = null;
+            FileOutputStream fos;
 
             fos = new FileOutputStream(f);
 
@@ -137,11 +131,11 @@ public class BusinessUploadPhotoActivity extends AppCompatActivity {
         Call<LoginResponse> call = service.addBusinessImage("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), filePart);
         call.enqueue(new Callback<LoginResponse>() {
             @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+            public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
                 pd.dismiss();
                 if (response.code() == 200) {
 
-                    LoginUserDetails user = response.body().getUserData();
+                    LoginUserDetails user = Objects.requireNonNull(response.body()).getUserData();
                     pref.saveStringKeyVal(LoginUserBusinessImage, user.getBusinessImage());
 
                     if (mIntent.getBooleanExtra("fromProfile", false)) {
@@ -165,7 +159,7 @@ public class BusinessUploadPhotoActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<LoginResponse> call, @NonNull Throwable t) {
                 t.printStackTrace();
                 pd.dismiss();
             }
@@ -183,21 +177,6 @@ public class BusinessUploadPhotoActivity extends AppCompatActivity {
 
     public void openCamera() {
         try {
-            final String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/picFolder/";
-//            Uri outputFileUri = FileProvider.getUriForFile(UploadProfileActivity.this, BuildConfig.APPLICATION_ID, newfile);
-
-//            File newdir = new File(dir);
-//            newdir.mkdirs();
-//
-//            count++;
-//            String file = dir + count + ".jpg";
-//            newfile = new File(file);
-//            try {
-//                newfile.createNewFile();
-//            } catch (IOException e) {
-//            }
-
-            //Uri outputFileUri = Uri.fromFile(newfile);
 
             Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 //            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
@@ -232,7 +211,7 @@ public class BusinessUploadPhotoActivity extends AppCompatActivity {
 
                 if (null != bitmap) {
                     binding.profileImage.setImageBitmap(bitmap);
-                    dummyimage.setVisibility(View.GONE);
+                    dummyImage.setVisibility(View.GONE);
                     showChange();
                 }
 
@@ -252,7 +231,7 @@ public class BusinessUploadPhotoActivity extends AppCompatActivity {
 
                 if (null != bitmap) {
                     binding.profileImage.setImageBitmap(bitmap);
-                    dummyimage.setVisibility(View.GONE);
+                    dummyImage.setVisibility(View.GONE);
                     showChange();
                 }
 

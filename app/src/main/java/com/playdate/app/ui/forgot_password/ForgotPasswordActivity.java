@@ -23,6 +23,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -106,7 +107,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 pd.cancel();
                 if (response.code() == 200) {
-                    if (response.body().getStatus() == 1) {
+                    if (Objects.requireNonNull(response.body()).getStatus() == 1) {
 
                         clsCommon.showDialogMsg(ForgotPasswordActivity.this, "PlayDate", "Password changed success!", "Ok");
                         finish();
@@ -151,7 +152,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 pd.cancel();
                 if (response.code() == 200) {
-                    if (response.body().getStatus() == 1) {
+                    if (Objects.requireNonNull(response.body()).getStatus() == 1) {
 
                         clsCommon.showDialogMsg(ForgotPasswordActivity.this, "PlayDate", "Password changed success!", "Ok");
                         finish();

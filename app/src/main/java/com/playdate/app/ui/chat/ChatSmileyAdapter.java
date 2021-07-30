@@ -13,6 +13,7 @@ import com.playdate.app.R;
 import java.util.ArrayList;
 
 public class ChatSmileyAdapter extends RecyclerView.Adapter<ChatSmileyAdapter.ViewHolder> {
+
     private final ArrayList<Integer> list;
     private final ChatMainActivity chatMainActivity;
 

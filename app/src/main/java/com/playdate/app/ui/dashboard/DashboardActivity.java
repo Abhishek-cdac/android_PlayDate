@@ -23,8 +23,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.widget.NestedScrollView;
@@ -78,13 +78,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import io.card.payment.CardIOActivity;
-import io.card.payment.CreditCard;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DashboardActivity extends BaseActivity implements OnInnerFragmentClicks, View.OnClickListener, OnProfilePhotoChageListerner, OnFriendSelected, OnAPIResponce {
+public class DashboardActivity extends BaseActivity implements OnInnerFragmentClicks, View.OnClickListener, OnProfilePhotoChangeListerner, OnFriendSelected, OnAPIResponse {
 
     private TextView txt_match;
     private TextView txt_social;
@@ -105,7 +103,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
     private LinearLayout ll_mainMenu2;
     private RecyclerView rv_friends;
     private SwipeRefreshLayout mSwipeRefreshLayout;
-    private FriendAdapter adapterfriend;
+    private FriendAdapter friendsAdapter;
     private Fragment CurrentFrag;
     private NestedScrollView nsv;
     private FragInstaLikeProfile profile;
@@ -169,8 +167,8 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
 
 
         RecyclerView.LayoutManager manager = new LinearLayoutManager(DashboardActivity.this, RecyclerView.HORIZONTAL, false);
-        adapterfriend = new FriendAdapter(new ArrayList<>(), DashboardActivity.this);
-        rv_friends.setAdapter(adapterfriend);
+        friendsAdapter = new FriendAdapter(new ArrayList<>(), DashboardActivity.this);
+        rv_friends.setAdapter(friendsAdapter);
         rv_friends.setLayoutManager(manager);
 
 
@@ -287,7 +285,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
         Call<Premium> call = service.getPackages("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<Premium>() {
             @Override
-            public void onResponse(Call<Premium> call, Response<Premium> response) {
+            public void onResponse(@NonNull Call<Premium> call, @NonNull Response<Premium> response) {
                 try {
 
                     if (response.code() == 200) {
@@ -304,7 +302,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
             }
 
             @Override
-            public void onFailure(Call<Premium> call, Throwable t) {
+            public void onFailure(@NonNull Call<Premium> call, @NonNull Throwable t) {
                 t.printStackTrace();
             }
         });
@@ -316,7 +314,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(task -> {
                     if (!task.isSuccessful()) {
-                        Log.w("******", "Fetching FCM registration token failed", task.getException());
+//                        Log.w("******", "Fetching FCM registration token failed", task.getException());
                         return;
                     }
                     String token = task.getResult();
@@ -335,7 +333,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
         Call<NotificationCountModel> call = service.getNotificationCount("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<NotificationCountModel>() {
             @Override
-            public void onResponse(Call<NotificationCountModel> call, Response<NotificationCountModel> response) {
+            public void onResponse(@NonNull Call<NotificationCountModel> call, @NonNull Response<NotificationCountModel> response) {
                 try {
 
                     if (response.code() == 200) {
@@ -358,7 +356,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
 //                                txt_count.setVisibility(View.VISIBLE);
                                 txt_count.setTextSize(8);
                                 txt_count.setPadding(5, 3, 5, 3);  ///99+
-                                txt_count.setText("99+");
+                                txt_count.setText(R.string.str_99);
 
                             } else {
                                 txt_count.setVisibility(View.GONE);
@@ -374,7 +372,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
             }
 
             @Override
-            public void onFailure(Call<NotificationCountModel> call, Throwable t) {
+            public void onFailure(@NonNull Call<NotificationCountModel> call, @NonNull Throwable t) {
                 t.printStackTrace();
             }
         });
@@ -394,7 +392,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
         Call<FriendsListModel> call = service.getFriendsList("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<FriendsListModel>() {
             @Override
-            public void onResponse(Call<FriendsListModel> call, Response<FriendsListModel> response) {
+            public void onResponse(@NonNull Call<FriendsListModel> call, @NonNull Response<FriendsListModel> response) {
                 if (response.code() == 200) {
                     assert response.body() != null;
                     if (response.body().getStatus() == 1) {
@@ -405,7 +403,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
                         if (lst.size() > 0) {
                             rv_friends.setVisibility(View.VISIBLE);
                             txt_serachfriend.setVisibility(View.GONE);
-                            adapterfriend.updateList(lst);
+                            friendsAdapter.updateList(lst);
                         } else {
                             rv_friends.setVisibility(View.GONE);
                             txt_serachfriend.setVisibility(View.VISIBLE);
@@ -416,7 +414,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
             }
 
             @Override
-            public void onFailure(Call<FriendsListModel> call, Throwable t) {
+            public void onFailure(@NonNull Call<FriendsListModel> call, @NonNull Throwable t) {
                 t.printStackTrace();
             }
         });
@@ -833,10 +831,10 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
             if (OPTION_CLICK == 3) {
                 iv_plus.setVisibility(View.VISIBLE);
             }
-            if (requestCode == 857) {
+//            if (requestCode == 857) {
 
-                if (data != null && data.hasExtra(CardIOActivity.EXTRA_SCAN_RESULT)) {
-                    CreditCard scanResult = data.getParcelableExtra(CardIOActivity.EXTRA_SCAN_RESULT);
+//                if (data != null && data.hasExtra(CardIOActivity.EXTRA_SCAN_RESULT)) {
+//                    CreditCard scanResult = data.getParcelableExtra(CardIOActivity.EXTRA_SCAN_RESULT);
 
 //                    if (scanResult.isExpiryValid()) {
 //                        scanResult.expiryMonth;
@@ -856,11 +854,11 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
 //                    }
 
 
-                } else {
-                    Toast.makeText(this, "Scan was cancelled", Toast.LENGTH_SHORT).show();
-                }
-                return;
-            }
+//                } else {
+//                    Toast.makeText(this, "Scan was cancelled", Toast.LENGTH_SHORT).show();
+//                }
+//                return;
+//            }
 
 
             if (resultCode == 104) {
@@ -978,27 +976,27 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
     }
 
     @Override
-    public void OnSingleFriendSelected(String Id, String FreindID) {
+    public void onSingleFriendSelected(String Id, String FreindID) {
         ll_friends.setVisibility(View.GONE);
         ll_option_love.setVisibility(View.GONE);
         ReplaceFragWithStack(new FragInstaLikeProfileFriends(true, Id, FreindID));
     }
 
     @Override
-    public void OnFrinedDataClosed() {
+    public void onFrinedDataClosed() {
         ll_friends.setVisibility(View.VISIBLE);
         ll_option_love.setVisibility(View.VISIBLE);
         ReplaceFrag(new FragSocialFeed());
     }
 
     @Override
-    public void OnSuggestionClosed() {
+    public void onSuggestionClosed() {
         ShowMainMenuWithFriends();
         ReplaceFrag(new FragSocialFeed());
     }
 
     @Override
-    public void OnSuggestionClosed(boolean isFriend, String id) {
+    public void onSuggestionClosed(boolean isFriend, String id) {
         ll_friends.setVisibility(View.GONE);
         ll_mainMenu.setVisibility(View.VISIBLE);
         ll_option_love.setVisibility(View.GONE);
@@ -1050,7 +1048,7 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
     }
 
     @Override
-    public void setNotiCount(int count) {
+    public void setNotificationCount(int count) {
        /* if (count > 0) {
             txt_count.setVisibility(View.VISIBLE);
             txt_count.setText("" + count);

@@ -2,7 +2,6 @@ package com.playdate.app.ui.dashboard.more_suggestion;
 
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,6 @@ import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.CommonModel;
-
 import com.playdate.app.model.GetUserSuggestion;
 import com.playdate.app.model.GetUserSuggestionData;
 import com.playdate.app.ui.chat.request.Onclick;
@@ -32,6 +30,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -66,7 +65,7 @@ public class FragSuggested extends Fragment {
             }
 
             @Override
-            public void onItemClicks(View v, int adapterPosition, int i, String notifiationId, String userId) {
+            public void onItemClicks(View v, int adapterPosition, int i, String notificationId, String userId) {
 
             }
 
@@ -91,17 +90,17 @@ public class FragSuggested extends Fragment {
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("toUserID", toUserID);
         SessionPref pref = SessionPref.getInstance(getActivity());
-        Log.e("CommonModel", "" + pref.getStringVal(SessionPref.LoginUsertoken));
+//        Log.e("CommonModel", "" + pref.getStringVal(SessionPref.LoginUsertoken));
 
         Call<CommonModel> call = service.addFriendRequest("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
-        Log.e("CommonModelData", "" + hashMap);
+//        Log.e("CommonModelData", "" + hashMap);
         call.enqueue(new Callback<CommonModel>() {
             @Override
-            public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
+            public void onResponse(@NonNull Call<CommonModel> call, @NonNull Response<CommonModel> response) {
             }
 
             @Override
-            public void onFailure(Call<CommonModel> call, Throwable t) {
+            public void onFailure(@NonNull Call<CommonModel> call, @NonNull Throwable t) {
                 t.printStackTrace();
             }
         });
@@ -118,13 +117,13 @@ public class FragSuggested extends Fragment {
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
         pd.show();
         SessionPref pref = SessionPref.getInstance(getActivity());
-        Log.e("GetUserSuggestionData", "" + pref.getStringVal(SessionPref.LoginUsertoken));
+//        Log.e("GetUserSuggestionData", "" + pref.getStringVal(SessionPref.LoginUsertoken));
 
         Call<GetUserSuggestion> call = service.getUserSuggestion("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
-        Log.e("GetUserSuggestionData", "" + hashMap);
+//        Log.e("GetUserSuggestionData", "" + hashMap);
         call.enqueue(new Callback<GetUserSuggestion>() {
             @Override
-            public void onResponse(Call<GetUserSuggestion> call, Response<GetUserSuggestion> response) {
+            public void onResponse(@NonNull Call<GetUserSuggestion> call, @NonNull Response<GetUserSuggestion> response) {
                 pd.cancel();
                 if (response.code() == 200) {
                     assert response.body() != null;
@@ -135,12 +134,12 @@ public class FragSuggested extends Fragment {
                         }
                         RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
                         recyclerView.setLayoutManager(manager);
-                        SuggestedFriendAdapter adapter = new SuggestedFriendAdapter(lst_getUserSuggestions, itemClick,null);
+                        SuggestedFriendAdapter adapter = new SuggestedFriendAdapter(lst_getUserSuggestions, itemClick, null);
                         recyclerView.setAdapter(adapter);
                     }
                 } else {
                     try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        JSONObject jObjError = new JSONObject(Objects.requireNonNull(response.errorBody()).string());
                         clsCommon.showDialogMsgFrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
@@ -150,7 +149,7 @@ public class FragSuggested extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<GetUserSuggestion> call, Throwable t) {
+            public void onFailure(@NonNull Call<GetUserSuggestion> call, @NonNull Throwable t) {
                 t.printStackTrace();
                 pd.cancel();
                 Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();

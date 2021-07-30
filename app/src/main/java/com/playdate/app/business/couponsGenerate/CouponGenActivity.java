@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -61,14 +60,9 @@ public class CouponGenActivity extends AppCompatActivity implements AdapterView.
     private TextView addImage;
     private String awardedByStr;
     private final String[] awardedBy = {"Game Winner", "Game Loser", "Level"};
-    //    private Calendar date;
-//    private String formateDate;
     private LinearLayout ll_camera_option;
     private ImageView camera;
     private ImageView restaurent_img;
-//    String couponId, couponTitleUpdate;
-//    Bundle bundle;
-//    String level;
 
     @Override
     protected void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -141,7 +135,7 @@ public class CouponGenActivity extends AppCompatActivity implements AdapterView.
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, R.style.TimePickerTheme,
 
                 (view, year, monthOfYear, dayOfMonth) -> {
-                    String text=year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
+                    String text = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
                     availabilityDays.setText(text);
                 }, mYear, mMonth, mDay);
 

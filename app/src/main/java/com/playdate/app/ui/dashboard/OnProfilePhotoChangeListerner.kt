@@ -1,5 +1,5 @@
 package com.playdate.app.ui.dashboard
 
-interface OnProfilePhotoChageListerner {
+interface OnProfilePhotoChangeListerner {
     fun updateImage()
 }

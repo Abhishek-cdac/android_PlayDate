@@ -25,7 +25,7 @@ public class AnonymousMedalDialog extends Dialog {
         setOnCancelListener(null);
         View view = LayoutInflater.from(context).inflate(
                 R.layout.dialog_perfect_answer_anonymous, null);
-        View medal = view.findViewById(R.id.medal);
+//        View medal = view.findViewById(R.id.medal);
 //        View view = LayoutInflater.from(context).inflate(
 //                R.layout.dialog_winner, null);
 //        View view = LayoutInflater.from(context).inflate(

@@ -31,7 +31,7 @@ import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.GetProfileDetails;
 import com.playdate.app.model.GetProileDetailData;
 import com.playdate.app.ui.blockuser.BlockUserActivity;
-import com.playdate.app.ui.dashboard.OnProfilePhotoChageListerner;
+import com.playdate.app.ui.dashboard.OnProfilePhotoChangeListerner;
 import com.playdate.app.ui.forgot_password.ForgotPasswordActivity;
 import com.playdate.app.ui.login.LoginActivity;
 import com.playdate.app.ui.register.age_verification.AgeVerifiationActivity;
@@ -323,7 +323,7 @@ public class FragBusinessProfile extends Fragment implements View.OnClickListene
         super.onActivityResult(requestCode, resultCode, data);
         try {
             setValues();
-            OnProfilePhotoChageListerner inf = (OnProfilePhotoChageListerner) getActivity();
+            OnProfilePhotoChangeListerner inf = (OnProfilePhotoChangeListerner) getActivity();
             inf.updateImage();
         } catch (Exception e) {
             e.printStackTrace();

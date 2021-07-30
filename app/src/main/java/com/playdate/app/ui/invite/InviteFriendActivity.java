@@ -12,12 +12,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.playdate.app.R;
 
 public class InviteFriendActivity extends AppCompatActivity implements View.OnClickListener {
-    String inviteCode, inviteLink;
+
+    private String inviteLink;
+
     @Override
     protected void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_invite_friend);
-        inviteCode = getIntent().getStringExtra("inviteCode");
+        String inviteCode = getIntent().getStringExtra("inviteCode");
         inviteLink = getIntent().getStringExtra("inviteLink");
 
         ImageView whtasapp_coupan = findViewById(R.id.whtasapp_coupan);
@@ -40,7 +42,7 @@ public class InviteFriendActivity extends AppCompatActivity implements View.OnCl
             Intent share = new Intent(Intent.ACTION_SEND);
             share.setType("text/plain");
             share.setPackage("com.facebook.katana"); //Facebook App package
-            share.putExtra(Intent.EXTRA_TEXT,  inviteLink);
+            share.putExtra(Intent.EXTRA_TEXT, inviteLink);
             startActivity(Intent.createChooser(share, "Playdate"));
         }
         if (id == R.id.message_coupan) {

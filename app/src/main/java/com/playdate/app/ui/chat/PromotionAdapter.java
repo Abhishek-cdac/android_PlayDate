@@ -1,6 +1,5 @@
 package com.playdate.app.ui.chat;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +14,7 @@ import java.util.ArrayList;
 
 public class PromotionAdapter extends RecyclerView.Adapter<PromotionAdapter.ViewHolder> {
 
-    ArrayList<String> lst;
-    Context mContext;
+    private final ArrayList<String> lst;
 
     public PromotionAdapter(ArrayList<String> lst) {
         this.lst = lst;
@@ -26,7 +24,7 @@ public class PromotionAdapter extends RecyclerView.Adapter<PromotionAdapter.View
     @Override
     public PromotionAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_promotion, parent, false);
-        mContext = parent.getContext();
+//        Context mContext = parent.getContext();
         return new ViewHolder(view);
     }
 
@@ -40,8 +38,8 @@ public class PromotionAdapter extends RecyclerView.Adapter<PromotionAdapter.View
         return lst.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tv_promotion1;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        private final TextView tv_promotion1;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

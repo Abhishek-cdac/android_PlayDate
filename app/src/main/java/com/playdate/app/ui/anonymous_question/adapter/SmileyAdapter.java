@@ -1,6 +1,5 @@
 package com.playdate.app.ui.anonymous_question.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +17,9 @@ import java.util.ArrayList;
 public class SmileyAdapter extends RecyclerView.Adapter<SmileyAdapter.ViewHolder> {
 
 
-    Context mContext;
-    ArrayList<Integer> lst;
-    AnoQuesCreateActivity ref;
+    //    private Context mContext;
+    private final ArrayList<Integer> lst;
+    private final AnoQuesCreateActivity ref;
 
     public SmileyAdapter(ArrayList<Integer> lst, AnoQuesCreateActivity anoQuesCreateActivity) {
         this.lst = lst;
@@ -31,7 +30,7 @@ public class SmileyAdapter extends RecyclerView.Adapter<SmileyAdapter.ViewHolder
     @Override
     public SmileyAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_smiley_sel, parent, false);
-        mContext = parent.getContext();
+//        mContext = parent.getContext();
         return new SmileyAdapter.ViewHolder(view);
     }
 
@@ -53,7 +52,7 @@ public class SmileyAdapter extends RecyclerView.Adapter<SmileyAdapter.ViewHolder
             super(itemView);
             ll_color = itemView.findViewById(R.id.ll_color);
             txt_emo = itemView.findViewById(R.id.txt_emo);
-            itemView.setOnClickListener(view -> ref.onSmileySelect(getAdapterPosition()));
+            itemView.setOnClickListener(view -> ref.onSmileySelect(getBindingAdapterPosition()));
         }
     }
 }

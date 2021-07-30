@@ -36,11 +36,11 @@ public class FragPremium1 extends Fragment {
         iv_close.setOnClickListener(v -> fragInvite.closePremium());
         Button getNowButton = view.findViewById(R.id.login_button);
         getNowButton.setOnClickListener(v -> fragInvite.closePremium());
-        RecyclerView recy_premiun = view.findViewById(R.id.recy_premiun);
+        RecyclerView recycler_premium = view.findViewById(R.id.recy_premiun);
         PremiumAdapter adapter = new PremiumAdapter(premiumPlans.getLst_packageDescription(), 1);
         LinearLayoutManager maLinearLayout = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
-        recy_premiun.setLayoutManager(maLinearLayout);
-        recy_premiun.setAdapter(adapter);
+        recycler_premium.setLayoutManager(maLinearLayout);
+        recycler_premium.setAdapter(adapter);
         return view;
     }
 }

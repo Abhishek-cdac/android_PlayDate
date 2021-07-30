@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -73,22 +74,22 @@ public class FullScreenView extends AppCompatActivity {
         Call<CommonModel> call = service.addUserMatchRequest("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<CommonModel>() {
             @Override
-            public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
+            public void onResponse(@NonNull Call<CommonModel> call, @NonNull Response<CommonModel> response) {
 
 //                pd.cancel();
-                if (response.code() == 200) {
-                    if (response.body().getStatus() == 1) {
-                        Log.d("Response", "onResponse1: " + response.body().getMessage());
-                    }
-                } else {
-                    try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        Log.d("Response", "onResponseJobj: " + jObjError.getString("message"));
-//                        clsCommon.showDialogMsgfrag(FullScreenView.this, "PlayDate", jObjError.getString("message"), "Ok");
-                    } catch (Exception e) {
-                        Toast.makeText(FullScreenView.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-                    }
-                }
+//                if (response.code() == 200) {
+//                    if (response.body().getStatus() == 1) {
+////                        Log.d("Response", "onResponse1: " + response.body().getMessage());
+//                    }
+//                } else {
+//                    try {
+//                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+////                        Log.d("Response", "onResponseJobj: " + jObjError.getString("message"));
+////                        clsCommon.showDialogMsgfrag(FullScreenView.this, "PlayDate", jObjError.getString("message"), "Ok");
+//                    } catch (Exception e) {
+//                        Toast.makeText(FullScreenView.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
                 finish();
             }
 

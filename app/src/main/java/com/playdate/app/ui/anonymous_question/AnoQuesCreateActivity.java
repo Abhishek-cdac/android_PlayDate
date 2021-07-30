@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -80,11 +81,6 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
     }
 
 
-    public String getEmoticon(int originalUnicode) {
-        return new String(Character.toChars(originalUnicode));
-    }
-
-
     public void CreateList() {
 
         lst.add("#D13A6F");
@@ -131,15 +127,10 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
         } else if (id == R.id.more_option) {
             showModel();
         } else if (id == R.id.txt_post_comments) {
-            // postQues();
             callAPIFeedPost();
         }
     }
 
-//    private void postQues() {
-//        setResult(100, null);
-//        finish();
-//    }
 
     private void showModel() {
         try {
@@ -168,7 +159,7 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
             Call<LoginResponse> call = service.addPostFeed("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
             call.enqueue(new Callback<LoginResponse>() {
                 @Override
-                public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
                     pd.cancel();
                     if (response.code() == 200) {
                         assert response.body() != null;
@@ -186,7 +177,7 @@ public class AnoQuesCreateActivity extends AppCompatActivity implements OnColorC
                 }
 
                 @Override
-                public void onFailure(Call<LoginResponse> call, Throwable t) {
+                public void onFailure(@NonNull Call<LoginResponse> call, @NonNull Throwable t) {
                     t.printStackTrace();
                     pd.cancel();
                 }

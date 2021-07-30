@@ -39,21 +39,21 @@ public class WinnerActivity extends Dialog {
 
 
         if (rank.equals("1")) {
-            txt_points.setText("+" + points);
+            txt_points.setText(("+" + points));
             center.setVisibility(View.VISIBLE);
             img_medal.setImageResource(R.drawable.medal);
-            txt_winner.setText("Winner!");
-            txt_ans.setText("You answered first!");
+            txt_winner.setText(R.string.str_winner);
+            txt_ans.setText(R.string.str_you_win);
         } else if (rank.equals("2")) {
-            txt_points.setText("+" + points);
+            txt_points.setText(("+" + points));
             img_medal.setImageResource(R.drawable.medal_second);
-            txt_winner.setText("Not Bad!");
-            txt_ans.setText("You answered second!");
+            txt_winner.setText(R.string.str_not_bad);
+            txt_ans.setText(R.string.str_you_second);
         } else {
             txt_points.setText(points);
             img_medal.setImageResource(R.drawable.brokenheart);
-            txt_winner.setText("Nice Try!");
-            txt_ans.setText("You answered wrong!");
+            txt_winner.setText(R.string.str_nice_try);
+            txt_ans.setText(R.string.str_you_ans);
         }
         iv_close.setOnClickListener(view1 -> dismiss());
     }

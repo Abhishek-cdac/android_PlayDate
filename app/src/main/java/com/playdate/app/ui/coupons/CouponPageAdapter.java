@@ -7,9 +7,9 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import org.jetbrains.annotations.NotNull;
 
-public class CoupounPageAdapter extends FragmentPagerAdapter {
+public class CouponPageAdapter extends FragmentPagerAdapter {
 
-    public CoupounPageAdapter(@NonNull @NotNull FragmentManager fm) {
+    public CouponPageAdapter(@NonNull @NotNull FragmentManager fm) {
         super(fm);
     }
 

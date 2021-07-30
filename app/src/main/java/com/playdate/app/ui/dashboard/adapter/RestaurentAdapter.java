@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.playdate.app.R;
 import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.ui.coupons.DialogSelectedRestaurant;
-import com.playdate.app.ui.dashboard.fragments.FragmentSearchRestaurent;
+import com.playdate.app.ui.dashboard.fragments.FragmentSearchRestaurant;
 import com.playdate.app.ui.restaurant.adapter.Restaurant;
 import com.squareup.picasso.Picasso;
 
@@ -28,10 +28,10 @@ public class RestaurentAdapter extends RecyclerView.Adapter<RestaurentAdapter.Vi
     private final List<Restaurant> restaurant_list;
     private List<Restaurant> restaurantListFiltered;
     private final Onclick itemClick;
-    private final FragmentSearchRestaurent userFrag;
+    private final FragmentSearchRestaurant userFrag;
     private final Picasso picasso;
 
-    public RestaurentAdapter(ArrayList<Restaurant> lst_getUserSuggestions, Onclick itemClick, FragmentSearchRestaurent userFrag) {
+    public RestaurentAdapter(ArrayList<Restaurant> lst_getUserSuggestions, Onclick itemClick, FragmentSearchRestaurant userFrag) {
         this.restaurant_list = lst_getUserSuggestions;
         this.restaurantListFiltered = lst_getUserSuggestions;
         this.itemClick = itemClick;

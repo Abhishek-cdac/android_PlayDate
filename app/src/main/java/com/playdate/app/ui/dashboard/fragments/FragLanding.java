@@ -1,8 +1,6 @@
 package com.playdate.app.ui.dashboard.fragments;
 
 import android.os.Bundle;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.playdate.app.R;
@@ -48,11 +47,13 @@ public class FragLanding extends Fragment {
     private ViewPager vp_suggestion;
     private ArrayList<GetUserSuggestionData> lst_getUserSuggestions;
     private Onclick itemClick;
+    private FragmentActivity mContext;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag_landing, container, false);
+        mContext = getActivity();
         vp_suggestion = view.findViewById(R.id.vp_suggestion);
         RelativeLayout rl_page = view.findViewById(R.id.Rl_page);
         clsCommon = CommonClass.getInstance();
@@ -66,8 +67,7 @@ public class FragLanding extends Fragment {
             public void onItemClicks(View view, int position, int value, String s) {
                 if (value == 10) {
                     callAddFriendRequestApi(s);
-                }
-                else if(value == 12){
+                } else if (value == 12) {
 
                     callchatRequestApi(s);
 
@@ -93,7 +93,7 @@ public class FragLanding extends Fragment {
         callGetUserSuggestionAPI();
 
 
-        int height = new CommonClass().getScreenHeight(getActivity());
+        int height = new CommonClass().getScreenHeight(mContext);
 
         int m1 = (int) getResources().getDimension(R.dimen._20sdp);
         int m2 = (int) getResources().getDimension(R.dimen._20sdp);
@@ -107,7 +107,7 @@ public class FragLanding extends Fragment {
         TextView txt_footer_see_more = view.findViewById(R.id.txt_footer_see_more);
         txt_footer_see_more.setOnClickListener(v -> {
 
-            OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
+            OnInnerFragmentClicks frag = (OnInnerFragmentClicks) mContext;
             Objects.requireNonNull(frag).ReplaceFrag(new FragMoreSuggestion());
         });
 
@@ -117,33 +117,33 @@ public class FragLanding extends Fragment {
 
     private void callchatRequestApi(String s) {
 
-        SessionPref pref = SessionPref.getInstance(getActivity());
+        SessionPref pref = SessionPref.getInstance(mContext);
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
         hashMap.put("toUserId", s);
-        Log.e("ChatRequestModel", "" + pref.getStringVal(SessionPref.LoginUsertoken));
+//        Log.e("ChatRequestModel", "" + pref.getStringVal(SessionPref.LoginUsertoken));
         Call<CommonModel> call = service.addChatRequest("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
-        Log.e("ChatRequestModel", "" + hashMap);
+//        Log.e("ChatRequestModel", "" + hashMap);
         call.enqueue(new Callback<CommonModel>() {
             @Override
-            public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
+            public void onResponse(@NonNull Call<CommonModel> call, @NonNull Response<CommonModel> response) {
                 if (response.code() == 200) {
                     assert response.body() != null;
-                    clsCommon.showDialogMsgFrag(getActivity(), "PlayDate", response.body().getMessage(), "Ok");
+                    clsCommon.showDialogMsgFrag(mContext, "PlayDate", response.body().getMessage(), "Ok");
 
                 } else {
                     try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        clsCommon.showDialogMsgFrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
+                        JSONObject jObjError = new JSONObject(Objects.requireNonNull(response.errorBody()).string());
+                        clsCommon.showDialogMsgFrag(mContext, "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
-                        Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
 
             @Override
-            public void onFailure(Call<CommonModel> call, Throwable t) {
+            public void onFailure(@NonNull Call<CommonModel> call, @NonNull Throwable t) {
                 t.printStackTrace();
             }
         });
@@ -155,13 +155,13 @@ public class FragLanding extends Fragment {
         hashMap.put("filter", "");
         hashMap.put("limit", "100");
         hashMap.put("pageNo", "1");//Hardcode
-        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
+        TransparentProgressDialog pd = TransparentProgressDialog.getInstance(mContext);
         pd.show();
-        SessionPref pref = SessionPref.getInstance(getActivity());
+        SessionPref pref = SessionPref.getInstance(mContext);
         Call<GetUserSuggestion> call = service.getUserSuggestion("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<GetUserSuggestion>() {
             @Override
-            public void onResponse(Call<GetUserSuggestion> call, Response<GetUserSuggestion> response) {
+            public void onResponse(@NonNull Call<GetUserSuggestion> call, @NonNull Response<GetUserSuggestion> response) {
                 pd.cancel();
                 if (response.code() == 200) {
                     assert response.body() != null;
@@ -172,18 +172,18 @@ public class FragLanding extends Fragment {
                         }
 
 
-                        // SuggestionAdapter adapter = new SuggestionAdapter(getActivity());
-                        SuggestionAdapter adapter = new SuggestionAdapter(getActivity(), lst_getUserSuggestions, itemClick);
+                        // SuggestionAdapter adapter = new SuggestionAdapter(mContext);
+                        SuggestionAdapter adapter = new SuggestionAdapter(mContext, lst_getUserSuggestions, itemClick);
                         vp_suggestion.setAdapter(adapter);
                         vp_suggestion.setCurrentItem(8);
                         vp_suggestion.setPadding(130, 0, 130, 0);
                     }
                 } else {
                     try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        clsCommon.showDialogMsgFrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
+                        JSONObject jObjError = new JSONObject(Objects.requireNonNull(response.errorBody()).string());
+                        clsCommon.showDialogMsgFrag(mContext, "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
-                        Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -191,7 +191,7 @@ public class FragLanding extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<GetUserSuggestion> call, Throwable t) {
+            public void onFailure(@NonNull Call<GetUserSuggestion> call, @NonNull Throwable t) {
                 t.printStackTrace();
                 pd.cancel();
             }
@@ -204,19 +204,19 @@ public class FragLanding extends Fragment {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("toUserID", s);
-        SessionPref pref = SessionPref.getInstance(getActivity());
-        Log.e("CommonModel", "" + pref.getStringVal(SessionPref.LoginUsertoken));
+        SessionPref pref = SessionPref.getInstance(mContext);
+//        Log.e("CommonModel", "" + pref.getStringVal(SessionPref.LoginUsertoken));
 
         Call<CommonModel> call = service.addFriendRequest("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
-        Log.e("CommonModelData", "" + hashMap);
+//        Log.e("CommonModelData", "" + hashMap);
         call.enqueue(new Callback<CommonModel>() {
             @Override
-            public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
+            public void onResponse(@NonNull Call<CommonModel> call, @NonNull Response<CommonModel> response) {
 
             }
 
             @Override
-            public void onFailure(Call<CommonModel> call, Throwable t) {
+            public void onFailure(@NonNull Call<CommonModel> call, @NonNull Throwable t) {
                 t.printStackTrace();
             }
         });

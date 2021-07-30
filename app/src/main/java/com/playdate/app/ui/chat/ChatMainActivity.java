@@ -97,6 +97,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 import io.socket.emitter.Emitter;
@@ -957,16 +958,14 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             @Override
             public void onResponse(Call<ChatFileUpload> call, Response<ChatFileUpload> response) {
                 if (response.code() == 200) {
-                    if (response.body().getStatus() == 1) {
+                    if (Objects.requireNonNull(response.body()).getStatus() == 1) {
                         ChatFile media = response.body().getChatFile();
                         if (isLocation) {
                             sendMessage("", "location", media.getMediaId());
                         } else {
                             sendMessage("", "media", media.getMediaId());
                         }
-                    } else {
                     }
-                } else {
                 }
             }
 
@@ -1037,7 +1036,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         if (gpsTracker.canGetLocation()) {
             this.lattitude = gpsTracker.getLatitude();
             this.longitude = gpsTracker.getLongitude();
-            Log.e("latlong", "" + lattitude + "  " + longitude);
+        //    Log.e("latlong", "" + lattitude + "  " + longitude);
             if (String.valueOf(lattitude).equals("0.0") && String.valueOf(longitude).equals("0.0")) {
                 Toast.makeText(this, "Wait a moment", Toast.LENGTH_SHORT).show();
             } else {
@@ -1206,26 +1205,16 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         builder.setMessage("To receive calls in background - \nPlease Allow overlay permission in Android Settings");
         builder.setCancelable(false);
 
-        builder.setNeutralButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                ToastUtils.longToast("You might miss calls while your application in background");
-                sharedPrefsHelper.save(OVERLAY_PERMISSION_CHECKED_KEY, true);
-            }
+        builder.setNeutralButton("No", (dialog, which) -> {
+            ToastUtils.longToast("You might miss calls while your application in background");
+            sharedPrefsHelper.save(OVERLAY_PERMISSION_CHECKED_KEY, true);
         });
 
-        builder.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                showAndroidOverlayPermissionsSettings();
-            }
-        });
+        builder.setPositiveButton("Settings", (dialog, which) -> showAndroidOverlayPermissionsSettings());
 
         AlertDialog alertDialog = builder.create();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            alertDialog.create();
-            alertDialog.show();
-        }
+        alertDialog.create();
+        alertDialog.show();
     }
 
     private void showAndroidOverlayPermissionsSettings() {
@@ -1233,8 +1222,6 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
             intent.setData(Uri.parse("package:" + getApplicationContext().getPackageName()));
             startActivityForResult(intent, ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE);
-        } else {
-//            Log.d(TAG, "Application Already has Overlay Permission");
         }
     }
 
@@ -1245,26 +1232,16 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         builder.setMessage("Please make sure that all additional permissions granted");
         builder.setCancelable(false);
 
-        builder.setNeutralButton("I'm sure", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                sharedPrefsHelper.save(MI_OVERLAY_PERMISSION_CHECKED_KEY, true);
-                runNextScreen();
-            }
+        builder.setNeutralButton("I'm sure", (dialog, which) -> {
+            sharedPrefsHelper.save(MI_OVERLAY_PERMISSION_CHECKED_KEY, true);
+            runNextScreen();
         });
 
-        builder.setPositiveButton("Mi Settings", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                showMiUiPermissionsSettings();
-            }
-        });
+        builder.setPositiveButton("Mi Settings", (dialog, which) -> showMiUiPermissionsSettings());
 
         AlertDialog alertDialog = builder.create();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            alertDialog.create();
-            alertDialog.show();
-        }
+        alertDialog.create();
+        alertDialog.show();
     }
 
     private void runNextScreen() {
@@ -1272,7 +1249,6 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             LoginService.start(ChatMainActivity.this, sharedPrefsHelper.getQbUser());
             startCall(true, Opponent);
 
-        } else {
         }
     }
 
@@ -1465,25 +1441,25 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 
         // Make Users FullName Strings and ID's list for iOS VOIP push
         String newSessionID = newQbRtcSession.getSessionID();
-        ArrayList<String> opponentsIDsList = new ArrayList<>();
-        ArrayList<String> opponentsNamesList = new ArrayList<>();
-        List<QBUser> usersInCall = selectedUsers;
+//        ArrayList<String> opponentsIDsList = new ArrayList<>();
+//        ArrayList<String> opponentsNamesList = new ArrayList<>();
+//        List<QBUser> usersInCall = selectedUsers;
 
         // the Caller in exactly first position is needed regarding to iOS 13 functionality
-        usersInCall.add(0, qbUsers);
+//        usersInCall.add(0, qbUsers);
 
-        for (QBUser user : usersInCall) {
-            String userId = user.getId().toString();
-            String userName = "";
-            if (TextUtils.isEmpty(user.getFullName())) {
-                userName = user.getLogin();
-            } else {
-                userName = user.getFullName();
-            }
-
-            opponentsIDsList.add(userId);
-            opponentsNamesList.add(userName);
-        }
+//        for (QBUser user : usersInCall) {
+//            String userId = user.getId().toString();
+//            String userName = "";
+//            if (TextUtils.isEmpty(user.getFullName())) {
+//                userName = user.getLogin();
+//            } else {
+//                userName = user.getFullName();
+//            }
+//
+//            opponentsIDsList.add(userId);
+//            opponentsNamesList.add(userName);
+//        }
 
 //        String opponentsIDsString = TextUtils.join(",", opponentsIDsList);
 //        String opponentNamesString = TextUtils.join(",", opponentsNamesList);
@@ -1513,12 +1489,13 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 
     public void sharelocation() {
         if (locationBitmap != null) {
-            Log.d("locatinBitmap", "locatinBitmap not null");
+//            Log.d("locatinBitmap", "locatinBitmap not null");
             addToListImage(locationBitmap, true);
 
-        } else {
-            Log.d("locatinBitmap", "locatinBitmap null");
         }
+//        else {
+//            Log.d("locatinBitmap", "locatinBitmap null");
+//        }
     }
 
     public void createDate() {

@@ -41,8 +41,8 @@ import retrofit2.Response;
 public class FragActiveCoupons extends Fragment implements OnInnerFragmentClicks {
     private RecyclerView rv_coupons_list;
     private ActiveCouponsAdapter adapter;
-    TextView no_coupon;
-    CommonClass clsCommon;
+    private TextView no_coupon;
+    private CommonClass clsCommon;
     private ArrayList<GetBusinessCouponData> GetBusinessCouponLst = new ArrayList<>();
 
     @Nullable
@@ -57,37 +57,6 @@ public class FragActiveCoupons extends Fragment implements OnInnerFragmentClicks
         enableSwipeToDeleteAndUndo();
         enableSwipeToUpdateAndUndo();
 
-//        *****Temp Code*****
-       /* String inputPattern = "yyyy-MM-dd";
-        SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
-
-        Date c = Calendar.getInstance().getTime();
-        SimpleDateFormat df = new SimpleDateFormat(inputPattern, Locale.getDefault());
-        String formattedDate = df.format(c);
-        ArrayList<GetBusinessCouponData> lstTemp = new ArrayList<>();
-        for (int i = 0; i < lst.size(); i++) {
-            try {
-                String[] s = lst.get(i).getCouponValidTillDate().split("T");
-                Date date = inputFormat.parse(s[0]);
-                Date date1 = inputFormat.parse(formattedDate);
-                if (s[0].equals(formattedDate)) {
-                    lstTemp.add(lst.get(i));
-                } else {
-                    if (!date.before(date1)) {
-                        lstTemp.add(lst.get(i));
-                    }
-                }
-
-                 couponId = lst.get(i).getCouponId();
-
-
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
-        }*/
-
-//        *****Temp Code*****
 
 
         return view;
@@ -146,7 +115,7 @@ public class FragActiveCoupons extends Fragment implements OnInnerFragmentClicks
         Call<CommonModel> call = service.deleteBusinessCoupon("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<CommonModel>() {
             @Override
-            public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
+            public void onResponse(@NonNull Call<CommonModel> call, @NonNull Response<CommonModel> response) {
                 pd.cancel();
                 if (response.code() == 200) {
                     if (Objects.requireNonNull(response.body()).getStatus() == 1) {
@@ -166,7 +135,7 @@ public class FragActiveCoupons extends Fragment implements OnInnerFragmentClicks
             }
 
             @Override
-            public void onFailure(Call<CommonModel> call, Throwable t) {
+            public void onFailure(@NonNull Call<CommonModel> call, @NonNull Throwable t) {
                 t.printStackTrace();
                 pd.cancel();
                 Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
@@ -238,7 +207,7 @@ public class FragActiveCoupons extends Fragment implements OnInnerFragmentClicks
         Call<GetBusinessCouponModel> call = service.getBusinessCoupon("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<GetBusinessCouponModel>() {
             @Override
-            public void onResponse(Call<GetBusinessCouponModel> call, Response<GetBusinessCouponModel> response) {
+            public void onResponse(@NonNull Call<GetBusinessCouponModel> call, @NonNull Response<GetBusinessCouponModel> response) {
                 pd.cancel();
                 if (response.code() == 200) {
                     if (Objects.requireNonNull(response.body()).getStatus() == 1) {
@@ -273,7 +242,7 @@ public class FragActiveCoupons extends Fragment implements OnInnerFragmentClicks
             }
 
             @Override
-            public void onFailure(Call<GetBusinessCouponModel> call, Throwable t) {
+            public void onFailure(@NonNull Call<GetBusinessCouponModel> call, @NonNull Throwable t) {
                 t.printStackTrace();
                 pd.cancel();
                 Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();

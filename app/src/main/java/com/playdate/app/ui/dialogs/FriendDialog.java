@@ -111,7 +111,7 @@ public class FriendDialog extends Dialog implements OnRelationShipSelected {
 
 class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder> {
 
-    private Context mcontext;
+    private Context mContext;
     private final ArrayList<MatchListUser> lstUserSuggestions;
     private final boolean isForRelationship;
     private final FriendDialog ref;
@@ -122,13 +122,13 @@ class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder> {
         this.ref = ref;
     }
 
-    Picasso picasso = Picasso.get();
+    private final Picasso picasso = Picasso.get();
 
     @NonNull
     @Override
     public FriendAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_friends_dialog, parent, false);
-        mcontext = parent.getContext();
+        mContext = parent.getContext();
         return new ViewHolder(view);
     }
 
@@ -137,7 +137,7 @@ class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder> {
         try {
             holder.name.setText(lstUserSuggestions.get(position).getUsername());
             if (lstUserSuggestions.get(position).getProfilePicPath() == null) {
-                holder.image.setBackgroundColor(mcontext.getResources().getColor(R.color.color_grey_light));
+                holder.image.setBackgroundColor(mContext.getResources().getColor(R.color.color_grey_light));
             }
             if (lstUserSuggestions.get(position).isSelected()) {
                 holder.iv_select.setVisibility(View.VISIBLE);

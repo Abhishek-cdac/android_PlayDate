@@ -132,7 +132,7 @@ public class FragInstaLikeProfileFriends extends Fragment implements View.OnClic
 
                 } else {
                     OnFriendSelected inf = (OnFriendSelected) getActivity();
-                    Objects.requireNonNull(inf).OnFrinedDataClosed();
+                    Objects.requireNonNull(inf).onFrinedDataClosed();
                 }
 
                 return true;

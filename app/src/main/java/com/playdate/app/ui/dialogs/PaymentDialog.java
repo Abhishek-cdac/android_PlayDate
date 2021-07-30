@@ -14,7 +14,8 @@ import com.playdate.app.R;
 import com.playdate.app.ui.my_profile_details.NewPaymentMethod;
 
 public class PaymentDialog extends Dialog implements View.OnClickListener {
-    NewPaymentMethod newPaymentMethod;
+
+    private final NewPaymentMethod newPaymentMethod;
 
     public PaymentDialog(Context context, int selected, NewPaymentMethod newPaymentMethod) {
         super(context, R.style.My_Dialog);

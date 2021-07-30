@@ -1,7 +1,6 @@
 package com.playdate.app.ui.coupons;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +24,7 @@ import com.playdate.app.model.NotificationCountModel;
 import com.playdate.app.model.RestMain;
 import com.playdate.app.ui.dashboard.adapter.RestaurantListAdapter;
 import com.playdate.app.ui.dashboard.data.CallAPI;
-import com.playdate.app.ui.dashboard.fragments.FragmentSearchRestaurent;
+import com.playdate.app.ui.dashboard.fragments.FragmentSearchRestaurant;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 import com.playdate.app.ui.notification_screen.FragNotification;
 import com.playdate.app.ui.restaurant.adapter.Restaurant;
@@ -43,16 +42,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FragCouponParent extends Fragment implements OnSizeDecided, View.OnClickListener, OnInnerFragmentClicks {
-    //, OnAPIResponce {
+
     private WrapContentViewPager viewpager;
     private RecyclerView rv_restaurant;
     private RestaurantListAdapter adapterRestaurent;
     private SessionPref pref;
     private TextView txt_store;
     private TextView txt_my_coupon;
-
-
-
     private TextView txt_count;
 
     @Nullable
@@ -69,7 +65,7 @@ public class FragCouponParent extends Fragment implements OnSizeDecided, View.On
         txt_my_coupon = view.findViewById(R.id.txt_my_coupon);
         pref = SessionPref.getInstance(getActivity());
         rv_restaurant = view.findViewById(R.id.rv_restaurant);
-        CoupounPageAdapter adapter = new CoupounPageAdapter(getChildFragmentManager());
+        CouponPageAdapter adapter = new CouponPageAdapter(getChildFragmentManager());
         viewpager.setAdapter(adapter);
         RecyclerView.LayoutManager manager1 = new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false);
         adapterRestaurent = new RestaurantListAdapter(new ArrayList<>());
@@ -134,18 +130,18 @@ public class FragCouponParent extends Fragment implements OnSizeDecided, View.On
                             if (countNotification > 0 && countNotification <= 9) {
                                 txt_count.setVisibility(View.VISIBLE);
                                 txt_count.setPadding(10, 0, 10, 0); //1-9
-                                txt_count.setText("" + countNotification);
+                                txt_count.setText(("" + countNotification));
 
                             } else if (countNotification > 9 && countNotification <= 99) {
                                 txt_count.setVisibility(View.VISIBLE);
                                 txt_count.setPadding(6, 2, 7, 2);  ///10-99
-                                txt_count.setText("" + countNotification);
+                                txt_count.setText(("" + countNotification));
 
                             } else if (countNotification > 99) {
                                 txt_count.setVisibility(View.VISIBLE);
                                 txt_count.setTextSize(8);
                                 txt_count.setPadding(5, 3, 5, 3);  ///99+
-                                txt_count.setText("99+");
+                                txt_count.setText(R.string.str_99);
 
                             } else {
                                 txt_count.setVisibility(View.GONE);
@@ -233,7 +229,7 @@ public class FragCouponParent extends Fragment implements OnSizeDecided, View.On
 
         if (v.getId() == R.id.iv_rest_search) {
             OnInnerFragmentClicks frag = (OnInnerFragmentClicks) getActivity();
-            Objects.requireNonNull(frag).ReplaceFrag(new FragmentSearchRestaurent());
+            Objects.requireNonNull(frag).ReplaceFrag(new FragmentSearchRestaurant());
 
         }
     }

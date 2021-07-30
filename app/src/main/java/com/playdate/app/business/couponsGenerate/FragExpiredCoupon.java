@@ -60,7 +60,7 @@ public class FragExpiredCoupon extends Fragment {
         Call<GetBusinessCouponModel> call = service.getBusinessCoupon("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<GetBusinessCouponModel>() {
             @Override
-            public void onResponse(Call<GetBusinessCouponModel> call, Response<GetBusinessCouponModel> response) {
+            public void onResponse(@NonNull Call<GetBusinessCouponModel> call, @NonNull Response<GetBusinessCouponModel> response) {
                 pd.cancel();
                 if (response.code() == 200) {
                     if (Objects.requireNonNull(response.body()).getStatus() == 1) {
@@ -97,7 +97,7 @@ public class FragExpiredCoupon extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<GetBusinessCouponModel> call, Throwable t) {
+            public void onFailure(@NonNull Call<GetBusinessCouponModel> call, @NonNull Throwable t) {
                 t.printStackTrace();
                 pd.cancel();
                 Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();

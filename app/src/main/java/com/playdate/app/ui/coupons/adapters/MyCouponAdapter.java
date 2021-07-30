@@ -1,5 +1,7 @@
 package com.playdate.app.ui.coupons.adapters;
 
+import static android.content.Context.CLIPBOARD_SERVICE;
+
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -19,8 +21,6 @@ import com.playdate.app.model.MyCoupons;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
-
-import static android.content.Context.CLIPBOARD_SERVICE;
 
 public class MyCouponAdapter extends RecyclerView.Adapter<MyCouponAdapter.ViewHolder> {
 
@@ -77,10 +77,13 @@ public class MyCouponAdapter extends RecyclerView.Adapter<MyCouponAdapter.ViewHo
         return list.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView iv_image;
-        RelativeLayout rl_code;
-        TextView rest_name, discount_desc, valid, coupon_code;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        private final ImageView iv_image;
+        private final RelativeLayout rl_code;
+        private final TextView rest_name;
+        private final TextView discount_desc;
+        private final TextView valid;
+        private final TextView coupon_code;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

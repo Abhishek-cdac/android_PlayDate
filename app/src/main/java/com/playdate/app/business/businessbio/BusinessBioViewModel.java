@@ -25,11 +25,11 @@ public class BusinessBioViewModel extends ViewModel {
 
     }
 
-    public MutableLiveData<String> OnBioInput() {
-
-        return Bio;
-
-    }
+//    public MutableLiveData<String> OnBioInput() {
+//
+//        return Bio;
+//
+//    }
 
     public void onBack(View view) {
         BackClick.setValue(true);

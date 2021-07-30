@@ -18,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -56,36 +57,45 @@ import retrofit2.Response;
 public class CouponGenUpdateActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     private CommonClass clsCommon;
-    private TextView availbilityDays;
+    private TextView availDays;
     public final static int PICK_PHOTO_FOR_BUSINESS = 150;
     public final static int ALL_PERMISSIONS_RESULT = 107;
     public final static int TAKE_PHOTO_CODE = 0;
     private EditText couponTitle, percentageOff, freeItem, pointsValue, amountOff, NewPrice;
-    private final boolean isDropdownVisible = false;
+//    private final boolean isDropdownVisible = false;
     private TextView addImage;
     private String awardedByStr;
     private final String[] awardedBy = {"Level", "Game Winner", "Game Loser"};
     private LinearLayout ll_camera_option;
     private ImageView camera;
-    private ImageView restaurent_img;
-    String couponId, couponTitleUpdate, availbilityDaysUpdate, CouponImageUpdate, awardedByUpdate,
-            couponAwardlevelUpdate, percentageOffUpdate, freeItemUpdate, pointsValueUpdate, amountOffUpdate, NewPriceUpdate;
-
+    private ImageView restaurant_img;
+    private String couponId;
+    private String couponTitleUpdate;
+    private String availabilityDaysUpdate;
+    private String CouponImageUpdate;
+    private String awardedByUpdate;
+    private String percentageOffUpdate;
+    private String freeItemUpdate;
+    private String pointsValueUpdate;
+    private String amountOffUpdate;
+    private String NewPriceUpdate;
+    private DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
     @Override
     protected void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coupons_generater);
+        clsCommon = CommonClass.getInstance();
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
 
             couponId = extras.getString("couponId");
             couponTitleUpdate = extras.getString("couponTitle");
             percentageOffUpdate = extras.getString("couponPercentageOff");
-            availbilityDaysUpdate = extras.getString("couponAvailableDays");
+            availabilityDaysUpdate = extras.getString("couponAvailableDays");
             NewPriceUpdate = extras.getString("couponNewPrice");
             freeItemUpdate = extras.getString("couponFreeItem");
             pointsValueUpdate = extras.getString("couponPointsValue");
-            couponAwardlevelUpdate = extras.getString("couponAwardlevelValue");
+//            String couponAwardlevelUpdate = extras.getString("couponAwardlevelValue");
             amountOffUpdate = extras.getString("couponAmountOff");
             CouponImageUpdate = extras.getString("CouponImage");
             awardedByUpdate = extras.getString("awardedByUpdate");
@@ -96,14 +106,14 @@ public class CouponGenUpdateActivity extends AppCompatActivity implements Adapte
         FrameLayout ll_image = findViewById(R.id.ll_image);
         camera = findViewById(R.id.camera);
         addImage = findViewById(R.id.addImage);
-        restaurent_img = findViewById(R.id.restaurent_img);
+        restaurant_img = findViewById(R.id.restaurent_img);
         ll_camera_option = findViewById(R.id.ll_camera_option);
 
         couponTitle = findViewById(R.id.CouponTitle);
         percentageOff = findViewById(R.id.PercentageOff);
         freeItem = findViewById(R.id.FreeItem);
         pointsValue = findViewById(R.id.PointsValue);
-        availbilityDays = findViewById(R.id.AvailbilityDays);
+        availDays = findViewById(R.id.AvailbilityDays);
         amountOff = findViewById(R.id.AmountOff);
         NewPrice = findViewById(R.id.NewPrice);
         Spinner spinner1 = findViewById(R.id.spinner1);
@@ -113,11 +123,11 @@ public class CouponGenUpdateActivity extends AppCompatActivity implements Adapte
         couponTitle.setText(couponTitleUpdate);
         percentageOff.setText(percentageOffUpdate);
         freeItem.setText(freeItemUpdate);
-        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
         try {
-            Date d = (Date) formatter.parse(availbilityDaysUpdate);
+            Date d = formatter.parse(availabilityDaysUpdate);
             String formateDate = new SimpleDateFormat("yyyy-MM-dd").format(d);
-            availbilityDays.setText(formateDate);
+            availDays.setText(formateDate);
 
         } catch (ParseException e) {
             e.printStackTrace();
@@ -128,8 +138,8 @@ public class CouponGenUpdateActivity extends AppCompatActivity implements Adapte
         pointsValue.setText(pointsValueUpdate);
         Picasso.get().load(CouponImageUpdate)
                 .fit()
-                .into(restaurent_img);
-        clsCommon = CommonClass.getInstance();
+                .into(restaurant_img);
+
         ImageView iv_back_generator = findViewById(R.id.iv_back_generator);
 //        RelativeLayout rl_body = findViewById(R.id.rl_body);
 //        LinearLayout ll_dropdown = findViewById(R.id.ll_dropdown);
@@ -141,7 +151,7 @@ public class CouponGenUpdateActivity extends AppCompatActivity implements Adapte
         LinearLayout ll_upload_photo = findViewById(R.id.ll_upload_photo);
         ll_take_photo.setOnClickListener(this);
         ll_upload_photo.setOnClickListener(this);
-        availbilityDays.setOnClickListener(this);
+        availDays.setOnClickListener(this);
         btnCreateCoupons.setOnClickListener(this);
         iv_back_generator.setOnClickListener(this);
         camera.setVisibility(View.GONE);
@@ -186,7 +196,7 @@ public class CouponGenUpdateActivity extends AppCompatActivity implements Adapte
 
                 (view, year, monthOfYear, dayOfMonth) -> {
                     String text = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
-                    availbilityDays.setText(text);
+                    availDays.setText(text);
                 }, mYear, mMonth, mDay);
         datePickerDialog.getDatePicker().setMinDate(c.getTimeInMillis());
         datePickerDialog.show();
@@ -228,7 +238,7 @@ public class CouponGenUpdateActivity extends AppCompatActivity implements Adapte
         SessionPref pref = SessionPref.getInstance(this);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("couponTitle", couponTitlestr);
-        hashMap.put("couponValidTillDate", availbilityDays.getText().toString());
+        hashMap.put("couponValidTillDate", availDays.getText().toString());
         hashMap.put("couponAmountOf", amountOffStr);
         hashMap.put("couponPercentageValue", percentageOffStr);
         hashMap.put("freeItem", freeItemStr);
@@ -239,25 +249,25 @@ public class CouponGenUpdateActivity extends AppCompatActivity implements Adapte
         hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
         hashMap.put("couponId", couponId);
 
-        String url = "";
+        StringBuilder url = new StringBuilder();
         for (Map.Entry<String, String> entry : hashMap.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
-            if (url.isEmpty()) {
-                url = key + "=" + value;
+            if (url.length() == 0) {
+                url = new StringBuilder(key + "=" + value);
             } else {
-                url = url + "&" + key + "=" + value;
+                url.append("&").append(key).append("=").append(value);
             }
         }
 
 
         MultipartBody.Part filePart = MultipartBody.Part.createFormData("couponImage", f.getName(), RequestBody.create(MediaType.parse("image/png"), f));
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-        url = "user/update-business-coupon?" + url;
-        Call<CommonModel> call = service.updateBusinessCoupon("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), filePart, hashMap, url);
+        url.insert(0, "user/update-business-coupon?");
+        Call<CommonModel> call = service.updateBusinessCoupon("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), filePart, hashMap, url.toString());
         call.enqueue(new Callback<CommonModel>() {
             @Override
-            public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
+            public void onResponse(@NonNull Call<CommonModel> call, @NonNull Response<CommonModel> response) {
                 pd.cancel();
                 if (response.code() == 200) {
                     try {
@@ -285,7 +295,7 @@ public class CouponGenUpdateActivity extends AppCompatActivity implements Adapte
             }
 
             @Override
-            public void onFailure(@NotNull Call<CommonModel> call, Throwable t) {
+            public void onFailure(@NotNull Call<CommonModel> call, @NonNull Throwable t) {
                 t.printStackTrace();
                 pd.cancel();
                 Toast.makeText(CouponGenUpdateActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
@@ -312,7 +322,7 @@ public class CouponGenUpdateActivity extends AppCompatActivity implements Adapte
                     }
                 }
                 if (null != bitmap) {
-                    restaurent_img.setImageBitmap(bitmap);
+                    restaurant_img.setImageBitmap(bitmap);
                     camera.setVisibility(View.GONE);
                     addImage.setVisibility(View.GONE);
                     //  showChange();
@@ -333,7 +343,7 @@ public class CouponGenUpdateActivity extends AppCompatActivity implements Adapte
                 if (null != bitmap) {
                     camera.setVisibility(View.GONE);
                     addImage.setVisibility(View.GONE);
-                    restaurent_img.setImageBitmap(bitmap);
+                    restaurant_img.setImageBitmap(bitmap);
                     //   showChange();
                 }
             }
@@ -398,36 +408,36 @@ public class CouponGenUpdateActivity extends AppCompatActivity implements Adapte
         String newPriceStr = NewPrice.getText().toString();
         String freeItemStr = freeItem.getText().toString();
         String pointsValueStr = pointsValue.getText().toString();
-        String availbilityDaysStr = availbilityDays.getText().toString();
+        String availbilityDaysStr = availDays.getText().toString();
         if (couponTitlestr.matches("")) {
             couponTitle.requestFocus();
-            new CommonClass().showDialogMsgFrag(CouponGenUpdateActivity.this, "PlayDate", "Enter a couponTitle", "Ok");
+           clsCommon.showDialogMsgFrag(CouponGenUpdateActivity.this, "PlayDate", "Enter a couponTitle", "Ok");
 
         } else if (percentageOffStr.matches("")) {
             percentageOff.requestFocus();
-            new CommonClass().showDialogMsgFrag(CouponGenUpdateActivity.this, "PlayDate", "Enter a percentageOff", "Ok");
+            clsCommon.showDialogMsgFrag(CouponGenUpdateActivity.this, "PlayDate", "Enter a percentageOff", "Ok");
 
         } else if (availbilityDaysStr.matches("")) {
-            availbilityDays.requestFocus();
-            new CommonClass().showDialogMsgFrag(CouponGenUpdateActivity.this, "PlayDate", "Enter a amount off", "Ok");
+            availDays.requestFocus();
+            clsCommon.showDialogMsgFrag(CouponGenUpdateActivity.this, "PlayDate", "Enter a amount off", "Ok");
 
         } else if (amountOffStr.matches("")) {
             amountOff.requestFocus();
-            new CommonClass().showDialogMsgFrag(CouponGenUpdateActivity.this, "PlayDate", "Enter a amount off", "Ok");
+            clsCommon.showDialogMsgFrag(CouponGenUpdateActivity.this, "PlayDate", "Enter a amount off", "Ok");
 
         } else if (newPriceStr.matches("")) {
             NewPrice.requestFocus();
-            new CommonClass().showDialogMsgFrag(CouponGenUpdateActivity.this, "PlayDate", "Enter a new price", "Ok");
+            clsCommon.showDialogMsgFrag(CouponGenUpdateActivity.this, "PlayDate", "Enter a new price", "Ok");
 
         }
 //        else if (freeItemStr.matches("")) {
 //            freeItem.requestFocus();
-//            new CommonClass().showDialogMsgfrag(CouponGenActivity.this, "PlayDate", "Enter a free item", "Ok");
+//            clsCommon.showDialogMsgfrag(CouponGenActivity.this, "PlayDate", "Enter a free item", "Ok");
 //
 //        }
         else if (pointsValueStr.matches("")) {
             pointsValue.requestFocus();
-            new CommonClass().showDialogMsgFrag(CouponGenUpdateActivity.this, "PlayDate", "Enter a points Vlaue", "Ok");
+            clsCommon.showDialogMsgFrag(CouponGenUpdateActivity.this, "PlayDate", "Enter a points Vlaue", "Ok");
 
         } else {
             callUpdateBusinessCouponApi(couponTitlestr, percentageOffStr, amountOffStr, newPriceStr, freeItemStr, pointsValueStr);

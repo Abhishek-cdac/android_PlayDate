@@ -15,7 +15,8 @@ import com.playdate.app.ui.login.OnUserTypeSelected;
 
 
 public class UserTypeDialog extends Dialog {
-    int selectedUserType = -1;
+
+    private int selectedUserType = -1;
 
     public UserTypeDialog(Context context) {
         super(context, R.style.My_Dialog);

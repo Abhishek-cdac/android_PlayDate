@@ -13,8 +13,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.playdate.app.R;
 
 public class ChatBottomSheet extends BottomSheetDialogFragment {
-    String text;
-    ChatMainActivity ref;
+
+    private final String text;
+    private final ChatMainActivity ref;
 
     public ChatBottomSheet(String text, ChatMainActivity ref) {
         this.text = text;
@@ -38,12 +39,9 @@ public class ChatBottomSheet extends BottomSheetDialogFragment {
                 dismiss();
             });
 
-            ll_date.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ref.createDate();
-                    dismiss();
-                }
+            ll_date.setOnClickListener(v -> {
+                ref.createDate();
+                dismiss();
             });
 
 

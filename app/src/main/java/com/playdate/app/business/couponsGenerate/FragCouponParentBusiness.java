@@ -99,7 +99,7 @@ public class FragCouponParentBusiness extends Fragment {
         Call<NotificationCountModel> call = service.getNotificationCount("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<NotificationCountModel>() {
             @Override
-            public void onResponse(Call<NotificationCountModel> call, Response<NotificationCountModel> response) {
+            public void onResponse(@NonNull Call<NotificationCountModel> call, @NonNull Response<NotificationCountModel> response) {
                 try {
 
                     if (response.code() == 200) {
@@ -122,7 +122,7 @@ public class FragCouponParentBusiness extends Fragment {
 //                                txt_count.setVisibility(View.VISIBLE);
                                 txt_count.setTextSize(8);
                                 txt_count.setPadding(5, 3, 5, 3);  ///99+
-                                txt_count.setText("99+");
+                                txt_count.setText(R.string.str_99);
 
                             } else {
                                 txt_count.setVisibility(View.GONE);
@@ -139,7 +139,7 @@ public class FragCouponParentBusiness extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<NotificationCountModel> call, Throwable t) {
+            public void onFailure(@NonNull Call<NotificationCountModel> call, @NonNull Throwable t) {
                 t.printStackTrace();
             }
         });

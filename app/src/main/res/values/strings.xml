@@ -527,4 +527,16 @@ Build version 4.0.3-java</string>
     <string name="str_change_couple_profile">Change couple profile photo</string>
     <string name="str_in_a_relation">In a relationship</string>
     <string name="type_how_you_met_with_your_partner">Type how you met with your partner</string>
+    <string name="str_winner">Winner!</string>
+    <string name="str_you_win">You answered first!</string>
+    <string name="str_not_bad">Not Bad!</string>
+    <string name="str_you_second">You answered second!</string>
+    <string name="str_nice_try">Nice Try!</string>
+    <string name="str_you_ans">You answered wrong!</string>
+    <string name="str_99">99+</string>
+    <string name="str_add_quest">Add an anonymous question and receive responses</string>
+    <string name="str_no_comments">No Comments</string>
+    <string name="str_no_ans">No Answer</string>
+    <string name="str_turn_post_off">Turn Post Notification OFF</string>
+    <string name="str_turn_post_on">Turn Post Notification ON</string>
 </resources>

@@ -29,7 +29,7 @@ public class FragMoreSuggestion extends Fragment {
         View view = inflater.inflate(R.layout.frag_more_suggestion, container, false);
         TabLayout tabLayout = view.findViewById(R.id.tab);
         ViewPager viewPager = view.findViewById(R.id.viewpager);
-        RelativeLayout rl_page=view.findViewById(R.id.rl_page);
+        RelativeLayout rl_page = view.findViewById(R.id.rl_page);
 
         tabLayout.addTab(tabLayout.newTab().setText("Suggested"));
         tabLayout.addTab(tabLayout.newTab().setText("   Invite   "));
@@ -37,14 +37,14 @@ public class FragMoreSuggestion extends Fragment {
         int height = new CommonClass().getScreenHeight(getActivity());
 
 
-        int m1= (int) getResources().getDimension(R.dimen._15sdp);
-        int m2= (int) getResources().getDimension(R.dimen._10sdp);
-        int m3= (int) getResources().getDimension(R.dimen._20sdp);
-        int m4= (int) getResources().getDimension(R.dimen._20sdp);
-        int m5= (int) getResources().getDimension(R.dimen._60sdp);
-        int m6= (int) getResources().getDimension(R.dimen._75sdp);
+        int m1 = (int) getResources().getDimension(R.dimen._15sdp);
+        int m2 = (int) getResources().getDimension(R.dimen._10sdp);
+        int m3 = (int) getResources().getDimension(R.dimen._20sdp);
+        int m4 = (int) getResources().getDimension(R.dimen._20sdp);
+        int m5 = (int) getResources().getDimension(R.dimen._60sdp);
+        int m6 = (int) getResources().getDimension(R.dimen._75sdp);
 
-        rl_page.getLayoutParams().height=height-(m1+m2+m3+m4+m5+m6);
+        rl_page.getLayoutParams().height = height - (m1 + m2 + m3 + m4 + m5 + m6);
 
         MoreSuggestionPagerAdapter pagerAdapter = new MoreSuggestionPagerAdapter(getChildFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(pagerAdapter);

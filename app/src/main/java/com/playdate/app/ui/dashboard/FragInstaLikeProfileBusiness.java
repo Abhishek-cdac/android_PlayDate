@@ -40,7 +40,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FragInstaLikeProfileBusiness extends Fragment implements onPhotoClick, View.OnClickListener {
+public class FragInstaLikeProfileBusiness extends Fragment implements View.OnClickListener {
 
     private ImageView profile_image;
     private TextView txt_bio;
@@ -67,13 +67,6 @@ public class FragInstaLikeProfileBusiness extends Fragment implements onPhotoCli
         ratingbar = view.findViewById(R.id.ratingBar);
         ratingbar.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> Toast.makeText(getActivity(), "Rating: " +
                 (int) rating, Toast.LENGTH_SHORT).show());
-//        ratingbar.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String rating=String.valueOf(ratingbar.getRating());
-//                Toast.makeText(getActivity(), rating, Toast.LENGTH_LONG).show();
-//            }
-//        });
         txtTotalFriend = view.findViewById(R.id.friend_count);
         txtTotalPost = view.findViewById(R.id.post_count);
         profile_image = view.findViewById(R.id.profile_image);
@@ -112,11 +105,10 @@ public class FragInstaLikeProfileBusiness extends Fragment implements onPhotoCli
         hashMap.put("userId", pref.getStringVal(SessionPref.LoginUserID));
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
         pd.show();
-//        Toast.makeText(this, ""+pref.getStringVal(SessionPref.LoginUsertoken), Toast.LENGTH_SHORT).show();
         Call<GetProfileDetails> call = service.getProfileDetails("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<GetProfileDetails>() {
             @Override
-            public void onResponse(Call<GetProfileDetails> call, Response<GetProfileDetails> response) {
+            public void onResponse(@NonNull Call<GetProfileDetails> call, @NonNull Response<GetProfileDetails> response) {
                 pd.cancel();
                 if (response.code() == 200) {
                     if (Objects.requireNonNull(response.body()).getStatus() == 1) {
@@ -151,7 +143,7 @@ public class FragInstaLikeProfileBusiness extends Fragment implements onPhotoCli
             }
 
             @Override
-            public void onFailure(Call<GetProfileDetails> call, Throwable t) {
+            public void onFailure(@NonNull Call<GetProfileDetails> call, @NonNull Throwable t) {
                 t.printStackTrace();
                 pd.cancel();
                 Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
@@ -160,10 +152,7 @@ public class FragInstaLikeProfileBusiness extends Fragment implements onPhotoCli
     }
 
 
-    @Override
-    public void onTypeChange(int type) {
 
-    }
 
 
     @Override
@@ -171,18 +160,18 @@ public class FragInstaLikeProfileBusiness extends Fragment implements onPhotoCli
         int id = view.getId();
         if (id == R.id.iv_send_request) {
             InstaPhotosAdapter.isLocked = false;
-            onTypeChange(0);
+//            onTypeChange(0);
         } else if (id == R.id.profile_image) {
             try {
                 Intent mIntent = new Intent(getActivity(), ExoPlayerActivity.class);
 
-                String videopath = pref.getStringVal(SessionPref.LoginUserprofileVideo);
+                String videoPath = pref.getStringVal(SessionPref.LoginUserprofileVideo);
 
 
-                if (!videopath.contains("http")) {
-                    videopath = BASE_URL_IMAGE + videopath;
+                if (!videoPath.contains("http")) {
+                    videoPath = BASE_URL_IMAGE + videoPath;
                 }
-                mIntent.putExtra("video", videopath);
+                mIntent.putExtra("video", videoPath);
                 startActivity(mIntent);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -198,6 +187,3 @@ public class FragInstaLikeProfileBusiness extends Fragment implements onPhotoCli
 }
 
 
-interface onPhotoClick {
-    void onTypeChange(int type);
-}

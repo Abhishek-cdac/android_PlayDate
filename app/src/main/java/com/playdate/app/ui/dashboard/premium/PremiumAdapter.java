@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class PremiumAdapter extends FragmentPagerAdapter {
     private final FragInvite fragInvite;
-    ArrayList<PremiumPlans> lstPremium;
+    private final ArrayList<PremiumPlans> lstPremium;
 
     public PremiumAdapter(@NonNull @NotNull FragmentManager fm, FragInvite fragInvite, ArrayList<PremiumPlans> lstPremium) {
         super(fm);
@@ -24,7 +24,7 @@ public class PremiumAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        if(lstPremium==null)
+        if (lstPremium == null)
             return 0;
         return 3;
     }

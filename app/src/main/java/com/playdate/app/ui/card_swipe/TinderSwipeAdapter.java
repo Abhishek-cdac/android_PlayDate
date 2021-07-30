@@ -1,9 +1,10 @@
 package com.playdate.app.ui.card_swipe;
 
+import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
+
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,8 +36,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 
 public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.ViewHolder> {
 
@@ -79,21 +78,24 @@ public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView image, iv_maximise, item_cross, item_check;
-        TextView name, age, hobby;
-        ImageView message;
-        ImageView item_premium;
-        ImageView iv_video_play;
-        boolean playing = false;
-        boolean firsttime = true;
-        SimpleExoPlayer absPlayerInternal;
-        PlayerView pvMain;
+        private final ImageView image;
+        private final ImageView iv_maximise;
+        private final TextView name;
+        private final TextView age;
+        private final TextView hobby;
+        private final ImageView message;
+        private final ImageView item_premium;
+        private final ImageView iv_video_play;
+        private boolean playing = false;
+        private boolean firstTime = true;
+        private SimpleExoPlayer absPlayerInternal;
+        private final PlayerView pvMain;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.item_name);
-            item_check = itemView.findViewById(R.id.item_check);
-            item_cross = itemView.findViewById(R.id.item_cross);
+            ImageView item_check = itemView.findViewById(R.id.item_check);
+            ImageView item_cross = itemView.findViewById(R.id.item_cross);
             age = itemView.findViewById(R.id.item_age);
             hobby = itemView.findViewById(R.id.item_hobby);
             image = itemView.findViewById(R.id.item_image);
@@ -125,8 +127,8 @@ public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.
                     iv_maximise.setVisibility(View.VISIBLE);
 
 
-                    if (firsttime) {
-                        firsttime = false;
+                    if (firstTime) {
+                        firstTime = false;
                         PlayVideo(user.getProfileVideoPath());
                         playing = true;
                         iv_video_play.setImageResource(R.drawable.ic_pause);
@@ -151,7 +153,7 @@ public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.
                         .into(image);
                 name.setText(user.getUsername());
 
-                age.setText("" + user.getAge());
+                age.setText(("" + user.getAge()));
 
                 if (null != lst_interest) {
                     for (int i = 0; i < lst_interest.size(); i++) {
@@ -230,7 +232,6 @@ public class TinderSwipeAdapter extends RecyclerView.Adapter<TinderSwipeAdapter.
 
                 if (user.getChatStatusFrom() != null) {
                     if (user.getChatStatusFrom().size() > 0) {
-                        Log.e("getChatStatusFrom", "" + user.getChatStatusFrom().get(0).getActiveStatus());
                         if (user.getChatStatusFrom().get(0).getActiveStatus().toLowerCase().equals("pending")) {
                             message.setImageResource(R.drawable.chat_sel);
                         } else {

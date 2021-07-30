@@ -38,7 +38,7 @@ import com.playdate.app.model.GetProfileDetails;
 import com.playdate.app.model.GetProileDetailData;
 import com.playdate.app.model.MatchListUser;
 import com.playdate.app.ui.blockuser.BlockUserActivity;
-import com.playdate.app.ui.dashboard.OnProfilePhotoChageListerner;
+import com.playdate.app.ui.dashboard.OnProfilePhotoChangeListerner;
 import com.playdate.app.ui.dialogs.FriendDialog;
 import com.playdate.app.ui.forgot_password.ForgotPasswordActivity;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
@@ -541,7 +541,7 @@ public class FragMyProfileDetails extends Fragment implements View.OnClickListen
     public void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         setValues();
-        OnProfilePhotoChageListerner inf = (OnProfilePhotoChageListerner) mContext;
+        OnProfilePhotoChangeListerner inf = (OnProfilePhotoChangeListerner) mContext;
         assert inf != null;
         inf.updateImage();
     }

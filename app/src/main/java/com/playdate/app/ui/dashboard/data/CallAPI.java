@@ -2,11 +2,13 @@ package com.playdate.app.ui.dashboard.data;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.NotificationData;
 import com.playdate.app.model.NotificationModel;
-import com.playdate.app.ui.dashboard.OnAPIResponce;
+import com.playdate.app.ui.dashboard.OnAPIResponse;
 import com.playdate.app.util.session.SessionPref;
 
 import java.util.HashMap;
@@ -16,7 +18,6 @@ import java.util.Map;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import timber.log.Timber;
 
 public class CallAPI {
     public void callGetNotificationAPI(Context mContext) {
@@ -27,37 +28,37 @@ public class CallAPI {
         hashMap.put("pageNo", "1");//Hardcode
         SessionPref pref = SessionPref.getInstance(mContext);
 //        Timber.tag("GetUserSuggestionData").e("" + pref.getStringVal(SessionPref.LoginUsertoken));
-        OnAPIResponce ref = (OnAPIResponce) mContext;
+        OnAPIResponse ref = (OnAPIResponse) mContext;
         Call<NotificationModel> call = service.getNotification("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
 //        Timber.e("" + hashMap);
         call.enqueue(new Callback<NotificationModel>() {
             @Override
-            public void onResponse(Call<NotificationModel> call, Response<NotificationModel> response) {
+            public void onResponse(@NonNull Call<NotificationModel> call, @NonNull Response<NotificationModel> response) {
                 if (response.code() == 200) {
                     assert response.body() != null;
                     try {
                         if (response.body().getStatus() == 1) {
                             List<NotificationData> lst_notifications = response.body().getData();
-                            ref.setNotiCount(lst_notifications.size());
+                            ref.setNotificationCount(lst_notifications.size());
 
 
                         } else {
-                            ref.setNotiCount(0);
+                            ref.setNotificationCount(0);
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
-                        ref.setNotiCount(0);
+                        ref.setNotificationCount(0);
                     }
                 } else {
-                    ref.setNotiCount(0);
+                    ref.setNotificationCount(0);
                 }
 
             }
 
             @Override
-            public void onFailure(Call<NotificationModel> call, Throwable t) {
+            public void onFailure(@NonNull Call<NotificationModel> call, @NonNull Throwable t) {
                 t.printStackTrace();
-                ref.setNotiCount(0);
+                ref.setNotificationCount(0);
             }
         });
     }

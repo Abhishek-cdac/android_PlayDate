@@ -59,7 +59,7 @@ public class CouponStoreAdapter extends RecyclerView.Adapter<CouponStoreAdapter.
     public void onBindViewHolder(@NonNull CouponStoreAdapter.ViewHolder holder, int position) {
 
         holder.discount_desc.setText(coupon_list.get(position).getCouponDescription());
-        holder.points.setText("" + coupon_list.get(position).getCouponPurchasePoint());
+        holder.points.setText(("" + coupon_list.get(position).getCouponPurchasePoint()));
         try {
             holder.rest_name.setText(coupon_list.get(position).getCouponTitle());
             picasso.load(coupon_list.get(position).getRestaurants().get(0).getImage())

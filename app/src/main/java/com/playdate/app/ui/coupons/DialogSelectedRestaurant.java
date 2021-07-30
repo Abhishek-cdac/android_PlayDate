@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +25,6 @@ import com.playdate.app.model.MyCouponsModelStore;
 import com.playdate.app.model.MyCouponsWrapStore;
 import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.ui.coupons.adapters.CouponStoreAdapter;
-import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
@@ -35,7 +33,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -44,24 +41,21 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class DialogSelectedRestaurant extends Dialog {
-    private String rest_name;
-    private String rest_image;
-    TextView tv_rest_name;
-    ImageView iv_rest_image;
-    ImageView iv_close;
-    RecyclerView rv_coupons_list;
+    private final String rest_name;
+    //    private String rest_image;
+    private final RecyclerView rv_coupons_list;
     private ArrayList<GetCouponsData> lst_getCoupons;
     private ArrayList<GetCouponsData> lst_filteredRest = new ArrayList<>();
     Onclick itemClick;
-    private CommonClass clsCommon;
+    //    private CommonClass clsCommon;
     private Account account;
-    private TextView tv_unavailavble;
+    private final TextView tv_unavailavble;
 
 
     public DialogSelectedRestaurant(@NonNull Context context, String rest_name, String rest_image) {
         super(context, R.style.My_Dialog);
         this.rest_name = rest_name;
-        this.rest_image = rest_image;
+//        this.rest_image = rest_image;
 
         WindowManager.LayoutParams wlmp = getWindow().getAttributes();
 
@@ -75,10 +69,10 @@ public class DialogSelectedRestaurant extends Dialog {
         getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         setContentView(view);
         callGetCouponsApi();
-        clsCommon = CommonClass.getInstance();
-        tv_rest_name = view.findViewById(R.id.rest_name);
-        iv_rest_image = view.findViewById(R.id.rest_image);
-        iv_close = view.findViewById(R.id.iv_close);
+//        clsCommon = CommonClass.getInstance();
+        TextView tv_rest_name = view.findViewById(R.id.rest_name);
+        ImageView iv_rest_image = view.findViewById(R.id.rest_image);
+        ImageView iv_close = view.findViewById(R.id.iv_close);
         tv_unavailavble = view.findViewById(R.id.tv_unavailavble);
         rv_coupons_list = view.findViewById(R.id.rv_coupons_list);
         rv_coupons_list.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
@@ -157,7 +151,7 @@ public class DialogSelectedRestaurant extends Dialog {
         Call<MyCouponsModelStore> call = service.getCoupons("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<MyCouponsModelStore>() {
             @Override
-            public void onResponse(Call<MyCouponsModelStore> call, Response<MyCouponsModelStore> response) {
+            public void onResponse(@NonNull Call<MyCouponsModelStore> call, @NonNull Response<MyCouponsModelStore> response) {
                 pd.cancel();
                 if (response.code() == 200) {
                     if (Objects.requireNonNull(response.body()).getStatus() == 1) {
@@ -184,7 +178,7 @@ public class DialogSelectedRestaurant extends Dialog {
                             }
                             lst_filteredRest = lst;
 
-                            Log.d("Filtered Lst", "onResponseAfter: " + rest_name + " --- " + lst_filteredRest.size());
+//                            Log.d("Filtered Lst", "onResponseAfter: " + rest_name + " --- " + lst_filteredRest.size());
 
                             if (lst_filteredRest.isEmpty()) {
 //                                    lst_filteredRest = new ArrayList<>();
@@ -210,7 +204,7 @@ public class DialogSelectedRestaurant extends Dialog {
                     }
                 } else {
                     try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        JSONObject jObjError = new JSONObject(Objects.requireNonNull(response.errorBody()).string());
                         Toast.makeText(getContext(), "" + jObjError.getString("message"), Toast.LENGTH_SHORT).show();
 //                        clsCommon.showDialogMsgfrag(getContext(), "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
@@ -223,7 +217,7 @@ public class DialogSelectedRestaurant extends Dialog {
             }
 
             @Override
-            public void onFailure(Call<MyCouponsModelStore> call, Throwable t) {
+            public void onFailure(@NonNull Call<MyCouponsModelStore> call, @NonNull Throwable t) {
                 t.printStackTrace();
                 pd.cancel();
                 Toast.makeText(getContext(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();

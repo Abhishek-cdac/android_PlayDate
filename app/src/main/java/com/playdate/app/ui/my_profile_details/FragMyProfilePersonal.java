@@ -19,7 +19,7 @@ import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.GetProfileDetails;
 import com.playdate.app.model.GetProileDetailData;
-import com.playdate.app.ui.dashboard.OnProfilePhotoChageListerner;
+import com.playdate.app.ui.dashboard.OnProfilePhotoChangeListerner;
 import com.playdate.app.ui.forgot_password.ForgotPasswordActivity;
 import com.playdate.app.ui.register.age_verification.AgeVerifiationActivity;
 import com.playdate.app.ui.register.gender.GenderSelActivity;
@@ -212,7 +212,7 @@ public class FragMyProfilePersonal extends Fragment implements View.OnClickListe
         super.onActivityResult(requestCode, resultCode, data);
         try {
             setValues();
-            OnProfilePhotoChageListerner inf = (OnProfilePhotoChageListerner) getActivity();
+            OnProfilePhotoChangeListerner inf = (OnProfilePhotoChangeListerner) getActivity();
             Objects.requireNonNull(inf).updateImage();
         } catch (Exception e) {
             e.printStackTrace();

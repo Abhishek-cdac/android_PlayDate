@@ -65,7 +65,7 @@ public class FragMyCoupons extends Fragment {
         Call<MyCouponsModel> call = service.getMyCoupons("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<MyCouponsModel>() {
             @Override
-            public void onResponse(Call<MyCouponsModel> call, Response<MyCouponsModel> response) {
+            public void onResponse(@NonNull Call<MyCouponsModel> call, @NonNull Response<MyCouponsModel> response) {
                 try {
                     if (response.code() == 200) {
                         assert response.body() != null;
@@ -75,13 +75,12 @@ public class FragMyCoupons extends Fragment {
                             if (lst == null) {
                                 lst = new ArrayList<>();
                             }
-                            txt_points.setText("" + wrap.getAccount().getCurrentPoints());
+                            txt_points.setText(("" + wrap.getAccount().getCurrentPoints()));
 
-                            if (lst.size()==0){
+                            if (lst.size() == 0) {
                                 tv_placeholder.setVisibility(View.VISIBLE);
                                 rv_coupons_list.setVisibility(View.GONE);
-                            }else
-                            {
+                            } else {
                                 tv_placeholder.setVisibility(View.GONE);
                                 rv_coupons_list.setVisibility(View.VISIBLE);
                                 MyCouponAdapter adapter = new MyCouponAdapter(lst);
@@ -98,7 +97,7 @@ public class FragMyCoupons extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<MyCouponsModel> call, Throwable t) {
+            public void onFailure(@NonNull Call<MyCouponsModel> call, @NonNull Throwable t) {
                 t.printStackTrace();
             }
         });

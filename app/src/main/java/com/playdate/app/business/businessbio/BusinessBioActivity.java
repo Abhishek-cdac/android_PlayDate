@@ -4,10 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
 
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
@@ -45,42 +45,27 @@ public class BusinessBioActivity extends AppCompatActivity {
         bioBinding.setLifecycleOwner(this);
         mIntent = getIntent();
         bioBinding.setBusinessBioViewModel(businessBioViewModel);
-//        if (mIntent.getBooleanExtra("fromProfile", false)) {
-//            SessionPref pref = SessionPref.getInstance(this);
-//            // businessBioViewModel.BioText.setValue(pref.getStringVal(LoginUserpersonalBio));
-//        } else {
-//
-//
-//        }
-        businessBioViewModel.OnNextClick().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean click) {
-                if (null == businessBioViewModel.BioText.getValue()) {
-                    clsCommon.showDialogMsg(BusinessBioActivity.this, "PlayDate", "Enter your business bio.", "Ok");
-                } else if (businessBioViewModel.BioText.getValue().trim().equals("")) {
-                    clsCommon.showDialogMsg(BusinessBioActivity.this, "PlayDate", "Enter your business bio.", "Ok");
+        businessBioViewModel.OnNextClick().observe(this, click -> {
+            if (null == businessBioViewModel.BioText.getValue()) {
+                clsCommon.showDialogMsg(BusinessBioActivity.this, "PlayDate", "Enter your business bio.", "Ok");
+            } else if (businessBioViewModel.BioText.getValue().trim().equals("")) {
+                clsCommon.showDialogMsg(BusinessBioActivity.this, "PlayDate", "Enter your business bio.", "Ok");
+            } else {
+
+                if (mIntent.getBooleanExtra("fromProfile", false)) {
+                    Intent mIntent = new Intent();
+                    setResult(410, mIntent);
+                    finish();
                 } else {
-
-                    if (mIntent.getBooleanExtra("fromProfile", false)) {
-                        Intent mIntent = new Intent();
-                        setResult(410, mIntent);
-                        finish();
-                    } else {
-                        callAPI();
-                    }
-                    //
+                    callAPI();
                 }
-
-
+                //
             }
+
+
         });
 
-        businessBioViewModel.onBackClick().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean click) {
-                finish();
-            }
-        });
+        businessBioViewModel.onBackClick().observe(this, click -> finish());
     }
 
     private void callAPI() {
@@ -99,7 +84,7 @@ public class BusinessBioActivity extends AppCompatActivity {
         Call<LoginResponse> call = service.updateProfile("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<LoginResponse>() {
             @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+            public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
                 pd.cancel();
                 if (response.code() == 200) {
                     if (Objects.requireNonNull(response.body()).getStatus() == 1) {
@@ -132,7 +117,7 @@ public class BusinessBioActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<LoginResponse> call, @NonNull Throwable t) {
                 t.printStackTrace();
                 pd.cancel();
                 Toast.makeText(BusinessBioActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();

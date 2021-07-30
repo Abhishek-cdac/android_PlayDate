@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
@@ -23,6 +24,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.playdate.app.R;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Objects;
 
 import static com.playdate.app.ui.register.profile.UploadProfileActivity.REQUEST_LOCATION_CODE;
 
@@ -58,7 +60,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     }
 
     @Override
-    public void onSaveInstanceState(Bundle bundle) {
+    public void onSaveInstanceState(@NonNull Bundle bundle) {
         super.onSaveInstanceState(bundle);
 
         Bundle mapViewBundle = bundle.getBundle(MAP_VIEW_BUNDLE_KEY);
@@ -107,7 +109,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(@NonNull GoogleMap googleMap) {
         gmap = googleMap;
 //        mIntent = getIntent();
 //        lattitude = mIntent.getDoubleExtra("lattitude", 0.0);
@@ -157,7 +159,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             bitmap = snapshot;
 
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 40, baos);
+            Objects.requireNonNull(bitmap).compress(Bitmap.CompressFormat.JPEG, 40, baos);
             ChatMainActivity.locationBitmap = bitmap;
 
 //            byte[] b = baos.toByteArray();

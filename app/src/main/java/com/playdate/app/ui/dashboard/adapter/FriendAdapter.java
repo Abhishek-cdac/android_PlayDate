@@ -65,7 +65,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
             super(itemView);
             profile_image = itemView.findViewById(R.id.profile_image);
             txt_friend_name = itemView.findViewById(R.id.txt_friend_name);
-            itemView.setOnClickListener(v -> ((OnFriendSelected) dashboardActivity).OnSingleFriendSelected(lst.get(getAdapterPosition()).getUserId(), lst.get(getAbsoluteAdapterPosition()).getFriendId()));
+            itemView.setOnClickListener(v -> ((OnFriendSelected) dashboardActivity).onSingleFriendSelected(lst.get(getAdapterPosition()).getUserId(), lst.get(getAbsoluteAdapterPosition()).getFriendId()));
         }
     }
 }

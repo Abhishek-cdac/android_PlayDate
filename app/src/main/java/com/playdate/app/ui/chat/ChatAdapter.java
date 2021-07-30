@@ -54,8 +54,6 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final Context mContext;
     private final ArrayList<ChatMessage> lst_chat;
-    //    private final ArrayList<PollingQuestion> lst_pollingQuestion;
-//    private ArrayList<ChatTotalResponse> lst_chatResponse = new ArrayList<>();
     private boolean isPlaying;
     private int lastAudiPlayPos = -1;
     private boolean isPause;

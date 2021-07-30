@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 public class ForgotViewModel extends ViewModel {
+
     public MutableLiveData<String> mobile = new MutableLiveData<>();
     public MutableLiveData<String> old_password = new MutableLiveData<>();
     public MutableLiveData<String> newPass = new MutableLiveData<>();

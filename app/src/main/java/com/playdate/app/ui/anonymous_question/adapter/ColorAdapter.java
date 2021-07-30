@@ -17,8 +17,8 @@ import java.util.ArrayList;
 public class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.ViewHolder> {
 
 
-    ArrayList<String> lst;
-    AnoQuesCreateActivity ref;
+    private final ArrayList<String> lst;
+    private final AnoQuesCreateActivity ref;
 
     public ColorAdapter(ArrayList<String> lst, AnoQuesCreateActivity anoQuesCreateActivity) {
         this.lst = lst;

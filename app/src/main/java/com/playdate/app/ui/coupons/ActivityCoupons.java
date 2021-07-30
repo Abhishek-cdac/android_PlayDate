@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -33,6 +34,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,22 +42,18 @@ import retrofit2.Response;
 
 public class ActivityCoupons extends AppCompatActivity implements View.OnClickListener {
     private String CouponCode;
-    //    private int CurrentPoints;
     private RelativeLayout rl_getcode;
     private RelativeLayout rl_code;
     private String inviteLink;
     private TextView share_coupans;
     private TextView share_coupans1;
     private ArrayList<FaqData> faq_list;
-    //    private TextView tv_Get_code;
     private RecyclerView rv_frequently;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.frag_coupan_code);
-        String inviteCode = getIntent().getStringExtra("inviteCode");
-        //  inviteLink = getIntent().getStringExtra("inviteLink");
         RelativeLayout copy_code = findViewById(R.id.copy_code);
 
         ImageView whatsup_coupan = findViewById(R.id.whatsup_coupan);
@@ -85,7 +83,7 @@ public class ActivityCoupons extends AppCompatActivity implements View.OnClickLi
         int CurrentPoints = mIntent.getIntExtra("CurrentPoints", 0);
         boolean isFromCoupon = mIntent.getBooleanExtra("isFromCoupon", false);
         boolean isnoBalance = mIntent.getBooleanExtra("No Balance", false);
-        txt_points.setText(couponPoints + " Points");
+        txt_points.setText((couponPoints + " Points"));
         inviteLink = "Hey, I'm on PlayDate. Join me! Download it here: http://139.59.0.106:3000/3310 and use my coupon code " + CouponCode + " and get discount on restaurants.";
 
         if (isFromCoupon) {
@@ -151,10 +149,10 @@ public class ActivityCoupons extends AppCompatActivity implements View.OnClickLi
         Call<FaqModel> call = service.getFaq("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<FaqModel>() {
             @Override
-            public void onResponse(Call<FaqModel> call, Response<FaqModel> response) {
+            public void onResponse(@NonNull Call<FaqModel> call, @NonNull Response<FaqModel> response) {
                 pd.cancel();
                 if (response.code() == 200) {
-                    if (response.body().getStatus() == 1) {
+                    if (Objects.requireNonNull(response.body()).getStatus() == 1) {
 
                         faq_list = (ArrayList<FaqData>) response.body().getData();
                         if (faq_list == null) {
@@ -166,11 +164,10 @@ public class ActivityCoupons extends AppCompatActivity implements View.OnClickLi
                         rv_frequently.setAdapter(adapter);
 
 
-                    } else {
                     }
                 } else {
                     try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        JSONObject jObjError = new JSONObject(Objects.requireNonNull(response.errorBody()).string());
                         new CommonClass().showDialogMsg(ActivityCoupons.this, "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (JSONException | IOException e) {
                         e.printStackTrace();
@@ -182,7 +179,7 @@ public class ActivityCoupons extends AppCompatActivity implements View.OnClickLi
             }
 
             @Override
-            public void onFailure(Call<FaqModel> call, Throwable t) {
+            public void onFailure(@NonNull Call<FaqModel> call, @NonNull Throwable t) {
                 t.printStackTrace();
                 pd.cancel();
                 Toast.makeText(ActivityCoupons.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
@@ -191,10 +188,6 @@ public class ActivityCoupons extends AppCompatActivity implements View.OnClickLi
 
     }
 
-//    private void callAPIRedeemCouPon() {
-
-
-//    }
 
     private void callAPIRedeemCouPon(String copy_code) {
         SessionPref pref = SessionPref.getInstance(this);
@@ -210,19 +203,18 @@ public class ActivityCoupons extends AppCompatActivity implements View.OnClickLi
         Call<GetCouponsModel> call = service.purchaseCoupons("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<GetCouponsModel>() {
             @Override
-            public void onResponse(Call<GetCouponsModel> call, Response<GetCouponsModel> response) {
+            public void onResponse(@NonNull Call<GetCouponsModel> call, @NonNull Response<GetCouponsModel> response) {
                 pd.cancel();
                 if (response.code() == 200) {
-                    if (response.body().getStatus() == 1) {
+                    if (Objects.requireNonNull(response.body()).getStatus() == 1) {
                         share_coupans.setVisibility(View.INVISIBLE);
                         share_coupans1.setVisibility(View.VISIBLE);
                         rl_getcode.setVisibility(View.INVISIBLE);
                         rl_code.setVisibility(View.VISIBLE);
-                    } else {
                     }
                 } else {
                     try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        JSONObject jObjError = new JSONObject(Objects.requireNonNull(response.errorBody()).string());
                         new CommonClass().showDialogMsg(ActivityCoupons.this, "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (JSONException | IOException e) {
                         e.printStackTrace();
@@ -234,7 +226,7 @@ public class ActivityCoupons extends AppCompatActivity implements View.OnClickLi
             }
 
             @Override
-            public void onFailure(Call<GetCouponsModel> call, Throwable t) {
+            public void onFailure(@NonNull Call<GetCouponsModel> call, @NonNull Throwable t) {
                 t.printStackTrace();
                 pd.cancel();
                 Toast.makeText(ActivityCoupons.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
@@ -310,7 +302,8 @@ public class ActivityCoupons extends AppCompatActivity implements View.OnClickLi
     private void shareTextUrl() {
         Intent share = new Intent(android.content.Intent.ACTION_SEND);
         share.setType("text/plain");
-        share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+
+        share.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
         share.putExtra(Intent.EXTRA_TEXT, inviteLink);
         startActivity(Intent.createChooser(share, "PlayDate InviteLink!"));
     }

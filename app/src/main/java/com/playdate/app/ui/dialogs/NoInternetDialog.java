@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import com.playdate.app.R;
 
 public class NoInternetDialog extends Dialog {
-    ImageView bar;
 
     public NoInternetDialog(@NonNull Context context) {
         super(context, R.style.My_Dialog);
@@ -22,7 +21,7 @@ public class NoInternetDialog extends Dialog {
         setOnCancelListener(null);
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_no_internet, null);
 
-        bar = view.findViewById(R.id.bar);
+        ImageView bar = view.findViewById(R.id.bar);
         bar.setOnClickListener(v -> context.startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS)));
         setContentView(view);
     }

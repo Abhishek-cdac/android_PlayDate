@@ -150,23 +150,21 @@ public class FragCouponStore extends Fragment implements OnCouponSelected {
                                 lst_getCoupons = new ArrayList<>();
                             }
 
-                            txt_points.setText("" + wrap.getAccount().getCurrentPoints());
+                            txt_points.setText(("" + wrap.getAccount().getCurrentPoints()));
 
-                            if (lst_getCoupons.size()==0){
+                            if (lst_getCoupons.size() == 0) {
                                 tv_placeholder.setVisibility(View.VISIBLE);
                                 rv_coupons_list.setVisibility(View.GONE);
-                            }else
-                            {
+                            } else {
                                 tv_placeholder.setVisibility(View.GONE);
                                 rv_coupons_list.setVisibility(View.VISIBLE);
-                                CouponStoreAdapter adapter = new CouponStoreAdapter(lst_getCoupons, itemClick,false);
+                                CouponStoreAdapter adapter = new CouponStoreAdapter(lst_getCoupons, itemClick, false);
                                 rv_coupons_list.setAdapter(adapter);
                                 adapter.setListerner(FragCouponStore.this);
                                 account = wrap.getAccount();
 
                                 adapter.setCurrentPoints(wrap.getAccount().getCurrentPoints());
                             }
-
 
 
                         } catch (Exception e) {
@@ -179,7 +177,7 @@ public class FragCouponStore extends Fragment implements OnCouponSelected {
                     }
                 } else {
                     try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        JSONObject jObjError = new JSONObject(Objects.requireNonNull(response.errorBody()).string());
                         clsCommon.showDialogMsgFrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
@@ -191,7 +189,7 @@ public class FragCouponStore extends Fragment implements OnCouponSelected {
             }
 
             @Override
-            public void onFailure(Call<MyCouponsModelStore> call, Throwable t) {
+            public void onFailure(@NonNull Call<MyCouponsModelStore> call, @NonNull Throwable t ) {
                 t.printStackTrace();
                 pd.cancel();
                 Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();

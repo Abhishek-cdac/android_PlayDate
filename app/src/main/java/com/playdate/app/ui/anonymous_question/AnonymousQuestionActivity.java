@@ -5,12 +5,12 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -29,6 +29,7 @@ import com.playdate.app.util.session.SessionPref;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -36,7 +37,7 @@ import retrofit2.Response;
 public class AnonymousQuestionActivity extends AppCompatActivity implements onCommentDelete, View.OnClickListener {
 
     private ArrayList<GetCommentData> lst_getComment;
-    private CommentAdapter adapter;
+    //    private CommentAdapter adapter;
     private TextView text_count, txt_post_comment;
     private RecyclerView recyclerView;
     private EditText add_comment;
@@ -112,7 +113,7 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
         if (mIntent.getBooleanExtra("new", false)) {
             isForNew = true;
             text.setText(R.string.anonymous);
-            text_count.setText("Add an anonymous question and receive responses");
+            text_count.setText(R.string.str_add_quest);
             recyclerView.setVisibility(View.GONE);
             add_comment.setEnabled(true);
             add_comment.setHint("Add a question...!");
@@ -190,14 +191,14 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("postId", postId);
-        Log.e("postId", "" + this.postId);
+//        Log.e("postId", "" + this.postId);
         Call<GetCommentModel> call = service.getPostComment("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new retrofit2.Callback<GetCommentModel>() {
             @Override
-            public void onResponse(Call<GetCommentModel> call, Response<GetCommentModel> response) {
+            public void onResponse(@NonNull Call<GetCommentModel> call, @NonNull Response<GetCommentModel> response) {
 //                pd.cancel();
                 if (response.code() == 200) {
-                    if (response.body().getStatus() == 1) {
+                    if (Objects.requireNonNull(response.body()).getStatus() == 1) {
                         lst_getComment = (ArrayList<GetCommentData>) response.body().getData();
                         if (lst_getComment == null) {
                             lst_getComment = new ArrayList<>();
@@ -213,28 +214,22 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
                         int number = adapter.getItemCount();
                         //  String number = lst_getComment.get(0).get;
                         //   Log.d("selected_click", String.valueOf(number));
-                        Log.e("selected_click", "" + number);
+//                        Log.e("selected_click", "" + number);
 
                         if (number == 0) {
-                            text_count.setText("No Comments");
+                            text_count.setText(R.string.str_no_comments);
                         } else {
-                            text_count.setText(number + " Comments");
+                            text_count.setText((number + " Comments"));
                         }
-                    } else {
-
                     }
-                } else {
-
                 }
 
 
             }
 
             @Override
-            public void onFailure(Call<GetCommentModel> call, Throwable t) {
+            public void onFailure(@NonNull Call<GetCommentModel> call, @NonNull Throwable t) {
                 t.printStackTrace();
-//                pd.cancel();
-//                Toast.makeText(BioActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -276,10 +271,10 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
         Call<CommonModel> call = service.addPostComment("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new retrofit2.Callback<CommonModel>() {
             @Override
-            public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
+            public void onResponse(@NonNull Call<CommonModel> call, @NonNull Response<CommonModel> response) {
 //                pd.cancel();
                 if (response.code() == 200) {
-                    if (response.body().getStatus() == 1) {
+                    if (Objects.requireNonNull(response.body()).getStatus() == 1) {
                         add_comment.setText("");
 
                         try {
@@ -305,18 +300,14 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
                         }
                         callGetCommentApi();
 
-                    } else {
-
                     }
-                } else {
-
                 }
 
 
             }
 
             @Override
-            public void onFailure(Call<CommonModel> call, Throwable t) {
+            public void onFailure(@NonNull Call<CommonModel> call, @NonNull Throwable t) {
                 t.printStackTrace();
 //                pd.cancel();
 //                Toast.makeText(BioActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
@@ -348,15 +339,15 @@ public class AnonymousQuestionActivity extends AppCompatActivity implements onCo
     public void ChangeCount(int number) {
         if (anonymous) {
             if (number == 0) {
-                text_count.setText("No Answer");
+                text_count.setText(R.string.str_no_ans);
             } else {
-                text_count.setText(number + " Answer");
+                text_count.setText((number + " Answer"));
             }
         } else {
             if (number == 0) {
-                text_count.setText("No Comments");
+                text_count.setText(R.string.str_no_comments);
             } else {
-                text_count.setText(number + " Comments");
+                text_count.setText((number + " Comments"));
             }
         }
     }

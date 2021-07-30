@@ -70,16 +70,10 @@ public class InviteAdapter extends RecyclerView.Adapter<InviteAdapter.ViewHolder
                     facebook();
                     break;
                 case 2:
-                    shareTextUrl();
-                    break;
                 case 3:
                     shareTextUrl();
                     break;
             }
-//                switch (position) {
-//                    case 0:
-//                        ReplaceFrag(new FragPremium1());
-//                }
         });
 
 

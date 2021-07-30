@@ -3,7 +3,6 @@ package com.playdate.app.ui.dashboard.fragments;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,17 +48,16 @@ public class FragSearchUser extends Fragment implements SuggestedFriendAdapter.S
     private CommonClass clsCommon;
     private Onclick itemClick;
     private SuggestedFriendAdapter adapter;
-    private int PageNumber=1;
+    private int PageNumber = 1;
 
     public FragSearchUser() {
     }
-    
 
 
     public void OnUserProfileSelected(boolean isFriend, String id) {
         try {
             OnFriendSelected inf = (OnFriendSelected) getActivity();
-            Objects.requireNonNull(inf).OnSuggestionClosed(isFriend, id);
+            Objects.requireNonNull(inf).onSuggestionClosed(isFriend, id);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -106,7 +104,7 @@ public class FragSearchUser extends Fragment implements SuggestedFriendAdapter.S
         txt_cancel.setOnClickListener(v -> {
             edt_search.setText("");
             OnFriendSelected inf = (OnFriendSelected) getActivity();
-            inf.OnSuggestionClosed();
+            Objects.requireNonNull(inf).onSuggestionClosed();
 
 
         });
@@ -152,7 +150,7 @@ public class FragSearchUser extends Fragment implements SuggestedFriendAdapter.S
         view.setOnKeyListener((v, keyCode, event) -> {
             if (keyCode == KeyEvent.KEYCODE_BACK) {
                 OnFriendSelected inf = (OnFriendSelected) getActivity();
-                Objects.requireNonNull(inf).OnSuggestionClosed();
+                Objects.requireNonNull(inf).onSuggestionClosed();
                 return true;
             }
             return false;
@@ -162,7 +160,7 @@ public class FragSearchUser extends Fragment implements SuggestedFriendAdapter.S
 
     private void callGetUserSuggestionAPI() {
 
-        if(PageNumber==-1){
+        if (PageNumber == -1) {
             return;
         }
 
@@ -170,14 +168,14 @@ public class FragSearchUser extends Fragment implements SuggestedFriendAdapter.S
         Map<String, String> hashMap = new HashMap<>();
         // hashMap.put("filter", "");
         hashMap.put("limit", "20");
-        hashMap.put("pageNo", ""+PageNumber);//Hardcode
+        hashMap.put("pageNo", "" + PageNumber);//Hardcode
         TransparentProgressDialog pd = TransparentProgressDialog.getInstance(getActivity());
         pd.show();
         SessionPref pref = SessionPref.getInstance(getActivity());
         Call<GetUserSuggestion> call = service.getUserSuggestion("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<GetUserSuggestion>() {
             @Override
-            public void onResponse(Call<GetUserSuggestion> call, Response<GetUserSuggestion> response) {
+            public void onResponse(@NonNull Call<GetUserSuggestion> call, @NonNull Response<GetUserSuggestion> response) {
                 pd.cancel();
                 if (response.code() == 200) {
                     assert response.body() != null;
@@ -187,22 +185,22 @@ public class FragSearchUser extends Fragment implements SuggestedFriendAdapter.S
                             lst = new ArrayList<>();
                         }
 
-                        if(lst.isEmpty()){
-                            PageNumber=-1;
+                        if (lst.isEmpty()) {
+                            PageNumber = -1;
                             adapter.setHideShowMore();
-                            adapter.notifyItemChanged(lst_getUserSuggestions.size()-1);
+                            adapter.notifyItemChanged(lst_getUserSuggestions.size() - 1);
                             return;
                         }
-                        if(PageNumber==1){
-                            PageNumber=PageNumber+1;
+                        if (PageNumber == 1) {
+                            PageNumber = PageNumber + 1;
                             lst_getUserSuggestions = new ArrayList<>();
                             lst_getUserSuggestions.addAll(lst);
                             RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
                             recyclerView.setLayoutManager(manager);
                             adapter = new SuggestedFriendAdapter(lst_getUserSuggestions, itemClick, FragSearchUser.this);
                             recyclerView.setAdapter(adapter);
-                        }else{
-                            PageNumber=PageNumber+1;
+                        } else {
+                            PageNumber = PageNumber + 1;
                             lst_getUserSuggestions.addAll(lst);
                             adapter.notifyDataSetChanged();
 
@@ -211,9 +209,9 @@ public class FragSearchUser extends Fragment implements SuggestedFriendAdapter.S
 
                     }
                 } else {
-                    PageNumber=-1;
+                    PageNumber = -1;
                     try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        JSONObject jObjError = new JSONObject(Objects.requireNonNull(response.errorBody()).string());
                         clsCommon.showDialogMsgFrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
@@ -223,10 +221,10 @@ public class FragSearchUser extends Fragment implements SuggestedFriendAdapter.S
             }
 
             @Override
-            public void onFailure(Call<GetUserSuggestion> call, Throwable t) {
+            public void onFailure(@NonNull Call<GetUserSuggestion> call, @NonNull Throwable t) {
                 t.printStackTrace();
                 pd.cancel();
-                PageNumber=-1;
+                PageNumber = -1;
                 Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
@@ -235,7 +233,7 @@ public class FragSearchUser extends Fragment implements SuggestedFriendAdapter.S
     @Override
     public void onSuggestionSelected(GetUserSuggestionData getUserSuggestionData) {
 
-        Log.e("filter user", "" + getUserSuggestionData);
+//        Log.e("filter user", "" + getUserSuggestionData);
     }
 
     private void callAddFriendRequestApi(String toUserID) {
@@ -248,13 +246,13 @@ public class FragSearchUser extends Fragment implements SuggestedFriendAdapter.S
         Call<CommonModel> call = service.addFriendRequest("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<CommonModel>() {
             @Override
-            public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
+            public void onResponse(@NonNull Call<CommonModel> call, @NonNull Response<CommonModel> response) {
 //                pd.cancel();
                 if (response.code() == 200) {
                     assert response.body() != null;
                 } else {
                     try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        JSONObject jObjError = new JSONObject(Objects.requireNonNull(response.errorBody()).string());
                         clsCommon.showDialogMsgFrag(getActivity(), "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
@@ -263,7 +261,7 @@ public class FragSearchUser extends Fragment implements SuggestedFriendAdapter.S
             }
 
             @Override
-            public void onFailure(Call<CommonModel> call, Throwable t) {
+            public void onFailure(@NonNull Call<CommonModel> call, @NonNull Throwable t) {
                 t.printStackTrace();
                 Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }

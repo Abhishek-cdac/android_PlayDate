@@ -2,7 +2,6 @@ package com.playdate.app.ui.chat;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,9 +20,6 @@ import com.playdate.app.R;
 import com.playdate.app.model.chat_models.ChatList;
 import com.playdate.app.ui.chat.request.Onclick;
 import com.playdate.app.ui.chat.request.RequestChatFragment;
-import com.playdate.app.ui.dashboard.OnFriendSelected;
-import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
-import com.playdate.app.ui.my_profile_details.FragInstaLikeProfileFriends;
 import com.playdate.app.util.session.SessionPref;
 import com.squareup.picasso.Picasso;
 
@@ -46,13 +42,8 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
     private final Picasso picasso;
     private String todaysDate;
     private final String MyID;
-    private final SimpleDateFormat format1;
-    private final SimpleDateFormat format2;
-    private final SimpleDateFormat format3;
-    private final SimpleDateFormat format4;
-    private final SimpleDateFormat df;
     private final SimpleDateFormat sdf;
-
+    private final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
     public ChattingAdapter(ArrayList<ChatList> inboxList, Onclick itemClick, RequestChatFragment frag) {
         this.lst_msgs = inboxList;
         this.itemClick = itemClick;
@@ -70,13 +61,17 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
             e.printStackTrace();
         }
 
-        format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        format2 = new SimpleDateFormat("hh:mm aa");
-        format3 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        format4 = new SimpleDateFormat("dd/MM/yyyy");
+//        format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        format2 = new SimpleDateFormat("hh:mm aa");
+//        format3 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        format4 = new SimpleDateFormat("dd/MM/yyyy");
         sdf = new SimpleDateFormat("yyyy-MM-dd");
-        df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
-        df.setTimeZone(TimeZone.getTimeZone("GTC"));
+        //    private final SimpleDateFormat format1;
+        //    private final SimpleDateFormat format2;
+        //    private final SimpleDateFormat format3;
+        //    private final SimpleDateFormat format4;
+        SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+        df1.setTimeZone(TimeZone.getTimeZone("GTC"));
     }
 
 
@@ -108,7 +103,7 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
     public ChattingAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.inbox_list_row, parent, false);
         mContext = parent.getContext();
-        return new ChattingAdapter.MyViewHolder(itemView);
+        return new MyViewHolder(itemView);
     }
 
     @Override
@@ -119,7 +114,8 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
                 holder.txt_count.setVisibility(View.GONE);
                 holder.img_more.setVisibility(View.VISIBLE);
             } else {
-                holder.txt_count.setText("" + lst_msgs.get(position).getUnreadChat());
+                String text = "" + lst_msgs.get(position).getUnreadChat();
+                holder.txt_count.setText(text);
                 holder.txt_count.setVisibility(View.VISIBLE);
                 holder.img_more.setVisibility(View.GONE);
             }
@@ -157,20 +153,17 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
                     String mediaType = lst_msgs.get(position).getLastMsg().get(0).getLstMedia().get(0).getMediaType();
                     switch (mediaType.toLowerCase()) {
                         case "video":
-                            holder.msg.setText(text + "a video");
+                            holder.msg.setText((text + "a video"));
                             break;
                         case "image":
-                            holder.msg.setText(text + "an image");
+                            holder.msg.setText((text + "an image"));
                             break;
                         case "audio":
-                            holder.msg.setText(text + "an audio");
+                            holder.msg.setText((text + "an audio"));
 
                             break;
                         case "location":
-                            holder.msg.setText(text + "a location");
-                            break;
-                        default:
-
+                            holder.msg.setText((text + "a location"));
                             break;
                     }
 
@@ -184,7 +177,7 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
             String timeFormat = lst_msgs.get(position).getLastMsg().get(0).getEntryDate();
 
             timeFormat = timeFormat.replace("T", " ");
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+
             df.setTimeZone(TimeZone.getTimeZone("GTC"));
             Date date = null;
             try {
@@ -193,7 +186,7 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
                 e.printStackTrace();
             }
             df.setTimeZone(TimeZone.getDefault());
-            String formattedDate = df.format(date);
+            String formattedDate = df.format(Objects.requireNonNull(date));
 
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date ddd = null;
@@ -202,7 +195,7 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            long millis = ddd.getTime();
+            long millis = Objects.requireNonNull(ddd).getTime();
             String text = TimeAgo.using(millis);
             holder.txt_time.setText(text.toLowerCase());
 
@@ -266,21 +259,21 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
 
     }
 
-    private int findDayDiff(String formattedDate) {
-
-        try {
-            Date date = sdf.parse(formattedDate);
-            Date date1 = sdf.parse(todaysDate);
-            if (date == null || date1 == null)
-                return 0;
-
-            return ((int) ((date.getTime() - date1.getTime()) / (1000 * 60 * 60 * 24))) * -1;
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return 0;
-    }
+//    private int findDayDiff(String formattedDate) {
+//
+//        try {
+//            Date date = sdf.parse(formattedDate);
+//            Date date1 = sdf.parse(todaysDate);
+//            if (date == null || date1 == null)
+//                return 0;
+//
+//            return ((int) ((date.getTime() - date1.getTime()) / (1000 * 60 * 60 * 24))) * -1;
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return 0;
+//    }
 
 
     @Override
@@ -297,7 +290,7 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
 
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView user_name, msg, txt_count, txt_time;
         public ImageView profile_image, img_more, img_active;
         public RelativeLayout main_rl;
@@ -317,13 +310,6 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
             img_active = itemView.findViewById(R.id.img_active);
             main_ll = itemView.findViewById(R.id.main_ll);
 
-//            main_rl.setOnLongClickListener(v -> {
-//                selectedToDelete = getAdapterPosition();
-//                String chatId = lst_msgs.get(getAbsoluteAdapterPosition()).getChatId();
-//                showBottomSheet(selectedToDelete, lst_msgs.get(getAbsoluteAdapterPosition()).getToUserId(), chatId);
-//                notifyDataSetChanged();
-//                return true;
-//            });
 
         }
     }

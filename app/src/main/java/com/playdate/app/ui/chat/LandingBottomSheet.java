@@ -1,8 +1,6 @@
 package com.playdate.app.ui.chat;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,12 +18,12 @@ import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.CommonModel;
 import com.playdate.app.model.LoginResponse;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
-import com.playdate.app.ui.my_profile_details.FragInstaLikeProfile;
 import com.playdate.app.ui.my_profile_details.FragInstaLikeProfileFriends;
 import com.playdate.app.util.session.SessionPref;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -105,7 +103,7 @@ public class LandingBottomSheet extends BottomSheetDialogFragment {
             } else {
                 try {
                     OnInnerFragmentClicks ref = (OnInnerFragmentClicks) getActivity();
-                    ref.ReplaceFragWithStack(new FragInstaLikeProfileFriends(true, toUserId, true));
+                    Objects.requireNonNull(ref).ReplaceFragWithStack(new FragInstaLikeProfileFriends(true, toUserId, true));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -126,22 +124,18 @@ public class LandingBottomSheet extends BottomSheetDialogFragment {
         Call<CommonModel> call = service.deleteChatRoom("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<CommonModel>() {
             @Override
-            public void onResponse(Call<CommonModel> call, Response<CommonModel> response) {
+            public void onResponse(@NonNull Call<CommonModel> call, @NonNull Response<CommonModel> response) {
                 if (response.code() == 200) {
-                    if (response.body().getStatus() == 1) {
+                    if (Objects.requireNonNull(response.body()).getStatus() == 1) {
                         chattingAdapter.deleteChat(index);
                         chattingAdapter.Refresh();
 
-                    } else {
-
                     }
-                } else {
-
                 }
             }
 
             @Override
-            public void onFailure(Call<CommonModel> call, Throwable t) {
+            public void onFailure(@NonNull Call<CommonModel> call, @NonNull Throwable t) {
                 t.printStackTrace();
             }
         });
@@ -162,35 +156,25 @@ public class LandingBottomSheet extends BottomSheetDialogFragment {
         Call<LoginResponse> call = service.addUserReportBlock("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new retrofit2.Callback<LoginResponse>() {
             @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-//                pd.cancel();
-                if (response.code() == 200) {
-                    if (response.body().getStatus() == 1) {
-                        Log.e("successful", "" + toUserId + " " + action);
-
-                    } else {
-                    }
-                } else {
-
-                }
+            public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
             }
 
 
             @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<LoginResponse> call, @NonNull Throwable t) {
                 t.printStackTrace();
             }
         });
 
     }
 
-    private void shareTextUrl() {
-        Intent share = new Intent(android.content.Intent.ACTION_SEND);
-        share.setType("text/plain");
-        share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-        String inviteLink = "Hey, welcome to playDAte";
-        share.putExtra(Intent.EXTRA_TEXT, inviteLink);
-        startActivity(Intent.createChooser(share, "PlayDate InviteLink!"));
-        chatAdapter.dismissSheet();
-    }
+//    private void shareTextUrl() {
+//        Intent share = new Intent(android.content.Intent.ACTION_SEND);
+//        share.setType("text/plain");
+//        share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+//        String inviteLink = "Hey, welcome to playDAte";
+//        share.putExtra(Intent.EXTRA_TEXT, inviteLink);
+//        startActivity(Intent.createChooser(share, "PlayDate InviteLink!"));
+//        chatAdapter.dismissSheet();
+//    }
 }

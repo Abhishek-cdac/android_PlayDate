@@ -1,9 +1,7 @@
 package com.playdate.app.ui.anonymous_question;
 
 import android.content.Context;
-import android.os.Build;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +10,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,6 +30,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TimeZone;
 
 import retrofit2.Call;
@@ -44,8 +42,10 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     private int selected_index = -1;
     private final Onclick itemClick;
     private Context mContext;
+    private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.ENGLISH);
+    private final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
     private String postId;
-    private String commentId;
+//    private String commentId;
 
     public CommentAdapter(Context applicationContext, ArrayList<GetCommentData> lst_getComment, Onclick itemClick) {
         this.commentList = lst_getComment;
@@ -62,7 +62,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         return new ViewHolder(view);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull CommentAdapter.ViewHolder holder, int position) {
         SessionPref pref = SessionPref.getInstance(mContext);
@@ -74,13 +73,13 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         holder.name.setText(Html.fromHtml(sourceString));
 
 
-        commentId = commentList.get(position).getComments().getCommentId();
+//        commentId = commentList.get(position).getComments().getCommentId();
         postId = commentList.get(position).getComments().getPostId();
         String timeFormat = commentList.get(position).getComments().getEntryDate();
 
 
         timeFormat = timeFormat.replace("T", " ");
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+
         df.setTimeZone(TimeZone.getTimeZone("GTC"));
         Date date = null;
         try {
@@ -89,16 +88,16 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             e.printStackTrace();
         }
         df.setTimeZone(TimeZone.getDefault());
-        String formattedDate = df.format(date);
+        String formattedDate = df.format(Objects.requireNonNull(date));
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
         Date ddd = null;
         try {
             ddd = sdf.parse(formattedDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        long millis = ddd.getTime();
+        long millis = Objects.requireNonNull(ddd).getTime();
         String text = TimeAgo.using(millis);
         holder.time.setText(text.toLowerCase());
 
@@ -126,25 +125,21 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
 
         holder.relativeLayout.setOnLongClickListener(v -> {
-            int selected_index = position;
-            if (!commentList.get(selected_index).isSelected) {
+            if (!commentList.get(position).isSelected) {
 
                 for (int i = 0; i < commentList.size(); i++) {
-                    if (selected_index != i) {
+                    if (position != i) {
                         commentList.get(i).setSelected(false);
                     } else {
-                        commentList.get(selected_index).setSelected(true);
-                        itemClick.onItemClicks(v, selected_index, 11, commentList.get(position).getComments().getCommentId(), postId, commentList.get(position).getUserId());
+                        commentList.get(position).setSelected(true);
+                        itemClick.onItemClicks(v, position, 11, commentList.get(position).getComments().getCommentId(), postId, commentList.get(position).getUserId());
                     }
                 }
-
-                notifyDataSetChanged();
-
-
             } else {
-                commentList.get(selected_index).setSelected(false);
-                notifyDataSetChanged();
+                commentList.get(position).setSelected(false);
+
             }
+            notifyDataSetChanged();
             return true;
         });
 
@@ -162,14 +157,20 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
     @Override
     public int getItemCount() {
+        if (commentList == null)
+            return 0;
         return commentList.size();
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView name, desc, like, reply, time;
-        RelativeLayout relativeLayout;
-        ImageView delete;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        private final TextView name;
+        private final TextView desc;
+        private final TextView like;
+        private final TextView reply;
+        private final TextView time;
+        private final RelativeLayout relativeLayout;
+        private final ImageView delete;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -195,11 +196,11 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         Call<GetCommentModel> call = service.deletePostComment("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new retrofit2.Callback<GetCommentModel>() {
             @Override
-            public void onResponse(Call<GetCommentModel> call, Response<GetCommentModel> response) {
+            public void onResponse(@NonNull Call<GetCommentModel> call, @NonNull Response<GetCommentModel> response) {
 
-                try{
+                try {
                     if (response.code() == 200) {
-                        if (response.body().getStatus() == 1) {
+                        if (Objects.requireNonNull(response.body()).getStatus() == 1) {
                             commentDeleted(selected_index);
                             callGetCommentApi();
                         }
@@ -212,7 +213,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             }
 
             @Override
-            public void onFailure(Call<GetCommentModel> call, Throwable t) {
+            public void onFailure(@NonNull Call<GetCommentModel> call, @NonNull Throwable t) {
                 t.printStackTrace();
             }
         });
@@ -246,13 +247,12 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         Call<GetCommentModel> call = service.getPostComment("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new retrofit2.Callback<GetCommentModel>() {
             @Override
-            public void onResponse(Call<GetCommentModel> call, Response<GetCommentModel> response) {
+            public void onResponse(@NonNull Call<GetCommentModel> call, @NonNull Response<GetCommentModel> response) {
 
                 if (response.code() == 200) {
 
-                    try
-                    {
-                        if (response.body().getStatus() == 1) {
+                    try {
+                        if (Objects.requireNonNull(response.body()).getStatus() == 1) {
                             commentList = (ArrayList<GetCommentData>) response.body().getData();
                             if (commentList == null) {
                                 commentList = new ArrayList<>();
@@ -269,7 +269,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             }
 
             @Override
-            public void onFailure(Call<GetCommentModel> call, Throwable t) {
+            public void onFailure(@NonNull Call<GetCommentModel> call, @NonNull Throwable t) {
                 t.printStackTrace();
             }
         });
