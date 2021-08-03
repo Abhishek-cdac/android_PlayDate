@@ -519,6 +519,7 @@ public class SocialFeedAdapter extends AAH_VideosAdapter {
 
                 if (pref.getStringVal(SessionPref.LoginUserID).equals(lst.get(position).getUserId())) {
                     viewHolderAnonymQuestion.delete_btn.setVisibility(View.VISIBLE);
+                    viewHolderAnonymQuestion.respond.setVisibility(View.VISIBLE);
                 } else {
                     viewHolderAnonymQuestion.delete_btn.setVisibility(View.INVISIBLE);
                     viewHolderAnonymQuestion.respond.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;

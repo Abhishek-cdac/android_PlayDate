@@ -91,6 +91,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
+                    android:layout_below="@+id/question_Anonymous"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:gravity="center"
                     android:textSize="@dimen/_90sdp" />
@@ -109,7 +111,7 @@
     </RelativeLayout>
 
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/rl_options"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -117,39 +119,44 @@
         android:layout_marginLeft="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_5sdp"
         android:layout_marginRight="@dimen/_10sdp"
-        android:gravity="start|center"
+        android:gravity="center"
+        android:weightSum="1"
         android:orientation="horizontal">
 
         <Button
+            android:layout_weight=".5"
             android:id="@+id/respond"
-            android:layout_width="@dimen/_120sdp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_gravity="center"
             android:background="@drawable/btn_pink_filled"
             android:fontFamily="@font/lato_bold"
-            android:text="@string/respond"
+            android:text="Respond"
+            android:layout_marginRight="@dimen/_5sdp"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
             android:textSize="@dimen/_12sdp"
             android:textStyle="bold" />
 
         <Button
+            android:layout_weight=".5"
             android:id="@+id/delete_btn"
-            android:layout_width="@dimen/_120sdp"
+            android:layout_width="0dp"
+            android:layout_marginLeft="@dimen/_5sdp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_gravity="center"
             android:background="@drawable/login_button"
             android:fontFamily="@font/lato_bold"
-            android:text="@string/delete"
+            android:text="Delete"
             android:textAllCaps="false"
             android:textColor="@color/textColour"
             android:textSize="@dimen/_12sdp"
             android:textStyle="bold" />
 
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/txt_heart_count"
@@ -162,7 +169,7 @@
         android:layout_marginRight="@dimen/_10sdp"
         android:visibility="gone"
         android:fontFamily="@font/lato_bold"
-        android:text="@string/no_answers"
+        android:text="No Answers"
         android:textColor="@color/textColour"
         android:textSize="@dimen/_10sdp"
         android:textStyle="bold" />
@@ -192,7 +199,7 @@
         android:layout_marginRight="@dimen/_10sdp"
         android:background="@null"
         android:enabled="true"
-        android:hint="@string/be_the_first_to_answer"
+        android:hint="Be the first to answer..."
         android:maxLines="1"
         android:padding="@dimen/_5sdp"
         android:paddingLeft="-10dp"
