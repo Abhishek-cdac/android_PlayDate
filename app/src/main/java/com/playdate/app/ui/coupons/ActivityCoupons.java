@@ -108,7 +108,7 @@ public class ActivityCoupons extends AppCompatActivity implements View.OnClickLi
         tv_code.setText(CouponCode);
         rl_getcode.setOnClickListener(v -> {
             if (isFromCoupon) {
-                if (CurrentPoints > Integer.parseInt(couponPoints)) {
+                if (CurrentPoints >= Integer.parseInt(couponPoints)) {
                     callAPIRedeemCouPon(couponId);
                 } else {
                     new CommonClass().showDialogMsg(ActivityCoupons.this, "PlayDate", "Insufficient wallet points!", "Ok");

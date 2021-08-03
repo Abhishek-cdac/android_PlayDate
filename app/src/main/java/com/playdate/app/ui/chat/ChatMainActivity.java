@@ -157,7 +157,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 
 
     // Video Calling
-    private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.ENGLISH);
+    private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
     protected QBResRequestExecutor requestExecutor;
     protected SharedPrefsHelper sharedPrefsHelper;
 
@@ -412,7 +412,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                             if (null != lstPollingQuestion) {
 
                                 for (int i = 0; i < lstPollingQuestion.size(); i++) {
-                                   // Log.d("pollingDate", lstPollingQuestion.get(i).getEntryDate());
+                                    // Log.d("pollingDate", lstPollingQuestion.get(i).getEntryDate());
 
                                     int j = 0;
                                     boolean found = false;
@@ -514,7 +514,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             odt = OffsetDateTime.parse(c.toString(), dtfInput);
         }
 
-       // Log.d("FormattedDAte", "Formatted DAte: " + odt);
+        // Log.d("FormattedDAte", "Formatted DAte: " + odt);
 
 
         try {
@@ -828,16 +828,27 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 
 
                     } else {
-                        Log.d("FAILED", "FAIELD TO GET DATA");
+                        Log.d("FAILED", "FAILED TO GET DATA");
                         Toast.makeText(this, "FAIELD TO GET DATA", Toast.LENGTH_SHORT).show();
                     }
 
                 }
 
             } else if (requestCode == REQUEST_LOCATION_CODE) {
-                if (data.getBooleanExtra("locationImg", false)) {
-                    sharelocation();
+                try {
+                    //  assert data != null;
+                    if (data != null) {
+                        if (data.getBooleanExtra("locationImg", false)) {
+                            sharelocation();
+                        }
+                    } else {
+                        Toast.makeText(this, "Please Try again later", Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+
             } else {
                 Log.d("Failed", "Failed to load");
                 //  Toast.makeText(this, "Failed to load", Toast.LENGTH_SHORT).show();
@@ -1030,7 +1041,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         if (gpsTracker.canGetLocation()) {
             this.lattitude = gpsTracker.getLatitude();
             this.longitude = gpsTracker.getLongitude();
-        //    Log.e("latlong", "" + lattitude + "  " + longitude);
+            //    Log.e("latlong", "" + lattitude + "  " + longitude);
             if (String.valueOf(lattitude).equals("0.0") && String.valueOf(longitude).equals("0.0")) {
                 Toast.makeText(this, "Wait a moment", Toast.LENGTH_SHORT).show();
             } else {

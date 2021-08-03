@@ -179,6 +179,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         };
         gmap.snapshot(callback);
     }
+
+
 }
 
 
