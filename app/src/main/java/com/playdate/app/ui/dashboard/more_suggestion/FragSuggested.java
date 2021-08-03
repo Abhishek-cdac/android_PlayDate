@@ -37,6 +37,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FragSuggested extends Fragment {
+
     private RecyclerView recyclerView;
     private ArrayList<GetUserSuggestionData> lst_getUserSuggestions;
     private CommonClass clsCommon;

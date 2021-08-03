@@ -1,4 +1,4 @@
-package com.playdate.app.business.chooselevel;
+package com.playdate.app.business.choose_level;
 
 import androidx.appcompat.app.AppCompatActivity;
 

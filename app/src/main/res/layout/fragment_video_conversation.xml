@@ -15,7 +15,6 @@
         android:id="@+id/local_video_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/margin_small"
         android:layout_marginTop="@dimen/action_bar_height" />
 
     <include layout="@layout/view_outgoing_screen" />

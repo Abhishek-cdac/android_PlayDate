@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -101,7 +102,7 @@ public class FragSocialFeed extends Fragment implements OnRefreshPage {
         Call<PostHistory> call = service.getPostFeed("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<PostHistory>() {
             @Override
-            public void onResponse(Call<PostHistory> call, Response<PostHistory> response) {
+            public void onResponse(@NonNull Call<PostHistory> call, @NonNull Response<PostHistory> response) {
 
                 if (response.code() == 200) {
                     assert response.body() != null;
@@ -183,7 +184,7 @@ public class FragSocialFeed extends Fragment implements OnRefreshPage {
             }
 
             @Override
-            public void onFailure(Call<PostHistory> call, Throwable t) {
+            public void onFailure(@NonNull Call<PostHistory> call, @NonNull Throwable t) {
                 t.printStackTrace();
             }
         });

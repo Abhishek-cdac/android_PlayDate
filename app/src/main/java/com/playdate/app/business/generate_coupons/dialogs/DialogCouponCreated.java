@@ -1,4 +1,4 @@
-package com.playdate.app.business.couponsGenerate.dialogs;
+package com.playdate.app.business.generate_coupons.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;

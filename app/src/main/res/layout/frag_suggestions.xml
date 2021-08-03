@@ -2,9 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:clickable="true"
     android:focusableInTouchMode="true"
-    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <LinearLayout
@@ -61,16 +61,16 @@
                 android:id="@+id/iv_send_request"
                 android:layout_width="@dimen/_40sdp"
                 android:layout_height="@dimen/_40sdp"
-                android:layout_marginRight="@dimen/_30sdp"
+                android:layout_marginEnd="@dimen/_30sdp"
                 android:src="@drawable/sent_request">
 
             </ImageView>
 
             <ImageView
+                android:id="@+id/iv_chat_icon"
                 android:layout_width="@dimen/_40sdp"
                 android:layout_height="@dimen/_40sdp"
-                android:id="@+id/iv_chat_icon"
-                android:layout_marginLeft="@dimen/_30sdp"
+                android:layout_marginStart="@dimen/_30sdp"
                 android:src="@drawable/msg_lock">
 
             </ImageView>
@@ -84,8 +84,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_8sdp"
-        android:visibility="gone"
-        android:src="@drawable/ic_diamond">
+        android:src="@drawable/ic_diamond"
+        android:visibility="gone">
 
 
     </ImageView>

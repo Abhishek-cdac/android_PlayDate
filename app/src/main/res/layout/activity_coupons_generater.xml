@@ -79,8 +79,6 @@
                     android:id="@+id/ll_image"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_100sdp"
-                    android:layout_below="@+id/ll_header"
-                    android:layout_centerHorizontal="true"
                     android:background="@color/white"
                     app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="0dp"
@@ -106,7 +104,6 @@
                         android:id="@+id/addImage"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_below="@+id/camera"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="@dimen/_40sdp"
                         android:gravity="center"
@@ -121,7 +118,6 @@
                     android:id="@+id/ll_camera_option"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_65sdp"
-                    android:layout_alignParentBottom="true"
                     android:background="#444444"
                     android:gravity="center"
                     android:orientation="horizontal"
@@ -198,7 +194,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:background="@null"
-                    android:drawableLeft="@drawable/business_ic_font"
+                    android:drawableStart="@drawable/business_ic_font"
                     android:drawablePadding="@dimen/_10sdp"
                     android:hint="@string/coupon_title"
                     android:padding="@dimen/_10sdp"
@@ -208,7 +204,6 @@
                 <View
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_2sdp"
-                    android:layout_centerVertical="true"
                     android:background="@color/color_grey_light"
                     android:padding="@dimen/_5sdp" />
                 <!--  android:text="@={CouponGeneraterViewModel.PercentageOff}"
@@ -219,7 +214,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:background="@null"
-                    android:drawableLeft="@drawable/business_ic_percent"
+                    android:drawableStart="@drawable/business_ic_percent"
                     android:drawablePadding="@dimen/_10sdp"
                     android:hint="@string/coupon_percent_off"
                     android:padding="@dimen/_10sdp"
@@ -229,7 +224,6 @@
                 <View
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_2sdp"
-                    android:layout_centerVertical="true"
                     android:background="@color/color_grey_light"
                     android:padding="@dimen/_5sdp" />
                 <!--                    android:text="@={CouponGeneraterViewModel.AvailbilityDays}"
@@ -251,7 +245,6 @@
                 <View
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_2sdp"
-                    android:layout_centerVertical="true"
                     android:background="@color/color_grey_light"
                     android:padding="@dimen/_5sdp" />
                 <!--                    android:text="@={CouponGeneraterViewModel.AmountOff}"
@@ -262,7 +255,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:background="@null"
-                    android:drawableLeft="@drawable/business_ic_money"
+                    android:drawableStart="@drawable/business_ic_money"
                     android:drawablePadding="@dimen/_10sdp"
                     android:hint="@string/coupon_amount_off"
                     android:padding="@dimen/_10sdp"
@@ -272,7 +265,6 @@
                 <View
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_2sdp"
-                    android:layout_centerVertical="true"
                     android:background="@color/color_grey_light"
                     android:padding="@dimen/_5sdp" />
                 <!--                    android:text="@={CouponGeneraterViewModel.NewPrice}"
@@ -283,7 +275,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:background="@null"
-                    android:drawableLeft="@drawable/business_ic_resource_new"
+                    android:drawableStart="@drawable/business_ic_resource_new"
                     android:drawablePadding="@dimen/_10sdp"
                     android:hint="@string/coupon_new_price"
                     android:padding="@dimen/_10sdp"
@@ -293,7 +285,6 @@
                 <View
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_2sdp"
-                    android:layout_centerVertical="true"
                     android:background="@color/color_grey_light"
                     android:padding="@dimen/_5sdp" />
                 <!--                    android:text="@={CouponGeneraterViewModel.FreeItem}"
@@ -304,7 +295,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:background="@null"
-                    android:drawableLeft="@drawable/business_ic_gift_box"
+                    android:drawableStart="@drawable/business_ic_gift_box"
                     android:drawablePadding="@dimen/_10sdp"
                     android:hint="@string/coupon_free_item"
                     android:padding="@dimen/_10sdp"
@@ -314,7 +305,6 @@
                 <View
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_2sdp"
-                    android:layout_centerVertical="true"
                     android:background="@color/color_grey_light"
                     android:padding="@dimen/_5sdp" />
                 <!--                    android:text="@={CouponGeneraterViewModel.PointsValue}"
@@ -325,7 +315,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:background="@null"
-                    android:drawableLeft="@drawable/business_ic_gold_ingots"
+                    android:drawableStart="@drawable/business_ic_gold_ingots"
                     android:drawablePadding="@dimen/_10sdp"
                     android:hint="@string/coupon_points_value"
                     android:padding="@dimen/_10sdp"
@@ -335,7 +325,6 @@
                 <View
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_2sdp"
-                    android:layout_centerVertical="true"
                     android:background="@color/color_grey_light"
                     android:padding="@dimen/_5sdp" />
 
@@ -349,7 +338,7 @@
                         android:id="@+id/iv_awardedby"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:layout_marginStart="@dimen/_5sdp"
                         android:padding="@dimen/_8sdp"
                         android:src="@drawable/business_ic_console__1" />
 
@@ -357,7 +346,7 @@
                         android:id="@+id/spinner1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_toRightOf="@+id/iv_awardedby"
+                        android:layout_toEndOf="@+id/iv_awardedby"
                         android:gravity="center" />
 
                     <TextView
@@ -391,7 +380,7 @@
                     android:background="@color/color_grey_light"
                     android:orientation="vertical"
                     android:paddingVertical="@dimen/_5sdp"
-                    android:paddingLeft="@dimen/_30sdp"
+                    android:paddingStart="@dimen/_30sdp"
                     android:visibility="gone">
 
 
@@ -423,7 +412,6 @@
                 <View
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_2sdp"
-                    android:layout_centerVertical="true"
                     android:background="@color/color_grey_light"
                     android:padding="@dimen/_5sdp" />
 

@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
-import com.playdate.app.business.couponsGenerate.FragCouponParentBusiness;
+import com.playdate.app.business.generate_coupons.FragCouponParentBusiness;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.CommonModel;

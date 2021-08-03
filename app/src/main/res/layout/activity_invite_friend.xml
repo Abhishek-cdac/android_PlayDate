@@ -50,7 +50,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_15sdp"
             android:gravity="center"
-            android:text="Every time one of your friend sign up ,\n you with both receive 25 points!"
+            android:text="@string/every_time_one_of_your_friend_sign_up_n_you_with_both_receive_25_points"
             android:textColor="@color/white"
             android:textSize="@dimen/_12sdp"
             android:textStyle="bold" />
@@ -74,11 +74,10 @@
                 <TextView
                     android:layout_width="@dimen/_40sdp"
                     android:layout_height="@dimen/_40sdp"
-                    android:layout_centerHorizontal="true"
                     android:layout_margin="@dimen/_5sdp"
                     android:background="@drawable/circle_corner_text"
                     android:gravity="center"
-                    android:text="1"
+                    android:text="@string/str_1"
                     android:textColor="@color/color_pink"
 
                     android:textSize="@dimen/_18sdp"
@@ -91,7 +90,7 @@
                     android:layout_gravity="center"
                     android:layout_margin="@dimen/_5sdp"
                     android:gravity="center"
-                    android:text="You invite a friend"
+                    android:text="@string/you_invite_a_friend"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_9sdp" />
             </LinearLayout>
@@ -105,11 +104,10 @@
                 <TextView
                     android:layout_width="@dimen/_40sdp"
                     android:layout_height="@dimen/_40sdp"
-                    android:layout_centerHorizontal="true"
                     android:layout_margin="@dimen/_5sdp"
                     android:gravity="center"
                     android:padding="@dimen/_5sdp"
-                    android:text="- - - "
+                    android:text="@string/str_dash"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_18sdp"
                     android:textStyle="bold" />
@@ -119,7 +117,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_5sdp"
                     android:gravity="center"
-                    android:text="You invite a friend"
+                    android:text="@string/you_invite_a_friend"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_9sdp"
                     android:visibility="invisible" />
@@ -134,11 +132,10 @@
                 <TextView
                     android:layout_width="@dimen/_40sdp"
                     android:layout_height="@dimen/_40sdp"
-                    android:layout_centerHorizontal="true"
                     android:layout_margin="@dimen/_5sdp"
                     android:background="@drawable/circle_corner_text"
                     android:gravity="center"
-                    android:text="2"
+                    android:text="@string/str_2"
                     android:textColor="@color/color_pink"
 
                     android:textSize="@dimen/_18sdp"
@@ -151,7 +148,7 @@
                     android:layout_gravity="center"
                     android:layout_margin="@dimen/_5sdp"
                     android:gravity="center"
-                    android:text="They join PlayDate"
+                    android:text="@string/they_join_playdate"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_9sdp"
 
@@ -166,11 +163,10 @@
                 <TextView
                     android:layout_width="@dimen/_40sdp"
                     android:layout_height="@dimen/_40sdp"
-                    android:layout_centerHorizontal="true"
                     android:layout_margin="@dimen/_5sdp"
                     android:gravity="center"
                     android:padding="@dimen/_5sdp"
-                    android:text="- - - "
+                    android:text="@string/str_dash"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_18sdp"
                     android:textStyle="bold" />
@@ -180,7 +176,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_5sdp"
                     android:gravity="center"
-                    android:text="You invite a friend"
+                    android:text="@string/you_invite_a_friend"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_9sdp"
                     android:visibility="invisible" />
@@ -194,11 +190,10 @@
                 <TextView
                     android:layout_width="@dimen/_40sdp"
                     android:layout_height="@dimen/_40sdp"
-                    android:layout_centerHorizontal="true"
                     android:layout_margin="@dimen/_5sdp"
                     android:background="@drawable/circle_corner_text"
                     android:gravity="center"
-                    android:text="3"
+                    android:text="@string/str_3"
                     android:textColor="@color/color_pink"
                     android:textSize="@dimen/_18sdp"
                     android:textStyle="bold"
@@ -211,7 +206,7 @@
                     android:layout_gravity="center"
                     android:layout_margin="@dimen/_5sdp"
                     android:gravity="center"
-                    android:text="You both get free Points"
+                    android:text="@string/you_both_get_free_points"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_9sdp"
 
@@ -229,7 +224,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_10sdp"
             android:gravity="center"
-            android:text="Send Invite Via"
+            android:text="@string/send_invite_via"
             android:textColor="@color/white"
             android:textSize="@dimen/_12sdp" />
 
@@ -249,7 +244,6 @@
             android:id="@+id/facebook_coupan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:background="@drawable/blue_rectangle"
             android:padding="@dimen/_8sdp"
@@ -259,16 +253,15 @@
             android:id="@+id/instagram_coupan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:background="@drawable/ic_grey_rectangle"
             android:padding="@dimen/_3sdp"
             android:src="@drawable/ic_instagram" />
+
         <ImageView
             android:id="@+id/whtasapp_coupan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:background="@drawable/ic_grey_rectangle"
             android:padding="@dimen/_3sdp"
@@ -278,7 +271,6 @@
             android:id="@+id/message_coupan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:background="@drawable/green_rectangle"
             android:padding="@dimen/_8sdp"
@@ -286,8 +278,8 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
         android:id="@+id/ll_frnds"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rl_social"
         android:layout_centerHorizontal="true"
@@ -321,7 +313,6 @@
     <Button
         android:id="@+id/btn_send_invite"
         android:layout_width="wrap_content"
-        android:visibility="gone"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ll_frnds"
         android:layout_centerHorizontal="true"
@@ -330,11 +321,11 @@
         android:gravity="center"
         android:paddingHorizontal="@dimen/_32sdp"
         android:text="@string/send_invite"
-
         android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_10sdp" />
 
+        android:textColor="@color/white"
+        android:textSize="@dimen/_10sdp"
+        android:visibility="gone" />
 
 
 </RelativeLayout>

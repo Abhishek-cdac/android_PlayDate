@@ -10,11 +10,10 @@
     android:paddingRight="@dimen/_10sdp">
 
     <RelativeLayout
-        android:background="@color/backgroundColour"
-        android:layout_marginTop="@dimen/_20sdp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:background="@color/backgroundColour">
 
 
         <TextView
@@ -54,7 +53,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="@font/lato_bold"
                 android:gravity="center"
-                android:text="0"
+                android:text="@string/str_0"
                 android:textColor="@color/color_pink"
                 android:textSize="@dimen/_12sdp" />
 
@@ -64,7 +63,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="@font/helvetica_neue"
                 android:gravity="center"
-                android:text="Friends"
+                android:text="@string/friends"
                 android:textColor="@color/textColour"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
@@ -84,8 +83,6 @@
             tools:ignore="MissingConstraints" />
 
 
-
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -101,7 +98,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="@font/lato_bold"
                 android:gravity="center"
-                android:text="0"
+                android:text="@string/str_0"
                 android:textColor="@color/color_pink"
                 android:textSize="@dimen/_12sdp" />
 
@@ -111,7 +108,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="@font/helvetica_neue"
                 android:gravity="center"
-                android:text="Posts"
+                android:text="@string/posts"
                 android:textColor="@color/textColour"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
@@ -121,11 +118,11 @@
 
 
     <RatingBar
-        android:layout_gravity="center"
         android:id="@+id/ratingBar"
         style="@style/StarRating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:numStars="5"
         android:rating="0"
@@ -156,7 +153,6 @@
         android:textColor="@color/textColour"
         android:textSize="@dimen/_10sdp"
         android:textStyle="bold" />
-
 
 
     <androidx.fragment.app.FragmentContainerView

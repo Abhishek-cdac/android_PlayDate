@@ -24,7 +24,7 @@
             android:paddingTop="@dimen/_5sdp"
             android:paddingRight="@dimen/_10sdp"
             android:paddingBottom="@dimen/_5sdp"
-            android:text="Account"
+            android:text="@string/account"
             android:textColor="@android:color/white"
             android:textSize="@dimen/_15sdp"
             android:textStyle="bold" />
@@ -39,7 +39,7 @@
             android:paddingTop="@dimen/_5sdp"
             android:paddingRight="@dimen/_10sdp"
             android:paddingBottom="@dimen/_5sdp"
-            android:text="Personal"
+            android:text="@string/personal"
             android:textColor="@android:color/darker_gray"
             android:textSize="@dimen/_15sdp"
             android:textStyle="bold" />
@@ -54,7 +54,7 @@
             android:paddingTop="@dimen/_5sdp"
             android:paddingRight="@dimen/_10sdp"
             android:paddingBottom="@dimen/_5sdp"
-            android:text="Payment"
+            android:text="@string/payment"
             android:textColor="@android:color/darker_gray"
             android:textSize="@dimen/_15sdp"
             android:textStyle="bold" />

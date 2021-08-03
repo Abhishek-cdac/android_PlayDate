@@ -67,7 +67,7 @@
         </activity>
         <!-- <activity android:name=".business.couponsGenerate.dialogs.DialogCouponCreated" /> -->
         <activity  android:exported="true"
-            android:name=".business.chooselevel.ChooseLevelActivity" /> <!-- <activity android:name=".business.couponsGenerate.DialogCouponsGenerater" /> -->
+            android:name=".business.choose_level.ChooseLevelActivity" /> <!-- <activity android:name=".business.couponsGenerate.DialogCouponsGenerater" /> -->
         <activity  android:exported="true"
             android:name=".business.businessphoto.BusinessUploadPhotoActivity" />
         <activity  android:exported="true"
@@ -113,11 +113,11 @@
         <activity
             android:exported="true"
             android:screenOrientation="portrait"
-            android:name=".business.couponsGenerate.CouponGenActivity" />
+            android:name=".business.generate_coupons.CouponGenActivity" />
         <activity
             android:exported="true"
             android:screenOrientation="portrait"
-            android:name=".business.couponsGenerate.CouponGenUpdateActivity" />
+            android:name=".business.generate_coupons.CouponGenUpdateActivity" />
         <activity
             android:exported="true"
             android:name=".ui.anonymous_question.AnonymousQuestionActivity"
@@ -176,7 +176,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:exported="true"
-            android:name=".ui.register.age_verification.AgeVerifiationActivity"
+            android:name=".ui.register.age_verification.AgeVerificationActivity"
             android:screenOrientation="portrait" />
         <activity
             android:exported="true"

@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import io.card.payment.CardIOActivity;
 
 public class MenuActivity extends Activity {
+
     final  int REQUEST_SCAN=100;
 
     @Override

@@ -26,7 +26,6 @@ import com.squareup.picasso.Picasso;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
@@ -40,36 +39,16 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
     private final RequestChatFragment frag;
     private LandingBottomSheet bottomSheet;
     private final Picasso picasso;
-    private String todaysDate;
     private final String MyID;
-    private final SimpleDateFormat sdf;
     private final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+
     public ChattingAdapter(ArrayList<ChatList> inboxList, Onclick itemClick, RequestChatFragment frag) {
         this.lst_msgs = inboxList;
         this.itemClick = itemClick;
         this.frag = frag;
         picasso = Picasso.get();
-
-
         SessionPref pref = SessionPref.getInstance(frag.getActivity());
         MyID = pref.getStringVal(SessionPref.LoginUserID);
-        try {
-            Date c = Calendar.getInstance().getTime();
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-            todaysDate = df.format(c);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-//        format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        format2 = new SimpleDateFormat("hh:mm aa");
-//        format3 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        format4 = new SimpleDateFormat("dd/MM/yyyy");
-        sdf = new SimpleDateFormat("yyyy-MM-dd");
-        //    private final SimpleDateFormat format1;
-        //    private final SimpleDateFormat format2;
-        //    private final SimpleDateFormat format3;
-        //    private final SimpleDateFormat format4;
         SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
         df1.setTimeZone(TimeZone.getTimeZone("GTC"));
     }
@@ -188,7 +167,7 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
             df.setTimeZone(TimeZone.getDefault());
             String formattedDate = df.format(Objects.requireNonNull(date));
 
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
             Date ddd = null;
             try {
                 ddd = sdf.parse(formattedDate);
@@ -200,52 +179,11 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
             holder.txt_time.setText(text.toLowerCase());
 
 
-//            try {
-//                String timeFormat = lst_msgs.get(position).getLastMsg().get(0).getEntryDate();
-//                timeFormat = timeFormat.replace("T", " ");
-//
-//
-//                Date date = null;
-//                try {
-//                    date = df.parse(timeFormat);
-//                } catch (ParseException e) {
-//                    e.printStackTrace();
-//                }
-//                df.setTimeZone(TimeZone.getDefault());
-//                String formattedDate = df.format(date);
-//
-////                if (formattedDate.contains(todaysDate)) {
-////
-////                    try {
-////                        date = format1.parse(formattedDate);
-////                    } catch (ParseException e) {
-////                        e.printStackTrace();
-////                    }
-////                    holder.txt_time.setText(format2.format(date));
-////
-////                } else if (findDayDiff(formattedDate) == 1) {
-////                    holder.txt_time.setText("Yesterday");
-////                } else {
-////                    try {
-////                        date = format3.parse(formattedDate);
-////                    } catch (ParseException e) {
-////                        e.printStackTrace();
-////                    }
-////                    holder.txt_time.setText(format4.format(date));
-////                }
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-
-            holder.main_ll.setOnClickListener(v -> {
-
-                frag.onClickEvent(lst_msgs.get(position));
-            });
+            holder.main_ll.setOnClickListener(v -> frag.onClickEvent(lst_msgs.get(position)));
 
 
             holder.main_ll.setOnLongClickListener(v -> {
                 String chatId = lst_msgs.get(position).getChatId();
-//                Log.d("DAte", "onBindViewHolder: " + lst_msgs.get(position).getLastMsg().get(0).getEntryDate());
                 showBottomSheet(position, lst_msgs.get(position).getLstFrom().get(0).getUserId(), chatId);
                 notifyItemChanged(position);
                 return false;
@@ -258,22 +196,6 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
 
 
     }
-
-//    private int findDayDiff(String formattedDate) {
-//
-//        try {
-//            Date date = sdf.parse(formattedDate);
-//            Date date1 = sdf.parse(todaysDate);
-//            if (date == null || date1 == null)
-//                return 0;
-//
-//            return ((int) ((date.getTime() - date1.getTime()) / (1000 * 60 * 60 * 24))) * -1;
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return 0;
-//    }
 
 
     @Override
@@ -291,6 +213,7 @@ public class ChattingAdapter extends RecyclerView.Adapter<ChattingAdapter.MyView
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
+
         public TextView user_name, msg, txt_count, txt_time;
         public ImageView profile_image, img_more, img_active;
         public RelativeLayout main_rl;

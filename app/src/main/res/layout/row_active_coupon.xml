@@ -29,7 +29,7 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/card"
+            android:layout_toEndOf="@+id/card"
             android:paddingHorizontal="@dimen/_10sdp">
 
             <TextView
@@ -67,10 +67,10 @@
                     android:layout_marginEnd="@dimen/_3sdp"
                     android:background="@drawable/pink_rect_filled"
                     android:gravity="center"
-                    android:paddingRight="@dimen/_3sdp"
+                    android:paddingEnd="@dimen/_3sdp"
                     android:paddingTop="@dimen/_3sdp"
                     android:paddingBottom="@dimen/_3sdp"
-                    android:text="LIVE"
+                    android:text="@string/live"
                     android:textColor="@color/white"
                     app:drawableLeftCompat="@drawable/default_dot" />
 
@@ -93,7 +93,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight=".5"
-                    android:text="Expires"
+                    android:text="@string/expires"
                     android:fontFamily="@font/lato_bold"
                     android:textAlignment="center"
                     android:textColor="@color/textColour"
@@ -104,7 +104,7 @@
                     android:id="@+id/tv_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_3sdp"
+                    android:layout_marginStart="@dimen/_3sdp"
                     android:layout_weight="1"
                     android:maxLines="2"
                     android:fontFamily="@font/lato_bold"

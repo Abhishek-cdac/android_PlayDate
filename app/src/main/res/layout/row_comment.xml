@@ -19,8 +19,7 @@
             android:id="@+id/comment_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/_4sdp"
-            android:text="Name"
+            android:layout_marginEnd="@dimen/_4sdp"
             android:maxLines="3"
             android:textColor="@color/textColour"
             />
@@ -29,7 +28,7 @@
             android:id="@+id/comment_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Comments"
+            android:text="@string/comments"
             android:visibility="gone"
             android:textColor="@color/textColour" />
     </LinearLayout>
@@ -45,8 +44,7 @@
             android:id="@+id/comment_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/_6sdp"
-            android:text="2h"
+            android:layout_marginEnd="@dimen/_6sdp"
             android:textSize="@dimen/_8sdp"
             android:visibility="visible"
             android:textColor="@color/color_grey_light" />
@@ -55,7 +53,7 @@
             android:id="@+id/comment_like"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_6sdp"
             android:text="@string/Like"
             android:visibility="gone"
             android:textColor="@color/color_grey" />
@@ -65,7 +63,7 @@
             android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
             android:text="@string/reply"
             android:textColor="@color/color_grey" />
 

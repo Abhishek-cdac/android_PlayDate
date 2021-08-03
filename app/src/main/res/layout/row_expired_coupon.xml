@@ -29,7 +29,7 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/card"
+            android:layout_toEndOf="@+id/card"
             android:paddingHorizontal="@dimen/_10sdp">
 
             <TextView
@@ -63,7 +63,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_3sdp"
-                    android:text="EXPIRED"
+                    android:text="@string/expired"
                     android:fontFamily="@font/lato_bold"
                     android:textColor="@color/textColour"
                     android:textSize="@dimen/_12sdp"

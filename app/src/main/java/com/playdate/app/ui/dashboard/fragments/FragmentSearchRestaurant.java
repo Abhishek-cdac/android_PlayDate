@@ -38,6 +38,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FragmentSearchRestaurant extends Fragment implements RestaurentAdapter.RestaurentAdapterListner {
+
     private EditText edt_search;
     private RecyclerView recyclerView;
     private Onclick itemClick;

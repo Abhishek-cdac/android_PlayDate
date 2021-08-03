@@ -5,11 +5,11 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 
 public class CommentList {
-    String _id;
-    String postId;
-    String comment;
-    String entryDate;
-    String commentId;
+    private String _id;
+    private String postId;
+    private String comment;
+    private String entryDate;
+    private String commentId;
 
     @SerializedName("commentBy")
     ArrayList<commentBy> commentBy;

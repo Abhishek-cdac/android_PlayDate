@@ -21,7 +21,7 @@ import com.playdate.app.model.GetProfileDetails;
 import com.playdate.app.model.GetProileDetailData;
 import com.playdate.app.ui.dashboard.OnProfilePhotoChangeListerner;
 import com.playdate.app.ui.forgot_password.ForgotPasswordActivity;
-import com.playdate.app.ui.register.age_verification.AgeVerifiationActivity;
+import com.playdate.app.ui.register.age_verification.AgeVerificationActivity;
 import com.playdate.app.ui.register.gender.GenderSelActivity;
 import com.playdate.app.ui.register.interestin.InterestActivity;
 import com.playdate.app.ui.register.profile.UploadProfileActivity;
@@ -186,7 +186,7 @@ public class FragMyProfilePersonal extends Fragment implements View.OnClickListe
             mIntent.putExtra("fromProfile", true);
             startActivityForResult(mIntent, 408);
         } else if (id == R.id.iv_dob) {
-            Intent mIntent = new Intent(getActivity(), AgeVerifiationActivity.class);
+            Intent mIntent = new Intent(getActivity(), AgeVerificationActivity.class);
             mIntent.putExtra("CurrentDOB", DOB.getText().toString());
             mIntent.putExtra("fromProfile", true);
             startActivityForResult(mIntent, 408);

@@ -8,11 +8,11 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 public class OnBoardingAdapter extends FragmentPagerAdapter {
 
-    private final Context mContext;
+//    private final Context mContext;
 
     public OnBoardingAdapter(final Context context, final FragmentManager fm) {
         super(fm);
-        mContext = context.getApplicationContext();
+//        mContext = context.getApplicationContext();
     }
 
     @Override

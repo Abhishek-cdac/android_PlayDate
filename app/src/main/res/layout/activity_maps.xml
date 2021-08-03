@@ -20,7 +20,7 @@
         android:drawableStart="@drawable/ic_pin_white"
         android:drawablePadding="@dimen/_5sdp"
         android:paddingVertical="@dimen/_12sdp"
-        android:paddingLeft="@dimen/_15sdp"
+        android:paddingStart="@dimen/_15sdp"
         android:text="@string/share_location"
         android:textAllCaps="false"
         android:textColor="@color/white"

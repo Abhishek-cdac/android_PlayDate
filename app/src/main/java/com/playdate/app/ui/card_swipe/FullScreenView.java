@@ -76,25 +76,11 @@ public class FullScreenView extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<CommonModel> call, @NonNull Response<CommonModel> response) {
 
-//                pd.cancel();
-//                if (response.code() == 200) {
-//                    if (response.body().getStatus() == 1) {
-////                        Log.d("Response", "onResponse1: " + response.body().getMessage());
-//                    }
-//                } else {
-//                    try {
-//                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-////                        Log.d("Response", "onResponseJobj: " + jObjError.getString("message"));
-////                        clsCommon.showDialogMsgfrag(FullScreenView.this, "PlayDate", jObjError.getString("message"), "Ok");
-//                    } catch (Exception e) {
-//                        Toast.makeText(FullScreenView.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-//                    }
-//                }
                 finish();
             }
 
             @Override
-            public void onFailure(Call<CommonModel> call, Throwable t) {
+            public void onFailure(@NonNull Call<CommonModel> call, @NonNull Throwable t) {
                 t.printStackTrace();
 //                pd.cancel();
                 Toast.makeText(FullScreenView.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();

@@ -1,4 +1,4 @@
-package com.playdate.app.business.couponsGenerate;
+package com.playdate.app.business.generate_coupons;
 
 import android.content.Context;
 import android.graphics.Canvas;

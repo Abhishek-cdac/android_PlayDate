@@ -20,6 +20,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class CallAPI {
+
     public void callGetNotificationAPI(Context mContext) {
 
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);

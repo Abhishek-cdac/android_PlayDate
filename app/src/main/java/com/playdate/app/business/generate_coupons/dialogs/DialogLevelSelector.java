@@ -1,10 +1,8 @@
-package com.playdate.app.business.couponsGenerate.dialogs;
+package com.playdate.app.business.generate_coupons.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +14,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.playdate.app.R;
-import com.playdate.app.business.couponsGenerate.CouponGenActivity;
 
 public class DialogLevelSelector extends Dialog {
     ImageView iv_minus;

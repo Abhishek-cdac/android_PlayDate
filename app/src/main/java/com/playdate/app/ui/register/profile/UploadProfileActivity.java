@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -30,6 +31,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Objects;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -123,11 +125,11 @@ public class UploadProfileActivity extends AppCompatActivity {
         Call<LoginResponse> call = service.uploadImage("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), filePart);
         call.enqueue(new Callback<LoginResponse>() {
             @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+            public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
                 pd.dismiss();
                 if (response.code() == 200) {
 
-                    LoginUserDetails user = response.body().getUserData();
+                    LoginUserDetails user = Objects.requireNonNull(response.body()).getUserData();
                     pref.saveStringKeyVal(LoginUserprofilePic, user.getProfilePicPath());
 
                     if (mIntent.getBooleanExtra("fromProfile", false)) {
@@ -155,7 +157,7 @@ public class UploadProfileActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<LoginResponse> call, @NonNull Throwable t) {
                 t.printStackTrace();
                 pd.dismiss();
             }

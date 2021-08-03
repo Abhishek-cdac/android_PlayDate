@@ -3,7 +3,6 @@ package com.playdate.app.ui.notification_screen;
 import android.content.Context;
 import android.content.Intent;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,12 +45,11 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
     public static final int CHATACCEPTED = 10;
     public static final int POSTTAGGED = 11;
     public static final int VIEWMORE = 100;
-    private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     public boolean showLoadmore = true;
     private final Onclick itemClick;
     private String relationRequestId;
     private final Context mContext;
-
+    private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
     private final Picasso picasso;
 
     private final ArrayList<NotificationData> notification_list;
@@ -109,6 +107,7 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
         }
     }
 
+    @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
@@ -171,16 +170,16 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
             if (notification_list.get(position).getEntryDate() != null) {
                 String timeFormat = notification_list.get(position).getEntryDate();
                 timeFormat = timeFormat.replace("T", " ");
-                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
-                df.setTimeZone(TimeZone.getTimeZone("GTC"));
+
+                sdf.setTimeZone(TimeZone.getTimeZone("GTC"));
                 Date date = null;
                 try {
-                    date = df.parse(timeFormat);
+                    date = sdf.parse(timeFormat);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                df.setTimeZone(TimeZone.getDefault());
-                String formattedDate = df.format(date);
+                sdf.setTimeZone(TimeZone.getDefault());
+                String formattedDate = sdf.format(Objects.requireNonNull(date));
 
 
                 Date ddd = null;
@@ -251,14 +250,11 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
                                         itemClick.onItemClicks(v, position, 11, notification_list.get(position).getNotificationId(), notification_list.get(position).getUserID());
                                     }
                                 }
-
-                                notifyDataSetChanged();
-
-
                             } else {
                                 notification_list.get(position).setSelected(false);
-                                notifyDataSetChanged();
+
                             }
+                            notifyDataSetChanged();
                             return true;
                         });
                     }
@@ -284,9 +280,6 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-
-                //  removeAt(getAdapterPosition());
             });
 
 // FriendRequest
@@ -297,22 +290,20 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
             picasso.load(notification_list.get(position).getmUserInformation().get(0).getProfilePicPath())
                     .placeholder(R.drawable.profile)
                     .into(viewHolderLiked.profile_image_3);
-            if (timeToSet.equals(timeToSetOld)) {
+
+            if (Objects.equals(timeToSet, timeToSetOld)) {
                 viewHolderLiked.tv_date.setVisibility(View.GONE);
             } else {
                 viewHolderLiked.tv_date.setVisibility(View.VISIBLE);
 
             }
-            timeToSetOld = text.toLowerCase();
+            timeToSetOld = Objects.requireNonNull(text).toLowerCase();
 
             String name = notification_list.get(position).getmUserInformation().get(0).getUsername();
             String desc = notification_list.get(position).getNotificationMessage();
 
             String sourceString = "<b>" + name + "</b> " + desc;
             viewHolderLiked.tv_name.setText(Html.fromHtml(sourceString));
-
-//          viewHolderLiked.tv_name.setText(notification_list.get(position).getmUserInformation().get(0).getUsername());
-//          viewHolderLiked.tv_desc.setText(notification_list.get(position).getNotificationMessage());
 
             if (notification_list.get(position).getmPostInfo().get(0).getMedia().get(0).getMediaType().equals("Image")) {
                 picasso.load(notification_list.get(position).getmPostInfo().get(0).getMedia().get(0).getMediaFullPath())
@@ -357,13 +348,13 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
         } else if (holder.getItemViewType() == COMMENT) {
             ViewHolderComment viewHolderComment = (ViewHolderComment) holder;
             viewHolderComment.tv_date.setText(timeToSet);
-            if (timeToSet.equals(timeToSetOld)) {
+            if (Objects.equals(timeToSet, timeToSetOld)) {
                 viewHolderComment.tv_date.setVisibility(View.GONE);
             } else {
                 viewHolderComment.tv_date.setVisibility(View.VISIBLE);
 
             }
-            timeToSetOld = text.toLowerCase();
+            timeToSetOld = Objects.requireNonNull(text).toLowerCase();
             picasso.load(notification_list.get(position).getmUserInformation().get(0).getProfilePicPath()).placeholder(R.drawable.profile)
                     .into(viewHolderComment.profile_image_3);
             String name = notification_list.get(position).getmUserInformation().get(0).getUsername();
@@ -371,9 +362,6 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
 
             String sourceString = "<b>" + name + "</b> " + desc;
             viewHolderComment.tv_name.setText(Html.fromHtml(sourceString));
-
-//          viewHolderComment.tv_name.setText(notification_list.get(position).getmUserInformation().get(0).getUsername());
-//          viewHolderComment.tv_desc.setText(notification_list.get(position).getNotificationMessage());
 
             if (notification_list.get(position).isSelected) {
                 viewHolderComment.rl_notification.setBackgroundColor(mContext.getResources().getColor(R.color.color_pink_dull));
@@ -394,13 +382,13 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
                         }
                     }
 
-                    notifyDataSetChanged();
+
 
 
                 } else {
                     notification_list.get(position).setSelected(false);
-                    notifyDataSetChanged();
                 }
+                notifyDataSetChanged();
                 return true;
             });
 
@@ -409,13 +397,13 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
             ViewHolder viewHolderMatched = (ViewHolder) holder;
             viewHolderMatched.tv_date.setText(timeToSet);
 
-            if (timeToSet.equals(timeToSetOld)) {
+            if (Objects.equals(timeToSet, timeToSetOld)) {
                 viewHolderMatched.tv_date.setVisibility(View.GONE);
             } else {
                 viewHolderMatched.tv_date.setVisibility(View.VISIBLE);
 
             }
-            timeToSetOld = text.toLowerCase();
+            timeToSetOld = Objects.requireNonNull(text).toLowerCase();
 
             if (notification_list.get(position).getFriendRequest() != null) {
 
@@ -423,9 +411,6 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
                     if (notification_list.get(position).getFriendRequest().get(0).getStatus().toLowerCase().equals("pending")) {
 
                         viewHolderMatched.rl_notification.setVisibility(View.VISIBLE);
-
-//                    String notifiationId = notification_list.get(position).getNotificationId();
-//                    String userId = notification_list.get(position).getUserID();
 
                         String name = notification_list.get(position).getFriendRequest().get(0).getUserInfo().get(0).getUsername();
                         String desc = notification_list.get(position).getNotificationMessage();
@@ -450,7 +435,7 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
 
 
                         viewHolderMatched.rl_notification.setOnLongClickListener(v -> {
-                            Log.e("relativeLayout", "relativeLayout" + position);
+//                            Log.e("relativeLayout", "relativeLayout" + position);
                             if (!notification_list.get(position).isSelected) {
 
                                 for (int i = 0; i < notification_list.size(); i++) {
@@ -461,14 +446,10 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
                                         itemClick.onItemClicks(v, position, 11, notification_list.get(position).getNotificationId(), notification_list.get(position).getUserID());
                                     }
                                 }
-
-                                notifyDataSetChanged();
-
-
                             } else {
                                 notification_list.get(position).setSelected(false);
-                                notifyDataSetChanged();
                             }
+                            notifyDataSetChanged();
                             return true;
                         });
                     }
@@ -543,27 +524,16 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
                             itemClick.onItemClicks(v, position, 11, notification_list.get(position).getNotificationId(), notification_list.get(position).getUserID());
                         }
                     }
-
-                    notifyDataSetChanged();
-
-
                 } else {
                     notification_list.get(position).setSelected(false);
-                    notifyDataSetChanged();
                 }
+                notifyDataSetChanged();
                 return true;
             });
             viewHolderMatchRequest.iv_right.setVisibility(View.GONE);
             viewHolderMatchRequest.iv_cross.setVisibility(View.GONE);
 
-//            viewHolderMatchRequest.iv_right.setOnClickListener(v -> {
-//
-//            });
-//
-//            viewHolderMatchRequest.iv_cross.setOnClickListener(v -> {
-//
-//            });
-//
+
 
         } else if (holder.getItemViewType() == DATE_PARTNER) {
 
@@ -582,8 +552,6 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
 
             picasso.load(notification_list.get(position).getmUserInformation().get(0).getProfilePicPath()).placeholder(R.drawable.profile)
                     .into(viewHolderMatchRequest.profile_image);
-//            viewHolderMatchRequest.tv_name.setText(notification_list.get(position).getmUserInformation().get(0).getUsername());
-//            viewHolderMatchRequest.tv_desc.setText(notification_list.get(position).getNotificationMessage());
 
             String name = notification_list.get(position).getmUserInformation().get(0).getUsername();
             String desc = notification_list.get(position).getNotificationMessage();
@@ -612,13 +580,11 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
                         }
                     }
 
-                    notifyDataSetChanged();
-
 
                 } else {
                     notification_list.get(position).setSelected(false);
-                    notifyDataSetChanged();
                 }
+                notifyDataSetChanged();
                 return true;
             });
             viewHolderMatchRequest.iv_right.setVisibility(View.GONE);
@@ -630,24 +596,10 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
                 if (notification_list.get(position).getNotificationText().equals("Date Request Invite")) {
                     DateBaseActivity.fromNotification = true;
                     mContext.startActivity(new Intent(mContext, DateBaseActivity.class));
-                } else {
                 }
             });
 
 
-//            viewHolderMatchRequest.iv_right.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//
-//                }
-//            });
-//
-//            viewHolderMatchRequest.iv_cross.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//
-//                }
-//            });
 
         } else if (holder.getItemViewType() == FRIENDACCEPTED) {
             ViewHolderLiked viewHolderLiked = (ViewHolderLiked) holder;
@@ -690,12 +642,11 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
                             itemClick.onItemClicks(v, position, 11, notification_list.get(position).getNotificationId(), notification_list.get(position).getUserID());
                         }
                     }
-                    notifyDataSetChanged();
 
                 } else {
                     notification_list.get(position).setSelected(false);
-                    notifyDataSetChanged();
                 }
+                notifyDataSetChanged();
                 return true;
             });
 
@@ -741,13 +692,11 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
                         }
                     }
 
-                    notifyDataSetChanged();
-
 
                 } else {
                     notification_list.get(position).setSelected(false);
-                    notifyDataSetChanged();
                 }
+                notifyDataSetChanged();
                 return true;
             });
         } else if (holder.getItemViewType() == RELATION_REQUEST) {
@@ -771,25 +720,19 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
             picasso.load(notification_list.get(position).getmUserInformation().get(0).getProfilePicPath()).placeholder(R.drawable.profile)
                     .into(viewHolderRelationRequest.profile_image);
 
-            viewHolderRelationRequest.iv_right.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    try {
-                        itemClick.onItemClicks(v, position, 30, relationRequestId);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+            viewHolderRelationRequest.iv_right.setOnClickListener(v -> {
+                try {
+                    itemClick.onItemClicks(v, position, 30, relationRequestId);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             });
 
-            viewHolderRelationRequest.iv_cross.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    try {
-                        itemClick.onItemClicks(v, position, 31, relationRequestId);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+            viewHolderRelationRequest.iv_cross.setOnClickListener(v -> {
+                try {
+                    itemClick.onItemClicks(v, position, 31, relationRequestId);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             });
         } else if (holder.getItemViewType() == CHAT_REQUEST) {
@@ -845,14 +788,10 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
                                         itemClick.onItemClicks(v, position, 11, notification_list.get(position).getNotificationId(), notification_list.get(position).getUserID());
                                     }
                                 }
-
-                                notifyDataSetChanged();
-
-
                             } else {
                                 notification_list.get(position).setSelected(false);
-                                notifyDataSetChanged();
                             }
+                            notifyDataSetChanged();
                             return true;
                         });
                     }
@@ -925,12 +864,12 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
                             itemClick.onItemClicks(v, position, 11, notification_list.get(position).getNotificationId(), notification_list.get(position).getUserID());
                         }
                     }
-                    notifyDataSetChanged();
+
 
                 } else {
                     notification_list.get(position).setSelected(false);
-                    notifyDataSetChanged();
                 }
+                notifyDataSetChanged();
                 return true;
             });
 
@@ -945,7 +884,7 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
                 viewHolderTagged.tv_date.setVisibility(View.VISIBLE);
 
             }
-            timeToSetOld = text.toLowerCase();
+            timeToSetOld = Objects.requireNonNull(text).toLowerCase();
 
             picasso.load(notification_list.get(position).getmUserInformation().get(0).getProfilePicPath())
                     .placeholder(R.drawable.profile)
@@ -957,9 +896,6 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
 
             String sourceString = "<b>" + name + "</b> " + desc;
             viewHolderTagged.tv_name.setText(Html.fromHtml(sourceString));
-
-//          viewHolderLiked.tv_name.setText(notification_list.get(position).getmUserInformation().get(0).getUsername());
-//          viewHolderLiked.tv_desc.setText(notification_list.get(position).getNotificationMessage());
 
             if (notification_list.get(position).getmPostInfo().get(0).getMedia().get(0).getMediaType().equals("Image")) {
                 picasso.load(notification_list.get(position).getmPostInfo().get(0).getMedia().get(0).getMediaFullPath())
@@ -1018,6 +954,7 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+
         private final ImageView profile_image;
         private final ImageView iv_right;
         private final ImageView iv_cross;
@@ -1026,7 +963,7 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
         private final LinearLayout main_ll;
         private final TextView tv_date;
 
-        RelativeLayout rl_request, rl_notification;
+        private final RelativeLayout rl_notification;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -1035,8 +972,6 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
             rl_notification = itemView.findViewById(R.id.rl_notification);
             ImageView icons = itemView.findViewById(R.id.iv_icon_1);
             tv_name = itemView.findViewById(R.id.tv_name_noti);
-//            tv_desc = itemView.findViewById(R.id.tv_desc_noti);
-            rl_request = itemView.findViewById(R.id.rl_request);
             iv_right = itemView.findViewById(R.id.iv_right);
             iv_cross = itemView.findViewById(R.id.iv_cross);
             tv_date = itemView.findViewById(R.id.tv_date);
@@ -1045,28 +980,6 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
         }
     }
 
-//    public class ViewHolderDateRequest extends RecyclerView.ViewHolder {
-//        ImageView profile_image, icons, iv_right, iv_cross;
-//        TextView tv_name, tv_desc;
-//        LinearLayout main_ll;
-//
-//        RelativeLayout rl_request, rl_notification;
-//
-//        public ViewHolderDateRequest(@NonNull View itemView) {
-//            super(itemView);
-//            main_ll = itemView.findViewById(R.id.main_ll);
-//            profile_image = itemView.findViewById(R.id.profile_image_1);
-//            rl_notification = itemView.findViewById(R.id.rl_notification);
-//            icons = itemView.findViewById(R.id.iv_icon_1);
-//            tv_name = itemView.findViewById(R.id.tv_name_noti);
-//            tv_desc = itemView.findViewById(R.id.tv_desc_noti);
-//            rl_request = itemView.findViewById(R.id.rl_request);
-//            iv_right = itemView.findViewById(R.id.iv_right);
-//            iv_cross = itemView.findViewById(R.id.iv_cross);
-//            icons.setVisibility(View.GONE);
-//
-//        }
-//    }
 
     public static class ViewHolderChatRequest extends RecyclerView.ViewHolder {
         private final ImageView profile_image;
@@ -1086,8 +999,6 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
             rl_notification = itemView.findViewById(R.id.rl_notification);
             ImageView icons = itemView.findViewById(R.id.iv_icon_1);
             tv_name = itemView.findViewById(R.id.tv_name_noti);
-//            tv_desc = itemView.findViewById(R.id.tv_desc_noti);
-//            rl_request = itemView.findViewById(R.id.rl_request);
             iv_right = itemView.findViewById(R.id.iv_right);
             iv_cross = itemView.findViewById(R.id.iv_cross);
             icons.setVisibility(View.GONE);
@@ -1123,8 +1034,6 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
         private final ImageView profile_image_3;
         private final ImageView iv_icon_3;
         private final TextView tv_name;
-        //        private TextView tv_desc;
-//        private LinearLayout main_ll;
         private final TextView tv_date;
         private final RelativeLayout rl_notification;
 
@@ -1135,8 +1044,6 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
             rl_notification = itemView.findViewById(R.id.rl_header);
 
             tv_name = itemView.findViewById(R.id.tv_name_noti);
-//            tv_desc = itemView.findViewById(R.id.tv_desc_noti);
-//            main_ll = itemView.findViewById(R.id.main_ll);
             tv_date = itemView.findViewById(R.id.tv_date);
 
         }
@@ -1170,8 +1077,6 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
         private final ImageView iv_right;
         private final ImageView iv_cross;
         private final TextView tv_name;
-        //        private TextView tv_desc;
-//        private RelativeLayout rl_request;
         private final RelativeLayout rl_notification;
         private final LinearLayout main_ll;
         private final TextView tv_date;
@@ -1183,8 +1088,6 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
             rl_notification = itemView.findViewById(R.id.rl_notification);
             icons = itemView.findViewById(R.id.iv_icon_1);
             tv_name = itemView.findViewById(R.id.tv_name_noti);
-//            tv_desc = itemView.findViewById(R.id.tv_desc_noti);
-//            rl_request = itemView.findViewById(R.id.rl_request);
             iv_right = itemView.findViewById(R.id.iv_right);
             iv_cross = itemView.findViewById(R.id.iv_cross);
             //  icons.setVisibility(View.GONE);
@@ -1200,8 +1103,6 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
         private final ImageView iv_right;
         private final ImageView iv_cross;
         private final TextView tv_name;
-        //        private TextView tv_desc;
-//        private RelativeLayout rl_request, rl_notification;
         private final TextView tv_date;
 
         public ViewHolderRelationRequest(@NonNull View itemView) {
@@ -1210,8 +1111,6 @@ public class FragNotificationTypeAdapter extends RecyclerView.Adapter<RecyclerVi
 //            rl_notification = itemView.findViewById(R.id.rl_notification);
             ImageView icons = itemView.findViewById(R.id.iv_icon_1);
             tv_name = itemView.findViewById(R.id.tv_name_noti);
-//            tv_desc = itemView.findViewById(R.id.tv_desc_noti);
-//            rl_request = itemView.findViewById(R.id.rl_request);
             iv_right = itemView.findViewById(R.id.iv_right);
             iv_cross = itemView.findViewById(R.id.iv_cross);
             icons.setVisibility(View.GONE);

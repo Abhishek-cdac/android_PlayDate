@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 public class PremiumAdapter extends FragmentPagerAdapter {
+
     private final FragInvite fragInvite;
     private final ArrayList<PremiumPlans> lstPremium;
 

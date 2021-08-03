@@ -1,5 +1,7 @@
 package com.playdate.app.ui.register.otp;
 
+import static com.playdate.app.util.session.SessionPref.LoginVerified;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -7,6 +9,7 @@ import android.os.Looper;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -17,7 +20,7 @@ import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.databinding.ActivityOtpBinding;
 import com.playdate.app.model.LoginResponse;
-import com.playdate.app.ui.register.age_verification.AgeVerifiationActivity;
+import com.playdate.app.ui.register.age_verification.AgeVerificationActivity;
 import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
@@ -26,12 +29,11 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.playdate.app.util.session.SessionPref.LoginVerified;
 
 public class OTPActivity extends AppCompatActivity {
 
@@ -93,9 +95,7 @@ public class OTPActivity extends AppCompatActivity {
             binding.txtResend.setVisibility(View.VISIBLE);
             binding.txtTimer.setVisibility(View.GONE);
         });
-        otpViewModel.iv_backClick.observe(this, loginUser -> {
-            finish();
-        });
+        otpViewModel.iv_backClick.observe(this, loginUser -> finish());
         otpViewModel.txtOTP.observe(this, loginUser -> {
             if (loginUser.length() > 3) {
                 new CommonClass().hideKeyboard(binding.edtOtp, OTPActivity.this);
@@ -138,10 +138,10 @@ public class OTPActivity extends AppCompatActivity {
         Call<LoginResponse> call = service.verifyOtp(hashMap);
         call.enqueue(new Callback<LoginResponse>() {
             @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+            public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
                 pd.cancel();
                 if (response.code() == 200) {
-                    if (response.body().getStatus() == 1) {
+                    if (Objects.requireNonNull(response.body()).getStatus() == 1) {
                         nextPage();
                         pref.saveBoolKeyVal(LoginVerified, true);
                         finish();
@@ -150,7 +150,7 @@ public class OTPActivity extends AppCompatActivity {
                     }
                 } else {
                     try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        JSONObject jObjError = new JSONObject(Objects.requireNonNull(response.errorBody()).string());
 
                         clsCommon.showDialogMsg(OTPActivity.this, "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
@@ -162,7 +162,7 @@ public class OTPActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<LoginResponse> call, @NonNull Throwable t) {
                 t.printStackTrace();
                 pd.cancel();
                 Toast.makeText(OTPActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
@@ -183,12 +183,12 @@ public class OTPActivity extends AppCompatActivity {
 
         call.enqueue(new Callback<LoginResponse>() {
             @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+            public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
                 pd.cancel();
             }
 
             @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<LoginResponse> call, @NonNull Throwable t) {
                 t.printStackTrace();
                 pd.cancel();
                 Toast.makeText(OTPActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
@@ -200,7 +200,7 @@ public class OTPActivity extends AppCompatActivity {
         if (pref.getBoolVal(SessionPref.isBusiness)) {
             OTPActivity.this.startActivity(new Intent(OTPActivity.this, BusinessStartingDateActivity.class));
         } else {
-            OTPActivity.this.startActivity(new Intent(OTPActivity.this, AgeVerifiationActivity.class));
+            OTPActivity.this.startActivity(new Intent(OTPActivity.this, AgeVerificationActivity.class));
         }
 
 

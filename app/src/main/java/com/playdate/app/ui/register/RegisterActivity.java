@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.InputFilter;
-import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -49,7 +48,7 @@ import com.playdate.app.model.LoginUserDetails;
 import com.playdate.app.model.RegisterResult;
 import com.playdate.app.model.RegisterUser;
 import com.playdate.app.ui.dashboard.DashboardActivity;
-import com.playdate.app.ui.register.age_verification.AgeVerifiationActivity;
+import com.playdate.app.ui.register.age_verification.AgeVerificationActivity;
 import com.playdate.app.ui.register.bio.BioActivity;
 import com.playdate.app.ui.register.gender.GenderSelActivity;
 import com.playdate.app.ui.register.interestin.InterestActivity;
@@ -184,18 +183,15 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
     }
 
     private InputFilter ignoreFirstWhiteSpace() {
-        return new InputFilter() {
-            public CharSequence filter(CharSequence source, int start, int end,
-                                       Spanned dest, int dstart, int dend) {
+        return (source, start, end, dest, dstart, dend) -> {
 
-                for (int i = start; i < end; i++) {
-                    if (Character.isWhitespace(source.charAt(i))) {
-                        if (dstart == 0)
-                            return "";
-                    }
+            for (int i = start; i < end; i++) {
+                if (Character.isWhitespace(source.charAt(i))) {
+                    if (dstart == 0)
+                        return "";
                 }
-                return null;
             }
+            return null;
         };
     }
 
@@ -232,10 +228,10 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
         Call<RegisterResult> call = service.registerUser(hashMap);
         call.enqueue(new Callback<RegisterResult>() {
             @Override
-            public void onResponse(Call<RegisterResult> call, Response<RegisterResult> response) {
+            public void onResponse(@NonNull Call<RegisterResult> call, @NonNull Response<RegisterResult> response) {
                 pd.cancel();
                 if (response.code() == 200) {
-                    if (response.body().getStatus() == 1) {
+                    if (Objects.requireNonNull(response.body()).getStatus() == 1) {
                         LoginUserDetails user = response.body().getData();
                         SessionPref.getInstance(RegisterActivity.this).saveLoginUser(
                                 user.getId(),
@@ -270,7 +266,7 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
                     }
                 } else {
                     try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        JSONObject jObjError = new JSONObject(Objects.requireNonNull(response.errorBody()).string());
 
                         clsCommon.showDialogMsg(RegisterActivity.this, "PlayDate", jObjError.getJSONArray("data").getJSONObject(0).getString("msg"), "Ok");
                     } catch (Exception e) {
@@ -282,7 +278,7 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
             }
 
             @Override
-            public void onFailure(Call<RegisterResult> call, Throwable t) {
+            public void onFailure(@NonNull Call<RegisterResult> call, @NonNull Throwable t) {
                 t.printStackTrace();
                 pd.cancel();
                 Toast.makeText(RegisterActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
@@ -502,7 +498,7 @@ public class RegisterActivity extends AppCompatActivity implements GoogleApiClie
                 mIntent.putExtra("Forgot", false);
 
             } else if (user.getBirthDate() == null) {
-                mIntent = new Intent(mContext, AgeVerifiationActivity.class);
+                mIntent = new Intent(mContext, AgeVerificationActivity.class);
 
             } else if (user.getGender() == null) {
                 mIntent = new Intent(mContext, GenderSelActivity.class);

@@ -35,22 +35,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <!-- <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
-         android:id="@+id/dots_indicator"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_marginBottom="@dimen/_30sdp"
-         app:dotsColor="@color/white"
-         app:dotsCornerRadius="8dp"
-         app:dotsSize="16dp"
-         app:dotsSpacing="4dp"
-         app:dotsWidthFactor="2.5"
-         app:layout_constraintBottom_toTopOf="@+id/btnLogin"
-         app:layout_constraintEnd_toEndOf="parent"
-         app:layout_constraintStart_toStartOf="parent"
-         app:progressMode="true"
-         app:selectedDotColor="@color/color_pink"
-         app:setUpWithViewpager="@{ viewPager }" />-->
 
     <Button
         android:id="@+id/btnLogin"

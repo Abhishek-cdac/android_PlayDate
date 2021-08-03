@@ -19,7 +19,7 @@ import com.playdate.app.util.common.CommonClass;
 import com.playdate.app.util.session.SessionPref;
 
 public class InvitePartnerActivity extends AppCompatActivity {
-    InvitepartnerViewModel viewModel;
+    InvitePartnerViewModel viewModel;
     ActivityInvitePartnerBinding binding;
     ImageView iv_next;
     ImageView iv_share_code;
@@ -36,7 +36,7 @@ public class InvitePartnerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new InvitepartnerViewModel();
+        viewModel = new InvitePartnerViewModel();
         mIntent = getIntent();
         SessionPref pref = SessionPref.getInstance(this);
         loginUserDetails = new LoginUserDetails();

@@ -1,4 +1,4 @@
-package com.playdate.app.business.couponsGenerate.adapter;
+package com.playdate.app.business.generate_coupons.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;

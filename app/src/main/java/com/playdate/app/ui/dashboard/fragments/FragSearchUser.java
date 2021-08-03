@@ -42,6 +42,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FragSearchUser extends Fragment implements SuggestedFriendAdapter.SuggestionsAdapterListner {
+
     private EditText edt_search;
     private RecyclerView recyclerView;
     private ArrayList<GetUserSuggestionData> lst_getUserSuggestions;

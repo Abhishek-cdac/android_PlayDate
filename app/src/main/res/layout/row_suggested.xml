@@ -43,7 +43,7 @@
                 android:id="@+id/diamond"
                 android:layout_width="@dimen/_15sdp"
                 android:layout_height="@dimen/_15sdp"
-                android:layout_alignLeft="@+id/card"
+                android:layout_alignStart="@+id/card"
                 android:layout_alignTop="@+id/card"
                 android:src="@drawable/ic_diamond_normal"
                 android:visibility="gone" />

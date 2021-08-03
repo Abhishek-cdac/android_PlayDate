@@ -1,10 +1,11 @@
 package com.playdate.app.ui.social.model;
 
 public class commentBy {
-    String _id;
-    String fullName;
-    String username;
-    String profilePicPath;
+
+    private String _id;
+    private String fullName;
+    private String username;
+    private String profilePicPath;
 
     public String get_id() {
         return _id;

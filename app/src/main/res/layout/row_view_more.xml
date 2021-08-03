@@ -11,12 +11,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:gravity="center"
-        android:textSize="@dimen/_13sdp"
         android:paddingTop="@dimen/_20sdp"
         android:paddingBottom="@dimen/_20sdp"
-        android:text="View More Notifications"
+        android:text="@string/view_more_notifications"
         android:textAllCaps="false"
-        android:textColor="@color/textColour" />
+        android:textColor="@color/textColour"
+        android:textSize="@dimen/_13sdp" />
 
 
 </RelativeLayout>

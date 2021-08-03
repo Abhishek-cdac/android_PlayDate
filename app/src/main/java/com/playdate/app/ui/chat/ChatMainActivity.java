@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -158,7 +157,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 
 
     // Video Calling
-    private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.ENGLISH);
     protected QBResRequestExecutor requestExecutor;
     protected SharedPrefsHelper sharedPrefsHelper;
 
@@ -190,7 +189,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         ImageView profile_image = findViewById(R.id.profile_image);
         TextView chat_name = findViewById(R.id.chat_name);
         ImageView iv_smiley = findViewById(R.id.iv_smiley);
-        ImageView iv_delete_msg = findViewById(R.id.iv_delete_msg);
+//        ImageView iv_delete_msg = findViewById(R.id.iv_delete_msg);
         ImageView iv_video_call = findViewById(R.id.iv_video_call);
         lstSmiley = new ArrayList<>();
         et_chat.setFocusable(true);
@@ -273,11 +272,6 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 
 
         scrollview.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
-
-            if (scrollY == 0) {
-//                callAPI();
-
-            }
 
         });
 
@@ -399,11 +393,11 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         Call<ChatMsgResp> call = service.getChatMessage("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<ChatMsgResp>() {
             @Override
-            public void onResponse(Call<ChatMsgResp> call, Response<ChatMsgResp> response) {
+            public void onResponse(@NonNull Call<ChatMsgResp> call, @NonNull Response<ChatMsgResp> response) {
 //                pd.cancel();
 
                 if (response.code() == 200) {
-                    if (response.body().getStatus() == 1) {
+                    if (Objects.requireNonNull(response.body()).getStatus() == 1) {
                         ChatMsgResp resp = response.body();
                         if (null == lstChat) {
                             lstChat = new ArrayList<>();
@@ -418,7 +412,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
                             if (null != lstPollingQuestion) {
 
                                 for (int i = 0; i < lstPollingQuestion.size(); i++) {
-                                    Log.d("pollingDate", lstPollingQuestion.get(i).getEntryDate());
+                                   // Log.d("pollingDate", lstPollingQuestion.get(i).getEntryDate());
 
                                     int j = 0;
                                     boolean found = false;
@@ -495,7 +489,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             }
 
             @Override
-            public void onFailure(Call<ChatMsgResp> call, Throwable t) {
+            public void onFailure(@NonNull Call<ChatMsgResp> call, @NonNull Throwable t) {
                 t.printStackTrace();
 //                pd.cancel();
                 isMoreData = false;
@@ -520,7 +514,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             odt = OffsetDateTime.parse(c.toString(), dtfInput);
         }
 
-        Log.d("FormattedDAte", "Formatted DAte: " + odt);
+       // Log.d("FormattedDAte", "Formatted DAte: " + odt);
 
 
         try {
@@ -893,7 +887,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             }
 
             @Override
-            public void onFailure(Call<ChatFileUpload> call, Throwable t) {
+            public void onFailure(@NonNull Call<ChatFileUpload> call, @NonNull Throwable t) {
                 t.printStackTrace();
             }
         });
@@ -956,7 +950,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         Call<ChatFileUpload> call = service.addMediaImage("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), filePart);
         call.enqueue(new Callback<ChatFileUpload>() {
             @Override
-            public void onResponse(Call<ChatFileUpload> call, Response<ChatFileUpload> response) {
+            public void onResponse(@NonNull Call<ChatFileUpload> call, @NonNull Response<ChatFileUpload> response) {
                 if (response.code() == 200) {
                     if (Objects.requireNonNull(response.body()).getStatus() == 1) {
                         ChatFile media = response.body().getChatFile();
@@ -970,7 +964,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
             }
 
             @Override
-            public void onFailure(Call<ChatFileUpload> call, Throwable t) {
+            public void onFailure(@NonNull Call<ChatFileUpload> call, @NonNull Throwable t) {
                 t.printStackTrace();
             }
         });
@@ -1247,7 +1241,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
     private void runNextScreen() {
         if (sharedPrefsHelper.hasQbUser()) {
             LoginService.start(ChatMainActivity.this, sharedPrefsHelper.getQbUser());
-            startCall(true, Opponent);
+            startCall(Opponent);
 
         }
     }
@@ -1409,7 +1403,7 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
 
                 Opponent = user;
                 if (checker.lacksPermissions(Consts.PERMISSIONS)) {
-                    startPermissionsActivity(false);
+                    startPermissionsActivity();
                 }
 
             }
@@ -1420,17 +1414,17 @@ public class ChatMainActivity extends BaseActivity implements onSmileyChangeList
         });
     }
 
-    private void startPermissionsActivity(boolean checkOnlyAudio) {
-        PermissionsActivity.startActivity(this, checkOnlyAudio, Consts.PERMISSIONS);
+    private void startPermissionsActivity() {
+        PermissionsActivity.startActivity(this, false, Consts.PERMISSIONS);
     }
 
 
-    private void startCall(boolean isVideoCall, QBUser qbUsers) {
+    private void startCall(QBUser qbUsers) {
 //        Log.d(TAG, "Starting Call");
         List<QBUser> selectedUsers = new ArrayList<>();
         selectedUsers.add(qbUsers);
         ArrayList<Integer> opponentsList = CollectionsUtils.getIdsSelectedOpponents(selectedUsers);
-        QBRTCTypes.QBConferenceType conferenceType = isVideoCall
+        QBRTCTypes.QBConferenceType conferenceType = true
                 ? QBRTCTypes.QBConferenceType.QB_CONFERENCE_TYPE_VIDEO
                 : QBRTCTypes.QBConferenceType.QB_CONFERENCE_TYPE_AUDIO;
 //        Log.d(TAG, "conferenceType = " + conferenceType);

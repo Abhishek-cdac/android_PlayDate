@@ -59,8 +59,4 @@ public class UserNameViewModel extends ViewModel {
     public void onNext(View view) {
         NextClick.setValue(true);
     }
-//
-//    public void onTaken(View view) {
-//        TakenClick.setValue(true);
-//    }
 }

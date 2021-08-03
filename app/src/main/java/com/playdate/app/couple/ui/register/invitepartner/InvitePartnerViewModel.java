@@ -5,7 +5,7 @@ import android.view.View;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class InvitepartnerViewModel extends ViewModel {
+public class InvitePartnerViewModel extends ViewModel {
     private final MutableLiveData<Boolean> BackClick = new MutableLiveData<>();
     private final MutableLiveData<Boolean> NextClick = new MutableLiveData<>();
 

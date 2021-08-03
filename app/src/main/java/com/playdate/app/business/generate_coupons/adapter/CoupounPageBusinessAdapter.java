@@ -1,12 +1,12 @@
-package com.playdate.app.business.couponsGenerate.adapter;
+package com.playdate.app.business.generate_coupons.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.playdate.app.business.couponsGenerate.FragActiveCoupons;
-import com.playdate.app.business.couponsGenerate.FragExpiredCoupon;
+import com.playdate.app.business.generate_coupons.FragActiveCoupons;
+import com.playdate.app.business.generate_coupons.FragExpiredCoupon;
 import com.playdate.app.model.GetBusinessCouponData;
 
 import java.util.ArrayList;

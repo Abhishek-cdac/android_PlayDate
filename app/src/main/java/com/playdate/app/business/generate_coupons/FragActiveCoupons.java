@@ -1,4 +1,4 @@
-package com.playdate.app.business.couponsGenerate;
+package com.playdate.app.business.generate_coupons;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
-import com.playdate.app.business.couponsGenerate.adapter.ActiveCouponsAdapter;
+import com.playdate.app.business.generate_coupons.adapter.ActiveCouponsAdapter;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.CommonModel;

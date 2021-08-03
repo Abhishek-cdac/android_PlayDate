@@ -19,6 +19,7 @@ import com.playdate.app.ui.dashboard.adapter.PremiumAdapter;
 import com.playdate.app.ui.dashboard.more_suggestion.FragInvite;
 
 public class FragPremium1 extends Fragment {
+
     private final FragInvite fragInvite;
     private final PremiumPlans premiumPlans;
 

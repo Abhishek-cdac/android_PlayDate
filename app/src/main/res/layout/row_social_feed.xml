@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clickable="true"
-    android:focusableInTouchMode="true">
+    android:focusableInTouchMode="true"
+    android:focusable="true">
 
     <com.playdate.app.ui.social.videoplay.AAH_CustomRecyclerView
         android:id="@+id/recycler_view_feed"

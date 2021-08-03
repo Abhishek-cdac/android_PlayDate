@@ -85,7 +85,6 @@ public class UserNameActivity extends AppCompatActivity {
 
                 });
 
-//        iv_next
 
         userNameViewModel.onBackClick().
 

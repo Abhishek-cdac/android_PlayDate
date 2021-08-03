@@ -12,16 +12,15 @@
         android:layout_height="@dimen/_55sdp"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
-        android:scaleType="fitXY"
-        android:layout_marginLeft="@dimen/_8sdp"
-        />
+        android:layout_marginStart="@dimen/_8sdp"
+        android:scaleType="fitXY" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_3sdp"
-        android:layout_toRightOf="@+id/iv_image"
+        android:layout_toEndOf="@+id/iv_image"
         android:paddingHorizontal="@dimen/_10sdp">
 
         <TextView
@@ -51,7 +50,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Valid until"
+                android:text="@string/valid_until"
                 android:textColor="@color/textColour"
                 android:textSize="@dimen/_8sdp" />
 
@@ -59,7 +58,7 @@
                 android:id="@+id/discount_valid_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_3sdp"
+                android:layout_marginStart="@dimen/_3sdp"
                 android:textColor="@color/textColour"
                 android:textSize="@dimen/_8sdp" />
 
@@ -110,7 +109,7 @@
                 android:layout_height="@dimen/_20sdp"
                 android:layout_centerInParent="true"
                 android:layout_marginHorizontal="@dimen/_3sdp"
-                android:layout_toRightOf="@+id/rl_code_inner"
+                android:layout_toEndOf="@+id/rl_code_inner"
                 android:background="@color/white" />
 
             <RelativeLayout
@@ -118,8 +117,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_marginLeft="@dimen/_1sdp"
-                android:layout_toRightOf="@+id/view_divider">
+                android:layout_marginStart="@dimen/_1sdp"
+                android:layout_toEndOf="@+id/view_divider">
 
                 <TextView
                     android:id="@+id/copy"
@@ -141,35 +140,6 @@
 
 
         </RelativeLayout>
-
-        <!--        <LinearLayout-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_below="@+id/discount_valid"-->
-        <!--            android:layout_marginTop="@dimen/_12sdp"-->
-        <!--            android:background="@drawable/pink_rect_filled"-->
-        <!--            android:orientation="horizontal"-->
-        <!--            android:paddingHorizontal="@dimen/_5sdp"-->
-        <!--            android:paddingVertical="@dimen/_1sdp">-->
-
-        <!--            <TextView-->
-        <!--                android:id="@+id/points"-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:text="100"-->
-        <!--                android:textColor="@color/white"-->
-        <!--                android:textSize="@dimen/_12sdp" />-->
-
-        <!--            <TextView-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:layout_marginLeft="@dimen/_3sdp"-->
-        <!--                android:text="POINTS"-->
-        <!--                android:textColor="@color/white"-->
-        <!--                android:textSize="@dimen/_12sdp" />-->
-
-
-        <!--        </LinearLayout>-->
 
 
     </RelativeLayout>

@@ -78,7 +78,7 @@
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
             android:fontFamily="@font/lato_bold"
-            android:text="1200"
+            android:text="0"
             android:textColor="@color/white"
             android:textSize="@dimen/_16sdp" />
 

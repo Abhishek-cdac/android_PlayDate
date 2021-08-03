@@ -5,7 +5,7 @@
 
         <variable
             name="InvitepartnerViewModel"
-            type="com.playdate.app.couple.ui.register.invitepartner.InvitepartnerViewModel" />
+            type="com.playdate.app.couple.ui.register.invitepartner.InvitePartnerViewModel" />
     </data>
 
     <RelativeLayout

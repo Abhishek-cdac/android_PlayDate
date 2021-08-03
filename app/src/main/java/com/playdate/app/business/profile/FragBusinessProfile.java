@@ -34,7 +34,7 @@ import com.playdate.app.ui.blockuser.BlockUserActivity;
 import com.playdate.app.ui.dashboard.OnProfilePhotoChangeListerner;
 import com.playdate.app.ui.forgot_password.ForgotPasswordActivity;
 import com.playdate.app.ui.login.LoginActivity;
-import com.playdate.app.ui.register.age_verification.AgeVerifiationActivity;
+import com.playdate.app.ui.register.age_verification.AgeVerificationActivity;
 import com.playdate.app.ui.register.profile.UploadProfileActivity;
 import com.playdate.app.util.common.TransparentProgressDialog;
 import com.playdate.app.util.session.SessionPref;
@@ -226,7 +226,7 @@ public class FragBusinessProfile extends Fragment implements View.OnClickListene
             mIntent.putExtra("fromProfile", true);
             startActivityForResult(mIntent, 407);
         } else if (id == R.id.iv_dob) {
-            Intent mIntent = new Intent(getActivity(), AgeVerifiationActivity.class);
+            Intent mIntent = new Intent(getActivity(), AgeVerificationActivity.class);
             mIntent.putExtra("CurrentDOB", DOB.getText().toString());
             mIntent.putExtra("fromProfile", true);
             startActivityForResult(mIntent, 408);

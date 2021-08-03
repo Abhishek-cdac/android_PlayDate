@@ -1,97 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_notification"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/backgroundColour"
     android:orientation="horizontal"
-    android:id="@+id/rl_notification"
     android:padding="@dimen/_5sdp">
+
     <TextView
         android:id="@+id/tv_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Yesterday"
+        android:layout_gravity="center_vertical"
+        android:fontFamily="@font/lato_bold"
         android:paddingTop="@dimen/_5sdp"
         android:paddingBottom="@dimen/_5sdp"
-        android:fontFamily="@font/lato_bold"
-        android:layout_gravity="center_vertical"
         android:textAllCaps="false"
         android:textColor="@color/textColour" />
+
     <LinearLayout
-        android:background="@color/backgroundColour"
         android:id="@+id/main_ll"
-        android:layout_below="@+id/tv_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
+        android:layout_below="@+id/tv_date"
+        android:background="@color/backgroundColour"
+        android:orientation="horizontal">
 
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/profile_image_1"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_weight=".1"
-                    android:layout_height="@dimen/_30sdp"
-                    app:civ_border_color="@android:color/transparent" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image_1"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_weight=".1"
+            app:civ_border_color="@android:color/transparent" />
 
-                <TextView
-                    android:layout_weight="1"
-                    android:id="@+id/tv_name_noti"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginHorizontal="@dimen/_5sdp"
-                    android:maxLines="2"
-                    android:layout_gravity="center"
-                    android:textAllCaps="false"
-                    android:layout_toRightOf="@+id/profile_image_1"
-                    android:textColor="@color/textColour"
-                    />
+        <TextView
+            android:id="@+id/tv_name_noti"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="@dimen/_5sdp"
+            android:layout_weight="1"
+            android:maxLines="2"
+            android:textAllCaps="false"
+            android:textColor="@color/textColour" />
 
-                <TextView
-                    android:id="@+id/tv_desc_noti"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/tv_name_noti"
-                    android:maxLines="2"
-                    android:visibility="gone"
-                    android:textColor="@color/textColour" />
+        <TextView
+            android:id="@+id/tv_desc_noti"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:textColor="@color/textColour"
+            android:visibility="gone" />
 
-                <ImageView
-                    android:layout_weight=".1"
+        <ImageView
+            android:id="@+id/iv_icon_1"
 
-                    android:id="@+id/iv_icon_1"
-                    android:layout_width="@dimen/_20sdp"
-                    android:layout_height="@dimen/_20sdp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_toRightOf="@+id/tv_desc_noti"
-                    />
-                <ImageView
-                    android:id="@+id/iv_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/iv_icon_1"
-                    android:layout_centerVertical="true"
-                    android:layout_marginHorizontal="@dimen/_4sdp"
-                    android:background="@drawable/icon_bg"
-                    android:padding="@dimen/_5sdp"
-                    android:src="@drawable/icon_check" />
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_weight=".1" />
 
-                <ImageView
+        <ImageView
+            android:id="@+id/iv_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_4sdp"
+            android:background="@drawable/icon_bg"
+            android:padding="@dimen/_5sdp"
+            android:src="@drawable/icon_check" />
 
-                    android:id="@+id/iv_cross"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginHorizontal="@dimen/_4sdp"
-                    android:layout_toRightOf="@+id/iv_right"
-                    android:background="@drawable/icon_bg"
-                    android:padding="@dimen/_1sdp"
-                    android:src="@drawable/ic_baseline_clear_24" />
+        <ImageView
 
+            android:id="@+id/iv_cross"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_4sdp"
+            android:background="@drawable/icon_bg"
+            android:padding="@dimen/_1sdp"
+            android:src="@drawable/ic_baseline_clear_24" />
 
 
     </LinearLayout>

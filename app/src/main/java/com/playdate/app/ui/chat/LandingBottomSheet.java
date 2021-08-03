@@ -154,6 +154,7 @@ public class LandingBottomSheet extends BottomSheetDialogFragment {
         hashMap.put("toUserId", toUserId);
 
         Call<LoginResponse> call = service.addUserReportBlock("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
+
         call.enqueue(new retrofit2.Callback<LoginResponse>() {
             @Override
             public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {

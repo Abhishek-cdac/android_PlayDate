@@ -13,7 +13,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/_45sdp"
         android:fontFamily="@font/lato_bold"
-        android:text="Time's Up!"
+        android:text="@string/time_s_up"
         android:textColor="@color/off_white"
         android:textSize="@dimen/_36sdp"
         android:textStyle="bold" />

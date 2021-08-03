@@ -1,4 +1,4 @@
-package com.playdate.app.business.couponsGenerate;
+package com.playdate.app.business.generate_coupons;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +15,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.playdate.app.R;
-import com.playdate.app.business.couponsGenerate.adapter.CoupounPageBusinessAdapter;
+import com.playdate.app.business.generate_coupons.adapter.CoupounPageBusinessAdapter;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
 import com.playdate.app.model.NotificationCountModel;

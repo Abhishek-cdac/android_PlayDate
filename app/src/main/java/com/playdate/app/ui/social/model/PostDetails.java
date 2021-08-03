@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 
 public class PostDetails {
+
     @SerializedName("postedBy")
     private ArrayList<PostedBy> lstpostby;
     int TapCount = 0;
@@ -18,6 +19,7 @@ public class PostDetails {
     }
 
     private String postType;
+
     private String colorCode;
     private int emojiCode;
 
@@ -25,17 +27,17 @@ public class PostDetails {
         return colorCode;
     }
 
-    public void setColorCode(String colorCode) {
-        this.colorCode = colorCode;
-    }
+//    public void setColorCode(String colorCode) {
+//        this.colorCode = colorCode;
+//    }
 
     public int getEmojiCode() {
         return emojiCode;
     }
 
-    public void setEmojiCode(int emojiCode) {
-        this.emojiCode = emojiCode;
-    }
+//    public void setEmojiCode(int emojiCode) {
+//        this.emojiCode = emojiCode;
+//    }
 
     boolean commentStatus;
 
@@ -43,9 +45,9 @@ public class PostDetails {
         return commentStatus;
     }
 
-    public void setCommentStatus(boolean commentStatus) {
-        this.commentStatus = commentStatus;
-    }
+//    public void setCommentStatus(boolean commentStatus) {
+//        this.commentStatus = commentStatus;
+//    }
 
     private String tag;
     private String comments;
@@ -60,9 +62,9 @@ public class PostDetails {
         return comments_list;
     }
 
-    public void setComments_list(ArrayList<CommentList> comments_list) {
-        this.comments_list = comments_list;
-    }
+//    public void setComments_list(ArrayList<CommentList> comments_list) {
+//        this.comments_list = comments_list;
+//    }
 
     public int getIsGallerySave() {
         return isGallerySave;
@@ -118,7 +120,7 @@ public class PostDetails {
 
 
 
-    private ArrayList<TagFriends> tagFriends;
+//    private ArrayList<TagFriends> tagFriends;
 
     private String location;
 
@@ -135,9 +137,9 @@ public class PostDetails {
         return lstpostby;
     }
 
-    public void setLstpostby(ArrayList<PostedBy> lstpostby) {
-        this.lstpostby = lstpostby;
-    }
+//    public void setLstpostby(ArrayList<PostedBy> lstpostby) {
+//        this.lstpostby = lstpostby;
+//    }
 
     public String getPostType() {
         return postType;
@@ -155,13 +157,13 @@ public class PostDetails {
         this.entryDate = entryDate;
     }
 
-    public ArrayList<TagFriends> getTagFriends() {
-        return tagFriends;
-    }
+//    public ArrayList<TagFriends> getTagFriends() {
+//        return tagFriends;
+//    }
 
-    public void setTagFriends(ArrayList<TagFriends> tagFriends) {
-        this.tagFriends = tagFriends;
-    }
+//    public void setTagFriends(ArrayList<TagFriends> tagFriends) {
+//        this.tagFriends = tagFriends;
+//    }
 
     public String getLocation() {
         return location;
@@ -183,17 +185,17 @@ public class PostDetails {
         return postMedia;
     }
 
-    public void setPostMedia(ArrayList<PostMedia> postMedia) {
-        this.postMedia = postMedia;
-    }
-
-    public String getMediaId() {
-        return mediaId;
-    }
-
-    public void setMediaId(String mediaId) {
-        this.mediaId = mediaId;
-    }
+//    public void setPostMedia(ArrayList<PostMedia> postMedia) {
+//        this.postMedia = postMedia;
+//    }
+//
+//    public String getMediaId() {
+//        return mediaId;
+//    }
+//
+//    public void setMediaId(String mediaId) {
+//        this.mediaId = mediaId;
+//    }
 
     public String getUserId() {
         return userId;

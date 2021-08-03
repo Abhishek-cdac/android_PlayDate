@@ -38,7 +38,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
@@ -59,7 +58,7 @@ import com.playdate.app.service.FcmMessageService;
 import com.playdate.app.ui.dashboard.DashboardActivity;
 import com.playdate.app.ui.dialogs.UserTypeDialog;
 import com.playdate.app.ui.forgot_password.ForgotPasswordActivity;
-import com.playdate.app.ui.register.age_verification.AgeVerifiationActivity;
+import com.playdate.app.ui.register.age_verification.AgeVerificationActivity;
 import com.playdate.app.ui.register.bio.BioActivity;
 import com.playdate.app.ui.register.gender.GenderSelActivity;
 import com.playdate.app.ui.register.interestin.InterestActivity;
@@ -400,7 +399,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 mIntent.putExtra("Forgot", false);
 
             } else if (user.getBirthDate() == null) {
-                mIntent = new Intent(mContext, AgeVerifiationActivity.class);
+                mIntent = new Intent(mContext, AgeVerificationActivity.class);
 
             } else if (user.getGender() == null) {
                 mIntent = new Intent(mContext, GenderSelActivity.class);

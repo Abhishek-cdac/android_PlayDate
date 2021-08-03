@@ -59,7 +59,7 @@
         android:layout_marginTop="@dimen/_10sdp"
         android:fontFamily="@font/lato_bold"
         android:paddingHorizontal="@dimen/_14sdp"
-        android:text="Choose a background color"
+        android:text="@string/choose_a_background_color"
         android:textColor="@color/textColour"
         android:textSize="@dimen/_13sdp"
         android:textStyle="bold" />
@@ -104,8 +104,6 @@
                 android:id="@+id/ll_smily"
                 android:layout_width="@dimen/_90sdp"
                 android:layout_height="@dimen/_90sdp"
-                android:layout_below="@+id/txt_ques"
-                android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/_30sdp"
                 android:orientation="vertical">
@@ -149,7 +147,7 @@
             android:layout_alignParentStart="true"
             android:backgroundTint="@android:color/transparent"
             android:enabled="true"
-            android:hint="Post in feed...!"
+            android:hint="@string/post_in_feed"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:textSize="@dimen/_12sdp" />

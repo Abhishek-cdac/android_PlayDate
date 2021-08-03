@@ -9,7 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.playdate.app.R;
-import com.playdate.app.business.couponsGenerate.FragCouponParentBusiness;
+import com.playdate.app.business.generate_coupons.FragCouponParentBusiness;
 import com.playdate.app.ui.interfaces.OnInnerFragmentClicks;
 
 public class DashboardBusiness extends AppCompatActivity implements OnInnerFragmentClicks {

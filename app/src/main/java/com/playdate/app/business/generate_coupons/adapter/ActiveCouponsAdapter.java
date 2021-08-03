@@ -1,6 +1,5 @@
-package com.playdate.app.business.couponsGenerate.adapter;
+package com.playdate.app.business.generate_coupons.adapter;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,15 +11,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.playdate.app.R;
-import com.playdate.app.business.couponsGenerate.FragActiveCoupons;
+import com.playdate.app.business.generate_coupons.FragActiveCoupons;
 import com.playdate.app.model.GetBusinessCouponData;
 import com.squareup.picasso.Picasso;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 public class ActiveCouponsAdapter extends RecyclerView.Adapter<ActiveCouponsAdapter.ViewHolder> {

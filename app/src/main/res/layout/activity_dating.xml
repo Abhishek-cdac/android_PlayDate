@@ -32,7 +32,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
             android:padding="@dimen/_8sdp"
             android:src="@drawable/ic_close" />
 
@@ -47,7 +47,7 @@
             android:layout_marginBottom="@dimen/_10sdp"
             android:background="@drawable/dating_button"
             android:elevation="@dimen/_15sdp"
-            android:text="Create Date"
+            android:text="@string/create_date"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
             android:textSize="@dimen/_12sdp" />
@@ -65,7 +65,7 @@
             android:layout_marginBottom="@dimen/_25sdp"
             android:background="@drawable/login_button"
             android:elevation="@dimen/_15sdp"
-            android:text="Accept Date"
+            android:text="@string/accept_date"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
             android:textSize="@dimen/_12sdp" />

@@ -81,7 +81,6 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tv_ur_code"
                         android:layout_centerHorizontal="true"
-                        android:text="AUX52NJHJ"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_14sdp"
                         android:textStyle="bold" />

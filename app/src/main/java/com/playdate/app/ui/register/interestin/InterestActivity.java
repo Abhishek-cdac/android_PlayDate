@@ -6,10 +6,10 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
 
 import com.playdate.app.R;
 import com.playdate.app.data.api.GetDataService;
@@ -25,6 +25,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -50,134 +51,102 @@ public class InterestActivity extends AppCompatActivity {
         binding.setLifecycleOwner(this);
         binding.setInterestInViewModel(viewModel);
 
-        viewModel.OnNextClick().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean click) {
-                if (!Male && !FeMale && !Other) {
-                    clsCommon.showDialogMsg(InterestActivity.this, "PlayDate", "Please select at least one interests in", "Ok");
-                } else {
-                    String interest = "";
-                    if (Male) {
-                        interest = "Male";
+        viewModel.OnNextClick().observe(this, click -> {
+            if (!Male && !FeMale && !Other) {
+                clsCommon.showDialogMsg(InterestActivity.this, "PlayDate", "Please select at least one interests in", "Ok");
+            } else {
+                String interest = "";
+                if (Male) {
+                    interest = "Male";
+                }
+                if (FeMale) {
+                    if (interest.isEmpty()) {
+                        interest = "Female";
+                    } else {
+                        interest = interest + ",Female";
                     }
-                    if (FeMale) {
-                        if (interest.isEmpty()) {
-                            interest = "Female";
-                        } else {
-                            interest = interest + ",Female";
-                        }
+                }
+                if (Other) {
+                    if (interest.isEmpty()) {
+                        interest = "Other";
+                    } else {
+                        interest = interest + ",Other";
                     }
-                    if (Other) {
-                        if (interest.isEmpty()) {
-                            interest = "Other";
-                        } else {
-                            interest = interest + ",Other";
-                        }
-                    }
-
-//                    startActivity(new Intent(InterestActivity.this, UserNameActivity
-//                            .class));
-
-                    callAPI(interest);
                 }
 
 
+                callAPI(interest);
+            }
+
+
+        });
+
+        viewModel.OnMaleClick().observe(this, click -> {
+            if (click) {
+                Male = true;
+                binding.btnMale.setBackground(getDrawable(R.drawable.selected_btn_back));
+                binding.ivNext.setVisibility(View.VISIBLE);
+
+            } else {
+                Male = false;
+                binding.btnMale.setBackground(getDrawable(R.drawable.normal_btn_back));
+                binding.ivNext.setVisibility(View.GONE);
+
+            }
+
+        });
+
+
+        viewModel.OnFemaleClick().observe(this, click -> {
+            if (click) {
+                FeMale = true;
+                binding.btnFemale.setBackground(getDrawable(R.drawable.selected_btn_back));
+                binding.ivNext.setVisibility(View.VISIBLE);
+
+            } else {
+                FeMale = false;
+                binding.btnFemale.setBackground(getDrawable(R.drawable.normal_btn_back));
+                binding.ivNext.setVisibility(View.GONE);
+
+            }
+
+        });
+        viewModel.OnNonBinClick().observe(this, click -> {
+
+            if (click) {
+                Other = true;
+                binding.btnNonBinary.setBackground(getDrawable(R.drawable.selected_btn_back));
+                binding.ivNext.setVisibility(View.VISIBLE);
+
+            } else {
+                Other = false;
+                binding.btnNonBinary.setBackground(getDrawable(R.drawable.normal_btn_back));
+                binding.ivNext.setVisibility(View.GONE);
+
             }
         });
 
-        viewModel.OnMaleClick().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean click) {
-                if (click) {
-                    Male = true;
-                    binding.btnMale.setBackground(getDrawable(R.drawable.selected_btn_back));
-                    binding.ivNext.setVisibility(View.VISIBLE);
-
-                } else {
-                    Male = false;
-                    binding.btnMale.setBackground(getDrawable(R.drawable.normal_btn_back));
-                    binding.ivNext.setVisibility(View.GONE);
-
-                }
-
-
-                // binding.btnFemale.setBackground(getDrawable(R.drawable.normal_btn_back));
-                // binding.btnNonBinary.setBackground(getDrawable(R.drawable.normal_btn_back));
-            }
-        });
-        
-
-
-        viewModel.OnFemaleClick().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean click) {
-                if (click) {
-                    FeMale = true;
-                    binding.btnFemale.setBackground(getDrawable(R.drawable.selected_btn_back));
-                    binding.ivNext.setVisibility(View.VISIBLE);
-
-                } else {
-                    FeMale = false;
-                    binding.btnFemale.setBackground(getDrawable(R.drawable.normal_btn_back));
-                    binding.ivNext.setVisibility(View.GONE);
-
-                }
-                //  binding.btnMale.setBackground(getDrawable(R.drawable.normal_btn_back));
-//                binding.btnFemale.setBackground(getDrawable(R.drawable.selected_btn_back));
-                // binding.btnNonBinary.setBackground(getDrawable(R.drawable.normal_btn_back));
-
-            }
-        });
-        viewModel.OnNonBinClick().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean click) {
-
-                if (click) {
-                    Other = true;
-                    binding.btnNonBinary.setBackground(getDrawable(R.drawable.selected_btn_back));
-                    binding.ivNext.setVisibility(View.VISIBLE);
-
-                } else {
-                    Other = false;
-                    binding.btnNonBinary.setBackground(getDrawable(R.drawable.normal_btn_back));
-                    binding.ivNext.setVisibility(View.GONE);
-
-                }
-
-                //  binding.btnMale.setBackground(getDrawable(R.drawable.normal_btn_back));
-                //  binding.btnFemale.setBackground(getDrawable(R.drawable.normal_btn_back));
-//                binding.btnNonBinary.setBackground(getDrawable(R.drawable.selected_btn_back));
-            }
-        });
-
-        viewModel.onBackClick().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean click) {
-                finish();
-            }
-        });
+        viewModel.onBackClick().observe(this, click -> finish());
 
 
         if (mIntent.getBooleanExtra("fromProfile", false)) {
-            new Handler().postDelayed(new Runnable() {
-                public void run() {
+            new Handler().postDelayed(() -> {
 
-                    String[] arr = mIntent.getStringExtra("Selected").split(",");
+                String[] arr = mIntent.getStringExtra("Selected").split(",");
 
-                    for (String s : arr) {
-                        if (s.equals("Male")) {
-                            viewModel.setMale();
-                        }
-                        if (s.equals("Female")) {
-                            viewModel.setFeMale();
-                        }
-                        if (s.equals("Other")) {
-                            viewModel.setNonBin();
-                        }
+                for (String s : arr) {
+                    if (s.equals("Male")) {
+                        viewModel.setMale();
                     }
-
-
+                    if (s.equals("Female")) {
+                        viewModel.setFeMale();
+                    }
+                    if (s.equals("Other")) {
+                        viewModel.setNonBin();
+                    }
                 }
+
+
             }, 200);
 
 
@@ -201,10 +170,10 @@ public class InterestActivity extends AppCompatActivity {
         Call<LoginResponse> call = service.updateProfile("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<LoginResponse>() {
             @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+            public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
                 pd.cancel();
                 if (response.code() == 200) {
-                    if (response.body().getStatus() == 1) {
+                    if (Objects.requireNonNull(response.body()).getStatus() == 1) {
                         pref.saveStringKeyVal(SessionPref.LoginUserinterestedIn, interest);
                         if (mIntent.getBooleanExtra("fromProfile", false)) {
 
@@ -219,7 +188,7 @@ public class InterestActivity extends AppCompatActivity {
                     }
                 } else {
                     try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        JSONObject jObjError = new JSONObject(Objects.requireNonNull(response.errorBody()).string());
                         clsCommon.showDialogMsg(InterestActivity.this, "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(InterestActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
@@ -231,7 +200,7 @@ public class InterestActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<LoginResponse> call, @NonNull Throwable t) {
                 t.printStackTrace();
                 pd.cancel();
                 Toast.makeText(InterestActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();

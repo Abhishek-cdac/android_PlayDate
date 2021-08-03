@@ -8,7 +8,8 @@
     android:background="@color/backgroundColour"
     android:clickable="true"
     android:focusableInTouchMode="true"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:focusable="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,7 +39,7 @@
                 android:paddingTop="@dimen/_5sdp"
                 android:paddingRight="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_5sdp"
-                android:text="Account"
+                android:text="@string/account"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/_15sdp"
                 android:textStyle="bold" />
@@ -68,7 +69,7 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:fontFamily="@font/lato_bold"
             android:gravity="center"
-            android:text="Change profile logo"
+            android:text="@string/change_profile_logo"
             android:textColor="@color/textColour"
             android:textSize="@dimen/_12sdp" />
 
@@ -90,7 +91,7 @@
 
                 android:fontFamily="@font/lato_bold"
                 android:gravity="start|center"
-                android:text="Username"
+                android:text="@string/username"
                 android:textColor="@color/textColour"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
@@ -141,7 +142,7 @@
 
                 android:fontFamily="@font/lato_bold"
                 android:gravity="start|center"
-                android:text="Reset Password"
+                android:text="@string/reset_password"
                 android:textColor="@color/textColour"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
@@ -169,7 +170,6 @@
             android:fontFamily="@font/helvetica_neue"
             android:gravity="start|center"
             android:inputType="textPassword"
-            android:text="Emyron96"
             android:textColor="@color/textColour"
             android:textSize="@dimen/_11sdp" />
 
@@ -195,7 +195,7 @@
 
                 android:fontFamily="@font/lato_bold"
                 android:gravity="start|center"
-                android:text="Leave Relationship"
+                android:text="@string/leave_relationship"
                 android:textColor="@color/textColour"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
@@ -223,7 +223,7 @@
             android:layout_marginRight="@dimen/_10sdp"
             android:fontFamily="@font/helvetica_neue"
             android:gravity="start|center"
-            android:text="Become Single"
+            android:text="@string/become_single"
             android:textColor="@color/textColour"
             android:textSize="@dimen/_11sdp"
             android:visibility="gone" />
@@ -245,7 +245,7 @@
                 android:layout_gravity="start"
                 android:fontFamily="@font/lato_bold"
                 android:gravity="start|center"
-                android:text="Email Address"
+                android:text="@string/email_address"
                 android:textColor="@color/textColour"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
@@ -344,7 +344,7 @@
                 android:layout_gravity="start"
                 android:fontFamily="@font/lato_bold"
                 android:gravity="start|center"
-                android:text="Change Business photo"
+                android:text="@string/change_business_photo"
                 android:textColor="@color/textColour"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
@@ -371,7 +371,7 @@
             android:fontFamily="@font/helvetica_neue"
             android:gravity="start|center"
             android:singleLine="true"
-            android:text="Edit your Business Photo"
+            android:text="@string/edit_your_business_photo"
             android:textColor="@color/textColour"
             android:textSize="@dimen/_11sdp" />  <RelativeLayout
             android:id="@+id/change_bio_rl"
@@ -389,7 +389,7 @@
                 android:layout_gravity="start"
                 android:fontFamily="@font/lato_bold"
                 android:gravity="start|center"
-                android:text="Change Profile Bio"
+                android:text="@string/change_profile_bio"
                 android:textColor="@color/textColour"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
@@ -420,7 +420,7 @@
             android:fontFamily="@font/helvetica_neue"
             android:gravity="start|center"
             android:singleLine="true"
-            android:text="Edit your profile Bio"
+            android:text="@string/edit_your_profile_bio"
             android:textColor="@color/textColour"
             android:textSize="@dimen/_11sdp" />
 
@@ -496,7 +496,7 @@
 
                 android:fontFamily="@font/lato_bold"
                 android:gravity="start|center"
-                android:text="Dark Mode"
+                android:text="@string/dark_mode"
                 android:textColor="@color/textColour"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
@@ -530,7 +530,7 @@
             android:layout_marginRight="@dimen/_10sdp"
             android:fontFamily="@font/helvetica_neue"
             android:gravity="start|center"
-            android:text="Enable/Disable dark mode"
+            android:text="@string/enable_disable_dark_mode"
             android:textColor="@color/textColour"
             android:textSize="@dimen/_11sdp"
             android:textStyle="bold" />
@@ -548,7 +548,7 @@
             android:layout_marginRight="@dimen/_10sdp"
             android:fontFamily="@font/lato_bold"
             android:gravity="start|center"
-            android:text="Blocked Users"
+            android:text="@string/blocked_users"
             android:textColor="@color/textColour"
             android:textSize="@dimen/_12sdp"
             android:textStyle="bold" />
@@ -564,7 +564,7 @@
             android:layout_marginBottom="@dimen/_30sdp"
             android:fontFamily="@font/lato_bold"
             android:gravity="start|center"
-            android:text="Logout"
+            android:text="@string/logout"
             android:textColor="@color/textColour"
             android:textSize="@dimen/_12sdp"
             android:textStyle="bold" />

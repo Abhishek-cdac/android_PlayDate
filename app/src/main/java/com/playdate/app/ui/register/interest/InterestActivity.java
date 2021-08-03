@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -33,6 +34,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -65,9 +67,8 @@ public class InterestActivity extends AppCompatActivity implements InterestAdapt
         getInterest();
 
 
-        rl_interest_bg.setOnClickListener(v -> {
-            clsCommon.hideKeyboard(v, InterestActivity.this);
-        });
+        rl_interest_bg.setOnClickListener(v -> clsCommon.hideKeyboard(v, InterestActivity.this));
+
         binding.edtSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -84,6 +85,7 @@ public class InterestActivity extends AppCompatActivity implements InterestAdapt
                 adapter.getFilter().filter(s);
             }
         });
+
 
         viewModel.OnNextClick().observe(InterestActivity.this, aBoolean -> callSaveAPI());
     }
@@ -135,10 +137,10 @@ public class InterestActivity extends AppCompatActivity implements InterestAdapt
         String finalSelectedText = selectedText.toString();
         call.enqueue(new Callback<LoginResponse>() {
             @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+            public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
                 pd.cancel();
                 if (response.code() == 200) {
-                    if (response.body().getStatus() == 1) {
+                    if (Objects.requireNonNull(response.body()).getStatus() == 1) {
                         pref.saveStringKeyVal(SessionPref.LoginUserinterested, finalSelectedText);
                         pref.saveStringKeyVal(SessionPref.LoginUserInterestsIDS, finalSelected);
                         if (mIntent.getBooleanExtra("fromProfile", false)) {
@@ -155,7 +157,7 @@ public class InterestActivity extends AppCompatActivity implements InterestAdapt
                     }
                 } else {
                     try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        JSONObject jObjError = new JSONObject(Objects.requireNonNull(response.errorBody()).string());
                         clsCommon.showDialogMsg(InterestActivity.this, "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(InterestActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
@@ -167,7 +169,7 @@ public class InterestActivity extends AppCompatActivity implements InterestAdapt
             }
 
             @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<LoginResponse> call, @NonNull Throwable t) {
                 t.printStackTrace();
                 pd.cancel();
                 Toast.makeText(InterestActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
@@ -191,7 +193,7 @@ public class InterestActivity extends AppCompatActivity implements InterestAdapt
         Call<InterestsMain> call = service.interested("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<InterestsMain>() {
             @Override
-            public void onResponse(Call<InterestsMain> call, Response<InterestsMain> response) {
+            public void onResponse(@NonNull Call<InterestsMain> call, @NonNull Response<InterestsMain> response) {
                 pd.cancel();
                 if (response.code() == 200) {
                     assert response.body() != null;
@@ -221,7 +223,7 @@ public class InterestActivity extends AppCompatActivity implements InterestAdapt
                     }
                 } else {
                     try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        JSONObject jObjError = new JSONObject(Objects.requireNonNull(response.errorBody()).string());
                         clsCommon.showDialogMsg(InterestActivity.this, "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(InterestActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
@@ -233,7 +235,7 @@ public class InterestActivity extends AppCompatActivity implements InterestAdapt
             }
 
             @Override
-            public void onFailure(Call<InterestsMain> call, Throwable t) {
+            public void onFailure(@NonNull Call<InterestsMain> call, @NonNull Throwable t) {
                 t.printStackTrace();
                 pd.cancel();
                 Toast.makeText(InterestActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();

@@ -10,245 +10,216 @@
 
     </data>
 
-    <LinearLayout
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/gradient"
-        android:orientation="vertical">
+        android:background="@drawable/gradient">
 
-        <ScrollView
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-
-            <LinearLayout
+            <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginTop="@dimen/_10sdp"
+                android:padding="@dimen/_30sdp"
+                android:src="@drawable/ic_playdate" />
 
-                <ImageView
+            <LinearLayout
+                android:id="@+id/textbox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/_30sdp">
+
+
+                <EditText
+                    android:id="@+id/login_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:padding="@dimen/_30sdp"
-                    android:src="@drawable/ic_playdate" />
+                    android:background="@drawable/rect_button"
+                    android:drawableStart="@drawable/ic_group1"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:hint="@string/Username"
+                    android:inputType="textEmailAddress"
+                    android:maxLength="50"
+                    android:padding="@dimen/_15sdp"
+                    android:text="@={LoginViewModel.EmailAddress}"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@android:color/white"
+                    android:textSize="@dimen/_12sdp" />
 
-                <LinearLayout
-                    android:id="@+id/textbox"
-                    android:layout_width="match_parent"
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingHorizontal="@dimen/_30sdp">
+                    android:layout_marginTop="@dimen/_20sdp">
 
 
                     <EditText
-                        android:id="@+id/login_email"
+                        android:id="@+id/login_Password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/rect_button"
-                        android:drawableStart="@drawable/ic_group1"
-                        android:layout_marginTop="@dimen/_10sdp"
+                        android:drawableStart="@drawable/union4"
                         android:drawablePadding="@dimen/_10sdp"
-                        android:hint="@string/Username"
-                        android:inputType="textEmailAddress"
-                        android:maxLength="50"
+                        android:ems="10"
+                        android:hint="@string/Password"
+                        android:inputType="textPassword"
                         android:padding="@dimen/_15sdp"
-                        android:text="@={LoginViewModel.EmailAddress}"
+                        android:text="@={LoginViewModel.Password}"
                         android:textColor="@android:color/white"
                         android:textColorHint="@android:color/white"
                         android:textSize="@dimen/_12sdp" />
 
 
-                    <RelativeLayout
+                    <ImageView
+                        android:id="@+id/iv_show_password"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_20sdp">
-
-
-                        <EditText
-                            android:id="@+id/login_Password"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/rect_button"
-                            android:drawableStart="@drawable/union4"
-                            android:drawablePadding="@dimen/_10sdp"
-                            android:ems="10"
-                            android:hint="@string/Password"
-                            android:inputType="textPassword"
-                            android:padding="@dimen/_15sdp"
-                            android:text="@={LoginViewModel.Password}"
-                            android:textColor="@android:color/white"
-                            android:textColorHint="@android:color/white"
-                            android:textSize="@dimen/_12sdp" />
-
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:id="@+id/iv_show_password"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:padding="@dimen/_10sdp"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/ic_visibility_off" />
-                    </RelativeLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/_30sdp"
-                        android:layout_marginBottom="@dimen/_30sdp"
-                        android:onClick="@{(v) -> LoginViewModel.onClickForgotPass(v)}"
-                        android:text="@string/forget_pswrd"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/_10sdp" />
-
-                    <!--                <com.twitter.sdk.android.core.identity.TwitterLoginButton-->
-                    <!--                    android:id="@+id/twitter_btn11"-->
-                    <!--                    android:layout_width="wrap_content"-->
-                    <!--                    android:layout_height="wrap_content" />-->
-
-                    <Button
-                        android:id="@+id/login_button"
-                        android:layout_width="@dimen/_180sdp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/_20sdp"
-                        android:background="@drawable/login_button"
-                        android:elevation="@dimen/_15sdp"
-                        android:onClick="@{(v) -> LoginViewModel.onClickLogin(v)}"
-                        android:text="@string/login"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/_12sdp" />
-
-                    <Button
-                        android:id="@+id/register"
-                        android:layout_width="@dimen/_180sdp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/_20sdp"
-                        android:background="@drawable/register_selector"
-                        android:elevation="@dimen/_15sdp"
-                        android:onClick="@{(v) -> LoginViewModel.onClickRegister(v)}"
-                        android:text="@string/REGISTER"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/_12sdp" />
-
-
-                </LinearLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_25sdp"
-                    android:paddingHorizontal="@dimen/_15sdp">
-
-                    <View
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/_2sdp"
+                        android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:layout_toRightOf="@+id/text_or"
-                        android:background="@color/view_color" />
-
-                    <TextView
-                        android:id="@+id/text_or"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_marginHorizontal="@dimen/_16sdp"
-                        android:text="@string/or"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/_10sdp" />
-
-                    <View
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/_2sdp"
-                        android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@+id/text_or"
-                        android:background="@color/view_color" />
+                        android:padding="@dimen/_10sdp"
+                        android:src="@drawable/ic_visibility_off" />
                 </RelativeLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:gravity="center"
-                    android:padding="@dimen/_15sdp"
-                    android:weightSum="1">
-
-                    <RelativeLayout
-                        android:layout_width="@dimen/_72sdp"
-                        android:layout_height="@dimen/_73sdp"
-                        android:onClick="@{(v) -> LoginViewModel.onClickFb(v)}"
-                        android:padding="@dimen/_20sdp">
-
-                        <ImageView
-                            android:layout_width="@dimen/_72sdp"
-                            android:layout_height="@dimen/_73sdp"
-                            android:src="@drawable/ellipse" />
-
-                        <ImageView
-                            android:id="@+id/fb"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:src="@drawable/fb" />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="@dimen/_72sdp"
-                        android:layout_height="@dimen/_73sdp"
-                        android:onClick="@{(v) -> LoginViewModel.onClickgPlus(v)}"
-                        android:padding="@dimen/_20sdp">
-
-                        <ImageView
-                            android:layout_width="@dimen/_72sdp"
-                            android:layout_height="@dimen/_73sdp"
-                            android:src="@drawable/ellipse" />
-
-                        <ImageView
-                            android:id="@+id/g_plus"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:src="@drawable/google_plus" />
-
-                    </RelativeLayout>
-
-<!--                    <RelativeLayout-->
-<!--                        android:id="@+id/rl_couple"-->
-<!--                        android:layout_width="@dimen/_72sdp"-->
-<!--                        android:layout_height="@dimen/_73sdp"-->
-<!--                        android:padding="@dimen/_20sdp"-->
-<!--                        android:visibility="visible">-->
-
-<!--                        <ImageView-->
-<!--                            android:layout_width="@dimen/_72sdp"-->
-<!--                            android:layout_height="@dimen/_73sdp"-->
-<!--                            android:src="@drawable/ellipse" />-->
-
-<!--                        <ImageView-->
-<!--                            android:id="@+id/couple"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_centerInParent="true"-->
-<!--                            android:src="@drawable/buainess_ic_business_and_trade" />-->
-
-<!--                    </RelativeLayout>-->
-
-                </LinearLayout>
-
-                <Button
-                    android:id="@+id/logout"
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="logout"
-                    android:visibility="gone" />
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:layout_marginBottom="@dimen/_30sdp"
+                    android:onClick="@{(v) -> LoginViewModel.onClickForgotPass(v)}"
+                    android:text="@string/forget_pswrd"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/_10sdp" />
+
+
+                <Button
+                    android:id="@+id/login_button"
+                    android:layout_width="@dimen/_180sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:background="@drawable/login_button"
+                    android:elevation="@dimen/_15sdp"
+                    android:onClick="@{(v) -> LoginViewModel.onClickLogin(v)}"
+                    android:text="@string/login"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/_12sdp" />
+
+                <Button
+                    android:id="@+id/register"
+                    android:layout_width="@dimen/_180sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:background="@drawable/register_selector"
+                    android:elevation="@dimen/_15sdp"
+                    android:onClick="@{(v) -> LoginViewModel.onClickRegister(v)}"
+                    android:text="@string/REGISTER"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/_12sdp" />
 
 
             </LinearLayout>
-        </ScrollView>
-    </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_25sdp"
+                android:paddingHorizontal="@dimen/_15sdp">
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_2sdp"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/text_or"
+                    android:background="@color/view_color" />
+
+                <TextView
+                    android:id="@+id/text_or"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginHorizontal="@dimen/_16sdp"
+                    android:text="@string/or"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/_10sdp" />
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_2sdp"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/text_or"
+                    android:background="@color/view_color" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:gravity="center"
+                android:padding="@dimen/_15sdp"
+                android:weightSum="1">
+
+                <RelativeLayout
+                    android:layout_width="@dimen/_72sdp"
+                    android:layout_height="@dimen/_73sdp"
+                    android:onClick="@{(v) -> LoginViewModel.onClickFb(v)}"
+                    android:padding="@dimen/_20sdp">
+
+                    <ImageView
+                        android:layout_width="@dimen/_72sdp"
+                        android:layout_height="@dimen/_73sdp"
+                        android:src="@drawable/ellipse" />
+
+                    <ImageView
+                        android:id="@+id/fb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/fb" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="@dimen/_72sdp"
+                    android:layout_height="@dimen/_73sdp"
+                    android:onClick="@{(v) -> LoginViewModel.onClickgPlus(v)}"
+                    android:padding="@dimen/_20sdp">
+
+                    <ImageView
+                        android:layout_width="@dimen/_72sdp"
+                        android:layout_height="@dimen/_73sdp"
+                        android:src="@drawable/ellipse" />
+
+                    <ImageView
+                        android:id="@+id/g_plus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/google_plus" />
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/logout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="logout"
+                android:visibility="gone" />
+
+
+        </LinearLayout>
+    </ScrollView>
 </layout>

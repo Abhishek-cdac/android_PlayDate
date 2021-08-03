@@ -47,12 +47,9 @@ public class FragInstaLikeProfileBusiness extends Fragment implements View.OnCli
     private TextView txt_login_user;
     private CommonClass clsCommon;
     private TextView txtTotalFriend, txtTotalPost;
-    //    private TextView txt_points;
     private ArrayList<GetProileDetailData> lst_getPostDetail;
     private Picasso picasso;
     private SessionPref pref;
-
-    RatingBar ratingbar;
 
     public FragInstaLikeProfileBusiness() {
     }
@@ -64,20 +61,20 @@ public class FragInstaLikeProfileBusiness extends Fragment implements View.OnCli
         clsCommon = CommonClass.getInstance();
         pref = SessionPref.getInstance(getActivity());
         picasso = Picasso.get();
-        ratingbar = view.findViewById(R.id.ratingBar);
-        ratingbar.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> Toast.makeText(getActivity(), "Rating: " +
-                (int) rating, Toast.LENGTH_SHORT).show());
+
+        RatingBar ratingbar = view.findViewById(R.id.ratingBar);
+
         txtTotalFriend = view.findViewById(R.id.friend_count);
         txtTotalPost = view.findViewById(R.id.post_count);
         profile_image = view.findViewById(R.id.profile_image);
         txt_bio = view.findViewById(R.id.txt_bio);
         txt_login_user = view.findViewById(R.id.txt_login_user);
-//        txt_points = view.findViewById(R.id.txt_points);
-
 
         callAPI();
         setValue();
 
+        ratingbar.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> Toast.makeText(getActivity(), "Rating: " +
+                (int) rating, Toast.LENGTH_SHORT).show());
         profile_image.setOnClickListener(this);
 
         return view;

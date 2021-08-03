@@ -37,7 +37,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.playdate.app.R;
-import com.playdate.app.business.couponsGenerate.FragCouponParentBusiness;
+import com.playdate.app.business.generate_coupons.FragCouponParentBusiness;
 import com.playdate.app.business.profile.FragBusinessProfile;
 import com.playdate.app.data.api.GetDataService;
 import com.playdate.app.data.api.RetrofitClientInstance;
@@ -1049,13 +1049,6 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
 
     @Override
     public void setNotificationCount(int count) {
-       /* if (count > 0) {
-            txt_count.setVisibility(View.VISIBLE);
-            txt_count.setText("" + count);
-        } else {
-            txt_count.setVisibility(View.GONE);
-            txt_count.setText("");
-        }*/
     }
 
 
@@ -1063,18 +1056,5 @@ public class DashboardActivity extends BaseActivity implements OnInnerFragmentCl
         ReplaceFragWithStack(new FragGameLeaderBoard());
     }
 
-   /*
-   @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        if (intent != null) {
-            String data = intent.getStringExtra("data");
-            if (data != null) {
-                Fragment fragment = new FragNotification("dashboard");
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
-            }
-        }
-    }
-    */
 }
 

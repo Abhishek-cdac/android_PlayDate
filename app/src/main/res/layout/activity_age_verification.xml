@@ -142,12 +142,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.498" />
 
-<!--            <Spinner-->
-            <!--                android:id="@+id/coloredSpinner"-->
-            <!--                android:layout_width="70dp"-->
-            <!--                android:theme="@style/Spinner112"-->
-            <!--                android:layout_height="40dp"-->
-            <!--                android:entries="@{AgeVerificationViewModel.fetchMonths()}" />-->
         </LinearLayout>
 
         <ImageView
@@ -161,6 +155,7 @@
             android:onClick="@{(v) -> AgeVerificationViewModel.onNext(v)}"
             android:padding="@dimen/_12sdp"
             android:src="@drawable/arrow_right" />
+
     </RelativeLayout>
 
 

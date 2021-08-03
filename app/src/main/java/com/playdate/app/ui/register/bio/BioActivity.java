@@ -33,6 +33,7 @@ import retrofit2.Response;
 
 
 public class BioActivity extends AppCompatActivity {
+
     private BioViewModel viewModel;
     private CommonClass clsCommon;
     private Intent mIntent;

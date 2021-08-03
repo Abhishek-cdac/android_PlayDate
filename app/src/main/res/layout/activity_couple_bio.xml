@@ -36,7 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginStart="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:fontFamily="@font/lato_bold"
                 android:gravity="start"
@@ -48,7 +48,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginStart="@dimen/_8sdp"
                 android:fontFamily="@font/lato_bold"
                 android:gravity="start"
                 android:text="@string/couple_short_note"

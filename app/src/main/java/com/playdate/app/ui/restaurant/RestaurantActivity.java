@@ -4,13 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -35,12 +35,14 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RestaurantActivity extends AppCompatActivity {
+
     private ActivityRestaurantBinding binding;
     private ArrayList<Restaurant> rest_list;
     private RestaurantAdapter adapter;
@@ -50,6 +52,7 @@ public class RestaurantActivity extends AppCompatActivity {
     private TextView txt_more_rest;
 
     SessionPref pref;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +73,6 @@ public class RestaurantActivity extends AppCompatActivity {
         recyclerView = binding.recyclerviewInterest;
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerView.setHasFixedSize(true);
-//      recyclerView.addItemDecoration(new SpacesItemDecoration(15));
 
 
         binding.edtSearch.addTextChangedListener(new TextWatcher() {
@@ -91,18 +93,10 @@ public class RestaurantActivity extends AppCompatActivity {
         });
 
 
-        viewModel.OnNextClick().observe(RestaurantActivity.this, aBoolean -> {
-//            startActivity(new Intent(RestaurantActivity.this, CameraActivity
-//                    .class));
-            callAPI();
-
-        });
+        viewModel.OnNextClick().observe(RestaurantActivity.this, aBoolean -> callAPI());
         viewModel.onBackClick().observe(RestaurantActivity.this, aBoolean -> finish());
 
-        rl_rest_bg.setOnClickListener(v -> {
-            Log.d("linear", "onClick:");
-            clsCommon.hideKeyboard(v, RestaurantActivity.this);
-        });
+        rl_rest_bg.setOnClickListener(v -> clsCommon.hideKeyboard(v, RestaurantActivity.this));
     }
 
 
@@ -144,10 +138,10 @@ public class RestaurantActivity extends AppCompatActivity {
         String finalSelected = Selected.toString();
         call.enqueue(new Callback<LoginResponse>() {
             @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+            public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
                 pd.cancel();
                 if (response.code() == 200) {
-                    if (response.body().getStatus() == 1) {
+                    if (Objects.requireNonNull(response.body()).getStatus() == 1) {
                         pref.saveStringKeyVal(SessionPref.LoginUserrestaurants, finalSelected);
                         startActivity(new Intent(RestaurantActivity.this, CameraActivity
                                 .class));
@@ -156,7 +150,7 @@ public class RestaurantActivity extends AppCompatActivity {
                     }
                 } else {
                     try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        JSONObject jObjError = new JSONObject(Objects.requireNonNull(response.errorBody()).string());
                         clsCommon.showDialogMsg(RestaurantActivity.this, "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(RestaurantActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
@@ -168,7 +162,7 @@ public class RestaurantActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<LoginResponse> call, @NonNull Throwable t) {
                 t.printStackTrace();
                 pd.cancel();
                 Toast.makeText(RestaurantActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
@@ -209,7 +203,7 @@ public class RestaurantActivity extends AppCompatActivity {
         Call<RestMain> call = service.restaurants("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<RestMain>() {
             @Override
-            public void onResponse(Call<RestMain> call, Response<RestMain> response) {
+            public void onResponse(@NonNull Call<RestMain> call, @NonNull Response<RestMain> response) {
                 pd.cancel();
                 if (response.code() == 200) {
                     assert response.body() != null;
@@ -226,7 +220,7 @@ public class RestaurantActivity extends AppCompatActivity {
                     }
                 } else {
                     try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        JSONObject jObjError = new JSONObject(Objects.requireNonNull(response.errorBody()).string());
                         clsCommon.showDialogMsg(RestaurantActivity.this, "PlayDate", jObjError.getString("message"), "Ok");
                     } catch (Exception e) {
                         Toast.makeText(RestaurantActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
@@ -238,7 +232,7 @@ public class RestaurantActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<RestMain> call, Throwable t) {
+            public void onFailure(@NonNull Call<RestMain> call, @NonNull Throwable t) {
                 t.printStackTrace();
                 pd.cancel();
                 Toast.makeText(RestaurantActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();

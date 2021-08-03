@@ -22,6 +22,7 @@ import com.google.android.exoplayer2.util.Util;
 import com.playdate.app.R;
 
 public class ExoPlayerActivity extends AppCompatActivity {
+
     private SimpleExoPlayer absPlayerInternal;
     private PlayerView pvMain;
     private ImageView iv_play_pause;

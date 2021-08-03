@@ -35,9 +35,8 @@
                 android:id="@+id/txt_relation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
                 android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginStart="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:fontFamily="@font/lato_bold"
                 android:gravity="start"
@@ -49,7 +48,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginStart="@dimen/_8sdp"
                 android:fontFamily="@font/lato_bold"
                 android:gravity="start"
                 android:text="@string/please_select_your_sex_orie"
@@ -67,8 +66,6 @@
                 android:id="@+id/btn_male"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/edt_otp"
-                android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/_30sdp"
                 android:layout_marginTop="@dimen/_25sdp"
@@ -89,7 +86,7 @@
                 android:layout_margin="@dimen/_25sdp"
                 android:fontFamily="@font/lato_bold"
                 android:gravity="center"
-                android:text="AND"
+                android:text="@string/and"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_10sdp" />
 
@@ -97,8 +94,6 @@
                 android:id="@+id/btn_female"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/edt_otp"
-                android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/_30sdp"
                 android:layout_marginRight="@dimen/_30sdp"
@@ -118,7 +113,7 @@
                 android:layout_margin="@dimen/_25sdp"
                 android:fontFamily="@font/lato_bold"
                 android:gravity="center"
-                android:text="AND"
+                android:text="@string/and"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_10sdp" />
 
@@ -127,8 +122,6 @@
                 android:id="@+id/btn_non_binary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/edt_otp"
-                android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/_30sdp"
                 android:layout_marginRight="@dimen/_30sdp"
@@ -152,8 +145,8 @@
             android:background="@drawable/arrow_back_circle"
             android:onClick="@{(v) -> InterestInViewModel.onNext(v)}"
             android:padding="@dimen/_12sdp"
-            android:visibility="gone"
-            android:src="@drawable/arrow_right" />
+            android:src="@drawable/arrow_right"
+            android:visibility="gone" />
     </RelativeLayout>
 
 </layout>

@@ -1,5 +1,7 @@
 package com.playdate.app.ui.social.upload_media;
 
+import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
+
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -44,6 +47,7 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -51,8 +55,6 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.playdate.app.data.api.RetrofitClientInstance.BASE_URL_IMAGE;
 
 public class PostMediaActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -145,7 +147,7 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
         Call<FriendsListModel> call = service.getFriendsList("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<FriendsListModel>() {
             @Override
-            public void onResponse(Call<FriendsListModel> call, Response<FriendsListModel> response) {
+            public void onResponse(@NonNull Call<FriendsListModel> call, Response<FriendsListModel> response) {
                 pd.cancel();
                 if (response.code() == 200) {
                     assert response.body() != null;
@@ -155,13 +157,11 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
                             lstUserSuggestions = new ArrayList<>();
                         }
                     }
-                } else {
                 }
-
             }
 
             @Override
-            public void onFailure(Call<FriendsListModel> call, Throwable t) {
+            public void onFailure(@NonNull Call<FriendsListModel> call, @NonNull Throwable t) {
                 t.printStackTrace();
                 pd.cancel();
             }
@@ -229,7 +229,7 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
 
             currentFile = new File(getIntent().getStringExtra("videoPath"));
         } else {
-            String filename = "";
+            String filename;
             filename = "profile.png";
             currentFile = new File(getCacheDir(), filename);
             try {
@@ -266,11 +266,11 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
 
         call.enqueue(new Callback<LoginResponse>() {
             @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+            public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
                 pd.dismiss();
                 if (response.code() == 200) {
 
-                    if (response.body().getStatus() == 1) {
+                    if (Objects.requireNonNull(response.body()).getStatus() == 1) {
                         LoginUserDetails user = response.body().getUserData();
                         callAPIFeedPost(user.getMediaId());
                     } else {
@@ -287,7 +287,7 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
             }
 
             @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<LoginResponse> call, @NonNull Throwable t) {
                 t.printStackTrace();
                 pd.dismiss();
             }
@@ -332,28 +332,19 @@ public class PostMediaActivity extends AppCompatActivity implements View.OnClick
         Call<LoginResponse> call = service.addPostFeed("Bearer " + pref.getStringVal(SessionPref.LoginUsertoken), hashMap);
         call.enqueue(new Callback<LoginResponse>() {
             @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+            public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
                 pd.cancel();
                 if (response.code() == 200) {
-                    if (response.body().getStatus() == 1) {
+                    if (Objects.requireNonNull(response.body()).getStatus() == 1) {
                         DashboardActivity.bitmap = null;
                         DashboardActivity.refreshFlag = 1;
                         finish();
-                    } else {
-//                        clsCommon.showDialogMsg(BioActivity.this, "PlayDate", response.body().getMessage(), "Ok");
                     }
-                } else {
-//                    try {
-//                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-//                        clsCommon.showDialogMsg(BioActivity.this, "PlayDate", jObjError.getString("message").toString(), "Ok");
-//                    } catch (Exception e) {
-//                        Toast.makeText(BioActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-//                    }
                 }
             }
 
             @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<LoginResponse> call, @NonNull Throwable t) {
                 t.printStackTrace();
                 pd.cancel();
 //                Toast.makeText(BioActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();

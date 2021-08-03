@@ -8,7 +8,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.chip.Chip;
 import com.playdate.app.R;
 import com.playdate.app.model.MatchListUser;
 
@@ -17,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 public class ChipsAdapter extends RecyclerView.Adapter<ChipsAdapter.ViewHolder> {
-    ArrayList<MatchListUser> lst;
+    private final ArrayList<MatchListUser> lst;
 
     public ChipsAdapter(ArrayList<MatchListUser> lstUserSuggestions) {
         this.lst = lstUserSuggestions;
@@ -41,8 +40,8 @@ public class ChipsAdapter extends RecyclerView.Adapter<ChipsAdapter.ViewHolder> 
         return lst.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView chips;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        private final TextView chips;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);

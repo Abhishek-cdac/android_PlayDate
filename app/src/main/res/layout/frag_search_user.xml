@@ -15,10 +15,10 @@
             android:id="@+id/edt_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/_25sdp"
+            android:layout_marginStart="@dimen/_25sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_5sdp"
-            android:layout_toLeftOf="@+id/txt_cancel"
+            android:layout_toStartOf="@+id/txt_cancel"
             android:background="@drawable/circle_pink"
             android:drawableStart="@drawable/ic_search"
             android:drawablePadding="@dimen/_8sdp"
@@ -44,7 +44,7 @@
             android:foregroundGravity="center"
             android:gravity="center"
             android:padding="@dimen/_5sdp"
-            android:text="Cancel"
+            android:text="@string/cancel"
             android:textColor="@color/textColour"
             android:textSize="@dimen/_12sdp"
             android:textStyle="bold" />
@@ -69,10 +69,10 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:overScrollMode="never"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
         android:layoutAnimation="@anim/layout_animation"
-        android:layout_margin="@dimen/_10sdp" />
+        android:overScrollMode="never" />
 
 
 </LinearLayout>

@@ -8,14 +8,15 @@
     android:focusableInTouchMode="true"
     android:orientation="vertical"
     android:paddingLeft="@dimen/_10sdp"
-    android:paddingRight="@dimen/_10sdp">
+    android:paddingRight="@dimen/_10sdp"
+    android:focusable="true">
 
     <TextView
         android:id="@+id/txt_login_user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginLeft="@dimen/_5sdp"
+        android:layout_marginStart="@dimen/_5sdp"
         android:layout_marginTop="@dimen/_25sdp"
         android:fontFamily="@font/lato_bold"
         android:gravity="center"
@@ -44,7 +45,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="@font/lato_bold"
                 android:gravity="center"
-                android:text="0"
+                android:text="@string/str_0"
                 android:textColor="@color/color_pink"
                 android:textSize="@dimen/_12sdp" />
 
@@ -54,7 +55,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="@font/helvetica_neue"
                 android:gravity="center"
-                android:text="Friends"
+                android:text="@string/friends"
                 android:textColor="@color/textColour"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
@@ -97,7 +98,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="@font/lato_bold"
                 android:gravity="center"
-                android:text="0"
+                android:text="@string/str_0"
                 android:textColor="@color/color_pink"
                 android:textSize="@dimen/_12sdp" />
 
@@ -107,7 +108,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="@font/helvetica_neue"
                 android:gravity="center"
-                android:text="Posts"
+                android:text="@string/posts"
                 android:textColor="@color/textColour"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
@@ -146,11 +147,11 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_5sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:fontFamily="@font/lato_bold"
             android:gravity="center"
-            android:text="0 Points"
+            android:text="@string/_0_points"
             android:textColor="@color/textColour"
             android:textSize="@dimen/_12sdp"
             android:textStyle="bold" />
